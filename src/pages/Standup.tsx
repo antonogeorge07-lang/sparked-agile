@@ -5,26 +5,82 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageSquare, Send, Sparkles } from "lucide-react";
+import { MessageSquare, Send, Sparkles, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+
+interface StandupUpdate {
+  name: string;
+  yesterday: string;
+  today: string;
+  blockers: string;
+}
 
 export default function Standup() {
   const [name, setName] = useState("");
   const [yesterday, setYesterday] = useState("");
   const [today, setToday] = useState("");
   const [blockers, setBlockers] = useState("");
+  const [teamUpdates, setTeamUpdates] = useState<StandupUpdate[]>([]);
+  const [summary, setSummary] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const newUpdate = { name, yesterday, today, blockers };
+    setTeamUpdates([...teamUpdates, newUpdate]);
+    
     toast({
-      title: "Standup Submitted",
-      description: "Your update has been recorded and will be included in the summary.",
+      title: "Update Added",
+      description: `${name}'s standup has been recorded. Add more team members or generate summary.`,
     });
+    
     setName("");
     setYesterday("");
     setToday("");
     setBlockers("");
+  };
+
+  const handleGenerateSummary = async () => {
+    if (teamUpdates.length === 0) {
+      toast({
+        title: "No Updates",
+        description: "Please add at least one team member's update first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-standup-summary', {
+        body: { updates: teamUpdates }
+      });
+
+      if (error) throw error;
+
+      setSummary(data.summary);
+      toast({
+        title: "Summary Generated",
+        description: "AI has analyzed the team updates.",
+      });
+    } catch (error) {
+      console.error("Error generating summary:", error);
+      toast({
+        title: "Error",
+        description: "Failed to generate summary. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleReset = () => {
+    setTeamUpdates([]);
+    setSummary("");
   };
 
   return (
@@ -107,26 +163,87 @@ export default function Standup() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-card bg-muted/50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-secondary" />
-                  AI Summary
-                </CardTitle>
-                <CardDescription>
-                  Once all team members submit, an AI-generated summary will appear here
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                <p>Summary will include:</p>
-                <ul className="list-disc list-inside mt-2 space-y-1">
-                  <li>Team progress highlights</li>
-                  <li>Today's focus areas</li>
-                  <li>Identified blockers requiring attention</li>
-                  <li>Suggested action items</li>
-                </ul>
-              </CardContent>
-            </Card>
+            {teamUpdates.length > 0 && (
+              <Card className="shadow-card">
+                <CardHeader>
+                  <CardTitle>Team Updates ({teamUpdates.length})</CardTitle>
+                  <CardDescription>
+                    Updates collected from team members
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {teamUpdates.map((update, index) => (
+                    <div key={index} className="p-3 rounded-lg bg-muted/50 text-sm">
+                      <p className="font-medium">{update.name}</p>
+                    </div>
+                  ))}
+                  <div className="flex gap-2 mt-4">
+                    <Button 
+                      onClick={handleGenerateSummary} 
+                      disabled={isGenerating}
+                      className="flex-1 gap-2"
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4" />
+                          Generate AI Summary
+                        </>
+                      )}
+                    </Button>
+                    <Button onClick={handleReset} variant="outline">
+                      Reset
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {summary && (
+              <Card className="shadow-card bg-gradient-primary/5 border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-secondary" />
+                    AI-Generated Summary
+                  </CardTitle>
+                  <CardDescription>
+                    Powered by Lovable AI
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-sm max-w-none whitespace-pre-wrap">
+                    {summary}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {teamUpdates.length === 0 && !summary && (
+              <Card className="shadow-card bg-muted/50">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-secondary" />
+                    AI Summary
+                  </CardTitle>
+                  <CardDescription>
+                    Add team member updates to generate an AI summary
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground">
+                  <p>Summary will include:</p>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>Team progress highlights</li>
+                    <li>Today's focus areas</li>
+                    <li>Identified blockers requiring attention</li>
+                    <li>Suggested action items</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </main>

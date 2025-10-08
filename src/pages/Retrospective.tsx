@@ -4,24 +4,79 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Target, Sparkles, Send } from "lucide-react";
+import { Target, Sparkles, Send, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+
+interface FeedbackItem {
+  wentWell: string;
+  improve: string;
+  actionItems: string;
+}
 
 export default function Retrospective() {
   const [wentWell, setWentWell] = useState("");
   const [improve, setImprove] = useState("");
   const [actionItems, setActionItems] = useState("");
+  const [feedback, setFeedback] = useState<FeedbackItem[]>([]);
+  const [insights, setInsights] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const newFeedback = { wentWell, improve, actionItems };
+    setFeedback([...feedback, newFeedback]);
+    
     toast({
-      title: "Feedback Submitted",
-      description: "Your retrospective input has been recorded.",
+      title: "Feedback Added",
+      description: "Your feedback has been recorded. Add more or generate insights.",
     });
+    
     setWentWell("");
     setImprove("");
     setActionItems("");
+  };
+
+  const handleGenerateInsights = async () => {
+    if (feedback.length === 0) {
+      toast({
+        title: "No Feedback",
+        description: "Please add at least one feedback item first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-retro-insights', {
+        body: { feedback }
+      });
+
+      if (error) throw error;
+
+      setInsights(data.insights);
+      toast({
+        title: "Insights Generated",
+        description: "AI has analyzed the retrospective feedback.",
+      });
+    } catch (error) {
+      console.error("Error generating insights:", error);
+      toast({
+        title: "Error",
+        description: "Failed to generate insights. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleReset = () => {
+    setFeedback([]);
+    setInsights("");
   };
 
   return (
@@ -93,42 +148,89 @@ export default function Retrospective() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-card bg-muted/50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-secondary" />
-                  AI-Generated Insights
-                </CardTitle>
-                <CardDescription>
-                  Key themes and patterns from team feedback
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-4 rounded-lg bg-card">
-                  <h4 className="font-medium mb-2 text-green-600">Top Positives</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Strong team collaboration (mentioned by 5 members)</li>
-                    <li>• Clear sprint goals (mentioned by 4 members)</li>
-                    <li>• Improved code quality (mentioned by 3 members)</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-card">
-                  <h4 className="font-medium mb-2 text-secondary">Areas for Improvement</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Meeting efficiency (mentioned by 4 members)</li>
-                    <li>• Documentation needs (mentioned by 3 members)</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-card">
-                  <h4 className="font-medium mb-2 text-primary">Recommended Actions</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>1. Implement 15-minute standup time limit</li>
-                    <li>2. Create documentation template and guidelines</li>
-                    <li>3. Schedule weekly knowledge-sharing sessions</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
+            {feedback.length > 0 && (
+              <Card className="shadow-card">
+                <CardHeader>
+                  <CardTitle>Collected Feedback ({feedback.length})</CardTitle>
+                  <CardDescription>
+                    Anonymous feedback from team members
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {feedback.map((item, index) => (
+                    <div key={index} className="p-3 rounded-lg bg-muted/50 text-sm">
+                      <p className="font-medium">Feedback {index + 1}</p>
+                    </div>
+                  ))}
+                  <div className="flex gap-2 mt-4">
+                    <Button 
+                      onClick={handleGenerateInsights} 
+                      disabled={isGenerating}
+                      className="flex-1 gap-2"
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4" />
+                          Generate AI Insights
+                        </>
+                      )}
+                    </Button>
+                    <Button onClick={handleReset} variant="outline">
+                      Reset
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {insights && (
+              <Card className="shadow-card bg-gradient-primary/5 border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-secondary" />
+                    AI-Generated Insights
+                  </CardTitle>
+                  <CardDescription>
+                    Powered by Lovable AI
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-sm max-w-none whitespace-pre-wrap">
+                    {insights}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {feedback.length === 0 && !insights && (
+              <Card className="shadow-card bg-muted/50">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-secondary" />
+                    AI-Generated Insights
+                  </CardTitle>
+                  <CardDescription>
+                    Add feedback to generate AI-powered insights
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 rounded-lg bg-card">
+                    <h4 className="font-medium mb-2">What You'll Get</h4>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Top positive themes from feedback</li>
+                      <li>• Key areas for improvement</li>
+                      <li>• Specific, actionable recommendations</li>
+                      <li>• Overall team health assessment</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </main>
