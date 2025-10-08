@@ -1,0 +1,131 @@
+import { Navigation } from "@/components/Navigation";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BarChart3, TrendingUp, AlertCircle, Calendar } from "lucide-react";
+
+export default function Dashboard() {
+  const velocityData = [
+    { sprint: "Sprint 10", points: 32 },
+    { sprint: "Sprint 11", points: 28 },
+    { sprint: "Sprint 12", points: 35 },
+  ];
+
+  const impediments = [
+    { id: 1, title: "API Rate Limits", severity: "high", days: 3 },
+    { id: 2, title: "Pending Design Review", severity: "medium", days: 1 },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-subtle">
+      <Navigation />
+      
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-8 animate-fade-in">
+            <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+              <BarChart3 className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold">Sprint Health Dashboard</h1>
+              <p className="text-muted-foreground">Monitor your team's performance and progress</p>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
+            <Card className="shadow-card">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Current Velocity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">35</div>
+                <p className="text-sm text-muted-foreground mt-1">story points</p>
+                <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>+7 from last sprint</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Sprint Progress</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">68%</div>
+                <p className="text-sm text-muted-foreground mt-1">completion rate</p>
+                <div className="w-full bg-muted rounded-full h-2 mt-4">
+                  <div className="bg-gradient-primary h-2 rounded-full" style={{ width: '68%' }}></div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Days Remaining</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">5</div>
+                <p className="text-sm text-muted-foreground mt-1">until sprint end</p>
+                <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground">
+                  <Calendar className="w-4 h-4" />
+                  <span>Ends Dec 15, 2024</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle>Velocity Trend</CardTitle>
+                <CardDescription>Last 3 sprints performance</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {velocityData.map((sprint, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="font-medium">{sprint.sprint}</span>
+                        <span className="text-muted-foreground">{sprint.points} points</span>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div 
+                          className="bg-gradient-primary h-2 rounded-full transition-all" 
+                          style={{ width: `${(sprint.points / 40) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-destructive" />
+                  Active Impediments
+                </CardTitle>
+                <CardDescription>Issues requiring attention</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {impediments.map((item) => (
+                    <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                      <div className={`w-2 h-2 rounded-full mt-2 ${
+                        item.severity === 'high' ? 'bg-destructive' : 'bg-secondary'
+                      }`}></div>
+                      <div className="flex-1">
+                        <p className="font-medium">{item.title}</p>
+                        <p className="text-sm text-muted-foreground">Open for {item.days} days</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
