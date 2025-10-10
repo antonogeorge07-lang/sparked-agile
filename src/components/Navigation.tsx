@@ -21,7 +21,7 @@ export const Navigation = () => {
             <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
               <Target className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl">ScrumMaster AI</span>
+            <span className="font-bold text-xl">SM ActiveInteligence</span>
           </Link>
           
           <div className="flex items-center gap-2">
