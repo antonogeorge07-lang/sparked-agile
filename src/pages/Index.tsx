@@ -43,7 +43,7 @@ const Index = () => {
         <section className="container mx-auto px-4 py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-              Your AI-Powered Scrum Master Assistant
+              Your AI-Powered Scrum Master
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Streamline your agile workflow with intelligent automation. From daily standups to sprint retrospectives, let AI handle the routine so you can focus on delivery.
