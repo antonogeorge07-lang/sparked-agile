@@ -49,7 +49,7 @@ const Index = () => {
               Streamline your agile workflow with intelligent automation. From daily standups to sprint retrospectives, let AI handle the routine so you can focus on delivery.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="gap-2" onClick={() => navigate("/standup")}>
+              <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
                 Get Started
                 <ArrowRight className="w-4 h-4" />
               </Button>

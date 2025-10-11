@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Zap, Loader2, CheckCircle, AlertCircle, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 interface ActionItem {
   title: string;
@@ -19,6 +20,7 @@ interface ActionItem {
 }
 
 export default function Workflows() {
+  const [user, setUser] = useState<any>(null);
   const [projectName, setProjectName] = useState("");
   const [projectId, setProjectId] = useState<string | null>(null);
   const [workflowType, setWorkflowType] = useState("standup_analysis");
@@ -27,10 +29,45 @@ export default function Workflows() {
   const [result, setResult] = useState<any>(null);
   const [actionItems, setActionItems] = useState<ActionItem[]>([]);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    loadActionItems();
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    if (projectId) {
+      loadActionItems();
+    }
   }, [projectId]);
+
+  const checkAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      navigate("/auth");
+      return;
+    }
+
+    // Check if user is approved
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .single();
+
+    if (profile?.role === 'pending') {
+      toast({
+        title: "Account Pending",
+        description: "Your account is awaiting admin approval",
+        variant: "destructive",
+      });
+      navigate("/");
+      return;
+    }
+
+    setUser(session.user);
+  };
 
   const loadActionItems = async () => {
     if (!projectId) return;
@@ -59,19 +96,38 @@ export default function Workflows() {
       return;
     }
 
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+
     const { data, error } = await supabase
       .from('projects')
-      .insert({ name: projectName, description: 'AI Workflow Project' })
+      .insert({ 
+        name: projectName, 
+        description: 'AI Workflow Project',
+        user_id: user.id
+      })
       .select()
       .single();
 
     if (error) {
+      console.error('Error creating project:', error);
       toast({
         title: "Error",
         description: "Failed to create project",
         variant: "destructive",
       });
     } else {
+      // Also add user as project member
+      await supabase
+        .from('project_members')
+        .insert({
+          project_id: data.id,
+          user_id: user.id,
+          role: 'owner'
+        });
+
       setProjectId(data.id);
       toast({
         title: "Project Created",
