@@ -7,6 +7,7 @@ export const Navigation = () => {
   
   const navItems = [
     { path: "/", label: "Home", icon: Home },
+    { path: "/workflows", label: "Workflows", icon: Target },
     { path: "/standup", label: "Standup", icon: MessageSquare },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
     { path: "/planning", label: "Planning", icon: Calendar },
