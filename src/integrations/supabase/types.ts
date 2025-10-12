@@ -299,6 +299,27 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       workflow_executions: {
         Row: {
           completed_at: string | null
@@ -351,6 +372,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_user_role: {
+        Args: {
+          required_role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Returns: boolean
+      }
       get_user_role: {
         Args: { user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]

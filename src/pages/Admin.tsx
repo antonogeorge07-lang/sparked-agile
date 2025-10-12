@@ -36,14 +36,15 @@ export default function Admin() {
         return;
       }
 
-      // Check if user is admin
-      const { data: profile } = await supabase
-        .from('profiles')
+      // Check if user is admin using secure user_roles table
+      const { data: userRole } = await supabase
+        .from('user_roles')
         .select('role')
-        .eq('id', session.user.id)
-        .single();
+        .eq('user_id', session.user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
 
-      if (profile?.role !== 'admin') {
+      if (!userRole) {
         toast({
           title: "Access Denied",
           description: "You must be an admin to access this page",
@@ -82,24 +83,46 @@ export default function Admin() {
   };
 
   const updateUserRole = async (userId: string, newRole: 'admin' | 'member' | 'pending') => {
-    const { error } = await supabase
-      .from('profiles')
-      .update({ role: newRole })
-      .eq('id', userId);
+    // Delete existing roles
+    const { error: deleteError } = await supabase
+      .from('user_roles')
+      .delete()
+      .eq('user_id', userId);
 
-    if (error) {
+    if (deleteError) {
       toast({
         title: "Error",
         description: "Failed to update user role",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Success",
-        description: `User role updated to ${newRole}`,
-      });
-      await loadProfiles();
+      return;
     }
+
+    // Insert new role
+    const { error: insertError } = await supabase
+      .from('user_roles')
+      .insert({ user_id: userId, role: newRole });
+
+    if (insertError) {
+      toast({
+        title: "Error",
+        description: "Failed to update user role",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Update profiles table for display purposes
+    await supabase
+      .from('profiles')
+      .update({ role: newRole })
+      .eq('id', userId);
+
+    toast({
+      title: "Success",
+      description: `User role updated to ${newRole}`,
+    });
+    await loadProfiles();
   };
 
   const getRoleBadge = (role: string) => {
