@@ -31,6 +31,24 @@ const Index = () => {
       title: "Retrospective Generator",
       description: "Collect anonymous feedback and generate actionable themes and insights.",
       path: "/retrospective"
+    },
+    {
+      icon: Target,
+      title: "Value Stream Management",
+      description: "Define and optimize value streams for accelerated flow with SAFe 6.0.",
+      path: "/value-streams"
+    },
+    {
+      icon: Calendar,
+      title: "Program Increment Planning",
+      description: "Plan and track 8-12 week program increments aligned with business objectives.",
+      path: "/program-increment"
+    },
+    {
+      icon: BarChart3,
+      title: "Flow Metrics Dashboard",
+      description: "Monitor WIP, cycle time, lead time, and throughput for continuous improvement.",
+      path: "/flow-metrics"
     }
   ];
 

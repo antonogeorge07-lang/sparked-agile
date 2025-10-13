@@ -74,6 +74,269 @@ export type Database = {
           },
         ]
       }
+      agile_release_trains: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string | null
+          value_stream_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string | null
+          value_stream_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+          value_stream_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agile_release_trains_value_stream_id_fkey"
+            columns: ["value_stream_id"]
+            isOneToOne: false
+            referencedRelation: "value_streams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dependencies: {
+        Row: {
+          created_at: string | null
+          dependent_feature_id: string | null
+          id: string
+          notes: string | null
+          source_feature_id: string | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          dependent_feature_id?: string | null
+          id?: string
+          notes?: string | null
+          source_feature_id?: string | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          dependent_feature_id?: string | null
+          id?: string
+          notes?: string | null
+          source_feature_id?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dependencies_dependent_feature_id_fkey"
+            columns: ["dependent_feature_id"]
+            isOneToOne: false
+            referencedRelation: "features"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dependencies_source_feature_id_fkey"
+            columns: ["source_feature_id"]
+            isOneToOne: false
+            referencedRelation: "features"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      epics: {
+        Row: {
+          business_value: number | null
+          created_at: string | null
+          description: string | null
+          id: string
+          priority: string | null
+          status: string | null
+          title: string
+          updated_at: string | null
+          value_stream_id: string | null
+        }
+        Insert: {
+          business_value?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          priority?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+          value_stream_id?: string | null
+        }
+        Update: {
+          business_value?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          priority?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+          value_stream_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epics_value_stream_id_fkey"
+            columns: ["value_stream_id"]
+            isOneToOne: false
+            referencedRelation: "value_streams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      features: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          effort_estimate: number | null
+          epic_id: string | null
+          id: string
+          pi_id: string | null
+          priority: string | null
+          status: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          effort_estimate?: number | null
+          epic_id?: string | null
+          id?: string
+          pi_id?: string | null
+          priority?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          effort_estimate?: number | null
+          epic_id?: string | null
+          id?: string
+          pi_id?: string | null
+          priority?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "features_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "features_pi_id_fkey"
+            columns: ["pi_id"]
+            isOneToOne: false
+            referencedRelation: "program_increments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      flow_metrics: {
+        Row: {
+          created_at: string | null
+          cycle_time_avg: number | null
+          id: string
+          lead_time_avg: number | null
+          metric_date: string
+          project_id: string | null
+          throughput: number | null
+          work_in_progress: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          cycle_time_avg?: number | null
+          id?: string
+          lead_time_avg?: number | null
+          metric_date: string
+          project_id?: string | null
+          throughput?: number | null
+          work_in_progress?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          cycle_time_avg?: number | null
+          id?: string
+          lead_time_avg?: number | null
+          metric_date?: string
+          project_id?: string | null
+          throughput?: number | null
+          work_in_progress?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flow_metrics_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      okrs: {
+        Row: {
+          created_at: string | null
+          current_value: number | null
+          description: string | null
+          id: string
+          pi_id: string | null
+          status: string | null
+          target_value: number | null
+          title: string
+          type: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          current_value?: number | null
+          description?: string | null
+          id?: string
+          pi_id?: string | null
+          status?: string | null
+          target_value?: number | null
+          title: string
+          type?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          current_value?: number | null
+          description?: string | null
+          id?: string
+          pi_id?: string | null
+          status?: string | null
+          target_value?: number | null
+          title?: string
+          type?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "okrs_pi_id_fkey"
+            columns: ["pi_id"]
+            isOneToOne: false
+            referencedRelation: "program_increments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -100,6 +363,50 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      program_increments: {
+        Row: {
+          art_id: string | null
+          created_at: string | null
+          end_date: string
+          id: string
+          name: string
+          objectives: string | null
+          start_date: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          art_id?: string | null
+          created_at?: string | null
+          end_date: string
+          id?: string
+          name: string
+          objectives?: string | null
+          start_date: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          art_id?: string | null
+          created_at?: string | null
+          end_date?: string
+          id?: string
+          name?: string
+          objectives?: string | null
+          start_date?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_increments_art_id_fkey"
+            columns: ["art_id"]
+            isOneToOne: false
+            referencedRelation: "agile_release_trains"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       project_members: {
         Row: {
@@ -319,6 +626,41 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      value_streams: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          project_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          project_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          project_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "value_streams_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       workflow_executions: {
         Row: {
