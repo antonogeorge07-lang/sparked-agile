@@ -16,6 +16,7 @@ import Retrospective from "./pages/Retrospective";
 import ValueStreams from "./pages/ValueStreams";
 import ProgramIncrement from "./pages/ProgramIncrement";
 import FlowMetrics from "./pages/FlowMetrics";
+import Integrations from "./pages/Integrations";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/value-streams" element={<ValueStreams />} />
           <Route path="/program-increment" element={<ProgramIncrement />} />
           <Route path="/flow-metrics" element={<FlowMetrics />} />
+          <Route path="/integrations" element={<Integrations />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -290,6 +290,39 @@ export type Database = {
           },
         ]
       }
+      integrations: {
+        Row: {
+          config: Json
+          created_at: string
+          id: string
+          integration_type: string
+          is_active: boolean
+          name: string
+          project_id: string
+          updated_at: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          id?: string
+          integration_type: string
+          is_active?: boolean
+          name: string
+          project_id: string
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          id?: string
+          integration_type?: string
+          is_active?: boolean
+          name?: string
+          project_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       okrs: {
         Row: {
           created_at: string | null
