@@ -63,14 +63,7 @@ export const Navigation = () => {
   
   const navItems = [
     { path: "/", label: "Home", icon: Home },
-    { path: "/workflows", label: "Workflows", icon: Target },
-    { path: "/standup", label: "Standup", icon: MessageSquare },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
-    { path: "/planning", label: "Planning", icon: Calendar },
-    { path: "/retrospective", label: "Retro", icon: Target },
-    { path: "/value-streams", label: "Value Streams", icon: Target },
-    { path: "/program-increment", label: "PI Planning", icon: Calendar },
-    { path: "/flow-metrics", label: "Flow Metrics", icon: BarChart3 },
   ];
 
   return (

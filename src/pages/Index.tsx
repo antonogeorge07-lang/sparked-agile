@@ -1,56 +1,33 @@
 import { Navigation } from "@/components/Navigation";
-import { FeatureCard } from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, BarChart3, Calendar, Target, ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Play, Pause, Volume2, VolumeX, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
 
 const Index = () => {
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
-  const features = [
-    {
-      icon: MessageSquare,
-      title: "Daily Standup Collector",
-      description: "Team members submit updates. AI generates summaries and creates tickets for impediments.",
-      path: "/standup"
-    },
-    {
-      icon: BarChart3,
-      title: "Sprint Health Dashboard",
-      description: "Track velocity, open impediments, and upcoming work with visual insights.",
-      path: "/dashboard"
-    },
-    {
-      icon: Calendar,
-      title: "Sprint Planning Assistant",
-      description: "AI suggests draft sprint plans based on backlog and team capacity.",
-      path: "/planning"
-    },
-    {
-      icon: Target,
-      title: "Retrospective Generator",
-      description: "Collect anonymous feedback and generate actionable themes and insights.",
-      path: "/retrospective"
-    },
-    {
-      icon: Target,
-      title: "Value Stream Management",
-      description: "Define and optimize value streams for accelerated flow with SAFe 6.0.",
-      path: "/value-streams"
-    },
-    {
-      icon: Calendar,
-      title: "Program Increment Planning",
-      description: "Plan and track 8-12 week program increments aligned with business objectives.",
-      path: "/program-increment"
-    },
-    {
-      icon: BarChart3,
-      title: "Flow Metrics Dashboard",
-      description: "Monitor WIP, cycle time, lead time, and throughput for continuous improvement.",
-      path: "/flow-metrics"
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     }
-  ];
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -64,42 +41,82 @@ const Index = () => {
               Your AI-Powered Scrum Master
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Streamline your agile workflow with intelligent automation. From daily standups to sprint retrospectives, let AI handle the routine so you can focus on delivery.
+              Streamline your agile workflow with intelligent automation powered by SAFe 6.0. From daily standups to program increments, let AI handle the routine so you can focus on delivering value.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
                 Get Started
                 <ArrowRight className="w-4 h-4" />
               </Button>
-              <Button size="lg" variant="outline" onClick={() => navigate("/demo")}>
-                Watch Demo
-              </Button>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* Video Demo Section */}
         <section className="container mx-auto px-4 py-16">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Powerful Features for Agile Teams</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">See SM ActiveIntelligence in Action</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Everything you need to run efficient sprints, delivered with zero setup through intelligent automation
+                Watch how our platform streamlines your entire agile workflow with AI-powered automation
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
-              {features.map((feature, index) => (
-                <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
-                  <FeatureCard
-                    icon={feature.icon}
-                    title={feature.title}
-                    description={feature.description}
-                    onClick={() => navigate(feature.path)}
-                  />
+            <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-2">
+              <div className="relative aspect-video bg-muted">
+                {/* Placeholder for video - replace src with actual demo video */}
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover"
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                >
+                  <source src="/demo-video.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                
+                {/* Video Controls Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity">
+                  <div className="absolute bottom-0 left-0 right-0 p-6 flex items-center gap-4">
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      onClick={togglePlay}
+                      className="rounded-full w-12 h-12"
+                    >
+                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      onClick={toggleMute}
+                      className="rounded-full w-12 h-12"
+                    >
+                      {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                    </Button>
+                  </div>
                 </div>
-              ))}
-            </div>
+
+                {/* Play button when not playing */}
+                {!isPlaying && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Button
+                      size="icon"
+                      onClick={togglePlay}
+                      className="rounded-full w-20 h-20 bg-primary/90 hover:bg-primary shadow-elevated"
+                    >
+                      <Play className="w-10 h-10 ml-1" />
+                    </Button>
+                  </div>
+                )}
+              </div>
+              
+              <div className="p-6 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Experience the power of AI-driven agile management with built-in voice guidance
+                </p>
+              </div>
+            </Card>
           </div>
         </section>
 
