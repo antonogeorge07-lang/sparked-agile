@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { Github, Network, Plus, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Integration {
   id: string;
@@ -27,10 +28,12 @@ interface Integration {
 
 const Integrations = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [projects, setProjects] = useState<{ id: string; name: string }[]>([]);
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAddingNew, setIsAddingNew] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [newIntegration, setNewIntegration] = useState({
     type: "jira" as "jira" | "github",
     name: "",
@@ -41,8 +44,24 @@ const Integrations = () => {
   });
 
   useEffect(() => {
-    fetchProjects();
+    checkAuthAndFetchProjects();
   }, []);
+
+  const checkAuthAndFetchProjects = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to access integrations",
+        variant: "destructive",
+      });
+      navigate("/auth");
+      return;
+    }
+    
+    fetchProjects();
+  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -51,6 +70,7 @@ const Integrations = () => {
   }, [selectedProject]);
 
   const fetchProjects = async () => {
+    setIsLoading(true);
     const { data, error } = await supabase
       .from("projects")
       .select("id, name")
@@ -62,6 +82,7 @@ const Integrations = () => {
         description: "Failed to load projects",
         variant: "destructive",
       });
+      setIsLoading(false);
       return;
     }
 
@@ -69,6 +90,7 @@ const Integrations = () => {
     if (data && data.length > 0) {
       setSelectedProject(data[0].id);
     }
+    setIsLoading(false);
   };
 
   const fetchIntegrations = async () => {
@@ -199,21 +221,41 @@ const Integrations = () => {
             </p>
           </div>
 
-          <div className="mb-6">
-            <Label htmlFor="project-select">Select Project</Label>
-            <Select value={selectedProject} onValueChange={setSelectedProject}>
-              <SelectTrigger id="project-select" className="max-w-md">
-                <SelectValue placeholder="Select a project" />
-              </SelectTrigger>
-              <SelectContent>
-                {projects.map((project) => (
-                  <SelectItem key={project.id} value={project.id}>
-                    {project.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          {isLoading ? (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <p className="text-muted-foreground">Loading projects...</p>
+              </CardContent>
+            </Card>
+          ) : projects.length === 0 ? (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <Network className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground mb-4">
+                  No projects found. You need to be assigned to a project to manage integrations.
+                </p>
+                <Button onClick={() => navigate("/dashboard")}>
+                  Go to Dashboard
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <>
+              <div className="mb-6">
+                <Label htmlFor="project-select">Select Project</Label>
+                <Select value={selectedProject} onValueChange={setSelectedProject}>
+                  <SelectTrigger id="project-select" className="max-w-md">
+                    <SelectValue placeholder="Select a project" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {projects.map((project) => (
+                      <SelectItem key={project.id} value={project.id}>
+                        {project.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
           {!isAddingNew && (
             <Button onClick={() => setIsAddingNew(true)} className="mb-6 gap-2">
@@ -415,6 +457,8 @@ const Integrations = () => {
               ))
             )}
           </div>
+            </>
+          )}
         </div>
       </main>
     </div>
