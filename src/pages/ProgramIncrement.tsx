@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar, Target, Plus, Loader2 } from "lucide-react";
+import { Calendar, Target, Plus, Loader2, Network } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { IntegrationDataCard } from "@/components/IntegrationDataCard";
+import { useIntegrationData } from "@/hooks/useIntegrationData";
 
 export default function ProgramIncrement() {
   const [arts, setArts] = useState<any[]>([]);
@@ -19,8 +21,10 @@ export default function ProgramIncrement() {
   const [newPiObjectives, setNewPiObjectives] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(currentProjectId);
 
   useEffect(() => {
     checkAuth();
@@ -59,7 +63,7 @@ export default function ProgramIncrement() {
   const loadArts = async () => {
     const { data, error } = await supabase
       .from('agile_release_trains')
-      .select('*, value_streams(name)')
+      .select('*, value_streams(name, project_id)')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -68,6 +72,10 @@ export default function ProgramIncrement() {
       setArts(data || []);
       if (data && data.length > 0) {
         setSelectedArt(data[0].id);
+        // Set current project ID for integration data
+        if (data[0].value_streams) {
+          setCurrentProjectId(data[0].value_streams.project_id);
+        }
       }
     }
   };
@@ -272,6 +280,25 @@ export default function ProgramIncrement() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Integration Data Section */}
+          {(hasJiraIntegration || hasGithubIntegration) && (
+            <>
+              <div className="flex items-center gap-3 mb-4 mt-8">
+                <Network className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">Related Integration Data</h2>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                {hasJiraIntegration && jiraData && (
+                  <IntegrationDataCard type="jira" data={jiraData} isLoading={isLoading} />
+                )}
+                {hasGithubIntegration && githubData && (
+                  <IntegrationDataCard type="github" data={{ gitPullRequests: githubData.gitPullRequests }} isLoading={isLoading} />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>

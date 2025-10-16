@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, TrendingUp, Clock, Zap } from "lucide-react";
+import { Activity, TrendingUp, Clock, Zap, Network } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { IntegrationDataCard } from "@/components/IntegrationDataCard";
+import { useIntegrationData } from "@/hooks/useIntegrationData";
 
 export default function FlowMetrics() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -12,6 +14,7 @@ export default function FlowMetrics() {
   const [metrics, setMetrics] = useState<any[]>([]);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
 
   useEffect(() => {
     checkAuth();
@@ -174,7 +177,7 @@ export default function FlowMetrics() {
             </Card>
           </div>
 
-          <Card className="shadow-card">
+          <Card className="shadow-card mb-6">
             <CardHeader>
               <CardTitle>Flow Trend Analysis</CardTitle>
               <CardDescription>Track your delivery efficiency over time</CardDescription>
@@ -215,6 +218,25 @@ export default function FlowMetrics() {
               )}
             </CardContent>
           </Card>
+
+          {/* Integration Data Section */}
+          {(hasJiraIntegration || hasGithubIntegration) && (
+            <>
+              <div className="flex items-center gap-3 mb-4">
+                <Network className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">Related Integration Data</h2>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                {hasJiraIntegration && jiraData && (
+                  <IntegrationDataCard type="jira" data={jiraData} isLoading={isLoading} />
+                )}
+                {hasGithubIntegration && githubData && (
+                  <IntegrationDataCard type="github" data={{ gitCommits: githubData.gitCommits }} isLoading={isLoading} />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>

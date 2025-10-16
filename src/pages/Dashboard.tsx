@@ -1,8 +1,32 @@
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3, TrendingUp, AlertCircle, Calendar } from "lucide-react";
+import { BarChart3, TrendingUp, AlertCircle, Calendar, Network } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { IntegrationDataCard } from "@/components/IntegrationDataCard";
+import { useIntegrationData } from "@/hooks/useIntegrationData";
 
 export default function Dashboard() {
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [projects, setProjects] = useState<any[]>([]);
+  const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    const { data } = await supabase
+      .from('projects')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (data && data.length > 0) {
+      setProjects(data);
+      setSelectedProject(data[0].id);
+    }
+  };
+
   const velocityData = [
     { sprint: "Sprint 10", points: 32 },
     { sprint: "Sprint 11", points: 28 },
@@ -73,7 +97,7 @@ export default function Dashboard() {
             </Card>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-2 mb-6">
             <Card className="shadow-card">
               <CardHeader>
                 <CardTitle>Velocity Trend</CardTitle>
@@ -124,6 +148,25 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Integration Data Section */}
+          {(hasJiraIntegration || hasGithubIntegration) && (
+            <>
+              <div className="flex items-center gap-3 mb-4 mt-8">
+                <Network className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">Integration Data</h2>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                {hasJiraIntegration && jiraData && (
+                  <IntegrationDataCard type="jira" data={jiraData} isLoading={isLoading} />
+                )}
+                {hasGithubIntegration && githubData && (
+                  <IntegrationDataCard type="github" data={githubData} isLoading={isLoading} />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>

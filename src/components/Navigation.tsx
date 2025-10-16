@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Target, BarChart3, Calendar, MessageSquare, Home, Shield, LogOut, Network } from "lucide-react";
+import { Target, BarChart3, Home, Shield, LogOut, Network, TrendingUp } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -64,6 +64,7 @@ export const Navigation = () => {
   const navItems = [
     { path: "/", label: "Home", icon: Home },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
+    { path: "/project-progress", label: "Progress", icon: TrendingUp },
     { path: "/integrations", label: "Integrations", icon: Network },
   ];
 
