@@ -1,10 +1,13 @@
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3, TrendingUp, AlertCircle, Calendar, Network } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BarChart3, TrendingUp, AlertCircle, Calendar, Network, FileDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
+import { exportDashboardToPowerPoint } from "@/utils/exportToPowerPoint";
+import { toast } from "sonner";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -38,20 +41,54 @@ export default function Dashboard() {
     { id: 2, title: "Pending Design Review", severity: "medium", days: 1 },
   ];
 
+  const handleExportToPowerPoint = async () => {
+    try {
+      toast.info("Generating PowerPoint presentation...");
+      
+      const recentActivity = [
+        { title: "Sprint 12 Started", description: "Team began work on new sprint", timestamp: new Date().toISOString() },
+        { title: "Standup Completed", description: "Daily sync meeting finished", timestamp: new Date().toISOString() },
+      ];
+
+      await exportDashboardToPowerPoint({
+        projectName: selectedProject ? projects.find(p => p.id === selectedProject)?.name || "Dashboard" : "All Projects",
+        stats: {
+          activeProjects: projects.length,
+          pendingWorkflows: 5,
+          completedActionItems: 12,
+        },
+        recentActivity,
+        jiraIssues: jiraData?.issues,
+        gitCommits: githubData?.commits,
+      });
+      
+      toast.success("PowerPoint presentation downloaded successfully!");
+    } catch (error) {
+      console.error("Error exporting to PowerPoint:", error);
+      toast.error("Failed to generate PowerPoint presentation");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-8 animate-fade-in">
-            <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <BarChart3 className="w-6 h-6 text-primary-foreground" />
+          <div className="flex items-center justify-between mb-8 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold">Sprint Health Dashboard</h1>
+                <p className="text-muted-foreground">Monitor your team's performance and progress</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold">Sprint Health Dashboard</h1>
-              <p className="text-muted-foreground">Monitor your team's performance and progress</p>
-            </div>
+            <Button onClick={handleExportToPowerPoint} className="gap-2">
+              <FileDown className="w-4 h-4" />
+              Export to PowerPoint
+            </Button>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
