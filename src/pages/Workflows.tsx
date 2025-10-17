@@ -12,6 +12,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionChart";
 import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
+import { useRealtimePresence } from "@/hooks/useRealtimePresence";
+import { ActiveUsers } from "@/components/ActiveUsers";
 
 interface ActionItem {
   title: string;
@@ -32,6 +34,7 @@ export default function Workflows() {
   const [actionItems, setActionItems] = useState<ActionItem[]>([]);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { activeUsers } = useRealtimePresence('/workflows');
 
   useEffect(() => {
     checkAuth();

@@ -4,12 +4,15 @@ import { Target, BarChart3, Home, Shield, LogOut, Network, TrendingUp } from "lu
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useRealtimePresence } from "@/hooks/useRealtimePresence";
+import { ActiveUsers } from "@/components/ActiveUsers";
 
 export const Navigation = () => {
   const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState<any>(null);
   const { toast } = useToast();
+  const { activeUsers } = useRealtimePresence(location.pathname);
 
   useEffect(() => {
     checkUser();
@@ -79,7 +82,10 @@ export const Navigation = () => {
             <span className="font-bold text-xl">SM ActiveInteligence</span>
           </Link>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            {user && <ActiveUsers users={activeUsers} currentPage={location.pathname} />}
+            
+            <div className="flex items-center gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -125,6 +131,7 @@ export const Navigation = () => {
                 <Button size="sm">Sign In</Button>
               </Link>
             )}
+            </div>
           </div>
         </div>
       </div>

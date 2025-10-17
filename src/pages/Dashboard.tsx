@@ -10,11 +10,14 @@ import { exportDashboardToPowerPoint } from "@/utils/exportToPowerPoint";
 import { toast } from "sonner";
 import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionChart";
 import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
+import { useRealtimePresence } from "@/hooks/useRealtimePresence";
+import { ActiveUsers } from "@/components/ActiveUsers";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
+  const { activeUsers } = useRealtimePresence('/dashboard');
 
   useEffect(() => {
     loadProjects();
@@ -196,6 +199,21 @@ export default function Dashboard() {
               <ActionItemsChart />
             </div>
           </div>
+
+          {/* Real-time Collaboration Section */}
+          {activeUsers.length > 0 && (
+            <div className="mt-8 mb-6">
+              <Card className="shadow-card">
+                <CardHeader>
+                  <CardTitle>Real-time Collaboration</CardTitle>
+                  <CardDescription>See who's currently active in the workspace</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ActiveUsers users={activeUsers} currentPage="/dashboard" variant="full" />
+                </CardContent>
+              </Card>
+            </div>
+          )}
 
           {/* Integration Data Section */}
           {(hasJiraIntegration || hasGithubIntegration) && (

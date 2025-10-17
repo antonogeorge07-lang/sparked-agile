@@ -10,6 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { Github, Network, Plus, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useRealtimePresence } from "@/hooks/useRealtimePresence";
+import { ActiveUsers } from "@/components/ActiveUsers";
 
 interface Integration {
   id: string;
@@ -34,6 +36,7 @@ const Integrations = () => {
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { activeUsers } = useRealtimePresence('/integrations');
   const [newIntegration, setNewIntegration] = useState({
     type: "jira" as "jira" | "github",
     name: "",
