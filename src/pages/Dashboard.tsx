@@ -24,9 +24,13 @@ export default function Dashboard() {
   }, []);
 
   const loadProjects = async () => {
+    // Only load projects that have integrations
     const { data } = await supabase
       .from('projects')
-      .select('*')
+      .select(`
+        *,
+        integrations!inner(id)
+      `)
       .order('created_at', { ascending: false });
 
     if (data && data.length > 0) {
