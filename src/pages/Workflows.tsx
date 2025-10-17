@@ -10,6 +10,8 @@ import { Zap, Loader2, CheckCircle, AlertCircle, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionChart";
+import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
 
 interface ActionItem {
   title: string;
@@ -227,6 +229,16 @@ export default function Workflows() {
               <p className="text-muted-foreground">Process team data through AI and automate actions</p>
             </div>
           </div>
+
+          {projectId && (
+            <div className="mb-8 space-y-6">
+              <h2 className="text-2xl font-bold">Performance Analytics</h2>
+              <div className="grid gap-6 lg:grid-cols-2">
+                <WorkflowExecutionChart />
+                <ActionItemsChart />
+              </div>
+            </div>
+          )}
 
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Input Section */}

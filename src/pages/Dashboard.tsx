@@ -8,6 +8,8 @@ import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
 import { exportDashboardToPowerPoint } from "@/utils/exportToPowerPoint";
 import { toast } from "sonner";
+import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionChart";
+import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -184,6 +186,15 @@ export default function Dashboard() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Analytics & Insights Section */}
+          <div className="mt-8 mb-6">
+            <h2 className="text-2xl font-bold mb-6">Analytics & Insights</h2>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <WorkflowExecutionChart />
+              <ActionItemsChart />
+            </div>
           </div>
 
           {/* Integration Data Section */}

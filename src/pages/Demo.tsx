@@ -1,11 +1,14 @@
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, BarChart3, Calendar, Target, ArrowRight, PlayCircle } from "lucide-react";
+import { MessageSquare, BarChart3, Calendar, Target, ArrowRight, PlayCircle, Lightbulb } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { OnboardingTour } from "@/components/OnboardingTour";
 
 export default function Demo() {
   const navigate = useNavigate();
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const demoSteps = [
     {
@@ -76,7 +79,21 @@ export default function Demo() {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               See how SM ActiveInteligence streamlines your agile workflow with AI-powered automation
             </p>
+            <Button 
+              onClick={() => setShowOnboarding(true)} 
+              className="mt-6 gap-2"
+              variant="outline"
+              size="lg"
+            >
+              <Lightbulb className="w-5 h-5" />
+              Start Guided Tour
+            </Button>
           </div>
+
+          <OnboardingTour 
+            isOpen={showOnboarding} 
+            onClose={() => setShowOnboarding(false)} 
+          />
 
           <div className="space-y-8">
             {demoSteps.map((step, index) => {

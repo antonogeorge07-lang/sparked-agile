@@ -5,13 +5,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
 import { Play, Pause, Volume2, VolumeX, ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { OnboardingTour } from "@/components/OnboardingTour";
 
 const Index = () => {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
+    if (!hasSeenOnboarding) {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -73,6 +82,11 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
+      
+      <OnboardingTour 
+        isOpen={showOnboarding} 
+        onClose={() => setShowOnboarding(false)} 
+      />
       
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="w-full">
