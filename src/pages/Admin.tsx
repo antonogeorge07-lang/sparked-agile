@@ -7,6 +7,8 @@ import { Shield, CheckCircle, XCircle, Clock, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { useItemPresence } from "@/hooks/useItemPresence";
+import { CollaborationIndicator } from "@/components/CollaborationIndicator";
 
 interface Profile {
   id: string;
@@ -15,6 +17,96 @@ interface Profile {
   role: string;
   created_at: string;
 }
+
+const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
+  profile: Profile;
+  onUpdateRole: (userId: string, role: 'admin' | 'member' | 'pending') => void;
+  getRoleBadge: (role: string) => JSX.Element;
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const { activeUsers } = useItemPresence(
+    profile.id,
+    'user-profile',
+    isEditing ? 'editing' : 'viewing'
+  );
+
+  return (
+    <div
+      key={profile.id}
+      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+      onMouseEnter={() => setIsEditing(false)}
+      onFocus={() => setIsEditing(true)}
+      onBlur={() => setIsEditing(false)}
+    >
+      <div className="flex-1">
+        <div className="flex items-center gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium">{profile.full_name || 'No name'}</h3>
+              <CollaborationIndicator users={activeUsers} size="sm" />
+            </div>
+            <p className="text-sm text-muted-foreground">{profile.email}</p>
+          </div>
+          {getRoleBadge(profile.role)}
+        </div>
+        <p className="text-xs text-muted-foreground mt-1">
+          Joined {new Date(profile.created_at).toLocaleDateString()}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2">
+        {profile.role === 'pending' && (
+          <>
+            <Button
+              size="sm"
+              onClick={() => onUpdateRole(profile.id, 'member')}
+              className="gap-1"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Approve
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={() => onUpdateRole(profile.id, 'pending')}
+              className="gap-1"
+            >
+              <XCircle className="w-4 h-4" />
+              Reject
+            </Button>
+          </>
+        )}
+        {profile.role === 'member' && (
+          <>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => onUpdateRole(profile.id, 'admin')}
+            >
+              Make Admin
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => onUpdateRole(profile.id, 'pending')}
+            >
+              Revoke Access
+            </Button>
+          </>
+        )}
+        {profile.role === 'admin' && (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => onUpdateRole(profile.id, 'member')}
+          >
+            Remove Admin
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function Admin() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -216,74 +308,12 @@ export default function Admin() {
                   <p className="text-muted-foreground text-center py-8">No users found</p>
                 ) : (
                   profiles.map((profile) => (
-                    <div
+                    <UserProfileRow
                       key={profile.id}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
-                    >
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <h3 className="font-medium">{profile.full_name || 'No name'}</h3>
-                            <p className="text-sm text-muted-foreground">{profile.email}</p>
-                          </div>
-                          {getRoleBadge(profile.role)}
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Joined {new Date(profile.created_at).toLocaleDateString()}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {profile.role === 'pending' && (
-                          <>
-                            <Button
-                              size="sm"
-                              onClick={() => updateUserRole(profile.id, 'member')}
-                              className="gap-1"
-                            >
-                              <CheckCircle className="w-4 h-4" />
-                              Approve
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => updateUserRole(profile.id, 'pending')}
-                              className="gap-1"
-                            >
-                              <XCircle className="w-4 h-4" />
-                              Reject
-                            </Button>
-                          </>
-                        )}
-                        {profile.role === 'member' && (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateUserRole(profile.id, 'admin')}
-                            >
-                              Make Admin
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateUserRole(profile.id, 'pending')}
-                            >
-                              Revoke Access
-                            </Button>
-                          </>
-                        )}
-                        {profile.role === 'admin' && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => updateUserRole(profile.id, 'member')}
-                          >
-                            Remove Admin
-                          </Button>
-                        )}
-                      </div>
-                    </div>
+                      profile={profile}
+                      onUpdateRole={updateUserRole}
+                      getRoleBadge={getRoleBadge}
+                    />
                   ))
                 )}
               </div>

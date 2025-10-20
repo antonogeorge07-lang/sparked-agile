@@ -17,6 +17,7 @@ import { ConnectionStatus } from "@/components/integrations/ConnectionStatus";
 import { IntegrationWizard } from "@/components/integrations/IntegrationWizard";
 import { ConnectionTester } from "@/components/integrations/ConnectionTester";
 import { Skeleton } from "@/components/ui/skeleton";
+import { IntegrationCard } from "@/components/IntegrationCard";
 
 // Validation schemas
 const jiraConfigSchema = z.object({
@@ -604,91 +605,26 @@ const Integrations = () => {
               </Card>
             ) : (
               integrations.map((integration) => (
-                <Card key={integration.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        {integration.integration_type === "jira" ? (
-                          <Network className="w-6 h-6 text-primary" />
-                        ) : (
-                          <Github className="w-6 h-6 text-primary" />
-                        )}
-                        <div>
-                          <CardTitle>{integration.name}</CardTitle>
-                          <CardDescription className="capitalize">
-                            {integration.integration_type} Integration
-                          </CardDescription>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                          <Label htmlFor={`active-${integration.id}`}>Active</Label>
-                          <Switch
-                            id={`active-${integration.id}`}
-                            checked={integration.is_active}
-                            onCheckedChange={() =>
-                              handleToggleActive(integration.id, integration.is_active)
-                            }
-                          />
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDeleteIntegration(integration.id)}
-                        >
-                          <Trash2 className="w-4 h-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <ConnectionStatus
-                      status={integration.status}
-                      lastSync={integration.lastSync}
-                      message={integration.statusMessage}
-                    />
-                    
-                    <div className="text-sm text-muted-foreground space-y-1">
-                      {integration.integration_type === "jira" && integration.config.url && (
-                        <p>URL: {integration.config.url}</p>
-                      )}
-                      {integration.integration_type === "github" && (
-                        <>
-                          {integration.config.organization && (
-                            <p>Organization: {integration.config.organization}</p>
-                          )}
-                          {integration.config.repository && (
-                            <p>Repository: {integration.config.repository}</p>
-                          )}
-                        </>
-                      )}
-                      <p className="text-xs">
-                        Added: {new Date(integration.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-
-                    {integration.is_active && (
-                      <ConnectionTester
-                        type={integration.integration_type}
-                        config={integration.config}
-                        onTestComplete={(success, message) => {
-                          if (success) {
-                            toast({
-                              title: "Connection Successful",
-                              description: message,
-                            });
-                          } else {
-                            toast({
-                              title: "Connection Failed",
-                              description: message,
-                              variant: "destructive",
-                            });
-                          }
-                        }}
-                      />
-                    )}
-                  </CardContent>
-                </Card>
+                <IntegrationCard
+                  key={integration.id}
+                  integration={integration}
+                  onToggleActive={handleToggleActive}
+                  onDelete={handleDeleteIntegration}
+                  onTestComplete={(success, message) => {
+                    if (success) {
+                      toast({
+                        title: "Connection Successful",
+                        description: message,
+                      });
+                    } else {
+                      toast({
+                        title: "Connection Failed",
+                        description: message,
+                        variant: "destructive",
+                      });
+                    }
+                  }}
+                />
               ))
             )}
           </div>
