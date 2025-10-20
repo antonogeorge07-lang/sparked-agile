@@ -184,111 +184,52 @@ const Integrations = () => {
     setIntegrations(integrationsWithStatus);
   };
 
-  const handleWizardComplete = async (wizardData: any) => {
-    if (!selectedProject) return;
-
-    try {
-      let config: any = {};
-
-      if (selectedType === "jira") {
-        const validationResult = jiraConfigSchema.safeParse({
-          url: wizardData.url,
-          apiToken: wizardData.apiToken,
-        });
-
-        if (!validationResult.success) {
-          const errorMessage = validationResult.error.issues[0]?.message || "Invalid Jira configuration";
-          toast({
-            title: "Validation Error",
-            description: errorMessage,
-            variant: "destructive",
-          });
-          return;
-        }
-
-        config = validationResult.data;
-      } else {
-        const validationResult = githubConfigSchema.safeParse({
-          repository: wizardData.repository,
-          organization: wizardData.organization,
-          apiToken: wizardData.apiToken,
-        });
-
-        if (!validationResult.success) {
-          const errorMessage = validationResult.error.issues[0]?.message || "Invalid GitHub configuration";
-          toast({
-            title: "Validation Error",
-            description: errorMessage,
-            variant: "destructive",
-          });
-          return;
-        }
-
-        config = validationResult.data;
-      }
-
-      const { error } = await supabase.from("integrations").insert({
-        project_id: selectedProject,
-        integration_type: selectedType,
-        name: wizardData.name,
-        config,
-        is_active: true,
-      });
-
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to add integration",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      toast({
-        title: "Success",
-        description: `${selectedType === "jira" ? "Jira" : "GitHub"} integration added successfully`,
-      });
-
-      setIsAddingNew(false);
-      setUseWizard(true);
-      fetchIntegrations();
-    } catch (error) {
+  // Unified function to add integration - used by both wizard and advanced flows
+  const addIntegration = async (
+    type: "jira" | "github",
+    name: string,
+    configData: {
+      url?: string;
+      apiToken?: string;
+      repository?: string;
+      organization?: string;
+    }
+  ) => {
+    if (!selectedProject) {
       toast({
         title: "Error",
-        description: "An unexpected error occurred",
+        description: "No project selected",
         variant: "destructive",
       });
+      return false;
     }
-  };
 
-  const handleAddIntegration = async () => {
-    if (!selectedProject || !newIntegration.name) {
+    if (!name || name.trim().length === 0) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields",
+        description: "Please provide an integration name",
         variant: "destructive",
       });
-      return;
+      return false;
     }
 
-    // Validate integration name
-    if (newIntegration.name.length > 200) {
+    if (name.length > 200) {
       toast({
         title: "Validation Error",
         description: "Integration name must be less than 200 characters",
         variant: "destructive",
       });
-      return;
+      return false;
     }
 
     try {
       let config: any = {};
       
       // Validate based on integration type
-      if (newIntegration.type === "jira") {
+      if (type === "jira") {
         const validationResult = jiraConfigSchema.safeParse({
-          url: newIntegration.url,
-          apiToken: newIntegration.apiToken,
+          url: configData.url,
+          apiToken: configData.apiToken,
         });
 
         if (!validationResult.success) {
@@ -298,15 +239,15 @@ const Integrations = () => {
             description: errorMessage,
             variant: "destructive",
           });
-          return;
+          return false;
         }
 
         config = validationResult.data;
       } else {
         const validationResult = githubConfigSchema.safeParse({
-          repository: newIntegration.repository,
-          organization: newIntegration.organization,
-          apiToken: newIntegration.apiToken,
+          repository: configData.repository,
+          organization: configData.organization,
+          apiToken: configData.apiToken,
         });
 
         if (!validationResult.success) {
@@ -316,7 +257,7 @@ const Integrations = () => {
             description: errorMessage,
             variant: "destructive",
           });
-          return;
+          return false;
         }
 
         config = validationResult.data;
@@ -324,8 +265,8 @@ const Integrations = () => {
 
       const { error } = await supabase.from("integrations").insert({
         project_id: selectedProject,
-        integration_type: newIntegration.type,
-        name: newIntegration.name,
+        integration_type: type,
+        name: name,
         config,
         is_active: true,
       });
@@ -336,14 +277,49 @@ const Integrations = () => {
           description: "Failed to add integration",
           variant: "destructive",
         });
-        return;
+        return false;
       }
 
       toast({
         title: "Success",
-        description: "Integration added successfully",
+        description: `${type === "jira" ? "Jira" : "GitHub"} integration added successfully`,
       });
 
+      await fetchIntegrations();
+      return true;
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
+  const handleWizardComplete = async (wizardData: any) => {
+    const success = await addIntegration(selectedType, wizardData.name, {
+      url: wizardData.url,
+      apiToken: wizardData.apiToken,
+      repository: wizardData.repository,
+      organization: wizardData.organization,
+    });
+
+    if (success) {
+      setIsAddingNew(false);
+      setUseWizard(true);
+    }
+  };
+
+  const handleAddIntegration = async () => {
+    const success = await addIntegration(newIntegration.type, newIntegration.name, {
+      url: newIntegration.url,
+      apiToken: newIntegration.apiToken,
+      repository: newIntegration.repository,
+      organization: newIntegration.organization,
+    });
+
+    if (success) {
       setIsAddingNew(false);
       setNewIntegration({
         type: "jira",
@@ -352,13 +328,6 @@ const Integrations = () => {
         apiToken: "",
         repository: "",
         organization: "",
-      });
-      fetchIntegrations();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred",
-        variant: "destructive",
       });
     }
   };
