@@ -109,6 +109,53 @@ export type Database = {
           },
         ]
       }
+      ceremony_configs: {
+        Row: {
+          attendees: string[] | null
+          ceremony_type: string
+          created_at: string | null
+          duration_minutes: number | null
+          id: string
+          is_active: boolean | null
+          outlook_event_id: string | null
+          recurrence_pattern: string | null
+          start_time: string | null
+          workspace_id: string
+        }
+        Insert: {
+          attendees?: string[] | null
+          ceremony_type: string
+          created_at?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_active?: boolean | null
+          outlook_event_id?: string | null
+          recurrence_pattern?: string | null
+          start_time?: string | null
+          workspace_id: string
+        }
+        Update: {
+          attendees?: string[] | null
+          ceremony_type?: string
+          created_at?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_active?: boolean | null
+          outlook_event_id?: string | null
+          recurrence_pattern?: string | null
+          start_time?: string | null
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_workspace"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "project_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dependencies: {
         Row: {
           created_at: string | null
@@ -482,6 +529,62 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_workspaces: {
+        Row: {
+          configuration_status: string | null
+          created_at: string | null
+          github_repo_name: string | null
+          github_repo_url: string | null
+          id: string
+          jira_board_id: string | null
+          jira_board_url: string | null
+          name: string
+          outlook_calendar_id: string | null
+          project_id: string
+          team_distribution_list: string | null
+          teams_channel_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          configuration_status?: string | null
+          created_at?: string | null
+          github_repo_name?: string | null
+          github_repo_url?: string | null
+          id?: string
+          jira_board_id?: string | null
+          jira_board_url?: string | null
+          name: string
+          outlook_calendar_id?: string | null
+          project_id: string
+          team_distribution_list?: string | null
+          teams_channel_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          configuration_status?: string | null
+          created_at?: string | null
+          github_repo_name?: string | null
+          github_repo_url?: string | null
+          id?: string
+          jira_board_id?: string | null
+          jira_board_url?: string | null
+          name?: string
+          outlook_calendar_id?: string | null
+          project_id?: string
+          team_distribution_list?: string | null
+          teams_channel_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_project"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]
