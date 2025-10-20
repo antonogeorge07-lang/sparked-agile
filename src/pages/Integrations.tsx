@@ -161,7 +161,7 @@ const Integrations = () => {
         });
 
         if (!validationResult.success) {
-          const errorMessage = validationResult.error.errors[0]?.message || "Invalid Jira configuration";
+          const errorMessage = validationResult.error.issues[0]?.message || "Invalid Jira configuration";
           toast({
             title: "Validation Error",
             description: errorMessage,
@@ -179,7 +179,7 @@ const Integrations = () => {
         });
 
         if (!validationResult.success) {
-          const errorMessage = validationResult.error.errors[0]?.message || "Invalid GitHub configuration";
+          const errorMessage = validationResult.error.issues[0]?.message || "Invalid GitHub configuration";
           toast({
             title: "Validation Error",
             description: errorMessage,

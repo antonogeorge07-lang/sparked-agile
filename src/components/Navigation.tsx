@@ -6,9 +6,34 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { ProfileMenu } from "@/components/ProfileMenu";
 
 export const Navigation = () => {
   const location = useLocation();
+  const [userEmail, setUserEmail] = useState<string>();
+  const [userName, setUserName] = useState<string>();
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserEmail(user.email);
+        
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+        
+        if (profile) {
+          setUserName(profile.full_name || undefined);
+        }
+      }
+    };
+    
+    loadUser();
+  }, []);
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState<any>(null);
   const { toast } = useToast();
@@ -116,16 +141,10 @@ export const Navigation = () => {
               </Link>
             )}
 
+            <ThemeToggle />
+            
             {user ? (
-              <Button 
-                variant="ghost"
-                size="sm"
-                onClick={handleSignOut}
-                className="gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">Sign Out</span>
-              </Button>
+              <ProfileMenu userEmail={userEmail} userName={userName} />
             ) : (
               <Link to="/auth">
                 <Button size="sm">Sign In</Button>
