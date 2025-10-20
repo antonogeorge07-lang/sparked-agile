@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Zap, Loader2, CheckCircle, AlertCircle, Clock } from "lucide-react";
+import { Zap, Loader2, CheckCircle, AlertCircle, Clock, Filter } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionCha
 import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
+import { SearchBar } from "@/components/SearchBar";
+import { FilterControls } from "@/components/FilterControls";
 
 interface ActionItem {
   title: string;
@@ -32,6 +34,10 @@ export default function Workflows() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [actionItems, setActionItems] = useState<ActionItem[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [showFilters, setShowFilters] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { activeUsers } = useRealtimePresence('/workflows');
@@ -202,6 +208,31 @@ export default function Workflows() {
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  // Filter action items based on search and filters
+  const filteredActionItems = useMemo(() => {
+    return actionItems.filter(item => {
+      const matchesSearch = 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      const matchesPriority = priorityFilter === "all" || item.priority === priorityFilter;
+      const matchesStatus = statusFilter === "all" || item.status === statusFilter;
+      return matchesSearch && matchesPriority && matchesStatus;
+    });
+  }, [actionItems, searchQuery, priorityFilter, statusFilter]);
+
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (priorityFilter !== "all") count++;
+    if (statusFilter !== "all") count++;
+    return count;
+  }, [priorityFilter, statusFilter]);
+
+  const clearFilters = () => {
+    setPriorityFilter("all");
+    setStatusFilter("all");
+    setSearchQuery("");
   };
 
   const getExampleInput = () => {
@@ -379,33 +410,105 @@ export default function Workflows() {
               {actionItems.length > 0 && (
                 <Card className="shadow-card">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5 text-orange-500" />
-                      Action Items
-                    </CardTitle>
-                    <CardDescription>AI-extracted tasks and blockers</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {actionItems.map((item, index) => (
-                      <div key={index} className="p-3 rounded-lg border bg-card">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1">
-                            <h4 className="font-medium">{item.title}</h4>
-                            {item.description && (
-                              <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
-                            )}
-                          </div>
-                          <div className={`text-xs px-2 py-1 rounded-full ${
-                            item.priority === 'critical' ? 'bg-red-500/20 text-red-500' :
-                            item.priority === 'high' ? 'bg-orange-500/20 text-orange-500' :
-                            item.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-500' :
-                            'bg-blue-500/20 text-blue-500'
-                          }`}>
-                            {item.priority}
-                          </div>
-                        </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="flex items-center gap-2">
+                          <AlertCircle className="w-5 h-5 text-orange-500" />
+                          Action Items ({filteredActionItems.length})
+                        </CardTitle>
+                        <CardDescription>AI-extracted tasks and blockers</CardDescription>
                       </div>
-                    ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowFilters(!showFilters)}
+                        className="gap-2"
+                      >
+                        <Filter className="h-4 w-4" />
+                        Filter
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {showFilters && (
+                      <div className="space-y-3 pb-4 border-b">
+                        <SearchBar
+                          value={searchQuery}
+                          onChange={setSearchQuery}
+                          placeholder="Search action items..."
+                        />
+                        <FilterControls
+                          filters={[
+                            {
+                              label: "Priority",
+                              value: priorityFilter,
+                              options: [
+                                { label: "All", value: "all" },
+                                { label: "Critical", value: "critical" },
+                                { label: "High", value: "high" },
+                                { label: "Medium", value: "medium" },
+                                { label: "Low", value: "low" },
+                              ],
+                              onChange: setPriorityFilter,
+                            },
+                            {
+                              label: "Status",
+                              value: statusFilter,
+                              options: [
+                                { label: "All", value: "all" },
+                                { label: "Open", value: "open" },
+                                { label: "In Progress", value: "in_progress" },
+                                { label: "Completed", value: "completed" },
+                              ],
+                              onChange: setStatusFilter,
+                            },
+                          ]}
+                          activeFiltersCount={activeFiltersCount}
+                          onClearAll={clearFilters}
+                        />
+                      </div>
+                    )}
+                    
+                    <div className="space-y-3">
+                      {filteredActionItems.length > 0 ? (
+                        filteredActionItems.map((item, index) => (
+                          <div key={index} className="p-3 rounded-lg border bg-card">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1">
+                                <h4 className="font-medium">{item.title}</h4>
+                                {item.description && (
+                                  <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                                )}
+                              </div>
+                              <div className="flex flex-col gap-2 items-end">
+                                <div className={`text-xs px-2 py-1 rounded-full ${
+                                  item.priority === 'critical' ? 'bg-red-500/20 text-red-500' :
+                                  item.priority === 'high' ? 'bg-orange-500/20 text-orange-500' :
+                                  item.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-500' :
+                                  'bg-blue-500/20 text-blue-500'
+                                }`}>
+                                  {item.priority}
+                                </div>
+                                <div className={`text-xs px-2 py-1 rounded-full ${
+                                  item.status === 'completed' ? 'bg-green-500/20 text-green-500' :
+                                  item.status === 'in_progress' ? 'bg-blue-500/20 text-blue-500' :
+                                  'bg-gray-500/20 text-gray-500'
+                                }`}>
+                                  {item.status.replace('_', ' ')}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8 text-muted-foreground">
+                          {actionItems.length === 0 
+                            ? "No action items yet. Run a workflow to generate some."
+                            : "No action items found matching your filters"
+                          }
+                        </div>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               )}

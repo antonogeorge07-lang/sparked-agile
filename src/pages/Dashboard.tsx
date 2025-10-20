@@ -1,8 +1,8 @@
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart3, TrendingUp, AlertCircle, Calendar, Network, FileDown } from "lucide-react";
-import { useState, useEffect } from "react";
+import { BarChart3, TrendingUp, AlertCircle, Calendar, Network, FileDown, Filter } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
@@ -12,10 +12,15 @@ import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionCha
 import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
+import { SearchBar } from "@/components/SearchBar";
+import { FilterControls } from "@/components/FilterControls";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [severityFilter, setSeverityFilter] = useState("all");
+  const [showFilters, setShowFilters] = useState(false);
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
   const { activeUsers } = useRealtimePresence('/dashboard');
 
@@ -48,7 +53,29 @@ export default function Dashboard() {
   const impediments = [
     { id: 1, title: "API Rate Limits", severity: "high", days: 3 },
     { id: 2, title: "Pending Design Review", severity: "medium", days: 1 },
+    { id: 3, title: "Database Performance Issues", severity: "high", days: 2 },
+    { id: 4, title: "Missing Test Coverage", severity: "low", days: 5 },
   ];
+
+  // Filter impediments based on search and severity
+  const filteredImpediments = useMemo(() => {
+    return impediments.filter(item => {
+      const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSeverity = severityFilter === "all" || item.severity === severityFilter;
+      return matchesSearch && matchesSeverity;
+    });
+  }, [searchQuery, severityFilter]);
+
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (severityFilter !== "all") count++;
+    return count;
+  }, [severityFilter]);
+
+  const clearFilters = () => {
+    setSeverityFilter("all");
+    setSearchQuery("");
+  };
 
   const handleExportToPowerPoint = async () => {
     try {
@@ -171,25 +198,73 @@ export default function Dashboard() {
 
             <Card className="shadow-card">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-destructive" />
-                  Active Impediments
-                </CardTitle>
-                <CardDescription>Issues requiring attention</CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5 text-destructive" />
+                      Active Impediments
+                    </CardTitle>
+                    <CardDescription>Issues requiring attention</CardDescription>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="gap-2"
+                  >
+                    <Filter className="h-4 w-4" />
+                    Filter
+                  </Button>
+                </div>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {impediments.map((item) => (
-                    <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className={`w-2 h-2 rounded-full mt-2 ${
-                        item.severity === 'high' ? 'bg-destructive' : 'bg-secondary'
-                      }`}></div>
-                      <div className="flex-1">
-                        <p className="font-medium">{item.title}</p>
-                        <p className="text-sm text-muted-foreground">Open for {item.days} days</p>
+              <CardContent className="space-y-4">
+                {showFilters && (
+                  <div className="space-y-3 pb-4 border-b">
+                    <SearchBar
+                      value={searchQuery}
+                      onChange={setSearchQuery}
+                      placeholder="Search impediments..."
+                    />
+                    <FilterControls
+                      filters={[
+                        {
+                          label: "Severity",
+                          value: severityFilter,
+                          options: [
+                            { label: "All", value: "all" },
+                            { label: "High", value: "high" },
+                            { label: "Medium", value: "medium" },
+                            { label: "Low", value: "low" },
+                          ],
+                          onChange: setSeverityFilter,
+                        },
+                      ]}
+                      activeFiltersCount={activeFiltersCount}
+                      onClearAll={clearFilters}
+                    />
+                  </div>
+                )}
+                
+                <div className="space-y-3">
+                  {filteredImpediments.length > 0 ? (
+                    filteredImpediments.map((item) => (
+                      <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className={`w-2 h-2 rounded-full mt-2 ${
+                          item.severity === 'high' ? 'bg-destructive' : 
+                          item.severity === 'medium' ? 'bg-orange-500' :
+                          'bg-blue-500'
+                        }`}></div>
+                        <div className="flex-1">
+                          <p className="font-medium">{item.title}</p>
+                          <p className="text-sm text-muted-foreground">Open for {item.days} days</p>
+                        </div>
                       </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      No impediments found matching your filters
                     </div>
-                  ))}
+                  )}
                 </div>
               </CardContent>
             </Card>
