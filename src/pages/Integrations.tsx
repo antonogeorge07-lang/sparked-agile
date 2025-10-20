@@ -8,11 +8,14 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { Github, Network, Plus, Trash2 } from "lucide-react";
+import { Github, Network, Plus, Trash2, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
 import { z } from "zod";
+import { ConnectionStatus } from "@/components/integrations/ConnectionStatus";
+import { IntegrationWizard } from "@/components/integrations/IntegrationWizard";
+import { ConnectionTester } from "@/components/integrations/ConnectionTester";
 
 // Validation schemas
 const jiraConfigSchema = z.object({
@@ -39,15 +42,24 @@ interface Integration {
   };
   is_active: boolean;
   created_at: string;
+  updated_at: string;
+}
+
+interface IntegrationWithStatus extends Integration {
+  status: "connected" | "disconnected" | "testing" | "error" | "warning";
+  lastSync?: string;
+  statusMessage?: string;
 }
 
 const Integrations = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [integrations, setIntegrations] = useState<Integration[]>([]);
+  const [integrations, setIntegrations] = useState<IntegrationWithStatus[]>([]);
   const [projects, setProjects] = useState<{ id: string; name: string }[]>([]);
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAddingNew, setIsAddingNew] = useState(false);
+  const [useWizard, setUseWizard] = useState(true);
+  const [selectedType, setSelectedType] = useState<"jira" | "github">("jira");
   const [isLoading, setIsLoading] = useState(true);
   const { activeUsers } = useRealtimePresence('/integrations');
   const [newIntegration, setNewIntegration] = useState({
@@ -127,7 +139,126 @@ const Integrations = () => {
       return;
     }
 
-    setIntegrations((data || []) as Integration[]);
+    // Add status information to integrations
+    const integrationsWithStatus: IntegrationWithStatus[] = (data || []).map((integration) => {
+      const config = integration.config as any;
+      
+      // Determine status based on activity and config
+      let status: "connected" | "disconnected" | "error" | "warning" = "disconnected";
+      let statusMessage = "";
+
+      if (integration.is_active) {
+        // Check if configuration looks valid
+        if (integration.integration_type === "jira") {
+          if (config?.url && config?.apiToken) {
+            status = "connected";
+            statusMessage = "Active and configured";
+          } else {
+            status = "warning";
+            statusMessage = "Missing configuration";
+          }
+        } else {
+          if (config?.organization && config?.repository && config?.apiToken) {
+            status = "connected";
+            statusMessage = "Active and configured";
+          } else {
+            status = "warning";
+            statusMessage = "Missing configuration";
+          }
+        }
+      } else {
+        status = "disconnected";
+        statusMessage = "Integration is disabled";
+      }
+
+      return {
+        ...integration,
+        integration_type: integration.integration_type as "jira" | "github",
+        config: config,
+        status,
+        statusMessage,
+        lastSync: integration.updated_at,
+      };
+    });
+
+    setIntegrations(integrationsWithStatus);
+  };
+
+  const handleWizardComplete = async (wizardData: any) => {
+    if (!selectedProject) return;
+
+    try {
+      let config: any = {};
+
+      if (selectedType === "jira") {
+        const validationResult = jiraConfigSchema.safeParse({
+          url: wizardData.url,
+          apiToken: wizardData.apiToken,
+        });
+
+        if (!validationResult.success) {
+          const errorMessage = validationResult.error.issues[0]?.message || "Invalid Jira configuration";
+          toast({
+            title: "Validation Error",
+            description: errorMessage,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        config = validationResult.data;
+      } else {
+        const validationResult = githubConfigSchema.safeParse({
+          repository: wizardData.repository,
+          organization: wizardData.organization,
+          apiToken: wizardData.apiToken,
+        });
+
+        if (!validationResult.success) {
+          const errorMessage = validationResult.error.issues[0]?.message || "Invalid GitHub configuration";
+          toast({
+            title: "Validation Error",
+            description: errorMessage,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        config = validationResult.data;
+      }
+
+      const { error } = await supabase.from("integrations").insert({
+        project_id: selectedProject,
+        integration_type: selectedType,
+        name: wizardData.name,
+        config,
+        is_active: true,
+      });
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to add integration",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Success",
+        description: `${selectedType === "jira" ? "Jira" : "GitHub"} integration added successfully`,
+      });
+
+      setIsAddingNew(false);
+      setUseWizard(true);
+      fetchIntegrations();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleAddIntegration = async () => {
@@ -322,18 +453,32 @@ const Integrations = () => {
               </div>
 
           {!isAddingNew && (
-            <Button onClick={() => setIsAddingNew(true)} className="mb-6 gap-2">
-              <Plus className="w-4 h-4" />
-              Add Integration
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => { setIsAddingNew(true); setUseWizard(true); setSelectedType("jira"); }} className="gap-2">
+                <Plus className="w-4 h-4" />
+                Add Integration (Wizard)
+              </Button>
+              <Button variant="outline" onClick={() => { setIsAddingNew(true); setUseWizard(false); }} className="gap-2">
+                <Settings className="w-4 h-4" />
+                Advanced Setup
+              </Button>
+            </div>
           )}
 
-          {isAddingNew && (
+          {isAddingNew && useWizard && (
+            <IntegrationWizard
+              type={selectedType}
+              onComplete={handleWizardComplete}
+              onCancel={() => { setIsAddingNew(false); setUseWizard(true); }}
+            />
+          )}
+
+          {isAddingNew && !useWizard && (
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>Add New Integration</CardTitle>
+                <CardTitle>Add New Integration (Advanced)</CardTitle>
                 <CardDescription>
-                  Configure a new Jira or GitHub integration
+                  Configure a new Jira or GitHub integration manually
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -497,7 +642,13 @@ const Integrations = () => {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="space-y-4">
+                    <ConnectionStatus
+                      status={integration.status}
+                      lastSync={integration.lastSync}
+                      message={integration.statusMessage}
+                    />
+                    
                     <div className="text-sm text-muted-foreground space-y-1">
                       {integration.integration_type === "jira" && integration.config.url && (
                         <p>URL: {integration.config.url}</p>
@@ -516,6 +667,27 @@ const Integrations = () => {
                         Added: {new Date(integration.created_at).toLocaleDateString()}
                       </p>
                     </div>
+
+                    {integration.is_active && (
+                      <ConnectionTester
+                        type={integration.integration_type}
+                        config={integration.config}
+                        onTestComplete={(success, message) => {
+                          if (success) {
+                            toast({
+                              title: "Connection Successful",
+                              description: message,
+                            });
+                          } else {
+                            toast({
+                              title: "Connection Failed",
+                              description: message,
+                              variant: "destructive",
+                            });
+                          }
+                        }}
+                      />
+                    )}
                   </CardContent>
                 </Card>
               ))
