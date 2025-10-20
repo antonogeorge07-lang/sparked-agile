@@ -696,6 +696,81 @@ export type Database = {
           },
         ]
       }
+      sprint_review_sessions: {
+        Row: {
+          achieved_objectives: string | null
+          backlog_updates: string | null
+          completed_tickets: Json | null
+          created_at: string | null
+          created_by: string | null
+          delivered_features: string[] | null
+          demo_checklist: string[] | null
+          github_commits: Json | null
+          id: string
+          meeting_date: string | null
+          outlook_event_id: string | null
+          project_id: string
+          sprint_number: number
+          stakeholder_feedback: string | null
+          status: string | null
+          updated_at: string | null
+          workspace_id: string | null
+        }
+        Insert: {
+          achieved_objectives?: string | null
+          backlog_updates?: string | null
+          completed_tickets?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          delivered_features?: string[] | null
+          demo_checklist?: string[] | null
+          github_commits?: Json | null
+          id?: string
+          meeting_date?: string | null
+          outlook_event_id?: string | null
+          project_id: string
+          sprint_number: number
+          stakeholder_feedback?: string | null
+          status?: string | null
+          updated_at?: string | null
+          workspace_id?: string | null
+        }
+        Update: {
+          achieved_objectives?: string | null
+          backlog_updates?: string | null
+          completed_tickets?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          delivered_features?: string[] | null
+          demo_checklist?: string[] | null
+          github_commits?: Json | null
+          id?: string
+          meeting_date?: string | null
+          outlook_event_id?: string | null
+          project_id?: string
+          sprint_number?: number
+          stakeholder_feedback?: string | null
+          status?: string | null
+          updated_at?: string | null
+          workspace_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_project"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_workspace"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "project_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sprint_summaries: {
         Row: {
           action_items_generated: number | null
