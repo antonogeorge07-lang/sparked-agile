@@ -13,7 +13,63 @@ serve(async (req) => {
   }
 
   try {
-    const { workflowType, projectId, inputData } = await req.json();
+    // Authentication check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Unauthorized: Missing authorization header');
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error('Supabase credentials not configured');
+    }
+
+    // Create client with user's auth token
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    if (userError || !user) {
+      throw new Error('Unauthorized: Invalid token');
+    }
+
+    // Input validation
+    const requestBody = await req.json();
+    const { workflowType, projectId, inputData } = requestBody;
+
+    if (!workflowType || !projectId || !inputData) {
+      throw new Error('Missing required fields: workflowType, projectId, or inputData');
+    }
+
+    if (!['standup_analysis', 'sprint_extraction', 'retro_insights'].includes(workflowType)) {
+      throw new Error('Invalid workflow type');
+    }
+
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(projectId)) {
+      throw new Error('Invalid project ID format');
+    }
+
+    // Check input data size
+    const inputDataStr = JSON.stringify(inputData);
+    if (inputDataStr.length > 50000) {
+      throw new Error('Input data too large (max 50KB)');
+    }
+
+    // Verify user has access to this project
+    const { data: membership, error: memberError } = await supabaseClient
+      .from('project_members')
+      .select('id')
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .single();
+
+    if (memberError || !membership) {
+      throw new Error('Unauthorized: User is not a member of this project');
+    }
     console.log('Processing workflow:', workflowType, 'for project:', projectId);
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
@@ -21,13 +77,12 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Supabase credentials not configured');
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    if (!supabaseServiceKey) {
+      throw new Error('Supabase service role key not configured');
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
     const startTime = Date.now();
 
     // Create workflow execution record

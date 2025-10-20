@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,7 +12,60 @@ serve(async (req) => {
   }
 
   try {
-    const { teamSize, capacity, backlogItems } = await req.json();
+    // Authentication check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Unauthorized: Missing authorization header');
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error('Supabase credentials not configured');
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      throw new Error('Unauthorized: Invalid token');
+    }
+
+    // Input validation
+    const { teamSize, capacity, backlogItems, projectId } = await req.json();
+    
+    if (!teamSize || typeof teamSize !== 'number' || teamSize < 1 || teamSize > 1000) {
+      throw new Error('Invalid team size (must be 1-1000)');
+    }
+
+    if (!capacity || typeof capacity !== 'number' || capacity < 1 || capacity > 10000) {
+      throw new Error('Invalid capacity (must be 1-10000)');
+    }
+
+    if (!backlogItems || typeof backlogItems !== 'string') {
+      throw new Error('Invalid backlog items (must be a string)');
+    }
+
+    if (backlogItems.length > 10000) {
+      throw new Error('Backlog items too large (max 10000 characters)');
+    }
+
+    // Verify user has access to project if projectId provided
+    if (projectId) {
+      const { data: membership, error: memberError } = await supabase
+        .from('project_members')
+        .select('id')
+        .eq('project_id', projectId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (memberError || !membership) {
+        throw new Error('Unauthorized: User is not a member of this project');
+      }
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     if (!LOVABLE_API_KEY) {

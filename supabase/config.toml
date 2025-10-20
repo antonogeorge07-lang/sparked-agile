@@ -1,13 +1,1 @@
 project_id = "pbrrfxgcksptloiwshiy"
-
-[functions.generate-standup-summary]
-verify_jwt = false
-
-[functions.generate-sprint-plan]
-verify_jwt = false
-
-[functions.generate-retro-insights]
-verify_jwt = false
-
-[functions.process-workflow]
-verify_jwt = false

@@ -12,6 +12,19 @@ import { Github, Network, Plus, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
+import { z } from "zod";
+
+// Validation schemas
+const jiraConfigSchema = z.object({
+  url: z.string().url({ message: "Invalid URL format" }).max(500, "URL too long"),
+  apiToken: z.string().min(10, "API token too short").max(500, "API token too long"),
+});
+
+const githubConfigSchema = z.object({
+  repository: z.string().min(1, "Repository required").max(200, "Repository name too long").regex(/^[a-zA-Z0-9_-]+$/, "Invalid repository name format"),
+  organization: z.string().min(1, "Organization required").max(200, "Organization name too long").regex(/^[a-zA-Z0-9_-]+$/, "Invalid organization name format"),
+  apiToken: z.string().min(10, "API token too short").max(500, "API token too long"),
+});
 
 interface Integration {
   id: string;
@@ -127,48 +140,96 @@ const Integrations = () => {
       return;
     }
 
-    const config: any = {};
-    if (newIntegration.type === "jira") {
-      config.url = newIntegration.url;
-      config.apiToken = newIntegration.apiToken;
-    } else {
-      config.repository = newIntegration.repository;
-      config.organization = newIntegration.organization;
-      config.apiToken = newIntegration.apiToken;
-    }
-
-    const { error } = await supabase.from("integrations").insert({
-      project_id: selectedProject,
-      integration_type: newIntegration.type,
-      name: newIntegration.name,
-      config,
-      is_active: true,
-    });
-
-    if (error) {
+    // Validate integration name
+    if (newIntegration.name.length > 200) {
       toast({
-        title: "Error",
-        description: "Failed to add integration",
+        title: "Validation Error",
+        description: "Integration name must be less than 200 characters",
         variant: "destructive",
       });
       return;
     }
 
-    toast({
-      title: "Success",
-      description: "Integration added successfully",
-    });
+    try {
+      let config: any = {};
+      
+      // Validate based on integration type
+      if (newIntegration.type === "jira") {
+        const validationResult = jiraConfigSchema.safeParse({
+          url: newIntegration.url,
+          apiToken: newIntegration.apiToken,
+        });
 
-    setIsAddingNew(false);
-    setNewIntegration({
-      type: "jira",
-      name: "",
-      url: "",
-      apiToken: "",
-      repository: "",
-      organization: "",
-    });
-    fetchIntegrations();
+        if (!validationResult.success) {
+          const errorMessage = validationResult.error.errors[0]?.message || "Invalid Jira configuration";
+          toast({
+            title: "Validation Error",
+            description: errorMessage,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        config = validationResult.data;
+      } else {
+        const validationResult = githubConfigSchema.safeParse({
+          repository: newIntegration.repository,
+          organization: newIntegration.organization,
+          apiToken: newIntegration.apiToken,
+        });
+
+        if (!validationResult.success) {
+          const errorMessage = validationResult.error.errors[0]?.message || "Invalid GitHub configuration";
+          toast({
+            title: "Validation Error",
+            description: errorMessage,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        config = validationResult.data;
+      }
+
+      const { error } = await supabase.from("integrations").insert({
+        project_id: selectedProject,
+        integration_type: newIntegration.type,
+        name: newIntegration.name,
+        config,
+        is_active: true,
+      });
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to add integration",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Success",
+        description: "Integration added successfully",
+      });
+
+      setIsAddingNew(false);
+      setNewIntegration({
+        type: "jira",
+        name: "",
+        url: "",
+        apiToken: "",
+        repository: "",
+        organization: "",
+      });
+      fetchIntegrations();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleToggleActive = async (id: string, isActive: boolean) => {
