@@ -8,6 +8,7 @@ import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProfileMenu } from "@/components/ProfileMenu";
+import { NotificationBell } from "@/components/NotificationBell";
 
 export const Navigation = () => {
   const location = useLocation();
@@ -145,6 +146,8 @@ export const Navigation = () => {
             )}
 
             <ThemeToggle />
+            
+            {user && <NotificationBell />}
             
             {user ? (
               <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
