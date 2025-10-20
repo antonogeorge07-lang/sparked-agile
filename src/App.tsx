@@ -20,6 +20,7 @@ import Integrations from "./pages/Integrations";
 import ProjectProgress from "./pages/ProjectProgress";
 import CeremonySetup from "./pages/CeremonySetup";
 import ProjectWorkspace from "./pages/ProjectWorkspace";
+import SprintPlanningAssistant from "./pages/SprintPlanningAssistant";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/project-progress" element={<ProjectProgress />} />
           <Route path="/ceremony-setup" element={<CeremonySetup />} />
           <Route path="/project-workspace" element={<ProjectWorkspace />} />
+          <Route path="/sprint-planning-assistant" element={<SprintPlanningAssistant />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

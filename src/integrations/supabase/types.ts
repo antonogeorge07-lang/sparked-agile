@@ -624,6 +624,78 @@ export type Database = {
           },
         ]
       }
+      sprint_planning_sessions: {
+        Row: {
+          agenda: string | null
+          backlog_items: Json | null
+          created_at: string | null
+          created_by: string | null
+          discussion_topics: string[] | null
+          id: string
+          meeting_minutes: string | null
+          outlook_event_id: string | null
+          project_id: string
+          sprint_goal: string | null
+          sprint_number: number
+          status: string | null
+          story_points_estimate: number | null
+          updated_at: string | null
+          velocity_data: Json | null
+          workspace_id: string | null
+        }
+        Insert: {
+          agenda?: string | null
+          backlog_items?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          discussion_topics?: string[] | null
+          id?: string
+          meeting_minutes?: string | null
+          outlook_event_id?: string | null
+          project_id: string
+          sprint_goal?: string | null
+          sprint_number: number
+          status?: string | null
+          story_points_estimate?: number | null
+          updated_at?: string | null
+          velocity_data?: Json | null
+          workspace_id?: string | null
+        }
+        Update: {
+          agenda?: string | null
+          backlog_items?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          discussion_topics?: string[] | null
+          id?: string
+          meeting_minutes?: string | null
+          outlook_event_id?: string | null
+          project_id?: string
+          sprint_goal?: string | null
+          sprint_number?: number
+          status?: string | null
+          story_points_estimate?: number | null
+          updated_at?: string | null
+          velocity_data?: Json | null
+          workspace_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_project"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_workspace"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "project_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sprint_summaries: {
         Row: {
           action_items_generated: number | null
