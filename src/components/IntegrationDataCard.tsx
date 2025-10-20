@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GitCommit, GitPullRequest, CheckCircle, XCircle, Clock, AlertCircle } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface JiraIssue {
   key: string;
@@ -40,8 +41,32 @@ export const IntegrationDataCard = ({ type, data, isLoading }: IntegrationDataCa
   if (isLoading) {
     return (
       <Card className="shadow-card">
-        <CardContent className="py-12 text-center">
-          <p className="text-muted-foreground">Loading {type} data...</p>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-5 w-5 rounded" />
+            <Skeleton className="h-6 w-32" />
+          </div>
+          <Skeleton className="h-4 w-48 mt-2" />
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="p-3 rounded-lg border bg-card">
+              <div className="flex items-start justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-20" />
+                  <Skeleton className="h-5 w-16 rounded-full" />
+                </div>
+                <Skeleton className="h-5 w-16 rounded-full" />
+              </div>
+              <Skeleton className="h-4 w-full mb-2" />
+              <Skeleton className="h-4 w-3/4 mb-2" />
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-3 w-3" />
+                <Skeleton className="h-3 w-32" />
+              </div>
+            </div>
+          ))}
         </CardContent>
       </Card>
     );
