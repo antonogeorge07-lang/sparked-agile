@@ -7,21 +7,18 @@ import { Play, Pause, Volume2, VolumeX, ArrowRight, GitBranch, Target, TrendingU
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
-
 const Index = () => {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
-
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
     if (!hasSeenOnboarding) {
       setShowOnboarding(true);
     }
   }, []);
-
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -32,61 +29,47 @@ const Index = () => {
       setIsPlaying(!isPlaying);
     }
   };
-
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
   };
-
-  const safeFeatures = [
-    {
-      icon: GitBranch,
-      title: "Value Streams",
-      description: "Manage your value streams and align teams around delivering customer value",
-      path: "/value-streams"
-    },
-    {
-      icon: Calendar,
-      title: "Program Increments",
-      description: "Plan and track your PI objectives with AI-powered planning assistance",
-      path: "/program-increment"
-    },
-    {
-      icon: TrendingUp,
-      title: "Flow Metrics",
-      description: "Monitor throughput, WIP, and cycle time to optimize your delivery flow",
-      path: "/flow-metrics"
-    },
-    {
-      icon: Target,
-      title: "Retrospectives",
-      description: "Conduct effective sprint retrospectives with AI-generated insights",
-      path: "/retrospective"
-    },
-    {
-      icon: Users,
-      title: "Daily Standups",
-      description: "Streamline your daily standups with automated summaries and action items",
-      path: "/standup"
-    },
-    {
-      icon: BarChart3,
-      title: "Workflows",
-      description: "Automate your agile ceremonies and integrate with your existing tools",
-      path: "/workflows"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-subtle">
+  const safeFeatures = [{
+    icon: GitBranch,
+    title: "Value Streams",
+    description: "Manage your value streams and align teams around delivering customer value",
+    path: "/value-streams"
+  }, {
+    icon: Calendar,
+    title: "Program Increments",
+    description: "Plan and track your PI objectives with AI-powered planning assistance",
+    path: "/program-increment"
+  }, {
+    icon: TrendingUp,
+    title: "Flow Metrics",
+    description: "Monitor throughput, WIP, and cycle time to optimize your delivery flow",
+    path: "/flow-metrics"
+  }, {
+    icon: Target,
+    title: "Retrospectives",
+    description: "Conduct effective sprint retrospectives with AI-generated insights",
+    path: "/retrospective"
+  }, {
+    icon: Users,
+    title: "Daily Standups",
+    description: "Streamline your daily standups with automated summaries and action items",
+    path: "/standup"
+  }, {
+    icon: BarChart3,
+    title: "Workflows",
+    description: "Automate your agile ceremonies and integrate with your existing tools",
+    path: "/workflows"
+  }];
+  return <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
       
-      <OnboardingTour 
-        isOpen={showOnboarding} 
-        onClose={() => setShowOnboarding(false)} 
-      />
+      <OnboardingTour isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} />
       
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="w-full">
@@ -126,50 +109,20 @@ const Index = () => {
                 
                 <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-2">
                   <div className="relative aspect-video bg-muted">
-                    <video
-                      ref={videoRef}
-                      className="w-full h-full object-cover"
-                      onPlay={() => setIsPlaying(true)}
-                      onPause={() => setIsPlaying(false)}
-                    >
+                    <video ref={videoRef} className="w-full h-full object-cover" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}>
                       <source src="/demo-video.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                     
                     {/* Video Controls Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity">
-                      <div className="absolute bottom-0 left-0 right-0 p-6 flex items-center gap-4">
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          onClick={togglePlay}
-                          className="rounded-full w-12 h-12"
-                        >
-                          {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          onClick={toggleMute}
-                          className="rounded-full w-12 h-12"
-                        >
-                          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                        </Button>
-                      </div>
-                    </div>
+                    
 
                     {/* Play button when not playing */}
-                    {!isPlaying && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Button
-                          size="icon"
-                          onClick={togglePlay}
-                          className="rounded-full w-20 h-20 bg-primary/90 hover:bg-primary shadow-elevated"
-                        >
+                    {!isPlaying && <div className="absolute inset-0 flex items-center justify-center">
+                        <Button size="icon" onClick={togglePlay} className="rounded-full w-20 h-20 bg-primary/90 hover:bg-primary shadow-elevated">
                           <Play className="w-10 h-10 ml-1" />
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                   </div>
                   
                   <div className="p-6 text-center">
@@ -211,21 +164,11 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {safeFeatures.map((feature, index) => (
-                <FeatureCard
-                  key={index}
-                  icon={feature.icon}
-                  title={feature.title}
-                  description={feature.description}
-                  onClick={() => navigate(feature.path)}
-                />
-              ))}
+              {safeFeatures.map((feature, index) => <FeatureCard key={index} icon={feature.icon} title={feature.title} description={feature.description} onClick={() => navigate(feature.path)} />)}
             </div>
           </TabsContent>
         </Tabs>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
