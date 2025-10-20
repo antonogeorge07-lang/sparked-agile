@@ -18,9 +18,10 @@ import { ProfileDialog } from "./ProfileDialog";
 interface ProfileMenuProps {
   userEmail?: string;
   userName?: string;
+  avatarUrl?: string;
 }
 
-export const ProfileMenu = ({ userEmail, userName }: ProfileMenuProps) => {
+export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps) => {
   const navigate = useNavigate();
   const [showProfileDialog, setShowProfileDialog] = useState(false);
 
@@ -59,7 +60,7 @@ export const ProfileMenu = ({ userEmail, userName }: ProfileMenuProps) => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-10 w-10 rounded-full">
             <Avatar className="h-10 w-10">
-              <AvatarImage src="" alt={userName || userEmail} />
+              <AvatarImage src={avatarUrl || ""} alt={userName || userEmail} />
               <AvatarFallback>{getInitials()}</AvatarFallback>
             </Avatar>
           </Button>
@@ -95,6 +96,7 @@ export const ProfileMenu = ({ userEmail, userName }: ProfileMenuProps) => {
         onClose={() => setShowProfileDialog(false)}
         userEmail={userEmail}
         userName={userName}
+        avatarUrl={avatarUrl}
       />
     </>
   );

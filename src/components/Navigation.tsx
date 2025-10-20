@@ -14,6 +14,8 @@ export const Navigation = () => {
   const [userEmail, setUserEmail] = useState<string>();
   const [userName, setUserName] = useState<string>();
 
+  const [avatarUrl, setAvatarUrl] = useState<string>();
+
   useEffect(() => {
     const loadUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -22,12 +24,13 @@ export const Navigation = () => {
         
         const { data: profile } = await supabase
           .from("profiles")
-          .select("full_name")
+          .select("full_name, avatar_url")
           .eq("id", user.id)
           .single();
         
         if (profile) {
           setUserName(profile.full_name || undefined);
+          setAvatarUrl(profile.avatar_url || undefined);
         }
       }
     };
@@ -144,7 +147,7 @@ export const Navigation = () => {
             <ThemeToggle />
             
             {user ? (
-              <ProfileMenu userEmail={userEmail} userName={userName} />
+              <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
             ) : (
               <Link to="/auth">
                 <Button size="sm">Sign In</Button>
