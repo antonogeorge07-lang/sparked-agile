@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import Subscription from "./pages/Subscription";
 import Workflows from "./pages/Workflows";
 import Standup from "./pages/Standup";
 import Dashboard from "./pages/Dashboard";
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/subscription" element={<Subscription />} />
           <Route path="/workflows" element={<Workflows />} />
           <Route path="/standup" element={<Standup />} />
           <Route path="/dashboard" element={<Dashboard />} />

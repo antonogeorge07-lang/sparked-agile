@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Settings, LogOut } from "lucide-react";
+import { User, Settings, LogOut, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -78,6 +78,10 @@ export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps
           <DropdownMenuItem onClick={() => setShowProfileDialog(true)}>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/subscription")}>
+            <CreditCard className="mr-2 h-4 w-4" />
+            <span>Subscription</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate("/admin")}>
             <Settings className="mr-2 h-4 w-4" />

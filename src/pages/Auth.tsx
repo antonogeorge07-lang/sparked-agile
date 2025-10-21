@@ -31,15 +31,42 @@ export default function Auth() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/workflows");
+        // Check if user has seen onboarding
+        const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
+        navigate(hasSeenOnboarding ? "/workflows" : "/");
       }
     };
     checkUser();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session && event === 'SIGNED_IN') {
-        navigate("/workflows");
+        // Initialize free trial subscription for new users
+        const { data: existingSub } = await supabase
+          .from('user_subscriptions')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .single();
+
+        if (!existingSub) {
+          const { data: freeTier } = await supabase
+            .from('subscription_tiers')
+            .select('id')
+            .eq('name', 'Free')
+            .single();
+
+          if (freeTier) {
+            await supabase.from('user_subscriptions').insert({
+              user_id: session.user.id,
+              tier_id: freeTier.id,
+              status: 'trial'
+            });
+          }
+        }
+
+        // Check if user has seen onboarding
+        const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
+        navigate(hasSeenOnboarding ? "/workflows" : "/");
       }
     });
 
