@@ -27,37 +27,105 @@ export default function Standup() {
   const [summary, setSummary] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string>("");
+  const [currentUserId, setCurrentUserId] = useState<string>("");
   const { toast } = useToast();
 
   const { data: integrations } = useProjectIntegrations(selectedProject);
 
   useEffect(() => {
-    const loadProject = async () => {
-      const { data } = await supabase
+    const loadData = async () => {
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to use this feature.",
+          variant: "destructive",
+        });
+        return;
+      }
+      setCurrentUserId(user.id);
+
+      // Get user's project
+      const { data: project } = await supabase
         .from("projects")
         .select("id")
+        .eq("user_id", user.id)
         .limit(1)
-        .single();
-      if (data) setSelectedProject(data.id);
-    };
-    loadProject();
-  }, []);
+        .maybeSingle();
 
-  const handleSubmit = (e: React.FormEvent) => {
+      if (project) {
+        setSelectedProject(project.id);
+        
+        // Load existing standup updates for today
+        const today = new Date().toISOString().split('T')[0];
+        const { data: updates } = await supabase
+          .from("standup_updates")
+          .select("*, profiles!standup_updates_team_member_id_fkey(full_name)")
+          .eq("project_id", project.id)
+          .gte("created_at", `${today}T00:00:00`)
+          .lte("created_at", `${today}T23:59:59`);
+
+        if (updates) {
+          const formattedUpdates = updates.map(u => ({
+            name: u.profiles?.full_name || "Unknown",
+            yesterday: u.yesterday,
+            today: u.today,
+            blockers: u.blockers || "",
+          }));
+          setTeamUpdates(formattedUpdates);
+        }
+      }
+    };
+    loadData();
+  }, [toast]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const newUpdate = { name, yesterday, today, blockers };
-    setTeamUpdates([...teamUpdates, newUpdate]);
-    
-    toast({
-      title: "Update Added",
-      description: `${name}'s standup has been recorded. Add more team members or generate summary.`,
-    });
-    
-    setName("");
-    setYesterday("");
-    setToday("");
-    setBlockers("");
+    if (!selectedProject || !currentUserId) {
+      toast({
+        title: "Error",
+        description: "Project or user information missing.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Save to database
+      const { error } = await supabase
+        .from("standup_updates")
+        .insert({
+          project_id: selectedProject,
+          team_member_id: currentUserId,
+          yesterday,
+          today,
+          blockers: blockers || null,
+        });
+
+      if (error) throw error;
+
+      const newUpdate = { name, yesterday, today, blockers };
+      setTeamUpdates([...teamUpdates, newUpdate]);
+      
+      toast({
+        title: "Update Saved",
+        description: `${name}'s standup has been saved to the database.`,
+      });
+      
+      setName("");
+      setYesterday("");
+      setToday("");
+      setBlockers("");
+    } catch (error: any) {
+      console.error("Error saving standup:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save standup update. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleGenerateSummary = async () => {
