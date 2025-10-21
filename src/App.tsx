@@ -7,11 +7,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
-import Demo from "./pages/Demo";
 import Workflows from "./pages/Workflows";
 import Standup from "./pages/Standup";
 import Dashboard from "./pages/Dashboard";
-import Planning from "./pages/Planning";
 import Retrospective from "./pages/Retrospective";
 import ValueStreams from "./pages/ValueStreams";
 import ProgramIncrement from "./pages/ProgramIncrement";
@@ -37,11 +35,9 @@ const App = () => {
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/demo" element={<Demo />} />
           <Route path="/workflows" element={<Workflows />} />
           <Route path="/standup" element={<Standup />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/planning" element={<Planning />} />
           <Route path="/retrospective" element={<Retrospective />} />
           <Route path="/value-streams" element={<ValueStreams />} />
           <Route path="/program-increment" element={<ProgramIncrement />} />
