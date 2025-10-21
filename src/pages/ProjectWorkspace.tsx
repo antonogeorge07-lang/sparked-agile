@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "sonner";
 import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TeamManagement } from "@/components/TeamManagement";
 
 const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
 
@@ -235,7 +236,7 @@ export default function ProjectWorkspace() {
         </div>
 
         <Tabs value={`step${currentStep}`} onValueChange={(v) => setCurrentStep(parseInt(v.replace("step", "")))}>
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="step1">
               {currentStep > 1 ? <CheckCircle2 className="w-4 h-4 mr-2" /> : "1. "}
               Initialize
@@ -245,7 +246,11 @@ export default function ProjectWorkspace() {
               Connect Tools
             </TabsTrigger>
             <TabsTrigger value="step3" disabled={!workspaceId}>
-              3. Review & Complete
+              {currentStep > 3 ? <CheckCircle2 className="w-4 h-4 mr-2" /> : "3. "}
+              Team Members
+            </TabsTrigger>
+            <TabsTrigger value="step4" disabled={!workspaceId}>
+              4. Review
             </TabsTrigger>
           </TabsList>
 
@@ -413,13 +418,30 @@ export default function ProjectWorkspace() {
                   className="w-full"
                   size="lg"
                 >
-                  Continue to Review
+                  Continue to Team Management
                 </Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="step3" className="space-y-6 mt-6">
+            {projectId && workspaceName && (
+              <TeamManagement
+                projectId={projectId}
+                projectName={workspaceName}
+                accessToken={accessToken || undefined}
+              />
+            )}
+            <Button
+              onClick={() => setCurrentStep(4)}
+              className="w-full"
+              size="lg"
+            >
+              Continue to Review
+            </Button>
+          </TabsContent>
+
+          <TabsContent value="step4" className="space-y-6 mt-6">
             <Card>
               <CardHeader>
                 <CardTitle>Configuration Summary</CardTitle>
