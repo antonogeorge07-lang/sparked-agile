@@ -1204,6 +1204,17 @@ export type Database = {
         }
         Returns: boolean
       }
+      get_safe_integration_info: {
+        Args: { integration_id: string }
+        Returns: {
+          created_at: string
+          id: string
+          integration_type: string
+          is_active: boolean
+          project_id: string
+          updated_at: string
+        }[]
+      }
       get_user_role: {
         Args: { user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]

@@ -9,9 +9,6 @@ interface IntegrationStatusProps {
   hasJira: boolean;
   hasGithub: boolean;
   hasOutlook: boolean;
-  jiraConfig?: any;
-  githubConfig?: any;
-  outlookConfig?: any;
   compact?: boolean;
 }
 
@@ -20,9 +17,6 @@ export const IntegrationStatus = ({
   hasJira,
   hasGithub,
   hasOutlook,
-  jiraConfig,
-  githubConfig,
-  outlookConfig,
   compact = false,
 }: IntegrationStatusProps) => {
   if (compact) {
@@ -30,11 +24,11 @@ export const IntegrationStatus = ({
       <div className="flex items-center gap-2 flex-wrap">
         <Badge variant={hasJira ? "default" : "outline"} className="gap-1">
           {hasJira ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
-          JIRA {jiraConfig?.project_key && `(${jiraConfig.project_key})`}
+          JIRA
         </Badge>
         <Badge variant={hasGithub ? "default" : "outline"} className="gap-1">
           {hasGithub ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
-          GitHub {githubConfig?.repo && `(${githubConfig.repo})`}
+          GitHub
         </Badge>
         <Badge variant={hasOutlook ? "default" : "outline"} className="gap-1">
           {hasOutlook ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
@@ -67,12 +61,9 @@ export const IntegrationStatus = ({
             )}
             <div className="flex-1">
               <p className="font-semibold">JIRA</p>
-              {hasJira && jiraConfig?.domain && (
-                <p className="text-sm text-muted-foreground">
-                  {jiraConfig.domain} • {jiraConfig.project_key}
-                </p>
-              )}
-              {!hasJira && <p className="text-sm text-muted-foreground">Not connected</p>}
+              <p className="text-sm text-muted-foreground">
+                {hasJira ? "Connected" : "Not connected"}
+              </p>
             </div>
           </div>
 
@@ -84,12 +75,9 @@ export const IntegrationStatus = ({
             )}
             <div className="flex-1">
               <p className="font-semibold">GitHub</p>
-              {hasGithub && githubConfig?.repo && (
-                <p className="text-sm text-muted-foreground">
-                  {githubConfig.owner}/{githubConfig.repo}
-                </p>
-              )}
-              {!hasGithub && <p className="text-sm text-muted-foreground">Not connected</p>}
+              <p className="text-sm text-muted-foreground">
+                {hasGithub ? "Connected" : "Not connected"}
+              </p>
             </div>
           </div>
 
@@ -101,10 +89,9 @@ export const IntegrationStatus = ({
             )}
             <div className="flex-1">
               <p className="font-semibold">Outlook</p>
-              {hasOutlook && outlookConfig?.tenant_id && (
-                <p className="text-sm text-muted-foreground">Connected</p>
-              )}
-              {!hasOutlook && <p className="text-sm text-muted-foreground">Not connected</p>}
+              <p className="text-sm text-muted-foreground">
+                {hasOutlook ? "Connected" : "Not connected"}
+              </p>
             </div>
           </div>
         </div>

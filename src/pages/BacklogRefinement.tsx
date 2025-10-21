@@ -152,9 +152,6 @@ const BacklogRefinement = () => {
             hasJira={integrations.hasJira}
             hasGithub={integrations.hasGithub}
             hasOutlook={integrations.hasOutlook}
-            jiraConfig={integrations.config.jira}
-            githubConfig={integrations.config.github}
-            outlookConfig={integrations.config.outlook}
             compact
           />
         )}

@@ -25,29 +25,22 @@ export const useProjectIntegrations = (projectId: string | undefined) => {
 
       const { data, error } = await supabase
         .from("integrations")
-        .select("id, name, integration_type, config, is_active")
+        .select("id, name, integration_type, is_active")
         .eq("project_id", projectId)
         .eq("is_active", true);
 
       if (error) throw error;
 
-      const integrations: IntegrationConfig = {};
-      
-      data?.forEach((integration) => {
-        if (integration.integration_type === "jira") {
-          integrations.jira = integration.config as any;
-        } else if (integration.integration_type === "github") {
-          integrations.github = integration.config as any;
-        } else if (integration.integration_type === "outlook") {
-          integrations.outlook = integration.config as any;
-        }
-      });
+      // Config data is now protected - we only track which integrations are active
+      const hasJira = data?.some(i => i.integration_type === "jira") || false;
+      const hasGithub = data?.some(i => i.integration_type === "github") || false;
+      const hasOutlook = data?.some(i => i.integration_type === "outlook") || false;
 
       return {
-        hasJira: !!integrations.jira,
-        hasGithub: !!integrations.github,
-        hasOutlook: !!integrations.outlook,
-        config: integrations,
+        hasJira,
+        hasGithub,
+        hasOutlook,
+        config: {}, // Config is no longer exposed for security reasons
       };
     },
     enabled: !!projectId,

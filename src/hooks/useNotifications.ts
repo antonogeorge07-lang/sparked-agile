@@ -157,14 +157,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
               duration: 4000,
             });
           }
-          // Notify on config update (could indicate a sync)
-          else if (JSON.stringify(oldIntegration.config) !== JSON.stringify(integration.config)) {
-            toast({
-              title: "Integration Updated",
-              description: `${integration.name} configuration has been updated`,
-              duration: 4000,
-            });
-          }
+          // Notify on status change only (config is no longer accessible)
         }
       )
       .subscribe();
