@@ -121,14 +121,14 @@ export default function Landing() {
               <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
                 <Target className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="font-bold text-xl">SM ActiveIntelligence</span>
+              <span className="font-bold text-base sm:text-xl">SM ActiveIntelligence</span>
             </div>
-            <div className="flex items-center gap-4">
-              <Link to="/auth">
-                <Button variant="ghost">Sign In</Button>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <Link to="/auth" className="hidden sm:block">
+                <Button variant="ghost" size="sm">Sign In</Button>
               </Link>
               <Link to="/auth">
-                <Button>Get Started</Button>
+                <Button size="sm">Get Started</Button>
               </Link>
             </div>
           </div>
@@ -136,30 +136,30 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-12 sm:py-20 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center space-y-6 animate-fade-in">
-            <Badge className="mb-4" variant="secondary">
+          <div className="text-center space-y-4 sm:space-y-6 animate-fade-in">
+            <Badge className="mb-2 sm:mb-4" variant="secondary">
               AI-Powered Scrum Master Assistant
             </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold px-4">
               Transform Your
               <span className="block bg-gradient-primary bg-clip-text text-transparent">
                 Agile Workflow
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Automate sprint planning, backlog refinement, and retrospectives with AI.
               Integrated with JIRA, GitHub, and Outlook.
             </p>
-            <div className="flex gap-4 justify-center pt-4">
-              <Link to="/auth">
-                <Button size="lg" className="gap-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
+              <Link to="/auth" className="w-full sm:w-auto">
+                <Button size="lg" className="gap-2 w-full sm:w-auto">
                   Start Free Trial
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
                 Watch Demo
               </Button>
             </div>

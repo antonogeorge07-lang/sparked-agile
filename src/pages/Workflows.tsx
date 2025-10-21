@@ -254,13 +254,13 @@ export default function Workflows() {
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-8 animate-fade-in">
-            <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <Zap className="w-6 h-6 text-primary-foreground" />
+          <div className="flex items-center gap-3 mb-6 sm:mb-8 animate-fade-in">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">AI Workflow Automation</h1>
-              <p className="text-muted-foreground">Process team data through AI and automate actions</p>
+              <h1 className="text-2xl sm:text-3xl font-bold">AI Workflow Automation</h1>
+              <p className="text-sm sm:text-base text-muted-foreground">Process team data through AI</p>
             </div>
           </div>
 

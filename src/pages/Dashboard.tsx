@@ -115,19 +115,19 @@ export default function Dashboard() {
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-6">
-          <div className="flex items-center justify-between animate-fade-in">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-primary-foreground" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">Sprint Health Dashboard</h1>
-                <p className="text-muted-foreground">Monitor performance with JIRA, GitHub & Outlook integration</p>
+                <h1 className="text-2xl sm:text-3xl font-bold">Sprint Health Dashboard</h1>
+                <p className="text-sm sm:text-base text-muted-foreground">Monitor performance with integrations</p>
               </div>
             </div>
-            <Button onClick={handleExportToPowerPoint} className="gap-2">
+            <Button onClick={handleExportToPowerPoint} className="gap-2 w-full sm:w-auto" size="sm">
               <FileDown className="w-4 h-4" />
-              Export to PowerPoint
+              <span className="sm:inline">Export</span>
             </Button>
           </div>
 

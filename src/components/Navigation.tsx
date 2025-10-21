@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Target, BarChart3, Home, Shield, LogOut, Network, TrendingUp, Calendar, FolderKanban, Sparkles, Presentation, ListFilter, Activity } from "lucide-react";
+import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -9,13 +9,14 @@ import { ActiveUsers } from "@/components/ActiveUsers";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export const Navigation = () => {
   const location = useLocation();
   const [userEmail, setUserEmail] = useState<string>();
   const [userName, setUserName] = useState<string>();
-
   const [avatarUrl, setAvatarUrl] = useState<string>();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -110,55 +111,117 @@ export const Navigation = () => {
             <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
               <Target className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl">SM ActiveInteligence</span>
+            <span className="font-bold text-lg md:text-xl">SM ActiveInteligence</span>
           </Link>
           
-          <div className="flex items-center gap-4">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-4">
             {user && <ActiveUsers users={activeUsers} currentPage={location.pathname} />}
             
             <div className="flex items-center gap-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.path;
-              return (
-                <Link key={item.path} to={item.path}>
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link key={item.path} to={item.path}>
+                    <Button 
+                      variant={isActive ? "default" : "ghost"}
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <Icon className="w-4 h-4" />
+                      {item.label}
+                    </Button>
+                  </Link>
+                );
+              })}
+              
+              {isAdmin && (
+                <Link to="/admin">
                   <Button 
-                    variant={isActive ? "default" : "ghost"}
+                    variant={location.pathname === "/admin" ? "default" : "ghost"}
                     size="sm"
                     className="gap-2"
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{item.label}</span>
+                    <Shield className="w-4 h-4" />
+                    Admin
                   </Button>
                 </Link>
-              );
-            })}
-            
-            {isAdmin && (
-              <Link to="/admin">
-                <Button 
-                  variant={location.pathname === "/admin" ? "default" : "ghost"}
-                  size="sm"
-                  className="gap-2"
-                >
-                  <Shield className="w-4 h-4" />
-                  <span className="hidden sm:inline">Admin</span>
-                </Button>
-              </Link>
-            )}
+              )}
 
+              <ThemeToggle />
+              
+              {user && <NotificationBell />}
+              
+              {user ? (
+                <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
+              ) : (
+                <Link to="/auth">
+                  <Button size="sm">Sign In</Button>
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="flex lg:hidden items-center gap-2">
             <ThemeToggle />
-            
             {user && <NotificationBell />}
             
-            {user ? (
-              <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
-            ) : (
-              <Link to="/auth">
-                <Button size="sm">Sign In</Button>
-              </Link>
-            )}
-            </div>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-64">
+                <div className="flex flex-col gap-4 mt-8">
+                  {user && (
+                    <div className="pb-4 border-b">
+                      <ActiveUsers users={activeUsers} currentPage={location.pathname} variant="full" />
+                    </div>
+                  )}
+                  
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <Link key={item.path} to={item.path} onClick={() => setMobileMenuOpen(false)}>
+                        <Button 
+                          variant={isActive ? "default" : "ghost"}
+                          className="w-full justify-start gap-2"
+                        >
+                          <Icon className="w-4 h-4" />
+                          {item.label}
+                        </Button>
+                      </Link>
+                    );
+                  })}
+                  
+                  {isAdmin && (
+                    <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                      <Button 
+                        variant={location.pathname === "/admin" ? "default" : "ghost"}
+                        className="w-full justify-start gap-2"
+                      >
+                        <Shield className="w-4 h-4" />
+                        Admin
+                      </Button>
+                    </Link>
+                  )}
+
+                  <div className="pt-4 border-t">
+                    {user ? (
+                      <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
+                    ) : (
+                      <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                        <Button className="w-full">Sign In</Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
