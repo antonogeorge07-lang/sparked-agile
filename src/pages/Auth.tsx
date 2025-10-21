@@ -23,10 +23,22 @@ export default function Auth() {
   const [fullName, setFullName] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check for password recovery hash
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get('type');
+    
+    if (type === 'recovery') {
+      setShowUpdatePassword(true);
+      return;
+    }
+
     // Check if user is already logged in
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -40,7 +52,9 @@ export default function Auth() {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session && event === 'SIGNED_IN') {
+      if (event === 'PASSWORD_RECOVERY') {
+        setShowUpdatePassword(true);
+      } else if (session && event === 'SIGNED_IN') {
         // Initialize free trial subscription for new users
         const { data: existingSub } = await supabase
           .from('user_subscriptions')
@@ -124,8 +138,8 @@ export default function Auth() {
         }
       } else {
         toast({
-          title: "Account created!",
-          description: "Your account is pending admin approval. You'll be able to access the system once approved.",
+          title: "Check your email!",
+          description: "We've sent you a verification link. Please verify your email, then your account will be pending admin approval.",
         });
         // Clear form
         setEmail("");
@@ -218,8 +232,8 @@ export default function Auth() {
       if (error) throw error;
 
       toast({
-        title: "Password reset email sent",
-        description: "Check your email for a link to reset your password.",
+        title: "Check your email!",
+        description: "We've sent you a password reset link. Click the link in your email to set a new password.",
       });
       setShowForgotPassword(false);
       setEmail("");
@@ -233,6 +247,118 @@ export default function Auth() {
       setIsLoading(false);
     }
   };
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate passwords
+    if (newPassword.length < 6) {
+      setErrors({ password: "Password must be at least 6 characters" });
+      return;
+    }
+    
+    if (newPassword !== confirmPassword) {
+      setErrors({ confirmPassword: "Passwords do not match" });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+      if (error) throw error;
+
+      toast({
+        title: "Password updated!",
+        description: "Your password has been successfully updated. You can now sign in.",
+      });
+      
+      setShowUpdatePassword(false);
+      setNewPassword("");
+      setConfirmPassword("");
+      setErrors({});
+      
+      // Clear the hash from URL
+      window.history.replaceState(null, '', window.location.pathname);
+    } catch (error: any) {
+      toast({
+        title: "Failed to update password",
+        description: error.message || "An error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Show password update form if user clicked reset link
+  if (showUpdatePassword) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-elevated">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <Target className="w-8 h-8 text-primary-foreground" />
+              </div>
+            </div>
+            <CardTitle className="text-2xl">Update Your Password</CardTitle>
+            <CardDescription>Enter your new password below</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleUpdatePassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="new-password">New Password</Label>
+                <Input
+                  id="new-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  disabled={isLoading}
+                />
+                {errors.password && (
+                  <p className="text-sm text-destructive flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.password}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirm-password">Confirm Password</Label>
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={isLoading}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-sm text-destructive flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.confirmPassword}
+                  </p>
+                )}
+              </div>
+
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Updating password...
+                  </>
+                ) : (
+                  "Update Password"
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
