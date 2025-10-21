@@ -60,37 +60,49 @@ serve(async (req) => {
       .join('');
 
     const emailBody = `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 800px;">
-        <h1 style="color: #0066cc;">Sprint ${sprintNumber} Planning Meeting</h1>
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 800px; color: #333;">
+        <h1 style="color: #0066cc; font-size: 24px; margin-bottom: 10px;">📅 Sprint ${sprintNumber} Planning</h1>
         
-        <div style="background: #f0f8ff; padding: 15px; border-left: 4px solid #0066cc; margin: 20px 0;">
-          <h3 style="margin-top: 0;">🎯 Sprint Goal</h3>
-          <p style="font-size: 16px; font-weight: 500;">${sprintGoal}</p>
+        <p style="font-size: 16px; line-height: 1.6; margin: 20px 0;">
+          Dear Team,
+        </p>
+        
+        <p style="font-size: 16px; line-height: 1.6; margin: 15px 0;">
+          Let's align our goals and capacity for the upcoming sprint.
+        </p>
+
+        <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0066cc; margin: 25px 0;">
+          <h3 style="margin-top: 0; color: #0066cc; font-size: 18px;">🎯 Sprint Goal</h3>
+          <p style="font-size: 16px; font-weight: 500; line-height: 1.5; margin: 10px 0;">${sprintGoal}</p>
         </div>
 
-        <h2>📋 Meeting Agenda</h2>
-        ${agendaHtml}
+        <p style="font-size: 16px; line-height: 1.6; margin: 20px 0;">
+          Please review your ${jiraBacklogUrl ? 'JIRA' : 'backlog'} items beforehand so we can finalise the sprint backlog efficiently.
+        </p>
 
         ${jiraBacklogUrl ? `
-        <div style="margin: 30px 0; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107;">
-          <h3 style="margin-top: 0;">🔗 Resources</h3>
-          <p><strong>JIRA Board:</strong> <a href="${jiraBacklogUrl}" style="color: #0066cc;">${jiraBacklogUrl}</a></p>
-          <p style="font-size: 14px; color: #666;">Review prioritized backlog items before the meeting</p>
+        <div style="margin: 25px 0; padding: 18px; background: #fff9e6; border-radius: 8px; border-left: 4px solid #ffc107;">
+          <p style="margin: 0; font-size: 15px;">
+            <strong>📎 Backlog Reference:</strong> <a href="${jiraBacklogUrl}" style="color: #0066cc; text-decoration: none;">${jiraBacklogUrl}</a>
+          </p>
         </div>
         ` : ''}
 
-        <div style="margin-top: 30px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50;">
-          <h3 style="margin-top: 0;">💡 Preparation Tips</h3>
-          <ul>
-            <li>Review the backlog items linked in JIRA</li>
-            <li>Come prepared with questions about unclear requirements</li>
-            <li>Consider technical dependencies and risks</li>
-            <li>Be ready to discuss capacity and commitments</li>
-          </ul>
-        </div>
+        <h3 style="color: #333; font-size: 18px; margin-top: 30px;">📋 Meeting Agenda</h3>
+        ${agendaHtml}
 
-        <p style="margin-top: 30px; color: #666; font-size: 14px;">
-          This meeting is part of our Agile sprint cycle. Please arrive on time and come prepared.
+        <p style="font-size: 16px; line-height: 1.6; margin: 30px 0 10px 0; font-weight: 500;">
+          Let's plan smart, commit wisely, and deliver with purpose.
+        </p>
+
+        <p style="font-size: 15px; color: #666; margin: 5px 0 30px 0;">
+          – Your AI Scrum Master 🤖
+        </p>
+
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
+
+        <p style="font-size: 14px; color: #888; line-height: 1.5; margin-top: 20px;">
+          Looking forward to a productive planning session!
         </p>
       </div>
     `;
