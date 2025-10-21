@@ -56,25 +56,6 @@ export default function Standup() {
 
       if (project) {
         setSelectedProject(project.id);
-        
-        // Load existing standup updates for today
-        const today = new Date().toISOString().split('T')[0];
-        const { data: updates } = await supabase
-          .from("standup_updates")
-          .select("*, profiles!standup_updates_team_member_id_fkey(full_name)")
-          .eq("project_id", project.id)
-          .gte("created_at", `${today}T00:00:00`)
-          .lte("created_at", `${today}T23:59:59`);
-
-        if (updates) {
-          const formattedUpdates = updates.map(u => ({
-            name: u.profiles?.full_name || "Unknown",
-            yesterday: u.yesterday,
-            today: u.today,
-            blockers: u.blockers || "",
-          }));
-          setTeamUpdates(formattedUpdates);
-        }
       }
     };
     loadData();
