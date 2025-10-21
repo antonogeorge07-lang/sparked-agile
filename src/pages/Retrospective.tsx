@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Target, Sparkles, Send, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { IntegrationStatus } from "@/components/IntegrationStatus";
+import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 
 interface FeedbackItem {
   wentWell: string;
@@ -21,7 +23,22 @@ export default function Retrospective() {
   const [feedback, setFeedback] = useState<FeedbackItem[]>([]);
   const [insights, setInsights] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<string>("");
   const { toast } = useToast();
+
+  const { data: integrations } = useProjectIntegrations(selectedProject);
+
+  useEffect(() => {
+    const loadProject = async () => {
+      const { data } = await supabase
+        .from("projects")
+        .select("id")
+        .limit(1)
+        .single();
+      if (data) setSelectedProject(data.id);
+    };
+    loadProject();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

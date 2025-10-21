@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
+import { IntegrationStatus } from "@/components/IntegrationStatus";
+import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -44,6 +46,8 @@ const BacklogRefinement = () => {
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<BacklogAnalysis | null>(null);
+
+  const { data: integrations } = useProjectIntegrations(selectedProject);
 
   const { data: projects } = useQuery({
     queryKey: ["projects"],
@@ -142,11 +146,24 @@ const BacklogRefinement = () => {
           </p>
         </div>
 
+        {integrations && selectedProject && (
+          <IntegrationStatus
+            projectId={selectedProject}
+            hasJira={integrations.hasJira}
+            hasGithub={integrations.hasGithub}
+            hasOutlook={integrations.hasOutlook}
+            jiraConfig={integrations.config.jira}
+            githubConfig={integrations.config.github}
+            outlookConfig={integrations.config.outlook}
+            compact
+          />
+        )}
+
         <Card>
           <CardHeader>
             <CardTitle>Analyze Backlog</CardTitle>
             <CardDescription>
-              Review backlog health, identify stale items, and get AI recommendations
+              Review backlog health, identify stale items, and get AI recommendations from JIRA and GitHub
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

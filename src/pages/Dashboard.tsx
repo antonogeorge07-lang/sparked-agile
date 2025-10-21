@@ -1,8 +1,11 @@
+import { useState, useEffect, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { IntegrationStatus } from "@/components/IntegrationStatus";
+import { IntegrationBanner } from "@/components/IntegrationBanner";
+import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
 import { BarChart3, TrendingUp, AlertCircle, Calendar, Network, FileDown, Filter } from "lucide-react";
-import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
@@ -23,6 +26,7 @@ export default function Dashboard() {
   const [showFilters, setShowFilters] = useState(false);
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
   const { activeUsers } = useRealtimePresence('/dashboard');
+  const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
 
   useEffect(() => {
     loadProjects();
@@ -110,15 +114,15 @@ export default function Dashboard() {
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-8 animate-fade-in">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <div className="flex items-center justify-between animate-fade-in">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
                 <BarChart3 className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold">Sprint Health Dashboard</h1>
-                <p className="text-muted-foreground">Monitor your team's performance and progress</p>
+                <p className="text-muted-foreground">Monitor performance with JIRA, GitHub & Outlook integration</p>
               </div>
             </div>
             <Button onClick={handleExportToPowerPoint} className="gap-2">
@@ -126,6 +130,14 @@ export default function Dashboard() {
               Export to PowerPoint
             </Button>
           </div>
+
+          {integrations && selectedProject && (
+            <IntegrationBanner
+              hasJira={integrations.hasJira}
+              hasGithub={integrations.hasGithub}
+              hasOutlook={integrations.hasOutlook}
+            />
+          )}
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
             <Card className="shadow-card">

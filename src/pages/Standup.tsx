@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { IntegrationStatus } from "@/components/IntegrationStatus";
+import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -24,7 +26,22 @@ export default function Standup() {
   const [teamUpdates, setTeamUpdates] = useState<StandupUpdate[]>([]);
   const [summary, setSummary] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<string>("");
   const { toast } = useToast();
+
+  const { data: integrations } = useProjectIntegrations(selectedProject);
+
+  useEffect(() => {
+    const loadProject = async () => {
+      const { data } = await supabase
+        .from("projects")
+        .select("id")
+        .limit(1)
+        .single();
+      if (data) setSelectedProject(data.id);
+    };
+    loadProject();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,16 +105,29 @@ export default function Standup() {
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-8 animate-fade-in">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="flex items-center gap-3 animate-fade-in">
             <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
               <MessageSquare className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
               <h1 className="text-3xl font-bold">Daily Standup</h1>
-              <p className="text-muted-foreground">Submit your daily update</p>
+              <p className="text-muted-foreground">Submit your daily update and sync with JIRA</p>
             </div>
           </div>
+
+          {integrations && selectedProject && (
+            <IntegrationStatus
+              projectId={selectedProject}
+              hasJira={integrations.hasJira}
+              hasGithub={integrations.hasGithub}
+              hasOutlook={integrations.hasOutlook}
+              jiraConfig={integrations.config.jira}
+              githubConfig={integrations.config.github}
+              outlookConfig={integrations.config.outlook}
+              compact
+            />
+          )}
 
           <div className="grid gap-6">
             <Card className="shadow-card">
