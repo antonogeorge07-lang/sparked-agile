@@ -12,6 +12,7 @@ import Workflows from "./pages/Workflows";
 import Standup from "./pages/Standup";
 import Dashboard from "./pages/Dashboard";
 import Retrospective from "./pages/Retrospective";
+import BacklogRefinement from "./pages/BacklogRefinement";
 import ValueStreams from "./pages/ValueStreams";
 import ProgramIncrement from "./pages/ProgramIncrement";
 import FlowMetrics from "./pages/FlowMetrics";
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/standup" element={<Standup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/retrospective" element={<Retrospective />} />
+          <Route path="/backlog-refinement" element={<BacklogRefinement />} />
           <Route path="/value-streams" element={<ValueStreams />} />
           <Route path="/program-increment" element={<ProgramIncrement />} />
           <Route path="/flow-metrics" element={<FlowMetrics />} />
