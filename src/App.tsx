@@ -13,6 +13,8 @@ import Standup from "./pages/Standup";
 import Dashboard from "./pages/Dashboard";
 import Retrospective from "./pages/Retrospective";
 import BacklogRefinement from "./pages/BacklogRefinement";
+import UsageAnalytics from "./pages/UsageAnalytics";
+import Landing from "./pages/Landing";
 import ValueStreams from "./pages/ValueStreams";
 import ProgramIncrement from "./pages/ProgramIncrement";
 import FlowMetrics from "./pages/FlowMetrics";
@@ -34,7 +36,8 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/subscription" element={<Subscription />} />
@@ -43,6 +46,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/retrospective" element={<Retrospective />} />
           <Route path="/backlog-refinement" element={<BacklogRefinement />} />
+          <Route path="/usage-analytics" element={<UsageAnalytics />} />
           <Route path="/value-streams" element={<ValueStreams />} />
           <Route path="/program-increment" element={<ProgramIncrement />} />
           <Route path="/flow-metrics" element={<FlowMetrics />} />

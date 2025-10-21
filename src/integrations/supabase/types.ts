@@ -109,6 +109,45 @@ export type Database = {
           },
         ]
       }
+      ai_usage_logs: {
+        Row: {
+          cost_estimate: number | null
+          created_at: string
+          endpoint: string
+          error_message: string | null
+          id: string
+          model: string
+          project_id: string | null
+          status: string
+          tokens_used: number
+          user_id: string
+        }
+        Insert: {
+          cost_estimate?: number | null
+          created_at?: string
+          endpoint: string
+          error_message?: string | null
+          id?: string
+          model: string
+          project_id?: string | null
+          status?: string
+          tokens_used?: number
+          user_id: string
+        }
+        Update: {
+          cost_estimate?: number | null
+          created_at?: string
+          endpoint?: string
+          error_message?: string | null
+          id?: string
+          model?: string
+          project_id?: string | null
+          status?: string
+          tokens_used?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       ceremony_configs: {
         Row: {
           attendees: string[] | null
@@ -533,6 +572,42 @@ export type Database = {
           },
         ]
       }
+      project_usage_stats: {
+        Row: {
+          active_users: number
+          ai_calls: number
+          created_at: string
+          date: string
+          id: string
+          project_id: string
+          tokens_used: number
+          total_actions: number
+          updated_at: string
+        }
+        Insert: {
+          active_users?: number
+          ai_calls?: number
+          created_at?: string
+          date: string
+          id?: string
+          project_id: string
+          tokens_used?: number
+          total_actions?: number
+          updated_at?: string
+        }
+        Update: {
+          active_users?: number
+          ai_calls?: number
+          created_at?: string
+          date?: string
+          id?: string
+          project_id?: string
+          tokens_used?: number
+          total_actions?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       project_workspaces: {
         Row: {
           configuration_status: string | null
@@ -936,6 +1011,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_activity_logs: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          page: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          page?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          page?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
