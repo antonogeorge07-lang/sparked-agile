@@ -62,13 +62,6 @@ export type Database = {
             foreignKeyName: "action_items_assigned_to_fkey"
             columns: ["assigned_to"]
             isOneToOne: false
-            referencedRelation: "safe_team_members"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "action_items_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
             referencedRelation: "team_members"
             referencedColumns: ["id"]
           },
@@ -958,13 +951,6 @@ export type Database = {
             foreignKeyName: "standup_updates_team_member_id_fkey"
             columns: ["team_member_id"]
             isOneToOne: false
-            referencedRelation: "safe_team_members"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "standup_updates_team_member_id_fkey"
-            columns: ["team_member_id"]
-            isOneToOne: false
             referencedRelation: "team_members"
             referencedColumns: ["id"]
           },
@@ -1229,98 +1215,7 @@ export type Database = {
       }
     }
     Views: {
-      safe_ai_usage_logs: {
-        Row: {
-          created_at: string | null
-          feature_used: string | null
-          id: string | null
-          model_used: string | null
-          project_id: string | null
-          tokens_used: number | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          feature_used?: string | null
-          id?: string | null
-          model_used?: string | null
-          project_id?: string | null
-          tokens_used?: number | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          feature_used?: string | null
-          id?: string | null
-          model_used?: string | null
-          project_id?: string | null
-          tokens_used?: number | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      safe_integrations: {
-        Row: {
-          created_at: string | null
-          id: string | null
-          integration_type: string | null
-          is_active: boolean | null
-          project_id: string | null
-          safe_config: Json | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string | null
-          integration_type?: string | null
-          is_active?: boolean | null
-          project_id?: string | null
-          safe_config?: never
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string | null
-          integration_type?: string | null
-          is_active?: boolean | null
-          project_id?: string | null
-          safe_config?: never
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      safe_team_members: {
-        Row: {
-          created_at: string | null
-          id: string | null
-          name: string | null
-          project_id: string | null
-          role: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string | null
-          name?: string | null
-          project_id?: string | null
-          role?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string | null
-          name?: string | null
-          project_id?: string | null
-          role?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "team_members_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
       check_user_role: {
