@@ -1,3 +1,6 @@
+# Robots.txt for SM ActiveIntelligence
+# Allow search engines to crawl public pages
+
 User-agent: Googlebot
 Allow: /
 
@@ -12,3 +15,18 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://smactiveintelligence.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /auth
+Disallow: /standup
+Disallow: /retrospective
+Disallow: /workflows
+
+# Allow public pages
+Allow: /privacy
+Allow: /terms

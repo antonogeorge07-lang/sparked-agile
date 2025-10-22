@@ -3,8 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Target, Zap, Users, Shield, ArrowRight, Star, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export default function Landing() {
+  const { trackButtonClick } = useAnalytics();
+  
   const features = [
     {
       icon: <Sparkles className="h-6 w-6" />,
@@ -125,10 +128,21 @@ export default function Landing() {
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/auth" className="hidden sm:block">
-                <Button variant="ghost" size="sm">Sign In</Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => trackButtonClick('Sign In', 'nav')}
+                >
+                  Sign In
+                </Button>
               </Link>
               <Link to="/auth">
-                <Button size="sm">Get Started</Button>
+                <Button 
+                  size="sm"
+                  onClick={() => trackButtonClick('Get Started', 'nav')}
+                >
+                  Get Started
+                </Button>
               </Link>
             </div>
           </div>
@@ -154,12 +168,21 @@ export default function Landing() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
               <Link to="/auth" className="w-full sm:w-auto">
-                <Button size="lg" className="gap-2 w-full sm:w-auto">
+                <Button 
+                  size="lg" 
+                  className="gap-2 w-full sm:w-auto"
+                  onClick={() => trackButtonClick('Start Free Trial', 'hero')}
+                >
                   Start Free Trial
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="w-full sm:w-auto"
+                onClick={() => trackButtonClick('Watch Demo', 'hero')}
+              >
                 Watch Demo
               </Button>
             </div>
