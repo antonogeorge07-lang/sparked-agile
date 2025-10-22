@@ -96,73 +96,32 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
         
         <div className="relative bg-muted">
           <div className="relative aspect-video">
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onTimeUpdate={handleTimeUpdate}
-              onLoadedMetadata={handleLoadedMetadata}
-            >
-              <source src="/demo-video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-
-            {/* Play overlay when not playing */}
-            {!isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                <Button
-                  size="icon"
-                  onClick={togglePlay}
-                  className="rounded-full w-20 h-20 bg-primary hover:bg-primary/90 shadow-elevated"
-                >
-                  <Play className="w-10 h-10 ml-1" />
-                </Button>
-              </div>
-            )}
-
-            {/* Video controls */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 opacity-0 hover:opacity-100 transition-opacity">
-              <div 
-                className="mb-3 cursor-pointer group"
-                onClick={handleProgressClick}
-              >
-                <Progress value={progress} className="h-1 group-hover:h-2 transition-all" />
-              </div>
-              
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={togglePlay}
-                    className="text-white hover:bg-white/20 h-9 w-9"
-                  >
-                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={toggleMute}
-                    className="text-white hover:bg-white/20 h-9 w-9"
-                  >
-                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                  </Button>
-                  {duration > 0 && (
-                    <span className="text-white text-sm font-medium">
-                      {formatTime((progress / 100) * duration)} / {formatTime(duration)}
-                    </span>
-                  )}
+            {/* Placeholder thumbnail */}
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+              <img 
+                src="/demo-thumbnail.jpg" 
+                alt="Demo Preview" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm">
+                <div className="text-center space-y-4 p-8">
+                  <Play className="w-20 h-20 mx-auto text-white" />
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold text-white">Interactive Demo Coming Soon</h3>
+                    <p className="text-white/90 text-lg max-w-2xl">
+                      We're preparing a comprehensive walkthrough of SM ActiveIntelligence's powerful features.
+                    </p>
+                  </div>
+                  <div className="pt-4">
+                    <Button 
+                      onClick={onClose}
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      Start Free Trial Instead
+                    </Button>
+                  </div>
                 </div>
-                
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  onClick={toggleFullscreen}
-                  className="text-white hover:bg-white/20 h-9 w-9"
-                >
-                  <Maximize className="w-5 h-5" />
-                </Button>
               </div>
             </div>
           </div>
