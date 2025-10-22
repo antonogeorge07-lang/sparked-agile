@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { Play, Pause, Volume2, VolumeX, ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3 } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
+import { DemoModal } from "@/components/DemoModal";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Index = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
@@ -88,6 +90,11 @@ const Index = () => {
         onClose={() => setShowOnboarding(false)} 
       />
       
+      <DemoModal 
+        isOpen={showDemoModal} 
+        onClose={() => setShowDemoModal(false)} 
+      />
+      
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
@@ -109,6 +116,15 @@ const Index = () => {
                   <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
                     Get Started
                     <ArrowRight className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="gap-2" 
+                    onClick={() => setShowDemoModal(true)}
+                  >
+                    <Video className="w-4 h-4" />
+                    Watch Demo
                   </Button>
                 </div>
               </div>
