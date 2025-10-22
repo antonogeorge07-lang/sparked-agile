@@ -25,6 +25,8 @@ import CeremonySetup from "./pages/CeremonySetup";
 import ProjectWorkspace from "./pages/ProjectWorkspace";
 import SprintPlanningAssistant from "./pages/SprintPlanningAssistant";
 import SprintReviewCoordinator from "./pages/SprintReviewCoordinator";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,7 +38,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Index />} />
@@ -58,6 +60,8 @@ const App = () => {
           <Route path="/project-workspace" element={<ProjectWorkspace />} />
           <Route path="/sprint-planning-assistant" element={<SprintPlanningAssistant />} />
           <Route path="/sprint-review-coordinator" element={<SprintReviewCoordinator />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
           </Routes>
