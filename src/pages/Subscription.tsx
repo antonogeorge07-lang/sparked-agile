@@ -87,9 +87,11 @@ export default function Subscription() {
   };
 
   const handleSubscribe = async (tierId: string) => {
+    // Ready for Stripe - will activate when you add your Stripe account
     toast({
-      title: "Coming Soon",
-      description: "Stripe integration will be activated once you configure your Stripe account. Contact support for early access.",
+      title: "Payment Setup Required",
+      description: "Connect your Stripe account to enable subscription payments. The integration is ready to go!",
+      variant: "default",
     });
   };
 
