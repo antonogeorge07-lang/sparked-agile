@@ -88,7 +88,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-5xl p-0 gap-0">
         <DialogHeader className="p-6 pb-4">
-          <DialogTitle className="text-2xl">SM ActiveIntelligence Demo</DialogTitle>
+          <DialogTitle className="text-2xl">See SM ActiveIntelligence in Action</DialogTitle>
           <DialogDescription>
             See how AI streamlines your entire agile workflow with intelligent automation
           </DialogDescription>
