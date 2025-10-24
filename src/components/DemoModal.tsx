@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Volume2, VolumeX, Maximize, X } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Play, CheckCircle, Zap, Users, Calendar, BarChart3, Shield } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -10,138 +10,135 @@ interface DemoModalProps {
 }
 
 export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-  useEffect(() => {
-    if (!isOpen) {
-      // Reset video when modal closes
-      if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-      }
-      setIsPlaying(false);
-      setProgress(0);
+  const features = [
+    {
+      icon: <Zap className="w-5 h-5 text-yellow-500" />,
+      title: "AI-Powered Sprint Planning",
+      description: "Automatically generate sprint plans based on team velocity, backlog, and historical data"
+    },
+    {
+      icon: <Users className="w-5 h-5 text-blue-500" />,
+      title: "Real-time Collaboration",
+      description: "See who's working on what with live presence indicators and instant updates"
+    },
+    {
+      icon: <Calendar className="w-5 h-5 text-green-500" />,
+      title: "Automated Ceremonies",
+      description: "Smart standup summaries, retrospectives, and review coordination with Microsoft Outlook"
+    },
+    {
+      icon: <BarChart3 className="w-5 h-5 text-purple-500" />,
+      title: "Flow Metrics & Analytics",
+      description: "Track cycle time, lead time, and throughput with actionable insights"
+    },
+    {
+      icon: <CheckCircle className="w-5 h-5 text-emerald-500" />,
+      title: "Smart Action Items",
+      description: "AI extracts and tracks action items from every ceremony automatically"
+    },
+    {
+      icon: <Shield className="w-5 h-5 text-red-500" />,
+      title: "SAFe 6.0 Support",
+      description: "Full program increment planning, value streams, and ARTs management"
     }
-  }, [isOpen]);
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const toggleFullscreen = () => {
-    if (videoRef.current) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        videoRef.current.requestFullscreen();
-      }
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const current = videoRef.current.currentTime;
-      const total = videoRef.current.duration;
-      setProgress((current / total) * 100);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
-    }
-  };
-
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (videoRef.current) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const pos = (e.clientX - rect.left) / rect.width;
-      videoRef.current.currentTime = pos * videoRef.current.duration;
-    }
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
+  ];
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl p-0 gap-0">
-        <DialogHeader className="p-6 pb-4">
-          <DialogTitle className="text-2xl">See SM ActiveIntelligence in Action</DialogTitle>
-          <DialogDescription>
-            See how AI streamlines your entire agile workflow with intelligent automation
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            Experience SM ActiveIntelligence
+          </DialogTitle>
+          <DialogDescription className="text-base">
+            See how AI transforms your agile ceremonies and workflow management
           </DialogDescription>
         </DialogHeader>
         
-        <div className="relative bg-muted">
-          <div className="relative aspect-video">
-            {/* Placeholder thumbnail */}
-            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-              <img 
-                src="/demo-thumbnail.jpg" 
-                alt="Demo Preview" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm">
-                <div className="text-center space-y-4 p-8">
-                  <Play className="w-20 h-20 mx-auto text-white" />
-                  <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-white">Interactive Demo Coming Soon</h3>
-                    <p className="text-white/90 text-lg max-w-2xl">
-                      We're preparing a comprehensive walkthrough of SM ActiveIntelligence's powerful features.
-                    </p>
+        <div className="space-y-6 py-4">
+          {/* Hero Section */}
+          <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-primary/10 via-accent/10 to-background p-8">
+            <div className="relative z-10 text-center space-y-4">
+              <Badge className="mb-2" variant="outline">
+                <Play className="w-3 h-3 mr-1" />
+                Interactive Demo
+              </Badge>
+              <h3 className="text-2xl font-bold">Try it yourself!</h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Sign up now to access a full demo workspace with sample data. Experience real AI-powered 
+                sprint planning, automated standups, and intelligent retrospectives.
+              </p>
+              <Button size="lg" className="mt-4" onClick={onClose}>
+                Start Your Free Trial →
+              </Button>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Key Features</h3>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {features.map((feature, index) => (
+                <div 
+                  key={index}
+                  className="flex gap-3 p-4 rounded-lg border bg-card hover:shadow-md transition-shadow"
+                >
+                  <div className="flex-shrink-0 mt-1">
+                    {feature.icon}
                   </div>
-                  <div className="pt-4">
-                    <Button 
-                      onClick={onClose}
-                      size="lg"
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      Start Free Trial Instead
-                    </Button>
+                  <div>
+                    <h4 className="font-semibold mb-1">{feature.title}</h4>
+                    <p className="text-sm text-muted-foreground">{feature.description}</p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Integration Highlights */}
+          <div className="p-6 rounded-lg border bg-muted/30">
+            <h3 className="text-lg font-semibold mb-3">Seamless Integrations</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              <div className="space-y-2">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                  J
+                </div>
+                <p className="text-sm font-medium">Jira</p>
+              </div>
+              <div className="space-y-2">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                  G
+                </div>
+                <p className="text-sm font-medium">GitHub</p>
+              </div>
+              <div className="space-y-2">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                  M
+                </div>
+                <p className="text-sm font-medium">Microsoft 365</p>
+              </div>
+              <div className="space-y-2">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                  T
+                </div>
+                <p className="text-sm font-medium">Teams</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="p-6 pt-4 bg-muted/30">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h3 className="font-semibold text-lg mb-2">What you'll see:</h3>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• AI-powered sprint planning and retrospectives</li>
-                <li>• Automated standup summaries with action items</li>
-                <li>• Real-time collaboration and presence indicators</li>
-                <li>• Integration with Jira, GitHub, and Microsoft Teams</li>
-                <li>• SAFe 6.0 program increment planning</li>
-              </ul>
+          {/* CTA Footer */}
+          <div className="flex justify-between items-center pt-4 border-t">
+            <p className="text-sm text-muted-foreground">
+              Ready to transform your agile workflow?
+            </p>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={onClose}>
+                Maybe Later
+              </Button>
+              <Button onClick={onClose}>
+                Get Started Free
+              </Button>
             </div>
-            <Button onClick={onClose} variant="outline">
-              Close
-            </Button>
           </div>
         </div>
       </DialogContent>

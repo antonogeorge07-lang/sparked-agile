@@ -3,7 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, CheckCircle, XCircle, Clock, Users } from "lucide-react";
+import { Shield, CheckCircle, XCircle, Clock, Users, Search, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -112,11 +112,15 @@ export default function Admin() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterRole, setFilterRole] = useState<"all" | "pending" | "member" | "admin">("all");
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     checkAdminAndLoadUsers();
+    checkFirstTimeUser();
   }, []);
 
   const checkAdminAndLoadUsers = async () => {
@@ -156,6 +160,18 @@ export default function Admin() {
     }
   };
 
+  const checkFirstTimeUser = async () => {
+    const hasSeenOnboarding = localStorage.getItem('hasSeenAdminOnboarding');
+    if (!hasSeenOnboarding) {
+      setTimeout(() => setShowOnboarding(true), 1000);
+    }
+  };
+
+  const completeOnboarding = () => {
+    localStorage.setItem('hasSeenAdminOnboarding', 'true');
+    setShowOnboarding(false);
+  };
+
   const loadProfiles = async () => {
     const { data, error } = await supabase
       .from('profiles')
@@ -171,6 +187,28 @@ export default function Admin() {
       });
     } else {
       setProfiles(data || []);
+    }
+  };
+
+  const bulkApproveUsers = async () => {
+    const pendingUsers = profiles.filter(p => p.role === 'pending');
+    if (pendingUsers.length === 0) return;
+
+    try {
+      for (const user of pendingUsers) {
+        await updateUserRole(user.id, 'member');
+      }
+      toast({
+        title: "Success",
+        description: `Approved ${pendingUsers.length} users`,
+      });
+    } catch (error) {
+      console.error('Error bulk approving:', error);
+      toast({
+        title: "Error",
+        description: "Failed to approve all users",
+        variant: "destructive",
+      });
     }
   };
 
@@ -245,6 +283,13 @@ export default function Admin() {
     return null;
   }
 
+  const filteredProfiles = profiles.filter(profile => {
+    const matchesSearch = profile.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          profile.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesRole = filterRole === "all" || profile.role === filterRole;
+    return matchesSearch && matchesRole;
+  });
+
   const pendingCount = profiles.filter(p => p.role === 'pending').length;
   const memberCount = profiles.filter(p => p.role === 'member').length;
   const adminCount = profiles.filter(p => p.role === 'admin').length;
@@ -253,16 +298,67 @@ export default function Admin() {
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
       
+      {/* Onboarding Overlay */}
+      {showOnboarding && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-background rounded-lg p-8 max-w-2xl w-full shadow-2xl animate-fade-in">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 mx-auto rounded-full bg-gradient-primary flex items-center justify-center">
+                <Shield className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h2 className="text-3xl font-bold">Welcome to Admin Dashboard</h2>
+              <p className="text-muted-foreground">
+                As an administrator, you have full control over user access and permissions. Here's what you can do:
+              </p>
+              <div className="text-left space-y-3 py-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Approve Pending Users</p>
+                    <p className="text-sm text-muted-foreground">Review and approve new user registrations</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Manage User Roles</p>
+                    <p className="text-sm text-muted-foreground">Promote members to admin or revoke access</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Search & Filter</p>
+                    <p className="text-sm text-muted-foreground">Quickly find users by name, email, or role</p>
+                  </div>
+                </div>
+              </div>
+              <Button onClick={completeOnboarding} size="lg" className="w-full">
+                Got it, Let's Start!
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-8 animate-fade-in">
-            <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <Shield className="w-6 h-6 text-primary-foreground" />
+          <div className="flex items-center justify-between mb-8 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <Shield className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+                <p className="text-muted-foreground">Manage user access and permissions</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-              <p className="text-muted-foreground">Manage user access and permissions</p>
-            </div>
+            {pendingCount > 0 && (
+              <Button onClick={bulkApproveUsers} className="gap-2">
+                <Check className="h-4 w-4" />
+                Approve All ({pendingCount})
+              </Button>
+            )}
           </div>
 
           <div className="grid gap-6 md:grid-cols-3 mb-8">
@@ -301,13 +397,37 @@ export default function Admin() {
             <CardHeader>
               <CardTitle>User Management</CardTitle>
               <CardDescription>Approve, reject, or modify user access</CardDescription>
+              <div className="flex gap-4 mt-4 flex-wrap">
+                <div className="relative flex-1 min-w-[200px]">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search by name or email..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                  />
+                </div>
+                <select
+                  value={filterRole}
+                  onChange={(e) => setFilterRole(e.target.value as any)}
+                  className="px-4 py-2 border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                >
+                  <option value="all">All Roles</option>
+                  <option value="pending">Pending</option>
+                  <option value="member">Members</option>
+                  <option value="admin">Admins</option>
+                </select>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {profiles.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-8">No users found</p>
+                {filteredProfiles.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-8">
+                    {searchQuery || filterRole !== "all" ? "No users match your filters" : "No users found"}
+                  </p>
                 ) : (
-                  profiles.map((profile) => (
+                  filteredProfiles.map((profile) => (
                     <UserProfileRow
                       key={profile.id}
                       profile={profile}

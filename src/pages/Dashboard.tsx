@@ -17,6 +17,7 @@ import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
+import { ProjectMemberManager } from "@/components/ProjectMemberManager";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -137,6 +138,15 @@ export default function Dashboard() {
               hasGithub={integrations.hasGithub}
               hasOutlook={integrations.hasOutlook}
             />
+          )}
+
+          {selectedProject && projects.length > 0 && (
+            <div className="mb-6">
+              <ProjectMemberManager
+                projectId={selectedProject}
+                projectName={projects.find(p => p.id === selectedProject)?.name || "Project"}
+              />
+            </div>
           )}
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
