@@ -4,9 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Target, Zap, Users, Shield, ArrowRight, Star, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { DemoModal } from "@/components/DemoModal";
+import { useState } from "react";
 
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
   
   const features = [
     {
@@ -181,7 +184,10 @@ export default function Landing() {
                 size="lg" 
                 variant="outline" 
                 className="w-full sm:w-auto"
-                onClick={() => trackButtonClick('Watch Demo', 'hero')}
+                onClick={() => {
+                  trackButtonClick('Watch Demo', 'hero');
+                  setIsDemoOpen(true);
+                }}
               >
                 Watch Demo
               </Button>
@@ -327,6 +333,9 @@ export default function Landing() {
           </Card>
         </div>
       </section>
+
+      {/* Demo Modal */}
+      <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
 
       {/* Footer */}
       <footer className="border-t border-border py-12 px-4">
