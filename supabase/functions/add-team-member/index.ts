@@ -1,6 +1,6 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
-import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -150,8 +150,8 @@ serve(async (req) => {
       }
     }
 
-    // Send welcome email
-    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    // Send welcome email via Resend REST API (no npm dependency)
+    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
     
     const welcomeEmailHtml = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; color: #333;">
@@ -209,13 +209,30 @@ serve(async (req) => {
     `;
 
     try {
-      await resend.emails.send({
-        from: 'Scrum Master AI <onboarding@resend.dev>',
-        to: [email],
-        subject: `Welcome to ${projectName}! 🎉`,
-        html: welcomeEmailHtml,
-      });
-      console.log('Welcome email sent successfully');
+      if (!RESEND_API_KEY) {
+        console.warn('RESEND_API_KEY not configured; skipping welcome email');
+      } else {
+        const emailRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Scrum Master AI <onboarding@resend.dev>',
+            to: [email],
+            subject: `Welcome to ${projectName}! 🎉`,
+            html: welcomeEmailHtml,
+          }),
+        });
+
+        if (!emailRes.ok) {
+          const text = await emailRes.text();
+          console.error('Resend API error:', emailRes.status, text);
+        } else {
+          console.log('Welcome email sent successfully');
+        }
+      }
     } catch (emailError) {
       console.error('Error sending welcome email:', emailError);
       // Don't fail the request if email fails
