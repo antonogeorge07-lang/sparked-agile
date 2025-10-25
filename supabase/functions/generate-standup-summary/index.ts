@@ -48,6 +48,22 @@ serve(async (req) => {
       throw new Error('Too many updates (max 100)');
     }
 
+    // Validate each update object structure and fields
+    for (const update of updates) {
+      if (!update.name || typeof update.name !== 'string' || update.name.length > 100) {
+        throw new Error('Invalid update: name must be a string (max 100 chars)');
+      }
+      if (!update.yesterday || typeof update.yesterday !== 'string' || update.yesterday.length > 1000) {
+        throw new Error('Invalid update: yesterday must be a string (max 1000 chars)');
+      }
+      if (!update.today || typeof update.today !== 'string' || update.today.length > 1000) {
+        throw new Error('Invalid update: today must be a string (max 1000 chars)');
+      }
+      if (update.blockers && (typeof update.blockers !== 'string' || update.blockers.length > 1000)) {
+        throw new Error('Invalid update: blockers must be a string (max 1000 chars)');
+      }
+    }
+
     // Verify user has access to project if projectId provided
     if (projectId) {
       const { data: membership, error: memberError } = await supabase

@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useItemPresence } from "@/hooks/useItemPresence";
 import { CollaborationIndicator } from "@/components/CollaborationIndicator";
+import { HelpTooltip } from "@/components/HelpTooltip";
 
 interface Profile {
   id: string;
@@ -54,7 +55,7 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
         </p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {profile.role === 'pending' && (
           <>
             <Button
@@ -63,7 +64,7 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
               className="gap-1"
             >
               <CheckCircle className="w-4 h-4" />
-              Approve
+              <span className="hidden sm:inline">Approve</span>
             </Button>
             <Button
               size="sm"
@@ -72,7 +73,7 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
               className="gap-1"
             >
               <XCircle className="w-4 h-4" />
-              Reject
+              <span className="hidden sm:inline">Reject</span>
             </Button>
           </>
         )}
@@ -83,14 +84,16 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
               variant="outline"
               onClick={() => onUpdateRole(profile.id, 'admin')}
             >
-              Make Admin
+              <span className="hidden sm:inline">Make Admin</span>
+              <span className="sm:hidden">Admin</span>
             </Button>
             <Button
               size="sm"
               variant="outline"
               onClick={() => onUpdateRole(profile.id, 'pending')}
             >
-              Revoke Access
+              <span className="hidden sm:inline">Revoke Access</span>
+              <span className="sm:hidden">Revoke</span>
             </Button>
           </>
         )}
@@ -100,7 +103,8 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
             variant="outline"
             onClick={() => onUpdateRole(profile.id, 'member')}
           >
-            Remove Admin
+            <span className="hidden sm:inline">Remove Admin</span>
+            <span className="sm:hidden">Remove</span>
           </Button>
         )}
       </div>
@@ -341,27 +345,27 @@ export default function Admin() {
         </div>
       )}
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-4 sm:py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-8 animate-fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 animate-fade-in">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <Shield className="w-6 h-6 text-primary-foreground" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-                <p className="text-muted-foreground">Manage user access and permissions</p>
+                <h1 className="text-2xl sm:text-3xl font-bold">Admin Dashboard</h1>
+                <p className="text-sm sm:text-base text-muted-foreground">Manage user access and permissions</p>
               </div>
             </div>
             {pendingCount > 0 && (
-              <Button onClick={bulkApproveUsers} className="gap-2">
+              <Button onClick={bulkApproveUsers} className="gap-2 w-full sm:w-auto" size="sm">
                 <Check className="h-4 w-4" />
                 Approve All ({pendingCount})
               </Button>
             )}
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3 mb-8">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-3 mb-6 sm:mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Pending Approval</CardTitle>
@@ -395,9 +399,12 @@ export default function Admin() {
 
           <Card className="shadow-card">
             <CardHeader>
-              <CardTitle>User Management</CardTitle>
+              <div className="flex items-center gap-2 mb-2">
+                <CardTitle>User Management</CardTitle>
+                <HelpTooltip content="Review and approve user registrations. Only approved users with assigned roles can access projects." />
+              </div>
               <CardDescription>Approve, reject, or modify user access</CardDescription>
-              <div className="flex gap-4 mt-4 flex-wrap">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
                 <div className="relative flex-1 min-w-[200px]">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input
@@ -411,7 +418,7 @@ export default function Admin() {
                 <select
                   value={filterRole}
                   onChange={(e) => setFilterRole(e.target.value as any)}
-                  className="px-4 py-2 border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full sm:w-auto px-4 py-2 border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="all">All Roles</option>
                   <option value="pending">Pending</option>

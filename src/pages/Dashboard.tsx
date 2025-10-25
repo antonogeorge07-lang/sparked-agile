@@ -18,6 +18,7 @@ import { ActiveUsers } from "@/components/ActiveUsers";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
+import { HelpTooltip } from "@/components/HelpTooltip";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -149,10 +150,13 @@ export default function Dashboard() {
             </div>
           )}
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-6">
             <Card className="shadow-card">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Current Velocity</CardTitle>
+                <div className="flex items-center gap-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Current Velocity</CardTitle>
+                  <HelpTooltip content="Story points completed in the current sprint, showing team productivity." />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">35</div>
@@ -192,10 +196,13 @@ export default function Dashboard() {
             </Card>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2 mb-6">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 mb-6">
             <Card className="shadow-card">
               <CardHeader>
-                <CardTitle>Velocity Trend</CardTitle>
+                <div className="flex items-center gap-2">
+                  <CardTitle>Velocity Trend</CardTitle>
+                  <HelpTooltip content="Track team velocity over the last 3 sprints to identify patterns and improve planning." />
+                </div>
                 <CardDescription>Last 3 sprints performance</CardDescription>
               </CardHeader>
               <CardContent>
@@ -220,22 +227,25 @@ export default function Dashboard() {
 
             <Card className="shadow-card">
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5 text-destructive" />
-                      Active Impediments
-                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2">
+                        <AlertCircle className="w-5 h-5 text-destructive" />
+                        Active Impediments
+                      </CardTitle>
+                      <HelpTooltip content="Track and manage blocking issues to keep sprints on track." />
+                    </div>
                     <CardDescription>Issues requiring attention</CardDescription>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setShowFilters(!showFilters)}
-                    className="gap-2"
+                    className="gap-2 w-full sm:w-auto"
                   >
                     <Filter className="h-4 w-4" />
-                    Filter
+                    <span className="sm:inline">Filter</span>
                   </Button>
                 </div>
               </CardHeader>
