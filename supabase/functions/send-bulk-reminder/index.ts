@@ -1,0 +1,196 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      {
+        global: {
+          headers: { Authorization: req.headers.get('Authorization')! },
+        },
+      }
+    );
+
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    
+    if (!user) {
+      throw new Error('Unauthorized');
+    }
+
+    const { projectId, ceremonyType, message, subject } = await req.json();
+
+    if (!projectId || !ceremonyType) {
+      throw new Error('Missing required fields: projectId, ceremonyType');
+    }
+
+    console.log('Sending bulk reminder for project:', projectId, 'ceremony:', ceremonyType);
+
+    // Get project name
+    const { data: project } = await supabaseClient
+      .from('projects')
+      .select('name')
+      .eq('id', projectId)
+      .single();
+
+    // Get all team members for the project
+    const { data: members, error: membersError } = await supabaseClient
+      .from('team_members')
+      .select('name, email')
+      .eq('project_id', projectId);
+
+    if (membersError) {
+      throw new Error(`Failed to fetch team members: ${membersError.message}`);
+    }
+
+    if (!members || members.length === 0) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'No team members found' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+    
+    if (!RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
+    // Get ceremony template
+    const ceremonyTemplates = {
+      standup: {
+        subject: `📅 Daily Standup Reminder - ${project?.name || 'Project'}`,
+        emoji: '🗣️',
+        title: 'Daily Standup',
+        description: 'Time for your daily standup!'
+      },
+      retrospective: {
+        subject: `🔄 Sprint Retrospective Reminder - ${project?.name || 'Project'}`,
+        emoji: '🔄',
+        title: 'Sprint Retrospective',
+        description: 'Time to reflect on the sprint and improve!'
+      },
+      sprint_planning: {
+        subject: `📋 Sprint Planning Reminder - ${project?.name || 'Project'}`,
+        emoji: '📋',
+        title: 'Sprint Planning',
+        description: 'Time to plan the next sprint!'
+      },
+      sprint_review: {
+        subject: `🎯 Sprint Review Reminder - ${project?.name || 'Project'}`,
+        emoji: '🎯',
+        title: 'Sprint Review',
+        description: 'Time to showcase our work!'
+      },
+      backlog_refinement: {
+        subject: `🔍 Backlog Refinement Reminder - ${project?.name || 'Project'}`,
+        emoji: '🔍',
+        title: 'Backlog Refinement',
+        description: 'Time to refine our backlog!'
+      }
+    };
+
+    const template = ceremonyTemplates[ceremonyType as keyof typeof ceremonyTemplates] || ceremonyTemplates.standup;
+
+    // Send emails to all members
+    const emailPromises = members.map(async (member) => {
+      if (!member.email) return null;
+
+      const emailHtml = `
+        <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; color: #333;">
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="color: white; margin: 0; font-size: 32px;">${template.emoji} ${template.title}</h1>
+          </div>
+          
+          <div style="padding: 30px; background: #f9fafb; border-radius: 0 0 8px 8px;">
+            <p style="font-size: 18px; color: #1f2937; margin-bottom: 20px;">
+              Hi ${member.name},
+            </p>
+            
+            <p style="font-size: 16px; color: #4b5563; line-height: 1.6; margin-bottom: 20px;">
+              ${template.description}
+            </p>
+            
+            ${message ? `
+              <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
+                <p style="margin: 0; color: #1f2937; line-height: 1.6;">${message}</p>
+              </div>
+            ` : ''}
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+              <p style="font-size: 14px; color: #6b7280; margin: 0;">
+                <strong>Project:</strong> ${project?.name || 'Your Project'}<br/>
+                <strong>Ceremony:</strong> ${template.title}
+              </p>
+            </div>
+            
+            <p style="font-size: 14px; color: #9ca3af; margin-top: 30px;">
+              This is an automated reminder from Scrum Master AI
+            </p>
+          </div>
+        </div>
+      `;
+
+      try {
+        const emailRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Scrum Master AI <onboarding@resend.dev>',
+            to: [member.email],
+            subject: subject || template.subject,
+            html: emailHtml,
+          }),
+        });
+
+        if (!emailRes.ok) {
+          const text = await emailRes.text();
+          console.error(`Failed to send email to ${member.email}:`, emailRes.status, text);
+          return { email: member.email, success: false };
+        }
+
+        console.log(`Email sent successfully to ${member.email}`);
+        return { email: member.email, success: true };
+      } catch (error) {
+        console.error(`Error sending email to ${member.email}:`, error);
+        return { email: member.email, success: false };
+      }
+    });
+
+    const results = await Promise.all(emailPromises);
+    const successCount = results.filter(r => r?.success).length;
+    const totalCount = members.filter(m => m.email).length;
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `Sent ${successCount}/${totalCount} reminders successfully`,
+        results
+      }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  } catch (error) {
+    console.error('Error in send-bulk-reminder:', error);
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  }
+});

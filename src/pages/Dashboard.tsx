@@ -19,6 +19,8 @@ import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
 import { HelpTooltip } from "@/components/HelpTooltip";
+import { SendReminderDialog } from "@/components/SendReminderDialog";
+import { Bell } from "lucide-react";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -26,6 +28,7 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [severityFilter, setSeverityFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
+  const [showReminderDialog, setShowReminderDialog] = useState(false);
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
@@ -127,10 +130,21 @@ export default function Dashboard() {
                 <p className="text-sm sm:text-base text-muted-foreground">Monitor performance with integrations</p>
               </div>
             </div>
-            <Button onClick={handleExportToPowerPoint} className="gap-2 w-full sm:w-auto" size="sm">
-              <FileDown className="w-4 h-4" />
-              <span className="sm:inline">Export</span>
-            </Button>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button 
+                onClick={() => setShowReminderDialog(true)} 
+                className="gap-2 flex-1 sm:flex-none" 
+                size="sm"
+                variant="outline"
+              >
+                <Bell className="w-4 h-4" />
+                <span className="sm:inline">Send Reminder</span>
+              </Button>
+              <Button onClick={handleExportToPowerPoint} className="gap-2 flex-1 sm:flex-none" size="sm">
+                <FileDown className="w-4 h-4" />
+                <span className="sm:inline">Export</span>
+              </Button>
+            </div>
           </div>
 
           {integrations && selectedProject && (
@@ -335,17 +349,21 @@ export default function Dashboard() {
               </div>
 
               <div className="grid gap-6 lg:grid-cols-2">
-                {hasJiraIntegration && jiraData && (
-                  <IntegrationDataCard type="jira" data={jiraData} isLoading={isLoading} />
-                )}
-                {hasGithubIntegration && githubData && (
-                  <IntegrationDataCard type="github" data={githubData} isLoading={isLoading} />
-                )}
+...
               </div>
             </>
           )}
         </div>
       </main>
+
+      {selectedProject && projects.length > 0 && (
+        <SendReminderDialog
+          open={showReminderDialog}
+          onOpenChange={setShowReminderDialog}
+          projectId={selectedProject}
+          projectName={projects.find(p => p.id === selectedProject)?.name || "Project"}
+        />
+      )}
     </div>
   );
 }

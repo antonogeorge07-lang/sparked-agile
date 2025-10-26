@@ -195,6 +195,50 @@ export type Database = {
           },
         ]
       }
+      ceremony_reminders: {
+        Row: {
+          ceremony_type: string
+          created_at: string
+          id: string
+          project_id: string
+          reminder_message: string | null
+          scheduled_time: string
+          sent_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          ceremony_type: string
+          created_at?: string
+          id?: string
+          project_id: string
+          reminder_message?: string | null
+          scheduled_time: string
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          ceremony_type?: string
+          created_at?: string
+          id?: string
+          project_id?: string
+          reminder_message?: string | null
+          scheduled_time?: string
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ceremony_reminders_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dependencies: {
         Row: {
           created_at: string | null
