@@ -20,6 +20,8 @@ import { FilterControls } from "@/components/FilterControls";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
 import { HelpTooltip } from "@/components/HelpTooltip";
 import { SendReminderDialog } from "@/components/SendReminderDialog";
+import { ScheduleReminderDialog } from "@/components/ScheduleReminderDialog";
+import { ReminderManagement } from "@/components/ReminderManagement";
 import { Bell } from "lucide-react";
 
 export default function Dashboard() {
@@ -29,6 +31,7 @@ export default function Dashboard() {
   const [severityFilter, setSeverityFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [showReminderDialog, setShowReminderDialog] = useState(false);
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false);
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
@@ -130,7 +133,7 @@ export default function Dashboard() {
                 <p className="text-sm sm:text-base text-muted-foreground">Monitor performance with integrations</p>
               </div>
             </div>
-            <div className="flex gap-2 w-full sm:w-auto">
+            <div className="flex gap-2 w-full sm:w-auto flex-wrap">
               <Button 
                 onClick={() => setShowReminderDialog(true)} 
                 className="gap-2 flex-1 sm:flex-none" 
@@ -138,9 +141,17 @@ export default function Dashboard() {
                 variant="outline"
               >
                 <Bell className="w-4 h-4" />
-                <span className="sm:inline">Send Reminder</span>
+                <span className="sm:inline">Send Now</span>
               </Button>
-              <Button onClick={handleExportToPowerPoint} className="gap-2 flex-1 sm:flex-none" size="sm">
+              <Button 
+                onClick={() => setShowScheduleDialog(true)} 
+                className="gap-2 flex-1 sm:flex-none" 
+                size="sm"
+              >
+                <Calendar className="w-4 h-4" />
+                <span className="sm:inline">Schedule</span>
+              </Button>
+              <Button onClick={handleExportToPowerPoint} className="gap-2 flex-1 sm:flex-none" size="sm" variant="outline">
                 <FileDown className="w-4 h-4" />
                 <span className="sm:inline">Export</span>
               </Button>
@@ -353,16 +364,35 @@ export default function Dashboard() {
               </div>
             </>
           )}
+
+          {/* Reminder Management Section */}
+          <div className="mt-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Bell className="w-6 h-6 text-primary" />
+              <h2 className="text-2xl font-bold">Ceremony Reminders</h2>
+            </div>
+            <ReminderManagement projectId={selectedProject || undefined} />
+          </div>
         </div>
       </main>
 
       {selectedProject && projects.length > 0 && (
-        <SendReminderDialog
-          open={showReminderDialog}
-          onOpenChange={setShowReminderDialog}
-          projectId={selectedProject}
-          projectName={projects.find(p => p.id === selectedProject)?.name || "Project"}
-        />
+        <>
+          <SendReminderDialog
+            open={showReminderDialog}
+            onOpenChange={setShowReminderDialog}
+            projectId={selectedProject}
+            projectName={projects.find(p => p.id === selectedProject)?.name || "Project"}
+          />
+          <ScheduleReminderDialog
+            open={showScheduleDialog}
+            onOpenChange={setShowScheduleDialog}
+            projects={projects.map(p => ({ id: p.id, name: p.name }))}
+            onSuccess={() => {
+              setShowScheduleDialog(false);
+            }}
+          />
+        </>
       )}
     </div>
   );
