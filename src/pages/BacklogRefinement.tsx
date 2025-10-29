@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { IntegrationStatus } from "@/components/IntegrationStatus";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
@@ -139,6 +140,7 @@ const BacklogRefinement = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <div className="container mx-auto p-6 space-y-6">
+        <BackButton className="mb-4" />
         <div>
           <h1 className="text-3xl font-bold mb-2">Backlog Refinement Assistant</h1>
           <p className="text-muted-foreground">
