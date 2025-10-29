@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, TrendingUp, Clock, Zap, Network } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -97,6 +98,7 @@ export default function FlowMetrics() {
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
+        <BackButton className="mb-4" />
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8 animate-fade-in">
             <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
