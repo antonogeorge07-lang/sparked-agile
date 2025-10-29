@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeamManagement } from "@/components/TeamManagement";
+import { BackButton } from "@/components/BackButton";
 
 const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
 
@@ -229,6 +230,7 @@ export default function ProjectWorkspace() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
+          <BackButton className="mb-4" />
           <h1 className="text-4xl font-bold mb-2">Initialize Project Workspace</h1>
           <p className="text-muted-foreground">
             Set up your complete Agile project environment with integrated tools and ceremonies

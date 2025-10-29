@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useItemPresence } from "@/hooks/useItemPresence";
 import { CollaborationIndicator } from "@/components/CollaborationIndicator";
 import { HelpTooltip } from "@/components/HelpTooltip";
+import { BackButton } from "@/components/BackButton";
 
 interface Profile {
   id: string;
@@ -347,6 +348,7 @@ export default function Admin() {
       
       <main className="container mx-auto px-4 py-4 sm:py-8">
         <div className="max-w-6xl mx-auto">
+          <BackButton className="mb-4" />
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 animate-fade-in">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
