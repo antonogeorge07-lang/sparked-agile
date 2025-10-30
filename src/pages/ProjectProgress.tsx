@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TrendingUp, GitBranch, CheckCircle, Clock, Activity } from "lucide-react";
@@ -93,6 +94,7 @@ export default function ProjectProgress() {
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto">
+          <BackButton className="mb-4" />
           <div className="flex items-center gap-3 mb-8 animate-fade-in">
             <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-primary-foreground" />
