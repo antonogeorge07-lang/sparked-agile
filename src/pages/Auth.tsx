@@ -16,6 +16,42 @@ const authSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters").optional(),
 });
 
+// Client-side leaked password check using HIBP k-anonymity API
+async function sha1Hex(str: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
+async function getPwnedCount(password: string): Promise<number | 'error'> {
+  try {
+    if (!password || password.length < 6) return 0;
+    const hash = await sha1Hex(password);
+    const prefix = hash.slice(0, 5);
+    const suffix = hash.slice(5);
+
+    const res = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`, {
+      headers: { 'Add-Padding': 'true' },
+    });
+
+    if (!res.ok) return 'error';
+
+    const text = await res.text();
+    for (const line of text.split('\n')) {
+      const [hashSuffix, countStr] = line.trim().split(':');
+      if (hashSuffix === suffix) {
+        const count = parseInt(countStr, 10);
+        return isNaN(count) ? 1 : count;
+      }
+    }
+    return 0;
+  } catch {
+    return 'error';
+  }
+}
+
 export default function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -115,6 +151,27 @@ export default function Auth() {
 
     setIsLoading(true);
     try {
+      // Leaked password protection (client-side)
+      const pwnedCount = await getPwnedCount(password);
+      if (pwnedCount === 'error') {
+        toast({
+          title: "Password check unavailable",
+          description: "We couldn't verify your password against breach databases. Please try again or use a different password.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+      if (typeof pwnedCount === 'number' && pwnedCount > 0) {
+        toast({
+          title: "Insecure password detected",
+          description: "This password appears in known data breaches. Choose a different password.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -264,6 +321,27 @@ export default function Auth() {
 
     setIsLoading(true);
     try {
+      // Leaked password protection (client-side)
+      const pwnedCount = await getPwnedCount(newPassword);
+      if (pwnedCount === 'error') {
+        toast({
+          title: "Password check unavailable",
+          description: "We couldn't verify your new password against breach databases. Please try again later.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+      if (typeof pwnedCount === 'number' && pwnedCount > 0) {
+        toast({
+          title: "Insecure password detected",
+          description: "This password appears in known data breaches. Choose a different password.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
       const { error } = await supabase.auth.updateUser({ password: newPassword });
 
       if (error) throw error;
