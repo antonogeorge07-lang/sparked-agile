@@ -1262,6 +1262,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_integration_status: {
+        Args: { integration_id: string }
+        Returns: {
+          id: string
+          integration_type: string
+          is_active: boolean
+          last_tested: string
+        }[]
+      }
       check_user_role: {
         Args: {
           required_role: Database["public"]["Enums"]["app_role"]
@@ -1287,6 +1296,10 @@ export type Database = {
       is_admin: { Args: { user_id: string }; Returns: boolean }
       is_approved_user: { Args: { user_id: string }; Returns: boolean }
       is_pending_user: { Args: { user_id: string }; Returns: boolean }
+      toggle_integration_status: {
+        Args: { integration_id: string; new_status: boolean }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "member" | "pending"
