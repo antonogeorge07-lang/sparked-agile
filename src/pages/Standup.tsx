@@ -105,19 +105,25 @@ export default function Standup() {
 
       const { data: updates, error } = await supabase
         .from("standup_updates")
-        .select(`
-          *,
-          profiles:team_member_id (full_name)
-        `)
+        .select("*")
         .eq("project_id", selectedProject)
         .gte("created_at", today.toISOString())
         .order("created_at", { ascending: false });
 
       if (error) throw error;
 
+      // Get profile names separately
+      const userIds = updates?.map(u => u.team_member_id).filter(Boolean) || [];
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, full_name")
+        .in("id", userIds);
+
+      const profileMap = new Map(profiles?.map(p => [p.id, p.full_name]) || []);
+
       const formattedUpdates = updates?.map(update => ({
         id: update.id,
-        name: update.profiles?.full_name || "Unknown",
+        name: profileMap.get(update.team_member_id) || "Unknown",
         yesterday: update.yesterday,
         today: update.today,
         blockers: update.blockers || "",

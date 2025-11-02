@@ -164,7 +164,7 @@ serve(async (req) => {
             .from('ceremony_reminders')
             .update({ status: 'failed', sent_at: new Date().toISOString() })
             .eq('id', reminder.id);
-          return { id: reminder.id, success: false, error: error.message };
+          return { id: reminder.id, success: false, error: error instanceof Error ? error.message : 'Unknown error' };
         }
       })
     );
@@ -183,7 +183,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in send-scheduled-reminder:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

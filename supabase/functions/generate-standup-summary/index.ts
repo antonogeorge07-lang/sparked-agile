@@ -131,8 +131,8 @@ serve(async (req) => {
     const fullContent = data.choices[0].message.content;
 
     // Extract action items if requested
-    let summary = fullContent;
-    let actionItems = [];
+    let summary: string = fullContent;
+    let actionItems: Array<{title: string; priority: string; assignedTo: string}> = [];
     
     if (includeActionItems) {
       // Try to extract JSON from the response
