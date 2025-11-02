@@ -123,11 +123,16 @@ export default function Landing() {
       <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
                 <Target className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="font-bold text-base sm:text-xl">SM ActiveIntelligence</span>
+              <div className="flex flex-col items-start">
+                <span className="font-bold text-base sm:text-xl">SM ActiveIntelligence</span>
+                <span className="text-[10px] text-muted-foreground font-medium -mt-0.5">
+                  by Antono George
+                </span>
+              </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/auth" className="hidden sm:block">
@@ -156,9 +161,23 @@ export default function Landing() {
       <section className="py-12 sm:py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center space-y-4 sm:space-y-6 animate-fade-in">
-            <Badge className="mb-2 sm:mb-4" variant="secondary">
-              AI-Powered Scrum Master Assistant
-            </Badge>
+            <div className="flex flex-col items-center gap-3 mb-2">
+              <Badge className="gap-2" variant="secondary">
+                <Sparkles className="h-3 w-3 animate-pulse" />
+                AI-Powered Scrum Master Assistant
+              </Badge>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="hidden sm:inline">Crafted with excellence by</span>
+                <span className="sm:hidden">By</span>
+                <span className="font-semibold bg-gradient-primary bg-clip-text text-transparent">
+                  Antono George
+                </span>
+                <Badge variant="outline" className="gap-1 text-xs">
+                  <Star className="h-3 w-3 fill-current" />
+                  PM
+                </Badge>
+              </div>
+            </div>
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold px-4">
               Transform Your
               <span className="block bg-gradient-primary bg-clip-text text-transparent">
@@ -379,8 +398,25 @@ export default function Landing() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-border mt-12 pt-8 text-center text-sm text-muted-foreground">
-            © 2025 SM ActiveIntelligence. All rights reserved.
+          <div className="border-t border-border mt-12 pt-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+              <p className="text-muted-foreground">
+                © 2025 SM ActiveIntelligence. All rights reserved.
+              </p>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+                <span className="font-medium">
+                  Crafted with excellence by{" "}
+                  <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
+                    Antono George
+                  </span>
+                </span>
+                <Badge variant="secondary" className="ml-2 gap-1">
+                  <Star className="h-3 w-3 fill-current" />
+                  Product Manager
+                </Badge>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

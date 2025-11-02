@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity } from "lucide-react";
+import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -107,11 +107,16 @@ export const Navigation = () => {
     <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
               <Target className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-lg md:text-xl">SM ActiveInteligence</span>
+            <div className="flex flex-col">
+              <span className="font-bold text-lg md:text-xl">SM ActiveInteligence</span>
+              <span className="text-[10px] text-muted-foreground font-medium -mt-1">
+                by Antono George
+              </span>
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
