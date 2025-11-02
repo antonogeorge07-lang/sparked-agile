@@ -35,7 +35,7 @@ serve(async (req) => {
     }
 
     // Input validation
-    const { updates, projectId } = await req.json();
+    const { updates, projectId, includeActionItems } = await req.json();
     
     if (!updates || !Array.isArray(updates)) {
       throw new Error('Invalid input: updates must be an array');
@@ -92,6 +92,14 @@ serve(async (req) => {
       `${update.name}:\n- Yesterday: ${update.yesterday}\n- Today: ${update.today}\n- Blockers: ${update.blockers || 'None'}`
     ).join('\n\n');
 
+    const systemPrompt = includeActionItems 
+      ? "You are a helpful Scrum Master assistant. Generate concise, actionable daily standup summaries AND extract specific action items from blockers. Focus on progress, blockers, next steps, and actionable tasks."
+      : "You are a helpful Scrum Master assistant. Generate concise, actionable daily standup summaries. Focus on progress, blockers, and next steps.";
+
+    const userPrompt = includeActionItems
+      ? `Generate a professional standup summary from these team updates:\n\n${updatesText}\n\nProvide:\n1. Team progress highlights\n2. Today's focus areas\n3. Blockers requiring attention\n4. Suggested action items\n\nThen, extract specific action items in JSON format with this structure:\n{"actionItems": [{"title": "action description", "priority": "high|medium|low", "assignedTo": "team member name"}]}`
+      : `Generate a professional standup summary from these team updates:\n\n${updatesText}\n\nProvide:\n1. Team progress highlights\n2. Today's focus areas\n3. Blockers requiring attention\n4. Suggested action items`;
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -103,11 +111,11 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are a helpful Scrum Master assistant. Generate concise, actionable daily standup summaries. Focus on progress, blockers, and next steps."
+            content: systemPrompt
           },
           {
             role: "user",
-            content: `Generate a professional standup summary from these team updates:\n\n${updatesText}\n\nProvide:\n1. Team progress highlights\n2. Today's focus areas\n3. Blockers requiring attention\n4. Suggested action items`
+            content: userPrompt
           }
         ],
       }),
@@ -120,10 +128,32 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    const summary = data.choices[0].message.content;
+    const fullContent = data.choices[0].message.content;
+
+    // Extract action items if requested
+    let summary = fullContent;
+    let actionItems = [];
+    
+    if (includeActionItems) {
+      // Try to extract JSON from the response
+      const jsonMatch = fullContent.match(/\{[\s\S]*"actionItems"[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          const parsed = JSON.parse(jsonMatch[0]);
+          actionItems = parsed.actionItems || [];
+          // Remove JSON from summary
+          summary = fullContent.replace(jsonMatch[0], '').trim();
+        } catch (e) {
+          console.log("Could not parse action items JSON, continuing without them");
+        }
+      }
+    }
 
     return new Response(
-      JSON.stringify({ summary }),
+      JSON.stringify({ 
+        summary,
+        actionItems: includeActionItems ? actionItems : undefined
+      }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {

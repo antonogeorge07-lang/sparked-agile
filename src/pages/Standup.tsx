@@ -7,15 +7,28 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageSquare, Send, Sparkles, Loader2 } from "lucide-react";
+import { MessageSquare, Send, Sparkles, Loader2, Users, Clock, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { format } from "date-fns";
 
 interface StandupUpdate {
+  id?: string;
   name: string;
   yesterday: string;
   today: string;
   blockers: string;
+  created_at?: string;
+  team_member_id?: string;
+}
+
+interface ActionItem {
+  title: string;
+  priority: string;
+  assignedTo: string;
 }
 
 export default function Standup() {
@@ -24,10 +37,15 @@ export default function Standup() {
   const [today, setToday] = useState("");
   const [blockers, setBlockers] = useState("");
   const [teamUpdates, setTeamUpdates] = useState<StandupUpdate[]>([]);
+  const [todayUpdates, setTodayUpdates] = useState<StandupUpdate[]>([]);
   const [summary, setSummary] = useState("");
+  const [actionItems, setActionItems] = useState<ActionItem[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isLoadingTeam, setIsLoadingTeam] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [currentUserId, setCurrentUserId] = useState<string>("");
+  const [currentTab, setCurrentTab] = useState("my-update");
+  const [userProfile, setUserProfile] = useState<any>(null);
   const { toast } = useToast();
 
   const { data: integrations } = useProjectIntegrations(selectedProject);
@@ -46,20 +64,79 @@ export default function Standup() {
       }
       setCurrentUserId(user.id);
 
-      // Get user's project
-      const { data: project } = await supabase
-        .from("projects")
-        .select("id")
-        .eq("user_id", user.id)
-        .limit(1)
-        .maybeSingle();
+      // Get user profile
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name")
+        .eq("id", user.id)
+        .single();
+      
+      if (profile) {
+        setUserProfile(profile);
+        setName(profile.full_name || "");
+      }
 
-      if (project) {
-        setSelectedProject(project.id);
+      // Get user's project
+      const { data: memberProjects } = await supabase
+        .from("project_members")
+        .select("project_id")
+        .eq("user_id", user.id)
+        .limit(1);
+
+      if (memberProjects && memberProjects.length > 0) {
+        setSelectedProject(memberProjects[0].project_id);
       }
     };
     loadData();
   }, [toast]);
+
+  // Load today's team updates when switching to facilitator tab
+  useEffect(() => {
+    if (currentTab === "facilitator" && selectedProject) {
+      loadTodayTeamUpdates();
+    }
+  }, [currentTab, selectedProject]);
+
+  const loadTodayTeamUpdates = async () => {
+    setIsLoadingTeam(true);
+    try {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const { data: updates, error } = await supabase
+        .from("standup_updates")
+        .select(`
+          *,
+          profiles:team_member_id (full_name)
+        `)
+        .eq("project_id", selectedProject)
+        .gte("created_at", today.toISOString())
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      const formattedUpdates = updates?.map(update => ({
+        id: update.id,
+        name: update.profiles?.full_name || "Unknown",
+        yesterday: update.yesterday,
+        today: update.today,
+        blockers: update.blockers || "",
+        created_at: update.created_at,
+        team_member_id: update.team_member_id,
+      })) || [];
+
+      setTodayUpdates(formattedUpdates);
+    } catch (error: any) {
+      console.error("Error loading team updates:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load team updates.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingTeam(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,7 +187,9 @@ export default function Standup() {
   };
 
   const handleGenerateSummary = async () => {
-    if (teamUpdates.length === 0) {
+    const updates = currentTab === "facilitator" ? todayUpdates : teamUpdates;
+    
+    if (updates.length === 0) {
       toast({
         title: "No Updates",
         description: "Please add at least one team member's update first.",
@@ -122,21 +201,29 @@ export default function Standup() {
     setIsGenerating(true);
     try {
       const { data, error } = await supabase.functions.invoke('generate-standup-summary', {
-        body: { updates: teamUpdates }
+        body: { 
+          updates: updates,
+          projectId: selectedProject,
+          includeActionItems: true
+        }
       });
 
       if (error) throw error;
 
       setSummary(data.summary);
+      if (data.actionItems) {
+        setActionItems(data.actionItems);
+      }
+      
       toast({
         title: "Summary Generated",
-        description: "AI has analyzed the team updates.",
+        description: "AI has analyzed the team updates and identified action items.",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error generating summary:", error);
       toast({
         title: "Error",
-        description: "Failed to generate summary. Please try again.",
+        description: error.message || "Failed to generate summary. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -154,15 +241,21 @@ export default function Standup() {
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center gap-3 animate-fade-in">
-            <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <MessageSquare className="w-6 h-6 text-primary-foreground" />
+        <div className="max-w-6xl mx-auto space-y-6">
+          <div className="flex items-center justify-between animate-fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <MessageSquare className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold">Daily Standup Facilitator</h1>
+                <p className="text-muted-foreground">Submit updates and manage team standups with AI</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold">Daily Standup</h1>
-              <p className="text-muted-foreground">Submit your daily update and sync with JIRA</p>
-            </div>
+            <Badge variant="secondary" className="gap-2">
+              <Clock className="w-3 h-3" />
+              {format(new Date(), "MMM dd, yyyy")}
+            </Badge>
           </div>
 
           {integrations && selectedProject && (
@@ -175,7 +268,19 @@ export default function Standup() {
             />
           )}
 
-          <div className="grid gap-6">
+          <Tabs value={currentTab} onValueChange={setCurrentTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="my-update" className="gap-2">
+                <Send className="w-4 h-4" />
+                My Update
+              </TabsTrigger>
+              <TabsTrigger value="facilitator" className="gap-2">
+                <Users className="w-4 h-4" />
+                Team Facilitator
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="my-update" className="space-y-6 mt-6">
             <Card className="shadow-card">
               <CardHeader>
                 <CardTitle>Your Update</CardTitle>
@@ -320,7 +425,162 @@ export default function Standup() {
                 </CardContent>
               </Card>
             )}
-          </div>
+            </TabsContent>
+
+            <TabsContent value="facilitator" className="space-y-6 mt-6">
+              <Card className="shadow-card">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        <Users className="w-5 h-5" />
+                        Today's Team Updates
+                      </CardTitle>
+                      <CardDescription>
+                        View and manage standup updates from all team members
+                      </CardDescription>
+                    </div>
+                    <Button onClick={loadTodayTeamUpdates} variant="outline" size="sm" disabled={isLoadingTeam}>
+                      {isLoadingTeam ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        "Refresh"
+                      )}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {isLoadingTeam ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : todayUpdates.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                      <p>No team updates yet today</p>
+                      <p className="text-sm mt-1">Updates will appear here as team members submit them</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {todayUpdates.map((update) => (
+                        <Card key={update.id} className="border-l-4 border-l-primary">
+                          <CardHeader className="pb-3">
+                            <div className="flex items-center justify-between">
+                              <CardTitle className="text-base">{update.name}</CardTitle>
+                              <Badge variant="outline" className="text-xs">
+                                {update.created_at && format(new Date(update.created_at), "HH:mm")}
+                              </Badge>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-3 text-sm">
+                            <div>
+                              <p className="font-medium text-muted-foreground mb-1">✅ Yesterday:</p>
+                              <p className="text-foreground">{update.yesterday}</p>
+                            </div>
+                            <Separator />
+                            <div>
+                              <p className="font-medium text-muted-foreground mb-1">🎯 Today:</p>
+                              <p className="text-foreground">{update.today}</p>
+                            </div>
+                            {update.blockers && (
+                              <>
+                                <Separator />
+                                <div>
+                                  <p className="font-medium text-destructive mb-1 flex items-center gap-1">
+                                    <AlertCircle className="w-3 h-3" />
+                                    Blockers:
+                                  </p>
+                                  <p className="text-foreground">{update.blockers}</p>
+                                </div>
+                              </>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))}
+
+                      <div className="pt-4">
+                        <Button 
+                          onClick={handleGenerateSummary} 
+                          disabled={isGenerating}
+                          className="w-full gap-2"
+                          size="lg"
+                        >
+                          {isGenerating ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Generating AI Summary...
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-4 h-4" />
+                              Generate Team Summary & Action Items
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {summary && (
+                <>
+                  <Card className="shadow-card bg-gradient-primary/5 border-primary/20">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-secondary" />
+                        AI Team Summary
+                      </CardTitle>
+                      <CardDescription>
+                        Powered by Lovable AI
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="prose prose-sm max-w-none whitespace-pre-wrap">
+                        {summary}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {actionItems.length > 0 && (
+                    <Card className="shadow-card border-secondary/20">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <CheckCircle2 className="w-5 h-5 text-secondary" />
+                          Extracted Action Items
+                        </CardTitle>
+                        <CardDescription>
+                          AI-identified actions from blockers and updates
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-3">
+                          {actionItems.map((item, index) => (
+                            <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                              <Badge 
+                                variant={item.priority === "high" ? "destructive" : item.priority === "medium" ? "default" : "secondary"}
+                                className="mt-0.5"
+                              >
+                                {item.priority}
+                              </Badge>
+                              <div className="flex-1">
+                                <p className="font-medium">{item.title}</p>
+                                {item.assignedTo && (
+                                  <p className="text-sm text-muted-foreground mt-1">
+                                    Assigned to: {item.assignedTo}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </>
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </div>
