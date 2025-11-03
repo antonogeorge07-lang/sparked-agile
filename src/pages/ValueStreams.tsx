@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GitBranch, Plus, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -149,18 +150,21 @@ export default function ValueStreams() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="project">Project</Label>
-                  <select
-                    id="project"
-                    className="w-full px-3 py-2 rounded-md border bg-background"
-                    value={selectedProject || ""}
-                    onChange={(e) => setSelectedProject(e.target.value)}
+                  <Select 
+                    value={selectedProject || ""} 
+                    onValueChange={setSelectedProject}
                   >
-                    {projects.map((project) => (
-                      <option key={project.id} value={project.id}>
-                        {project.name}
-                      </option>
-                    ))}
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a project" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {projects.map((project) => (
+                        <SelectItem key={project.id} value={project.id}>
+                          {project.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="space-y-2">

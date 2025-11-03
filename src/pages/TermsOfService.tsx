@@ -1,29 +1,26 @@
-import { Button } from "@/components/ui/button";
+import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { FileText } from "lucide-react";
 
 export default function TermsOfService() {
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-2">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Home
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gradient-subtle">
+      <Navigation />
 
       <main className="container mx-auto px-4 py-12 max-w-4xl">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-4xl">Terms of Service</CardTitle>
+        <div className="flex items-center gap-3 mb-8 animate-fade-in">
+          <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shadow-elegant">
+            <FileText className="w-6 h-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-4xl font-bold">Terms of Service</h1>
             <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+          </div>
+        </div>
+
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="text-2xl">Legal Agreement</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-slate dark:prose-invert max-w-none">
             <section className="mb-8">

@@ -4,12 +4,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Activity, Users, Zap, DollarSign, TrendingUp, Calendar } from "lucide-react";
+import { Activity, Users, Zap, DollarSign } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"];
+// Use semantic colors from design system
+const CHART_COLORS = [
+  "hsl(var(--primary))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+];
 
 export default function UsageAnalytics() {
   const [timeRange, setTimeRange] = useState("7d");
@@ -218,12 +225,18 @@ export default function UsageAnalytics() {
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={dailyAIData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
+                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                    <XAxis dataKey="date" className="text-xs" />
+                    <YAxis className="text-xs" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem'
+                      }}
+                    />
                     <Legend />
-                    <Line type="monotone" dataKey="calls" stroke="#3b82f6" strokeWidth={2} />
+                    <Line type="monotone" dataKey="calls" stroke="hsl(var(--primary))" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -239,12 +252,18 @@ export default function UsageAnalytics() {
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={actionsData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="action" />
-                    <YAxis />
-                    <Tooltip />
+                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                    <XAxis dataKey="action" className="text-xs" />
+                    <YAxis className="text-xs" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem'
+                      }}
+                    />
                     <Legend />
-                    <Bar dataKey="count" fill="#10b981" />
+                    <Bar dataKey="count" fill="hsl(var(--chart-2))" />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -271,7 +290,7 @@ export default function UsageAnalytics() {
                       dataKey="value"
                     >
                       {modelData.map((entry: any, index: number) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                       ))}
                     </Pie>
                     <Tooltip />
@@ -291,7 +310,7 @@ export default function UsageAnalytics() {
                       <div className="flex items-center gap-3">
                         <div
                           className="w-4 h-4 rounded"
-                          style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                          style={{ backgroundColor: CHART_COLORS[index % CHART_COLORS.length] }}
                         />
                         <span className="font-medium">{model.name}</span>
                       </div>
