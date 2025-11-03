@@ -215,6 +215,160 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Value Proposition Section */}
+      <section className="py-20 px-4 bg-card/50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Built for Modern Agile Teams
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              Whether you're running sprints, managing stakeholders, or driving project success, 
+              SM ActiveIntelligence adapts to your workflow and amplifies your impact
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* For Scrum Masters */}
+            <Card className="border-2 hover:shadow-elegant transition-all">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-2xl">For Scrum Masters</CardTitle>
+                <CardDescription className="text-base">
+                  Orchestrate ceremonies with confidence
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Automate standup summaries and track blockers in real-time
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Generate sprint plans from JIRA with AI-powered velocity analysis
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Run productive retrospectives with anonymous feedback and AI insights
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Schedule and coordinate all ceremonies with Outlook integration
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* For Project Managers */}
+            <Card className="border-2 hover:shadow-elegant transition-all border-primary/50">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center mb-4">
+                  <Target className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <CardTitle className="text-2xl">For Project Managers</CardTitle>
+                <CardDescription className="text-base">
+                  Drive projects to successful completion
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Monitor project health with flow metrics and burndown charts
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Identify risks early with AI-powered backlog analysis
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Track team velocity and predictability across multiple sprints
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Generate executive-ready reports with one click
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* For Stakeholders */}
+            <Card className="border-2 hover:shadow-elegant transition-all">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Shield className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-2xl">For Stakeholders</CardTitle>
+                <CardDescription className="text-base">
+                  Stay informed without the noise
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Access real-time dashboards showing project progress and milestones
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Review sprint outcomes and team achievements at a glance
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Get automated summaries and insights without attending every meeting
+                  </p>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    Make data-driven decisions with AI-generated recommendations
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Key Stats */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="space-y-2">
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">85%</p>
+              <p className="text-sm text-muted-foreground">Less time in ceremonies</p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">3x</p>
+              <p className="text-sm text-muted-foreground">Faster sprint planning</p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">40%</p>
+              <p className="text-sm text-muted-foreground">Velocity improvement</p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">100%</p>
+              <p className="text-sm text-muted-foreground">Team satisfaction</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
