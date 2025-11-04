@@ -9,6 +9,16 @@ import { Target, Loader2, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const authSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -62,6 +72,8 @@ export default function Auth() {
   const [showUpdatePassword, setShowUpdatePassword] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showExistingUserDialog, setShowExistingUserDialog] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("signin");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -161,12 +173,10 @@ export default function Auth() {
       });
 
       if (error) {
-        if (error.message.includes("already registered")) {
-          toast({
-            title: "Account exists",
-            description: "This email is already registered. Please sign in instead.",
-            variant: "destructive",
-          });
+        if (error.message.includes("already registered") || error.message.includes("User already registered")) {
+          setShowExistingUserDialog(true);
+          setIsLoading(false);
+          return;
         } else {
           throw error;
         }
@@ -416,6 +426,38 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
+      <AlertDialog open={showExistingUserDialog} onOpenChange={setShowExistingUserDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Account Already Exists</AlertDialogTitle>
+            <AlertDialogDescription>
+              An account with the email <strong>{email}</strong> already exists. 
+              Would you like to sign in or recover your password?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setShowExistingUserDialog(false);
+                setActiveTab("signin");
+              }}
+            >
+              Sign In
+            </AlertDialogAction>
+            <AlertDialogAction
+              onClick={() => {
+                setShowExistingUserDialog(false);
+                setActiveTab("signin");
+                setShowForgotPassword(true);
+              }}
+            >
+              Recover Password
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <Card className="w-full max-w-md shadow-elevated">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -427,7 +469,7 @@ export default function Auth() {
           <CardDescription>Sign in to your account or create a new one</CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="signin" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
