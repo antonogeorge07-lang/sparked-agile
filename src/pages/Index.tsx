@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
 import { DemoModal } from "@/components/DemoModal";
+import { DemoModeButton } from "@/components/DemoModeButton";
+import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const Index = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showDemoModal, setShowDemoModal] = useState(false);
+  const [showEmailCapture, setShowEmailCapture] = useState(false);
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
@@ -96,6 +99,12 @@ const Index = () => {
         onClose={() => setShowDemoModal(false)} 
       />
       
+      <EmailCaptureForm 
+        isOpen={showEmailCapture} 
+        onClose={() => setShowEmailCapture(false)}
+        context="newsletter"
+      />
+      
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
@@ -118,6 +127,7 @@ const Index = () => {
                     Get Started
                     <ArrowRight className="w-4 h-4" />
                   </Button>
+                  <DemoModeButton />
                   <Button 
                     size="lg" 
                     variant="outline" 

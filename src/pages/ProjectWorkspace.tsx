@@ -10,6 +10,8 @@ import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeamManagement } from "@/components/TeamManagement";
 import { BackButton } from "@/components/BackButton";
+import { CelebrationModal } from "@/components/CelebrationModal";
+import { ProgressTracker } from "@/components/ProgressTracker";
 
 export default function ProjectWorkspace() {
   const [searchParams] = useSearchParams();
@@ -33,6 +35,12 @@ export default function ProjectWorkspace() {
   const [githubConnected, setGithubConnected] = useState(false);
   const [outlookConnected, setOutlookConnected] = useState(false);
   const [teamsConnected, setTeamsConnected] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationConfig, setCelebrationConfig] = useState({
+    title: "",
+    description: "",
+    nextAction: undefined as { label: string; onClick: () => void } | undefined
+  });
 
   useEffect(() => {
     // Load user's projects
@@ -240,19 +248,42 @@ export default function ProjectWorkspace() {
 
   const completeSetup = () => {
     localStorage.setItem("workspace_setup_completed", "true");
-    toast.success("Project workspace is ready for Sprint 1!");
-    navigate("/dashboard");
+    setCelebrationConfig({
+      title: "🎉 Workspace Ready!",
+      description: "Your project workspace is fully configured and ready for Sprint 1. Let's start building something amazing!",
+      nextAction: {
+        label: "Go to Dashboard",
+        onClick: () => navigate("/dashboard")
+      }
+    });
+    setShowCelebration(true);
   };
+
+  // Progress tracking
+  const progressSteps = [
+    { id: "workspace", title: "Workspace Created", completed: !!workspaceId },
+    { id: "outlook", title: "Outlook Connected", completed: outlookConnected },
+    { id: "jira", title: "JIRA Connected", completed: jiraConnected },
+    { id: "github", title: "GitHub Connected", completed: githubConnected },
+    { id: "teams", title: "Teams Channel Setup", completed: teamsConnected }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <BackButton className="mb-4" />
-          <h1 className="text-4xl font-bold mb-2">Initialize Project Workspace</h1>
-          <p className="text-muted-foreground">
-            Set up your complete Agile project environment with integrated tools and ceremonies
-          </p>
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Initialize Project Workspace</h1>
+              <p className="text-muted-foreground">
+                Set up your complete Agile project environment with integrated tools and ceremonies
+              </p>
+            </div>
+            <div className="md:w-80">
+              <ProgressTracker steps={progressSteps} currentStep={currentStep - 1} />
+            </div>
+          </div>
         </div>
 
         <Tabs value={`step${currentStep}`} onValueChange={(v) => setCurrentStep(parseInt(v.replace("step", "")))}>
@@ -341,21 +372,38 @@ export default function ProjectWorkspace() {
                   </div>
                 </div>
 
-                <Button
-                  onClick={initializeWorkspace}
-                  disabled={loading || !workspaceName || !outlookConnected}
-                  className="w-full"
-                  size="lg"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Initializing...
-                    </>
-                  ) : (
-                    "Initialize Workspace & Create Ceremonies"
+                <div className="space-y-3">
+                  <Button
+                    onClick={initializeWorkspace}
+                    disabled={loading || !workspaceName}
+                    className="w-full"
+                    size="lg"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Initializing...
+                      </>
+                    ) : (
+                      "Initialize Workspace"
+                    )}
+                  </Button>
+                  
+                  {!outlookConnected && (
+                    <p className="text-sm text-center text-muted-foreground">
+                      💡 Outlook connection is optional - you can set it up later
+                    </p>
                   )}
-                </Button>
+                  
+                  <Button
+                    onClick={() => setCurrentStep(2)}
+                    variant="ghost"
+                    className="w-full"
+                    disabled={loading}
+                  >
+                    Skip to Integrations Setup
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -443,13 +491,28 @@ export default function ProjectWorkspace() {
                   </div>
                 </div>
 
-                <Button
-                  onClick={() => setCurrentStep(3)}
-                  className="w-full"
-                  size="lg"
-                >
-                  Continue to Team Management
-                </Button>
+                <div className="space-y-3">
+                  <Button
+                    onClick={() => setCurrentStep(3)}
+                    className="w-full"
+                    size="lg"
+                  >
+                    Continue to Team Management
+                  </Button>
+                  
+                  <Button
+                    onClick={() => setCurrentStep(4)}
+                    variant="outline"
+                    className="w-full"
+                    size="sm"
+                  >
+                    Skip to Review (Optional integrations)
+                  </Button>
+                  
+                  <p className="text-sm text-center text-muted-foreground">
+                    💡 All tool integrations are optional and can be configured later
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -560,6 +623,14 @@ export default function ProjectWorkspace() {
           </TabsContent>
         </Tabs>
       </div>
+      
+      <CelebrationModal
+        isOpen={showCelebration}
+        onClose={() => setShowCelebration(false)}
+        title={celebrationConfig.title}
+        description={celebrationConfig.description}
+        nextAction={celebrationConfig.nextAction}
+      />
     </div>
   );
 }

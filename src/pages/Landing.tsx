@@ -5,13 +5,35 @@ import { Check, Sparkles, Target, Zap, Users, Shield, ArrowRight, Star, Quote } 
 import { Link, useNavigate } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModal } from "@/components/DemoModal";
+import { DemoModeButton } from "@/components/DemoModeButton";
+import { EmailCaptureForm } from "@/components/EmailCaptureForm";
+import { TrustBadges } from "@/components/TrustBadges";
+import { CompanyLogos } from "@/components/CompanyLogos";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [showEmailCapture, setShowEmailCapture] = useState(false);
+  const [emailContext, setEmailContext] = useState<"early_access" | "newsletter" | "beta" | "exit_intent">("newsletter");
   const navigate = useNavigate();
+
+  // Exit intent detection
+  useEffect(() => {
+    let exitIntentShown = false;
+    
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0 && !exitIntentShown) {
+        exitIntentShown = true;
+        setEmailContext("exit_intent");
+        setShowEmailCapture(true);
+      }
+    };
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+    return () => document.removeEventListener('mouseleave', handleMouseLeave);
+  }, []);
 
   useEffect(() => {
     // Redirect authenticated users
@@ -213,6 +235,7 @@ export default function Landing() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
+              <DemoModeButton />
               <Button 
                 size="lg" 
                 variant="outline" 
@@ -225,7 +248,33 @@ export default function Landing() {
                 Watch Demo
               </Button>
             </div>
+            
+            <div className="mt-6 text-center">
+              <button 
+                onClick={() => {
+                  setEmailContext("early_access");
+                  setShowEmailCapture(true);
+                }}
+                className="text-sm text-primary hover:underline"
+              >
+                🎁 Get early access to beta features
+              </button>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="py-8 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <TrustBadges />
+        </div>
+      </section>
+
+      {/* Company Logos */}
+      <section className="py-12 px-4 bg-card/50">
+        <div className="container mx-auto max-w-6xl">
+          <CompanyLogos />
         </div>
       </section>
 
@@ -588,6 +637,13 @@ export default function Landing() {
           </div>
         </div>
       </footer>
+
+      <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
+      <EmailCaptureForm 
+        isOpen={showEmailCapture} 
+        onClose={() => setShowEmailCapture(false)}
+        context={emailContext}
+      />
     </div>
   );
 }
