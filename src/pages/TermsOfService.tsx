@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 
@@ -8,6 +9,7 @@ export default function TermsOfService() {
       <Navigation />
 
       <main className="container mx-auto px-4 py-12 max-w-4xl">
+        <BackButton fallbackPath="/" className="mb-6" />
         <div className="flex items-center gap-3 mb-8 animate-fade-in">
           <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shadow-elegant">
             <FileText className="w-6 h-6 text-primary-foreground" />

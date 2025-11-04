@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { IntegrationStatus } from "@/components/IntegrationStatus";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
@@ -248,6 +249,7 @@ export default function Standup() {
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-6">
+          <BackButton className="mb-4" />
           <div className="flex items-center justify-between animate-fade-in">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">

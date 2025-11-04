@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import {
   Accordion,
   AccordionContent,
@@ -19,6 +20,7 @@ export default function FAQ() {
       
       <main className="container mx-auto px-4 py-12 mt-16">
         <div className="max-w-4xl mx-auto">
+          <BackButton className="mb-6" />
           <div className="text-center mb-12">
             <HelpCircle className="h-12 w-12 mx-auto mb-4 text-primary" />
             <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
