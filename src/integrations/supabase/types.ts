@@ -1265,6 +1265,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_user: { Args: { user_id_param: string }; Returns: undefined }
       can_create_project: { Args: { user_id_param: string }; Returns: boolean }
       check_integration_status: {
         Args: { integration_id: string }

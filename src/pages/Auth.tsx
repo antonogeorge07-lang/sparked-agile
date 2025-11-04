@@ -91,27 +91,21 @@ export default function Auth() {
       if (event === 'PASSWORD_RECOVERY') {
         setShowUpdatePassword(true);
       } else if (session && event === 'SIGNED_IN') {
-        // Initialize free trial subscription for new users
-        const { data: existingSub } = await supabase
-          .from('user_subscriptions')
-          .select('id')
-          .eq('user_id', session.user.id)
+        // Check user approval status
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
           .single();
 
-        if (!existingSub) {
-          const { data: freeTier } = await supabase
-            .from('subscription_tiers')
-            .select('id')
-            .eq('name', 'Free')
-            .single();
-
-          if (freeTier) {
-            await supabase.from('user_subscriptions').insert({
-              user_id: session.user.id,
-              tier_id: freeTier.id,
-              status: 'trial'
-            });
-          }
+        if (profile?.role === 'pending') {
+          await supabase.auth.signOut();
+          toast({
+            title: "Account Pending Approval",
+            description: "Your account is awaiting admin approval. You'll be notified once approved.",
+            variant: "default",
+          });
+          return;
         }
 
         // Check if user has seen onboarding
@@ -195,8 +189,8 @@ export default function Auth() {
         }
       } else {
         toast({
-          title: "Check your email!",
-          description: "We've sent you a verification link. Please verify your email, then your account will be pending admin approval.",
+          title: "Registration Successful!",
+          description: "Your account has been created and is pending admin approval. You'll be notified when you can sign in.",
         });
         // Clear form
         setEmail("");
@@ -246,16 +240,21 @@ export default function Auth() {
         if (profile?.role === 'pending') {
           await supabase.auth.signOut();
           toast({
-            title: "Account pending approval",
-            description: "Your account is awaiting admin approval. Please contact an administrator.",
-            variant: "destructive",
+            title: "Account Pending Approval",
+            description: "Your account is still awaiting admin approval. You'll receive notification once approved.",
+            variant: "default",
           });
-        } else {
-          toast({
-            title: "Welcome back!",
-            description: "Successfully signed in.",
-          });
+          return;
         }
+        
+        toast({
+          title: "Welcome back!",
+          description: "Successfully signed in.",
+        });
+        
+        // Navigate after successful auth check
+        const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
+        navigate(hasSeenOnboarding ? "/workflows" : "/");
       }
     } catch (error: any) {
       toast({

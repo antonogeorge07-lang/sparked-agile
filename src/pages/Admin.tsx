@@ -3,7 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, CheckCircle, XCircle, Clock, Users, Search, Check } from "lucide-react";
+import { Shield, CheckCircle, XCircle, Clock, Users, Search, Check, Bell } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { useItemPresence } from "@/hooks/useItemPresence";
 import { CollaborationIndicator } from "@/components/CollaborationIndicator";
 import { HelpTooltip } from "@/components/HelpTooltip";
 import { BackButton } from "@/components/BackButton";
+import { ApproveUsersDialog } from "@/components/ApproveUsersDialog";
 
 interface Profile {
   id: string;
@@ -119,6 +120,7 @@ export default function Admin() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterRole, setFilterRole] = useState<"all" | "pending" | "member" | "admin">("all");
+  const [showApproveDialog, setShowApproveDialog] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -359,12 +361,26 @@ export default function Admin() {
                 <p className="text-sm sm:text-base text-muted-foreground">Manage user access and permissions</p>
               </div>
             </div>
-            {pendingCount > 0 && (
-              <Button onClick={bulkApproveUsers} className="gap-2 w-full sm:w-auto" size="sm">
-                <Check className="h-4 w-4" />
-                Approve All ({pendingCount})
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {pendingCount > 0 && (
+                <>
+                  <Button 
+                    onClick={() => setShowApproveDialog(true)} 
+                    className="gap-2" 
+                    size="sm"
+                    variant="outline"
+                  >
+                    <Bell className="h-4 w-4" />
+                    <span className="hidden sm:inline">Review Pending</span>
+                    <Badge variant="secondary" className="ml-1">{pendingCount}</Badge>
+                  </Button>
+                  <Button onClick={bulkApproveUsers} className="gap-2" size="sm">
+                    <Check className="h-4 w-4" />
+                    <span className="hidden sm:inline">Approve All</span>
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-3 mb-6 sm:mb-8">
@@ -450,6 +466,12 @@ export default function Admin() {
           </Card>
         </div>
       </main>
+      
+      <ApproveUsersDialog
+        open={showApproveDialog}
+        onOpenChange={setShowApproveDialog}
+        onUserApproved={loadProfiles}
+      />
     </div>
   );
 }
