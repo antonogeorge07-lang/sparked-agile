@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
+import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 // Eager load critical pages
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -57,6 +58,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <AnalyticsProvider>
+              <PerformanceMonitor />
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />

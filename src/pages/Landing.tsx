@@ -2,14 +2,28 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Target, Zap, Users, Shield, ArrowRight, Star, Quote } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModal } from "@/components/DemoModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect authenticated users
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
+        navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
   
   const features = [
     {

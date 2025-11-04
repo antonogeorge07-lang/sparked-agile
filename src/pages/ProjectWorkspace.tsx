@@ -232,6 +232,7 @@ export default function ProjectWorkspace() {
   };
 
   const completeSetup = () => {
+    localStorage.setItem("workspace_setup_completed", "true");
     toast.success("Project workspace is ready for Sprint 1!");
     navigate("/dashboard");
   };
