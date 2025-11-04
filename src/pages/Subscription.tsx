@@ -15,6 +15,7 @@ interface SubscriptionTier {
   price_yearly: number;
   workspace_limit: number;
   team_member_limit: number;
+  project_limit: number;
   features: string[];
 }
 
@@ -63,6 +64,7 @@ export default function Subscription() {
         price_yearly: tier.price_yearly,
         workspace_limit: tier.workspace_limit,
         team_member_limit: tier.team_member_limit,
+        project_limit: tier.project_limit || 1,
         features: (Array.isArray(tier.features) ? tier.features : []) as string[]
       }));
       
@@ -183,6 +185,9 @@ export default function Subscription() {
                         <span className="text-muted-foreground ml-2">
                           /{billingPeriod === 'monthly' ? 'month' : 'year'}
                         </span>
+                      </div>
+                      <div className="mt-4 text-sm text-muted-foreground">
+                        Up to {tier.project_limit === 9999 ? 'unlimited' : tier.project_limit} projects
                       </div>
                     </CardDescription>
                   </CardHeader>

@@ -1009,6 +1009,7 @@ export type Database = {
           name: string
           price_monthly: number | null
           price_yearly: number | null
+          project_limit: number
           stripe_price_id: string | null
           team_member_limit: number
           updated_at: string
@@ -1022,6 +1023,7 @@ export type Database = {
           name: string
           price_monthly?: number | null
           price_yearly?: number | null
+          project_limit?: number
           stripe_price_id?: string | null
           team_member_limit: number
           updated_at?: string
@@ -1035,6 +1037,7 @@ export type Database = {
           name?: string
           price_monthly?: number | null
           price_yearly?: number | null
+          project_limit?: number
           stripe_price_id?: string | null
           team_member_limit?: number
           updated_at?: string
@@ -1262,6 +1265,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_create_project: { Args: { user_id_param: string }; Returns: boolean }
       check_integration_status: {
         Args: { integration_id: string }
         Returns: {
@@ -1277,6 +1281,15 @@ export type Database = {
           user_id: string
         }
         Returns: boolean
+      }
+      get_project_limit_info: {
+        Args: { user_id_param: string }
+        Returns: {
+          can_create: boolean
+          current_count: number
+          limit_count: number
+          tier_name: string
+        }[]
       }
       get_safe_integration_info: {
         Args: { integration_id: string }

@@ -6,16 +6,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Zap, Loader2, CheckCircle, AlertCircle, Clock, Filter } from "lucide-react";
+import { Zap, Loader2, CheckCircle, AlertCircle, Clock, Filter, Crown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionChart";
 import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
+import { useProjectLimits } from "@/hooks/useProjectLimits";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface ActionItem {
   title: string;
@@ -41,6 +43,7 @@ export default function Workflows() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { activeUsers } = useRealtimePresence('/workflows');
+  const { currentCount, limitCount, canCreate, tierName, refresh: refreshLimits } = useProjectLimits();
 
   useEffect(() => {
     checkAuth();
@@ -112,6 +115,16 @@ export default function Workflows() {
       return;
     }
 
+    // Check if user can create more projects
+    if (!canCreate) {
+      toast({
+        title: "Project Limit Reached",
+        description: `You've reached your ${tierName} plan limit of ${limitCount} projects. Upgrade to create more!`,
+        variant: "destructive",
+      });
+      return;
+    }
+
     const { data, error } = await supabase
       .from('projects')
       .insert({ 
@@ -140,6 +153,7 @@ export default function Workflows() {
         });
 
       setProjectId(data.id);
+      await refreshLimits();
       toast({
         title: "Project Created",
         description: `Project "${projectName}" created successfully`,
@@ -278,26 +292,53 @@ export default function Workflows() {
             {/* Input Section */}
             <div className="space-y-6">
               {!projectId ? (
-                <Card className="shadow-card">
-                  <CardHeader>
-                    <CardTitle>Create Project</CardTitle>
-                    <CardDescription>Start by creating a project to organize your workflows</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="project-name">Project Name</Label>
-                      <Input
-                        id="project-name"
-                        placeholder="My Agile Team"
-                        value={projectName}
-                        onChange={(e) => setProjectName(e.target.value)}
-                      />
-                    </div>
-                    <Button onClick={createProject} className="w-full">
-                      Create Project
-                    </Button>
-                  </CardContent>
-                </Card>
+                <>
+                  {/* Project Limit Alert */}
+                  {!canCreate && currentCount !== undefined && limitCount !== undefined && (
+                    <Alert className="mb-4 border-primary/50 bg-primary/10">
+                      <Crown className="h-4 w-4" />
+                      <AlertTitle>Project Limit Reached</AlertTitle>
+                      <AlertDescription>
+                        You've reached your {tierName} plan limit of {limitCount} projects ({currentCount}/{limitCount}).
+                        <Link to="/subscription" className="font-medium underline ml-1">
+                          Upgrade now
+                        </Link> to create more projects!
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  <Card className="shadow-card">
+                    <CardHeader>
+                      <CardTitle>Create Project</CardTitle>
+                      <CardDescription>
+                        {currentCount !== undefined && limitCount !== undefined && (
+                          <span className="text-sm">
+                            {currentCount}/{limitCount} projects used on {tierName} plan
+                          </span>
+                        )}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="project-name">Project Name</Label>
+                        <Input
+                          id="project-name"
+                          placeholder="My Agile Team"
+                          value={projectName}
+                          onChange={(e) => setProjectName(e.target.value)}
+                          disabled={!canCreate}
+                        />
+                      </div>
+                      <Button 
+                        onClick={createProject} 
+                        className="w-full"
+                        disabled={!canCreate}
+                      >
+                        {!canCreate ? 'Upgrade to Create More' : 'Create Project'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </>
               ) : (
                 <>
                   <Card className="shadow-card bg-gradient-primary/5 border-primary/20">
