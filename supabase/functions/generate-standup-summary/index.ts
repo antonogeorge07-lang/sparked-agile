@@ -7,6 +7,27 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Rate limiting
+const rateLimiter = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(userId: string, maxRequests: number, windowMs: number) {
+  const now = Date.now();
+  const userLimit = rateLimiter.get(userId);
+  
+  if (!userLimit || now > userLimit.resetAt) {
+    rateLimiter.set(userId, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  
+  if (userLimit.count >= maxRequests) {
+    const waitSeconds = Math.ceil((userLimit.resetAt - now) / 1000);
+    throw new Error(`Rate limit exceeded. Try again in ${waitSeconds} seconds`);
+  }
+  
+  userLimit.count++;
+  return true;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -33,6 +54,9 @@ serve(async (req) => {
     if (userError || !user) {
       throw new Error('Unauthorized: Invalid token');
     }
+
+    // Rate limiting: 10 requests per minute for AI functions
+    checkRateLimit(user.id, 10, 60000);
 
     // Input validation
     const { updates, projectId, includeActionItems } = await req.json();

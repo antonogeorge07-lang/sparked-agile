@@ -1,10 +1,37 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Rate limiting
+const rateLimiter = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(userId: string, maxRequests: number, windowMs: number) {
+  const now = Date.now();
+  const userLimit = rateLimiter.get(userId);
+  
+  if (!userLimit || now > userLimit.resetAt) {
+    rateLimiter.set(userId, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  
+  if (userLimit.count >= maxRequests) {
+    const waitSeconds = Math.ceil((userLimit.resetAt - now) / 1000);
+    throw new Error(`Rate limit exceeded. Try again in ${waitSeconds} seconds`);
+  }
+  
+  userLimit.count++;
+  return true;
+}
+
+// Input validation schema
+const analyzeBacklogSchema = z.object({
+  projectId: z.string().uuid("Invalid project ID format"),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -32,11 +59,12 @@ serve(async (req) => {
       throw new Error('Unauthorized: Invalid token');
     }
 
-    const { projectId } = await req.json();
-    
-    if (!projectId) {
-      throw new Error('Project ID is required');
-    }
+    // Rate limiting: 10 requests per minute for AI functions
+    checkRateLimit(user.id, 10, 60000);
+
+    // Validate input
+    const rawInput = await req.json();
+    const { projectId } = analyzeBacklogSchema.parse(rawInput);
 
     // Verify user has access to project
     const { data: membership, error: memberError } = await supabase

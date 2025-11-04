@@ -1,23 +1,46 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface AddTeamMemberRequest {
-  name: string;
-  email: string;
-  projectId: string;
-  projectName: string;
-  role?: string;
-  accessToken?: string;
-  grantJiraAccess?: boolean;
-  grantGithubAccess?: boolean;
-  grantTeamsAccess?: boolean;
+// Rate limiting
+const rateLimiter = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(userId: string, maxRequests: number, windowMs: number) {
+  const now = Date.now();
+  const userLimit = rateLimiter.get(userId);
+  
+  if (!userLimit || now > userLimit.resetAt) {
+    rateLimiter.set(userId, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  
+  if (userLimit.count >= maxRequests) {
+    const waitSeconds = Math.ceil((userLimit.resetAt - now) / 1000);
+    throw new Error(`Rate limit exceeded. Try again in ${waitSeconds} seconds`);
+  }
+  
+  userLimit.count++;
+  return true;
 }
+
+// Input validation schema
+const addTeamMemberSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().email("Invalid email format").max(255, "Email must be less than 255 characters"),
+  projectId: z.string().uuid("Invalid project ID format"),
+  projectName: z.string().min(1).max(200),
+  role: z.enum(['member', 'admin', 'viewer']).optional(),
+  accessToken: z.string().optional(),
+  grantJiraAccess: z.boolean().optional(),
+  grantGithubAccess: z.boolean().optional(),
+  grantTeamsAccess: z.boolean().optional(),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -37,6 +60,13 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
+    // Rate limiting: 30 requests per minute for data operations
+    checkRateLimit(user.id, 30, 60000);
+
+    // Validate input
+    const rawInput = await req.json();
+    const validatedInput = addTeamMemberSchema.parse(rawInput);
+
     const {
       name,
       email,
@@ -47,7 +77,7 @@ serve(async (req) => {
       grantJiraAccess = false,
       grantGithubAccess = false,
       grantTeamsAccess = false
-    }: AddTeamMemberRequest = await req.json();
+    } = validatedInput;
 
     console.log('Adding team member:', { name, email, projectId });
 

@@ -1,10 +1,49 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Rate limiting
+const rateLimiter = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(userId: string, maxRequests: number, windowMs: number) {
+  const now = Date.now();
+  const userLimit = rateLimiter.get(userId);
+  
+  if (!userLimit || now > userLimit.resetAt) {
+    rateLimiter.set(userId, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  
+  if (userLimit.count >= maxRequests) {
+    const waitSeconds = Math.ceil((userLimit.resetAt - now) / 1000);
+    throw new Error(`Rate limit exceeded. Try again in ${waitSeconds} seconds`);
+  }
+  
+  userLimit.count++;
+  return true;
+}
+
+// Input validation schema
+const demoChecklistSchema = z.object({
+  sprintNumber: z.number().int().positive().max(9999, "Sprint number must be less than 10000"),
+  completedTickets: z.array(z.object({
+    key: z.string(),
+    summary: z.string(),
+    issueType: z.string().optional(),
+    storyPoints: z.number().optional(),
+  })).max(200, "Too many tickets (max 200)").optional(),
+  githubCommits: z.array(z.object({
+    sha: z.string(),
+    message: z.string(),
+    author: z.string().optional(),
+  })).max(200, "Too many commits (max 200)").optional(),
+  projectName: z.string().min(1).max(200),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -27,12 +66,17 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
+    // Rate limiting: 10 requests per minute for AI functions
+    checkRateLimit(user.id, 10, 60000);
+
+    // Validate input
+    const rawInput = await req.json();
     const { 
       sprintNumber, 
       completedTickets,
       githubCommits,
       projectName 
-    } = await req.json();
+    } = demoChecklistSchema.parse(rawInput);
 
     console.log(`Generating demo checklist for Sprint ${sprintNumber}`);
 
