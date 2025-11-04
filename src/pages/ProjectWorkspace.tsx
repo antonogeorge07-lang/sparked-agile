@@ -11,8 +11,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeamManagement } from "@/components/TeamManagement";
 import { BackButton } from "@/components/BackButton";
 
-const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
-
 export default function ProjectWorkspace() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -71,15 +69,17 @@ export default function ProjectWorkspace() {
 
   const handleMicrosoftCallback = async (code: string) => {
     try {
+      const redirectUri = `${window.location.origin}/project-workspace`;
       const { data, error } = await supabase.functions.invoke("get-microsoft-token", {
-        body: { code },
+        body: { code, redirectUri },
       });
 
       if (error) throw error;
 
-      if (data.access_token) {
-        localStorage.setItem("microsoft_access_token", data.access_token);
-        setAccessToken(data.access_token);
+      const token = data?.accessToken || data?.access_token;
+      if (token) {
+        localStorage.setItem("microsoft_access_token", token);
+        setAccessToken(token);
         setOutlookConnected(true);
         toast.success("Connected to Microsoft Outlook & Teams");
       }
@@ -88,12 +88,22 @@ export default function ProjectWorkspace() {
     }
   };
 
-  const connectOutlook = () => {
-    const redirectUri = `${window.location.origin}/project-workspace`;
-    const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(
-      redirectUri
-    )}&scope=${encodeURIComponent("Calendars.ReadWrite offline_access User.Read Group.ReadWrite.All Channel.Create")}`;
-    window.location.href = authUrl;
+  const connectOutlook = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("get-microsoft-client-id");
+      if (error) throw error;
+      if (!data?.clientId) {
+        toast.error("Microsoft credentials not configured. Please contact administrator.");
+        return;
+      }
+      const redirectUri = `${window.location.origin}/project-workspace`;
+      const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${data.clientId}&response_type=code&redirect_uri=${encodeURIComponent(
+        redirectUri
+      )}&scope=${encodeURIComponent("Calendars.ReadWrite offline_access User.Read Group.ReadWrite.All Channel.Create")}`;
+      window.location.href = authUrl;
+    } catch (e: any) {
+      toast.error(`Unable to start Microsoft sign-in: ${e.message}`);
+    }
   };
 
   const initializeWorkspace = async () => {

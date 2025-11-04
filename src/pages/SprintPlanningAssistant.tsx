@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ import { BackButton } from "@/components/BackButton";
 
 export default function SprintPlanningAssistant() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   
@@ -52,6 +53,32 @@ export default function SprintPlanningAssistant() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
+    // Handle Microsoft OAuth redirect
+    const code = searchParams.get('code');
+    if (code) {
+      const redirectUri = `${window.location.origin}/sprint-planning-assistant`;
+      supabase.functions
+        .invoke('get-microsoft-token', { body: { code, redirectUri } })
+        .then(({ data, error }) => {
+          if (error) throw error;
+          const token = data?.accessToken || data?.access_token;
+          if (token) {
+            localStorage.setItem('microsoft_access_token', token);
+            setAccessToken(token);
+            toast.success('Connected to Microsoft Outlook');
+          }
+        })
+        .catch((e: any) => {
+          toast.error(`Microsoft auth failed: ${e.message}`);
+        })
+        .finally(() => {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('code');
+          url.searchParams.delete('state');
+          window.history.replaceState({}, '', url.pathname + (url.search ? '?' + url.searchParams.toString() : ''));
+        });
+    }
+
     loadWorkspaces();
     
     // Load token from localStorage
@@ -59,7 +86,7 @@ export default function SprintPlanningAssistant() {
     if (storedToken) {
       setAccessToken(storedToken);
     }
-  }, []);
+  }, [searchParams]);
 
   const loadWorkspaces = async () => {
     const { data: { user } } = await supabase.auth.getUser();
