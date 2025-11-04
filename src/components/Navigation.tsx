@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star } from "lucide-react";
+import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -154,6 +154,18 @@ export const Navigation = () => {
                 </Link>
               )}
 
+              <Link to="/user-guide">
+                <Button 
+                  variant={location.pathname === "/user-guide" ? "default" : "ghost"}
+                  size="sm"
+                  className="gap-2"
+                  title="User Guide"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                  May I Help You
+                </Button>
+              </Link>
+
               <ThemeToggle />
               
               {user && <NotificationBell />}
@@ -214,6 +226,16 @@ export const Navigation = () => {
                       </Button>
                     </Link>
                   )}
+
+                  <Link to="/user-guide" onClick={() => setMobileMenuOpen(false)}>
+                    <Button 
+                      variant={location.pathname === "/user-guide" ? "default" : "ghost"}
+                      className="w-full justify-start gap-2"
+                    >
+                      <HelpCircle className="w-4 h-4" />
+                      May I Help You
+                    </Button>
+                  </Link>
 
                   <div className="pt-4 border-t">
                     {user ? (

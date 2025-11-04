@@ -36,6 +36,7 @@ const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const VideoScriptGenerator = lazy(() => import("./pages/VideoScriptGenerator"));
 const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
+const UserGuide = lazy(() => import("./pages/UserGuide"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -86,6 +87,7 @@ const App = () => {
                   <Route path="/video-script-generator" element={<VideoScriptGenerator />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/faq" element={<FAQ />} />
+                  <Route path="/user-guide" element={<UserGuide />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
