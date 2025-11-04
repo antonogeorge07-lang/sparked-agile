@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, CheckCircle2, XCircle } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface ProfileDialogProps {
@@ -35,12 +35,54 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
     darkMode: false,
     language: "en",
   });
+  const [microsoftConnected, setMicrosoftConnected] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       loadProfile();
+      checkMicrosoftConnection();
     }
   }, [isOpen]);
+
+  const checkMicrosoftConnection = () => {
+    const token = localStorage.getItem("microsoft_access_token");
+    setMicrosoftConnected(!!token);
+  };
+
+  const handleDisconnectMicrosoft = () => {
+    localStorage.removeItem("microsoft_access_token");
+    setMicrosoftConnected(false);
+    toast({
+      title: "Disconnected",
+      description: "Your Microsoft account has been disconnected",
+    });
+  };
+
+  const handleConnectMicrosoft = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("get-microsoft-client-id");
+      if (error) throw error;
+      if (!data?.clientId) {
+        toast({
+          title: "Configuration Error",
+          description: "Microsoft credentials not configured. Please contact administrator.",
+          variant: "destructive",
+        });
+        return;
+      }
+      const redirectUri = `${window.location.origin}/project-workspace`;
+      const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${data.clientId}&response_type=code&redirect_uri=${encodeURIComponent(
+        redirectUri
+      )}&scope=${encodeURIComponent("Calendars.ReadWrite offline_access User.Read Group.ReadWrite.All Channel.Create")}`;
+      window.location.href = authUrl;
+    } catch (e: any) {
+      toast({
+        title: "Connection Failed",
+        description: e.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const loadProfile = async () => {
     try {
@@ -232,9 +274,10 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
         </DialogHeader>
 
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="preferences">Preferences</TabsTrigger>
+            <TabsTrigger value="connections">Connections</TabsTrigger>
           </TabsList>
 
           <TabsContent value="general" className="space-y-4 pt-4">
@@ -344,6 +387,60 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
                 <option value="fr">Français</option>
                 <option value="de">Deutsch</option>
               </select>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="connections" className="space-y-4 pt-4">
+            <div className="flex items-center justify-between p-4 border rounded-lg">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-medium">Microsoft Office 365</h3>
+                  {microsoftConnected ? (
+                    <CheckCircle2 className="h-4 w-4 text-success" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {microsoftConnected 
+                    ? "Connected - Access to Outlook calendars and Teams" 
+                    : "Connect to use Outlook and Teams features"
+                  }
+                </p>
+              </div>
+              <div>
+                {microsoftConnected ? (
+                  <Button 
+                    onClick={handleDisconnectMicrosoft} 
+                    variant="destructive" 
+                    size="sm"
+                  >
+                    Disconnect
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={handleConnectMicrosoft} 
+                    variant="outline"
+                    size="sm"
+                  >
+                    Connect
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            <div className="p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                <strong>Why connect Microsoft?</strong>
+                <br />
+                • Create and manage Outlook calendar events for ceremonies
+                <br />
+                • Set up Microsoft Teams channels for project collaboration
+                <br />
+                • Send meeting invites to team members
+                <br />
+                • Access Microsoft 365 integration features
+              </p>
             </div>
           </TabsContent>
         </Tabs>

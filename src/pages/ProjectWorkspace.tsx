@@ -106,6 +106,13 @@ export default function ProjectWorkspace() {
     }
   };
 
+  const disconnectOutlook = () => {
+    localStorage.removeItem("microsoft_access_token");
+    setAccessToken(null);
+    setOutlookConnected(false);
+    toast.success("Disconnected from Microsoft Outlook & Teams");
+  };
+
   const initializeWorkspace = async () => {
     if (!projectId) {
       toast.error("No project found. Please create a project first.");
@@ -311,16 +318,26 @@ export default function ProjectWorkspace() {
                     <div>
                       <h3 className="font-medium">Microsoft Outlook & Teams</h3>
                       <p className="text-sm text-muted-foreground">
-                        Connect to create calendar events and Teams channels
+                        {outlookConnected 
+                          ? "Connected - You can access Outlook and Teams features" 
+                          : "Connect to create calendar events and Teams channels"
+                        }
                       </p>
                     </div>
-                    {outlookConnected ? (
-                      <CheckCircle2 className="text-success w-6 h-6" />
-                    ) : (
-                      <Button onClick={connectOutlook} variant="outline">
-                        Connect
-                      </Button>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {outlookConnected ? (
+                        <>
+                          <CheckCircle2 className="text-success w-6 h-6" />
+                          <Button onClick={disconnectOutlook} variant="destructive" size="sm">
+                            Disconnect
+                          </Button>
+                        </>
+                      ) : (
+                        <Button onClick={connectOutlook} variant="outline">
+                          Connect
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </div>
 
