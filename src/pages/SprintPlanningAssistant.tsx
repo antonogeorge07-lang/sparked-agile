@@ -12,8 +12,7 @@ import { Loader2, Sparkles, Calendar, FileText, CheckCircle2, Download } from "l
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-
-const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
+import { BackButton } from "@/components/BackButton";
 
 export default function SprintPlanningAssistant() {
   const navigate = useNavigate();
@@ -86,12 +85,26 @@ export default function SprintPlanningAssistant() {
     }
   };
 
-  const connectOutlook = () => {
-    const redirectUri = `${window.location.origin}/sprint-planning-assistant`;
-    const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(
-      redirectUri
-    )}&scope=${encodeURIComponent("Calendars.ReadWrite offline_access User.Read")}`;
-    window.location.href = authUrl;
+  const connectOutlook = async () => {
+    try {
+      // Get Microsoft Client ID from backend secrets
+      const { data, error } = await supabase.functions.invoke("get-microsoft-client-id");
+      
+      if (error) throw error;
+      
+      if (!data?.clientId) {
+        toast.error("Microsoft credentials not configured. Please contact administrator.");
+        return;
+      }
+      
+      const redirectUri = `${window.location.origin}/sprint-planning-assistant`;
+      const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${data.clientId}&response_type=code&redirect_uri=${encodeURIComponent(
+        redirectUri
+      )}&scope=${encodeURIComponent("Calendars.ReadWrite offline_access User.Read")}`;
+      window.location.href = authUrl;
+    } catch (error: any) {
+      toast.error(`Failed to connect: ${error.message}`);
+    }
   };
 
   const fetchBacklog = async () => {
@@ -281,6 +294,7 @@ export default function SprintPlanningAssistant() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
       <div className="max-w-6xl mx-auto">
+        <BackButton />
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
             <Sparkles className="w-10 h-10 text-primary" />
@@ -290,6 +304,19 @@ export default function SprintPlanningAssistant() {
             AI-powered sprint planning with JIRA integration and automated Outlook invites
           </p>
         </div>
+
+        {workspaces.length === 0 && (
+          <Card className="mb-6 border-warning">
+            <CardContent className="pt-6">
+              <p className="text-muted-foreground mb-4">
+                No configured workspaces found. You need to set up a Project Workspace first with JIRA and GitHub integrations.
+              </p>
+              <Button onClick={() => navigate("/project-workspace")} variant="outline">
+                Go to Project Workspace Setup
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         <Tabs value={`step${currentStep}`} onValueChange={(v) => setCurrentStep(parseInt(v.replace("step", "")))}>
           <TabsList className="grid w-full grid-cols-4">
