@@ -91,23 +91,6 @@ export default function Auth() {
       if (event === 'PASSWORD_RECOVERY') {
         setShowUpdatePassword(true);
       } else if (session && event === 'SIGNED_IN') {
-        // Check user approval status
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
-
-        if (profile?.role === 'pending') {
-          await supabase.auth.signOut();
-          toast({
-            title: "Account Pending Approval",
-            description: "Your account is awaiting admin approval. You'll be notified once approved.",
-            variant: "default",
-          });
-          return;
-        }
-
         // Check if user has seen onboarding
         const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
         navigate(hasSeenOnboarding ? "/workflows" : "/");
@@ -189,13 +172,24 @@ export default function Auth() {
         }
       } else {
         toast({
-          title: "Registration Successful!",
-          description: "Your account has been created and is pending admin approval. You'll be notified when you can sign in.",
+          title: "Welcome to SM ActiveIntelligence!",
+          description: "Your account has been created successfully. Please check your email to verify your account.",
         });
         // Clear form
         setEmail("");
         setPassword("");
         setFullName("");
+        
+        // Auto-sign in the user
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        
+        if (!signInError) {
+          const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
+          navigate(hasSeenOnboarding ? "/workflows" : "/");
+        }
       }
     } catch (error: any) {
       toast({
@@ -230,23 +224,6 @@ export default function Auth() {
           throw error;
         }
       } else {
-        // Check user status
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', data.user.id)
-          .single();
-
-        if (profile?.role === 'pending') {
-          await supabase.auth.signOut();
-          toast({
-            title: "Account Pending Approval",
-            description: "Your account is still awaiting admin approval. You'll receive notification once approved.",
-            variant: "default",
-          });
-          return;
-        }
-        
         toast({
           title: "Welcome back!",
           description: "Successfully signed in.",
