@@ -33,6 +33,8 @@ const SprintReviewCoordinator = lazy(() => import("./pages/SprintReviewCoordinat
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const VideoScriptGenerator = lazy(() => import("./pages/VideoScriptGenerator"));
+const Contact = lazy(() => import("./pages/Contact"));
+const FAQ = lazy(() => import("./pages/FAQ"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -80,6 +82,8 @@ const App = () => {
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<TermsOfService />} />
                   <Route path="/video-script-generator" element={<VideoScriptGenerator />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/faq" element={<FAQ />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
