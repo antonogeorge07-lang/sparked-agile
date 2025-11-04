@@ -9,6 +9,17 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Video, Copy, Download } from "lucide-react";
 import { useActivityTracking } from "@/hooks/useActivityTracking";
+import { z } from "zod";
+
+const scriptSchema = z.object({
+  prompt: z.string()
+    .trim()
+    .min(10, "Prompt must be at least 10 characters")
+    .max(2000, "Prompt must be less than 2000 characters"),
+  duration: z.string(),
+  tone: z.string(),
+  style: z.string(),
+});
 
 export default function VideoScriptGenerator() {
   useActivityTracking("video_script_generator");
@@ -22,10 +33,14 @@ export default function VideoScriptGenerator() {
   const { toast } = useToast();
 
   const generateScript = async () => {
-    if (!prompt.trim()) {
+    // Validate input
+    const result = scriptSchema.safeParse({ prompt, duration, tone, style });
+    
+    if (!result.success) {
+      const error = result.error.issues[0];
       toast({
-        title: "Prompt Required",
-        description: "Please enter a video topic or description",
+        title: "Validation Error",
+        description: error?.message || "Please check your input",
         variant: "destructive",
       });
       return;
@@ -132,9 +147,13 @@ export default function VideoScriptGenerator() {
                   placeholder="Example: Create a 60-second video explaining how AI is transforming the healthcare industry, focusing on diagnostic tools and patient care..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
+                  maxLength={2000}
                   rows={6}
                   className="resize-none"
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  {prompt.length}/2000 characters
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
