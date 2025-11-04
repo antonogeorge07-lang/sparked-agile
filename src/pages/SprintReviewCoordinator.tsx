@@ -389,8 +389,8 @@ export default function SprintReviewCoordinator() {
                   ) : (
                     <div className="space-y-2 max-h-64 overflow-y-auto">
                       {completedTickets.map(ticket => (
-                        <div key={ticket.key} className="p-3 border rounded-lg hover:bg-muted">
-                          <div className="flex items-start justify-between">
+                        <div key={ticket.key} className="p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                          <div className="flex items-start justify-between gap-4">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
                                 <Badge variant="outline">{ticket.key}</Badge>
@@ -403,14 +403,21 @@ export default function SprintReviewCoordinator() {
                                 {ticket.issueType} • {ticket.status}
                               </p>
                             </div>
-                            <a
-                              href={ticket.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:text-primary/80"
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="flex-shrink-0"
+                              asChild
                             >
-                              <ExternalLink className="w-4 h-4" />
-                            </a>
+                              <a
+                                href={ticket.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <ExternalLink className="w-4 h-4 mr-1" />
+                                View
+                              </a>
+                            </Button>
                           </div>
                         </div>
                       ))}
