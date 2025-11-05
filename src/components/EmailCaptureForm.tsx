@@ -38,9 +38,9 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
       benefit: "🚀 Free lifetime Pro access for beta testers"
     },
     exit_intent: {
-      title: "Wait! Don't Miss Out",
+      title: "Welcome! Let's Get Started",
       description: "Get a personalized demo and see how we can transform your workflow",
-      benefit: "🎯 Free 1-on-1 onboarding session ($299 value)"
+      benefit: "🎯 Free personalized onboarding and dedicated support"
     }
   };
 
