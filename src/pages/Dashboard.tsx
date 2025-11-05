@@ -57,18 +57,8 @@ export default function Dashboard() {
     }
   };
 
-  const velocityData = [
-    { sprint: "Sprint 10", points: 32 },
-    { sprint: "Sprint 11", points: 28 },
-    { sprint: "Sprint 12", points: 35 },
-  ];
-
-  const impediments = [
-    { id: 1, title: "API Rate Limits", severity: "high", days: 3 },
-    { id: 2, title: "Pending Design Review", severity: "medium", days: 1 },
-    { id: 3, title: "Database Performance Issues", severity: "high", days: 2 },
-    { id: 4, title: "Missing Test Coverage", severity: "low", days: 5 },
-  ];
+  const velocityData: Array<{ sprint: string; points: number }> = [];
+  const impediments: Array<{ id: number; title: string; severity: string; days: number }> = [];
 
   // Filter impediments based on search and severity
   const filteredImpediments = useMemo(() => {
@@ -186,12 +176,8 @@ export default function Dashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">35</div>
-                <p className="text-sm text-muted-foreground mt-1">story points</p>
-                <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
-                  <TrendingUp className="w-4 h-4" />
-                  <span>+7 from last sprint</span>
-                </div>
+                <div className="text-3xl font-bold text-muted-foreground">--</div>
+                <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
               </CardContent>
             </Card>
 
@@ -200,11 +186,8 @@ export default function Dashboard() {
                 <CardTitle className="text-sm font-medium text-muted-foreground">Sprint Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">68%</div>
-                <p className="text-sm text-muted-foreground mt-1">completion rate</p>
-                <div className="w-full bg-muted rounded-full h-2 mt-4">
-                  <div className="bg-gradient-primary h-2 rounded-full" style={{ width: '68%' }}></div>
-                </div>
+                <div className="text-3xl font-bold text-muted-foreground">--</div>
+                <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
               </CardContent>
             </Card>
 
@@ -213,12 +196,8 @@ export default function Dashboard() {
                 <CardTitle className="text-sm font-medium text-muted-foreground">Days Remaining</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">5</div>
-                <p className="text-sm text-muted-foreground mt-1">until sprint end</p>
-                <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground">
-                  <Calendar className="w-4 h-4" />
-                  <span>Ends Dec 15, 2024</span>
-                </div>
+                <div className="text-3xl font-bold text-muted-foreground">--</div>
+                <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
               </CardContent>
             </Card>
           </div>
@@ -233,22 +212,30 @@ export default function Dashboard() {
                 <CardDescription>Last 3 sprints performance</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {velocityData.map((sprint, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">{sprint.sprint}</span>
-                        <span className="text-muted-foreground">{sprint.points} points</span>
+                {velocityData.length > 0 ? (
+                  <div className="space-y-4">
+                    {velocityData.map((sprint, index) => (
+                      <div key={index} className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="font-medium">{sprint.sprint}</span>
+                          <span className="text-muted-foreground">{sprint.points} points</span>
+                        </div>
+                        <div className="w-full bg-muted rounded-full h-2">
+                          <div 
+                            className="bg-gradient-primary h-2 rounded-full transition-all" 
+                            style={{ width: `${(sprint.points / 40) * 100}%` }}
+                          ></div>
+                        </div>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
-                        <div 
-                          className="bg-gradient-primary h-2 rounded-full transition-all" 
-                          style={{ width: `${(sprint.points / 40) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 text-muted-foreground">
+                    <TrendingUp className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                    <p>No velocity data available</p>
+                    <p className="text-sm mt-1">Connect integrations to track sprint velocity</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
