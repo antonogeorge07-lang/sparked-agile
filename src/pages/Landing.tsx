@@ -202,17 +202,6 @@ export default function Landing() {
                 <Sparkles className="h-3 w-3 animate-pulse" />
                 AI-Powered Scrum Master Assistant
               </Badge>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span className="hidden sm:inline">Crafted with excellence by</span>
-                <span className="sm:hidden">By</span>
-                <span className="font-semibold bg-gradient-primary bg-clip-text text-transparent">
-                  Antono George
-                </span>
-                <Badge variant="outline" className="gap-1 text-xs">
-                  <Star className="h-3 w-3 fill-current" />
-                  PM
-                </Badge>
-              </div>
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold px-4">
               Transform Your
