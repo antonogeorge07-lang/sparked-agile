@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Target, Loader2, AlertCircle, Mail } from "lucide-react";
+import { Target, Loader2, AlertCircle, Mail, Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -378,6 +378,16 @@ export default function Auth() {
     }
   };
 
+  const handleGuestMode = () => {
+    localStorage.setItem("guest_mode", "true");
+    localStorage.setItem("onboarding_completed", "true");
+    toast({
+      title: "Welcome to Guest Mode!",
+      description: "Explore features with sample data. Sign up anytime to save your work.",
+    });
+    navigate("/");
+  };
+
   // Show password update form if user clicked reset link
   if (showUpdatePassword) {
     return (
@@ -715,13 +725,24 @@ export default function Auth() {
                     "Sign Up"
                   )}
                 </Button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  New accounts require admin approval before access is granted.
-                </p>
               </form>
             </TabsContent>
           </Tabs>
+
+          <div className="mt-6 pt-6 border-t">
+            <Button
+              variant="ghost"
+              className="w-full gap-2 text-muted-foreground hover:text-foreground"
+              onClick={handleGuestMode}
+            >
+              <Eye className="w-4 h-4" />
+              Continue as Guest (Try Before Signing Up)
+            </Button>
+          </div>
+
+          <p className="text-xs text-muted-foreground text-center mt-4">
+            New accounts require admin approval before access is granted.
+          </p>
         </CardContent>
       </Card>
     </div>

@@ -6,7 +6,7 @@ import { IntegrationStatus } from "@/components/IntegrationStatus";
 import { IntegrationBanner } from "@/components/IntegrationBanner";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
-import { BarChart3, TrendingUp, AlertCircle, Calendar, Network, FileDown, Filter } from "lucide-react";
+import { BarChart3, TrendingUp, AlertCircle, Calendar, Network, FileDown, Filter, Lightbulb } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
@@ -24,6 +24,16 @@ import { SendReminderDialog } from "@/components/SendReminderDialog";
 import { ScheduleReminderDialog } from "@/components/ScheduleReminderDialog";
 import { ReminderManagement } from "@/components/ReminderManagement";
 import { Bell } from "lucide-react";
+import { GuestModeBar } from "@/components/GuestModeBar";
+import { useGuestMode } from "@/hooks/useGuestMode";
+import { 
+  sampleVelocityData, 
+  sampleImpediments, 
+  sampleCurrentVelocity,
+  sampleSprintProgress,
+  sampleDaysRemaining,
+  sampleInsights
+} from "@/data/sampleDashboardData";
 
 export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -36,6 +46,10 @@ export default function Dashboard() {
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
+  const { isGuestMode } = useGuestMode();
+
+  // Use sample data if no integrations or in guest mode
+  const showSampleData = isGuestMode || (!hasJiraIntegration && !hasGithubIntegration);
 
   useEffect(() => {
     loadProjects();
@@ -57,8 +71,8 @@ export default function Dashboard() {
     }
   };
 
-  const velocityData: Array<{ sprint: string; points: number }> = [];
-  const impediments: Array<{ id: number; title: string; severity: string; days: number }> = [];
+  const velocityData = showSampleData ? sampleVelocityData : [];
+  const impediments = showSampleData ? sampleImpediments : [];
 
   // Filter impediments based on search and severity
   const filteredImpediments = useMemo(() => {
@@ -176,8 +190,17 @@ export default function Dashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-muted-foreground">--</div>
-                <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                {showSampleData ? (
+                  <>
+                    <div className="text-3xl font-bold text-primary">{sampleCurrentVelocity}</div>
+                    <p className="text-sm text-success mt-1">+12% from last sprint</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-3xl font-bold text-muted-foreground">--</div>
+                    <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                  </>
+                )}
               </CardContent>
             </Card>
 
@@ -186,8 +209,17 @@ export default function Dashboard() {
                 <CardTitle className="text-sm font-medium text-muted-foreground">Sprint Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-muted-foreground">--</div>
-                <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                {showSampleData ? (
+                  <>
+                    <div className="text-3xl font-bold text-primary">{sampleSprintProgress}%</div>
+                    <p className="text-sm text-muted-foreground mt-1">On track for sprint goal</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-3xl font-bold text-muted-foreground">--</div>
+                    <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                  </>
+                )}
               </CardContent>
             </Card>
 
@@ -196,8 +228,17 @@ export default function Dashboard() {
                 <CardTitle className="text-sm font-medium text-muted-foreground">Days Remaining</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-muted-foreground">--</div>
-                <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                {showSampleData ? (
+                  <>
+                    <div className="text-3xl font-bold text-primary">{sampleDaysRemaining}</div>
+                    <p className="text-sm text-muted-foreground mt-1">Until sprint end</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-3xl font-bold text-muted-foreground">--</div>
+                    <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                  </>
+                )}
               </CardContent>
             </Card>
           </div>
@@ -325,6 +366,28 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {/* Quick Wins - Sample Insights Section */}
+          {showSampleData && (
+            <div className="mt-8 mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Lightbulb className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">Quick Insights</h2>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {sampleInsights.map((insight, index) => (
+                  <Card key={index} className="shadow-card hover-scale">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base">{insight.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">{insight.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Real-time Collaboration Section */}
           {activeUsers.length > 0 && (
             <div className="mt-8 mb-6">
@@ -383,6 +446,8 @@ export default function Dashboard() {
           />
         </>
       )}
+
+      {isGuestMode && <GuestModeBar />}
     </div>
   );
 }

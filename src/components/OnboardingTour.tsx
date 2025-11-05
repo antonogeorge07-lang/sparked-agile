@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, ArrowRight, ArrowLeft, X } from "lucide-react";
+import { CheckCircle2, ArrowRight, ArrowLeft, X, Sparkles } from "lucide-react";
+import { toast } from "sonner";
 
 interface OnboardingStep {
   title: string;
@@ -55,10 +56,23 @@ const onboardingSteps: OnboardingStep[] = [
 
 export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && currentStep > 0) {
+      setShowTooltip(true);
+      const timer = setTimeout(() => setShowTooltip(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentStep, isOpen]);
 
   const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1);
+      toast.success(`Step ${currentStep + 2} of ${onboardingSteps.length}`, {
+        description: onboardingSteps[currentStep + 1].title,
+        icon: <Sparkles className="w-4 h-4" />,
+      });
     } else {
       handleComplete();
     }
@@ -108,13 +122,23 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
             {step.description}
           </DialogDescription>
           
-          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex gap-3">
+          <div className={`bg-primary/10 border border-primary/20 rounded-lg p-4 flex gap-3 transition-all duration-500 ${
+            showTooltip ? 'scale-105 shadow-elevated' : ''
+          }`}>
             <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-sm text-primary mb-1">Pro Tip</p>
               <p className="text-sm text-muted-foreground">{step.tip}</p>
             </div>
           </div>
+
+          {currentStep === 0 && (
+            <div className="mt-4 p-3 bg-muted rounded-lg">
+              <p className="text-sm">
+                <strong>Tip:</strong> Take this tour at your own pace. You can skip or come back anytime!
+              </p>
+            </div>
+          )}
         </div>
 
         <DialogFooter className="flex justify-between sm:justify-between">

@@ -11,6 +11,8 @@ import { OnboardingTour } from "@/components/OnboardingTour";
 import { DemoModal } from "@/components/DemoModal";
 import { DemoModeButton } from "@/components/DemoModeButton";
 import { EmailCaptureForm } from "@/components/EmailCaptureForm";
+import { GuestModeBar } from "@/components/GuestModeBar";
+import { useGuestMode } from "@/hooks/useGuestMode";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const Index = () => {
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
+  const { isGuestMode, enableGuestMode } = useGuestMode();
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
@@ -244,6 +247,8 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {isGuestMode && <GuestModeBar onTryDemo={() => setShowDemoModal(true)} />}
     </div>
   );
 };
