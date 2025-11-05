@@ -764,6 +764,36 @@ export type Database = {
           },
         ]
       }
+      satisfaction_surveys: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          questions: Json
+          survey_type: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          questions?: Json
+          survey_type: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          questions?: Json
+          survey_type?: string
+          title?: string
+        }
+        Relationships: []
+      }
       sprint_planning_sessions: {
         Row: {
           agenda: string | null
@@ -1045,6 +1075,50 @@ export type Database = {
         }
         Relationships: []
       }
+      survey_responses: {
+        Row: {
+          created_at: string
+          feedback_text: string | null
+          id: string
+          nps_score: number | null
+          page: string | null
+          rating: number | null
+          responses: Json
+          survey_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          feedback_text?: string | null
+          id?: string
+          nps_score?: number | null
+          page?: string | null
+          rating?: number | null
+          responses?: Json
+          survey_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          feedback_text?: string | null
+          id?: string
+          nps_score?: number | null
+          page?: string | null
+          rating?: number | null
+          responses?: Json
+          survey_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_responses_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "satisfaction_surveys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_members: {
         Row: {
           created_at: string
@@ -1104,6 +1178,42 @@ export type Database = {
           metadata?: Json | null
           page?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_feedback: {
+        Row: {
+          created_at: string
+          feedback_type: string
+          id: string
+          message: string
+          metadata: Json | null
+          page: string | null
+          sentiment: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          feedback_type: string
+          id?: string
+          message: string
+          metadata?: Json | null
+          page?: string | null
+          sentiment?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          feedback_type?: string
+          id?: string
+          message?: string
+          metadata?: Json | null
+          page?: string | null
+          sentiment?: string | null
+          status?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

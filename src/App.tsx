@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
+import { FeedbackWidget } from "@/components/FeedbackWidget";
 // Eager load critical pages
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -60,6 +61,7 @@ const App = () => {
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <AnalyticsProvider>
               <PerformanceMonitor />
+              <FeedbackWidget />
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />

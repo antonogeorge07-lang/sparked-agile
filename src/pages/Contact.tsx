@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MessageSquare, Send, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -63,8 +64,18 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    // Simulate form submission - In production, this should call an API
-    setTimeout(() => {
+    try {
+      const { data, error } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: result.data.name,
+          email: result.data.email,
+          subject: result.data.subject,
+          message: result.data.message,
+        },
+      });
+
+      if (error) throw error;
+
       toast({
         title: "Message Sent",
         description: "Thank you for contacting us. We'll get back to you within 24 hours.",
@@ -74,8 +85,16 @@ export default function Contact() {
       setEmail("");
       setSubject("");
       setMessage("");
+    } catch (error) {
+      console.error("Error sending contact email:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or email us directly.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
