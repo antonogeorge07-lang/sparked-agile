@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { Play, Pause, Volume2, VolumeX, ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video } from "lucide-react";
+import { ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video, Zap, Bot, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
 import { DemoModal } from "@/components/DemoModal";
 import { DemoModeButton } from "@/components/DemoModeButton";
@@ -14,12 +14,10 @@ import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 
 const Index = () => {
   const navigate = useNavigate();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(0);
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
@@ -28,23 +26,30 @@ const Index = () => {
     }
   }, []);
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % 3);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+  const animatedFeatures = [
+    {
+      icon: Zap,
+      title: "AI-Powered Automation",
+      description: "Automate standups, retrospectives, and planning with intelligent AI assistance"
+    },
+    {
+      icon: Bot,
+      title: "Smart Insights",
+      description: "Get actionable insights from your sprint data and team performance metrics"
+    },
+    {
+      icon: CheckCircle2,
+      title: "SAFe 6.0 Aligned",
+      description: "Built on proven frameworks to scale agile across your entire organization"
     }
-  };
+  ];
 
   const safeFeatures = [
     {
@@ -141,70 +146,58 @@ const Index = () => {
               </div>
             </section>
 
-            {/* Video Demo Section */}
+            {/* Animated Features Section */}
             <section className="py-8">
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
                   <h2 className="text-3xl md:text-4xl font-bold mb-4">See SM ActiveIntelligence in Action</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Watch how our platform streamlines your entire agile workflow with AI-powered automation
+                    Discover how our platform streamlines your entire agile workflow with AI-powered automation
                   </p>
                 </div>
                 
-                <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-2">
-                  <div className="relative aspect-video bg-muted">
-                    <video
-                      ref={videoRef}
-                      className="w-full h-full object-cover"
-                      onPlay={() => setIsPlaying(true)}
-                      onPause={() => setIsPlaying(false)}
-                    >
-                      <source src="/demo-video.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                    
-                    {/* Video Controls Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity">
-                      <div className="absolute bottom-0 left-0 right-0 p-6 flex items-center gap-4">
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          onClick={togglePlay}
-                          className="rounded-full w-12 h-12"
-                        >
-                          {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          onClick={toggleMute}
-                          className="rounded-full w-12 h-12"
-                        >
-                          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                        </Button>
-                      </div>
-                    </div>
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  {animatedFeatures.map((feature, index) => {
+                    const Icon = feature.icon;
+                    return (
+                      <Card 
+                        key={index}
+                        className={`p-6 transition-all duration-500 ${
+                          activeFeature === index 
+                            ? 'scale-105 shadow-elevated border-primary bg-primary/5' 
+                            : 'hover:scale-102'
+                        }`}
+                      >
+                        <div className="flex flex-col items-center text-center space-y-4">
+                          <div className={`p-4 rounded-full transition-all duration-500 ${
+                            activeFeature === index 
+                              ? 'bg-primary text-primary-foreground animate-pulse' 
+                              : 'bg-muted'
+                          }`}>
+                            <Icon className="w-8 h-8" />
+                          </div>
+                          <h3 className="text-xl font-semibold">{feature.title}</h3>
+                          <p className="text-muted-foreground text-sm">{feature.description}</p>
+                        </div>
+                      </Card>
+                    );
+                  })}
+                </div>
 
-                    {/* Play button when not playing */}
-                    {!isPlaying && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Button
-                          size="icon"
-                          onClick={togglePlay}
-                          className="rounded-full w-20 h-20 bg-primary/90 hover:bg-primary shadow-elevated"
-                        >
-                          <Play className="w-10 h-10 ml-1" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="p-6 text-center">
-                    <p className="text-sm text-muted-foreground">
-                      Experience the power of AI-driven agile management with built-in voice guidance
-                    </p>
-                  </div>
-                </Card>
+                <div className="flex justify-center gap-2">
+                  {animatedFeatures.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveFeature(index)}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        activeFeature === index 
+                          ? 'w-8 bg-primary' 
+                          : 'w-2 bg-muted-foreground/30'
+                      }`}
+                      aria-label={`Go to feature ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </section>
 
