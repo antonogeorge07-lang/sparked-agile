@@ -13,6 +13,7 @@ import { DemoModeButton } from "@/components/DemoModeButton";
 import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
+import { WelcomePopup } from "@/components/WelcomePopup";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -95,6 +96,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <WelcomePopup />
       <Navigation />
       
       <OnboardingTour 
