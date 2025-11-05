@@ -29,6 +29,7 @@ const FlowMetrics = lazy(() => import("./pages/FlowMetrics"));
 const Integrations = lazy(() => import("./pages/Integrations"));
 const ProjectProgress = lazy(() => import("./pages/ProjectProgress"));
 const CeremonySetup = lazy(() => import("./pages/CeremonySetup"));
+const TaskManagement = lazy(() => import("./pages/TaskManagement"));
 const ProjectWorkspace = lazy(() => import("./pages/ProjectWorkspace"));
 const SprintPlanningAssistant = lazy(() => import("./pages/SprintPlanningAssistant"));
 const SprintReviewCoordinator = lazy(() => import("./pages/SprintReviewCoordinator"));
@@ -81,6 +82,7 @@ const App = () => {
                   <Route path="/integrations" element={<Integrations />} />
                   <Route path="/project-progress" element={<ProjectProgress />} />
                   <Route path="/ceremony-setup" element={<CeremonySetup />} />
+                  <Route path="/task-management" element={<TaskManagement />} />
                   <Route path="/project-workspace" element={<ProjectWorkspace />} />
                   <Route path="/sprint-planning-assistant" element={<SprintPlanningAssistant />} />
                   <Route path="/sprint-review-coordinator" element={<SprintReviewCoordinator />} />
