@@ -439,6 +439,91 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Omair Project Command Centre Spotlight */}
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+        <div className="container mx-auto max-w-5xl relative">
+          <div className="text-center mb-8 space-y-4">
+            <Badge className="gap-2" variant="secondary">
+              <Sparkles className="h-3 w-3 animate-pulse" />
+              New Feature
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              Omair Project Command Centre
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Built for Traditional Project Management • Futuristic, AI-Ready Design
+            </p>
+          </div>
+
+          <Card className="border-2 border-primary/20 shadow-elegant overflow-hidden">
+            <CardContent className="p-8 md:p-12">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Target className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">PMI PMBOK 7 & 8 Lifecycle</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Manage projects through complete PMI lifecycle stages from initiation to closure
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">AI-Powered Insights</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Get intelligent recommendations and risk analysis powered by advanced AI
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Users className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">Team Collaboration</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Manage up to 5 projects with team members and use PolyLinQ for seamless communication
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <Link to="/auth">
+                      <Button size="lg" className="gap-2 w-full md:w-auto">
+                        Access Command Centre
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <div className="aspect-video rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center border-2 border-primary/30">
+                    <div className="text-center space-y-2 p-8">
+                      <Target className="h-16 w-16 mx-auto text-primary opacity-80" />
+                      <p className="text-sm font-medium text-muted-foreground">
+                        Kanban Board • Task Management • Progress Tracking
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
