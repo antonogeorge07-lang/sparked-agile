@@ -505,7 +505,7 @@ export default function Landing() {
               Real Feedback from Real Users
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
-              We believe in transparency and continuous improvement. Share your experience—positive or negative—
+              We believe in transparency and continuous improvement. Share your experience, positive or negative,
               and help us build a better product together. All approved feedback is displayed publicly.
             </p>
           </div>

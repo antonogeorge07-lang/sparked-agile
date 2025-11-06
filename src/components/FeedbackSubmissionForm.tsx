@@ -73,7 +73,7 @@ export const FeedbackSubmissionForm = () => {
       <CardHeader>
         <CardTitle>Share Your Experience</CardTitle>
         <CardDescription>
-          Your honest feedback helps us improve. All feedback—positive and negative—will be displayed publicly.
+          Your honest feedback helps us improve. All feedback, positive and negative, will be displayed publicly.
           We believe in transparency and continuous improvement.
         </CardDescription>
       </CardHeader>
