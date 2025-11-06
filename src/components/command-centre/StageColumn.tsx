@@ -9,10 +9,13 @@ interface Task {
   title: string;
   description: string | null;
   owner: string | null;
+  start_date: string | null;
   due_date: string | null;
   status: string;
   stage: string;
   notes: string | null;
+  dependencies: string[] | null;
+  progress: number;
 }
 
 interface Stage {

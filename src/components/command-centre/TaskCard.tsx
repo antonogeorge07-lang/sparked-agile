@@ -15,10 +15,13 @@ interface Task {
   title: string;
   description: string | null;
   owner: string | null;
+  start_date: string | null;
   due_date: string | null;
   status: string;
   stage: string;
   notes: string | null;
+  dependencies: string[] | null;
+  progress: number;
 }
 
 interface TaskCardProps {
@@ -133,11 +136,27 @@ export function TaskCard({ task, onUpdate }: TaskCardProps) {
             )}
           </div>
 
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
+          {/* Progress Bar */}
+          {task.progress > 0 && (
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Progress</span>
+                <span className="font-mono text-accent">{task.progress}%</span>
+              </div>
+              <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-accent transition-all" 
+                  style={{ width: `${task.progress}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
             {task.owner && (
               <div className="flex items-center gap-1">
                 <User className="h-3 w-3" />
-                <span>{task.owner}</span>
+                <span className="truncate">{task.owner}</span>
               </div>
             )}
             {task.due_date && (
@@ -147,6 +166,20 @@ export function TaskCard({ task, onUpdate }: TaskCardProps) {
               </div>
             )}
           </div>
+
+          {/* Dependencies */}
+          {task.dependencies && task.dependencies.length > 0 && (
+            <div className="pt-2 border-t border-border">
+              <p className="text-xs text-muted-foreground mb-1">Dependencies:</p>
+              <div className="flex flex-wrap gap-1">
+                {task.dependencies.map((dep, idx) => (
+                  <Badge key={idx} variant="outline" className="text-xs">
+                    {dep}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
 
           {task.notes && (
             <div className="pt-2 border-t border-border">

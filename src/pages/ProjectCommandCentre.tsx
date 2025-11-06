@@ -3,18 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
-import { Plus, Filter, AlertCircle } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Filter, AlertCircle, LayoutDashboard, Kanban, Shield, Lightbulb, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { LoadingState } from "@/components/LoadingState";
 import { StageColumn } from "@/components/command-centre/StageColumn";
 import { CommandPanel } from "@/components/command-centre/CommandPanel";
 import { AIInsights } from "@/components/command-centre/AIInsights";
+import { ControlDeck } from "@/components/command-centre/ControlDeck";
+import { RiskRegister } from "@/components/command-centre/RiskRegister";
+import { LessonsLearned } from "@/components/command-centre/LessonsLearned";
+import { AIInsightPlaceholders } from "@/components/command-centre/AIInsightPlaceholders";
 import { CreateProjectDialog } from "@/components/command-centre/CreateProjectDialog";
 import { CreateTaskDialog } from "@/components/command-centre/CreateTaskDialog";
 import { DndContext, DragEndEvent, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { TaskCard } from "@/components/command-centre/TaskCard";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 
 const PMI_STAGES = [
   { id: "initiation", title: "Initiation", color: "from-blue-500 to-cyan-500" },
@@ -29,10 +34,13 @@ interface Task {
   title: string;
   description: string | null;
   owner: string | null;
+  start_date: string | null;
   due_date: string | null;
   status: string;
   stage: string;
   notes: string | null;
+  dependencies: string[] | null;
+  progress: number;
   position: number;
 }
 
@@ -186,9 +194,9 @@ export default function ProjectCommandCentre() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-              Project Command Centre
+              Omair Project Command Centre
             </h1>
-            <p className="text-muted-foreground">PMI PMBOK 7 & 8 Lifecycle Management</p>
+            <p className="text-muted-foreground">Built for Traditional Project Management • Futuristic, AI-Ready Design</p>
           </div>
           
           <div className="flex gap-3">
@@ -214,44 +222,34 @@ export default function ProjectCommandCentre() {
             </Button>
           </div>
         ) : (
-          <div className="flex gap-6">
-            {/* Main Board Area */}
-            <div className="flex-1">
-              <DndContext
-                collisionDetection={closestCorners}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-              >
-                <div className="flex gap-4 overflow-x-auto pb-4">
-                  {PMI_STAGES.map(stage => (
-                    <StageColumn
-                      key={stage.id}
-                      stage={stage}
-                      tasks={getFilteredTasks().filter(t => t.stage === stage.id)}
-                      onTaskUpdate={loadTasks}
-                    />
-                  ))}
-                </div>
+          <Tabs defaultValue="overview" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-5 lg:w-[600px]">
+              <TabsTrigger value="overview" className="gap-2">
+                <LayoutDashboard className="h-4 w-4" />
+                Overview
+              </TabsTrigger>
+              <TabsTrigger value="board" className="gap-2">
+                <Kanban className="h-4 w-4" />
+                Task Board
+              </TabsTrigger>
+              <TabsTrigger value="risks" className="gap-2">
+                <Shield className="h-4 w-4" />
+                Risks
+              </TabsTrigger>
+              <TabsTrigger value="lessons" className="gap-2">
+                <Lightbulb className="h-4 w-4" />
+                Lessons
+              </TabsTrigger>
+              <TabsTrigger value="reports" className="gap-2">
+                <FileText className="h-4 w-4" />
+                Reports
+              </TabsTrigger>
+            </TabsList>
 
-                <DragOverlay>
-                  {activeTask ? (
-                    <div className="transform rotate-2 opacity-90">
-                      <TaskCard task={activeTask} onUpdate={loadTasks} />
-                    </div>
-                  ) : null}
-                </DragOverlay>
-              </DndContext>
-            </div>
-
-            {/* Command Panel Sidebar */}
-            <div className="w-80 space-y-4">
-              <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="team">Team</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="overview" className="space-y-4 mt-4">
+            {/* Project Overview Tab */}
+            <TabsContent value="overview" className="space-y-6">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-4">
                   <CommandPanel
                     projects={projects}
                     selectedProject={selectedProject}
@@ -261,24 +259,116 @@ export default function ProjectCommandCentre() {
                     onFilterChange={setActiveFilter}
                   />
                   
+                  {selectedProject && currentProject && (
+                    <Card className="border-2">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold mb-2">{currentProject.name}</h3>
+                        <p className="text-sm text-muted-foreground">{currentProject.description}</p>
+                        <div className="mt-4">
+                          <ProjectMemberManager
+                            projectId={selectedProject}
+                            projectName={currentProject.name}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+
+                <div className="space-y-4">
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  
                   <AIInsights
                     projectId={selectedProject}
                     projectName={currentProject?.name || ""}
                     taskCount={tasks.length}
                   />
-                </TabsContent>
-                
-                <TabsContent value="team" className="mt-4">
-                  {selectedProject && currentProject && (
-                    <ProjectMemberManager
-                      projectId={selectedProject}
-                      projectName={currentProject.name}
-                    />
-                  )}
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Task Board Tab */}
+            <TabsContent value="board">
+              <div className="flex gap-6">
+                <div className="flex-1">
+                  <DndContext
+                    collisionDetection={closestCorners}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
+                  >
+                    <div className="flex gap-4 overflow-x-auto pb-4">
+                      {PMI_STAGES.map(stage => (
+                        <StageColumn
+                          key={stage.id}
+                          stage={stage}
+                          tasks={getFilteredTasks().filter(t => t.stage === stage.id)}
+                          onTaskUpdate={loadTasks}
+                        />
+                      ))}
+                    </div>
+
+                    <DragOverlay>
+                      {activeTask ? (
+                        <div className="transform rotate-2 opacity-90">
+                          <TaskCard task={activeTask} onUpdate={loadTasks} />
+                        </div>
+                      ) : null}
+                    </DragOverlay>
+                  </DndContext>
+                </div>
+
+                <div className="w-80 space-y-4">
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <AIInsightPlaceholders />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Risk Register Tab */}
+            <TabsContent value="risks">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <RiskRegister projectId={selectedProject} />
+                </div>
+                <div>
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Lessons Learned Tab */}
+            <TabsContent value="lessons">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <LessonsLearned projectId={selectedProject} />
+                </div>
+                <div>
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Reports Tab */}
+            <TabsContent value="reports">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <Card className="border-2">
+                    <CardContent className="py-12 text-center">
+                      <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold mb-2">Executive Reports</h3>
+                      <p className="text-muted-foreground mb-6">
+                        Comprehensive project reports and analytics coming soon
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+                <div className="space-y-4">
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <AIInsightPlaceholders />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         )}
       </div>
 

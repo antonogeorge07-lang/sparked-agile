@@ -8,41 +8,48 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
+    --background: 220 15% 97%;
+    --foreground: 220 15% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 220 15% 15%;
 
-    --primary: 221 83% 53%;
+    /* Midnight Blue - Primary authority color */
+    --primary: 220 45% 25%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 270 70% 60%;
+    /* Steel Grey - Secondary precision color */
+    --secondary: 210 8% 45%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 95%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 220 12% 92%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 270 70% 60%;
-    --accent-foreground: 0 0% 100%;
+    /* Gold Accent - Executive highlight */
+    --accent: 42 88% 55%;
+    --accent-foreground: 220 45% 25%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 42 88% 55%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(270 70% 60%));
-    --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%), hsl(0 0% 100%));
+    /* Executive color palette gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 45% 25%), hsl(210 8% 45%));
+    --gradient-accent: linear-gradient(135deg, hsl(42 88% 55%), hsl(42 88% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 15% 97%), hsl(0 0% 100%));
     
-    --shadow-card: 0 2px 8px -2px hsl(222 47% 11% / 0.08);
-    --shadow-elevated: 0 8px 24px -4px hsl(222 47% 11% / 0.12);
+    /* Professional shadows */
+    --shadow-card: 0 2px 12px -2px hsl(220 45% 25% / 0.1);
+    --shadow-elevated: 0 8px 32px -4px hsl(220 45% 25% / 0.15);
+    --shadow-gold: 0 4px 20px -2px hsl(42 88% 55% / 0.25);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -55,39 +62,45 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222 47% 7%;
-    --foreground: 210 40% 98%;
+    --background: 220 45% 8%;
+    --foreground: 220 15% 95%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 40% 12%;
+    --card-foreground: 220 15% 95%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 40% 12%;
+    --popover-foreground: 220 15% 95%;
 
-    --primary: 221 83% 53%;
+    /* Midnight Blue - Dark mode primary */
+    --primary: 220 45% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 270 70% 60%;
-    --secondary-foreground: 0 0% 100%;
+    /* Steel Grey - Dark mode secondary */
+    --secondary: 210 8% 55%;
+    --secondary-foreground: 220 45% 8%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 35% 15%;
+    --muted-foreground: 220 12% 65%;
 
-    --accent: 270 70% 60%;
-    --accent-foreground: 0 0% 100%;
+    /* Gold Accent - Dark mode highlight */
+    --accent: 42 88% 60%;
+    --accent-foreground: 220 45% 8%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 220 15% 95%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 221 83% 53%;
+    --border: 220 35% 18%;
+    --input: 220 35% 18%;
+    --ring: 42 88% 60%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(270 70% 60%));
-    --gradient-subtle: linear-gradient(180deg, hsl(222 47% 7%), hsl(222 47% 11%));
+    /* Dark mode executive gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 45% 35%), hsl(210 8% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(42 88% 60%), hsl(42 88% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 45% 8%), hsl(220 40% 12%));
     
-    --shadow-card: 0 2px 8px -2px hsl(0 0% 0% / 0.3);
-    --shadow-elevated: 0 8px 24px -4px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.4);
+    --shadow-elevated: 0 8px 32px -4px hsl(0 0% 0% / 0.5);
+    --shadow-gold: 0 4px 20px -2px hsl(42 88% 60% / 0.3);
 
     --sidebar-background: 240 6% 10%;
     --sidebar-foreground: 240 5% 96%;

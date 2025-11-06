@@ -13,10 +13,13 @@ interface Task {
   title: string;
   description: string | null;
   owner: string | null;
+  start_date: string | null;
   due_date: string | null;
   status: string;
   stage: string;
   notes: string | null;
+  dependencies: string[] | null;
+  progress: number;
 }
 
 interface EditTaskDialogProps {
@@ -34,16 +37,19 @@ const PMI_STAGES = [
   { id: "closure", label: "Closure" },
 ];
 
-const STATUSES = ["To-Do", "In-Progress", "Completed", "Spillover"];
+const STATUSES = ["Not Started", "To-Do", "In-Progress", "Completed", "Deferred", "Spillover"];
 
 export function EditTaskDialog({ open, onOpenChange, task, onSuccess }: EditTaskDialogProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [owner, setOwner] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [status, setStatus] = useState("To-Do");
+  const [status, setStatus] = useState("Not Started");
   const [stage, setStage] = useState("initiation");
   const [notes, setNotes] = useState("");
+  const [dependencies, setDependencies] = useState("");
+  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -51,10 +57,13 @@ export function EditTaskDialog({ open, onOpenChange, task, onSuccess }: EditTask
       setTitle(task.title);
       setDescription(task.description || "");
       setOwner(task.owner || "");
+      setStartDate(task.start_date || "");
       setDueDate(task.due_date || "");
       setStatus(task.status);
       setStage(task.stage);
       setNotes(task.notes || "");
+      setDependencies(task.dependencies?.join(", ") || "");
+      setProgress(task.progress || 0);
     }
   }, [task]);
 
@@ -67,16 +76,23 @@ export function EditTaskDialog({ open, onOpenChange, task, onSuccess }: EditTask
 
     setLoading(true);
     try {
+      const depArray = dependencies.trim() 
+        ? dependencies.split(',').map(d => d.trim()).filter(d => d) 
+        : null;
+
       const { error } = await supabase
         .from("pmi_tasks")
         .update({
           title: title.trim(),
           description: description.trim() || null,
           owner: owner.trim() || null,
+          start_date: startDate || null,
           due_date: dueDate || null,
           status,
           stage,
           notes: notes.trim() || null,
+          dependencies: depArray,
+          progress,
         })
         .eq("id", task.id);
 
@@ -157,12 +173,12 @@ export function EditTaskDialog({ open, onOpenChange, task, onSuccess }: EditTask
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="owner">Assigned Owner</Label>
+              <Label htmlFor="startDate">Start Date</Label>
               <Input
-                id="owner"
-                value={owner}
-                onChange={(e) => setOwner(e.target.value)}
-                placeholder="Name or email"
+                id="startDate"
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
               />
             </div>
 
@@ -175,6 +191,29 @@ export function EditTaskDialog({ open, onOpenChange, task, onSuccess }: EditTask
                 onChange={(e) => setDueDate(e.target.value)}
               />
             </div>
+          </div>
+
+          <div>
+            <Label htmlFor="dependencies">Dependencies (comma-separated)</Label>
+            <Input
+              id="dependencies"
+              value={dependencies}
+              onChange={(e) => setDependencies(e.target.value)}
+              placeholder="Task A, Task B, Task C"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="progress">Progress: {progress}%</Label>
+            <Input
+              id="progress"
+              type="range"
+              min="0"
+              max="100"
+              value={progress}
+              onChange={(e) => setProgress(Number(e.target.value))}
+              className="cursor-pointer"
+            />
           </div>
 
           <div>

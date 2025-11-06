@@ -486,6 +486,47 @@ export type Database = {
         }
         Relationships: []
       }
+      lessons_learned: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string
+          id: string
+          impact: string | null
+          project_id: string
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description: string
+          id?: string
+          impact?: string | null
+          project_id: string
+          title: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string
+          id?: string
+          impact?: string | null
+          project_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lessons_learned_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       okrs: {
         Row: {
           created_at: string | null
@@ -569,42 +610,51 @@ export type Database = {
       pmi_tasks: {
         Row: {
           created_at: string
+          dependencies: string[] | null
           description: string | null
           due_date: string | null
           id: string
           notes: string | null
           owner: string | null
           position: number
+          progress: number | null
           project_id: string
           stage: string
+          start_date: string | null
           status: string
           title: string
           updated_at: string
         }
         Insert: {
           created_at?: string
+          dependencies?: string[] | null
           description?: string | null
           due_date?: string | null
           id?: string
           notes?: string | null
           owner?: string | null
           position?: number
+          progress?: number | null
           project_id: string
           stage?: string
+          start_date?: string | null
           status?: string
           title: string
           updated_at?: string
         }
         Update: {
           created_at?: string
+          dependencies?: string[] | null
           description?: string | null
           due_date?: string | null
           id?: string
           notes?: string | null
           owner?: string | null
           position?: number
+          progress?: number | null
           project_id?: string
           stage?: string
+          start_date?: string | null
           status?: string
           title?: string
           updated_at?: string
@@ -717,6 +767,41 @@ export type Database = {
           },
         ]
       }
+      project_budget: {
+        Row: {
+          budget_allocated: number
+          budget_spent: number
+          currency: string | null
+          id: string
+          last_updated: string | null
+          project_id: string
+        }
+        Insert: {
+          budget_allocated?: number
+          budget_spent?: number
+          currency?: string | null
+          id?: string
+          last_updated?: string | null
+          project_id: string
+        }
+        Update: {
+          budget_allocated?: number
+          budget_spent?: number
+          currency?: string | null
+          id?: string
+          last_updated?: string | null
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_budget_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_members: {
         Row: {
           created_at: string | null
@@ -752,6 +837,50 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_milestones: {
+        Row: {
+          completion_percentage: number | null
+          created_at: string | null
+          description: string | null
+          id: string
+          project_id: string
+          status: string | null
+          target_date: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          completion_percentage?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          project_id: string
+          status?: string | null
+          target_date: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          completion_percentage?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          project_id?: string
+          status?: string | null
+          target_date?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_milestones_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
             referencedColumns: ["id"]
           },
         ]
@@ -879,6 +1008,59 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      risk_register: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          impact: string | null
+          mitigation_strategy: string | null
+          owner: string | null
+          probability: string | null
+          project_id: string
+          risk_title: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          impact?: string | null
+          mitigation_strategy?: string | null
+          owner?: string | null
+          probability?: string | null
+          project_id: string
+          risk_title: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          impact?: string | null
+          mitigation_strategy?: string | null
+          owner?: string | null
+          probability?: string | null
+          project_id?: string
+          risk_title?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_register_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
             referencedColumns: ["id"]
           },
         ]
