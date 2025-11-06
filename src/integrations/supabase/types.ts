@@ -1435,6 +1435,13 @@ export type Database = {
           tier_name: string
         }[]
       }
+      get_public_user_stats: {
+        Args: never
+        Returns: {
+          recent_signups: number
+          total_users: number
+        }[]
+      }
       get_safe_integration_info: {
         Args: { integration_id: string }
         Returns: {
