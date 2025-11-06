@@ -557,7 +557,9 @@ export default function Landing() {
                 Ready to Transform Your Agile Workflow?
               </h2>
               <p className="text-lg opacity-90">
-                Join thousands of teams already using SM ActiveIntelligence
+                {statsLoading 
+                  ? "Join our growing community" 
+                  : `Join ${userStats?.totalUsers || 0} users already using SM ActiveIntelligence`}
               </p>
               <Link to="/auth">
                 <Button size="lg" variant="secondary" className="gap-2">
