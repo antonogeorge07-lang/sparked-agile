@@ -12,6 +12,7 @@ import { FeedbackSubmissionForm } from "@/components/FeedbackSubmissionForm";
 import { FeedbackDisplay } from "@/components/FeedbackDisplay";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserStats } from "@/hooks/useUserStats";
 
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
@@ -19,6 +20,7 @@ export default function Landing() {
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [emailContext, setEmailContext] = useState<"early_access" | "newsletter" | "beta" | "exit_intent">("newsletter");
   const navigate = useNavigate();
+  const { data: userStats, isLoading: statsLoading } = useUserStats();
 
   // Exit intent detection
   useEffect(() => {
@@ -397,22 +399,43 @@ export default function Landing() {
           {/* Key Stats */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-2">
-              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">85%</p>
-              <p className="text-sm text-muted-foreground">Less time in ceremonies</p>
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                {statsLoading ? "..." : userStats?.totalUsers || 0}
+              </p>
+              <p className="text-sm text-muted-foreground">Active Users</p>
             </div>
             <div className="space-y-2">
-              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">3x</p>
-              <p className="text-sm text-muted-foreground">Faster sprint planning</p>
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                {statsLoading ? "..." : userStats?.locations.length || 0}
+              </p>
+              <p className="text-sm text-muted-foreground">Countries</p>
             </div>
             <div className="space-y-2">
-              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">40%</p>
-              <p className="text-sm text-muted-foreground">Velocity improvement</p>
+              <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                {statsLoading ? "..." : `+${userStats?.recentSignups || 0}`}
+              </p>
+              <p className="text-sm text-muted-foreground">New users this month</p>
             </div>
             <div className="space-y-2">
               <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">100%</p>
               <p className="text-sm text-muted-foreground">Team satisfaction</p>
             </div>
           </div>
+
+          {/* User Locations */}
+          {!statsLoading && userStats && userStats.locations.length > 0 && (
+            <div className="mt-12 p-6 rounded-lg bg-card border">
+              <h3 className="text-lg font-semibold mb-4 text-center">Our Global Community</h3>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {userStats.locations.map((loc) => (
+                  <div key={loc.location} className="text-center space-y-1">
+                    <p className="text-2xl font-bold text-primary">{loc.count}</p>
+                    <p className="text-xs text-muted-foreground">{loc.location}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
