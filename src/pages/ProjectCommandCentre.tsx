@@ -13,6 +13,8 @@ import { CreateProjectDialog } from "@/components/command-centre/CreateProjectDi
 import { CreateTaskDialog } from "@/components/command-centre/CreateTaskDialog";
 import { DndContext, DragEndEvent, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { TaskCard } from "@/components/command-centre/TaskCard";
+import { ProjectMemberManager } from "@/components/ProjectMemberManager";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const PMI_STAGES = [
   { id: "initiation", title: "Initiation", color: "from-blue-500 to-cyan-500" },
@@ -243,20 +245,38 @@ export default function ProjectCommandCentre() {
 
             {/* Command Panel Sidebar */}
             <div className="w-80 space-y-4">
-              <CommandPanel
-                projects={projects}
-                selectedProject={selectedProject}
-                onProjectChange={setSelectedProject}
-                tasks={tasks}
-                activeFilter={activeFilter}
-                onFilterChange={setActiveFilter}
-              />
-              
-              <AIInsights
-                projectId={selectedProject}
-                projectName={currentProject?.name || ""}
-                taskCount={tasks.length}
-              />
+              <Tabs defaultValue="overview" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="overview">Overview</TabsTrigger>
+                  <TabsTrigger value="team">Team</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="overview" className="space-y-4 mt-4">
+                  <CommandPanel
+                    projects={projects}
+                    selectedProject={selectedProject}
+                    onProjectChange={setSelectedProject}
+                    tasks={tasks}
+                    activeFilter={activeFilter}
+                    onFilterChange={setActiveFilter}
+                  />
+                  
+                  <AIInsights
+                    projectId={selectedProject}
+                    projectName={currentProject?.name || ""}
+                    taskCount={tasks.length}
+                  />
+                </TabsContent>
+                
+                <TabsContent value="team" className="mt-4">
+                  {selectedProject && currentProject && (
+                    <ProjectMemberManager
+                      projectId={selectedProject}
+                      projectName={currentProject.name}
+                    />
+                  )}
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         )}
