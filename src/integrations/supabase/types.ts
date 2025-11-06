@@ -533,6 +533,92 @@ export type Database = {
           },
         ]
       }
+      pmi_projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          status: string
+          target_completion_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          status?: string
+          target_completion_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          status?: string
+          target_completion_date?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pmi_tasks: {
+        Row: {
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          notes: string | null
+          owner: string | null
+          position: number
+          project_id: string
+          stage: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string | null
+          owner?: string | null
+          position?: number
+          project_id: string
+          stage?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string | null
+          owner?: string | null
+          position?: number
+          project_id?: string
+          stage?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pmi_tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profile_access_log: {
         Row: {
           accessed_at: string | null

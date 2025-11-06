@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound";
 const Admin = lazy(() => import("./pages/Admin"));
 const Subscription = lazy(() => import("./pages/Subscription"));
 const Workflows = lazy(() => import("./pages/Workflows"));
+const ProjectCommandCentre = lazy(() => import("./pages/ProjectCommandCentre"));
 const Standup = lazy(() => import("./pages/Standup"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Retrospective = lazy(() => import("./pages/Retrospective"));
@@ -94,6 +95,7 @@ const App = () => {
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/user-guide" element={<UserGuide />} />
                   <Route path="/polylinq" element={<PolyLinQ />} />
+                  <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
