@@ -8,6 +8,8 @@ import { DemoModal } from "@/components/DemoModal";
 import { DemoModeButton } from "@/components/DemoModeButton";
 import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { TrustBadges } from "@/components/TrustBadges";
+import { FeedbackSubmissionForm } from "@/components/FeedbackSubmissionForm";
+import { FeedbackDisplay } from "@/components/FeedbackDisplay";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -495,38 +497,31 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Real User Feedback Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Loved by Scrum Masters Worldwide
+              Real Feedback from Real Users
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              See what our customers are saying about SM ActiveIntelligence
+            <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
+              We believe in transparency and continuous improvement. Share your experience—positive or negative—
+              and help us build a better product together. All approved feedback is displayed publicly.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex gap-1 mb-2">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <Quote className="h-8 w-8 text-muted-foreground mb-2" />
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground">{testimonial.content}</p>
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          
+          <div className="mb-12 max-w-2xl mx-auto">
+            <FeedbackSubmissionForm />
           </div>
+
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold mb-2">What Our Community Says</h3>
+            <p className="text-sm text-muted-foreground">
+              Every voice matters. We learn from every piece of feedback.
+            </p>
+          </div>
+          
+          <FeedbackDisplay />
         </div>
       </section>
 

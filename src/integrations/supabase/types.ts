@@ -453,6 +453,39 @@ export type Database = {
         }
         Relationships: []
       }
+      landing_feedback: {
+        Row: {
+          company: string | null
+          created_at: string
+          feedback: string
+          id: string
+          is_approved: boolean | null
+          name: string
+          rating: number | null
+          role: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          feedback: string
+          id?: string
+          is_approved?: boolean | null
+          name: string
+          rating?: number | null
+          role?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          feedback?: string
+          id?: string
+          is_approved?: boolean | null
+          name?: string
+          rating?: number | null
+          role?: string | null
+        }
+        Relationships: []
+      }
       okrs: {
         Row: {
           created_at: string | null
