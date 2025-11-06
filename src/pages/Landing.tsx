@@ -8,7 +8,6 @@ import { DemoModal } from "@/components/DemoModal";
 import { DemoModeButton } from "@/components/DemoModeButton";
 import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { TrustBadges } from "@/components/TrustBadges";
-import { CompanyLogos } from "@/components/CompanyLogos";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -260,12 +259,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Company Logos */}
-      <section className="py-12 px-4 bg-card/50">
-        <div className="container mx-auto max-w-6xl">
-          <CompanyLogos />
-        </div>
-      </section>
 
       {/* Value Proposition Section */}
       <section className="py-20 px-4 bg-card/50">
