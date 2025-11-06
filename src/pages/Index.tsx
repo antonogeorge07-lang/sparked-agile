@@ -1,10 +1,10 @@
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video, Zap, Bot, CheckCircle2 } from "lucide-react";
+import { ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video, Zap, Bot, CheckCircle2, Languages, Globe } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
@@ -148,6 +148,48 @@ const Index = () => {
                     Watch Demo
                   </Button>
                 </div>
+              </div>
+            </section>
+
+            {/* PolyLinQ Subproduct Banner */}
+            <section className="py-8">
+              <div className="max-w-5xl mx-auto">
+                <Card className="overflow-hidden border-2 border-primary/20 shadow-elevated bg-gradient-to-r from-background to-muted/30">
+                  <CardContent className="p-8 md:p-12">
+                    <div className="flex flex-col md:flex-row items-center gap-8">
+                      <div className="flex-shrink-0">
+                        <div className="w-20 h-20 rounded-2xl bg-gradient-primary flex items-center justify-center">
+                          <Languages className="w-10 h-10 text-primary-foreground" />
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1 text-center md:text-left">
+                        <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
+                          <h3 className="text-2xl md:text-3xl font-bold">Introducing PolyLinQ</h3>
+                          <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-semibold">NEW</span>
+                        </div>
+                        <p className="text-lg text-muted-foreground mb-2">
+                          Real-time multilingual communication for Agile teams
+                        </p>
+                        <p className="text-muted-foreground flex items-center justify-center md:justify-start gap-2">
+                          <Globe className="w-4 h-4" />
+                          Break language barriers. Collaborate seamlessly.
+                        </p>
+                      </div>
+                      
+                      <div className="flex flex-col gap-3">
+                        <Button 
+                          size="lg" 
+                          className="gap-2"
+                          onClick={() => navigate("/polylinq")}
+                        >
+                          Learn More
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </section>
 
