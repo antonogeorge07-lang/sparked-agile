@@ -554,7 +554,7 @@ export default function Landing() {
           <Card className="bg-gradient-primary text-primary-foreground border-0">
             <CardContent className="p-12 text-center space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold">
-                Ready to Transform Your Agile Workflow?
+                Are You Ready to Transform to an Agile Workflow?
               </h2>
               <p className="text-lg opacity-90">
                 {statsLoading 
