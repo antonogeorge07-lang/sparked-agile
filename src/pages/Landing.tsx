@@ -466,7 +466,7 @@ export default function Landing() {
                         <Target className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-lg mb-1">PMI PMBOK 7 & 8 Lifecycle</h3>
+                        <h3 className="font-semibold text-lg mb-1">Aligned with PMP Principles</h3>
                         <p className="text-sm text-muted-foreground">
                           Manage projects through complete PMI lifecycle stages from initiation to closure
                         </p>
