@@ -439,7 +439,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Omair Project Command Centre Spotlight */}
+      {/* Project Command Centre Spotlight */}
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
         <div className="container mx-auto max-w-5xl relative">
@@ -449,7 +449,7 @@ export default function Landing() {
               New Feature
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold">
-              Omair Project Command Centre
+              Project Command Centre
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Built for Traditional Project Management • Futuristic, AI-Ready Design

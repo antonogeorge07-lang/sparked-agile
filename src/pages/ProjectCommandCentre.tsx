@@ -194,7 +194,7 @@ export default function ProjectCommandCentre() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-              Omair Project Command Centre
+              Project Command Centre
             </h1>
             <p className="text-muted-foreground">Built for Traditional Project Management • Futuristic, AI-Ready Design</p>
           </div>
