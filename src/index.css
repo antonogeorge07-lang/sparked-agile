@@ -17,39 +17,39 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 15%;
 
-    /* Midnight Blue - Primary authority color */
-    --primary: 220 45% 25%;
+    /* Vibrant Blue - Primary brand color */
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
 
-    /* Steel Grey - Secondary precision color */
-    --secondary: 210 8% 45%;
+    /* Purple - Secondary accent color */
+    --secondary: 262 83% 58%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 12% 92%;
     --muted-foreground: 220 10% 45%;
 
-    /* Gold Accent - Executive highlight */
-    --accent: 42 88% 55%;
-    --accent-foreground: 220 45% 25%;
+    /* Purple Accent - Modern highlight */
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 220 15% 88%;
     --input: 220 15% 88%;
-    --ring: 42 88% 55%;
+    --ring: 221 83% 53%;
 
     --radius: 0.5rem;
 
-    /* Executive color palette gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 45% 25%), hsl(210 8% 45%));
-    --gradient-accent: linear-gradient(135deg, hsl(42 88% 55%), hsl(42 88% 65%));
+    /* Modern blue-purple gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(262 83% 58%));
+    --gradient-accent: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     --gradient-subtle: linear-gradient(180deg, hsl(220 15% 97%), hsl(0 0% 100%));
     
-    /* Professional shadows */
-    --shadow-card: 0 2px 12px -2px hsl(220 45% 25% / 0.1);
-    --shadow-elevated: 0 8px 32px -4px hsl(220 45% 25% / 0.15);
-    --shadow-gold: 0 4px 20px -2px hsl(42 88% 55% / 0.25);
+    /* Modern shadows */
+    --shadow-card: 0 2px 12px -2px hsl(221 83% 53% / 0.1);
+    --shadow-elevated: 0 8px 32px -4px hsl(221 83% 53% / 0.15);
+    --shadow-gold: 0 4px 20px -2px hsl(262 83% 58% / 0.25);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -71,36 +71,36 @@ All colors MUST be HSL.
     --popover: 220 40% 12%;
     --popover-foreground: 220 15% 95%;
 
-    /* Midnight Blue - Dark mode primary */
-    --primary: 220 45% 35%;
+    /* Vibrant Blue - Dark mode primary */
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
 
-    /* Steel Grey - Dark mode secondary */
-    --secondary: 210 8% 55%;
-    --secondary-foreground: 220 45% 8%;
+    /* Purple - Dark mode secondary */
+    --secondary: 262 83% 58%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 220 35% 15%;
     --muted-foreground: 220 12% 65%;
 
-    /* Gold Accent - Dark mode highlight */
-    --accent: 42 88% 60%;
-    --accent-foreground: 220 45% 8%;
+    /* Purple Accent - Dark mode highlight */
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 220 15% 95%;
 
     --border: 220 35% 18%;
     --input: 220 35% 18%;
-    --ring: 42 88% 60%;
+    --ring: 221 83% 53%;
     
-    /* Dark mode executive gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 45% 35%), hsl(210 8% 55%));
-    --gradient-accent: linear-gradient(135deg, hsl(42 88% 60%), hsl(42 88% 70%));
+    /* Dark mode blue-purple gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(262 83% 58%));
+    --gradient-accent: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     --gradient-subtle: linear-gradient(180deg, hsl(220 45% 8%), hsl(220 40% 12%));
     
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.4);
     --shadow-elevated: 0 8px 32px -4px hsl(0 0% 0% / 0.5);
-    --shadow-gold: 0 4px 20px -2px hsl(42 88% 60% / 0.3);
+    --shadow-gold: 0 4px 20px -2px hsl(262 83% 58% / 0.3);
 
     --sidebar-background: 240 6% 10%;
     --sidebar-foreground: 240 5% 96%;
