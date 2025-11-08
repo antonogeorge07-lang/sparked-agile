@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
+import { AIAssistant } from "@/components/AIAssistant";
 // Eager load critical pages
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -65,6 +66,7 @@ const App = () => {
             <AnalyticsProvider>
               <PerformanceMonitor />
               <FeedbackWidget />
+              <AIAssistant />
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />
