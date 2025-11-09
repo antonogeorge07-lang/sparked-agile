@@ -8,10 +8,36 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const supportedLanguages: Language[] = ['en', 'es', 'fr', 'de', 'it', 'pt'];
+
+function detectBrowserLanguage(): Language {
+  const browserLang = navigator.language || navigator.languages?.[0] || 'en';
+  
+  // Extract the primary language code (e.g., 'en' from 'en-US')
+  const primaryLang = browserLang.split('-')[0].toLowerCase();
+  
+  // Check if the detected language is supported
+  if (supportedLanguages.includes(primaryLang as Language)) {
+    return primaryLang as Language;
+  }
+  
+  // Fall back to English
+  return 'en';
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     const stored = localStorage.getItem('app-language');
-    return (stored as Language) || 'en';
+    
+    // If user has previously set a language, use that
+    if (stored && supportedLanguages.includes(stored as Language)) {
+      return stored as Language;
+    }
+    
+    // Otherwise, detect from browser
+    const detected = detectBrowserLanguage();
+    localStorage.setItem('app-language', detected);
+    return detected;
   });
 
   const setLanguage = (lang: Language) => {
