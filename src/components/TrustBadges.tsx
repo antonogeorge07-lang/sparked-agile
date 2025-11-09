@@ -3,13 +3,12 @@ import { Badge } from "@/components/ui/badge";
 
 export const TrustBadges = () => {
   const badges = [
-    { icon: Shield, text: "Enterprise Security", color: "text-blue-600" },
-    { icon: Star, text: "4.9/5 Rating", color: "text-orange-600" }
+    // Add verified badges here when available
   ];
 
   return (
     <div className="flex flex-wrap justify-center gap-3">
-      {badges.map((badge, index) => {
+      {badges.length > 0 ? badges.map((badge, index) => {
         const Icon = badge.icon;
         return (
           <Badge 
@@ -21,7 +20,7 @@ export const TrustBadges = () => {
             {badge.text}
           </Badge>
         );
-      })}
+      }) : null}
     </div>
   );
 };
