@@ -11,11 +11,47 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, duration, tone, style } = await req.json();
-
-    if (!prompt) {
+    // Parse and validate input
+    let requestData;
+    try {
+      requestData = await req.json();
+    } catch (e) {
       return new Response(
-        JSON.stringify({ error: 'Prompt is required' }),
+        JSON.stringify({ error: 'Invalid JSON in request body' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { prompt, duration, tone, style } = requestData;
+
+    // Input validation
+    if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
+      return new Response(
+        JSON.stringify({ error: 'Prompt is required and must be a non-empty string' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (prompt.length > 2000) {
+      return new Response(
+        JSON.stringify({ error: 'Prompt must be less than 2000 characters' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (duration && (typeof duration !== 'string' || duration.length > 50)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid duration format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (tone && (typeof tone !== 'string' || tone.length > 50)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid tone format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (style && (typeof style !== 'string' || style.length > 50)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid style format' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
