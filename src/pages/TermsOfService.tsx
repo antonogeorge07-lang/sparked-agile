@@ -2,82 +2,197 @@ import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
-import { LanguageSelector } from "@/components/LanguageSelector";
-import { useLanguage } from "@/hooks/useLanguage";
-import { termsOfServiceTranslations } from "@/i18n/translations";
 
 export default function TermsOfService() {
-  const { language } = useLanguage();
-  const t = termsOfServiceTranslations[language];
-
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
 
       <main className="container mx-auto px-4 py-12 max-w-4xl">
-        <div className="flex items-center justify-between mb-6">
-          <BackButton fallbackPath="/" />
-          <LanguageSelector />
-        </div>
+        <BackButton fallbackPath="/" className="mb-6" />
         <div className="flex items-center gap-3 mb-8 animate-fade-in">
           <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shadow-elegant">
             <FileText className="w-6 h-6 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold">{t.title}</h1>
-            <p className="text-muted-foreground">{t.lastUpdated}: {new Date().toLocaleDateString()}</p>
+            <h1 className="text-4xl font-bold">Terms of Service</h1>
+            <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
           </div>
         </div>
 
         <Card className="shadow-card">
           <CardHeader>
-            <CardTitle className="text-2xl">{t.legalAgreement}</CardTitle>
+            <CardTitle className="text-2xl">Legal Agreement</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-slate dark:prose-invert max-w-none">
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">1. {t.sections.acceptance.title}</h2>
+              <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
               <p className="text-muted-foreground mb-4">
-                {t.sections.acceptance.content}
+                By accessing and using SM ActiveIntelligence ("Service"), you accept and agree to be bound by the terms 
+                and provision of this agreement. If you do not agree to these Terms of Service, please do not use the Service.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">2. {t.sections.description.title}</h2>
+              <h2 className="text-2xl font-semibold mb-4">2. Description of Service</h2>
               <p className="text-muted-foreground mb-4">
-                {t.sections.description.intro}
+                SM ActiveIntelligence provides an AI-powered Scrum Master assistant platform that helps teams with:
               </p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                {t.sections.description.items.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
+                <li>Sprint planning and backlog refinement</li>
+                <li>Daily standup management</li>
+                <li>Sprint retrospectives and reviews</li>
+                <li>Integration with JIRA, GitHub, and Microsoft services</li>
+                <li>AI-generated insights and recommendations</li>
               </ul>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">3. {t.sections.userAccounts.title}</h2>
-              <h3 className="text-xl font-medium mb-2">3.1 {t.sections.userAccounts.registration.title}</h3>
+              <h2 className="text-2xl font-semibold mb-4">3. User Accounts</h2>
+              <h3 className="text-xl font-medium mb-2">3.1 Registration</h3>
               <p className="text-muted-foreground mb-4">
-                {t.sections.userAccounts.registration.content}
+                You must create an account to use our Service. You agree to provide accurate, current, and complete 
+                information during registration and to update such information to keep it accurate, current, and complete.
               </p>
               
-              <h3 className="text-xl font-medium mb-2">3.2 {t.sections.userAccounts.security.title}</h3>
+              <h3 className="text-xl font-medium mb-2">3.2 Account Security</h3>
               <p className="text-muted-foreground mb-4">
-                {t.sections.userAccounts.security.content}
+                You are responsible for maintaining the confidentiality of your account credentials and for all activities 
+                that occur under your account. You agree to notify us immediately of any unauthorized use of your account.
               </p>
 
-              <h3 className="text-xl font-medium mb-2">3.3 {t.sections.userAccounts.termination.title}</h3>
+              <h3 className="text-xl font-medium mb-2">3.3 Account Termination</h3>
               <p className="text-muted-foreground mb-4">
-                {t.sections.userAccounts.termination.content}
+                We reserve the right to suspend or terminate your account if you violate these Terms of Service or 
+                engage in activities that may harm the Service or other users.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">4. {t.sections.contact.title}</h2>
+              <h2 className="text-2xl font-semibold mb-4">4. Subscription and Payment</h2>
+              <h3 className="text-xl font-medium mb-2">4.1 Subscription Plans</h3>
               <p className="text-muted-foreground mb-4">
-                {t.sections.contact.content}
+                We offer various subscription plans with different features and pricing. Details of each plan are available 
+                on our pricing page.
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">4.2 Payment Terms</h3>
+              <p className="text-muted-foreground mb-4">
+                Subscription fees are billed in advance on a monthly or yearly basis. All payments are processed securely 
+                through Stripe. You authorize us to charge your payment method for all fees incurred.
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">4.3 Refund Policy</h3>
+              <p className="text-muted-foreground mb-4">
+                We offer a 14-day money-back guarantee for new subscriptions. Refund requests must be submitted within 
+                14 days of the initial purchase. No refunds are provided for partial subscription periods or downgrades.
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">4.4 Cancellation</h3>
+              <p className="text-muted-foreground mb-4">
+                You may cancel your subscription at any time. Upon cancellation, you will retain access to the Service 
+                until the end of your current billing period.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">5. User Conduct</h2>
+              <p className="text-muted-foreground mb-4">You agree not to:</p>
+              <ul className="list-disc pl-6 mb-4 text-muted-foreground">
+                <li>Use the Service for any illegal or unauthorized purpose</li>
+                <li>Attempt to gain unauthorized access to the Service or related systems</li>
+                <li>Interfere with or disrupt the Service or servers</li>
+                <li>Upload or transmit viruses or malicious code</li>
+                <li>Harvest or collect information about other users</li>
+                <li>Impersonate any person or entity</li>
+                <li>Violate any applicable laws or regulations</li>
+              </ul>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
+              <h3 className="text-xl font-medium mb-2">6.1 Our Rights</h3>
+              <p className="text-muted-foreground mb-4">
+                The Service, including its original content, features, and functionality, is owned by SM ActiveIntelligence 
+                and is protected by international copyright, trademark, and other intellectual property laws.
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">6.2 Your Content</h3>
+              <p className="text-muted-foreground mb-4">
+                You retain all rights to the data and content you submit to the Service. By submitting content, you grant 
+                us a non-exclusive, worldwide, royalty-free license to use, store, and process your content solely for 
+                providing and improving the Service.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">7. AI-Generated Content</h2>
+              <p className="text-muted-foreground mb-4">
+                Our Service uses AI to generate insights, summaries, and recommendations. While we strive for accuracy, 
+                AI-generated content may contain errors or inaccuracies. You are responsible for reviewing and validating 
+                all AI-generated content before use in critical decision-making.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">8. Third-Party Integrations</h2>
+              <p className="text-muted-foreground mb-4">
+                Our Service integrates with third-party platforms (JIRA, GitHub, Microsoft services). Your use of these 
+                integrations is subject to the respective third-party terms of service. We are not responsible for the 
+                availability, accuracy, or reliability of third-party services.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">9. Disclaimer of Warranties</h2>
+              <p className="text-muted-foreground mb-4">
+                THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. 
+                WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, OR COMPLETELY SECURE.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">10. Limitation of Liability</h2>
+              <p className="text-muted-foreground mb-4">
+                TO THE MAXIMUM EXTENT PERMITTED BY LAW, SM ACTIVEINTELLIGENCE SHALL NOT BE LIABLE FOR ANY INDIRECT, 
+                INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER 
+                INCURRED DIRECTLY OR INDIRECTLY.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">11. Indemnification</h2>
+              <p className="text-muted-foreground mb-4">
+                You agree to indemnify and hold harmless SM ActiveIntelligence from any claims, losses, damages, liabilities, 
+                and expenses arising out of your use of the Service or violation of these Terms.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">12. Changes to Terms</h2>
+              <p className="text-muted-foreground mb-4">
+                We reserve the right to modify these Terms at any time. We will notify users of material changes via email 
+                or through the Service. Your continued use of the Service after such modifications constitutes acceptance 
+                of the updated Terms.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">13. Governing Law</h2>
+              <p className="text-muted-foreground mb-4">
+                These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction], 
+                without regard to its conflict of law provisions.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">14. Contact Information</h2>
+              <p className="text-muted-foreground mb-4">
+                If you have any questions about these Terms, please contact us at:
               </p>
               <p className="text-muted-foreground">
-                Email: <a href={`mailto:${t.sections.contact.email}`} className="text-primary hover:underline">{t.sections.contact.email}</a>
+                Email: legal@smactiveintelligence.com<br />
+                Address: [Your Company Address]
               </p>
             </section>
           </CardContent>

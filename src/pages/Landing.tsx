@@ -206,11 +206,12 @@ export default function Landing() {
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold px-4">
               Transform Your
               <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                Workflow Agile
+                Agile Workflow
               </span>
             </h1>
             <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Automate sprint planning, backlog refinement, and retrospectives with AI.
+              Integrated with JIRA, GitHub, and Outlook.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
               <Link to="/auth" className="w-full sm:w-auto">
@@ -700,22 +701,9 @@ export default function Landing() {
           </div>
           <div className="border-t border-border mt-12 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-              <div className="flex flex-col md:flex-row items-center gap-4">
-                <p className="text-muted-foreground">
-                  © 2025 SM ActiveIntelligence. All rights reserved.
-                </p>
-                <div className="flex items-center gap-4">
-                  <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
-                    Privacy Policy
-                  </Link>
-                  <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
-                    Terms of Service
-                  </Link>
-                  <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                    Contact
-                  </Link>
-                </div>
-              </div>
+              <p className="text-muted-foreground">
+                © 2025 SM ActiveIntelligence. All rights reserved.
+              </p>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Sparkles className="h-4 w-4 text-primary animate-pulse" />
                 <span className="font-medium">

@@ -9,7 +9,6 @@ import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
 import { AIAssistant } from "@/components/AIAssistant";
-import { CookieConsent } from "@/components/CookieConsent";
 // Eager load critical pages
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -68,7 +67,6 @@ const App = () => {
               <PerformanceMonitor />
               <FeedbackWidget />
               <AIAssistant />
-              <CookieConsent />
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />
@@ -92,9 +90,7 @@ const App = () => {
                   <Route path="/project-workspace" element={<ProjectWorkspace />} />
                   <Route path="/sprint-planning-assistant" element={<SprintPlanningAssistant />} />
                   <Route path="/sprint-review-coordinator" element={<SprintReviewCoordinator />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/terms-of-service" element={<TermsOfService />} />
                   <Route path="/terms" element={<TermsOfService />} />
                   <Route path="/video-script-generator" element={<VideoScriptGenerator />} />
                   <Route path="/contact" element={<Contact />} />

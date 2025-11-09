@@ -3,7 +3,6 @@ import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { NotificationProvider } from "@/components/NotificationProvider";
-import { LanguageProvider } from "@/hooks/useLanguage";
 
 import { StrictMode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -15,15 +14,13 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <LanguageProvider>
-        <QueryClientProvider client={queryClient}>
-          <NotificationProvider>
-            <Toaster />
-            <SonnerToaster />
-            <App />
-          </NotificationProvider>
-        </QueryClientProvider>
-      </LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <NotificationProvider>
+          <Toaster />
+          <SonnerToaster />
+          <App />
+        </NotificationProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>
 );

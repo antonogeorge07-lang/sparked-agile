@@ -239,33 +239,6 @@ export type Database = {
           },
         ]
       }
-      data_export_requests: {
-        Row: {
-          completed_date: string | null
-          export_data: Json | null
-          id: string
-          request_date: string | null
-          status: string | null
-          user_id: string
-        }
-        Insert: {
-          completed_date?: string | null
-          export_data?: Json | null
-          id?: string
-          request_date?: string | null
-          status?: string | null
-          user_id: string
-        }
-        Update: {
-          completed_date?: string | null
-          export_data?: Json | null
-          id?: string
-          request_date?: string | null
-          status?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
       dependencies: {
         Row: {
           created_at: string | null
@@ -1505,42 +1478,6 @@ export type Database = {
           id?: string
           metadata?: Json | null
           page?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
-      user_consents: {
-        Row: {
-          analytics_consent: boolean | null
-          consent_date: string | null
-          functional_consent: boolean | null
-          id: string
-          ip_address: string | null
-          marketing_consent: boolean | null
-          updated_at: string | null
-          user_agent: string | null
-          user_id: string
-        }
-        Insert: {
-          analytics_consent?: boolean | null
-          consent_date?: string | null
-          functional_consent?: boolean | null
-          id?: string
-          ip_address?: string | null
-          marketing_consent?: boolean | null
-          updated_at?: string | null
-          user_agent?: string | null
-          user_id: string
-        }
-        Update: {
-          analytics_consent?: boolean | null
-          consent_date?: string | null
-          functional_consent?: boolean | null
-          id?: string
-          ip_address?: string | null
-          marketing_consent?: boolean | null
-          updated_at?: string | null
-          user_agent?: string | null
           user_id?: string
         }
         Relationships: []

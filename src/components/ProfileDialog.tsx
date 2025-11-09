@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Upload, X, CheckCircle2, XCircle } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { GDPRDataManagement } from "@/components/GDPRDataManagement";
 
 interface ProfileDialogProps {
   isOpen: boolean;
@@ -275,11 +274,10 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
         </DialogHeader>
 
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="preferences">Preferences</TabsTrigger>
             <TabsTrigger value="connections">Connections</TabsTrigger>
-            <TabsTrigger value="privacy">Privacy</TabsTrigger>
           </TabsList>
 
           <TabsContent value="general" className="space-y-4 pt-4">
@@ -444,10 +442,6 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
                 • Access Microsoft 365 integration features
               </p>
             </div>
-          </TabsContent>
-
-          <TabsContent value="privacy" className="space-y-4 pt-4">
-            <GDPRDataManagement />
           </TabsContent>
         </Tabs>
 
