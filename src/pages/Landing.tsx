@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Target, Zap, Users, Shield, ArrowRight, Star, Quote } from "lucide-react";
+import sparkAgileLogo from "@/assets/spark-agile-logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModal } from "@/components/DemoModal";
@@ -162,16 +163,12 @@ export default function Landing() {
       <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <Target className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="font-bold text-base sm:text-xl">SM ActiveIntelligence</span>
-                <span className="text-[10px] text-muted-foreground font-medium -mt-0.5">
-                  by Antono George
-                </span>
-              </div>
+            <div className="flex items-center">
+              <img 
+                src={sparkAgileLogo} 
+                alt="SPARK-AGILE" 
+                className="h-10 w-auto object-contain"
+              />
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/auth" className="hidden sm:block">
