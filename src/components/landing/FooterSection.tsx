@@ -10,12 +10,15 @@ export function FooterSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-3 mb-4">
               <OptimizedImage 
                 src={saaiLogo} 
                 alt="SAAI - AI-powered Scrum Master assistant logo" 
                 className="h-10 w-auto object-contain" 
               />
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                SAAI
+              </span>
             </div>
             <p className="text-sm text-muted-foreground">
               AI-powered Scrum Master assistant for agile teams
