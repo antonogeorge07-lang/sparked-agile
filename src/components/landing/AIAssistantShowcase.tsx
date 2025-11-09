@@ -165,9 +165,9 @@ export function AIAssistantShowcase() {
 
             <Card className="bg-gradient-primary text-primary-foreground border-0">
               <CardContent className="p-6 text-center space-y-4">
-                <h3 className="font-bold text-2xl">Want Unlimited Access?</h3>
+                <h3 className="font-bold text-2xl">Unlock Unlimited Access</h3>
                 <p className="opacity-90">
-                  Sign up now and chat with Omair anytime, with no limits on questions!
+                  Connect with Omair anytime and get answers without limits.
                 </p>
                 <Link to="/auth">
                   <Button 
@@ -179,9 +179,7 @@ export function AIAssistantShowcase() {
                     Get Started Free
                   </Button>
                 </Link>
-                <p className="text-sm opacity-75">
-                  Free forever • No credit card required
-                </p>
+                <p className="text-sm opacity-75">Get Started Free. Go Unlimited Anytime.</p>
               </CardContent>
             </Card>
           </div>
