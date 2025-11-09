@@ -34,7 +34,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
     },
     beta: {
       title: "Join Beta Program",
-      description: "Help shape the future of SM ActiveIntelligence",
+      description: "Help shape the future of SAAI",
       benefit: "🚀 Free lifetime Pro access for beta testers"
     },
     exit_intent: {

@@ -26,7 +26,7 @@ export const DemoModeButton = () => {
         .from("projects")
         .insert({
           name: "Demo Project - E-commerce Platform",
-          description: "Sample project showcasing SM ActiveIntelligence features with realistic data",
+          description: "Sample project showcasing SAAI features with realistic data",
           user_id: user.id
         })
         .select()
@@ -193,7 +193,7 @@ export const DemoModeButton = () => {
               Try Demo Mode
             </DialogTitle>
             <DialogDescription className="text-base pt-2">
-              Experience SM ActiveIntelligence instantly with a fully populated sample project
+              Experience SAAI instantly with a fully populated sample project
             </DialogDescription>
           </DialogHeader>
 

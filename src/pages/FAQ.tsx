@@ -25,21 +25,21 @@ export default function FAQ() {
             <HelpCircle className="h-12 w-12 mx-auto mb-4 text-primary" />
             <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
             <p className="text-xl text-muted-foreground">
-              Find answers to common questions about SM ActiveIntelligence
+              Find answers to common questions about SAAI
             </p>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>General Questions</CardTitle>
-              <CardDescription>Learn about SM ActiveIntelligence basics</CardDescription>
+              <CardDescription>Learn about SAAI basics</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>What is SM ActiveIntelligence?</AccordionTrigger>
+                  <AccordionTrigger>What is SAAI?</AccordionTrigger>
                   <AccordionContent>
-                    SM ActiveIntelligence is an AI-powered platform that helps agile teams optimize their Scrum ceremonies, 
+                    SAAI is an AI-powered platform that helps agile teams optimize their Scrum ceremonies,
                     track progress, and improve collaboration. It integrates with tools like JIRA and GitHub to provide 
                     intelligent insights and automation for your agile workflows.
                   </AccordionContent>
@@ -57,7 +57,7 @@ export default function FAQ() {
                 <AccordionItem value="item-3">
                   <AccordionTrigger>Do I need to install anything?</AccordionTrigger>
                   <AccordionContent>
-                    No installation required! SM ActiveIntelligence is a cloud-based web application. Simply create an 
+                    No installation required! SAAI is a cloud-based web application. Simply create an 
                     account and access it through your browser. We handle all infrastructure and updates automatically.
                   </AccordionContent>
                 </AccordionItem>

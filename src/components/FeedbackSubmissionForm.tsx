@@ -146,7 +146,7 @@ export const FeedbackSubmissionForm = () => {
               id="feedback"
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              placeholder="Tell us about your experience with SM ActiveIntelligence..."
+              placeholder="Tell us about your experience with SAAI..."
               rows={5}
               required
             />

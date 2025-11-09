@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
               <p className="text-muted-foreground mb-4">
-                SM ActiveIntelligence ("we," "our," or "us") is committed to protecting your privacy. 
+                SAAI ("we," "our," or "us") is committed to protecting your privacy. 
                 This Privacy Policy explains how we collect, use, disclose, and safeguard your information 
                 when you use our AI-powered Scrum Master assistant platform.
               </p>

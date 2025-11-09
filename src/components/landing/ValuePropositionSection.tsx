@@ -53,7 +53,7 @@ export function ValuePropositionSection() {
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Whether you're running sprints, managing stakeholders, or driving project success, 
-            SM ActiveIntelligence adapts to your workflow and amplifies your impact
+            SAAI adapts to your workflow and amplifies your impact
           </p>
         </header>
         

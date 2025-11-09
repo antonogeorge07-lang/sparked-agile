@@ -40,7 +40,7 @@ export default function UserGuide() {
               <h1 className="text-4xl font-bold">May I Help You</h1>
             </div>
             <p className="text-xl text-muted-foreground">
-              Your complete guide to mastering SM ActiveIntelligence
+              Your complete guide to mastering SAAI
             </p>
             <Badge variant="outline" className="mt-4">Good to Know</Badge>
           </div>

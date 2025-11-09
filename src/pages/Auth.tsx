@@ -182,7 +182,7 @@ export default function Auth() {
         }
       } else {
         toast({
-          title: "Welcome to SM ActiveIntelligence!",
+          title: "Welcome to SAAI!",
           description: "Your account has been created successfully. Please check your email to verify your account.",
         });
         // Clear form

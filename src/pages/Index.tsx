@@ -197,7 +197,7 @@ const Index = () => {
             <section className="py-8">
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">See SM ActiveIntelligence in Action</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">See SAAI in Action</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Discover how our platform streamlines your entire agile workflow with AI-powered automation
                   </p>

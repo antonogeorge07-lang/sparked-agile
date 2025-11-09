@@ -71,7 +71,7 @@ export const FeedbackDisplay = () => {
     return (
       <div className="text-center py-8">
         <p className="text-muted-foreground">
-          Be the first to share your experience with SM ActiveIntelligence!
+          Be the first to share your experience with SAAI!
         </p>
       </div>
     );

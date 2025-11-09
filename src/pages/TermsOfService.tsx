@@ -28,7 +28,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
               <p className="text-muted-foreground mb-4">
-                By accessing and using SM ActiveIntelligence ("Service"), you accept and agree to be bound by the terms 
+                By accessing and using SAAI ("Service"), you accept and agree to be bound by the terms 
                 and provision of this agreement. If you do not agree to these Terms of Service, please do not use the Service.
               </p>
             </section>
@@ -36,7 +36,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">2. Description of Service</h2>
               <p className="text-muted-foreground mb-4">
-                SM ActiveIntelligence provides an AI-powered Scrum Master assistant platform that helps teams with:
+                SAAI provides an AI-powered Scrum Master assistant platform that helps teams with:
               </p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
                 <li>Sprint planning and backlog refinement</li>
@@ -113,7 +113,7 @@ export default function TermsOfService() {
               <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
               <h3 className="text-xl font-medium mb-2">6.1 Our Rights</h3>
               <p className="text-muted-foreground mb-4">
-                The Service, including its original content, features, and functionality, is owned by SM ActiveIntelligence 
+                The Service, including its original content, features, and functionality, is owned by SAAI 
                 and is protected by international copyright, trademark, and other intellectual property laws.
               </p>
 
@@ -154,7 +154,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">10. Limitation of Liability</h2>
               <p className="text-muted-foreground mb-4">
-                TO THE MAXIMUM EXTENT PERMITTED BY LAW, SM ACTIVEINTELLIGENCE SHALL NOT BE LIABLE FOR ANY INDIRECT, 
+                TO THE MAXIMUM EXTENT PERMITTED BY LAW, SAAI SHALL NOT BE LIABLE FOR ANY INDIRECT, 
                 INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER 
                 INCURRED DIRECTLY OR INDIRECTLY.
               </p>
@@ -163,7 +163,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">11. Indemnification</h2>
               <p className="text-muted-foreground mb-4">
-                You agree to indemnify and hold harmless SM ActiveIntelligence from any claims, losses, damages, liabilities, 
+                You agree to indemnify and hold harmless SAAI from any claims, losses, damages, liabilities, 
                 and expenses arising out of your use of the Service or violation of these Terms.
               </p>
             </section>

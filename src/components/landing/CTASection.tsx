@@ -18,7 +18,7 @@ export function CTASection() {
             <p className="text-lg opacity-90">
               {statsLoading 
                 ? "Join our growing community" 
-                : `Join ${userStats?.totalUsers || 0} users already using SM ActiveIntelligence`}
+                : `Join ${userStats?.totalUsers || 0} users already using SAAI`}
             </p>
             <Link to="/auth">
               <Button 

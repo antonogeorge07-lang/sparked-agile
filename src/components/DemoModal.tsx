@@ -48,7 +48,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Experience SM ActiveIntelligence
+            Experience SAAI
           </DialogTitle>
           <DialogDescription className="text-base">
             See how AI transforms your agile ceremonies and workflow management

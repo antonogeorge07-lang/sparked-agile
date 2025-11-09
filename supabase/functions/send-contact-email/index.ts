@@ -87,7 +87,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to user
     const userEmailResponse = await resend.emails.send({
-      from: "SM ActiveIntelligence <onboarding@resend.dev>",
+      from: "SAAI <onboarding@resend.dev>",
       to: [email],
       subject: "We received your message!",
       html: `
@@ -102,7 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           <p style="color: #666;">
             Best regards,<br>
-            <strong>The SM ActiveIntelligence Team</strong>
+            <strong>The SAAI Team</strong>
           </p>
         </div>
       `,
@@ -112,7 +112,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "SM ActiveIntelligence <onboarding@resend.dev>",
+      from: "SAAI <onboarding@resend.dev>",
       to: ["info@smactiveintelligence.com"],
       subject: `New Contact Form: ${safeSubject}`,
       html: `
