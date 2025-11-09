@@ -5,6 +5,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { TypingIndicator } from "@/components/chat/TypingIndicator";
+import { chatSounds } from "@/utils/chatSounds";
 
 interface Message {
   role: "user" | "assistant";
@@ -16,8 +18,10 @@ export const AIAssistant = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const firstTokenReceived = useRef(false);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -27,6 +31,11 @@ export const AIAssistant = () => {
 
   const streamChat = async (userMessages: Message[]) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+    
+    // Show typing indicator and play typing sound
+    setIsTyping(true);
+    chatSounds.playTypingStart();
+    firstTokenReceived.current = false;
     
     const resp = await fetch(CHAT_URL, {
       method: "POST",
@@ -86,6 +95,13 @@ export const AIAssistant = () => {
           const parsed = JSON.parse(jsonStr);
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
           if (content) {
+            // Hide typing indicator and play receive sound on first token
+            if (!firstTokenReceived.current) {
+              setIsTyping(false);
+              chatSounds.playReceive();
+              firstTokenReceived.current = true;
+            }
+            
             assistantContent += content;
             setMessages((prev) => {
               const last = prev[prev.length - 1];
@@ -108,6 +124,9 @@ export const AIAssistant = () => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
+    // Play send sound
+    chatSounds.playSend();
+
     const userMessage: Message = { role: "user", content: input.trim() };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
@@ -118,6 +137,7 @@ export const AIAssistant = () => {
       await streamChat(newMessages);
     } catch (error) {
       console.error("Chat error:", error);
+      setIsTyping(false);
       toast({
         title: "Error",
         description: "Failed to get response. Please try again.",
@@ -125,6 +145,7 @@ export const AIAssistant = () => {
       });
     } finally {
       setIsLoading(false);
+      setIsTyping(false);
     }
   };
 
@@ -171,7 +192,7 @@ export const AIAssistant = () => {
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
             >
               <div
                 className={`max-w-[80%] rounded-lg px-4 py-2 ${
@@ -184,6 +205,13 @@ export const AIAssistant = () => {
               </div>
             </div>
           ))}
+          
+          {/* Typing Indicator */}
+          {isTyping && (
+            <div className="flex justify-start animate-fade-in">
+              <TypingIndicator />
+            </div>
+          )}
         </div>
       </ScrollArea>
 
