@@ -206,7 +206,7 @@ export default function Landing() {
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold px-4">
               Transform Your
               <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                Agile Workflow
+                Workflow Agile
               </span>
             </h1>
             <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
