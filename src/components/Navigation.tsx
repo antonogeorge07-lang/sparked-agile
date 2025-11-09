@@ -141,16 +141,28 @@ export const Navigation = () => {
               })}
               
               {isAdmin && (
-                <Link to="/admin">
-                  <Button 
-                    variant={location.pathname === "/admin" ? "default" : "ghost"}
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Shield className="w-4 h-4" />
-                    Admin
-                  </Button>
-                </Link>
+                <>
+                  <Link to="/admin">
+                    <Button 
+                      variant={location.pathname === "/admin" ? "default" : "ghost"}
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <Shield className="w-4 h-4" />
+                      Admin
+                    </Button>
+                  </Link>
+                  <Link to="/market-intelligence">
+                    <Button 
+                      variant={location.pathname === "/market-intelligence" ? "default" : "ghost"}
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <Target className="w-4 h-4" />
+                      Market Intel
+                    </Button>
+                  </Link>
+                </>
               )}
 
               <Link to="/user-guide">

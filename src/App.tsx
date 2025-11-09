@@ -42,6 +42,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
 const PolyLinQ = lazy(() => import("./pages/PolyLinQ"));
+const MarketIntelligence = lazy(() => import("./pages/MarketIntelligence"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -98,6 +99,7 @@ const App = () => {
                   <Route path="/user-guide" element={<UserGuide />} />
                   <Route path="/polylinq" element={<PolyLinQ />} />
                   <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
+                  <Route path="/market-intelligence" element={<MarketIntelligence />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

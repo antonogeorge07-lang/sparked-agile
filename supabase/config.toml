@@ -8,3 +8,6 @@ verify_jwt = true
 
 [functions.chat-demo]
 verify_jwt = false
+
+[functions.market-research]
+verify_jwt = true
