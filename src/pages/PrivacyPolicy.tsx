@@ -145,12 +145,65 @@ export default function PrivacyPolicy() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">11. Contact Us</h2>
+              <h2 className="text-2xl font-semibold mb-4">11. GDPR Compliance</h2>
+              <h3 className="text-xl font-medium mb-2">11.1 Lawful Basis for Processing</h3>
+              <p className="text-muted-foreground mb-4">
+                Under GDPR, we process your personal data based on the following lawful bases:
+              </p>
+              <ul className="list-disc pl-6 mb-4 text-muted-foreground">
+                <li><strong>Contractual necessity:</strong> To provide our services as outlined in our Terms of Service</li>
+                <li><strong>Legitimate interests:</strong> For analytics, security, and service improvements</li>
+                <li><strong>Consent:</strong> For marketing communications and optional analytics tracking</li>
+                <li><strong>Legal obligation:</strong> For compliance with applicable laws and regulations</li>
+              </ul>
+
+              <h3 className="text-xl font-medium mb-2">11.2 Data Protection Officer</h3>
+              <p className="text-muted-foreground mb-4">
+                For all GDPR-related inquiries, please contact our Data Protection Officer:
+              </p>
+              <p className="text-muted-foreground mb-4">
+                Email: <a href="mailto:dpo@spark-agile.com" className="text-primary hover:underline">dpo@spark-agile.com</a>
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">11.3 Data Subject Rights</h3>
+              <p className="text-muted-foreground mb-4">
+                Under GDPR, you have the following rights regarding your personal data:
+              </p>
+              <ul className="list-disc pl-6 mb-4 text-muted-foreground">
+                <li><strong>Right of access:</strong> Request a copy of your personal data</li>
+                <li><strong>Right to rectification:</strong> Correct inaccurate or incomplete data</li>
+                <li><strong>Right to erasure:</strong> Request deletion of your data ("right to be forgotten")</li>
+                <li><strong>Right to restrict processing:</strong> Limit how we use your data</li>
+                <li><strong>Right to data portability:</strong> Receive your data in a structured, machine-readable format</li>
+                <li><strong>Right to object:</strong> Object to processing based on legitimate interests</li>
+                <li><strong>Rights related to automated decision-making:</strong> Opt out of automated profiling</li>
+              </ul>
+              <p className="text-muted-foreground mb-4">
+                To exercise any of these rights, please use the data management tools in your profile settings 
+                or contact us at <a href="mailto:dpo@spark-agile.com" className="text-primary hover:underline">dpo@spark-agile.com</a>.
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">11.4 Data Breach Notification</h3>
+              <p className="text-muted-foreground mb-4">
+                In the event of a data breach that affects your personal data, we will notify you and the relevant 
+                supervisory authority within 72 hours as required by GDPR.
+              </p>
+
+              <h3 className="text-xl font-medium mb-2">11.5 Supervisory Authority</h3>
+              <p className="text-muted-foreground mb-4">
+                You have the right to lodge a complaint with your local data protection supervisory authority 
+                if you believe we have not handled your data in accordance with GDPR.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">12. Contact Us</h2>
               <p className="text-muted-foreground mb-4">
                 If you have questions or concerns about this Privacy Policy, please contact us at:
               </p>
               <p className="text-muted-foreground">
-                Email: privacy@smactiveintelligence.com<br />
+                Email: <a href="mailto:privacy@spark-agile.com" className="text-primary hover:underline">privacy@spark-agile.com</a><br />
+                Data Protection Officer: <a href="mailto:dpo@spark-agile.com" className="text-primary hover:underline">dpo@spark-agile.com</a><br />
                 Address: [Your Company Address]
               </p>
             </section>

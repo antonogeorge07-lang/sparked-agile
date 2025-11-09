@@ -700,9 +700,22 @@ export default function Landing() {
           </div>
           <div className="border-t border-border mt-12 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-              <p className="text-muted-foreground">
-                © 2025 SM ActiveIntelligence. All rights reserved.
-              </p>
+              <div className="flex flex-col md:flex-row items-center gap-4">
+                <p className="text-muted-foreground">
+                  © 2025 SM ActiveIntelligence. All rights reserved.
+                </p>
+                <div className="flex items-center gap-4">
+                  <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+                    Privacy Policy
+                  </Link>
+                  <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                    Terms of Service
+                  </Link>
+                  <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                    Contact
+                  </Link>
+                </div>
+              </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Sparkles className="h-4 w-4 text-primary animate-pulse" />
                 <span className="font-medium">
