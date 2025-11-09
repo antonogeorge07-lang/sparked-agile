@@ -1,39 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Homepage - Highest priority -->
   <url>
     <loc>https://smactiveintelligence.com/</loc>
-    <lastmod>2025-11-04</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  <!-- Authentication -->
   <url>
     <loc>https://smactiveintelligence.com/auth</loc>
-    <lastmod>2025-11-04</lastmod>
+    <lastmod>2025-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://smactiveintelligence.com/privacy</loc>
-    <lastmod>2025-11-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://smactiveintelligence.com/terms</loc>
-    <lastmod>2025-11-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
+  
+  <!-- Contact & Support -->
   <url>
     <loc>https://smactiveintelligence.com/contact</loc>
-    <lastmod>2025-11-04</lastmod>
+    <lastmod>2025-11-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
+  
   <url>
     <loc>https://smactiveintelligence.com/faq</loc>
-    <lastmod>2025-11-04</lastmod>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/user-guide</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Features Pages -->
+  <url>
+    <loc>https://smactiveintelligence.com/project-command-centre</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/sprint-planning-assistant</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/sprint-review-coordinator</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/backlog-refinement</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/integrations</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/polylinq</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://smactiveintelligence.com/privacy</loc>
+    <lastmod>2025-11-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://smactiveintelligence.com/terms</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

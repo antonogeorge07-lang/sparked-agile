@@ -29,14 +29,16 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
               </Badge>
             </div>
             <h1 id="hero-heading" className="text-3xl sm:text-5xl font-bold px-4 md:text-6xl">
-              Transform Your
-              <span className="block bg-gradient-primary bg-clip-text text-violet-400">
-                Workflow Agile
+              Transform Your Agile
+              <span className="block bg-gradient-primary bg-clip-text text-transparent">
+                Workflow with AI
               </span>
             </h1>
             <p className="text-base text-muted-foreground max-w-2xl mx-auto px-4 sm:text-lg">
-              Automate sprint planning, backlog refinement, and retrospectives with AI.
-              Integrated with JIRA, GitHub, and Outlook.
+              Automate ceremonies, sync with JIRA & GitHub, boost team velocity by 30%.
+              <span className="block mt-2 text-sm font-medium text-primary">
+                ✓ Free forever • ✓ No credit card • ✓ 2-minute setup
+              </span>
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
               <Link to="/auth" className="w-full sm:w-auto">

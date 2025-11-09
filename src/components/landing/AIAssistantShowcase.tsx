@@ -40,7 +40,7 @@ export function AIAssistantShowcase() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden" aria-labelledby="ai-assistant-heading">
+    <section id="demo" className="py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden" aria-labelledby="ai-assistant-heading">
       <div className="absolute inset-0 bg-grid-pattern opacity-5" aria-hidden="true" />
       
       <div className="container mx-auto max-w-6xl relative">

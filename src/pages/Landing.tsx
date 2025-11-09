@@ -4,12 +4,16 @@ import { DemoModal } from "@/components/DemoModal";
 import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
+import { FAQSchema } from "@/components/landing/FAQSchema";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import saaiLogo from "@/assets/saai-logo.png";
 
 // Lazy load sections below the fold for better initial page load
+const SocialProofSection = lazy(() => import("@/components/landing/SocialProofSection").then(module => ({ default: module.SocialProofSection })));
+const QuickValueSection = lazy(() => import("@/components/landing/QuickValueSection").then(module => ({ default: module.QuickValueSection })));
 const ValuePropositionSection = lazy(() => import("@/components/landing/ValuePropositionSection").then(module => ({ default: module.ValuePropositionSection })));
 const AIAssistantShowcase = lazy(() => import("@/components/landing/AIAssistantShowcase").then(module => ({ default: module.AIAssistantShowcase })));
 const ProjectCommandCentreSection = lazy(() => import("@/components/landing/ProjectCommandCentreSection").then(module => ({ default: module.ProjectCommandCentreSection })));
@@ -68,6 +72,9 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* SEO: FAQ Structured Data */}
+      <FAQSchema />
+      
       {/* Navigation */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <nav className="container mx-auto px-4" aria-label="Main navigation">
@@ -113,6 +120,14 @@ export default function Landing() {
         />
         
         <Suspense fallback={<SectionSkeleton />}>
+          <SocialProofSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <QuickValueSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
           <ValuePropositionSection />
         </Suspense>
         
@@ -148,6 +163,9 @@ export default function Landing() {
         onClose={() => setShowEmailCapture(false)} 
         context={emailContext} 
       />
+      
+      {/* Interactive Onboarding for First-Time Visitors */}
+      <InteractiveOnboarding />
     </div>
   );
 }

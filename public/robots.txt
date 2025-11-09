@@ -1,32 +1,74 @@
-# Robots.txt for SM ActiveIntelligence
-# Allow search engines to crawl public pages
+# Robots.txt for SAAI - AI-Powered Agile Project Management
+# Updated: 2025-11-09
 
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Specific bot configurations
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 0
 
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Social media crawlers for rich previews
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
 
-# Sitemap location (update with your actual domain)
-Sitemap: https://smactiveintelligence.com/sitemap.xml
-
-# Disallow admin and private areas
+# Disallow authenticated/private areas
 Disallow: /admin
 Disallow: /dashboard
-Disallow: /auth
 Disallow: /standup
 Disallow: /retrospective
 Disallow: /workflows
+Disallow: /usage-analytics
+Disallow: /value-streams
+Disallow: /program-increment
+Disallow: /flow-metrics
+Disallow: /ceremony-setup
+Disallow: /task-management
+Disallow: /project-workspace
+Disallow: /project-progress
+Disallow: /market-intelligence
 
-# Allow public pages
+# Allow public marketing pages
+Allow: /auth
+Allow: /contact
+Allow: /faq
+Allow: /user-guide
 Allow: /privacy
 Allow: /terms
+Allow: /project-command-centre
+Allow: /sprint-planning-assistant
+Allow: /sprint-review-coordinator
+Allow: /backlog-refinement
+Allow: /integrations
+Allow: /polylinq
+
+# Sitemap location
+Sitemap: https://smactiveintelligence.com/sitemap.xml
+
+# Crawl delay (seconds) - be nice to small servers
+Crawl-delay: 1
+
+# Block specific file types if needed
+# Disallow: /*.json$
+# Disallow: /*.xml$
