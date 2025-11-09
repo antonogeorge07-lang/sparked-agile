@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModeButton } from "@/components/DemoModeButton";
 import { TrustBadges } from "@/components/TrustBadges";
+import { lazy, Suspense } from "react";
+
+const TrustBadgesLazy = lazy(() => import("@/components/TrustBadges").then(module => ({ default: module.TrustBadges })));
 
 interface HeroSectionProps {
   onWatchDemo: () => void;
@@ -77,7 +80,9 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
 
       <section className="py-8 px-4" aria-label="Trust indicators">
         <div className="container mx-auto max-w-6xl">
-          <TrustBadges />
+          <Suspense fallback={<div className="h-20 animate-pulse bg-muted rounded" />}>
+            <TrustBadgesLazy />
+          </Suspense>
         </div>
       </section>
     </>

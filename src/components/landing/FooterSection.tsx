@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import saaiLogo from "@/assets/saai-logo.png";
 
 export function FooterSection() {
@@ -10,7 +11,7 @@ export function FooterSection() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img 
+              <OptimizedImage 
                 src={saaiLogo} 
                 alt="SAAI - AI-powered Scrum Master assistant logo" 
                 className="h-10 w-auto object-contain" 

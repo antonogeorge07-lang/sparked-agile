@@ -3,16 +3,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { DemoModal } from "@/components/DemoModal";
 import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { HeroSection } from "@/components/landing/HeroSection";
-import { ValuePropositionSection } from "@/components/landing/ValuePropositionSection";
-import { ProjectCommandCentreSection } from "@/components/landing/ProjectCommandCentreSection";
-import { FeaturesSection } from "@/components/landing/FeaturesSection";
-import { FeedbackSection } from "@/components/landing/FeedbackSection";
-import { CTASection } from "@/components/landing/CTASection";
-import { FooterSection } from "@/components/landing/FooterSection";
-import { useState, useEffect } from "react";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import saaiLogo from "@/assets/saai-logo.png";
+
+// Lazy load sections below the fold for better initial page load
+const ValuePropositionSection = lazy(() => import("@/components/landing/ValuePropositionSection").then(module => ({ default: module.ValuePropositionSection })));
+const ProjectCommandCentreSection = lazy(() => import("@/components/landing/ProjectCommandCentreSection").then(module => ({ default: module.ProjectCommandCentreSection })));
+const FeaturesSection = lazy(() => import("@/components/landing/FeaturesSection").then(module => ({ default: module.FeaturesSection })));
+const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
+const CTASection = lazy(() => import("@/components/landing/CTASection").then(module => ({ default: module.CTASection })));
+const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
+
+const SectionSkeleton = () => (
+  <div className="py-20 px-4">
+    <div className="container mx-auto max-w-6xl">
+      <div className="h-64 animate-pulse bg-muted rounded" />
+    </div>
+  </div>
+);
 
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
@@ -61,10 +72,11 @@ export default function Landing() {
         <nav className="container mx-auto px-4" aria-label="Main navigation">
           <div className="flex items-center justify-between h-16">
             <Link to="/" className="flex items-center" aria-label="SAAI home">
-              <img 
+              <OptimizedImage 
                 src={saaiLogo} 
                 alt="SAAI - Agile Active Intelligence logo" 
-                className="h-12 w-auto object-contain" 
+                className="h-12 w-auto object-contain"
+                priority={true}
               />
             </Link>
             <div className="flex items-center gap-2 sm:gap-4">
@@ -99,18 +111,30 @@ export default function Landing() {
           onEarlyAccess={handleEarlyAccess}
         />
         
-        <ValuePropositionSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <ValuePropositionSection />
+        </Suspense>
         
-        <ProjectCommandCentreSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <ProjectCommandCentreSection />
+        </Suspense>
         
-        <FeaturesSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <FeaturesSection />
+        </Suspense>
         
-        <FeedbackSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <FeedbackSection />
+        </Suspense>
         
-        <CTASection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <CTASection />
+        </Suspense>
       </main>
 
-      <FooterSection />
+      <Suspense fallback={<div className="border-t border-border py-12 px-4 h-64 animate-pulse bg-muted" />}>
+        <FooterSection />
+      </Suspense>
 
       {/* Modals */}
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
