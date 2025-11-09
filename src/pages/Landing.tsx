@@ -549,10 +549,11 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                  <Target className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="font-bold">SM ActiveIntelligence</span>
+                <img 
+                  src={saaiLogo} 
+                  alt="SAAI" 
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 AI-powered Scrum Master assistant for agile teams
