@@ -164,11 +164,7 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <img 
-                src={sparkAgileLogo} 
-                alt="SPARK-AGILE" 
-                className="h-10 w-auto object-contain"
-              />
+              <span className="text-2xl font-bold text-foreground">SAAI</span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/auth" className="hidden sm:block">
