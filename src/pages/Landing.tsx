@@ -127,7 +127,7 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-foreground">SAAI</span>
+              <span className="font-bold text-4xl text-violet-700"> SAAI</span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/auth" className="hidden sm:block">
@@ -155,13 +155,11 @@ export default function Landing() {
                 AI-Powered Scrum Master Assistant
               </Badge>
             </div>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold px-4">
+            <h1 className="text-3xl sm:text-5xl font-bold px-4 md:text-6xl">
               Transform Your
-              <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                Agile Workflow
-              </span>
+              <span className="block bg-gradient-primary bg-clip-text text-violet-400">Workflow Agile </span>
             </h1>
-            <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto px-4 sm:text-lg">
               Automate sprint planning, backlog refinement, and retrospectives with AI.
               Integrated with JIRA, GitHub, and Outlook.
             </p>
@@ -549,11 +547,7 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <img 
-                  src={saaiLogo} 
-                  alt="SAAI" 
-                  className="h-10 w-auto object-contain"
-                />
+                <img src={saaiLogo} alt="SAAI" className="h-10 w-auto object-contain" />
               </div>
               <p className="text-sm text-muted-foreground">
                 AI-powered Scrum Master assistant for agile teams
@@ -588,9 +582,7 @@ export default function Landing() {
           </div>
           <div className="border-t border-border mt-12 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-              <p className="text-muted-foreground">
-                © 2025 SM ActiveIntelligence. All rights reserved.
-              </p>
+              <p className="text-muted-foreground">© 2025 SAAI All rights reserved.</p>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Sparkles className="h-4 w-4 text-primary animate-pulse" />
                 <span className="font-medium">
