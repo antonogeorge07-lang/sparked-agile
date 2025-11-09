@@ -211,7 +211,6 @@ export default function Landing() {
             </h1>
             <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Automate sprint planning, backlog refinement, and retrospectives with AI.
-              Integrated with JIRA, GitHub, and Outlook.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
               <Link to="/auth" className="w-full sm:w-auto">
