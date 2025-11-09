@@ -11,6 +11,7 @@ import saaiLogo from "@/assets/saai-logo.png";
 
 // Lazy load sections below the fold for better initial page load
 const ValuePropositionSection = lazy(() => import("@/components/landing/ValuePropositionSection").then(module => ({ default: module.ValuePropositionSection })));
+const AIAssistantShowcase = lazy(() => import("@/components/landing/AIAssistantShowcase").then(module => ({ default: module.AIAssistantShowcase })));
 const ProjectCommandCentreSection = lazy(() => import("@/components/landing/ProjectCommandCentreSection").then(module => ({ default: module.ProjectCommandCentreSection })));
 const FeaturesSection = lazy(() => import("@/components/landing/FeaturesSection").then(module => ({ default: module.FeaturesSection })));
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
@@ -113,6 +114,10 @@ export default function Landing() {
         
         <Suspense fallback={<SectionSkeleton />}>
           <ValuePropositionSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <AIAssistantShowcase />
         </Suspense>
         
         <Suspense fallback={<SectionSkeleton />}>
