@@ -14,19 +14,22 @@ import { FeedbackDisplay } from "@/components/FeedbackDisplay";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserStats } from "@/hooks/useUserStats";
-
 export default function Landing() {
-  const { trackButtonClick } = useAnalytics();
+  const {
+    trackButtonClick
+  } = useAnalytics();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [emailContext, setEmailContext] = useState<"early_access" | "newsletter" | "beta" | "exit_intent">("newsletter");
   const navigate = useNavigate();
-  const { data: userStats, isLoading: statsLoading } = useUserStats();
+  const {
+    data: userStats,
+    isLoading: statsLoading
+  } = useUserStats();
 
   // Exit intent detection
   useEffect(() => {
     let exitIntentShown = false;
-    
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !exitIntentShown) {
         exitIntentShown = true;
@@ -34,15 +37,17 @@ export default function Landing() {
         setShowEmailCapture(true);
       }
     };
-
     document.addEventListener('mouseleave', handleMouseLeave);
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, []);
-
   useEffect(() => {
     // Redirect authenticated users
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: {
+          session
+        }
+      } = await supabase.auth.getSession();
       if (session) {
         const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
         navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
@@ -50,115 +55,73 @@ export default function Landing() {
     };
     checkAuth();
   }, [navigate]);
-  
-  const features = [
-    {
-      icon: <Sparkles className="h-6 w-6" />,
-      title: "AI-Powered Sprint Planning",
-      description: "Automatically generate sprint plans from JIRA backlog with velocity-based estimates",
-    },
-    {
-      icon: <Target className="h-6 w-6" />,
-      title: "Backlog Refinement",
-      description: "AI analyzes backlog health, identifies stale items, and recommends improvements",
-    },
-    {
-      icon: <Zap className="h-6 w-6" />,
-      title: "Automated Retrospectives",
-      description: "Collect feedback anonymously and generate actionable insights with AI",
-    },
-    {
-      icon: <Users className="h-6 w-6" />,
-      title: "Team Collaboration",
-      description: "Real-time presence, activity tracking, and seamless team coordination",
-    },
-    {
-      icon: <Shield className="h-6 w-6" />,
-      title: "Enterprise Security",
-      description: "Row-level security, role-based access control, and encrypted data storage",
-    },
-    {
-      icon: <Target className="h-6 w-6" />,
-      title: "JIRA & GitHub Integration",
-      description: "Seamless integration with your existing tools and workflows",
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Sarah Chen",
-      role: "Scrum Master, TechCorp",
-      content: "SM ActiveIntelligence transformed our sprint planning. What used to take 3 hours now takes 30 minutes, and the AI recommendations are spot-on.",
-      rating: 5,
-    },
-    {
-      name: "Michael Rodriguez",
-      role: "Engineering Manager, StartupXYZ",
-      content: "The backlog refinement feature alone is worth it. We've reduced stale tickets by 80% and improved our velocity by 25%.",
-      rating: 5,
-    },
-    {
-      name: "Emily Watson",
-      role: "Product Owner, Enterprise Inc",
-      content: "Finally, a tool that understands agile workflows. The JIRA integration works flawlessly, and the AI insights are incredibly valuable.",
-      rating: 5,
-    },
-  ];
-
-  const pricingTiers = [
-    {
-      name: "Free",
-      price: "$0",
-      period: "forever",
-      description: "Perfect for individuals and small teams",
-      features: [
-        "Up to 5 team members",
-        "1 workspace",
-        "Basic AI features",
-        "JIRA & GitHub integration",
-        "Community support",
-      ],
-      cta: "Start Free",
-      popular: false,
-    },
-    {
-      name: "Professional",
-      price: "$29",
-      period: "per user/month",
-      description: "For growing teams and businesses",
-      features: [
-        "Unlimited team members",
-        "5 workspaces",
-        "Advanced AI features",
-        "All integrations",
-        "Priority support",
-        "Usage analytics",
-        "Custom workflows",
-      ],
-      cta: "Start Trial",
-      popular: true,
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      period: "contact us",
-      description: "For large organizations",
-      features: [
-        "Everything in Professional",
-        "Unlimited workspaces",
-        "Dedicated support",
-        "Custom integrations",
-        "SLA guarantees",
-        "Advanced security",
-        "Training & onboarding",
-      ],
-      cta: "Contact Sales",
-      popular: false,
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-background">
+  const features = [{
+    icon: <Sparkles className="h-6 w-6" />,
+    title: "AI-Powered Sprint Planning",
+    description: "Automatically generate sprint plans from JIRA backlog with velocity-based estimates"
+  }, {
+    icon: <Target className="h-6 w-6" />,
+    title: "Backlog Refinement",
+    description: "AI analyzes backlog health, identifies stale items, and recommends improvements"
+  }, {
+    icon: <Zap className="h-6 w-6" />,
+    title: "Automated Retrospectives",
+    description: "Collect feedback anonymously and generate actionable insights with AI"
+  }, {
+    icon: <Users className="h-6 w-6" />,
+    title: "Team Collaboration",
+    description: "Real-time presence, activity tracking, and seamless team coordination"
+  }, {
+    icon: <Shield className="h-6 w-6" />,
+    title: "Enterprise Security",
+    description: "Row-level security, role-based access control, and encrypted data storage"
+  }, {
+    icon: <Target className="h-6 w-6" />,
+    title: "JIRA & GitHub Integration",
+    description: "Seamless integration with your existing tools and workflows"
+  }];
+  const testimonials = [{
+    name: "Sarah Chen",
+    role: "Scrum Master, TechCorp",
+    content: "SM ActiveIntelligence transformed our sprint planning. What used to take 3 hours now takes 30 minutes, and the AI recommendations are spot-on.",
+    rating: 5
+  }, {
+    name: "Michael Rodriguez",
+    role: "Engineering Manager, StartupXYZ",
+    content: "The backlog refinement feature alone is worth it. We've reduced stale tickets by 80% and improved our velocity by 25%.",
+    rating: 5
+  }, {
+    name: "Emily Watson",
+    role: "Product Owner, Enterprise Inc",
+    content: "Finally, a tool that understands agile workflows. The JIRA integration works flawlessly, and the AI insights are incredibly valuable.",
+    rating: 5
+  }];
+  const pricingTiers = [{
+    name: "Free",
+    price: "$0",
+    period: "forever",
+    description: "Perfect for individuals and small teams",
+    features: ["Up to 5 team members", "1 workspace", "Basic AI features", "JIRA & GitHub integration", "Community support"],
+    cta: "Start Free",
+    popular: false
+  }, {
+    name: "Professional",
+    price: "$29",
+    period: "per user/month",
+    description: "For growing teams and businesses",
+    features: ["Unlimited team members", "5 workspaces", "Advanced AI features", "All integrations", "Priority support", "Usage analytics", "Custom workflows"],
+    cta: "Start Trial",
+    popular: true
+  }, {
+    name: "Enterprise",
+    price: "Custom",
+    period: "contact us",
+    description: "For large organizations",
+    features: ["Everything in Professional", "Unlimited workspaces", "Dedicated support", "Custom integrations", "SLA guarantees", "Advanced security", "Training & onboarding"],
+    cta: "Contact Sales",
+    popular: false
+  }];
+  return <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4">
@@ -168,19 +131,12 @@ export default function Landing() {
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/auth" className="hidden sm:block">
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => trackButtonClick('Sign In', 'nav')}
-                >
+                <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
                   Sign In
                 </Button>
               </Link>
               <Link to="/auth">
-                <Button 
-                  size="sm"
-                  onClick={() => trackButtonClick('Get Started', 'nav')}
-                >
+                <Button size="sm" onClick={() => trackButtonClick('Get Started', 'nav')}>
                   Get Started
                 </Button>
               </Link>
@@ -211,37 +167,25 @@ export default function Landing() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
               <Link to="/auth" className="w-full sm:w-auto">
-                <Button 
-                  size="lg" 
-                  className="gap-2 w-full sm:w-auto"
-                  onClick={() => trackButtonClick('Start Free Trial', 'hero')}
-                >
+                <Button size="lg" className="gap-2 w-full sm:w-auto" onClick={() => trackButtonClick('Start Free Trial', 'hero')}>
                   Start Free Trial
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <DemoModeButton />
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="w-full sm:w-auto"
-                onClick={() => {
-                  trackButtonClick('Watch Demo', 'hero');
-                  setIsDemoOpen(true);
-                }}
-              >
+              <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => {
+              trackButtonClick('Watch Demo', 'hero');
+              setIsDemoOpen(true);
+            }}>
                 Watch Demo
               </Button>
             </div>
             
             <div className="mt-6 text-center">
-              <button 
-                onClick={() => {
-                  setEmailContext("early_access");
-                  setShowEmailCapture(true);
-                }}
-                className="text-sm text-primary hover:underline"
-              >
+              <button onClick={() => {
+              setEmailContext("early_access");
+              setShowEmailCapture(true);
+            }} className="text-sm text-primary hover:underline">
                 🎁 Get early access to beta features
               </button>
             </div>
@@ -416,77 +360,21 @@ export default function Landing() {
           </div>
 
           {/* User Locations */}
-          {!statsLoading && userStats && userStats.locations.length > 0 && (
-            <div className="mt-12 p-6 rounded-lg bg-card border">
+          {!statsLoading && userStats && userStats.locations.length > 0 && <div className="mt-12 p-6 rounded-lg bg-card border">
               <h3 className="text-lg font-semibold mb-4 text-center">Our Global Community</h3>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {userStats.locations.map((loc) => (
-                  <div key={loc.location} className="text-center space-y-1">
+                {userStats.locations.map(loc => <div key={loc.location} className="text-center space-y-1">
                     <p className="text-2xl font-bold text-primary">{loc.count}</p>
                     <p className="text-xs text-muted-foreground">{loc.location}</p>
-                  </div>
-                ))}
+                  </div>)}
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </section>
 
       {/* Meet the Founder Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-8">
-            <Badge className="gap-2 mb-4" variant="secondary">
-              <Users className="h-3 w-3" />
-              Meet the Founder
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Built by Practitioners, for Practitioners
-            </h2>
-          </div>
-          
-          <Card className="border-2 hover:shadow-elegant transition-all">
-            <CardContent className="p-8 md:p-12">
-              <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
-                <div className="mx-auto md:mx-0">
-                  <div className="w-48 h-48 rounded-full bg-gradient-primary flex items-center justify-center text-6xl font-bold text-primary-foreground shadow-elegant">
-                    OM
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">Omair</h3>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <Badge variant="secondary">Founder & Creator</Badge>
-                      <Badge variant="outline">Agile Expert</Badge>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3 text-muted-foreground">
-                    <p>
-                      With years of experience in agile methodologies and project management, Omair recognized 
-                      the challenges teams face in managing sprints, coordinating ceremonies, and maintaining 
-                      momentum across projects.
-                    </p>
-                    <p>
-                      SM ActiveIntelligence was born from a vision to empower Scrum Masters, Project Managers, 
-                      and agile teams with intelligent tools that automate the mundane and amplify the meaningful. 
-                      Every feature is designed based on real-world experience and the needs of modern agile teams.
-                    </p>
-                    <div className="flex items-start gap-2 pt-2">
-                      <Quote className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
-                      <p className="italic text-foreground font-medium">
-                        "Great teams deserve great tools. SM ActiveIntelligence is my commitment to making 
-                        agile excellence accessible to everyone."
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        
       </section>
 
       {/* Project Command Centre Spotlight */}
@@ -586,8 +474,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <Card key={index} className="border-2">
+            {features.map((feature, index) => <Card key={index} className="border-2">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
                     {feature.icon}
@@ -595,65 +482,13 @@ export default function Landing() {
                   <CardTitle>{feature.title}</CardTitle>
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Choose the plan that's right for your team
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pricingTiers.map((tier, index) => (
-              <Card
-                key={index}
-                className={`relative ${tier.popular ? "border-primary border-2 shadow-lg" : ""}`}
-              >
-                {tier.popular && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    Most Popular
-                  </Badge>
-                )}
-                <CardHeader>
-                  <CardTitle>{tier.name}</CardTitle>
-                  <CardDescription>{tier.description}</CardDescription>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold">{tier.price}</span>
-                    <span className="text-muted-foreground ml-2">/{tier.period}</span>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <ul className="space-y-3">
-                    {tier.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to="/auth">
-                    <Button
-                      className="w-full"
-                      variant={tier.popular ? "default" : "outline"}
-                    >
-                      {tier.cta}
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Real User Feedback Section */}
       <section className="py-20 px-4 bg-muted/30">
@@ -692,9 +527,7 @@ export default function Landing() {
                 Are You Ready to Transform to an Agile Workflow?
               </h2>
               <p className="text-lg opacity-90">
-                {statsLoading 
-                  ? "Join our growing community" 
-                  : `Join ${userStats?.totalUsers || 0} users already using SM ActiveIntelligence`}
+                {statsLoading ? "Join our growing community" : `Join ${userStats?.totalUsers || 0} users already using SM ActiveIntelligence`}
               </p>
               <Link to="/auth">
                 <Button size="lg" variant="secondary" className="gap-2">
@@ -776,11 +609,6 @@ export default function Landing() {
       </footer>
 
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
-      <EmailCaptureForm 
-        isOpen={showEmailCapture} 
-        onClose={() => setShowEmailCapture(false)}
-        context={emailContext}
-      />
-    </div>
-  );
+      <EmailCaptureForm isOpen={showEmailCapture} onClose={() => setShowEmailCapture(false)} context={emailContext} />
+    </div>;
 }
