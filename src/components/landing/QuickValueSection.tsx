@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 
 export const QuickValueSection = () => {
   const benefits = [
-    "Set up your first project in under 2 minutes",
+    "Set up your first project in minutes",
     "AI generates sprint plans automatically from your backlog",
     "Sync with JIRA, GitHub & Microsoft 365 instantly",
     "Get actionable insights from your retrospectives",
-    "Save 5+ hours per sprint on ceremony preparation",
+    "Automate ceremony preparation and admin work",
     "Real-time collaboration with your entire team"
   ];
 
@@ -49,22 +49,22 @@ export const QuickValueSection = () => {
               <div className="space-y-4">
                 <Card className="bg-primary/5 border-primary/20">
                   <CardContent className="p-6">
-                    <div className="text-4xl font-bold text-primary mb-2">2 minutes</div>
-                    <p className="text-sm text-muted-foreground">From signup to your first AI-generated sprint plan</p>
+                    <div className="text-4xl font-bold text-primary mb-2">Quick Setup</div>
+                    <p className="text-sm text-muted-foreground">Get started in minutes with AI-powered sprint planning</p>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-green-500/5 border-green-500/20">
                   <CardContent className="p-6">
-                    <div className="text-4xl font-bold text-green-500 mb-2">30%</div>
-                    <p className="text-sm text-muted-foreground">Average increase in team velocity within first month</p>
+                    <div className="text-4xl font-bold text-green-500 mb-2">AI-Powered</div>
+                    <p className="text-sm text-muted-foreground">Intelligent insights for better team performance</p>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-blue-500/5 border-blue-500/20">
                   <CardContent className="p-6">
-                    <div className="text-4xl font-bold text-blue-500 mb-2">5+ hours</div>
-                    <p className="text-sm text-muted-foreground">Saved per sprint on ceremony prep and admin work</p>
+                    <div className="text-4xl font-bold text-blue-500 mb-2">Time Saver</div>
+                    <p className="text-sm text-muted-foreground">Automate ceremony prep and admin work</p>
                   </CardContent>
                 </Card>
               </div>

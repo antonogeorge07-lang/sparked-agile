@@ -7,8 +7,7 @@ export const TrustBadges = () => {
     { icon: Lock, text: "SOC 2 Compliant", color: "text-green-600" },
     { icon: Zap, text: "99.9% Uptime", color: "text-yellow-600" },
     { icon: Award, text: "ISO 27001", color: "text-purple-600" },
-    { icon: CheckCircle2, text: "GDPR Ready", color: "text-indigo-600" },
-    { icon: Star, text: "4.9/5 Rating", color: "text-orange-600" }
+    { icon: CheckCircle2, text: "GDPR Ready", color: "text-indigo-600" }
   ];
 
   return (
