@@ -436,6 +436,63 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Meet the Founder Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-8">
+            <Badge className="gap-2 mb-4" variant="secondary">
+              <Users className="h-3 w-3" />
+              Meet the Founder
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Built by Practitioners, for Practitioners
+            </h2>
+          </div>
+          
+          <Card className="border-2 hover:shadow-elegant transition-all">
+            <CardContent className="p-8 md:p-12">
+              <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
+                <div className="mx-auto md:mx-0">
+                  <div className="w-48 h-48 rounded-full bg-gradient-primary flex items-center justify-center text-6xl font-bold text-primary-foreground shadow-elegant">
+                    OM
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">Omair</h3>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <Badge variant="secondary">Founder & Creator</Badge>
+                      <Badge variant="outline">Agile Expert</Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3 text-muted-foreground">
+                    <p>
+                      With years of experience in agile methodologies and project management, Omair recognized 
+                      the challenges teams face in managing sprints, coordinating ceremonies, and maintaining 
+                      momentum across projects.
+                    </p>
+                    <p>
+                      SM ActiveIntelligence was born from a vision to empower Scrum Masters, Project Managers, 
+                      and agile teams with intelligent tools that automate the mundane and amplify the meaningful. 
+                      Every feature is designed based on real-world experience and the needs of modern agile teams.
+                    </p>
+                    <div className="flex items-start gap-2 pt-2">
+                      <Quote className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
+                      <p className="italic text-foreground font-medium">
+                        "Great teams deserve great tools. SM ActiveIntelligence is my commitment to making 
+                        agile excellence accessible to everyone."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Project Command Centre Spotlight */}
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
