@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle, LayoutDashboard, Users, Workflow, Languages, Briefcase } from "lucide-react";
-import sparkAgileLogo from "@/assets/spark-agile-logo.jpg";
+import saaiLogo from "@/assets/saai-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -112,9 +112,9 @@ export const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
             <img 
-              src={sparkAgileLogo} 
-              alt="SPARK-AGILE" 
-              className="h-10 w-auto object-contain"
+              src={saaiLogo} 
+              alt="SAAI - Agile Active Intelligence" 
+              className="h-12 w-auto object-contain"
             />
           </Link>
           

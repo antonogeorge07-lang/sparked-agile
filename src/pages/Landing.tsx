@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Target, Zap, Users, Shield, ArrowRight, Star, Quote } from "lucide-react";
-import sparkAgileLogo from "@/assets/spark-agile-logo.jpg";
+import saaiLogo from "@/assets/saai-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModal } from "@/components/DemoModal";
