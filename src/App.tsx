@@ -49,6 +49,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const AITransformingAgileDelivery = lazy(() => import("./pages/blog/AITransformingAgileDelivery"));
 const AutomatedSprintPlanningGuide = lazy(() => import("./pages/blog/AutomatedSprintPlanningGuide"));
 const AgileBacklogPrioritizationAI = lazy(() => import("./pages/blog/AgileBacklogPrioritizationAI"));
+const About = lazy(() => import("./pages/About"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -112,6 +113,7 @@ const App = () => {
                   <Route path="/blog/ai-transforming-agile-delivery" element={<AITransformingAgileDelivery />} />
                   <Route path="/blog/automated-sprint-planning-guide" element={<AutomatedSprintPlanningGuide />} />
                   <Route path="/blog/agile-backlog-prioritization-ai" element={<AgileBacklogPrioritizationAI />} />
+                  <Route path="/about" element={<About />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

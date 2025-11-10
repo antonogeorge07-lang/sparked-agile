@@ -15,9 +15,13 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
               <p className="text-muted-foreground mb-4">
-                SAAI ("we," "our," or "us") is committed to protecting your privacy. 
-                This Privacy Policy explains how we collect, use, disclose, and safeguard your information 
-                when you use our AI-powered Scrum Master assistant platform.
+                Welcome to SAAI (Spark-Agile Active Intelligence). I'm Antono, the founder of Spark-Agile, 
+                and I'm committed to protecting your privacy. This Privacy Policy explains how I collect, use, 
+                and safeguard your information when you use SAAI.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                As a solo-founder micro-studio, I take data protection seriously and comply with GDPR and 
+                other applicable data protection laws.
               </p>
             </section>
 
@@ -145,13 +149,34 @@ export default function PrivacyPolicy() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">11. Contact Us</h2>
+              <h2 className="text-2xl font-semibold mb-4">11. GDPR Compliance</h2>
               <p className="text-muted-foreground mb-4">
-                If you have questions or concerns about this Privacy Policy, please contact us at:
+                If you are in the European Economic Area (EEA), you have additional rights under GDPR:
+              </p>
+              <ul className="list-disc pl-6 mb-4 text-muted-foreground">
+                <li>Right to access your personal data</li>
+                <li>Right to rectification of inaccurate data</li>
+                <li>Right to erasure ("right to be forgotten")</li>
+                <li>Right to restrict processing</li>
+                <li>Right to data portability</li>
+                <li>Right to object to processing</li>
+                <li>Right to withdraw consent at any time</li>
+              </ul>
+              <p className="text-muted-foreground mb-4">
+                To exercise these rights, please contact me using the information below.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">12. Contact Information</h2>
+              <p className="text-muted-foreground mb-4">
+                If you have questions or concerns about this Privacy Policy or want to exercise your rights, 
+                please contact me at:
               </p>
               <p className="text-muted-foreground">
-                Email: privacy@smactiveintelligence.com<br />
-                Address: [Your Company Address]
+                <strong>Data Controller:</strong> Antono, Spark-Agile<br />
+                <strong>Email:</strong> privacy@spark-agile.com<br />
+                <strong>Support:</strong> support@spark-agile.com
               </p>
             </section>
           </CardContent>

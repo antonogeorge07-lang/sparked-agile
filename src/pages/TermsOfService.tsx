@@ -28,8 +28,12 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
               <p className="text-muted-foreground mb-4">
-                By accessing and using SAAI ("Service"), you accept and agree to be bound by the terms 
-                and provision of this agreement. If you do not agree to these Terms of Service, please do not use the Service.
+                Welcome to SAAI (Spark-Agile Active Intelligence). By accessing and using this Service, 
+                you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, 
+                please do not use the Service.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                SAAI is operated by Antono, a solo founder committed to providing quality AI-powered Agile tools.
               </p>
             </section>
 
@@ -96,16 +100,16 @@ export default function TermsOfService() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">5. User Conduct</h2>
-              <p className="text-muted-foreground mb-4">You agree not to:</p>
+              <h2 className="text-2xl font-semibold mb-4">5. User Responsibilities</h2>
+              <p className="text-muted-foreground mb-4">As a user of SAAI, you are responsible for:</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Use the Service for any illegal or unauthorized purpose</li>
-                <li>Attempt to gain unauthorized access to the Service or related systems</li>
-                <li>Interfere with or disrupt the Service or servers</li>
-                <li>Upload or transmit viruses or malicious code</li>
-                <li>Harvest or collect information about other users</li>
-                <li>Impersonate any person or entity</li>
-                <li>Violate any applicable laws or regulations</li>
+                <li>Maintaining the security of your account credentials</li>
+                <li>Ensuring all information you provide is accurate and current</li>
+                <li>Using the Service in compliance with applicable laws and regulations</li>
+                <li>Reviewing and validating AI-generated content before use in critical decisions</li>
+                <li>Respecting the intellectual property rights of others</li>
+                <li>Not attempting to reverse engineer, hack, or disrupt the Service</li>
+                <li>Not using the Service for illegal or harmful purposes</li>
               </ul>
             </section>
 
@@ -188,11 +192,12 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">14. Contact Information</h2>
               <p className="text-muted-foreground mb-4">
-                If you have any questions about these Terms, please contact us at:
+                If you have questions about these Terms, I'm here to help. Please contact me at:
               </p>
               <p className="text-muted-foreground">
-                Email: legal@smactiveintelligence.com<br />
-                Address: [Your Company Address]
+                <strong>Founder:</strong> Antono, Spark-Agile<br />
+                <strong>Email:</strong> legal@spark-agile.com<br />
+                <strong>Support:</strong> support@spark-agile.com
               </p>
             </section>
           </CardContent>
