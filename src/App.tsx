@@ -45,6 +45,7 @@ const UserGuide = lazy(() => import("./pages/UserGuide"));
 const PolyLinQ = lazy(() => import("./pages/PolyLinQ"));
 const MarketIntelligence = lazy(() => import("./pages/MarketIntelligence"));
 const SocialMediaGenerator = lazy(() => import("./pages/SocialMediaGenerator"));
+const FeatureDemo = lazy(() => import("./pages/FeatureDemo"));
 const Blog = lazy(() => import("./pages/Blog"));
 const AITransformingAgileDelivery = lazy(() => import("./pages/blog/AITransformingAgileDelivery"));
 const AutomatedSprintPlanningGuide = lazy(() => import("./pages/blog/AutomatedSprintPlanningGuide"));
@@ -109,6 +110,7 @@ const App = () => {
                   <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
                   <Route path="/market-intelligence" element={<MarketIntelligence />} />
                   <Route path="/social-media-generator" element={<SocialMediaGenerator />} />
+                  <Route path="/feature-demo" element={<FeatureDemo />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/ai-transforming-agile-delivery" element={<AITransformingAgileDelivery />} />
                   <Route path="/blog/automated-sprint-planning-guide" element={<AutomatedSprintPlanningGuide />} />
