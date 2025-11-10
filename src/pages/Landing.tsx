@@ -22,6 +22,8 @@ const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection"
 const CTASection = lazy(() => import("@/components/landing/CTASection").then(module => ({ default: module.CTASection })));
 const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
 
+const PricingSection = lazy(() => import("@/components/landing/PricingSection").then(module => ({ default: module.PricingSection })));
+
 const SectionSkeleton = () => (
   <div className="py-20 px-4">
     <div className="container mx-auto max-w-6xl">
@@ -154,6 +156,10 @@ export default function Landing() {
         
         <Suspense fallback={<SectionSkeleton />}>
           <FeaturesSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <PricingSection onEarlyAccess={handleEarlyAccess} />
         </Suspense>
         
         <Suspense fallback={<SectionSkeleton />}>
