@@ -201,26 +201,36 @@ export const Navigation = () => {
             
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  <Menu className="h-5 w-5" />
+                <Button variant="ghost" size="sm" className="relative w-10 h-10 p-0">
+                  <div className="w-5 h-5 flex flex-col justify-center items-center gap-1">
+                    <span className={`w-5 h-0.5 bg-current transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+                    <span className={`w-5 h-0.5 bg-current transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
+                    <span className={`w-5 h-0.5 bg-current transition-all duration-300 ease-in-out ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+                  </div>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-64">
-                <div className="flex flex-col gap-4 mt-8">
+              <SheetContent side="right" className="w-64 animate-slide-in-right">
+                <div className="flex flex-col gap-4 mt-8 animate-fade-in">
                   {user && (
                     <div className="pb-4 border-b">
                       <ActiveUsers users={activeUsers} currentPage={location.pathname} variant="full" />
                     </div>
                   )}
                   
-                  {navItems.map((item) => {
+                  {navItems.map((item, index) => {
                     const Icon = item.icon;
                     const isActive = location.pathname === item.path;
                     return (
-                      <Link key={item.path} to={item.path} onClick={() => setMobileMenuOpen(false)}>
+                      <Link 
+                        key={item.path} 
+                        to={item.path} 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="animate-fade-in"
+                        style={{ animationDelay: `${index * 50}ms` }}
+                      >
                         <Button 
                           variant={isActive ? "default" : "ghost"}
-                          className="w-full justify-start gap-2"
+                          className="w-full justify-start gap-2 transition-all hover:translate-x-1"
                         >
                           <Icon className="w-4 h-4" />
                           {item.label}
@@ -233,7 +243,7 @@ export const Navigation = () => {
                     <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
                       <Button 
                         variant={location.pathname === "/admin" ? "default" : "ghost"}
-                        className="w-full justify-start gap-2"
+                        className="w-full justify-start gap-2 transition-all hover:translate-x-1"
                       >
                         <Shield className="w-4 h-4" />
                         Admin
@@ -244,7 +254,7 @@ export const Navigation = () => {
                   <Link to="/user-guide" onClick={() => setMobileMenuOpen(false)}>
                     <Button 
                       variant={location.pathname === "/user-guide" ? "default" : "ghost"}
-                      className="w-full justify-start gap-2"
+                      className="w-full justify-start gap-2 transition-all hover:translate-x-1"
                     >
                       <HelpCircle className="w-4 h-4" />
                       May I Help You
