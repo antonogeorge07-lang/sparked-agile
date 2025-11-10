@@ -38,15 +38,15 @@ export function FeaturesSection() {
   return (
     <section className="py-20 px-4 bg-muted/30" aria-labelledby="features-heading">
       <div className="container mx-auto max-w-6xl">
-        <header className="text-center mb-12">
-          <h2 id="features-heading" className="text-3xl md:text-4xl font-bold mb-4">
+        <header className="text-center mb-8 sm:mb-12">
+          <h2 id="features-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 px-2">
             Everything You Need for Agile Excellence
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base px-4">
             Powerful features designed to streamline your agile ceremonies and boost team productivity
           </p>
         </header>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" role="list">
           {features.map((feature, index) => (
             <Card key={index} className="border-2" role="listitem">
               <CardHeader>

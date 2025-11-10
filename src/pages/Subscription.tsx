@@ -152,14 +152,14 @@ export default function Subscription() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           <BackButton className="mb-6" />
-          <div className="text-center mb-12">
-            <p className="text-muted-foreground text-lg mb-2">
+          <div className="text-center mb-8 sm:mb-12">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-2 px-2">
               From solo founders to enterprise teams — Spark Agile grows with you
             </p>
-            <h1 className="text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 bg-gradient-primary bg-clip-text text-transparent px-2">
               ⚡ Choose Your Plan
             </h1>
-            <p className="text-muted-foreground text-lg mb-6">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-4 sm:mb-6 px-2">
               Scale your agile workspace with the perfect plan for your team — from startup simplicity to enterprise performance
             </p>
             
@@ -182,7 +182,7 @@ export default function Subscription() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {tiers.map((tier) => {
               const Icon = getTierIcon(tier.name);
               const emoji = getTierEmoji(tier.name);
@@ -196,7 +196,7 @@ export default function Subscription() {
                   key={tier.id} 
                   className={`relative overflow-hidden transition-all hover:shadow-elevated ${
                     tier.name.toLowerCase() === 'professional' 
-                      ? 'border-primary shadow-lg scale-105' 
+                      ? 'border-primary shadow-lg lg:scale-105' 
                       : ''
                   }`}
                 >
@@ -266,12 +266,12 @@ export default function Subscription() {
           </div>
 
           {/* Add-Ons Section */}
-          <div className="mt-16">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-2">💡 Add-Ons (Optional)</h2>
-              <p className="text-muted-foreground">Enhance your Professional plan with these powerful extras</p>
+          <div className="mt-12 sm:mt-16">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2 px-2">💡 Add-Ons (Optional)</h2>
+              <p className="text-muted-foreground text-sm sm:text-base px-2">Enhance your Professional plan with these powerful extras</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <Card className="border-2 hover:border-primary transition-colors">
                 <CardHeader>
                   <CardTitle className="text-lg">AI-Powered Agile Coach</CardTitle>
@@ -308,14 +308,14 @@ export default function Subscription() {
           </div>
 
           {/* AI Partner Section */}
-          <div className="mt-16">
+          <div className="mt-12 sm:mt-16">
             <Card className="bg-gradient-primary text-primary-foreground border-0">
-              <CardContent className="p-8 text-center">
-                <h2 className="text-3xl font-bold mb-4">✨ Your AI Partner in Every Sprint</h2>
-                <p className="text-lg opacity-90 mb-4">
+              <CardContent className="p-6 sm:p-8 text-center">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">✨ Your AI Partner in Every Sprint</h2>
+                <p className="text-base sm:text-lg opacity-90 mb-3 sm:mb-4">
                   Every plan includes Spark Agile's AI Chatbot, your virtual Scrum assistant that helps you plan, prioritize, and deliver faster.
                 </p>
-                <p className="text-base opacity-80">
+                <p className="text-sm sm:text-base opacity-80">
                   Unlock advanced coaching, automation, and insights with Professional or Enterprise.
                 </p>
               </CardContent>

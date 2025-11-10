@@ -7,8 +7,8 @@ import saaiLogo from "@/assets/saai-logo.png";
 export function FooterSection() {
   return (
     <footer className="border-t border-border py-12 px-4" role="contentinfo">
-      <div className="container mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto max-w-6xl px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <OptimizedImage 
@@ -71,18 +71,20 @@ export function FooterSection() {
             </ul>
           </nav>
         </div>
-        <div className="border-t border-border mt-12 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-            <p className="text-muted-foreground">© 2025 SAAI All rights reserved.</p>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
-              <span className="font-medium">
-                Crafted with excellence by{" "}
-                <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                  Antono George
+        <div className="border-t border-border mt-8 sm:mt-12 pt-6 sm:pt-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
+            <p className="text-muted-foreground text-center md:text-left">© 2025 SAAI All rights reserved.</p>
+            <div className="flex flex-col sm:flex-row items-center gap-2 text-muted-foreground text-center">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
+                <span className="font-medium">
+                  Crafted with excellence by{" "}
+                  <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
+                    Antono George
+                  </span>
                 </span>
-              </span>
-              <Badge variant="secondary" className="ml-2 gap-1">
+              </div>
+              <Badge variant="secondary" className="gap-1">
                 <Star className="h-3 w-3 fill-current" aria-hidden="true" />
                 Product Manager
               </Badge>

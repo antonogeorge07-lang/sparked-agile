@@ -47,17 +47,17 @@ export function ValuePropositionSection() {
   return (
     <section className="py-20 px-4 bg-card/50" aria-labelledby="value-prop-heading">
       <div className="container mx-auto max-w-6xl">
-        <header className="text-center mb-12">
-          <h2 id="value-prop-heading" className="text-3xl md:text-4xl font-bold mb-4">
+        <header className="text-center mb-8 sm:mb-12">
+          <h2 id="value-prop-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 px-2">
             Built for Modern Agile Teams
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4">
             Whether you're running sprints, managing stakeholders, or driving project success, 
             SAAI adapts to your workflow and amplifies your impact
           </p>
         </header>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {roles.map((role, index) => (
             <Card 
               key={index}
@@ -103,30 +103,30 @@ export function ValuePropositionSection() {
         </div>
 
         {/* Key Stats */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center" role="region" aria-label="Platform statistics">
+        <div className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center" role="region" aria-label="Platform statistics">
           <div className="space-y-2">
-            <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`${statsLoading ? 'Loading' : userStats?.totalUsers || 0} active users`}>
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`${statsLoading ? 'Loading' : userStats?.totalUsers || 0} active users`}>
               {statsLoading ? "..." : userStats?.totalUsers || 0}
             </p>
-            <p className="text-sm text-muted-foreground">Active Users</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Active Users</p>
           </div>
           <div className="space-y-2">
-            <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`${statsLoading ? 'Loading' : userStats?.locations.length || 0} countries`}>
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`${statsLoading ? 'Loading' : userStats?.locations.length || 0} countries`}>
               {statsLoading ? "..." : userStats?.locations.length || 0}
             </p>
-            <p className="text-sm text-muted-foreground">Countries</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Countries</p>
           </div>
           <div className="space-y-2">
-            <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`Plus ${statsLoading ? 'loading' : userStats?.recentSignups || 0} new users this month`}>
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`Plus ${statsLoading ? 'loading' : userStats?.recentSignups || 0} new users this month`}>
               {statsLoading ? "..." : `+${userStats?.recentSignups || 0}`}
             </p>
-            <p className="text-sm text-muted-foreground">New users this month</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">New users this month</p>
           </div>
           <div className="space-y-2">
-            <p className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="100% team satisfaction">
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="100% team satisfaction">
               100%
             </p>
-            <p className="text-sm text-muted-foreground">Team satisfaction</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Team satisfaction</p>
           </div>
         </div>
 
