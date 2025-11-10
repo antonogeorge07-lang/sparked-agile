@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Target, Loader2, AlertCircle, Mail, Eye } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -197,8 +198,8 @@ export default function Auth() {
         });
         
         if (!signInError) {
-          const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
-          navigate(hasSeenOnboarding ? "/workflows" : "/");
+          // Pending users get sent to dashboard where they'll see helpful info
+          navigate("/dashboard");
         }
       }
     } catch (error: any) {
@@ -239,9 +240,21 @@ export default function Auth() {
           description: "Successfully signed in.",
         });
         
-        // Navigate after successful auth check
+        // Navigate based on user role
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', data.user?.id)
+          .single();
+        
         const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
-        navigate(hasSeenOnboarding ? "/workflows" : "/");
+        
+        // If pending, show onboarding to help them understand the platform
+        if (profile?.role === 'pending') {
+          navigate(hasSeenOnboarding ? "/dashboard" : "/");
+        } else {
+          navigate(hasSeenOnboarding ? "/workflows" : "/");
+        }
       }
     } catch (error: any) {
       toast({
@@ -740,9 +753,13 @@ export default function Auth() {
             </Button>
           </div>
 
-          <p className="text-xs text-muted-foreground text-center mt-4">
-            New accounts require admin approval before access is granted.
-          </p>
+          <Alert className="mt-4 border-primary/20 bg-primary/5">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="text-xs">
+              <strong>Quick Start:</strong> New accounts require admin approval for project access. 
+              While waiting, you can explore demo features, review guides, and learn the platform.
+            </AlertDescription>
+          </Alert>
         </CardContent>
       </Card>
     </div>

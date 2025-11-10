@@ -75,8 +75,10 @@ export default function FAQ() {
                 <AccordionItem value="item-4">
                   <AccordionTrigger>How do I sign up?</AccordionTrigger>
                   <AccordionContent>
-                    Click the "Sign Up" button, enter your email and create a password. New accounts require admin 
-                    approval before you can access projects. You'll receive a notification once your account is approved.
+                    Click the "Sign Up" button, enter your email and create a password. You'll be automatically 
+                    signed in and can immediately explore demo features, documentation, and learn the platform while 
+                    your account awaits admin approval. You'll receive an email notification once your account is 
+                    approved for full access to projects and team collaboration.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -84,7 +86,9 @@ export default function FAQ() {
                   <AccordionTrigger>Why is my account pending approval?</AccordionTrigger>
                   <AccordionContent>
                     For security and proper project allocation, all new accounts require admin approval. This ensures 
-                    that only authorized team members have access to your organization's project data. Contact your 
+                    that only authorized team members have access to your organization's project data. While waiting 
+                    for approval, you can explore demo features, review documentation, and familiarize yourself with 
+                    the platform. You'll receive an email notification once your account is approved. Contact your 
                     admin if you need immediate access.
                   </AccordionContent>
                 </AccordionItem>

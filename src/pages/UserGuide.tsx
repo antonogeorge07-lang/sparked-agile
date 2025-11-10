@@ -64,11 +64,23 @@ export default function UserGuide() {
                   <AccordionContent>
                     <div className="space-y-3 text-sm">
                       <p><strong>Step 1:</strong> Sign up with your email and create a secure password</p>
-                      <p><strong>Step 2:</strong> Wait for admin approval (you'll receive an email notification)</p>
-                      <p><strong>Step 3:</strong> Once approved, complete your profile with name and avatar</p>
-                      <p><strong>Step 4:</strong> Request project allocation from your admin</p>
+                      <p><strong>Step 2:</strong> You'll be automatically signed in and can explore the platform immediately</p>
+                      <p><strong>Step 3:</strong> While waiting for admin approval, you can:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Explore demo features and sample data</li>
+                        <li>Review comprehensive documentation</li>
+                        <li>Learn about all platform features</li>
+                        <li>Take the interactive onboarding tour</li>
+                      </ul>
+                      <p><strong>Step 4:</strong> Once approved by admin (you'll receive an email), you can:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Access real project data</li>
+                        <li>Request project allocation from your admin</li>
+                        <li>Collaborate with your team</li>
+                        <li>Use all platform features</li>
+                      </ul>
                       <p className="text-muted-foreground italic">
-                        💡 Only allocated members can view project data for security purposes
+                        💡 This approval process protects your organization's data while letting you get started right away
                       </p>
                     </div>
                   </AccordionContent>
