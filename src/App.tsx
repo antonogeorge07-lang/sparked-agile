@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 
 // Lazy load non-critical pages for better performance
 const Admin = lazy(() => import("./pages/Admin"));
+const SecurityIncidents = lazy(() => import("./pages/SecurityIncidents"));
 const Subscription = lazy(() => import("./pages/Subscription"));
 const Workflows = lazy(() => import("./pages/Workflows"));
 const ProjectCommandCentre = lazy(() => import("./pages/ProjectCommandCentre"));
@@ -74,6 +75,7 @@ const App = () => {
                   <Route path="/home" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin/incidents" element={<SecurityIncidents />} />
                   <Route path="/subscription" element={<Subscription />} />
                   <Route path="/workflows" element={<Workflows />} />
                   <Route path="/standup" element={<Standup />} />

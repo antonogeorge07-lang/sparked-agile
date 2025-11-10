@@ -1122,6 +1122,78 @@ export type Database = {
         }
         Relationships: []
       }
+      security_incidents: {
+        Row: {
+          affected_systems: string[] | null
+          affected_users: string[] | null
+          assigned_bot: boolean | null
+          assigned_to: string | null
+          bot_status: string | null
+          created_at: string
+          created_by: string | null
+          description: string
+          detected_at: string
+          detection_method: string | null
+          evidence_collected: Json | null
+          id: string
+          incident_type: string
+          lessons_learned: string | null
+          resolved_at: string | null
+          response_actions: Json | null
+          root_cause: string | null
+          severity: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affected_systems?: string[] | null
+          affected_users?: string[] | null
+          assigned_bot?: boolean | null
+          assigned_to?: string | null
+          bot_status?: string | null
+          created_at?: string
+          created_by?: string | null
+          description: string
+          detected_at?: string
+          detection_method?: string | null
+          evidence_collected?: Json | null
+          id?: string
+          incident_type: string
+          lessons_learned?: string | null
+          resolved_at?: string | null
+          response_actions?: Json | null
+          root_cause?: string | null
+          severity: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affected_systems?: string[] | null
+          affected_users?: string[] | null
+          assigned_bot?: boolean | null
+          assigned_to?: string | null
+          bot_status?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          detected_at?: string
+          detection_method?: string | null
+          evidence_collected?: Json | null
+          id?: string
+          incident_type?: string
+          lessons_learned?: string | null
+          resolved_at?: string | null
+          response_actions?: Json | null
+          root_cause?: string | null
+          severity?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sprint_planning_sessions: {
         Row: {
           agenda: string | null
