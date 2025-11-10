@@ -240,17 +240,17 @@ export default function Auth() {
           description: "Successfully signed in.",
         });
         
-        // Navigate based on user role
-        const { data: profile } = await supabase
-          .from('profiles')
+        // Navigate based on user role (check authoritative user_roles table)
+        const { data: userRole } = await supabase
+          .from('user_roles')
           .select('role')
-          .eq('id', data.user?.id)
+          .eq('user_id', data.user?.id)
           .single();
         
         const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
         
         // If pending, show onboarding to help them understand the platform
-        if (profile?.role === 'pending') {
+        if (userRole?.role === 'pending') {
           navigate(hasSeenOnboarding ? "/dashboard" : "/");
         } else {
           navigate(hasSeenOnboarding ? "/workflows" : "/");

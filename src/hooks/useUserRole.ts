@@ -16,13 +16,14 @@ export const useUserRole = () => {
           return;
         }
 
-        const { data: profile } = await supabase
-          .from('profiles')
+        // Query user_roles table (authoritative source) instead of profiles.role (display cache)
+        const { data: userRole } = await supabase
+          .from('user_roles')
           .select('role')
-          .eq('id', session.user.id)
+          .eq('user_id', session.user.id)
           .single();
 
-        setRole(profile?.role || 'pending');
+        setRole(userRole?.role || 'pending');
       } catch (error) {
         console.error("Error checking user role:", error);
         setRole(null);

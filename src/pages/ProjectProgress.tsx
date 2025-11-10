@@ -36,13 +36,14 @@ export default function ProjectProgress() {
       return;
     }
 
-    const { data: profile } = await supabase
-      .from('profiles')
+    // Check authoritative user_roles table instead of profiles.role (display cache)
+    const { data: userRole } = await supabase
+      .from('user_roles')
       .select('role')
-      .eq('id', session.user.id)
+      .eq('user_id', session.user.id)
       .single();
 
-    if (profile?.role === 'pending') {
+    if (userRole?.role === 'pending') {
       toast({
         title: "Account Pending",
         description: "Your account is awaiting admin approval",
