@@ -107,6 +107,34 @@ export default function Subscription() {
     }
   };
 
+  const getTierEmoji = (tierName: string) => {
+    switch (tierName.toLowerCase()) {
+      case 'free': return '🟢';
+      case 'professional': return '🔵';
+      case 'enterprise': return '🟣';
+      default: return '⚡';
+    }
+  };
+
+  const getTierTagline = (tierName: string) => {
+    switch (tierName.toLowerCase()) {
+      case 'free': return 'Ideal for individuals or small teams getting started with agile';
+      case 'professional': return 'Best for growing teams ready to automate and optimize their agile delivery';
+      case 'enterprise': return 'Designed for large organizations that need scale, security, and customization';
+      default: return '';
+    }
+  };
+
+  const getButtonText = (tierName: string, isCurrentPlan: boolean) => {
+    if (isCurrentPlan) return 'Current Plan';
+    switch (tierName.toLowerCase()) {
+      case 'free': return 'Start Free';
+      case 'professional': return 'Upgrade Now';
+      case 'enterprise': return 'Contact Sales';
+      default: return 'Get Started';
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-subtle">
@@ -126,11 +154,14 @@ export default function Subscription() {
         <div className="max-w-6xl mx-auto">
           <BackButton className="mb-6" />
           <div className="text-center mb-12">
+            <p className="text-muted-foreground text-lg mb-2">
+              From solo founders to enterprise teams — Spark Agile grows with you
+            </p>
             <h1 className="text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-              Choose Your Plan
+              ⚡ Choose Your Plan
             </h1>
             <p className="text-muted-foreground text-lg mb-6">
-              Scale your agile workspace with the perfect plan for your team
+              Scale your agile workspace with the perfect plan for your team — from startup simplicity to enterprise performance
             </p>
             
             <div className="inline-flex rounded-lg border p-1 bg-muted/50">
@@ -155,9 +186,11 @@ export default function Subscription() {
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier) => {
               const Icon = getTierIcon(tier.name);
+              const emoji = getTierEmoji(tier.name);
+              const tagline = getTierTagline(tier.name);
               const price = billingPeriod === 'monthly' ? tier.price_monthly : tier.price_yearly;
               const isCurrentPlan = currentSubscription?.tier_id === tier.id;
-              const isFree = tier.name.toLowerCase() === 'free';
+              const buttonText = getButtonText(tier.name, isCurrentPlan);
 
               return (
                 <Card 
@@ -178,8 +211,13 @@ export default function Subscription() {
                     <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-primary-foreground" />
                     </div>
-                    <CardTitle className="text-2xl">{tier.name}</CardTitle>
+                    <CardTitle className="text-2xl flex items-center gap-2">
+                      <span>{emoji}</span> {tier.name}
+                    </CardTitle>
                     <CardDescription>
+                      <div className="mt-2 text-sm text-muted-foreground min-h-[40px]">
+                        {tagline}
+                      </div>
                       <div className="mt-4 flex items-baseline">
                         <span className="text-4xl font-bold text-foreground">
                           ${price.toFixed(0)}
@@ -188,15 +226,12 @@ export default function Subscription() {
                           /{billingPeriod === 'monthly' ? 'month' : 'year'}
                         </span>
                       </div>
-                      <div className="mt-4 text-sm text-muted-foreground">
-                        Up to {tier.project_limit === 9999 ? 'unlimited' : tier.project_limit} projects
-                      </div>
                     </CardDescription>
                   </CardHeader>
 
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <div className="text-sm font-semibold mb-3">Key Features:</div>
+                      <div className="text-sm font-semibold mb-3">Includes:</div>
                       {tier.features.map((feature, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -205,13 +240,19 @@ export default function Subscription() {
                       ))}
                     </div>
 
+                    <div className="mt-4 p-3 bg-muted/50 rounded-lg text-xs text-muted-foreground italic">
+                      {tier.name.toLowerCase() === 'free' && "Start your agile journey — build momentum with the essentials."}
+                      {tier.name.toLowerCase() === 'professional' && "Boost team velocity with AI-driven clarity and smarter collaboration."}
+                      {tier.name.toLowerCase() === 'enterprise' && "Empower your organization with a personalized AI coach and full agile ecosystem."}
+                    </div>
+
                     <Button 
                       className="w-full mt-6" 
                       variant={tier.name.toLowerCase() === 'professional' ? 'default' : 'outline'}
                       onClick={() => handleSubscribe(tier.id)}
                       disabled={isCurrentPlan}
                     >
-                      {isCurrentPlan ? 'Current Plan' : isFree ? 'Get Started' : 'Upgrade Now'}
+                      {buttonText}
                     </Button>
 
                     {isCurrentPlan && (
@@ -223,6 +264,63 @@ export default function Subscription() {
                 </Card>
               );
             })}
+          </div>
+
+          {/* Add-Ons Section */}
+          <div className="mt-16">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-2">💡 Add-Ons (Optional)</h2>
+              <p className="text-muted-foreground">Enhance your Professional plan with these powerful extras</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              <Card className="border-2 hover:border-primary transition-colors">
+                <CardHeader>
+                  <CardTitle className="text-lg">AI-Powered Agile Coach</CardTitle>
+                  <CardDescription>For Professional Plan</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold mb-4">+$9<span className="text-sm font-normal text-muted-foreground">/mo</span></div>
+                  <p className="text-sm text-muted-foreground">Get personalized agile coaching and advanced automation for your team</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 hover:border-primary transition-colors">
+                <CardHeader>
+                  <CardTitle className="text-lg">Custom Branding</CardTitle>
+                  <CardDescription>White-label solution</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold mb-4">+$5<span className="text-sm font-normal text-muted-foreground">/mo</span></div>
+                  <p className="text-sm text-muted-foreground">Add your company logo, colors, and branding to the platform</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 hover:border-primary transition-colors">
+                <CardHeader>
+                  <CardTitle className="text-lg">Advanced Analytics Dashboard</CardTitle>
+                  <CardDescription>Deep insights & reporting</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold mb-4">+$7<span className="text-sm font-normal text-muted-foreground">/mo</span></div>
+                  <p className="text-sm text-muted-foreground">Unlock predictive analytics, custom reports, and team performance metrics</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* AI Partner Section */}
+          <div className="mt-16">
+            <Card className="bg-gradient-primary text-primary-foreground border-0">
+              <CardContent className="p-8 text-center">
+                <h2 className="text-3xl font-bold mb-4">✨ Your AI Partner in Every Sprint</h2>
+                <p className="text-lg opacity-90 mb-4">
+                  Every plan includes Spark Agile's AI Chatbot, your virtual Scrum assistant that helps you plan, prioritize, and deliver faster.
+                </p>
+                <p className="text-base opacity-80">
+                  Unlock advanced coaching, automation, and insights with Professional or Enterprise.
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           <div className="mt-12 text-center">
