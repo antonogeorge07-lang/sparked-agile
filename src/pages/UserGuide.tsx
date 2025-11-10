@@ -93,11 +93,21 @@ export default function UserGuide() {
                   <AccordionTrigger>Setting Up Your First Project</AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-3 text-sm">
-                      <p><strong>1. Project Creation:</strong> Navigate to Project Workspace</p>
-                      <p><strong>2. Basic Info:</strong> Enter project name, description, and sprint duration</p>
-                      <p><strong>3. Team Setup:</strong> Add team members and assign roles</p>
-                      <p><strong>4. Integrations:</strong> Connect JIRA, GitHub, and Microsoft services</p>
-                      <p><strong>5. Ceremonies:</strong> Configure automated Scrum ceremonies</p>
+                      <p><strong>Method 1: Project Command Centre (Recommended)</strong></p>
+                      <p>• Navigate to <strong>Command Centre</strong> in the main navigation</p>
+                      <p>• Click <strong>"New Project"</strong> button to instantly create a project</p>
+                      <p>• Enter project name, description, and target completion date</p>
+                      <p>• Start managing tasks immediately with PMI methodology</p>
+                      
+                      <p className="pt-3"><strong>Method 2: Project Workspace (Full Setup)</strong></p>
+                      <p>• Navigate to Project Workspace for comprehensive setup</p>
+                      <p>• Configure sprint duration and team information</p>
+                      <p>• Connect JIRA, GitHub, and Microsoft services</p>
+                      <p>• Set up automated Scrum ceremonies</p>
+                      
+                      <p className="text-muted-foreground italic pt-2">
+                        💡 Use Command Centre for quick project setup, or Project Workspace for full Agile integration
+                      </p>
                       <p className="text-muted-foreground italic">
                         💡 Admin permission is required for profile acceptance and validation
                       </p>
@@ -236,24 +246,35 @@ export default function UserGuide() {
                   <AccordionTrigger>
                     <div className="flex items-center gap-2">
                       <Activity className="h-4 w-4" />
-                      Project Command Centre
+                      Project Command Centre - Create & Manage Projects
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-3 text-sm">
-                      <p><strong>Purpose:</strong> Centralized project management hub</p>
-                      <p><strong>Features:</strong></p>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li>Kanban-style task management with drag-and-drop</li>
-                        <li>Multi-stage workflow (Backlog, To Do, In Progress, Review, Done)</li>
-                        <li>AI-powered insights and recommendations</li>
-                        <li>Risk register and lessons learned tracking</li>
-                        <li>Real-time collaboration with team presence</li>
-                        <li>Task prioritization and assignment</li>
+                      <p><strong>Purpose:</strong> Your primary tool for creating new projects and managing them with PMI methodology</p>
+                      
+                      <p><strong>Creating a New Project:</strong></p>
+                      <ol className="list-decimal pl-6 space-y-2">
+                        <li>Click <strong>"Command Centre"</strong> in the main navigation</li>
+                        <li>Click the <strong>"New Project"</strong> button in the top-right</li>
+                        <li>Enter project name (required), description, and target completion date</li>
+                        <li>Click <strong>"Create Project"</strong> - your project is ready instantly!</li>
+                        <li>Add team members using the Project Member Manager</li>
+                        <li>Start creating and organizing tasks across PMI stages</li>
+                      </ol>
+                      
+                      <p><strong>Key Features:</strong></p>
+                      <ul className="list-disc pl-6 space-y-2">
+                        <li><strong>PMI Task Stages:</strong> Manage tasks through Initiation, Planning, Execution, Monitoring & Control, and Closure phases</li>
+                        <li><strong>Kanban Board:</strong> Drag-and-drop tasks between project stages</li>
+                        <li><strong>AI Insights:</strong> Get intelligent recommendations for your projects</li>
+                        <li><strong>Risk Register:</strong> Track and mitigate project risks</li>
+                        <li><strong>Lessons Learned:</strong> Document and share project knowledge</li>
+                        <li><strong>Team Management:</strong> Assign members and manage project access</li>
+                        <li><strong>Real-time Collaboration:</strong> See who's working on what, live</li>
                       </ul>
-                      <p className="text-muted-foreground italic">
-                        💡 Perfect for high-level project oversight and strategic planning
-                      </p>
+
+                      <p className="text-primary font-semibold pt-2">✨ This is the fastest way to create and manage projects on SAAI!</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
