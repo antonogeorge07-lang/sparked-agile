@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Copy, Twitter, Linkedin, Sparkles, Check } from "lucide-react";
+import { Copy, Twitter, Linkedin, Sparkles, Check, X as XIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Navigation } from "@/components/Navigation";
 
@@ -205,6 +205,128 @@ Ready to revolutionize your agile workflow? Visit [your-link] or comment below t
               </CardContent>
             </Card>
           </div>
+
+          {/* Feature Comparison Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle>SAAI vs Traditional Agile Tools</CardTitle>
+              <CardDescription>
+                Use this comparison in your posts to highlight SAAI's competitive advantages
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-4 font-semibold">Feature</th>
+                      <th className="text-center p-4 font-semibold">SAAI</th>
+                      <th className="text-center p-4 font-semibold">Traditional Tools</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    <tr>
+                      <td className="p-4">AI-Powered Sprint Planning</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <XIcon className="w-5 h-5 text-red-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Automated Retrospective Insights</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <XIcon className="w-5 h-5 text-red-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Smart Backlog Prioritization</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <XIcon className="w-5 h-5 text-red-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Real-Time Team Collaboration</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <span className="text-sm text-muted-foreground">Limited</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Integrated Command Centre</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <XIcon className="w-5 h-5 text-red-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Automated Ceremony Minutes</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <XIcon className="w-5 h-5 text-red-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">GitHub & Jira Integration</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Microsoft Teams Integration</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <span className="text-sm text-muted-foreground">Varies</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Sentiment Analysis</td>
+                      <td className="text-center p-4">
+                        <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      </td>
+                      <td className="text-center p-4">
+                        <XIcon className="w-5 h-5 text-red-500 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4">Setup Time</td>
+                      <td className="text-center p-4">
+                        <span className="text-sm font-semibold text-green-600">Minutes</span>
+                      </td>
+                      <td className="text-center p-4">
+                        <span className="text-sm text-muted-foreground">Days/Weeks</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                <p className="text-sm font-semibold mb-2">Copy-Paste Snippet for Posts:</p>
+                <p className="text-sm text-muted-foreground italic">
+                  "Unlike traditional agile tools, SAAI brings AI-powered intelligence to every ceremony - from automated sprint planning to sentiment-aware retrospectives. What takes hours in other tools, takes minutes with SAAI."
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Tips Section */}
           <Card className="bg-muted/50">
