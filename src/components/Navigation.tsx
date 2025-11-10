@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle, LayoutDashboard, Users, Workflow, Languages, Briefcase } from "lucide-react";
 import saaiLogo from "@/assets/saai-logo.png";
+import saaiLogoOptimized from "@/assets/saai-logo-optimized.webp";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -111,11 +112,16 @@ export const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
-            <img 
-              src={saaiLogo} 
-              alt="SAAI - Agile Active Intelligence" 
-              className="h-12 w-auto object-contain"
-            />
+            <picture>
+              <source srcSet={saaiLogoOptimized} type="image/webp" />
+              <img 
+                src={saaiLogo} 
+                alt="SAAI - Agile Active Intelligence logo"
+                width="48"
+                height="48"
+                className="h-12 w-auto object-contain"
+              />
+            </picture>
             <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               SAAI
             </span>
