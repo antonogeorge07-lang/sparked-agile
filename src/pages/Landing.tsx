@@ -91,6 +91,16 @@ export default function Landing() {
               </span>
             </Link>
             <div className="flex items-center gap-2 sm:gap-4">
+              <Link to="/subscription" className="hidden md:block">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => trackButtonClick('Pricing', 'nav')}
+                  aria-label="View pricing plans"
+                >
+                  Pricing
+                </Button>
+              </Link>
               <Link to="/auth" className="hidden sm:block">
                 <Button 
                   variant="ghost" 

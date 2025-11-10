@@ -35,20 +35,12 @@ export default function Subscription() {
   const { toast } = useToast();
 
   useEffect(() => {
-    checkAuth();
     loadSubscriptionData();
   }, []);
 
-  const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      navigate("/auth");
-    }
-  };
-
   const loadSubscriptionData = async () => {
     try {
-      // Load subscription tiers
+      // Load subscription tiers (public data)
       const { data: tiersData, error: tiersError } = await supabase
         .from('subscription_tiers')
         .select('*')
@@ -71,7 +63,7 @@ export default function Subscription() {
       
       setTiers(parsedTiers);
 
-      // Load user's current subscription
+      // Load user's current subscription (only if authenticated)
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const { data: subData } = await supabase
@@ -90,6 +82,13 @@ export default function Subscription() {
   };
 
   const handleSubscribe = async (tierId: string) => {
+    // Check if user is authenticated
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      navigate("/auth");
+      return;
+    }
+    
     // Ready for Stripe - will activate when you add your Stripe account
     toast({
       title: "Payment Setup Required",
