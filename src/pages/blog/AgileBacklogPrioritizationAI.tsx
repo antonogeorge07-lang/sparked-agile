@@ -166,7 +166,7 @@ export default function AgileBacklogPrioritizationAI() {
           
           <h3>Myth: "AI will eliminate the need for product owners"</h3>
           <p>
-            <strong>Reality:</strong> <strong>Agile backlog prioritization AI</strong> assists product owners—it doesn't 
+            <strong>Reality:</strong> <strong>Agile backlog prioritization AI</strong> assists product owners, it doesn't 
             replace them. Final prioritization decisions still require human judgment about business strategy and customer needs.
           </p>
 

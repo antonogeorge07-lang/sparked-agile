@@ -96,7 +96,7 @@ export default function AITransformingAgileDelivery() {
 
           <h2>Integration with Your Existing Tools</h2>
           <p>
-            The best <strong>automated sprint planning tools</strong> don't replace your workflow—they enhance it. 
+            The best <strong>automated sprint planning tools</strong> don't replace your workflow, they enhance it. 
             With seamless JIRA and GitHub integration, these tools:
           </p>
           <ul>
@@ -109,7 +109,7 @@ export default function AITransformingAgileDelivery() {
           <h2>The Future of Agile is AI-Powered</h2>
           <p>
             As AI continues to evolve, <strong>agile backlog prioritization AI</strong> and automated planning will become 
-            table stakes for high-performing teams. The question isn't whether to adopt these tools—it's how quickly you can 
+            table stakes for high-performing teams. The question isn't whether to adopt these tools, it's how quickly you can 
             start benefiting from them.
           </p>
 

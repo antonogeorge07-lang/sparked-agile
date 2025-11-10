@@ -35,7 +35,7 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
               </span>
             </h1>
             <p className="text-base text-muted-foreground max-w-2xl mx-auto px-4 sm:text-lg">
-              SAAI automates your sprint ceremonies, backlog prioritization and team insights — so you deliver 40% faster, with less overhead.
+              SAAI automates your sprint ceremonies, backlog prioritization and team insights so you deliver 40% faster, with less overhead.
               <span className="block mt-2 text-sm font-medium text-primary">
                 ✓ Free today, premium features coming soon • ✓ No credit card • ✓ 2-minute setup
               </span>

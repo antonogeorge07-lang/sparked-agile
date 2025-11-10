@@ -103,7 +103,7 @@ export default function AutomatedSprintPlanningGuide() {
           <h3>Time Savings</h3>
           <p>
             Teams typically spend <strong>4-10 hours</strong> on sprint planning. With automation, this drops to 
-            <strong> 30 minutes to 2 hours</strong>—an 80% reduction. That's 8 hours per sprint your team can spend 
+            <strong> 30 minutes to 2 hours</strong>, an 80% reduction. That's 8 hours per sprint your team can spend 
             actually building.
           </p>
 
@@ -144,7 +144,7 @@ export default function AutomatedSprintPlanningGuide() {
           <h3>Myth: "AI will replace product owners"</h3>
           <p>
             <strong>Reality:</strong> Automated sprint planning tools augment, not replace, human judgment. Product owners 
-            still set priorities—AI just handles the mechanical work of fitting items into capacity.
+            still set priorities. AI just handles the mechanical work of fitting items into capacity.
           </p>
 
           <h3>Myth: "It only works for large teams"</h3>
@@ -156,7 +156,7 @@ export default function AutomatedSprintPlanningGuide() {
           <h3>Myth: "Setup is complex and time-consuming"</h3>
           <p>
             <strong>Reality:</strong> Modern tools connect to JIRA or GitHub in under 2 minutes. The AI learns from your 
-            existing data—no lengthy configuration required.
+            existing data, no lengthy configuration required.
           </p>
 
           <h2>Getting Started with Automated Sprint Planning</h2>
@@ -173,8 +173,8 @@ export default function AutomatedSprintPlanningGuide() {
 
           <h2>Conclusion</h2>
           <p>
-            <strong>Automated sprint planning tools</strong> aren't just a nice-to-have—they're becoming essential for 
-            high-performing agile teams. By reducing planning overhead by 80% and improving sprint predictability, these 
+            <strong>Automated sprint planning tools</strong> aren't just a nice-to-have, they're becoming essential for 
+            high-performing agile teams. By reducing planning overhead by 80% and improving sprint predictability, these
             tools let teams focus on what matters: delivering value.
           </p>
         </div>

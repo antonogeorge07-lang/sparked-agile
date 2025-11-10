@@ -109,7 +109,7 @@ export default function About() {
               <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
               <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed">
                 SAAI is a solo-founder micro-studio project. This means every feature is thoughtfully designed, 
-                every interaction carefully considered. I'm not trying to be everything to everyone—I'm focused 
+                every interaction carefully considered. I'm not trying to be everything to everyone. I'm focused 
                 on building the best AI-powered Agile tool for teams who value quality, clarity, and purpose.
               </p>
             </div>

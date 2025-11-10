@@ -30,7 +30,7 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
           <Card className="border-2">
             <CardHeader>
               <CardTitle className="text-2xl">Free Forever</CardTitle>
-              <CardDescription className="text-base">Available now — no credit card required</CardDescription>
+              <CardDescription className="text-base">Available now - no credit card required</CardDescription>
               <div className="pt-4">
                 <p className="text-4xl font-bold">$0</p>
                 <p className="text-sm text-muted-foreground">Always free</p>
@@ -74,7 +74,7 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
             </div>
             <CardHeader>
               <CardTitle className="text-2xl">Premium</CardTitle>
-              <CardDescription className="text-base">For growing teams — launching Q2 2025</CardDescription>
+              <CardDescription className="text-base">For growing teams - launching Q2 2025</CardDescription>
               <div className="pt-4">
                 <p className="text-4xl font-bold">$19<span className="text-lg text-muted-foreground">/user/mo</span></p>
                 <p className="text-sm text-muted-foreground">Billed monthly</p>

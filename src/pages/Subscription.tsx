@@ -154,13 +154,13 @@ export default function Subscription() {
           <BackButton className="mb-6" />
           <div className="text-center mb-8 sm:mb-12">
             <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-2 px-2">
-              From solo founders to enterprise teams — Spark Agile grows with you
+              From solo founders to enterprise teams, Spark Agile grows with you
             </p>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 bg-gradient-primary bg-clip-text text-transparent px-2">
               ⚡ Choose Your Plan
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-4 sm:mb-6 px-2">
-              Scale your agile workspace with the perfect plan for your team — from startup simplicity to enterprise performance
+              Scale your agile workspace with the perfect plan for your team, from startup simplicity to enterprise performance
             </p>
             
             <div className="inline-flex rounded-lg border p-1 bg-muted/50">
@@ -240,7 +240,7 @@ export default function Subscription() {
                     </div>
 
                     <div className="mt-4 p-3 bg-muted/50 rounded-lg text-xs text-muted-foreground italic">
-                      {tier.name.toLowerCase() === 'free' && "Start your agile journey — build momentum with the essentials."}
+                      {tier.name.toLowerCase() === 'free' && "Start your agile journey and build momentum with the essentials."}
                       {tier.name.toLowerCase() === 'professional' && "Boost team velocity with AI-driven clarity and smarter collaboration."}
                       {tier.name.toLowerCase() === 'enterprise' && "Empower your organization with a personalized AI coach and full agile ecosystem."}
                     </div>
