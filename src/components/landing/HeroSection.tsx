@@ -29,15 +29,15 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
               </Badge>
             </div>
             <h1 id="hero-heading" className="text-3xl sm:text-5xl font-bold px-4 md:text-6xl">
-              Transform Your Agile
+              AI-Powered Agile.
               <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                Workflow with AI
+                From Planning to Retrospectives in Minutes
               </span>
             </h1>
             <p className="text-base text-muted-foreground max-w-2xl mx-auto px-4 sm:text-lg">
-              Automate ceremonies, sync with JIRA & GitHub, boost team velocity by 30%.
+              SAAI automates your sprint ceremonies, backlog prioritization and team insights — so you deliver 40% faster, with less overhead.
               <span className="block mt-2 text-sm font-medium text-primary">
-                ✓ Free forever • ✓ No credit card • ✓ 2-minute setup
+                ✓ Free today, premium features coming soon • ✓ No credit card • ✓ 2-minute setup
               </span>
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 px-4">
@@ -45,10 +45,10 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
                 <Button 
                   size="lg" 
                   className="gap-2 w-full sm:w-auto"
-                  onClick={() => trackButtonClick('Start Free Trial', 'hero')}
-                  aria-label="Start your free trial of SAAI"
+                  onClick={() => trackButtonClick('Start Free Today', 'hero')}
+                  aria-label="Start free with SAAI today"
                 >
-                  Start Free Trial
+                  Start Free Today
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </Link>
