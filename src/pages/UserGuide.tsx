@@ -22,7 +22,10 @@ import {
   Shield,
   Workflow,
   TrendingUp,
-  CheckCircle2
+  CheckCircle2,
+  AlertTriangle,
+  Bot,
+  Activity
 } from "lucide-react";
 
 export default function UserGuide() {
@@ -225,6 +228,32 @@ export default function UserGuide() {
                         <li>Suggests story splitting and prioritization</li>
                         <li>Tracks definition of ready compliance</li>
                       </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-8b">
+                  <AccordionTrigger>
+                    <div className="flex items-center gap-2">
+                      <Activity className="h-4 w-4" />
+                      Project Command Centre
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-3 text-sm">
+                      <p><strong>Purpose:</strong> Centralized project management hub</p>
+                      <p><strong>Features:</strong></p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Kanban-style task management with drag-and-drop</li>
+                        <li>Multi-stage workflow (Backlog, To Do, In Progress, Review, Done)</li>
+                        <li>AI-powered insights and recommendations</li>
+                        <li>Risk register and lessons learned tracking</li>
+                        <li>Real-time collaboration with team presence</li>
+                        <li>Task prioritization and assignment</li>
+                      </ul>
+                      <p className="text-muted-foreground italic">
+                        💡 Perfect for high-level project oversight and strategic planning
+                      </p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -489,6 +518,51 @@ export default function UserGuide() {
                         <li>Keep integration credentials updated</li>
                       </ul>
                       <p><strong>Data Protection:</strong> All data is encrypted and access-controlled via RLS policies</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-19b">
+                  <AccordionTrigger>
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Security Incidents Dashboard
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-3 text-sm">
+                      <p><strong>Purpose:</strong> Monitor, track, and resolve security incidents with AI assistance</p>
+                      <p><strong>Admin Access:</strong> Navigate to Admin → Security Incidents (admin privileges required)</p>
+                      <p><strong>Key Features:</strong></p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li><strong>Real-time Monitoring:</strong> Live updates on active security incidents</li>
+                        <li><strong>Incident Types:</strong> Unauthorized access, data breach, malware, DDoS, phishing, insider threat, and more</li>
+                        <li><strong>Severity Levels:</strong> Critical, high, medium, low classification</li>
+                        <li><strong>Status Tracking:</strong> Detected, investigating, contained, resolved</li>
+                        <li><strong>AI Bot Assignment:</strong> Assign specialized bots to investigate and resolve incidents automatically</li>
+                        <li><strong>Evidence Collection:</strong> Document and track incident evidence</li>
+                        <li><strong>Root Cause Analysis:</strong> AI-powered analysis and lessons learned</li>
+                      </ul>
+                      <p><strong>Bot Capabilities:</strong></p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li><strong>Investigation Bot:</strong> Analyzes incident details and gathers evidence</li>
+                        <li><strong>Containment Bot:</strong> Implements immediate security measures</li>
+                        <li><strong>Remediation Bot:</strong> Executes resolution steps and patches vulnerabilities</li>
+                        <li><strong>Documentation Bot:</strong> Creates detailed incident reports and compliance logs</li>
+                      </ul>
+                      <p><strong>How to Use:</strong></p>
+                      <ol className="list-decimal pl-5 space-y-1">
+                        <li>Access Admin Dashboard → Security Incidents</li>
+                        <li>View all incidents with real-time status updates</li>
+                        <li>Filter by severity, status, or incident type</li>
+                        <li>Click an incident to view full details</li>
+                        <li>Assign appropriate bot for automated resolution</li>
+                        <li>Monitor bot progress and review actions taken</li>
+                        <li>Document lessons learned for future prevention</li>
+                      </ol>
+                      <p className="text-muted-foreground italic">
+                        🤖 AI bots work 24/7 to investigate and resolve incidents, reducing response time and improving security posture
+                      </p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
