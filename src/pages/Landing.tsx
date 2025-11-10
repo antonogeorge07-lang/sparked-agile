@@ -103,6 +103,16 @@ export default function Landing() {
                   Pricing
                 </Button>
               </Link>
+              <Link to="/blog" className="hidden md:block">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => trackButtonClick('Blog', 'nav')}
+                  aria-label="Read our blog"
+                >
+                  Blog
+                </Button>
+              </Link>
               <Link to="/auth" className="hidden sm:block">
                 <Button 
                   variant="ghost" 

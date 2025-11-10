@@ -41,7 +41,11 @@ export function FooterSection() {
             <h3 className="font-semibold mb-4">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground" role="list">
               <li><a href="#about" className="hover:text-foreground transition-colors">About</a></li>
-              <li><a href="#blog" className="hover:text-foreground transition-colors">Blog</a></li>
+              <li>
+                <Link to="/blog" className="hover:text-foreground transition-colors">
+                  Blog
+                </Link>
+              </li>
               <li><a href="#careers" className="hover:text-foreground transition-colors">Careers</a></li>
               <li>
                 <Link to="/contact" className="hover:text-foreground transition-colors">
