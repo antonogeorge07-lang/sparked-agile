@@ -34,7 +34,7 @@ export const WelcomePopup = () => {
             Save 10+ Hours Per Sprint with AI
           </DialogTitle>
           <DialogDescription className="text-base leading-relaxed pt-3">
-            Automate sprint ceremonies, get instant insights, and focus on what matters—building great products.
+            Automate sprint ceremonies, get instant insights, and focus on what matters - building great products.
           </DialogDescription>
         </DialogHeader>
 

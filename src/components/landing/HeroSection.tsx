@@ -43,7 +43,7 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
 
             {/* Value proposition with specific benefits */}
             <p className="text-base text-muted-foreground max-w-3xl mx-auto px-4 sm:text-lg leading-relaxed animate-in fade-in duration-1000">
-              Automate sprint ceremonies, generate insights instantly, and track team performance—all in one platform. 
+              Automate sprint ceremonies, generate insights instantly, and track team performance - all in one platform. 
               <span className="block mt-3 text-foreground font-semibold">
                 Go from 3-hour planning sessions to 30 minutes.
               </span>

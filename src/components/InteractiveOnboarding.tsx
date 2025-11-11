@@ -36,7 +36,7 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: "welcome",
     title: "Welcome to SAAI! 🎉",
-    description: "Cut your sprint overhead by 50% with AI automation. Let me show you how in 60 seconds—you'll save 10+ hours this sprint.",
+    description: "Cut your sprint overhead by 50% with AI automation. Let me show you how in 60 seconds - you'll save 10+ hours this sprint.",
     icon: Sparkles,
     benefit: "Save 10+ hours per sprint starting today"
   },
