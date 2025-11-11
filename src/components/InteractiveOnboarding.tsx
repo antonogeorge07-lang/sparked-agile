@@ -36,9 +36,9 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: "welcome",
     title: "Welcome to SAAI! 🎉",
-    description: "Your AI-powered agile project management assistant. Let's get you started in 60 seconds.",
+    description: "Cut your sprint overhead by 50% with AI automation. Let me show you how in 60 seconds—you'll save 10+ hours this sprint.",
     icon: Sparkles,
-    benefit: "AI-powered project management in minutes, not hours"
+    benefit: "Save 10+ hours per sprint starting today"
   },
   {
     id: "ai-assistant",
@@ -109,10 +109,10 @@ export const InteractiveOnboarding = () => {
     const isFirstVisit = !localStorage.getItem("saai_visited_before");
     
     if (!hasSeenOnboarding && isFirstVisit) {
-      // Small delay to let page load
+      // Quick delay to show engagement immediately
       setTimeout(() => {
         setIsOpen(true);
-      }, 1000);
+      }, 500);
       localStorage.setItem("saai_visited_before", "true");
     }
   }, []);
