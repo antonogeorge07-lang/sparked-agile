@@ -36,19 +36,19 @@ export function HeroSection({
             </div>
 
             {/* Main headline - benefit-focused */}
-            <h1 id="hero-heading" className="text-3xl sm:text-5xl font-bold px-4 md:text-6xl leading-tight animate-in slide-in-from-bottom duration-700">SAAI Help you Cut Sprint 
-Overhead by 50% 
-Agile Management
-Powered with AI<span className="bg-gradient-primary bg-clip-text text-transparent">50%</span>
+            <h1 id="hero-heading" className="text-3xl sm:text-5xl px-4 leading-tight animate-in slide-in-from-bottom duration-700 text-purple-600 md:text-5xl font-semibold">Spark Agile Active Intelligence
+
+50% Less Overhead. 100% More Impact.
+AI-Powered Agility for Modern Teams.<span className="bg-gradient-primary bg-clip-text text-transparent">50%</span>
               <span className="block mt-2 text-2xl sm:text-4xl md:text-5xl">
                 with AI-Powered Agile Management
               </span>
             </h1>
 
             {/* Value proposition with specific benefits */}
-            <p className="text-base text-muted-foreground max-w-3xl mx-auto px-4 sm:text-lg leading-relaxed animate-in fade-in duration-1000">
-              Automate sprint ceremonies, generate insights instantly, and track team performance - all in one platform. 
-              <span className="block mt-3 text-foreground font-semibold">
+            <p className="text-base text-muted-foreground max-w-3xl mx-auto px-4 sm:text-lg leading-relaxed animate-in fade-in duration-1000">Automate sprint ceremonies, generate insights instantly, and track team performance 
+All in one platform.
+Go from 3-hour planning sessions to 30 minutes.<span className="block mt-3 text-foreground font-semibold">
                 Go from 3-hour planning sessions to 30 minutes.
               </span>
             </p>
