@@ -81,16 +81,13 @@ export default function Landing() {
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <nav className="container mx-auto px-4" aria-label="Main navigation">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-3" aria-label="SAAI home">
+            <Link to="/" className="flex items-center" aria-label="SAAI home">
               <OptimizedImage 
                 src={saaiLogo} 
                 alt="SAAI - Agile Active Intelligence logo" 
-                className="h-12 w-auto object-contain"
+                className="h-10 w-auto object-contain"
                 priority={true}
               />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                SAAI
-              </span>
             </Link>
             <div className="flex items-center gap-2 sm:gap-4">
               <Link to="/about" className="hidden md:block">
