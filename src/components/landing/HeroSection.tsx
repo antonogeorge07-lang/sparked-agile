@@ -76,11 +76,11 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
               <Link to="/auth" className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
-                  className="gap-2 w-full sm:w-auto text-base font-semibold shadow-lg hover:shadow-xl transition-shadow"
-                  onClick={() => trackButtonClick('Start Free - Save 10 Hours', 'hero')}
+                  className="gap-2 w-full sm:w-auto shadow-lg hover:shadow-xl transition-shadow"
+                  onClick={() => trackButtonClick('Start Free Today', 'hero')}
                   aria-label="Start free with SAAI today"
                 >
-                  Start Free - Save 10 Hours This Sprint
+                  Start Free Today
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </Link>
@@ -90,12 +90,12 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
                 variant="outline"
                 className="w-full sm:w-auto"
                 onClick={() => {
-                  trackButtonClick('Watch 2-Min Demo', 'hero');
+                  trackButtonClick('Watch Demo', 'hero');
                   onWatchDemo();
                 }}
-                aria-label="Watch a 2-minute demonstration of SAAI features"
+                aria-label="Watch a demonstration of SAAI features"
               >
-                Watch 2-Min Demo
+                Watch Demo
               </Button>
             </div>
             
