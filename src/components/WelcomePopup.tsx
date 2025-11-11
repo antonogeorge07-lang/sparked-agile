@@ -27,7 +27,7 @@ export const WelcomePopup = () => {
           <div className="flex items-center justify-between mb-3">
             <Badge className="gap-2" variant="secondary">
               <Sparkles className="w-3 h-3 animate-pulse" />
-              Join 500+ Teams
+              AI-Powered Agile Platform
             </Badge>
           </div>
           <DialogTitle className="text-3xl font-bold">
@@ -42,18 +42,18 @@ export const WelcomePopup = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
               <Clock className="w-8 h-8 text-primary mb-2" />
+              <p className="font-bold text-2xl text-primary">10+</p>
+              <p className="text-xs text-muted-foreground">Hours saved per sprint</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
+              <TrendingUp className="w-8 h-8 text-primary mb-2" />
               <p className="font-bold text-2xl text-primary">50%</p>
               <p className="text-xs text-muted-foreground">Less ceremony time</p>
             </div>
             <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
-              <TrendingUp className="w-8 h-8 text-primary mb-2" />
-              <p className="font-bold text-2xl text-primary">30%</p>
-              <p className="text-xs text-muted-foreground">Faster delivery</p>
-            </div>
-            <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
               <Users className="w-8 h-8 text-primary mb-2" />
-              <p className="font-bold text-2xl text-primary">100%</p>
-              <p className="text-xs text-muted-foreground">Team visibility</p>
+              <p className="font-bold text-2xl text-primary">2 min</p>
+              <p className="text-xs text-muted-foreground">Setup time</p>
             </div>
           </div>
 

@@ -29,7 +29,7 @@ export function HeroSection({ onWatchDemo, onEarlyAccess }: HeroSectionProps) {
             <div className="flex flex-col items-center gap-3 mb-2">
               <Badge className="gap-2 text-xs sm:text-sm px-3 py-1.5 animate-in slide-in-from-top duration-500" variant="secondary">
                 <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 animate-pulse" aria-hidden="true" />
-                Join 500+ Teams Saving 10+ Hours Per Sprint
+                Save 10+ Hours Per Sprint with AI Automation
               </Badge>
             </div>
 
