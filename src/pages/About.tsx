@@ -4,21 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import saaiLogo from "@/assets/saai-logo.png";
 import { Sparkles, Target, Users, Zap } from "lucide-react";
-
 export default function About() {
-  return (
-    <div className="min-h-screen bg-gradient-subtle">
+  return <div className="min-h-screen bg-gradient-subtle">
       <main className="container mx-auto px-4 py-12 max-w-4xl">
         <BackButton fallbackPath="/" className="mb-6" />
         
         {/* Hero Section */}
         <div className="text-center mb-12 animate-fade-in">
           <div className="flex justify-center mb-6">
-            <OptimizedImage 
-              src={saaiLogo} 
-              alt="SAAI - Spark-Agile Active Intelligence logo" 
-              className="h-24 w-auto object-contain"
-            />
+            <OptimizedImage src={saaiLogo} alt="SAAI - Spark-Agile Active Intelligence logo" className="h-24 w-auto object-contain" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             About <span className="bg-gradient-primary bg-clip-text text-transparent">SAAI</span>
@@ -62,7 +56,7 @@ export default function About() {
                 <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
                   <Target className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Our Mission</h3>
+                <h3 className="text-lg font-semibold mb-2">Mission</h3>
                 <p className="text-sm text-muted-foreground">
                   Empower teams to unlock their full potential through AI-powered Agile practices
                 </p>
@@ -76,7 +70,7 @@ export default function About() {
                 <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
                   <Users className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Our Approach</h3>
+                <h3 className="text-lg font-semibold mb-2">Approach</h3>
                 <p className="text-sm text-muted-foreground">
                   Carefully crafted solutions, not mass-market products. Every feature is designed with care
                 </p>
@@ -90,7 +84,7 @@ export default function About() {
                 <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Our Vision</h3>
+                <h3 className="text-lg font-semibold mb-2">Vision</h3>
                 <p className="text-sm text-muted-foreground">
                   Make AI-powered Agile the standard for modern teams worldwide
                 </p>
@@ -107,11 +101,11 @@ export default function About() {
                 Micro-Studio
               </Badge>
               <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
-              <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed">
-                SAAI is a solo-founder micro-studio project. This means every feature is thoughtfully designed, 
-                every interaction carefully considered. I'm not trying to be everything to everyone. I'm focused 
-                on building the best AI-powered Agile tool for teams who value quality, clarity, and purpose.
-              </p>
+              <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed">SAAI is a solo-founder, well-guided, research-driven micro-studio project.
+
+Every feature is built with intention, every interaction crafted with care. I’m not here to build just anything; I’m here to create the most purposeful AI-powered Agile tools for teams that value quality, clarity, and progress.
+
+This is the first step toward a new era of engagement one where AI empowers people, rather than replacing them.</p>
             </div>
           </CardContent>
         </Card>
@@ -138,6 +132,5 @@ export default function About() {
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 }
