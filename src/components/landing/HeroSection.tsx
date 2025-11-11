@@ -36,10 +36,9 @@ export function HeroSection({
             </div>
 
             {/* Main headline - benefit-focused */}
-            <h1 id="hero-heading" className="text-3xl sm:text-5xl px-4 leading-tight animate-in slide-in-from-bottom duration-700 text-purple-600 md:text-5xl font-semibold">Spark Agile Active Intelligence
-
-50% Less Overhead. 100% More Impact.
-AI-Powered Agility for Modern Teams.<span className="bg-gradient-primary bg-clip-text text-transparent">50%</span>
+            <h1 id="hero-heading" className="text-3xl sm:text-5xl px-4 leading-tight animate-in slide-in-from-bottom duration-700 text-purple-600 md:text-5xl font-semibold">Spark Agile Active Intelligence 
+50% Less Overhead. 100% More Impact. AI-Powered Agility for Modern Teams.50%
+with AI-Powered Agile Management<span className="bg-gradient-primary bg-clip-text text-transparent">50%</span>
               <span className="block mt-2 text-2xl sm:text-4xl md:text-5xl">
                 with AI-Powered Agile Management
               </span>
