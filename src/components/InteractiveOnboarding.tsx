@@ -43,13 +43,9 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: "ai-assistant",
     title: "Meet Omair, Your AI Assistant",
-    description: "Ask questions, get instant insights, and automate your agile ceremonies. Try it now with a demo question!",
+    description: "Ask questions, get instant insights, and automate your agile ceremonies. Available after you sign up to answer all your project management questions in real-time.",
     icon: MessageSquare,
-    action: {
-      label: "Try AI Demo",
-      path: "/#demo"
-    },
-    benefit: "Get instant answers to project management questions"
+    benefit: "Get instant answers to project management questions 24/7"
   },
   {
     id: "command-centre",
@@ -158,9 +154,11 @@ export const InteractiveOnboarding = () => {
       return;
     }
 
+    // Mark onboarding as in-progress, not completed
+    localStorage.setItem("saai_onboarding_in_progress", "true");
+    setIsOpen(false);
+    
     if (action.path) {
-      localStorage.setItem("saai_onboarding_completed", "true");
-      setIsOpen(false);
       if (action.path.startsWith('/#')) {
         // Scroll to section
         const section = action.path.substring(2);
