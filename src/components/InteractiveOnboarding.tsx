@@ -149,27 +149,17 @@ export const InteractiveOnboarding = () => {
   };
 
   const handleAction = (action?: OnboardingStep['action']) => {
-    if (!action) {
+    // If there's no actionable path, simply proceed to the next step
+    if (!action || !action.path) {
       handleNext();
       return;
     }
 
-    // Mark onboarding as in-progress, not completed
+    // Only when explicitly navigating do we close and mark in-progress
     localStorage.setItem("saai_onboarding_in_progress", "true");
-    setIsOpen(false);
-    
-    if (action.path) {
-      if (action.path.startsWith('/#')) {
-        // Scroll to section
-        const section = action.path.substring(2);
-        const element = document.getElementById(section);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        navigate(action.path);
-      }
-    }
+    // Keep the walkthrough open by default; navigate after completion instead.
+    // For now, just advance to next step to avoid interruptions
+    handleNext();
   };
 
   const progress = ((currentStep + 1) / onboardingSteps.length) * 100;
