@@ -115,7 +115,17 @@ const handler = async (req: Request): Promise<Response> => {
                 
                 <p style="margin-top: 30px;">If you have any questions or need assistance, don't hesitate to reach out to our support team.</p>
                 
-                <p>Best regards,<br><strong>The SAAI Platform Team</strong></p>
+                <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
+                  <p style="margin-bottom: 5px;">Best regards,</p>
+                  <p style="margin: 5px 0; font-weight: bold; font-size: 16px; color: #667eea;">The SAAI Platform Team</p>
+                  <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">Agile Delivery Excellence</p>
+                  <p style="margin: 10px 0; font-size: 14px;">
+                    <a href="mailto:support@saai-platform.com" style="color: #667eea; text-decoration: none;">support@saai-platform.com</a>
+                  </p>
+                  <p style="margin: 5px 0; font-size: 13px; color: #9ca3af;">
+                    📧 Questions? Visit our <a href="#" style="color: #667eea; text-decoration: none;">Help Center</a> or reply to this email
+                  </p>
+                </div>
               </div>
               
               <div class="footer">
