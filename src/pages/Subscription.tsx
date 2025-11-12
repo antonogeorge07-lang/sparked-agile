@@ -5,9 +5,10 @@ import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Check, Crown, Zap, Building2 } from "lucide-react";
+import { Loader2, Check, Crown, Zap, Building2, ShieldAlert } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserRole } from "@/hooks/useUserRole";
 
 interface SubscriptionTier {
   id: string;
@@ -33,10 +34,24 @@ export default function Subscription() {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { role, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
-    loadSubscriptionData();
-  }, []);
+    if (!roleLoading && role !== 'admin') {
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to access this page.",
+        variant: "destructive",
+      });
+      navigate("/dashboard");
+    }
+  }, [role, roleLoading, navigate, toast]);
+
+  useEffect(() => {
+    if (role === 'admin') {
+      loadSubscriptionData();
+    }
+  }, [role]);
 
   const loadSubscriptionData = async () => {
     try {
@@ -134,12 +149,34 @@ export default function Subscription() {
     }
   };
 
-  if (isLoading) {
+  if (roleLoading || isLoading) {
     return (
       <div className="min-h-screen bg-gradient-subtle">
         <Navigation />
         <div className="flex items-center justify-center h-screen">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
+
+  if (role !== 'admin') {
+    return (
+      <div className="min-h-screen bg-gradient-subtle">
+        <Navigation />
+        <div className="flex items-center justify-center h-screen">
+          <Card className="max-w-md">
+            <CardContent className="pt-6 text-center space-y-4">
+              <ShieldAlert className="w-12 h-12 text-destructive mx-auto" />
+              <h2 className="text-2xl font-bold">Access Restricted</h2>
+              <p className="text-muted-foreground">
+                This page is only accessible to administrators.
+              </p>
+              <Button onClick={() => navigate("/dashboard")}>
+                Return to Dashboard
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
