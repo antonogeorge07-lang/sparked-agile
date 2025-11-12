@@ -53,11 +53,34 @@ serve(async (req) => {
       );
     }
 
-    // Check rate limit (10 requests per minute)
-    if (!checkRateLimit(user.id, 10, 60000)) {
+    // Get user's subscription tier
+    const { data: subscriptionData } = await supabaseClient
+      .from('user_subscriptions')
+      .select(`
+        status,
+        tier_id,
+        subscription_tiers (
+          name,
+          project_limit
+        )
+      `)
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .single();
+
+    const tierName = subscriptionData?.subscription_tiers?.name || 'Free';
+    const isPremium = tierName !== 'Free';
+    
+    console.log(`User ${user.id} tier: ${tierName}, isPremium: ${isPremium}`);
+
+    // Check rate limit based on tier (Free: 5/min, Premium: 20/min)
+    const rateLimit = isPremium ? 20 : 5;
+    if (!checkRateLimit(user.id, rateLimit, 60000)) {
       console.warn(`Rate limit exceeded for user: ${user.id}`);
       return new Response(
-        JSON.stringify({ error: "Rate limit exceeded. Please try again in a minute." }),
+        JSON.stringify({ 
+          error: `Rate limit exceeded. ${isPremium ? 'Premium' : 'Free'} tier allows ${rateLimit} requests per minute.${!isPremium ? ' Upgrade to Premium for higher limits!' : ''}` 
+        }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -82,7 +105,28 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are Omair, a helpful and friendly AI assistant specializing in project management and workspace setup. 
+            content: `You are Omair, a helpful and friendly AI assistant specializing in project management and workspace setup.
+
+**User Subscription: ${tierName} Tier**
+${isPremium ? '✓ Premium features enabled: Priority support, unlimited workspaces, advanced analytics, custom integrations' : '⚠ Free tier: Limited to 5 requests/min. Upgrade for premium features!'}
+
+${!isPremium ? `
+**Free Tier Limitations:**
+- 5 AI requests per minute (vs 20 for Premium)
+- Basic workspace features only
+- Standard support
+
+**Premium Benefits Available:**
+- 4x more AI requests (20/min)
+- Unlimited project workspaces
+- Advanced analytics & insights
+- Priority support & faster responses
+- Custom integration support
+- Ceremony customization
+- Team collaboration features
+
+Mention upgrade benefits naturally when users ask about advanced features.
+` : ''}
 
 **Your Expertise Includes:**
 - Agile methodologies, sprint planning, and task management
@@ -122,11 +166,14 @@ The platform automatically schedules these Scrum ceremonies:
 - Sprint Retrospective (Last Friday after review, 1 hour)
 - Backlog Refinement (Mid-sprint Wednesday, 1 hour)
 
-Keep your answers clear, concise, and actionable. Provide step-by-step instructions when needed.`
+Keep your answers clear, concise, and actionable. Provide step-by-step instructions when needed.
+
+${!isPremium ? 'For free tier users, keep responses focused and suggest premium features when relevant.' : 'Provide comprehensive guidance with full access to all platform features.'}`
           },
           ...messages,
         ],
         stream: true,
+        max_tokens: isPremium ? 4000 : 1000, // Premium gets longer responses
       }),
     });
 
