@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Navigation } from "@/components/Navigation";
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
@@ -126,8 +126,9 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
-      <Navigation />
+    <DashboardLayout>
+      {isPending && <PendingApprovalBanner />}
+      {isGuestMode && <GuestModeBar />}
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-6">
@@ -455,8 +456,6 @@ export default function Dashboard() {
           />
         </>
       )}
-
-      {isGuestMode && <GuestModeBar />}
-    </div>
+    </DashboardLayout>
   );
 }
