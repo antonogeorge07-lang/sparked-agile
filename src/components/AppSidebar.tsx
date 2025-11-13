@@ -21,28 +21,28 @@ const menuSections = [
   {
     label: "Get Started",
     items: [
-      { title: "Quick Start Guide", url: "/quick-start", icon: Star },
+      { title: "Quick Start Guide", url: "/quick-start", icon: Star, tour: "quick-start" },
       { title: "Home", url: "/home", icon: Home },
     ]
   },
   {
     label: "Overview",
     items: [
-      { title: "Dashboard", url: "/dashboard", icon: BarChart3 },
+      { title: "Dashboard", url: "/dashboard", icon: BarChart3, tour: "dashboard" },
     ]
   },
   {
     label: "Epic Management",
     items: [
-      { title: "Epics", url: "/epic-management", icon: GitBranch },
+      { title: "Epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
       { title: "Epic Portfolio", url: "/epic-portfolio", icon: Target },
     ]
   },
   {
     label: "Agile Ceremonies",
     items: [
-      { title: "Command Centre", url: "/project-command-centre", icon: Briefcase },
-      { title: "Sprint Planning", url: "/sprint-planning-assistant", icon: Sparkles },
+      { title: "Command Centre", url: "/project-command-centre", icon: Briefcase, tour: "command-centre" },
+      { title: "Sprint Planning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
       { title: "Sprint Review", url: "/sprint-review-coordinator", icon: Presentation },
       { title: "Backlog Refinement", url: "/backlog-refinement", icon: ListFilter },
       { title: "Retrospective", url: "/retrospective", icon: Calendar },
@@ -62,7 +62,7 @@ const menuSections = [
     items: [
       { title: "Workflows", url: "/workflows", icon: Workflow },
       { title: "Ceremony Setup", url: "/ceremony-setup", icon: Calendar },
-      { title: "Integrations", url: "/integrations", icon: Network },
+      { title: "Integrations", url: "/integrations", icon: Network, tour: "integrations" },
     ]
   },
   {
@@ -105,7 +105,8 @@ export function AppSidebar() {
                       tooltip={!open ? item.title : undefined}
                     >
                       <Link 
-                        to={item.url} 
+                        to={item.url}
+                        data-tour={item.tour}
                         className={`
                           flex items-center gap-3 px-3 py-2 rounded-lg transition-colors
                           ${isActive(item.url) 
