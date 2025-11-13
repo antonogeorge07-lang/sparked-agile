@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle, LayoutDashboard, Users, Workflow, Languages, Briefcase, BookOpen } from "lucide-react";
+import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle, LayoutDashboard, Users, Workflow, Languages, Briefcase, BookOpen, GitBranch } from "lucide-react";
 import saaiLogo from "@/assets/saai-logo.png";
 import saaiLogoOptimized from "@/assets/saai-logo-optimized.webp";
 import { supabase } from "@/integrations/supabase/client";
@@ -99,6 +99,7 @@ export const Navigation = () => {
   const navItems = [
     { path: "/home", label: "Home", icon: Home },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
+    { path: "/epic-management", label: "Epics", icon: GitBranch },
     { path: "/project-command-centre", label: "Command Centre", icon: Briefcase },
     { path: "/sprint-planning-assistant", label: "Sprint AI", icon: Sparkles },
     { path: "/sprint-review-coordinator", label: "Review", icon: Presentation },

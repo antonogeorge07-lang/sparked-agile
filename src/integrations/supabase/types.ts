@@ -308,36 +308,101 @@ export type Database = {
           },
         ]
       }
+      epic_stakeholders: {
+        Row: {
+          created_at: string | null
+          epic_id: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          epic_id: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          epic_id?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_stakeholders_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       epics: {
         Row: {
+          acceptance_criteria: string[] | null
+          business_justification: string | null
           business_value: number | null
+          color_hex: string | null
           created_at: string | null
+          created_by: string | null
           description: string | null
+          effort_estimate: number | null
+          end_date: string | null
+          health_score: string | null
           id: string
           priority: string | null
+          responsible_teams: string[] | null
+          roi_score: number | null
+          start_date: string | null
           status: string | null
+          strategic_goals: string[] | null
           title: string
           updated_at: string | null
           value_stream_id: string | null
         }
         Insert: {
+          acceptance_criteria?: string[] | null
+          business_justification?: string | null
           business_value?: number | null
+          color_hex?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
+          effort_estimate?: number | null
+          end_date?: string | null
+          health_score?: string | null
           id?: string
           priority?: string | null
+          responsible_teams?: string[] | null
+          roi_score?: number | null
+          start_date?: string | null
           status?: string | null
+          strategic_goals?: string[] | null
           title: string
           updated_at?: string | null
           value_stream_id?: string | null
         }
         Update: {
+          acceptance_criteria?: string[] | null
+          business_justification?: string | null
           business_value?: number | null
+          color_hex?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
+          effort_estimate?: number | null
+          end_date?: string | null
+          health_score?: string | null
           id?: string
           priority?: string | null
+          responsible_teams?: string[] | null
+          roi_score?: number | null
+          start_date?: string | null
           status?: string | null
+          strategic_goals?: string[] | null
           title?: string
           updated_at?: string | null
           value_stream_id?: string | null
@@ -1812,6 +1877,10 @@ export type Database = {
     }
     Functions: {
       approve_user: { Args: { user_id_param: string }; Returns: undefined }
+      calculate_epic_progress: {
+        Args: { epic_id_param: string }
+        Returns: number
+      }
       can_create_project: { Args: { user_id_param: string }; Returns: boolean }
       check_integration_status: {
         Args: { integration_id: string }
