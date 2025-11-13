@@ -18,6 +18,7 @@ export const IntegrationWizard = ({ type, onComplete, onCancel }: IntegrationWiz
   const [formData, setFormData] = useState({
     name: "",
     url: "",
+    email: "",
     apiToken: "",
     repository: "",
     organization: "",
@@ -42,7 +43,7 @@ export const IntegrationWizard = ({ type, onComplete, onCancel }: IntegrationWiz
     if (type === "jira") {
       if (step === 1) return formData.name.length > 0;
       if (step === 2) return formData.url.length > 0;
-      if (step === 3) return formData.apiToken.length > 0;
+      if (step === 3) return formData.email.length > 0 && formData.apiToken.length > 0;
     } else {
       if (step === 1) return formData.name.length > 0;
       if (step === 2) return formData.organization.length > 0;
@@ -105,6 +106,19 @@ export const IntegrationWizard = ({ type, onComplete, onCancel }: IntegrationWiz
         case 3:
           return (
             <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Jira Account Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="your.email@company.com"
+                />
+                <p className="text-xs text-muted-foreground">
+                  The email address associated with your Jira account
+                </p>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="apiToken">API Token</Label>
                 <Input
