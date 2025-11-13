@@ -356,6 +356,103 @@ export type Database = {
           },
         ]
       }
+      epic_milestones: {
+        Row: {
+          completion_date: string | null
+          completion_percentage: number | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          epic_id: string
+          id: string
+          status: string
+          target_date: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          completion_date?: string | null
+          completion_percentage?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          epic_id: string
+          id?: string
+          status?: string
+          target_date: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          completion_date?: string | null
+          completion_percentage?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          epic_id?: string
+          id?: string
+          status?: string
+          target_date?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_milestones_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      epic_progress_snapshots: {
+        Row: {
+          completed_features: number
+          completed_story_points: number | null
+          completion_percentage: number | null
+          created_at: string | null
+          epic_id: string
+          id: string
+          snapshot_date: string
+          total_features: number
+          total_story_points: number | null
+          velocity: number | null
+        }
+        Insert: {
+          completed_features?: number
+          completed_story_points?: number | null
+          completion_percentage?: number | null
+          created_at?: string | null
+          epic_id: string
+          id?: string
+          snapshot_date?: string
+          total_features?: number
+          total_story_points?: number | null
+          velocity?: number | null
+        }
+        Update: {
+          completed_features?: number
+          completed_story_points?: number | null
+          completion_percentage?: number | null
+          created_at?: string | null
+          epic_id?: string
+          id?: string
+          snapshot_date?: string
+          total_features?: number
+          total_story_points?: number | null
+          velocity?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_progress_snapshots_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       epic_stakeholders: {
         Row: {
           created_at: string | null
@@ -396,17 +493,20 @@ export type Database = {
           color_hex: string | null
           created_at: string | null
           created_by: string | null
+          current_velocity: number | null
           description: string | null
           effort_estimate: number | null
           end_date: string | null
           health_score: string | null
           id: string
+          last_health_check: string | null
           priority: string | null
           responsible_teams: string[] | null
           roi_score: number | null
           start_date: string | null
           status: string | null
           strategic_goals: string[] | null
+          target_velocity: number | null
           title: string
           updated_at: string | null
           value_stream_id: string | null
@@ -418,17 +518,20 @@ export type Database = {
           color_hex?: string | null
           created_at?: string | null
           created_by?: string | null
+          current_velocity?: number | null
           description?: string | null
           effort_estimate?: number | null
           end_date?: string | null
           health_score?: string | null
           id?: string
+          last_health_check?: string | null
           priority?: string | null
           responsible_teams?: string[] | null
           roi_score?: number | null
           start_date?: string | null
           status?: string | null
           strategic_goals?: string[] | null
+          target_velocity?: number | null
           title: string
           updated_at?: string | null
           value_stream_id?: string | null
@@ -440,17 +543,20 @@ export type Database = {
           color_hex?: string | null
           created_at?: string | null
           created_by?: string | null
+          current_velocity?: number | null
           description?: string | null
           effort_estimate?: number | null
           end_date?: string | null
           health_score?: string | null
           id?: string
+          last_health_check?: string | null
           priority?: string | null
           responsible_teams?: string[] | null
           roi_score?: number | null
           start_date?: string | null
           status?: string | null
           strategic_goals?: string[] | null
+          target_velocity?: number | null
           title?: string
           updated_at?: string | null
           value_stream_id?: string | null
@@ -1928,6 +2034,10 @@ export type Database = {
     }
     Functions: {
       approve_user: { Args: { user_id_param: string }; Returns: undefined }
+      calculate_epic_health_score: {
+        Args: { epic_id_param: string }
+        Returns: string
+      }
       calculate_epic_progress: {
         Args: { epic_id_param: string }
         Returns: number
@@ -1948,6 +2058,10 @@ export type Database = {
           user_id: string
         }
         Returns: boolean
+      }
+      create_epic_progress_snapshot: {
+        Args: { epic_id_param: string }
+        Returns: undefined
       }
       get_project_limit_info: {
         Args: { user_id_param: string }
