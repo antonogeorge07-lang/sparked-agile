@@ -12,6 +12,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { BreadcrumbNav } from "@/components/BreadcrumbNav";
 
 export const Navigation = () => {
   const location = useLocation();
@@ -249,6 +250,7 @@ export const Navigation = () => {
           </div>
         </div>
       </div>
+      <BreadcrumbNav />
     </nav>
   );
 };
