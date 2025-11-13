@@ -15,6 +15,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { FeatureBreakdownPanel } from "@/components/epic/FeatureBreakdownPanel";
 import { DependencyGraph } from "@/components/epic/DependencyGraph";
+import { EpicBurndownChart } from "@/components/epic/EpicBurndownChart";
+import { EpicHealthScore } from "@/components/epic/EpicHealthScore";
+import { EpicMilestones } from "@/components/epic/EpicMilestones";
+import { EpicVelocityMetrics } from "@/components/epic/EpicVelocityMetrics";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
@@ -273,7 +277,8 @@ export default function EpicDetail() {
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="features">Features</TabsTrigger>
               <TabsTrigger value="dependencies">Dependencies</TabsTrigger>
-              <TabsTrigger value="progress">Progress</TabsTrigger>
+              <TabsTrigger value="progress">Progress & Analytics</TabsTrigger>
+              <TabsTrigger value="milestones">Milestones</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
@@ -415,38 +420,29 @@ export default function EpicDetail() {
             </TabsContent>
 
             <TabsContent value="progress">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Epic Progress</CardTitle>
-                  <CardDescription>
-                    Track completion and velocity metrics
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium">Overall Completion</span>
-                        <span className="text-sm text-muted-foreground">
-                          {completedFeatures}/{features.length} Features
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary rounded-full h-4">
-                        <div
-                          className="bg-primary h-4 rounded-full transition-all"
-                          style={{ width: `${progressPercentage}%` }}
-                        />
-                      </div>
-                    </div>
+              <div className="space-y-6">
+                <EpicHealthScore 
+                  epicId={id!}
+                  currentHealth={epic.health_score}
+                  lastCheck={epic.last_health_check}
+                  onHealthUpdate={loadEpicDetails}
+                />
+                
+                <EpicBurndownChart 
+                  epicId={id!}
+                  startDate={epic.start_date}
+                  endDate={epic.end_date}
+                />
+                
+                <EpicVelocityMetrics epicId={id!} />
+              </div>
+            </TabsContent>
 
-                    <Separator />
-
-                    <div className="text-center py-8 text-muted-foreground">
-                      <p>Burndown charts and detailed progress tracking coming soon</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            <TabsContent value="milestones">
+              <EpicMilestones 
+                epicId={id!}
+                onMilestoneUpdate={loadEpicDetails}
+              />
             </TabsContent>
           </Tabs>
         </div>
