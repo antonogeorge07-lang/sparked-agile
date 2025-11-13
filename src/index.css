@@ -121,6 +121,16 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #root-scroll-container {
+    overflow: auto;
+    height: 100vh;
+  }
 }
 
 /* Prose styles for blog content */
