@@ -111,31 +111,32 @@ export const Navigation = () => {
   ];
 
   return (
-    <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-3">
+    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto">
+        <div className="flex h-14 items-center justify-between px-4 md:px-6">
+          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <picture>
               <source srcSet={saaiLogoOptimized} type="image/webp" />
               <img 
                 src={saaiLogo} 
                 alt="SAAI - Agile Active Intelligence logo"
-                width="48"
-                height="48"
-                className="h-12 w-auto object-contain"
+                width="32"
+                height="32"
+                className="h-7 w-7 object-contain"
               />
             </picture>
-            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <span className="text-lg font-semibold bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent">
               SAAI
             </span>
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-4">
-            {user && <ActiveUsers users={activeUsers} currentPage={location.pathname} />}
+          <div className="hidden lg:flex lg:items-center lg:gap-1">
+            {user && <div className="mr-1"><ActiveUsers users={activeUsers} currentPage={location.pathname} /></div>}
             
-            <div className="flex items-center gap-2">
-              {navItems.map((item) => {
+            {/* Primary nav items - show only first 4 */}
+            <div className="flex items-center gap-0.5">
+              {navItems.slice(0, 4).map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
                 return (
@@ -143,90 +144,47 @@ export const Navigation = () => {
                     <Button 
                       variant={isActive ? "default" : "ghost"}
                       size="sm"
-                      className="gap-2"
+                      className="gap-1.5 text-sm h-8 px-3"
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="h-3.5 w-3.5" />
                       {item.label}
                     </Button>
                   </Link>
                 );
               })}
-              
-              {isAdmin && (
-                <>
-                  <Link to="/admin">
-                    <Button 
-                      variant={location.pathname === "/admin" ? "default" : "ghost"}
-                      size="sm"
-                      className="gap-2"
-                    >
-                      <Shield className="w-4 h-4" />
-                      Admin
-                    </Button>
-                  </Link>
-                  <Link to="/market-intelligence">
-                    <Button 
-                      variant={location.pathname === "/market-intelligence" ? "default" : "ghost"}
-                      size="sm"
-                      className="gap-2"
-                    >
-                      <Target className="w-4 h-4" />
-                      Market Intel
-                    </Button>
-                  </Link>
-                </>
-              )}
+            </div>
 
-              <Link to="/user-guide">
-                <Button 
-                  variant={location.pathname === "/user-guide" ? "default" : "ghost"}
-                  size="sm"
-                  className="gap-2"
-                  title="User Guide"
-                >
-                  <HelpCircle className="w-4 h-4" />
-                  May I Help You
-                </Button>
-              </Link>
-
+            {/* Utility items */}
+            <div className="ml-1 flex items-center gap-0.5">
               <ThemeToggle />
-              
               {user && <NotificationBell />}
-              
               {user ? (
                 <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
               ) : (
                 <Link to="/auth">
-                  <Button size="sm">Sign In</Button>
+                  <Button size="sm" className="h-8 px-3 text-sm">Sign In</Button>
                 </Link>
               )}
             </div>
           </div>
 
           {/* Mobile Navigation */}
-          <div className="flex lg:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-1.5">
             <ThemeToggle />
             {user && <NotificationBell />}
             
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" className="relative w-10 h-10 p-0">
-                  <div className="w-5 h-5 flex flex-col justify-center items-center gap-1">
-                    <span className={`w-5 h-0.5 bg-current transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-                    <span className={`w-5 h-0.5 bg-current transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
-                    <span className={`w-5 h-0.5 bg-current transition-all duration-300 ease-in-out ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-                  </div>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Menu className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-64 animate-slide-in-right">
-                <div className="flex flex-col gap-4 mt-8 animate-fade-in">
-                  {user && (
-                    <div className="pb-4 border-b">
-                      <ActiveUsers users={activeUsers} currentPage={location.pathname} variant="full" />
-                    </div>
-                  )}
-                  
-                  {navItems.map((item, index) => {
+              <SheetContent side="right" className="w-72 sm:w-80">
+                <nav className="flex flex-col gap-2 mt-8">
+                  <div className="text-xs font-medium text-muted-foreground px-3 mb-1">
+                    NAVIGATION
+                  </div>
+                  {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = location.pathname === item.path;
                     return (
@@ -234,14 +192,12 @@ export const Navigation = () => {
                         key={item.path} 
                         to={item.path} 
                         onClick={() => setMobileMenuOpen(false)}
-                        className="animate-fade-in"
-                        style={{ animationDelay: `${index * 50}ms` }}
                       >
                         <Button 
                           variant={isActive ? "default" : "ghost"}
-                          className="w-full justify-start gap-2 transition-all hover:translate-x-1"
+                          className="w-full justify-start gap-3 h-10"
                         >
-                          <Icon className="w-4 h-4" />
+                          <Icon className="h-4 w-4" />
                           {item.label}
                         </Button>
                       </Link>
@@ -249,28 +205,36 @@ export const Navigation = () => {
                   })}
                   
                   {isAdmin && (
-                    <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
-                      <Button 
-                        variant={location.pathname === "/admin" ? "default" : "ghost"}
-                        className="w-full justify-start gap-2 transition-all hover:translate-x-1"
-                      >
-                        <Shield className="w-4 h-4" />
-                        Admin
-                      </Button>
-                    </Link>
+                    <>
+                      <div className="text-xs font-medium text-muted-foreground px-3 mt-3 mb-1">
+                        ADMIN
+                      </div>
+                      <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                        <Button 
+                          variant={location.pathname === "/admin" ? "default" : "ghost"}
+                          className="w-full justify-start gap-3 h-10"
+                        >
+                          <Shield className="h-4 w-4" />
+                          Admin
+                        </Button>
+                      </Link>
+                    </>
                   )}
 
+                  <div className="text-xs font-medium text-muted-foreground px-3 mt-3 mb-1">
+                    HELP
+                  </div>
                   <Link to="/user-guide" onClick={() => setMobileMenuOpen(false)}>
                     <Button 
                       variant={location.pathname === "/user-guide" ? "default" : "ghost"}
-                      className="w-full justify-start gap-2 transition-all hover:translate-x-1"
+                      className="w-full justify-start gap-3 h-10"
                     >
-                      <HelpCircle className="w-4 h-4" />
+                      <HelpCircle className="h-4 w-4" />
                       May I Help You
                     </Button>
                   </Link>
 
-                  <div className="pt-4 border-t">
+                  <div className="mt-4 pt-4 border-t">
                     {user ? (
                       <ProfileMenu userEmail={userEmail} userName={userName} avatarUrl={avatarUrl} />
                     ) : (
@@ -279,7 +243,7 @@ export const Navigation = () => {
                       </Link>
                     )}
                   </div>
-                </div>
+                </nav>
               </SheetContent>
             </Sheet>
           </div>
