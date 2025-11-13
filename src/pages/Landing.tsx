@@ -26,7 +26,7 @@ const FooterSection = lazy(() => import("@/components/landing/FooterSection").th
 const PricingSection = lazy(() => import("@/components/landing/PricingSection").then(module => ({ default: module.PricingSection })));
 
 const SectionSkeleton = () => (
-  <div className="py-20 px-4">
+  <div className="py-20 px-4 min-h-[400px]">
     <div className="container mx-auto max-w-6xl">
       <div className="h-64 animate-pulse bg-muted rounded" />
     </div>

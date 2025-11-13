@@ -18,10 +18,10 @@ export const ScrollReveal = ({
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const directionOffset = {
-    up: { y: 40 },
-    down: { y: -40 },
-    left: { x: 40 },
-    right: { x: -40 }
+    up: { y: 20 },
+    down: { y: -20 },
+    left: { x: 20 },
+    right: { x: -20 }
   };
 
   return (
@@ -41,6 +41,7 @@ export const ScrollReveal = ({
         delay: delay,
         ease: [0.25, 0.4, 0.25, 1]
       }}
+      style={{ willChange: 'transform' }}
       className={fullWidth ? "w-full" : ""}
     >
       {children}

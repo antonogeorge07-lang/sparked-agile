@@ -94,10 +94,34 @@ const App = () => {
 
     requestAnimationFrame(raf);
 
+    // Add ResizeObserver to detect content height changes
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+    });
+    resizeObserver.observe(scrollContainer);
+
+    // Listen for image loads and lazy content to recalculate scroll bounds
+    const handleContentLoad = () => {
+      lenis.resize();
+    };
+    window.addEventListener('load', handleContentLoad);
+    
+    // Also listen for any dynamic content changes
+    const mutationObserver = new MutationObserver(() => {
+      lenis.resize();
+    });
+    mutationObserver.observe(scrollContainer, {
+      childList: true,
+      subtree: true,
+    });
+
     // Cleanup on unmount
     return () => {
       cancelAnimationFrame(animationFrame);
       lenis.destroy();
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+      window.removeEventListener('load', handleContentLoad);
     };
   }, []);
 
