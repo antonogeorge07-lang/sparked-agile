@@ -308,6 +308,65 @@ export type Database = {
           },
         ]
       }
+      epic_closure_reviews: {
+        Row: {
+          acceptance_criteria_met: boolean | null
+          all_features_completed: boolean | null
+          checklist_items: Json | null
+          closure_date: string | null
+          closure_status: string
+          created_at: string | null
+          created_by: string | null
+          documentation_complete: boolean | null
+          epic_id: string
+          id: string
+          review_notes: string | null
+          reviewed_by: string | null
+          stakeholder_signoff: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          acceptance_criteria_met?: boolean | null
+          all_features_completed?: boolean | null
+          checklist_items?: Json | null
+          closure_date?: string | null
+          closure_status?: string
+          created_at?: string | null
+          created_by?: string | null
+          documentation_complete?: boolean | null
+          epic_id: string
+          id?: string
+          review_notes?: string | null
+          reviewed_by?: string | null
+          stakeholder_signoff?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          acceptance_criteria_met?: boolean | null
+          all_features_completed?: boolean | null
+          checklist_items?: Json | null
+          closure_date?: string | null
+          closure_status?: string
+          created_at?: string | null
+          created_by?: string | null
+          documentation_complete?: boolean | null
+          epic_id?: string
+          id?: string
+          review_notes?: string | null
+          reviewed_by?: string | null
+          stakeholder_signoff?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_closure_reviews_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: true
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       epic_dependencies: {
         Row: {
           created_at: string | null
@@ -349,6 +408,62 @@ export type Database = {
           },
           {
             foreignKeyName: "epic_dependencies_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      epic_impact_metrics: {
+        Row: {
+          baseline_value: number | null
+          created_at: string | null
+          created_by: string | null
+          current_value: number | null
+          epic_id: string
+          id: string
+          measurement_date: string | null
+          measurement_unit: string | null
+          metric_name: string
+          metric_type: string
+          notes: string | null
+          target_value: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          baseline_value?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          current_value?: number | null
+          epic_id: string
+          id?: string
+          measurement_date?: string | null
+          measurement_unit?: string | null
+          metric_name: string
+          metric_type: string
+          notes?: string | null
+          target_value?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          baseline_value?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          current_value?: number | null
+          epic_id?: string
+          id?: string
+          measurement_date?: string | null
+          measurement_unit?: string | null
+          metric_name?: string
+          metric_type?: string
+          notes?: string | null
+          target_value?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_impact_metrics_epic_id_fkey"
             columns: ["epic_id"]
             isOneToOne: false
             referencedRelation: "epics"
@@ -453,6 +568,65 @@ export type Database = {
           },
         ]
       }
+      epic_roi_tracking: {
+        Row: {
+          calculation_notes: string | null
+          cost_breakdown: Json | null
+          created_at: string | null
+          created_by: string | null
+          epic_id: string
+          id: string
+          investment_amount: number
+          investment_currency: string | null
+          last_calculated: string | null
+          payback_period_days: number | null
+          returns_amount: number | null
+          revenue_breakdown: Json | null
+          roi_percentage: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          calculation_notes?: string | null
+          cost_breakdown?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          epic_id: string
+          id?: string
+          investment_amount?: number
+          investment_currency?: string | null
+          last_calculated?: string | null
+          payback_period_days?: number | null
+          returns_amount?: number | null
+          revenue_breakdown?: Json | null
+          roi_percentage?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          calculation_notes?: string | null
+          cost_breakdown?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          epic_id?: string
+          id?: string
+          investment_amount?: number
+          investment_currency?: string | null
+          last_calculated?: string | null
+          payback_period_days?: number | null
+          returns_amount?: number | null
+          revenue_breakdown?: Json | null
+          roi_percentage?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_roi_tracking_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: true
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       epic_stakeholders: {
         Row: {
           created_at: string | null
@@ -488,8 +662,11 @@ export type Database = {
       epics: {
         Row: {
           acceptance_criteria: string[] | null
+          actual_roi: number | null
           business_justification: string | null
           business_value: number | null
+          closure_approved: boolean | null
+          closure_date: string | null
           color_hex: string | null
           created_at: string | null
           created_by: string | null
@@ -513,8 +690,11 @@ export type Database = {
         }
         Insert: {
           acceptance_criteria?: string[] | null
+          actual_roi?: number | null
           business_justification?: string | null
           business_value?: number | null
+          closure_approved?: boolean | null
+          closure_date?: string | null
           color_hex?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -538,8 +718,11 @@ export type Database = {
         }
         Update: {
           acceptance_criteria?: string[] | null
+          actual_roi?: number | null
           business_justification?: string | null
           business_value?: number | null
+          closure_approved?: boolean | null
+          closure_date?: string | null
           color_hex?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -2034,6 +2217,10 @@ export type Database = {
     }
     Functions: {
       approve_user: { Args: { user_id_param: string }; Returns: undefined }
+      calculate_closure_readiness: {
+        Args: { epic_id_param: string }
+        Returns: Json
+      }
       calculate_epic_health_score: {
         Args: { epic_id_param: string }
         Returns: string
@@ -2093,6 +2280,10 @@ export type Database = {
       get_user_role: {
         Args: { user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
+      }
+      initialize_epic_closure_review: {
+        Args: { epic_id_param: string }
+        Returns: string
       }
       is_admin: { Args: { user_id: string }; Returns: boolean }
       is_approved_user: { Args: { user_id: string }; Returns: boolean }

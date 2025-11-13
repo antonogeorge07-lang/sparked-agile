@@ -19,6 +19,10 @@ import { EpicBurndownChart } from "@/components/epic/EpicBurndownChart";
 import { EpicHealthScore } from "@/components/epic/EpicHealthScore";
 import { EpicMilestones } from "@/components/epic/EpicMilestones";
 import { EpicVelocityMetrics } from "@/components/epic/EpicVelocityMetrics";
+import { EpicClosureWorkflow } from "@/components/epic/EpicClosureWorkflow";
+import { EpicImpactTracking } from "@/components/epic/EpicImpactTracking";
+import { EpicROIDashboard } from "@/components/epic/EpicROIDashboard";
+import { EpicLessonsLearned } from "@/components/epic/EpicLessonsLearned";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
@@ -279,6 +283,7 @@ export default function EpicDetail() {
               <TabsTrigger value="dependencies">Dependencies</TabsTrigger>
               <TabsTrigger value="progress">Progress & Analytics</TabsTrigger>
               <TabsTrigger value="milestones">Milestones</TabsTrigger>
+              <TabsTrigger value="closure">Closure & Impact</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
@@ -443,6 +448,25 @@ export default function EpicDetail() {
                 epicId={id!}
                 onMilestoneUpdate={loadEpicDetails}
               />
+            </TabsContent>
+
+            <TabsContent value="closure">
+              <div className="space-y-6">
+                <EpicClosureWorkflow 
+                  epicId={id!}
+                  onClosureUpdate={loadEpicDetails}
+                />
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <EpicImpactTracking epicId={id!} />
+                  <EpicROIDashboard epicId={id!} />
+                </div>
+
+                <EpicLessonsLearned 
+                  epicId={id!}
+                  projectId={epic.value_streams?.project_id}
+                />
+              </div>
             </TabsContent>
           </Tabs>
         </div>
