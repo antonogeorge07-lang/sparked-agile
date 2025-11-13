@@ -12,6 +12,7 @@ import { CollaborationIndicator } from "@/components/CollaborationIndicator";
 import { HelpTooltip } from "@/components/HelpTooltip";
 import { BackButton } from "@/components/BackButton";
 import { ApproveUsersDialog } from "@/components/ApproveUsersDialog";
+import { useUserRole } from "@/hooks/useUserRole";
 
 interface Profile {
   id: string;
@@ -124,30 +125,11 @@ export default function Admin() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const { role, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
-    checkAdminAndLoadUsers();
-    checkFirstTimeUser();
-  }, []);
-
-  const checkAdminAndLoadUsers = async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        navigate("/auth");
-        return;
-      }
-
-      // Check if user is admin using secure user_roles table
-      const { data: userRole } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', session.user.id)
-        .eq('role', 'admin')
-        .maybeSingle();
-
-      if (!userRole) {
+    if (!roleLoading) {
+      if (role !== 'admin') {
         toast({
           title: "Access Denied",
           description: "You must be an admin to access this page",
@@ -156,16 +138,17 @@ export default function Admin() {
         navigate("/");
         return;
       }
-
       setIsAdmin(true);
-      await loadProfiles();
-    } catch (error) {
-      console.error('Error checking admin status:', error);
-      navigate("/auth");
-    } finally {
+      loadProfiles();
       setIsLoading(false);
     }
-  };
+  }, [role, roleLoading, navigate]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      checkFirstTimeUser();
+    }
+  }, [isAdmin]);
 
   const checkFirstTimeUser = async () => {
     const hasSeenOnboarding = localStorage.getItem('hasSeenAdminOnboarding');

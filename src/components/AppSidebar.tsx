@@ -4,6 +4,7 @@ import {
   Video, BookOpen, Shield, Settings, Network, Star, TrendingUp
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useUserRole } from "@/hooks/useUserRole";
 import {
   Sidebar,
   SidebarContent,
@@ -73,22 +74,59 @@ const menuSections = [
       { title: "Social Media", url: "/social-media-generator", icon: Star },
       { title: "User Guide", url: "/user-guide", icon: BookOpen },
     ]
+  },
+  {
+    label: "Administration",
+    items: [
+      { title: "Admin Panel", url: "/admin", icon: Settings },
+      { title: "Security Incidents", url: "/security-incidents", icon: Shield },
+    ]
   }
 ];
 
 export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
+  const { role, loading } = useUserRole();
+
+  // Filter menu sections based on user role
+  const getFilteredSections = () => {
+    if (loading) return [];
+    
+    return menuSections.map(section => ({
+      ...section,
+      items: section.items.filter(item => {
+        // Admin-only features
+        if (item.url === '/admin' || item.url === '/security-incidents') {
+          return role === 'admin';
+        }
+        // Features available to approved users (admin or member)
+        return role === 'admin' || role === 'member';
+      })
+    })).filter(section => section.items.length > 0);
+  };
+
+  const filteredSections = getFilteredSections();
   const currentPath = location.pathname;
 
   const isActive = (path: string) => currentPath === path;
+
+  if (loading) {
+    return (
+      <Sidebar collapsible="icon">
+        <SidebarContent className="flex items-center justify-center pt-12">
+          <div className="text-muted-foreground text-sm">Loading...</div>
+        </SidebarContent>
+      </Sidebar>
+    );
+  }
 
   return (
     <Sidebar
       collapsible="icon"
     >
       <SidebarContent className="pt-12">
-        {menuSections.map((section) => (
+        {filteredSections.map((section) => (
           <SidebarGroup key={section.label}>
             {open && (
               <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
