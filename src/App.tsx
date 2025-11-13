@@ -69,8 +69,12 @@ const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
-    // Initialize Lenis
+    // Initialize Lenis with custom scroll container
+    const scrollContainer = document.querySelector('#root-scroll-container');
+    if (!scrollContainer) return;
+
     const lenis = new Lenis({
+      wrapper: scrollContainer as HTMLElement,
       duration: 1.2, // scroll speed in seconds
       easing: (t: number) => 1 - Math.pow(1 - t, 4), // custom ease-out
       smoothWheel: true, // enable smooth scrolling on wheel
