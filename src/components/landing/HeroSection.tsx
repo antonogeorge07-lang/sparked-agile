@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModeButton } from "@/components/DemoModeButton";
 import { TrustBadges } from "@/components/TrustBadges";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 const TrustBadgesLazy = lazy(() => import("@/components/TrustBadges").then(module => ({
   default: module.TrustBadges
 })));
@@ -20,12 +21,39 @@ export function HeroSection({
   const {
     trackButtonClick
   } = useAnalytics();
+  
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Different parallax speeds for different layers
+  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const y3 = useTransform(scrollYProgress, [0, 1], ["0%", "70%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   return <>
-      <section className="py-12 sm:py-20 px-4 relative overflow-hidden" aria-labelledby="hero-heading">
+      <section ref={heroRef} className="py-12 sm:py-20 px-4 relative overflow-hidden" aria-labelledby="hero-heading">
         {/* Background gradient effect */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
         
-        <div className="container mx-auto max-w-6xl relative">
+        {/* Parallax decorative elements */}
+        <motion.div 
+          style={{ y: y1, opacity }}
+          className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none"
+        />
+        <motion.div 
+          style={{ y: y2, opacity }}
+          className="absolute top-40 right-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none"
+        />
+        <motion.div 
+          style={{ y: y3, opacity }}
+          className="absolute bottom-20 left-1/3 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none"
+        />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center space-y-4 sm:space-y-6 animate-fade-in">
             {/* Social proof badge */}
             <div className="flex flex-col items-center gap-3 mb-2">
