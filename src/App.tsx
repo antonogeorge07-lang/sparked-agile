@@ -107,51 +107,53 @@ const App = () => {
               <PerformanceMonitor />
               <FeedbackWidget />
               <AIAssistant />
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Landing />} />
-                  <Route path="/home" element={<Index />} />
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/admin" element={<Admin />} />
-                  <Route path="/admin/incidents" element={<SecurityIncidents />} />
-                  <Route path="/subscription" element={<Subscription />} />
-                  <Route path="/workflows" element={<Workflows />} />
-                  <Route path="/standup" element={<Standup />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/retrospective" element={<Retrospective />} />
-                  <Route path="/backlog-refinement" element={<BacklogRefinement />} />
-                  <Route path="/usage-analytics" element={<UsageAnalytics />} />
-                  <Route path="/value-streams" element={<ValueStreams />} />
-                  <Route path="/program-increment" element={<ProgramIncrement />} />
-                  <Route path="/flow-metrics" element={<FlowMetrics />} />
-                  <Route path="/integrations" element={<Integrations />} />
-                  <Route path="/project-progress" element={<ProjectProgress />} />
-                  <Route path="/ceremony-setup" element={<CeremonySetup />} />
-                  <Route path="/task-management" element={<TaskManagement />} />
-                  <Route path="/project-workspace" element={<ProjectWorkspace />} />
-                  <Route path="/sprint-planning-assistant" element={<SprintPlanningAssistant />} />
-                  <Route path="/sprint-review-coordinator" element={<SprintReviewCoordinator />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/terms" element={<TermsOfService />} />
-                  <Route path="/video-script-generator" element={<VideoScriptGenerator />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/faq" element={<FAQ />} />
-                  <Route path="/user-guide" element={<UserGuide />} />
-                  <Route path="/polylinq" element={<PolyLinQ />} />
-                  <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
-                  <Route path="/market-intelligence" element={<MarketIntelligence />} />
-                  <Route path="/social-media-generator" element={<SocialMediaGenerator />} />
-                  <Route path="/feature-demo" element={<FeatureDemo />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/ai-transforming-agile-delivery" element={<AITransformingAgileDelivery />} />
-                  <Route path="/blog/automated-sprint-planning-guide" element={<AutomatedSprintPlanningGuide />} />
-                  <Route path="/blog/agile-backlog-prioritization-ai" element={<AgileBacklogPrioritizationAI />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/investor-pitch" element={<InvestorPitchDeck />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
+              <div id="root-scroll-container">
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/home" element={<Index />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/admin/incidents" element={<SecurityIncidents />} />
+                    <Route path="/subscription" element={<Subscription />} />
+                    <Route path="/workflows" element={<Workflows />} />
+                    <Route path="/standup" element={<Standup />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/retrospective" element={<Retrospective />} />
+                    <Route path="/backlog-refinement" element={<BacklogRefinement />} />
+                    <Route path="/usage-analytics" element={<UsageAnalytics />} />
+                    <Route path="/value-streams" element={<ValueStreams />} />
+                    <Route path="/program-increment" element={<ProgramIncrement />} />
+                    <Route path="/flow-metrics" element={<FlowMetrics />} />
+                    <Route path="/integrations" element={<Integrations />} />
+                    <Route path="/project-progress" element={<ProjectProgress />} />
+                    <Route path="/ceremony-setup" element={<CeremonySetup />} />
+                    <Route path="/task-management" element={<TaskManagement />} />
+                    <Route path="/project-workspace" element={<ProjectWorkspace />} />
+                    <Route path="/sprint-planning-assistant" element={<SprintPlanningAssistant />} />
+                    <Route path="/sprint-review-coordinator" element={<SprintReviewCoordinator />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/terms" element={<TermsOfService />} />
+                    <Route path="/video-script-generator" element={<VideoScriptGenerator />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/user-guide" element={<UserGuide />} />
+                    <Route path="/polylinq" element={<PolyLinQ />} />
+                    <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
+                    <Route path="/market-intelligence" element={<MarketIntelligence />} />
+                    <Route path="/social-media-generator" element={<SocialMediaGenerator />} />
+                    <Route path="/feature-demo" element={<FeatureDemo />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/ai-transforming-agile-delivery" element={<AITransformingAgileDelivery />} />
+                    <Route path="/blog/automated-sprint-planning-guide" element={<AutomatedSprintPlanningGuide />} />
+                    <Route path="/blog/agile-backlog-prioritization-ai" element={<AgileBacklogPrioritizationAI />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/investor-pitch" element={<InvestorPitchDeck />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </div>
             </AnalyticsProvider>
           </BrowserRouter>
         </TooltipProvider>
