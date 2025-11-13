@@ -2,6 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -9,10 +10,11 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { Github, Network, Plus, Trash2, Settings } from "lucide-react";
+import { Github, Network, Plus, Trash2, Settings, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
+import { useUserRole } from "@/hooks/useUserRole";
 import { z } from "zod";
 import { ConnectionStatus } from "@/components/integrations/ConnectionStatus";
 import { IntegrationWizard } from "@/components/integrations/IntegrationWizard";
@@ -65,6 +67,7 @@ const Integrations = () => {
   const [selectedType, setSelectedType] = useState<"jira" | "github">("jira");
   const [isLoading, setIsLoading] = useState(true);
   const { activeUsers } = useRealtimePresence('/integrations');
+  const { role, loading: roleLoading, isPending } = useUserRole();
   const [newIntegration, setNewIntegration] = useState({
     type: "jira" as "jira" | "github",
     name: "",
@@ -90,7 +93,8 @@ const Integrations = () => {
       navigate("/auth");
       return;
     }
-    
+
+    // Don't block pending users, but they won't see projects they're not allocated to
     fetchProjects();
   };
 
@@ -102,15 +106,18 @@ const Integrations = () => {
 
   const fetchProjects = async () => {
     setIsLoading(true);
+    
+    // Query projects - RLS will automatically filter to only show projects user has access to
     const { data, error } = await supabase
       .from("projects")
       .select("id, name")
       .order("name");
 
     if (error) {
+      console.error("Error fetching projects:", error);
       toast({
         title: "Error",
-        description: "Failed to load projects",
+        description: "Failed to load projects. Please check your permissions.",
         variant: "destructive",
       });
       setIsLoading(false);
@@ -120,6 +127,9 @@ const Integrations = () => {
     setProjects(data || []);
     if (data && data.length > 0) {
       setSelectedProject(data[0].id);
+    } else {
+      // User has no project access
+      console.log("No projects found for user");
     }
     setIsLoading(false);
   };
@@ -428,9 +438,21 @@ const Integrations = () => {
             <Card>
               <CardContent className="py-12 text-center">
                 <Network className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-muted-foreground mb-4">
-                  No projects found. You need to be assigned to a project to manage integrations.
-                </p>
+                {isPending ? (
+                  <>
+                    <h3 className="text-lg font-semibold mb-2">Account Pending Approval</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Your account is awaiting admin approval. Once approved and allocated to a project, you'll be able to manage integrations.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-lg font-semibold mb-2">No Project Access</h3>
+                    <p className="text-muted-foreground mb-4">
+                      You need to be assigned to a project to manage integrations. Contact your admin to request project access.
+                    </p>
+                  </>
+                )}
                 <Button onClick={() => navigate("/dashboard")}>
                   Go to Dashboard
                 </Button>
