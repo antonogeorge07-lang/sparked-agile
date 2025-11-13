@@ -25,6 +25,7 @@ import { IntegrationCard } from "@/components/IntegrationCard";
 // Validation schemas
 const jiraConfigSchema = z.object({
   url: z.string().url({ message: "Invalid URL format" }).max(500, "URL too long"),
+  email: z.string().email({ message: "Invalid email format" }).optional(),
   apiToken: z.string().min(10, "API token too short").max(500, "API token too long"),
 });
 
@@ -41,6 +42,7 @@ interface Integration {
   name: string;
   config: {
     url?: string;
+    email?: string;
     apiToken?: string;
     repository?: string;
     organization?: string;
@@ -72,6 +74,7 @@ const Integrations = () => {
     type: "jira" as "jira" | "github",
     name: "",
     url: "",
+    email: "",
     apiToken: "",
     repository: "",
     organization: "",
@@ -203,6 +206,7 @@ const Integrations = () => {
     name: string,
     configData: {
       url?: string;
+      email?: string;
       apiToken?: string;
       repository?: string;
       organization?: string;
@@ -242,6 +246,7 @@ const Integrations = () => {
       if (type === "jira") {
         const validationResult = jiraConfigSchema.safeParse({
           url: configData.url,
+          email: configData.email,
           apiToken: configData.apiToken,
         });
 
@@ -338,6 +343,7 @@ const Integrations = () => {
         type: "jira",
         name: "",
         url: "",
+        email: "",
         apiToken: "",
         repository: "",
         organization: "",

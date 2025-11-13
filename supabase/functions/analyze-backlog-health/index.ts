@@ -102,12 +102,41 @@ serve(async (req) => {
 
     const jiraConfig = integration.config as any;
     
+    // Parse Jira config - handle both old and new format
+    let domain: string;
+    let projectKey: string;
+    let email: string;
+
+    if (jiraConfig.domain && jiraConfig.project_key) {
+      // New format
+      domain = jiraConfig.domain;
+      projectKey = jiraConfig.project_key;
+      email = jiraConfig.email || '';
+    } else if (jiraConfig.url) {
+      // Old format - extract from URL
+      const urlMatch = jiraConfig.url.match(/https?:\/\/([^\/]+).*\/projects\/([A-Z]+)/i);
+      if (!urlMatch) {
+        throw new Error('Invalid JIRA URL format. Please reconfigure your JIRA integration.');
+      }
+      domain = urlMatch[1];
+      projectKey = urlMatch[2];
+      email = jiraConfig.email || '';
+    } else {
+      throw new Error('JIRA configuration is incomplete. Please reconfigure your JIRA integration.');
+    }
+
+    console.log('JIRA Config:', { domain, projectKey, hasEmail: !!email });
+    
     // Fetch JIRA backlog
+    const authString = email 
+      ? `${email}:${JIRA_API_TOKEN}`
+      : JIRA_API_TOKEN; // Use token directly if no email
+    
     const jiraResponse = await fetch(
-      `https://${jiraConfig.domain}/rest/api/3/search?jql=project=${jiraConfig.project_key} AND status!=Done ORDER BY created DESC&maxResults=100`,
+      `https://${domain}/rest/api/3/search?jql=project=${projectKey} AND status!=Done ORDER BY created DESC&maxResults=100`,
       {
         headers: {
-          'Authorization': `Basic ${btoa(`${jiraConfig.email}:${JIRA_API_TOKEN}`)}`,
+          'Authorization': `Basic ${btoa(authString)}`,
           'Content-Type': 'application/json',
         },
       }
