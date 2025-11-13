@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +9,7 @@ import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
 import { AIAssistant } from "@/components/AIAssistant";
+import Lenis from '@studio-freight/lenis';
 // Eager load critical pages
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -66,6 +67,30 @@ const PageLoader = () => (
 const queryClient = new QueryClient();
 
 const App = () => {
+  useEffect(() => {
+    // Initialize Lenis
+    const lenis = new Lenis({
+      duration: 1.2, // scroll speed in seconds
+      easing: (t: number) => 1 - Math.pow(1 - t, 4), // custom ease-out
+      smoothWheel: true, // enable smooth scrolling on wheel
+    });
+
+    // Animation frame loop
+    let animationFrame: number;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      animationFrame = requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+
+    // Cleanup on unmount
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
