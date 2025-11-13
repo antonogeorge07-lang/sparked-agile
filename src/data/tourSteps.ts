@@ -41,3 +41,42 @@ export const standupTourSteps = [
     position: "bottom" as const,
   },
 ];
+
+export const sidebarTourSteps = [
+  {
+    target: "[data-tour='quick-start']",
+    title: "Quick Start Guide",
+    description: "Start here to learn the platform basics and get up to speed quickly.",
+    position: "right" as const,
+  },
+  {
+    target: "[data-tour='dashboard']",
+    title: "Dashboard Overview",
+    description: "View team velocity, sprint progress, and key metrics at a glance.",
+    position: "right" as const,
+  },
+  {
+    target: "[data-tour='epics']",
+    title: "Epic Management",
+    description: "Manage large initiatives, track dependencies, and monitor epic progress.",
+    position: "right" as const,
+  },
+  {
+    target: "[data-tour='command-centre']",
+    title: "Command Centre",
+    description: "Your project hub for tasks, risks, and lessons learned.",
+    position: "right" as const,
+  },
+  {
+    target: "[data-tour='sprint-planning']",
+    title: "AI Sprint Planning",
+    description: "Get AI-powered sprint recommendations based on team capacity and velocity.",
+    position: "right" as const,
+  },
+  {
+    target: "[data-tour='integrations']",
+    title: "Integrations",
+    description: "Connect with Jira, GitHub, and Microsoft tools to sync your workflow.",
+    position: "right" as const,
+  },
+];
