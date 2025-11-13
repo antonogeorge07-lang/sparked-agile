@@ -56,6 +56,7 @@ const About = lazy(() => import("./pages/About"));
 const InvestorPitchDeck = lazy(() => import("./pages/InvestorPitchDeck"));
 const EpicManagement = lazy(() => import("./pages/EpicManagement"));
 const EpicDetail = lazy(() => import("./pages/EpicDetail"));
+const EpicPortfolio = lazy(() => import("./pages/EpicPortfolio"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -183,6 +184,7 @@ const App = () => {
                     <Route path="/investor-pitch" element={<InvestorPitchDeck />} />
                     <Route path="/epic-management" element={<EpicManagement />} />
                     <Route path="/epic/:id" element={<EpicDetail />} />
+                    <Route path="/epic-portfolio" element={<EpicPortfolio />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                   </Routes>

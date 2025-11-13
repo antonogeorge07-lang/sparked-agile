@@ -100,6 +100,7 @@ export const Navigation = () => {
     { path: "/home", label: "Home", icon: Home },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
     { path: "/epic-management", label: "Epics", icon: GitBranch },
+    { path: "/epic-portfolio", label: "Epic Portfolio", icon: Target },
     { path: "/project-command-centre", label: "Command Centre", icon: Briefcase },
     { path: "/sprint-planning-assistant", label: "Sprint AI", icon: Sparkles },
     { path: "/sprint-review-coordinator", label: "Review", icon: Presentation },
