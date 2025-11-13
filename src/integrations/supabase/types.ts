@@ -308,6 +308,54 @@ export type Database = {
           },
         ]
       }
+      epic_dependencies: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          dependency_type: string
+          depends_on_epic_id: string
+          description: string | null
+          epic_id: string
+          id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          dependency_type?: string
+          depends_on_epic_id: string
+          description?: string | null
+          epic_id: string
+          id?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          dependency_type?: string
+          depends_on_epic_id?: string
+          description?: string | null
+          epic_id?: string
+          id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_dependencies_depends_on_epic_id_fkey"
+            columns: ["depends_on_epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "epic_dependencies_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       epic_stakeholders: {
         Row: {
           created_at: string | null
@@ -421,6 +469,7 @@ export type Database = {
         Row: {
           created_at: string | null
           description: string | null
+          display_order: number | null
           effort_estimate: number | null
           epic_id: string | null
           id: string
@@ -433,6 +482,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           description?: string | null
+          display_order?: number | null
           effort_estimate?: number | null
           epic_id?: string | null
           id?: string
@@ -445,6 +495,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           description?: string | null
+          display_order?: number | null
           effort_estimate?: number | null
           epic_id?: string | null
           id?: string

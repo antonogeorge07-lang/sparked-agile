@@ -5,11 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Target, Calendar, Users, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
+import { EpicTimeline } from "@/components/epic/EpicTimeline";
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -246,12 +248,12 @@ export default function EpicManagement() {
             </div>
           </div>
 
-          {/* Epic Cards */}
+          {/* Epic Views with Tabs */}
           {loading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading epics...</p>
             </div>
-          ) : epics.length === 0 ? (
+          ) : epics.length === 0 && selectedProject ? (
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
@@ -265,72 +267,95 @@ export default function EpicManagement() {
                 </Button>
               </CardContent>
             </Card>
+          ) : selectedProject ? (
+            <Tabs defaultValue="board" className="space-y-6">
+              <TabsList>
+                <TabsTrigger value="board">Board View</TabsTrigger>
+                <TabsTrigger value="timeline">Timeline View</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="board">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {epics.map(epic => (
+                    <Card 
+                      key={epic.id} 
+                      className="hover:shadow-lg transition-all cursor-pointer border-l-4"
+                      style={{ borderLeftColor: epic.color_hex }}
+                      onClick={() => navigate(`/epic/${epic.id}`)}
+                    >
+                      <CardHeader>
+                        <div className="flex items-start justify-between mb-2">
+                          <Badge variant={getPriorityColor(epic.priority)}>
+                            {epic.priority?.toUpperCase()}
+                          </Badge>
+                          <Badge className={getStatusColor(epic.status)}>
+                            {epic.status?.replace('_', ' ').toUpperCase()}
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-xl">{epic.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">
+                          {epic.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-3">
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <Target className="h-4 w-4 mr-2" />
+                            {epic.value_streams?.name}
+                          </div>
+
+                          {epic.business_value && (
+                            <div className="flex items-center text-sm">
+                              <TrendingUp className="h-4 w-4 mr-2 text-primary" />
+                              <span>Business Value: {epic.business_value}/100</span>
+                            </div>
+                          )}
+
+                          {epic.features && (
+                            <div className="flex items-center text-sm text-muted-foreground">
+                              <Users className="h-4 w-4 mr-2" />
+                              {epic.features[0]?.count || 0} Features
+                            </div>
+                          )}
+
+                          {(epic.start_date || epic.end_date) && (
+                            <div className="flex items-center text-sm text-muted-foreground">
+                              <Calendar className="h-4 w-4 mr-2" />
+                              {epic.start_date && new Date(epic.start_date).toLocaleDateString()}
+                              {epic.start_date && epic.end_date && ' - '}
+                              {epic.end_date && new Date(epic.end_date).toLocaleDateString()}
+                            </div>
+                          )}
+
+                          {epic.health_score && (
+                            <div className="flex items-center justify-between pt-2 border-t">
+                              <span className="text-sm text-muted-foreground">Health</span>
+                              <span className={`text-sm font-semibold ${getHealthColor(epic.health_score)}`}>
+                                {epic.health_score.replace('_', ' ').toUpperCase()}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="timeline">
+                <EpicTimeline projectId={selectedProject} />
+              </TabsContent>
+            </Tabs>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {epics.map(epic => (
-                <Card 
-                  key={epic.id} 
-                  className="hover:shadow-lg transition-all cursor-pointer border-l-4"
-                  style={{ borderLeftColor: epic.color_hex }}
-                  onClick={() => navigate(`/epic/${epic.id}`)}
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
-                      <Badge variant={getPriorityColor(epic.priority)}>
-                        {epic.priority?.toUpperCase()}
-                      </Badge>
-                      <Badge className={getStatusColor(epic.status)}>
-                        {epic.status?.replace('_', ' ').toUpperCase()}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-xl">{epic.title}</CardTitle>
-                    <CardDescription className="line-clamp-2">
-                      {epic.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Target className="h-4 w-4 mr-2" />
-                        {epic.value_streams?.name}
-                      </div>
-
-                      {epic.business_value && (
-                        <div className="flex items-center text-sm">
-                          <TrendingUp className="h-4 w-4 mr-2 text-primary" />
-                          <span>Business Value: {epic.business_value}/100</span>
-                        </div>
-                      )}
-
-                      {epic.features && (
-                        <div className="flex items-center text-sm text-muted-foreground">
-                          <Users className="h-4 w-4 mr-2" />
-                          {epic.features[0]?.count || 0} Features
-                        </div>
-                      )}
-
-                      {(epic.start_date || epic.end_date) && (
-                        <div className="flex items-center text-sm text-muted-foreground">
-                          <Calendar className="h-4 w-4 mr-2" />
-                          {epic.start_date && new Date(epic.start_date).toLocaleDateString()}
-                          {epic.start_date && epic.end_date && ' - '}
-                          {epic.end_date && new Date(epic.end_date).toLocaleDateString()}
-                        </div>
-                      )}
-
-                      {epic.health_score && (
-                        <div className="flex items-center justify-between pt-2 border-t">
-                          <span className="text-sm text-muted-foreground">Health</span>
-                          <span className={`text-sm font-semibold ${getHealthColor(epic.health_score)}`}>
-                            {epic.health_score.replace('_', ' ').toUpperCase()}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <Card>
+              <CardContent className="py-12 text-center">
+                <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-semibold mb-2">Select a Project</h3>
+                <p className="text-muted-foreground">
+                  Choose a project from the dropdown to view its epics
+                </p>
+              </CardContent>
+            </Card>
           )}
         </div>
       </div>

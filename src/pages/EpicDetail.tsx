@@ -13,6 +13,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, useParams } from "react-router-dom";
+import { FeatureBreakdownPanel } from "@/components/epic/FeatureBreakdownPanel";
+import { DependencyGraph } from "@/components/epic/DependencyGraph";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
@@ -270,6 +272,7 @@ export default function EpicDetail() {
             <TabsList>
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="features">Features</TabsTrigger>
+              <TabsTrigger value="dependencies">Dependencies</TabsTrigger>
               <TabsTrigger value="progress">Progress</TabsTrigger>
             </TabsList>
 
@@ -397,45 +400,18 @@ export default function EpicDetail() {
             </TabsContent>
 
             <TabsContent value="features">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Linked Features</CardTitle>
-                  <CardDescription>
-                    Features and user stories that are part of this epic
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {features.length === 0 ? (
-                    <div className="text-center py-8">
-                      <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                      <p className="text-muted-foreground">No features linked yet</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {features.map((feature) => (
-                        <div
-                          key={feature.id}
-                          className="p-4 border rounded-lg hover:bg-accent/50 transition-colors"
-                        >
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h4 className="font-semibold mb-1">{feature.title}</h4>
-                              {feature.description && (
-                                <p className="text-sm text-muted-foreground line-clamp-2">
-                                  {feature.description}
-                                </p>
-                              )}
-                            </div>
-                            <Badge variant={feature.status === 'completed' ? 'default' : 'secondary'}>
-                              {feature.status}
-                            </Badge>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+              <FeatureBreakdownPanel 
+                epicId={id!} 
+                features={features}
+                onFeaturesChange={loadEpicDetails}
+              />
+            </TabsContent>
+
+            <TabsContent value="dependencies">
+              <DependencyGraph 
+                currentEpicId={id!} 
+                projectId={epic.value_streams?.project_id}
+              />
             </TabsContent>
 
             <TabsContent value="progress">
