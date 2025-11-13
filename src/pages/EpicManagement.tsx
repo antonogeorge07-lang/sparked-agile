@@ -185,10 +185,24 @@ export default function EpicManagement() {
                   Create, track, and manage Epics across your value streams
                 </p>
               </div>
-              <Button onClick={() => setIsCreateDialogOpen(true)} size="lg">
-                <Plus className="mr-2 h-5 w-5" />
-                Create Epic
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={() => navigate("/value-streams")}
+                  variant="outline"
+                  size="lg"
+                >
+                  <Target className="mr-2 h-5 w-5" />
+                  Manage Value Streams
+                </Button>
+                <Button 
+                  onClick={() => setIsCreateDialogOpen(true)} 
+                  size="lg"
+                  disabled={valueStreams.length === 0}
+                >
+                  <Plus className="mr-2 h-5 w-5" />
+                  Create Epic
+                </Button>
+              </div>
             </div>
 
             {/* Filters */}
@@ -253,6 +267,20 @@ export default function EpicManagement() {
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading epics...</p>
             </div>
+          ) : valueStreams.length === 0 && selectedProject ? (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-semibold mb-2">No Value Streams Found</h3>
+                <p className="text-muted-foreground mb-4">
+                  You need to create a Value Stream before you can create Epics. Value Streams organize your work around business outcomes.
+                </p>
+                <Button onClick={() => navigate("/value-streams")}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create Value Stream
+                </Button>
+              </CardContent>
+            </Card>
           ) : epics.length === 0 && selectedProject ? (
             <Card>
               <CardContent className="py-12 text-center">
@@ -261,7 +289,7 @@ export default function EpicManagement() {
                 <p className="text-muted-foreground mb-4">
                   Create your first Epic to start organizing your work
                 </p>
-                <Button onClick={() => setIsCreateDialogOpen(true)}>
+                <Button onClick={() => setIsCreateDialogOpen(true)} disabled={valueStreams.length === 0}>
                   <Plus className="mr-2 h-4 w-4" />
                   Create Epic
                 </Button>
