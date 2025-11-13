@@ -75,6 +75,11 @@ const App = () => {
       smoothWheel: true, // enable smooth scrolling on wheel
     });
 
+    // Dispatch custom event on scroll
+    lenis.on('scroll', (e: any) => {
+      window.dispatchEvent(new CustomEvent('lenis-scroll', { detail: e }));
+    });
+
     // Animation frame loop
     let animationFrame: number;
     const raf = (time: number) => {
