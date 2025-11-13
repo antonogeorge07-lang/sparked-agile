@@ -9,6 +9,7 @@ import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
 import { AIAssistant } from "@/components/AIAssistant";
+import ScrollRestoration from "@/components/ScrollRestoration";
 import Lenis from '@studio-freight/lenis';
 // Eager load critical pages
 import Landing from "./pages/Landing";
@@ -104,6 +105,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <AnalyticsProvider>
+              <ScrollRestoration />
               <PerformanceMonitor />
               <FeedbackWidget />
               <AIAssistant />
