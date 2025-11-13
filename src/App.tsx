@@ -57,6 +57,7 @@ const InvestorPitchDeck = lazy(() => import("./pages/InvestorPitchDeck"));
 const EpicManagement = lazy(() => import("./pages/EpicManagement"));
 const EpicDetail = lazy(() => import("./pages/EpicDetail"));
 const EpicPortfolio = lazy(() => import("./pages/EpicPortfolio"));
+const QuickStart = lazy(() => import("./pages/QuickStart"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -145,6 +146,7 @@ const App = () => {
                   <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/home" element={<Index />} />
+                    <Route path="/quick-start" element={<QuickStart />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/admin" element={<Admin />} />
                     <Route path="/admin/incidents" element={<SecurityIncidents />} />

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video, Zap, Bot, CheckCircle2, Languages, Globe } from "lucide-react";
+import { ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video, Zap, Bot, CheckCircle2, Languages, Globe, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
@@ -48,6 +48,14 @@ const Index = () => {
       
       if (roleData) {
         setUserRole(roleData.role);
+      }
+
+      // Redirect to Quick Start for first-time users
+      const hasSeenQuickStart = localStorage.getItem('seen_quick_start');
+      if (!hasSeenQuickStart) {
+        localStorage.setItem('seen_quick_start', 'true');
+        navigate('/quick-start');
+        return;
       }
 
       // Check onboarding progress
@@ -194,11 +202,26 @@ const Index = () => {
                   Streamline your agile workflow with intelligent automation powered by SAFe 6.0. From daily standups to program increments, let AI handle the routine so you can focus on delivering value.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
-                    Get Started
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                  <DemoModeButton />
+                  {isAuthenticated ? (
+                    <>
+                      <Button size="lg" className="gap-2" onClick={() => navigate("/quick-start")}>
+                        <Star className="w-4 h-4" />
+                        Quick Start Guide
+                      </Button>
+                      <Button size="lg" variant="outline" className="gap-2" onClick={() => navigate("/dashboard")}>
+                        Go to Dashboard
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
+                        Get Started
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                      <DemoModeButton />
+                    </>
+                  )}
                   <Button 
                     size="lg" 
                     variant="outline" 
