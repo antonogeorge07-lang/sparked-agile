@@ -14,6 +14,9 @@ import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { WelcomePopup } from "@/components/WelcomePopup";
+import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
+import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -22,13 +25,51 @@ const Index = () => {
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
   const { isGuestMode, enableGuestMode } = useGuestMode();
+  const [showWizard, setShowWizard] = useState(false);
+  const [userRole, setUserRole] = useState<string>('member');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
-    if (!hasSeenOnboarding) {
-      setShowOnboarding(true);
-    }
+    checkAuthAndOnboarding();
   }, []);
+
+  const checkAuthAndOnboarding = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      setIsAuthenticated(true);
+      
+      // Get user role
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .single();
+      
+      if (roleData) {
+        setUserRole(roleData.role);
+      }
+
+      // Check onboarding progress
+      const { data: progressData } = await supabase
+        .from('onboarding_progress')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .single();
+
+      // Show wizard if onboarding not completed and not dismissed
+      const dismissedWizard = localStorage.getItem('dismissed_onboarding_wizard');
+      if (progressData && !progressData.onboarding_completed && !dismissedWizard) {
+        setTimeout(() => setShowWizard(true), 1000);
+      }
+    } else {
+      // For non-authenticated users, show the old tour
+      const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
+      if (!hasSeenOnboarding) {
+        setShowOnboarding(true);
+      }
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -99,17 +140,30 @@ const Index = () => {
       <WelcomePopup />
       <Navigation />
       
+      {/* Old onboarding tour for non-authenticated users */}
       <OnboardingTour 
         isOpen={showOnboarding} 
         onClose={() => setShowOnboarding(false)} 
       />
+      
+      {/* New onboarding wizard for authenticated users */}
+      {isAuthenticated && (
+        <OnboardingWizard
+          isOpen={showWizard}
+          onClose={() => {
+            setShowWizard(false);
+            localStorage.setItem('dismissed_onboarding_wizard', 'true');
+          }}
+          userRole={userRole}
+        />
+      )}
       
       <DemoModal 
         isOpen={showDemoModal} 
         onClose={() => setShowDemoModal(false)} 
       />
       
-      <EmailCaptureForm 
+      <EmailCaptureForm
         isOpen={showEmailCapture} 
         onClose={() => setShowEmailCapture(false)}
         context="newsletter"
@@ -123,6 +177,13 @@ const Index = () => {
           </TabsList>
           
           <TabsContent value="overview" className="space-y-8">
+            {/* Onboarding Checklist for authenticated users */}
+            {isAuthenticated && (
+              <div className="max-w-xl mx-auto mb-8">
+                <OnboardingChecklist />
+              </div>
+            )}
+            
             {/* Hero Section */}
             <section className="py-8 md:py-16">
               <div className="max-w-4xl mx-auto text-center animate-fade-in">

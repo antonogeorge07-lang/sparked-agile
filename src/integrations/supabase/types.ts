@@ -1006,6 +1006,45 @@ export type Database = {
           },
         ]
       }
+      onboarding_progress: {
+        Row: {
+          completed_steps: Json
+          created_at: string
+          current_step: string | null
+          first_epic_id: string | null
+          first_project_id: string | null
+          first_value_stream_id: string | null
+          id: string
+          onboarding_completed: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_steps?: Json
+          created_at?: string
+          current_step?: string | null
+          first_epic_id?: string | null
+          first_project_id?: string | null
+          first_value_stream_id?: string | null
+          id?: string
+          onboarding_completed?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_steps?: Json
+          created_at?: string
+          current_step?: string | null
+          first_epic_id?: string | null
+          first_project_id?: string | null
+          first_value_stream_id?: string | null
+          id?: string
+          onboarding_completed?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       pmi_projects: {
         Row: {
           created_at: string
