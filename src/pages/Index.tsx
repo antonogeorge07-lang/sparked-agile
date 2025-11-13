@@ -376,7 +376,7 @@ const Index = () => {
         </Tabs>
       </main>
 
-      {isGuestMode && <GuestModeBar onTryDemo={() => setShowDemoModal(true)} />}
+      {isGuestMode && !isAuthenticated && <GuestModeBar onTryDemo={() => setShowDemoModal(true)} />}
     </div>
   );
 };
