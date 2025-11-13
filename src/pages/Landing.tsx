@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
 import { FAQSchema } from "@/components/landing/FAQSchema";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -151,41 +152,59 @@ export default function Landing() {
           onEarlyAccess={handleEarlyAccess}
         />
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <SocialProofSection />
-        </Suspense>
+        <ScrollReveal fullWidth>
+          <Suspense fallback={<SectionSkeleton />}>
+            <SocialProofSection />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <QuickValueSection />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <QuickValueSection />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <ValuePropositionSection />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <ValuePropositionSection />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <AIAssistantShowcase />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <AIAssistantShowcase />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <ProjectCommandCentreSection />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <ProjectCommandCentreSection />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <FeaturesSection />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <FeaturesSection />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <PricingSection onEarlyAccess={handleEarlyAccess} />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <PricingSection onEarlyAccess={handleEarlyAccess} />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <FeedbackSection />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <FeedbackSection />
+          </Suspense>
+        </ScrollReveal>
         
-        <Suspense fallback={<SectionSkeleton />}>
-          <CTASection />
-        </Suspense>
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <CTASection />
+          </Suspense>
+        </ScrollReveal>
       </main>
 
       <Suspense fallback={<div className="border-t border-border py-12 px-4 h-64 animate-pulse bg-muted" />}>

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ScrollReveal, ScrollRevealList, ScrollRevealItem } from "@/components/ScrollReveal";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
@@ -41,19 +42,23 @@ export default function Blog() {
       <Navigation />
       
       <main className="container mx-auto px-4 py-12 max-w-6xl">
-        <header className="text-center mb-12">
-          <Badge className="mb-4">Blog</Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Insights on AI & Agile Delivery
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Learn how AI agile tools are transforming sprint planning, backlog prioritization, and team collaboration
-          </p>
-        </header>
+        <ScrollReveal>
+          <header className="text-center mb-12">
+            <Badge className="mb-4">Blog</Badge>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Insights on AI & Agile Delivery
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Learn how AI agile tools are transforming sprint planning, backlog prioritization, and team collaboration
+            </p>
+          </header>
+        </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <Card key={post.slug} className="flex flex-col hover:border-primary/50 transition-colors">
+        <ScrollRevealList staggerDelay={0.15}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogPosts.map((post) => (
+              <ScrollRevealItem key={post.slug}>
+                <Card className="flex flex-col hover:border-primary/50 transition-colors h-full">
               <CardHeader>
                 <Badge variant="secondary" className="w-fit mb-2">
                   {post.category}
@@ -93,11 +98,14 @@ export default function Blog() {
                 </Link>
               </CardContent>
             </Card>
+            </ScrollRevealItem>
           ))}
         </div>
+        </ScrollRevealList>
 
         {/* CTA Section */}
-        <div className="mt-16 text-center">
+        <ScrollReveal delay={0.2}>
+          <div className="mt-16 text-center">
           <Card className="bg-gradient-primary text-primary-foreground border-0">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4">
@@ -114,6 +122,7 @@ export default function Blog() {
             </CardContent>
           </Card>
         </div>
+        </ScrollReveal>
       </main>
     </div>
   );

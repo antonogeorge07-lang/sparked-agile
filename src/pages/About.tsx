@@ -2,6 +2,7 @@ import { BackButton } from "@/components/BackButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import saaiLogo from "@/assets/saai-logo.png";
 import { Sparkles, Target, Users, Zap } from "lucide-react";
 export default function About() {
@@ -10,46 +11,51 @@ export default function About() {
         <BackButton fallbackPath="/" className="mb-6" />
         
         {/* Hero Section */}
-        <div className="text-center mb-12 animate-fade-in">
-          <div className="flex justify-center mb-6">
-            <OptimizedImage src={saaiLogo} alt="SAAI - Spark-Agile Active Intelligence logo" className="h-24 w-auto object-contain" />
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <div className="flex justify-center mb-6">
+              <OptimizedImage src={saaiLogo} alt="SAAI - Spark-Agile Active Intelligence logo" className="h-24 w-auto object-contain" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              About <span className="bg-gradient-primary bg-clip-text text-transparent">SAAI</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Spark-Agile Active Intelligence
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            About <span className="bg-gradient-primary bg-clip-text text-transparent">SAAI</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Spark-Agile Active Intelligence
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Founder Story */}
-        <Card className="mb-8 shadow-card">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3 mb-6">
-              <Sparkles className="h-8 w-8 text-primary" />
-              <h2 className="text-2xl font-bold">My Story</h2>
-            </div>
-            <div className="prose prose-slate dark:prose-invert max-w-none">
-              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                At Spark-Agile, I believe agility should empower teams to do their best work. 
-                I'm <strong className="text-foreground">Antono</strong>, and I created SAAI (Spark + Agile + AI) 
-                to help teams unlock their full potential.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                SAAI transforms the way teams collaborate and innovate, providing clarity, focus, 
-                and insights that let them make meaningful impact. It's not about managing tools; 
-                it's about giving teams the space to create, deliver, and thrive.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Together with my mentor, we envision making AI-powered Agile the standard, 
-                helping modern teams move with confidence, purpose, and clarity.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        <ScrollReveal delay={0.1}>
+          <Card className="mb-8 shadow-card">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-6">
+                <Sparkles className="h-8 w-8 text-primary" />
+                <h2 className="text-2xl font-bold">My Story</h2>
+              </div>
+              <div className="prose prose-slate dark:prose-invert max-w-none">
+                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                  At Spark-Agile, I believe agility should empower teams to do their best work. 
+                  I'm <strong className="text-foreground">Antono</strong>, and I created SAAI (Spark + Agile + AI) 
+                  to help teams unlock their full potential.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                  SAAI transforms the way teams collaborate and innovate, providing clarity, focus, 
+                  and insights that let them make meaningful impact. It's not about managing tools; 
+                  it's about giving teams the space to create, deliver, and thrive.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Together with my mentor, we envision making AI-powered Agile the standard, 
+                  helping modern teams move with confidence, purpose, and clarity.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
 
         {/* Vision & Values */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <ScrollReveal delay={0.1}>
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
           <Card className="shadow-card">
             <CardContent className="pt-6">
               <div className="flex flex-col items-center text-center">
@@ -92,9 +98,11 @@ export default function About() {
             </CardContent>
           </Card>
         </div>
+        </ScrollReveal>
 
         {/* Micro-Studio Positioning */}
-        <Card className="shadow-card bg-gradient-primary text-primary-foreground">
+        <ScrollReveal delay={0.1}>
+          <Card className="shadow-card bg-gradient-primary text-primary-foreground">
           <CardContent className="pt-6">
             <div className="text-center">
               <Badge variant="secondary" className="mb-4">
@@ -109,9 +117,11 @@ This is the first step toward a new era of engagement one where AI empowers peop
             </div>
           </CardContent>
         </Card>
+        </ScrollReveal>
 
         {/* Trust & Integrations */}
-        <div className="mt-12 text-center">
+        <ScrollReveal delay={0.1}>
+          <div className="mt-12 text-center">
           <h2 className="text-2xl font-bold mb-4">Trusted Integrations</h2>
           <p className="text-muted-foreground mb-6">
             SAAI seamlessly integrates with the tools your team already uses
@@ -131,6 +141,7 @@ This is the first step toward a new era of engagement one where AI empowers peop
             </Badge>
           </div>
         </div>
+        </ScrollReveal>
       </main>
     </div>;
 }
