@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserRole } from "@/hooks/useUserRole";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
@@ -63,10 +64,22 @@ export default function SecurityIncidents() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { role, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
-    checkAdminAndFetchIncidents();
-  }, []);
+    if (!roleLoading && role !== 'admin') {
+      toast({
+        title: "Access Denied",
+        description: "Only admins can access security incidents.",
+        variant: "destructive",
+      });
+      navigate('/');
+      return;
+    }
+    if (!roleLoading && role === 'admin') {
+      checkAdminAndFetchIncidents();
+    }
+  }, [role, roleLoading, navigate]);
 
   useEffect(() => {
     if (incidents.length > 0) {
