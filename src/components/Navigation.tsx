@@ -13,6 +13,7 @@ import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+import { useUserRole } from "@/hooks/useUserRole";
 
 export const Navigation = () => {
   const location = useLocation();
@@ -20,6 +21,10 @@ export const Navigation = () => {
   const [userName, setUserName] = useState<string>();
   const [avatarUrl, setAvatarUrl] = useState<string>();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const { toast } = useToast();
+  const { activeUsers } = useRealtimePresence(location.pathname);
+  const { role } = useUserRole();
 
   useEffect(() => {
     const loadUser = async () => {
@@ -42,44 +47,21 @@ export const Navigation = () => {
     
     loadUser();
   }, []);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const { toast } = useToast();
-  const { activeUsers } = useRealtimePresence(location.pathname);
 
   useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+
     checkUser();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        checkAdminStatus(session.user.id);
-      } else {
-        setIsAdmin(false);
-      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
-
-  const checkUser = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    setUser(session?.user ?? null);
-    if (session?.user) {
-      await checkAdminStatus(session.user.id);
-    }
-  };
-
-  const checkAdminStatus = async (userId: string) => {
-    const { data } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .eq('role', 'admin')
-      .maybeSingle();
-    
-    setIsAdmin(!!data);
-  };
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -206,7 +188,7 @@ export const Navigation = () => {
                     );
                   })}
                   
-                  {isAdmin && (
+                  {role === 'admin' && (
                     <>
                       <div className="text-xs font-medium text-muted-foreground px-3 mt-3 mb-1">
                         ADMIN
@@ -217,7 +199,16 @@ export const Navigation = () => {
                           className="w-full justify-start gap-3 h-10"
                         >
                           <Shield className="h-4 w-4" />
-                          Admin
+                          Admin Panel
+                        </Button>
+                      </Link>
+                      <Link to="/security-incidents" onClick={() => setMobileMenuOpen(false)}>
+                        <Button 
+                          variant={location.pathname === "/security-incidents" ? "default" : "ghost"}
+                          className="w-full justify-start gap-3 h-10"
+                        >
+                          <Shield className="h-4 w-4" />
+                          Security Incidents
                         </Button>
                       </Link>
                     </>
