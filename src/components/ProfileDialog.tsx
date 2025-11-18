@@ -93,7 +93,7 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
         .from("profiles")
         .select("full_name, avatar_url, preferences")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
 
       if (profile) {
         setFullName(profile.full_name || "");

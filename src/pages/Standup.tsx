@@ -70,7 +70,7 @@ export default function Standup() {
         .from("profiles")
         .select("full_name")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
       
       if (profile) {
         setUserProfile(profile);

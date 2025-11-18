@@ -85,7 +85,7 @@ export default function Subscription() {
           .from('user_subscriptions')
           .select('*')
           .eq('user_id', user.id)
-          .single();
+          .maybeSingle();
 
         setCurrentSubscription(subData);
       }
