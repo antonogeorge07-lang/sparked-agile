@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,6 +39,7 @@ import {
 } from "@/data/sampleDashboardData";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,6 +55,25 @@ export default function Dashboard() {
 
   // Use sample data if no integrations or in guest mode
   const showSampleData = isGuestMode || (!hasJiraIntegration && !hasGithubIntegration);
+
+  // Check authentication
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session && !isGuestMode) {
+        navigate("/auth");
+      }
+    };
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' && !isGuestMode) {
+        navigate("/auth");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, isGuestMode]);
 
   useEffect(() => {
     loadProjects();
