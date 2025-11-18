@@ -245,7 +245,7 @@ export default function Auth() {
           .from('user_roles')
           .select('role')
           .eq('user_id', data.user?.id)
-          .single();
+          .maybeSingle();
         
         const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
         

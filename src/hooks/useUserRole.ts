@@ -21,7 +21,7 @@ export const useUserRole = () => {
           .from('user_roles')
           .select('role')
           .eq('user_id', session.user.id)
-          .single();
+          .maybeSingle();
 
         setRole(userRole?.role || 'pending');
       } catch (error) {

@@ -68,7 +68,7 @@ export default function ProjectWorkspace() {
       .from("projects")
       .select("id")
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
 
     if (projects) {
       setProjectId(projects.id);

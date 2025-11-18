@@ -44,7 +44,7 @@ const Index = () => {
         .from('user_roles')
         .select('role')
         .eq('user_id', session.user.id)
-        .single();
+        .maybeSingle();
       
       if (roleData) {
         setUserRole(roleData.role);
@@ -63,7 +63,7 @@ const Index = () => {
         .from('onboarding_progress')
         .select('*')
         .eq('user_id', session.user.id)
-        .single();
+        .maybeSingle();
 
       // Show wizard if onboarding not completed and not dismissed
       const dismissedWizard = localStorage.getItem('dismissed_onboarding_wizard');
