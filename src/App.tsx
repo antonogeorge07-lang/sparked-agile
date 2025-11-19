@@ -79,9 +79,9 @@ const App = () => {
 
     const lenis = new Lenis({
       wrapper: scrollContainer as HTMLElement,
-      duration: 1.2, // scroll speed in seconds
-      easing: (t: number) => 1 - Math.pow(1 - t, 4), // custom ease-out
-      smoothWheel: true, // enable smooth scrolling on wheel
+      duration: 1.2,
+      easing: (t: number) => 1 - Math.pow(1 - t, 4),
+      smoothWheel: true,
     });
 
     // Dispatch custom event on scroll
@@ -98,33 +98,23 @@ const App = () => {
 
     requestAnimationFrame(raf);
 
-    // Add ResizeObserver to detect content height changes
+    // Add ResizeObserver with debouncing to reduce overhead
     const resizeObserver = new ResizeObserver(() => {
-      lenis.resize();
+      requestAnimationFrame(() => lenis.resize());
     });
     resizeObserver.observe(scrollContainer);
 
-    // Listen for image loads and lazy content to recalculate scroll bounds
+    // Listen for image loads
     const handleContentLoad = () => {
       lenis.resize();
     };
     window.addEventListener('load', handleContentLoad);
-    
-    // Also listen for any dynamic content changes
-    const mutationObserver = new MutationObserver(() => {
-      lenis.resize();
-    });
-    mutationObserver.observe(scrollContainer, {
-      childList: true,
-      subtree: true,
-    });
 
     // Cleanup on unmount
     return () => {
       cancelAnimationFrame(animationFrame);
       lenis.destroy();
       resizeObserver.disconnect();
-      mutationObserver.disconnect();
       window.removeEventListener('load', handleContentLoad);
     };
   }, []);

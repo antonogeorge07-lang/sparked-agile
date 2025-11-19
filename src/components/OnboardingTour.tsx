@@ -69,10 +69,7 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
   const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1);
-      toast.success(`Step ${currentStep + 2} of ${onboardingSteps.length}`, {
-        description: onboardingSteps[currentStep + 1].title,
-        icon: <Sparkles className="w-4 h-4" />,
-      });
+      // Removed toast notification to reduce UI overhead
     } else {
       handleComplete();
     }
