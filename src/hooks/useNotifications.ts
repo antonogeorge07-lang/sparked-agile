@@ -10,6 +10,24 @@ interface UseNotificationsOptions {
 
 export const useNotifications = ({ userId, enabled = true }: UseNotificationsOptions) => {
   const channelsRef = useRef<any[]>([]);
+  const toastQueueRef = useRef<any[]>([]);
+  const isProcessingRef = useRef(false);
+
+  // Debounce toast notifications to prevent overwhelming the UI
+  const queueToast = (toastConfig: any) => {
+    toastQueueRef.current.push(toastConfig);
+    
+    if (!isProcessingRef.current) {
+      isProcessingRef.current = true;
+      setTimeout(() => {
+        if (toastQueueRef.current.length > 0) {
+          const nextToast = toastQueueRef.current.shift();
+          toast(nextToast);
+        }
+        isProcessingRef.current = false;
+      }, 500); // Minimum 500ms between toasts
+    }
+  };
 
   useEffect(() => {
     if (!enabled || !userId) return;
@@ -26,7 +44,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
         },
         (payload) => {
           const actionItem = payload.new;
-          toast({
+          queueToast({
             title: "New Action Item Created",
             description: `${actionItem.title} - Priority: ${actionItem.priority}`,
             duration: 5000,
@@ -46,7 +64,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
           
           // Notify on status change to completed
           if (oldItem.status !== 'completed' && actionItem.status === 'completed') {
-            toast({
+            queueToast({
               title: "Action Item Completed! 🎉",
               description: actionItem.title,
               duration: 5000,
@@ -55,7 +73,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
           // Notify on priority escalation
           else if (oldItem.priority !== actionItem.priority && 
                    (actionItem.priority === 'critical' || actionItem.priority === 'high')) {
-            toast({
+            queueToast({
               title: "Action Item Priority Updated",
               description: `${actionItem.title} - Now ${actionItem.priority} priority`,
               variant: "destructive",
@@ -79,7 +97,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
         (payload) => {
           const workflow = payload.new;
           if (workflow.status === 'pending') {
-            toast({
+            queueToast({
               title: "Workflow Started",
               description: `Processing ${workflow.workflow_type.replace('_', ' ')}...`,
               duration: 3000,
@@ -100,7 +118,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
           
           // Notify on completion
           if (oldWorkflow.status !== 'completed' && workflow.status === 'completed') {
-            toast({
+            queueToast({
               title: "Workflow Completed Successfully! ✓",
               description: `${workflow.workflow_type.replace('_', ' ')} finished in ${workflow.execution_time_ms}ms`,
               duration: 5000,
@@ -108,7 +126,7 @@ export const useNotifications = ({ userId, enabled = true }: UseNotificationsOpt
           }
           // Notify on error
           else if (oldWorkflow.status !== 'error' && workflow.status === 'error') {
-            toast({
+            queueToast({
               title: "Workflow Failed",
               description: workflow.error_message || "An error occurred during workflow execution",
               variant: "destructive",
