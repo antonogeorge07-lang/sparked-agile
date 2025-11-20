@@ -22,6 +22,16 @@ export const useGuestMode = () => {
     };
     
     checkGuestMode();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        localStorage.removeItem("guest_mode");
+        setIsGuestMode(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const enableGuestMode = () => {

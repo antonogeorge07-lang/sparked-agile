@@ -646,6 +646,17 @@ export default function Auth() {
                       "Sign In"
                     )}
                   </Button>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full gap-2"
+                    onClick={handleGuestMode}
+                    disabled={isLoading}
+                  >
+                    <Eye className="w-4 h-4" />
+                    Continue as Guest
+                  </Button>
                 </form>
               )}
             </TabsContent>
