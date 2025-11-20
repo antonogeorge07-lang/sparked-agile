@@ -23,6 +23,8 @@ import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
 import { HelpTooltip } from "@/components/HelpTooltip";
+import { SmartFeedbackTrigger } from "@/components/SmartFeedbackTrigger";
+import { CeremonyHealthCheck } from "@/components/CeremonyHealthCheck";
 import { SendReminderDialog } from "@/components/SendReminderDialog";
 import { ScheduleReminderDialog } from "@/components/ScheduleReminderDialog";
 import { ReminderManagement } from "@/components/ReminderManagement";
@@ -157,6 +159,7 @@ export default function Dashboard() {
     <DashboardLayout>
       {isPending && <PendingApprovalBanner />}
       {isGuestMode && <GuestModeBar />}
+      <SmartFeedbackTrigger />
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-6">
@@ -166,6 +169,8 @@ export default function Dashboard() {
               <GuestNavigationCards />
             </>
           )}
+          
+          {!isGuestMode && <CeremonyHealthCheck />}
           
           <BackButton className="mb-4" />
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in">
