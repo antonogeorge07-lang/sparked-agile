@@ -3,7 +3,6 @@ import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { NotificationProvider } from "@/components/NotificationProvider";
-import { PrivacyBanner } from "@/components/PrivacyBanner";
 
 import { StrictMode } from "react";
 
@@ -12,7 +11,6 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <NotificationProvider>
         <App />
-        <PrivacyBanner />
       </NotificationProvider>
     </ThemeProvider>
   </StrictMode>
