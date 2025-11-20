@@ -31,6 +31,18 @@ export const useVisitorTracking = () => {
         setVisitorData(data);
       } catch (error) {
         console.error('Failed to initialize visitor tracking:', error);
+        // Set default data so components don't break
+        setVisitorData({
+          id: 'fallback',
+          device_fingerprint: 'fallback',
+          first_visit: new Date().toISOString(),
+          last_visit: new Date().toISOString(),
+          visit_count: 1,
+          has_seen_onboarding: false,
+          has_dismissed_signup_reminder: false,
+          total_time_on_site: 0,
+          pages_visited: 0,
+        });
       } finally {
         setIsLoading(false);
       }
@@ -44,12 +56,16 @@ export const useVisitorTracking = () => {
     if (!fingerprint || !visitorData) return;
 
     const interval = setInterval(() => {
-      const timeOnSite = Math.floor((Date.now() - startTime) / 1000);
-      const totalTime = (visitorData.total_time_on_site || 0) + timeOnSite;
-      
-      updateVisitorPreferences(fingerprint, {
-        total_time_on_site: totalTime,
-      });
+      try {
+        const timeOnSite = Math.floor((Date.now() - startTime) / 1000);
+        const totalTime = (visitorData.total_time_on_site || 0) + timeOnSite;
+        
+        updateVisitorPreferences(fingerprint, {
+          total_time_on_site: totalTime,
+        });
+      } catch (error) {
+        console.error('Failed to update time on site:', error);
+      }
     }, 60000); // Update every minute
 
     return () => clearInterval(interval);
@@ -58,18 +74,26 @@ export const useVisitorTracking = () => {
   const updatePreferences = async (updates: Partial<VisitorData>) => {
     if (!fingerprint) return;
     
-    await updateVisitorPreferences(fingerprint, updates);
-    setVisitorData(prev => prev ? { ...prev, ...updates } : null);
+    try {
+      await updateVisitorPreferences(fingerprint, updates);
+      setVisitorData(prev => prev ? { ...prev, ...updates } : null);
+    } catch (error) {
+      console.error('Failed to update visitor preferences:', error);
+    }
   };
 
   const incrementPagesVisited = async () => {
     if (!fingerprint || !visitorData) return;
     
-    const newCount = (visitorData.pages_visited || 0) + 1;
-    await updateVisitorPreferences(fingerprint, {
-      pages_visited: newCount,
-    });
-    setVisitorData(prev => prev ? { ...prev, pages_visited: newCount } : null);
+    try {
+      const newCount = (visitorData.pages_visited || 0) + 1;
+      await updateVisitorPreferences(fingerprint, {
+        pages_visited: newCount,
+      });
+      setVisitorData(prev => prev ? { ...prev, pages_visited: newCount } : null);
+    } catch (error) {
+      console.error('Failed to increment pages visited:', error);
+    }
   };
 
   return {
