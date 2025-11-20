@@ -123,13 +123,7 @@ All colors MUST be HSL.
   }
 
   html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  #root-scroll-container {
-    overflow: auto;
-    height: 100vh;
+    min-height: 100%;
   }
 }
 
