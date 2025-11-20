@@ -49,7 +49,7 @@ export const PrivacyBanner = () => {
             <p className="text-xs text-muted-foreground">
               We use device fingerprinting to improve your experience and remember your preferences across visits. 
               Your privacy matters - data is hashed and secure. {" "}
-              <Link to="/privacy-policy" className="text-primary hover:underline">
+              <Link to="/privacy" className="text-primary hover:underline">
                 Learn more
               </Link>
             </p>
