@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -15,7 +16,13 @@ export const ScrollReveal = ({
   fullWidth = false 
 }: ScrollRevealProps) => {
   const ref = useRef(null);
+  const isMobile = useIsMobile();
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // Disable animations on mobile for better performance
+  if (isMobile) {
+    return <div ref={ref} className={fullWidth ? "w-full" : ""}>{children}</div>;
+  }
 
   const directionOffset = {
     up: { y: 20 },
@@ -41,7 +48,6 @@ export const ScrollReveal = ({
         delay: delay,
         ease: [0.25, 0.4, 0.25, 1]
       }}
-      style={{ willChange: 'transform' }}
       className={fullWidth ? "w-full" : ""}
     >
       {children}
