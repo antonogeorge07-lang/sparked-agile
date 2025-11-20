@@ -11,6 +11,7 @@ import { FeedbackWidget } from "@/components/FeedbackWidget";
 import { AIAssistant } from "@/components/AIAssistant";
 import ScrollRestoration from "@/components/ScrollRestoration";
 import Lenis from '@studio-freight/lenis';
+import { useIsMobile } from "@/hooks/use-mobile";
 // Eager load critical pages
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -72,7 +73,12 @@ const PageLoader = () => (
 const queryClient = new QueryClient();
 
 const App = () => {
+  const isMobile = useIsMobile();
+
   useEffect(() => {
+    // Disable Lenis smooth scroll on mobile to avoid scroll freeze
+    if (isMobile) return;
+
     // Initialize Lenis with custom scroll container
     const scrollContainer = document.querySelector('#root-scroll-container');
     if (!scrollContainer) return;
@@ -117,7 +123,7 @@ const App = () => {
       resizeObserver.disconnect();
       window.removeEventListener('load', handleContentLoad);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <ErrorBoundary>
