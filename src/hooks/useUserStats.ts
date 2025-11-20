@@ -11,12 +11,23 @@ export const useUserStats = () => {
   return useQuery({
     queryKey: ["user-stats"],
     queryFn: async (): Promise<UserStats> => {
-      // Call the secure public function
-      const { data, error } = await supabase.rpc("get_public_user_stats");
+      // Call the secure public function with timeout
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Query timeout')), 5000)
+      );
+      
+      const queryPromise = supabase.rpc("get_public_user_stats");
+      
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]) as any;
 
       if (error) {
         console.error("Error fetching user stats:", error);
-        throw error;
+        // Return default values on error instead of throwing
+        return {
+          totalUsers: 0,
+          locations: [],
+          recentSignups: 0,
+        };
       }
 
       const stats = data?.[0] || { total_users: 0, recent_signups: 0 };
@@ -38,6 +49,8 @@ export const useUserStats = () => {
         recentSignups,
       };
     },
-    refetchInterval: 60000, // Refetch every minute
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+    retry: 1, // Only retry once on failure
   });
 };
