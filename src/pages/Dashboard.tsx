@@ -29,6 +29,8 @@ import { ReminderManagement } from "@/components/ReminderManagement";
 import { Bell } from "lucide-react";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
+import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import { 
   sampleVelocityData, 
   sampleImpediments, 
@@ -52,6 +54,11 @@ export default function Dashboard() {
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
   const { isGuestMode } = useGuestMode();
   const { isPending } = useUserRole();
+  const { isReturningVisitor, incrementPagesVisited } = useVisitorTracking();
+  
+  useEffect(() => {
+    incrementPagesVisited();
+  }, []);
 
   // Use sample data if no integrations or in guest mode
   const showSampleData = isGuestMode || (!hasJiraIntegration && !hasGithubIntegration);
@@ -153,6 +160,13 @@ export default function Dashboard() {
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-6">
+          {isGuestMode && (
+            <>
+              <GuestWelcomeBanner />
+              <GuestNavigationCards />
+            </>
+          )}
+          
           <BackButton className="mb-4" />
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in">
             <div className="flex items-center gap-3">

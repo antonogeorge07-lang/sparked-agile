@@ -11,6 +11,7 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import saaiLogo from "@/assets/saai-logo.png";
+import { PrivacyBanner } from "@/components/PrivacyBanner";
 
 // Lazy load sections below the fold for better initial page load
 const SocialProofSection = lazy(() => import("@/components/landing/SocialProofSection").then(module => ({ default: module.SocialProofSection })));
@@ -221,6 +222,9 @@ export default function Landing() {
       
       {/* Interactive Onboarding for First-Time Visitors */}
       <InteractiveOnboarding />
+      
+      {/* Privacy Banner */}
+      <PrivacyBanner />
     </div>
   );
 }

@@ -14,7 +14,8 @@ import {
   Zap,
   BarChart3,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  Eye
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
@@ -100,7 +101,7 @@ export const InteractiveOnboarding = () => {
   const [completed, setCompleted] = useState(false);
   
   useEffect(() => {
-    // Check if user has seen onboarding
+    // Check if user has seen onboarding (now managed by visitor tracking)
     const hasSeenOnboarding = localStorage.getItem("saai_onboarding_completed");
     const isFirstVisit = !localStorage.getItem("saai_visited_before");
     
@@ -130,6 +131,13 @@ export const InteractiveOnboarding = () => {
   const handleSkip = () => {
     localStorage.setItem("saai_onboarding_completed", "true");
     setIsOpen(false);
+  };
+
+  const handleSkipAndContinueAsGuest = () => {
+    localStorage.setItem("saai_onboarding_completed", "true");
+    localStorage.setItem("guest_mode", "true");
+    setIsOpen(false);
+    navigate("/dashboard");
   };
 
   const handleComplete = () => {
@@ -225,6 +233,16 @@ export const InteractiveOnboarding = () => {
                 </Button>
 
                 <div className="flex gap-2">
+                  {currentStep === 0 && (
+                    <Button
+                      variant="outline"
+                      onClick={handleSkipAndContinueAsGuest}
+                      className="gap-2"
+                    >
+                      <Eye className="w-4 h-4" />
+                      Skip & Continue as Guest
+                    </Button>
+                  )}
                   <Button
                     variant="ghost"
                     onClick={handleSkip}

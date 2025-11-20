@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { DemoModeButton } from "@/components/DemoModeButton";

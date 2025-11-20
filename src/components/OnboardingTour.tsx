@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, ArrowRight, ArrowLeft, X, Sparkles } from "lucide-react";
-import { toast } from "sonner";
+import { CheckCircle2, ArrowRight, ArrowLeft, X, Sparkles, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface OnboardingStep {
   title: string;
@@ -18,58 +18,29 @@ interface OnboardingTourProps {
 
 const onboardingSteps: OnboardingStep[] = [
   {
-    title: "Welcome to SAFe Agile Platform",
-    description: "This quick tour will guide you through the key features of our AI-powered agile workflow platform.",
-    tip: "You can skip this tour anytime and access it later from the Demo page."
+    title: "Welcome to SAAI Platform",
+    description: "Cut your sprint overhead by 50% with AI automation. This quick 3-step tour shows you the essentials.",
+    tip: "Skip anytime and explore on your own."
   },
   {
-    title: "Daily Standup",
-    description: "Start your day by sharing team updates. Our AI analyzes the information and generates insightful summaries, helping identify blockers and track progress.",
-    tip: "Navigate to Standup from the menu to begin your first daily sync."
-  },
-  {
-    title: "Sprint Planning",
-    description: "Plan your sprints effectively with AI-powered recommendations. Input your team capacity and backlog, and get optimized sprint plans based on velocity and priorities.",
-    tip: "Access Planning to create data-driven sprint plans."
-  },
-  {
-    title: "Workflows & AI Processing",
-    description: "Use AI workflows to analyze standup data, extract sprint details, and generate retrospective insights. The platform automatically creates action items from your inputs.",
-    tip: "Visit Workflows to see AI processing in action."
-  },
-  {
-    title: "Dashboard & Metrics",
-    description: "Monitor your team's performance with real-time metrics, velocity trends, and active impediments. Export reports to PowerPoint for stakeholder presentations.",
-    tip: "Check the Dashboard for comprehensive sprint health insights."
-  },
-  {
-    title: "Integrations",
-    description: "Connect your JIRA and GitHub accounts to sync issues, commits, and pull requests. View integrated data across Flow Metrics, Program Increments, and Project Progress pages.",
-    tip: "Set up integrations to unify your development workflow."
+    title: "Visual Project Management",
+    description: "Drag-and-drop tasks, real-time collaboration, and AI-powered insights all in one place.",
+    tip: "Visit Project Command Centre to see it in action."
   },
   {
     title: "You're All Set!",
-    description: "You now know the basics of the SAFe Agile Platform. Start by creating a project in Workflows or running your first Daily Standup.",
-    tip: "Explore the Demo page anytime to see detailed feature walkthroughs."
+    description: "Start exploring or sign up to save your work and unlock premium features.",
+    tip: "Continue as guest or create an account."
   }
 ];
 
 export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  useEffect(() => {
-    if (isOpen && currentStep > 0) {
-      setShowTooltip(true);
-      const timer = setTimeout(() => setShowTooltip(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [currentStep, isOpen]);
 
   const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1);
-      // Removed toast notification to reduce UI overhead
     } else {
       handleComplete();
     }
@@ -90,6 +61,13 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
   const handleSkip = () => {
     onClose();
     setCurrentStep(0);
+  };
+
+  const handleContinueAsGuest = () => {
+    localStorage.setItem("guest_mode", "true");
+    localStorage.setItem("onboarding_completed", "true");
+    onClose();
+    navigate("/dashboard");
   };
 
   const progress = ((currentStep + 1) / onboardingSteps.length) * 100;
@@ -119,9 +97,7 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
             {step.description}
           </DialogDescription>
           
-          <div className={`bg-primary/10 border border-primary/20 rounded-lg p-4 flex gap-3 transition-all duration-500 ${
-            showTooltip ? 'scale-105 shadow-elevated' : ''
-          }`}>
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex gap-3">
             <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-sm text-primary mb-1">Pro Tip</p>
