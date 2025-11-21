@@ -273,14 +273,14 @@ export default function ProjectWorkspace() {
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <BackButton className="mb-4" />
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div className="flex flex-col gap-6">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Initialize Project Workspace</h1>
-              <p className="text-muted-foreground">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-2">Initialize Project Workspace</h1>
+              <p className="text-muted-foreground text-sm sm:text-base">
                 Set up your complete Agile project environment with integrated tools and ceremonies
               </p>
             </div>
-            <div className="md:w-80">
+            <div className="w-full">
               <ProgressTracker steps={progressSteps} currentStep={currentStep - 1} />
             </div>
           </div>
