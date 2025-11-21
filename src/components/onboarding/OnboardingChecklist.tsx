@@ -207,59 +207,129 @@ export const OnboardingChecklist = () => {
       </CardHeader>
 
       {isExpanded && (
-        <CardContent className="space-y-3 pb-4">
-          {checklistItems.map((item) => (
-            <div
-              key={item.id}
-              className={cn(
-                "flex items-start gap-3 p-3 rounded-lg border transition-all",
-                item.completed
-                  ? "bg-primary/5 border-primary/20"
-                  : "bg-background hover:bg-accent/50"
-              )}
-            >
-              <div className="mt-0.5">
-                {item.completed ? (
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
-                ) : (
-                  <Circle className="h-5 w-5 text-muted-foreground" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className={cn(
-                      "font-medium text-sm",
-                      item.completed && "text-muted-foreground line-through"
-                    )}>
-                      {item.title}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {item.description}
-                    </p>
-                  </div>
-                  {!item.completed && (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => {
-                        if (item.action.path) {
-                          navigate(item.action.path);
-                        } else if (item.action.onClick) {
-                          item.action.onClick();
-                        }
-                      }}
+        <CardContent className="pb-6 pt-2">
+          {/* Horizontal Fishbone Timeline */}
+          <div className="relative overflow-x-auto pb-4">
+            <div className="min-w-[800px]">
+              {/* Central spine line */}
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 -translate-y-1/2" />
+              
+              {/* Timeline items */}
+              <div className="relative flex justify-between items-center px-8 py-12">
+                {checklistItems.map((item, index) => {
+                  const isAbove = index % 2 === 0;
+                  const Icon = item.icon;
+                  
+                  return (
+                    <div
+                      key={item.id}
+                      className="relative flex flex-col items-center"
+                      style={{ flex: '1 1 0' }}
                     >
-                      {item.action.label}
-                    </Button>
-                  )}
-                </div>
+                      {/* Connecting line to spine */}
+                      <div
+                        className={cn(
+                          "absolute left-1/2 w-0.5 -translate-x-1/2 transition-all",
+                          isAbove ? "bottom-1/2 top-auto h-16" : "top-1/2 bottom-auto h-16",
+                          item.completed 
+                            ? "bg-primary" 
+                            : "bg-border"
+                        )}
+                      />
+                      
+                      {/* Card container */}
+                      <div
+                        className={cn(
+                          "relative w-full max-w-[140px] transition-all",
+                          isAbove ? "mb-16" : "mt-16"
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "p-3 rounded-lg border-2 transition-all hover:scale-105 cursor-pointer",
+                            item.completed
+                              ? "bg-primary/10 border-primary shadow-lg shadow-primary/20"
+                              : "bg-background border-border hover:border-primary/50 hover:shadow-md"
+                          )}
+                          onClick={() => {
+                            if (!item.completed && item.action.path) {
+                              navigate(item.action.path);
+                            } else if (!item.completed && item.action.onClick) {
+                              item.action.onClick();
+                            }
+                          }}
+                        >
+                          {/* Icon and status */}
+                          <div className="flex items-center justify-between mb-2">
+                            <div className={cn(
+                              "p-2 rounded-full transition-all",
+                              item.completed
+                                ? "bg-primary/20"
+                                : "bg-muted"
+                            )}>
+                              <Icon className={cn(
+                                "h-4 w-4",
+                                item.completed ? "text-primary" : "text-muted-foreground"
+                              )} />
+                            </div>
+                            {item.completed ? (
+                              <CheckCircle2 className="h-5 w-5 text-primary" />
+                            ) : (
+                              <Circle className="h-5 w-5 text-muted-foreground" />
+                            )}
+                          </div>
+                          
+                          {/* Content */}
+                          <h4 className={cn(
+                            "text-xs font-semibold mb-1 leading-tight",
+                            item.completed && "text-muted-foreground"
+                          )}>
+                            {item.title}
+                          </h4>
+                          <p className="text-[10px] text-muted-foreground leading-tight line-clamp-2">
+                            {item.description}
+                          </p>
+                          
+                          {/* Action button */}
+                          {!item.completed && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="w-full mt-2 h-7 text-[10px] px-2"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (item.action.path) {
+                                  navigate(item.action.path);
+                                } else if (item.action.onClick) {
+                                  item.action.onClick();
+                                }
+                              }}
+                            >
+                              {item.action.label}
+                            </Button>
+                          )}
+                        </div>
+                        
+                        {/* Step number badge */}
+                        <div className={cn(
+                          "absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2",
+                          item.completed
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-background text-muted-foreground border-border"
+                        )}>
+                          {index + 1}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          ))}
+          </div>
 
+          {/* Completion message */}
           {isFullyCompleted && (
-            <div className="mt-4 p-4 bg-primary/10 rounded-lg text-center">
+            <div className="mt-4 p-4 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-lg text-center border border-primary/20">
               <p className="text-sm font-medium text-primary">
                 🎉 Congratulations! You've completed all setup tasks.
               </p>
