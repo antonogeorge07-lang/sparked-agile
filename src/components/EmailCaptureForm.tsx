@@ -29,7 +29,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
     },
     newsletter: {
       title: "Stay Updated",
-      description: "Join 1,000+ agile teams getting productivity tips and updates",
+      description: "Get productivity tips and updates for agile teams",
       benefit: "📧 Weekly agile best practices and platform updates"
     },
     beta: {

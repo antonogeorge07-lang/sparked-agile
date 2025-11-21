@@ -34,7 +34,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     {
       icon: <CheckCircle className="w-5 h-5 text-emerald-500" />,
       title: "Smart Action Items",
-      description: "AI helps extract and track action items from ceremonies"
+      description: "AI assists with extracting and tracking action items from ceremonies"
     },
     {
       icon: <Shield className="w-5 h-5 text-red-500" />,
@@ -51,7 +51,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             Experience SAAI
           </DialogTitle>
           <DialogDescription className="text-base">
-            See how AI transforms your agile ceremonies and workflow management
+            See how AI helps with your agile ceremonies and workflow management
           </DialogDescription>
         </DialogHeader>
         
@@ -97,7 +97,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
           {/* Integration Highlights */}
           <div className="p-6 rounded-lg border bg-muted/30">
-            <h3 className="text-lg font-semibold mb-3">Seamless Integrations</h3>
+            <h3 className="text-lg font-semibold mb-3">Available Integrations</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
               <div className="space-y-2">
                 <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
@@ -129,7 +129,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           {/* CTA Footer */}
           <div className="flex justify-between items-center pt-4 border-t">
             <p className="text-sm text-muted-foreground">
-              Ready to transform your agile workflow?
+              Ready to improve your agile workflow?
             </p>
             <div className="flex gap-2">
               <Button variant="outline" onClick={onClose}>

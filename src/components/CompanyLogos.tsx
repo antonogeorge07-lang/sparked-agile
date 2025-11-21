@@ -13,7 +13,7 @@ export const CompanyLogos = () => {
   return (
     <div className="space-y-4">
       <p className="text-center text-sm text-muted-foreground font-medium">
-        TRUSTED BY AGILE TEAMS AT
+        BUILT FOR AGILE TEAMS
       </p>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
         {companies.map((company, index) => (
