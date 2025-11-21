@@ -48,13 +48,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   <Menu className="h-5 w-5" />
                 </SidebarTrigger>
                 
-                <Link to="/home" className="flex items-center gap-2">
-                  <img 
-                    src={saaiLogo} 
-                    alt="SAAI Logo" 
-                    className="h-8 w-auto"
-                  />
-                  <span className="font-bold text-lg hidden sm:inline-block">SAAI</span>
+                <Link to="/home" className="group flex items-center gap-2 transition-all hover:scale-105">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-primary opacity-15 blur-lg rounded-full group-hover:opacity-25 transition-opacity" />
+                    <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-1.5 rounded-lg border border-primary/10 group-hover:border-primary/30 transition-all">
+                      <img 
+                        src={saaiLogo} 
+                        alt="SAAI Logo" 
+                        className="h-6 w-6 object-contain relative z-10"
+                      />
+                    </div>
+                  </div>
+                  <span className="font-bold text-lg hidden sm:inline-block bg-gradient-primary bg-clip-text text-transparent">SAAI</span>
                 </Link>
               </div>
 

@@ -11,11 +11,16 @@ export function FooterSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <OptimizedImage 
-                src={saaiLogo} 
-                alt="SAAI - AI-powered Scrum Master assistant logo" 
-                className="h-10 w-auto object-contain" 
-              />
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-primary opacity-15 blur-lg rounded-full" />
+                <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
+                  <OptimizedImage 
+                    src={saaiLogo} 
+                    alt="SAAI - AI-powered Scrum Master assistant logo" 
+                    className="h-8 w-8 object-contain relative z-10" 
+                  />
+                </div>
+              </div>
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 SAAI
               </span>

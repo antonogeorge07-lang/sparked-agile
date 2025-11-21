@@ -98,20 +98,35 @@ export const Navigation = () => {
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto">
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
-          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <picture>
-              <source srcSet={saaiLogoOptimized} type="image/webp" />
-              <img 
-                src={saaiLogo} 
-                alt="SAAI - Agile Active Intelligence logo"
-                width="32"
-                height="32"
-                className="h-7 w-7 object-contain"
-              />
-            </picture>
-            <span className="text-lg font-semibold bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent">
-              SAAI
-            </span>
+          <Link to="/" className="group flex items-center gap-3 transition-all hover:scale-105">
+            <div className="relative">
+              {/* Gradient glow effect behind logo */}
+              <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity" />
+              
+              {/* Logo container with subtle background */}
+              <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10 group-hover:border-primary/30 transition-all shadow-sm group-hover:shadow-md">
+                <picture>
+                  <source srcSet={saaiLogoOptimized} type="image/webp" />
+                  <img 
+                    src={saaiLogo} 
+                    alt="SAAI - Agile Active Intelligence logo"
+                    width="40"
+                    height="40"
+                    className="h-8 w-8 sm:h-9 sm:w-9 object-contain relative z-10"
+                  />
+                </picture>
+              </div>
+            </div>
+            
+            {/* Brand name with professional styling */}
+            <div className="flex flex-col items-start -space-y-1">
+              <span className="text-xl sm:text-2xl font-bold tracking-tight bg-gradient-primary bg-clip-text text-transparent group-hover:tracking-wide transition-all">
+                SAAI
+              </span>
+              <span className="hidden sm:block text-[10px] font-medium text-muted-foreground tracking-wider uppercase">
+                Agile Intelligence
+              </span>
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
