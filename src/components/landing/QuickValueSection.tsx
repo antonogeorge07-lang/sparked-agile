@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 export const QuickValueSection = () => {
   const benefits = [
     "Set up your first project in minutes",
-    "AI generates sprint plans automatically from your backlog",
-    "Sync with JIRA, GitHub & Microsoft 365 instantly",
+    "AI assists with sprint planning from your backlog",
+    "Integrate with JIRA, GitHub & Microsoft 365",
     "Get actionable insights from your retrospectives",
-    "Automate ceremony preparation and admin work",
-    "Real-time collaboration with your entire team"
+    "Streamline ceremony preparation and admin work",
+    "Collaborate effectively with your entire team"
   ];
 
   return (
@@ -64,7 +64,7 @@ export const QuickValueSection = () => {
                 <Card className="bg-blue-500/5 border-blue-500/20">
                   <CardContent className="p-6">
                     <div className="text-4xl font-bold text-blue-500 mb-2">Time Saver</div>
-                    <p className="text-sm text-muted-foreground">Automate ceremony prep and admin work</p>
+                    <p className="text-sm text-muted-foreground">Streamline ceremony prep and admin work</p>
                   </CardContent>
                 </Card>
               </div>

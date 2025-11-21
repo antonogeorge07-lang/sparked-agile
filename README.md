@@ -1,14 +1,14 @@
 # SM ActiveIntelligence
 
-AI-powered Scrum Master assistant for agile teams. Automate sprint planning, backlog refinement, retrospectives, and team collaboration with seamless JIRA, GitHub, and Microsoft integrations.
+AI-powered Scrum Master assistant for agile teams. Streamline sprint planning, backlog refinement, retrospectives, and team collaboration with seamless JIRA, GitHub, and Microsoft integrations.
 
 ## 🚀 Features
 
-- **AI-Powered Sprint Planning** - Automatically generate sprint plans with velocity-based estimates
+- **AI-Powered Sprint Planning** - Generate sprint plans with velocity-based estimates
 - **Backlog Refinement** - AI analyzes backlog health and recommends improvements  
-- **Automated Retrospectives** - Collect feedback anonymously and generate actionable insights
-- **Team Collaboration** - Real-time presence tracking and activity monitoring
-- **Enterprise Integrations** - Seamless integration with JIRA, GitHub, Outlook, and Microsoft Teams
+- **Streamlined Retrospectives** - Collect feedback anonymously and generate actionable insights
+- **Team Collaboration** - Activity monitoring and presence tracking
+- **Enterprise Integrations** - Integration with JIRA, GitHub, Outlook, and Microsoft Teams
 - **Enterprise Security** - Row-level security, RBAC, encrypted data storage
 
 ## 🛠️ Tech Stack

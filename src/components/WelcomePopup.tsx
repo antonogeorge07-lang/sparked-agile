@@ -31,10 +31,10 @@ export const WelcomePopup = () => {
             </Badge>
           </div>
           <DialogTitle className="text-3xl font-bold">
-            Save 10+ Hours Per Sprint with AI
+            Work Smarter with AI-Powered Agile
           </DialogTitle>
           <DialogDescription className="text-base leading-relaxed pt-3">
-            Automate sprint ceremonies, get instant insights, and focus on what matters - building great products.
+            Streamline sprint ceremonies, get actionable insights, and focus on what matters - building great products.
           </DialogDescription>
         </DialogHeader>
 
@@ -42,13 +42,13 @@ export const WelcomePopup = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
               <Clock className="w-8 h-8 text-primary mb-2" />
-              <p className="font-bold text-2xl text-primary">10+</p>
-              <p className="text-xs text-muted-foreground">Hours saved per sprint</p>
+              <p className="font-bold text-2xl text-primary">AI</p>
+              <p className="text-xs text-muted-foreground">Powered insights</p>
             </div>
             <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
               <TrendingUp className="w-8 h-8 text-primary mb-2" />
-              <p className="font-bold text-2xl text-primary">50%</p>
-              <p className="text-xs text-muted-foreground">Less ceremony time</p>
+              <p className="font-bold text-2xl text-primary">Fast</p>
+              <p className="text-xs text-muted-foreground">Setup & deployment</p>
             </div>
             <div className="flex flex-col items-center text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
               <Users className="w-8 h-8 text-primary mb-2" />
@@ -61,22 +61,22 @@ export const WelcomePopup = () => {
             <div className="flex gap-3 items-start">
               <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-sm">AI Sprint Planning in 30 Minutes</p>
-                <p className="text-sm text-muted-foreground">What used to take 3 hours now takes 30 minutes</p>
+                <p className="font-semibold text-sm">AI-Assisted Sprint Planning</p>
+                <p className="text-sm text-muted-foreground">Make planning sessions more efficient and data-driven</p>
               </div>
             </div>
             <div className="flex gap-3 items-start">
               <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-sm">Instant Retrospective Insights</p>
+                <p className="font-semibold text-sm">Actionable Retrospective Insights</p>
                 <p className="text-sm text-muted-foreground">AI analyzes patterns and suggests improvements</p>
               </div>
             </div>
             <div className="flex gap-3 items-start">
               <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-sm">Real-Time Team Collaboration</p>
-                <p className="text-sm text-muted-foreground">Everyone stays aligned without endless meetings</p>
+                <p className="font-semibold text-sm">Effective Team Collaboration</p>
+                <p className="text-sm text-muted-foreground">Keep everyone aligned with clear visibility</p>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ export const WelcomePopup = () => {
           <Link to="/auth" className="flex-1" onClick={handleClose}>
             <Button className="w-full gap-2 font-semibold">
               <Rocket className="w-4 h-4" />
-              Start Free - Save Time Today
+              Start Free Today
             </Button>
           </Link>
           <Button onClick={handleClose} variant="outline" className="flex-1 gap-2">
