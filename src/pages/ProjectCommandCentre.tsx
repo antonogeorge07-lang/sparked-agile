@@ -223,26 +223,27 @@ export default function ProjectCommandCentre() {
           </div>
         ) : (
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5 lg:w-[600px]">
-              <TabsTrigger value="overview" className="gap-2">
-                <LayoutDashboard className="h-4 w-4" />
-                Overview
+            <TabsList className="w-full lg:w-auto flex-wrap justify-center">
+              <TabsTrigger value="overview" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <LayoutDashboard className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Overview</span>
               </TabsTrigger>
-              <TabsTrigger value="board" className="gap-2">
-                <Kanban className="h-4 w-4" />
-                Task Board
+              <TabsTrigger value="board" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <Kanban className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Task Board</span>
+                <span className="sm:hidden text-[10px]">Tasks</span>
               </TabsTrigger>
-              <TabsTrigger value="risks" className="gap-2">
-                <Shield className="h-4 w-4" />
-                Risks
+              <TabsTrigger value="risks" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Risks</span>
               </TabsTrigger>
-              <TabsTrigger value="lessons" className="gap-2">
-                <Lightbulb className="h-4 w-4" />
-                Lessons
+              <TabsTrigger value="lessons" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <Lightbulb className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Lessons</span>
               </TabsTrigger>
-              <TabsTrigger value="reports" className="gap-2">
-                <FileText className="h-4 w-4" />
-                Reports
+              <TabsTrigger value="reports" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Reports</span>
               </TabsTrigger>
             </TabsList>
 

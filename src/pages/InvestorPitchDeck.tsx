@@ -65,10 +65,10 @@ export default function InvestorPitchDeck() {
         </div>
 
         <Tabs value={slides[currentSlide]} onValueChange={(value) => setCurrentSlide(slides.indexOf(value))}>
-          <TabsList className="grid grid-cols-5 lg:grid-cols-10 mb-8">
+          <TabsList className="grid grid-cols-5 md:grid-cols-10 mb-8 gap-1">
             {slides.map((slide, index) => (
-              <TabsTrigger key={slide} value={slide} className="text-xs capitalize">
-                {index + 1}. {slide}
+              <TabsTrigger key={slide} value={slide} className="text-[10px] sm:text-xs capitalize px-1 sm:px-2">
+                <span className="hidden sm:inline">{index + 1}. </span>{slide}
               </TabsTrigger>
             ))}
           </TabsList>
