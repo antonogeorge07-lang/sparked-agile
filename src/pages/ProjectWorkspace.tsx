@@ -287,21 +287,21 @@ export default function ProjectWorkspace() {
         </div>
 
         <Tabs value={`step${currentStep}`} onValueChange={(v) => setCurrentStep(parseInt(v.replace("step", "")))}>
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="step1">
-              {currentStep > 1 ? <CheckCircle2 className="w-4 h-4 mr-2" /> : "1. "}
-              Initialize
+          <TabsList className="w-full flex flex-wrap justify-between gap-2 sm:grid sm:grid-cols-4">
+            <TabsTrigger value="step1" className="flex-1 sm:flex-none text-xs sm:text-sm">
+              {currentStep > 1 ? <CheckCircle2 className="w-4 h-4 mr-1" /> : "1."}
+              <span className="ml-1">Initialize</span>
             </TabsTrigger>
-            <TabsTrigger value="step2" disabled={!workspaceId}>
-              {currentStep > 2 ? <CheckCircle2 className="w-4 h-4 mr-2" /> : "2. "}
-              Connect Tools
+            <TabsTrigger value="step2" disabled={!workspaceId} className="flex-1 sm:flex-none text-xs sm:text-sm">
+              {currentStep > 2 ? <CheckCircle2 className="w-4 h-4 mr-1" /> : "2."}
+              <span className="ml-1">Connect Tools</span>
             </TabsTrigger>
-            <TabsTrigger value="step3" disabled={!workspaceId}>
-              {currentStep > 3 ? <CheckCircle2 className="w-4 h-4 mr-2" /> : "3. "}
-              Team Members
+            <TabsTrigger value="step3" disabled={!workspaceId} className="flex-1 sm:flex-none text-xs sm:text-sm">
+              {currentStep > 3 ? <CheckCircle2 className="w-4 h-4 mr-1" /> : "3."}
+              <span className="ml-1">Team Members</span>
             </TabsTrigger>
-            <TabsTrigger value="step4" disabled={!workspaceId}>
-              4. Review
+            <TabsTrigger value="step4" disabled={!workspaceId} className="flex-1 sm:flex-none text-xs sm:text-sm">
+              <span>4. Review</span>
             </TabsTrigger>
           </TabsList>
 
