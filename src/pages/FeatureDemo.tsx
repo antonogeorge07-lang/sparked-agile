@@ -271,12 +271,13 @@ export default function FeatureDemo() {
 
         {/* Category Filter */}
         <Tabs defaultValue="all" className="mb-8" onValueChange={setSelectedCategory}>
-          <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-6">
+          <TabsList className="w-full max-w-4xl mx-auto flex-wrap justify-center sm:justify-start">
             <TabsTrigger value="all">All</TabsTrigger>
             {Object.entries(categories).map(([key, { label, icon: Icon }]) => (
-              <TabsTrigger key={key} value={key} className="flex items-center gap-2">
-                <Icon className="w-4 h-4" />
+              <TabsTrigger key={key} value={key} className="flex items-center gap-1 sm:gap-2">
+                <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">{label}</span>
+                <span className="sm:hidden text-[10px]">{label.split(' ')[0]}</span>
               </TabsTrigger>
             ))}
           </TabsList>
