@@ -24,8 +24,6 @@ const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection"
 const CTASection = lazy(() => import("@/components/landing/CTASection").then(module => ({ default: module.CTASection })));
 const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
 
-const PricingSection = lazy(() => import("@/components/landing/PricingSection").then(module => ({ default: module.PricingSection })));
-
 const SectionSkeleton = () => (
   <div className="py-20 px-4 min-h-[400px]">
     <div className="container mx-auto max-w-6xl">
@@ -194,12 +192,6 @@ export default function Landing() {
         <ScrollReveal fullWidth delay={0.1}>
           <Suspense fallback={<SectionSkeleton />}>
             <FeaturesSection />
-          </Suspense>
-        </ScrollReveal>
-        
-        <ScrollReveal fullWidth delay={0.1}>
-          <Suspense fallback={<SectionSkeleton />}>
-            <PricingSection onEarlyAccess={handleEarlyAccess} />
           </Suspense>
         </ScrollReveal>
         
