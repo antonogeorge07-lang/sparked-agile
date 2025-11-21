@@ -14,16 +14,16 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     {
       icon: <Zap className="w-5 h-5 text-yellow-500" />,
       title: "AI-Powered Sprint Planning",
-      description: "Automatically generate sprint plans based on team velocity, backlog, and historical data"
+      description: "Generate sprint plans based on team velocity, backlog, and historical data"
     },
     {
       icon: <Users className="w-5 h-5 text-blue-500" />,
-      title: "Real-time Collaboration",
-      description: "See who's working on what with live presence indicators and instant updates"
+      title: "Team Collaboration",
+      description: "See who's working on what with live presence indicators and updates"
     },
     {
       icon: <Calendar className="w-5 h-5 text-green-500" />,
-      title: "Automated Ceremonies",
+      title: "Streamlined Ceremonies",
       description: "Smart standup summaries, retrospectives, and review coordination with Microsoft Outlook"
     },
     {
@@ -34,7 +34,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     {
       icon: <CheckCircle className="w-5 h-5 text-emerald-500" />,
       title: "Smart Action Items",
-      description: "AI extracts and tracks action items from every ceremony automatically"
+      description: "AI helps extract and track action items from ceremonies"
     },
     {
       icon: <Shield className="w-5 h-5 text-red-500" />,
@@ -65,8 +65,8 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
               </Badge>
               <h3 className="text-2xl font-bold">Try it yourself!</h3>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Sign up now to access a full demo workspace with sample data. Experience real AI-powered 
-                sprint planning, automated standups, and intelligent retrospectives.
+                Sign up now to access a full demo workspace with sample data. Experience AI-powered 
+                sprint planning, streamlined standups, and intelligent retrospectives.
               </p>
               <Button size="lg" className="mt-4" onClick={onClose}>
                 Start Your Free Trial →

@@ -37,21 +37,21 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: "welcome",
     title: "Welcome to SAAI! 🎉",
-    description: "Cut your sprint overhead by 50% with AI automation. Let me show you how in 60 seconds - you'll save 10+ hours this sprint.",
+    description: "Streamline your sprint ceremonies with AI assistance. Let me show you the key features in 60 seconds.",
     icon: Sparkles,
-    benefit: "Save 10+ hours per sprint starting today"
+    benefit: "Work more efficiently with AI-powered tools"
   },
   {
     id: "ai-assistant",
     title: "Meet Omair, Your AI Assistant",
-    description: "Ask questions, get instant insights, and automate your agile ceremonies. Available after you sign up to answer all your project management questions in real-time.",
+    description: "Ask questions, get insights, and streamline your agile ceremonies. Available after you sign up to help with project management.",
     icon: MessageSquare,
-    benefit: "Get instant answers to project management questions 24/7"
+    benefit: "Get AI-powered answers to project management questions"
   },
   {
     id: "command-centre",
     title: "Visual Project Management",
-    description: "Drag-and-drop tasks across stages. Real-time collaboration with your team. All your projects in one view.",
+    description: "Drag-and-drop tasks across stages. Collaborate with your team. All your projects in one view.",
     icon: Target,
     action: {
       label: "See Command Centre",
@@ -61,14 +61,14 @@ const onboardingSteps: OnboardingStep[] = [
   },
   {
     id: "ceremonies",
-    title: "Automate Agile Ceremonies",
-    description: "AI-powered standups, sprint planning, retrospectives, and reviews. Save 5+ hours per sprint.",
+    title: "Streamline Agile Ceremonies",
+    description: "AI-assisted standups, sprint planning, retrospectives, and reviews. Work more efficiently.",
     icon: Calendar,
     action: {
       label: "Explore Sprint AI",
       path: "/sprint-planning-assistant"
     },
-    benefit: "Reduce ceremony overhead by 50%"
+    benefit: "Reduce ceremony overhead significantly"
   },
   {
     id: "integrations",
@@ -84,13 +84,13 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: "analytics",
     title: "Track Team Performance",
-    description: "Real-time metrics, velocity tracking, and actionable insights. Make data-driven decisions.",
+    description: "Metrics, velocity tracking, and actionable insights. Make data-driven decisions.",
     icon: BarChart3,
     action: {
       label: "See Analytics",
       path: "/usage-analytics"
     },
-    benefit: "Improve team velocity by 30%"
+    benefit: "Monitor and improve team velocity"
   }
 ];
 

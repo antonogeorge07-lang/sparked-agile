@@ -59,7 +59,7 @@ export function HeroSection({
             <div className="flex flex-col items-center gap-3 mb-2">
               <Badge className="gap-2 text-xs sm:text-sm px-3 py-1.5 animate-in slide-in-from-top duration-500" variant="secondary">
                 <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 animate-pulse" aria-hidden="true" />
-                Save 10+ Hours Per Sprint with AI Automation
+                AI-Powered Agile Management
               </Badge>
             </div>
 
@@ -69,18 +69,18 @@ export function HeroSection({
                 Spark Agile Active Intelligence
               </span>
               <span className="block mt-2 text-2xl sm:text-4xl md:text-5xl">
-                50% Less Overhead. 100% More Impact.
+                Streamline Your Agile Workflow
               </span>
               <span className="block mt-2 text-2xl sm:text-4xl md:text-5xl">
-                AI-Powered Agile Management
+                AI-Powered Team Management
               </span>
             </h1>
 
             {/* Value proposition with specific benefits */}
             <p className="text-base text-muted-foreground max-w-3xl mx-auto px-4 sm:text-lg leading-relaxed animate-in fade-in duration-1000">
-              Automate sprint ceremonies, generate insights instantly, and track team performance. All in one platform.
+              AI-assisted sprint ceremonies, actionable insights, and team performance tracking. All in one platform.
               <span className="block mt-3 text-foreground font-semibold">
-                Go from 3-hour planning sessions to 30 minutes.
+                Make sprint planning faster and more effective.
               </span>
             </p>
 
@@ -102,7 +102,7 @@ export function HeroSection({
                 <div className="h-5 w-5 rounded-full bg-green-500/20 flex items-center justify-center">
                   <span className="text-green-600 dark:text-green-400 font-bold text-xs">✓</span>
                 </div>
-                <span className="text-muted-foreground">Instant AI insights</span>
+                <span className="text-muted-foreground">AI-powered insights</span>
               </div>
             </div>
 

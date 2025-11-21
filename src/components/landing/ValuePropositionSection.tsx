@@ -11,10 +11,10 @@ export function ValuePropositionSection() {
       title: "For Scrum Masters",
       description: "Orchestrate ceremonies with confidence",
       features: [
-        "Automate standup summaries and track blockers in real-time",
-        "Generate sprint plans from JIRA with AI-powered velocity analysis",
+        "Generate standup summaries and track blockers effectively",
+        "Create sprint plans from JIRA with AI-powered velocity analysis",
         "Run productive retrospectives with anonymous feedback and AI insights",
-        "Schedule and coordinate all ceremonies with Outlook integration"
+        "Schedule and coordinate ceremonies with Outlook integration"
       ],
       highlighted: false
     },
@@ -35,10 +35,10 @@ export function ValuePropositionSection() {
       title: "For Stakeholders",
       description: "Stay informed without the noise",
       features: [
-        "Access real-time dashboards showing project progress and milestones",
+        "Access dashboards showing project progress and milestones",
         "Review sprint outcomes and team achievements at a glance",
-        "Get automated summaries and insights without attending every meeting",
-        "Make data-driven decisions with AI-generated recommendations"
+        "Get summary reports and insights from ceremonies",
+        "Make data-driven decisions with AI-powered recommendations"
       ],
       highlighted: false
     }
