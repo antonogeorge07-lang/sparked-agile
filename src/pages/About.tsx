@@ -37,16 +37,16 @@ export default function About() {
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                   At Spark-Agile, I believe agility should empower teams to do their best work. 
                   I'm <strong className="text-foreground">Antono</strong>, and I created SAAI (Spark + Agile + AI) 
-                  to help teams unlock their full potential.
+                  to help teams improve their agile practices.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  SAAI transforms the way teams collaborate and innovate, providing clarity, focus, 
-                  and insights that let them make meaningful impact. It's not about managing tools; 
+                  SAAI helps teams collaborate more effectively, providing clarity, focus, 
+                  and insights for meaningful impact. It's not about managing tools; 
                   it's about giving teams the space to create, deliver, and thrive.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Together with my mentor, we envision making AI-powered Agile the standard, 
-                  helping modern teams move with confidence, purpose, and clarity.
+                  Together with my mentor, we're working to make AI-powered Agile accessible to modern teams, 
+                  helping them move with confidence, purpose, and clarity.
                 </p>
               </div>
             </CardContent>
@@ -92,7 +92,7 @@ export default function About() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Vision</h3>
                 <p className="text-sm text-muted-foreground">
-                  Make AI-powered Agile the standard for modern teams worldwide
+                  Help make AI-powered Agile accessible to modern teams worldwide
                 </p>
               </div>
             </CardContent>
@@ -119,12 +119,12 @@ This is the first step toward a new era of engagement one where AI empowers peop
         </Card>
         </ScrollReveal>
 
-        {/* Trust & Integrations */}
+        {/* Available Integrations */}
         <ScrollReveal delay={0.1}>
           <div className="mt-12 text-center">
-          <h2 className="text-2xl font-bold mb-4">Trusted Integrations</h2>
+          <h2 className="text-2xl font-bold mb-4">Available Integrations</h2>
           <p className="text-muted-foreground mb-6">
-            SAAI seamlessly integrates with the tools your team already uses
+            SAAI integrates with the tools your team already uses
           </p>
           <div className="flex justify-center gap-8 flex-wrap">
             <Badge variant="outline" className="text-base py-2 px-4">

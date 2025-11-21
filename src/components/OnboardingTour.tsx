@@ -24,7 +24,7 @@ const onboardingSteps: OnboardingStep[] = [
   },
   {
     title: "Visual Project Management",
-    description: "Drag-and-drop tasks, real-time collaboration, and AI-powered insights all in one place.",
+    description: "Drag-and-drop tasks, team collaboration, and AI-powered insights all in one place.",
     tip: "Visit Project Command Centre to see it in action."
   },
   {
