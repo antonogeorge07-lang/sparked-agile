@@ -86,20 +86,14 @@ export function FooterSection() {
         <div className="border-t border-border mt-8 sm:mt-12 pt-6 sm:pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
             <p className="text-muted-foreground text-center md:text-left">© 2025 SAAI All rights reserved.</p>
-            <div className="flex flex-col sm:flex-row items-center gap-2 text-muted-foreground text-center">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
-                <span className="font-medium">
-                  Crafted with excellence by{" "}
-                  <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                    Antono George
-                  </span>
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
+              <span className="font-medium">
+                Crafted by{" "}
+                <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
+                  Antono George
                 </span>
-              </div>
-              <Badge variant="secondary" className="gap-1">
-                <Star className="h-3 w-3 fill-current" aria-hidden="true" />
-                Product Manager
-              </Badge>
+              </span>
             </div>
           </div>
         </div>
