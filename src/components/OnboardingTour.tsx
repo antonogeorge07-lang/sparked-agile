@@ -76,11 +76,11 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleSkip}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="w-[95vw] sm:max-w-[600px] max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl">{step.title}</DialogTitle>
-            <Button variant="ghost" size="icon" onClick={handleSkip}>
+          <div className="flex items-center justify-between gap-2">
+            <DialogTitle className="text-lg sm:text-2xl leading-snug">{step.title}</DialogTitle>
+            <Button variant="ghost" size="icon" onClick={handleSkip} className="shrink-0">
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -92,7 +92,7 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
           </div>
         </DialogHeader>
 
-        <div className="py-6">
+        <div className="py-4 flex-1 overflow-y-auto">
           <DialogDescription className="text-base leading-relaxed mb-4">
             {step.description}
           </DialogDescription>
@@ -114,24 +114,24 @@ export const OnboardingTour = ({ isOpen, onClose }: OnboardingTourProps) => {
           )}
         </div>
 
-        <DialogFooter className="flex justify-between sm:justify-between">
+        <DialogFooter className="flex flex-wrap justify-between gap-2 pt-4 border-t mt-2 bg-background/80">
           <Button
             variant="outline"
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className="gap-2"
+            className="gap-2 order-2 sm:order-1 flex-1 sm:flex-none"
           >
             <ArrowLeft className="w-4 h-4" />
             Previous
           </Button>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end flex-1 sm:flex-none order-1 sm:order-2">
             {!isLastStep && (
-              <Button variant="ghost" onClick={handleSkip}>
+              <Button variant="ghost" onClick={handleSkip} className="flex-1 sm:flex-none">
                 Skip Tour
               </Button>
             )}
-            <Button onClick={handleNext} className="gap-2">
+            <Button onClick={handleNext} className="gap-2 flex-1 sm:flex-none">
               {isLastStep ? (
                 <>
                   <CheckCircle2 className="w-4 h-4" />
