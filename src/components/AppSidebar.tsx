@@ -1,7 +1,7 @@
 import { 
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
-  ListFilter, Activity, Calendar, Users, Workflow, Languages, Globe, 
-  Video, BookOpen, Shield, Settings, Network, Star, TrendingUp
+  ListFilter, Activity, Calendar, Users, Workflow, Languages, 
+  BookOpen, Shield, Settings, Network, Star, TrendingUp
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -55,7 +55,6 @@ const menuSections = [
     items: [
       { title: "Usage Analytics", url: "/usage-analytics", icon: Activity },
       { title: "Flow Metrics", url: "/flow-metrics", icon: TrendingUp },
-      { title: "Market Intelligence", url: "/market-intelligence", icon: Globe },
     ]
   },
   {
@@ -70,8 +69,6 @@ const menuSections = [
     label: "Content & Tools",
     items: [
       { title: "PolyLinQ Translator", url: "/polylinq", icon: Languages },
-      { title: "Video Scripts", url: "/video-script-generator", icon: Video },
-      { title: "Social Media", url: "/social-media-generator", icon: Star },
       { title: "User Guide", url: "/user-guide", icon: BookOpen },
     ]
   },
