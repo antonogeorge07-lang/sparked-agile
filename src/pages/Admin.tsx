@@ -37,46 +37,48 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
   return (
     <div
       key={profile.id}
-      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+      className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors"
       onMouseEnter={() => setIsEditing(false)}
       onFocus={() => setIsEditing(true)}
       onBlur={() => setIsEditing(false)}
     >
-      <div className="flex-1">
-        <div className="flex items-center gap-3">
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="font-medium">{profile.full_name || 'No name'}</h3>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start sm:items-center gap-3 flex-wrap">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-medium truncate">{profile.full_name || 'No name'}</h3>
               <CollaborationIndicator users={activeUsers} size="sm" />
             </div>
-            <p className="text-sm text-muted-foreground">{profile.email}</p>
+            <p className="text-sm text-muted-foreground truncate">{profile.email}</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Joined {new Date(profile.created_at).toLocaleDateString()}
+            </p>
           </div>
-          {getRoleBadge(profile.role)}
+          <div className="shrink-0">
+            {getRoleBadge(profile.role)}
+          </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-1">
-          Joined {new Date(profile.created_at).toLocaleDateString()}
-        </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
         {profile.role === 'pending' && (
           <>
             <Button
               size="sm"
               onClick={() => onUpdateRole(profile.id, 'member')}
-              className="gap-1"
+              className="gap-1 flex-1 sm:flex-initial"
             >
               <CheckCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">Approve</span>
+              <span>Approve</span>
             </Button>
             <Button
               size="sm"
               variant="destructive"
               onClick={() => onUpdateRole(profile.id, 'pending')}
-              className="gap-1"
+              className="gap-1 flex-1 sm:flex-initial"
             >
               <XCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">Reject</span>
+              <span>Reject</span>
             </Button>
           </>
         )}
@@ -86,17 +88,17 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
               size="sm"
               variant="outline"
               onClick={() => onUpdateRole(profile.id, 'admin')}
+              className="flex-1 sm:flex-initial whitespace-nowrap"
             >
-              <span className="hidden sm:inline">Make Admin</span>
-              <span className="sm:hidden">Admin</span>
+              Admin
             </Button>
             <Button
               size="sm"
               variant="outline"
               onClick={() => onUpdateRole(profile.id, 'pending')}
+              className="flex-1 sm:flex-initial whitespace-nowrap"
             >
-              <span className="hidden sm:inline">Revoke Access</span>
-              <span className="sm:hidden">Revoke</span>
+              Revoke
             </Button>
           </>
         )}
@@ -105,9 +107,9 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
             size="sm"
             variant="outline"
             onClick={() => onUpdateRole(profile.id, 'member')}
+            className="whitespace-nowrap w-full sm:w-auto"
           >
-            <span className="hidden sm:inline">Remove Admin</span>
-            <span className="sm:hidden">Remove</span>
+            Remove
           </Button>
         )}
       </div>
