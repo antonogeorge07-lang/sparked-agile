@@ -39,20 +39,16 @@ const SprintPlanningAssistant = lazy(() => import("./pages/SprintPlanningAssista
 const SprintReviewCoordinator = lazy(() => import("./pages/SprintReviewCoordinator"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
-const VideoScriptGenerator = lazy(() => import("./pages/VideoScriptGenerator"));
 const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
 const PolyLinQ = lazy(() => import("./pages/PolyLinQ"));
-const MarketIntelligence = lazy(() => import("./pages/MarketIntelligence"));
-const SocialMediaGenerator = lazy(() => import("./pages/SocialMediaGenerator"));
 const FeatureDemo = lazy(() => import("./pages/FeatureDemo"));
 const Blog = lazy(() => import("./pages/Blog"));
 const AITransformingAgileDelivery = lazy(() => import("./pages/blog/AITransformingAgileDelivery"));
 const AutomatedSprintPlanningGuide = lazy(() => import("./pages/blog/AutomatedSprintPlanningGuide"));
 const AgileBacklogPrioritizationAI = lazy(() => import("./pages/blog/AgileBacklogPrioritizationAI"));
 const About = lazy(() => import("./pages/About"));
-const InvestorPitchDeck = lazy(() => import("./pages/InvestorPitchDeck"));
 const EpicManagement = lazy(() => import("./pages/EpicManagement"));
 const EpicDetail = lazy(() => import("./pages/EpicDetail"));
 const EpicPortfolio = lazy(() => import("./pages/EpicPortfolio"));
@@ -110,21 +106,17 @@ const App = () => {
                   <Route path="/sprint-review-coordinator" element={<SprintReviewCoordinator />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<TermsOfService />} />
-                  <Route path="/video-script-generator" element={<VideoScriptGenerator />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/user-guide" element={<UserGuide />} />
                   <Route path="/polylinq" element={<PolyLinQ />} />
                   <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
-                  <Route path="/market-intelligence" element={<MarketIntelligence />} />
-                  <Route path="/social-media-generator" element={<SocialMediaGenerator />} />
                   <Route path="/feature-demo" element={<FeatureDemo />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/ai-transforming-agile-delivery" element={<AITransformingAgileDelivery />} />
                   <Route path="/blog/automated-sprint-planning-guide" element={<AutomatedSprintPlanningGuide />} />
                   <Route path="/blog/agile-backlog-prioritization-ai" element={<AgileBacklogPrioritizationAI />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/investor-pitch" element={<InvestorPitchDeck />} />
                   <Route path="/epic-management" element={<EpicManagement />} />
                   <Route path="/epic/:id" element={<EpicDetail />} />
                   <Route path="/epic-portfolio" element={<EpicPortfolio />} />
