@@ -45,7 +45,7 @@ export const FAQSchema = () => {
           "name": "How does the AI assistant work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Omair, the AI assistant, uses advanced language models to analyze your project data, generate sprint plans, summarize standups, identify blockers, and provide actionable insights. It learns from your team's patterns to offer increasingly relevant suggestions over time."
+            "text": "Omair, the AI assistant, uses advanced language models to provide expert guidance on agile methodologies, sprint planning best practices, ceremony facilitation, and platform usage. It answers questions about project management concepts and helps you navigate SAAI features effectively."
           }
         },
         {

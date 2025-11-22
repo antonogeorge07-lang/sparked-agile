@@ -44,7 +44,7 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: "ai-assistant",
     title: "Meet Omair, Your AI Assistant",
-    description: "Ask questions, get insights, and streamline your agile ceremonies. Available after you sign up to help with project management.",
+    description: "Get guidance on agile methodologies, best practices, and platform features. Available after you sign up to help with your project management questions.",
     icon: MessageSquare,
     benefit: "Get AI-powered answers to project management questions"
   },
