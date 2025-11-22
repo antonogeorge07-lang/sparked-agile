@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { ArrowRight, GitBranch, Target, TrendingUp, Calendar, Users, BarChart3, Video, Zap, Bot, CheckCircle2, Languages, Globe, Star } from "lucide-react";
+import { ArrowRight, GitBranch, Target, Calendar, Users, BarChart3, Zap, Bot, CheckCircle2, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
@@ -89,57 +89,57 @@ const Index = () => {
   const animatedFeatures = [
     {
       icon: Zap,
-      title: "AI-Powered Automation",
-      description: "Automate standups, retrospectives, and planning with intelligent AI assistance"
+      title: "AI-Powered Sprint Planning",
+      description: "Automate sprint planning with intelligent backlog analysis and team capacity insights"
     },
     {
       icon: Bot,
-      title: "Smart Insights",
-      description: "Get actionable insights from your sprint data and team performance metrics"
+      title: "Smart Retrospectives",
+      description: "Get AI-generated insights from your retros to continuously improve team performance"
     },
     {
       icon: CheckCircle2,
-      title: "SAFe 6.0 Aligned",
-      description: "Built on proven frameworks to scale agile across your entire organization"
+      title: "Integrated Workflows",
+      description: "Connect JIRA, GitHub, and Microsoft 365 to streamline your entire agile workflow"
     }
   ];
 
-  const safeFeatures = [
+  const coreFeatures = [
     {
       icon: GitBranch,
-      title: "Value Streams",
-      description: "Manage your value streams and align teams around delivering customer value",
-      path: "/value-streams"
+      title: "Epic Management",
+      description: "Track and manage epics with dependency mapping and progress visualization",
+      path: "/epic-management"
     },
     {
       icon: Calendar,
-      title: "Program Increments",
-      description: "Plan and track your PI objectives with AI-powered planning assistance",
-      path: "/program-increment"
-    },
-    {
-      icon: TrendingUp,
-      title: "Flow Metrics",
-      description: "Monitor throughput, WIP, and cycle time to optimize your delivery flow",
-      path: "/flow-metrics"
+      title: "Sprint Planning",
+      description: "AI-assisted sprint planning with automatic story point estimation",
+      path: "/sprint-planning-assistant"
     },
     {
       icon: Target,
       title: "Retrospectives",
-      description: "Conduct effective sprint retrospectives with AI-generated insights",
+      description: "Conduct effective retrospectives with AI-generated insights and action items",
       path: "/retrospective"
     },
     {
       icon: Users,
       title: "Daily Standups",
-      description: "Streamline your daily standups with automated summaries and action items",
+      description: "Streamline daily standups with automated summaries and blocker tracking",
       path: "/standup"
     },
     {
       icon: BarChart3,
-      title: "Workflows",
-      description: "Automate your agile ceremonies and integrate with your existing tools",
+      title: "Workflows & Analytics",
+      description: "Automate ceremonies and track team performance with real-time metrics",
       path: "/workflows"
+    },
+    {
+      icon: Target,
+      title: "Project Command Centre",
+      description: "Centralized view of all your projects, tasks, and team collaboration",
+      path: "/project-command-centre"
     }
   ];
 
@@ -179,9 +179,8 @@ const Index = () => {
       
       <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-4 sm:mb-8">
-            <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
-            <TabsTrigger value="safe" className="text-xs sm:text-sm">Plan with SAFe 6.0</TabsTrigger>
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-1 mb-4 sm:mb-8">
+            <TabsTrigger value="overview" className="text-xs sm:text-sm">Platform Overview</TabsTrigger>
           </TabsList>
           
           <TabsContent value="overview" className="space-y-8">
@@ -199,7 +198,7 @@ const Index = () => {
                   Your AI-Powered Scrum Master
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
-                  Streamline your agile workflow with intelligent automation powered by SAFe 6.0. From daily standups to program increments, let AI handle the routine so you can focus on delivering value.
+                  Streamline your agile workflow with intelligent automation. From daily standups to sprint planning, let AI handle the routine so you can focus on delivering value.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   {isAuthenticated ? (
@@ -222,58 +221,7 @@ const Index = () => {
                       <DemoModeButton />
                     </>
                   )}
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="gap-2" 
-                    onClick={() => setShowDemoModal(true)}
-                  >
-                    <Video className="w-4 h-4" />
-                    Watch Demo
-                  </Button>
                 </div>
-              </div>
-            </section>
-
-            {/* PolyLinQ Subproduct Banner */}
-            <section className="py-8">
-              <div className="max-w-5xl mx-auto">
-                <Card className="overflow-hidden border-2 border-primary/20 shadow-elevated bg-gradient-to-r from-background to-muted/30">
-                  <CardContent className="p-8 md:p-12">
-                    <div className="flex flex-col md:flex-row items-center gap-8">
-                      <div className="flex-shrink-0">
-                        <div className="w-20 h-20 rounded-2xl bg-gradient-primary flex items-center justify-center">
-                          <Languages className="w-10 h-10 text-primary-foreground" />
-                        </div>
-                      </div>
-                      
-                      <div className="flex-1 text-center md:text-left">
-                        <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
-                          <h3 className="text-2xl md:text-3xl font-bold">Introducing PolyLinQ</h3>
-                          <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-semibold">NEW</span>
-                        </div>
-                        <p className="text-lg text-muted-foreground mb-2">
-                          Real-time multilingual communication for Agile teams
-                        </p>
-                        <p className="text-muted-foreground flex items-center justify-center md:justify-start gap-2">
-                          <Globe className="w-4 h-4" />
-                          Break language barriers. Collaborate seamlessly.
-                        </p>
-                      </div>
-                      
-                      <div className="flex flex-col gap-3">
-                        <Button 
-                          size="lg" 
-                          className="gap-2"
-                          onClick={() => navigate("/polylinq")}
-                        >
-                          Learn More
-                          <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             </section>
 
@@ -281,9 +229,9 @@ const Index = () => {
             <section className="py-8">
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">See SAAI in Action</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Core Agile Tools</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Discover how our platform streamlines your entire agile workflow with AI-powered automation
+                    Everything your team needs for effective agile project management
                   </p>
                 </div>
                 
@@ -332,18 +280,42 @@ const Index = () => {
               </div>
             </section>
 
+            {/* All Features Grid */}
+            <section className="py-8">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Complete Agile Toolkit</h2>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    From epics to standups, manage your entire agile workflow in one place
+                  </p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {coreFeatures.map((feature, index) => (
+                    <FeatureCard
+                      key={index}
+                      icon={feature.icon}
+                      title={feature.title}
+                      description={feature.description}
+                      onClick={() => navigate(feature.path)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
+
             {/* CTA Section */}
             <section className="py-8 mb-8">
               <div className="max-w-4xl mx-auto">
                 <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-center shadow-elevated">
                   <h2 className="text-3xl font-bold text-primary-foreground mb-4">
-                    Ready to Transform Your Sprint Process?
+                    Ready to Transform Your Agile Process?
                   </h2>
                   <p className="text-primary-foreground/90 mb-6 max-w-2xl mx-auto">
-                    Join teams using AI to automate their agile ceremonies and focus on what matters most - delivering value.
+                    Join teams using AI to streamline their agile ceremonies and focus on what matters most - delivering value.
                   </p>
-                  <Button size="lg" variant="secondary" className="gap-2" onClick={() => navigate("/standup")}>
-                    Start Your First Standup
+                  <Button size="lg" variant="secondary" className="gap-2" onClick={() => navigate("/sprint-planning-assistant")}>
+                    Start Sprint Planning
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 </div>
@@ -354,15 +326,15 @@ const Index = () => {
           <TabsContent value="safe" className="space-y-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-                Plan with SAFe 6.0
+                Explore All Features
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Leverage the full power of Scaled Agile Framework with AI-powered tools for enterprise-scale agile delivery
+                Comprehensive tools for small to medium-sized agile teams
               </p>
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {safeFeatures.map((feature, index) => (
+              {coreFeatures.map((feature, index) => (
                 <FeatureCard
                   key={index}
                   icon={feature.icon}
