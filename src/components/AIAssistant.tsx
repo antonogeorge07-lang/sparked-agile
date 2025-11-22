@@ -185,7 +185,7 @@ export const AIAssistant = () => {
           <div className="text-center text-muted-foreground py-8">
             <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p className="text-sm font-medium mb-1">Hi! I'm Omair 👋</p>
-            <p className="text-xs">Your AI assistant for project management. Ask me anything!</p>
+            <p className="text-xs">Your AI assistant for agile best practices and platform guidance. Ask me anything!</p>
           </div>
         )}
         <div className="space-y-4">

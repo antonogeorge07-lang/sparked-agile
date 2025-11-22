@@ -134,29 +134,29 @@ export function AIAssistantShowcase() {
                   <li className="flex gap-3 items-start">
                     <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
                     <div>
-                      <p className="font-medium">Sprint Planning & Estimation</p>
-                      <p className="text-sm text-muted-foreground">Story points, velocity analysis, capacity planning</p>
+                      <p className="font-medium">Sprint Planning Guidance</p>
+                      <p className="text-sm text-muted-foreground">Learn about story point estimation, velocity concepts, and capacity planning strategies</p>
                     </div>
                   </li>
                   <li className="flex gap-3 items-start">
                     <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
                     <div>
-                      <p className="font-medium">Agile Ceremonies</p>
-                      <p className="text-sm text-muted-foreground">Standups, retrospectives, reviews, refinement</p>
+                      <p className="font-medium">Agile Methodology Advice</p>
+                      <p className="text-sm text-muted-foreground">Get tips on standups, retrospectives, reviews, and refinement sessions</p>
                     </div>
                   </li>
                   <li className="flex gap-3 items-start">
                     <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
                     <div>
-                      <p className="font-medium">Team Collaboration</p>
-                      <p className="text-sm text-muted-foreground">Best practices, conflict resolution, productivity tips</p>
+                      <p className="font-medium">Team Best Practices</p>
+                      <p className="text-sm text-muted-foreground">Advice on collaboration, conflict resolution, and productivity improvement</p>
                     </div>
                   </li>
                   <li className="flex gap-3 items-start">
                     <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
                     <div>
-                      <p className="font-medium">Platform Features</p>
-                      <p className="text-sm text-muted-foreground">Navigate SAAI features and integrations</p>
+                      <p className="font-medium">Platform Navigation</p>
+                      <p className="text-sm text-muted-foreground">Help understanding SAAI features and how to use integrations</p>
                     </div>
                   </li>
                 </ul>

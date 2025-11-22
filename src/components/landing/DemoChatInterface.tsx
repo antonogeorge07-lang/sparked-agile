@@ -177,7 +177,7 @@ export function DemoChatInterface({ onClose }: DemoChatInterfaceProps) {
           <div className="text-center text-muted-foreground py-8 px-4">
             <p className="text-sm font-medium mb-2">👋 Hi! I'm Omair, your AI assistant</p>
             <p className="text-xs">
-              Ask me anything about agile methodologies, sprint planning, or team collaboration!
+              Ask me about agile best practices, sprint planning concepts, or how to use SAAI features!
             </p>
           </div>
         )}
