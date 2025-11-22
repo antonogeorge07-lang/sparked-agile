@@ -1,40 +1,65 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Zap, GitBranch, BarChart } from "lucide-react";
+import { Sparkles, Zap, GitBranch, BarChart, Calendar, Users, Target } from "lucide-react";
 
 export function FeaturesSection() {
   const featureCategories = [
     {
-      category: "Planning",
+      category: "AI-Powered Planning",
       features: [
         {
           icon: Sparkles,
-          title: "AI Sprint Planning",
-          description: "Turn 10-hour planning sessions into 2 hours"
+          title: "Sprint Planning Assistant",
+          description: "Turn 10-hour planning sessions into 2 hours with AI"
         },
         {
           icon: BarChart,
-          title: "Smart Backlog Health",
+          title: "Smart Backlog Analysis",
           description: "AI spots stale items and suggests priorities"
         }
       ]
     },
     {
-      category: "Execution & Visibility",
+      category: "Epic & Project Management",
       features: [
         {
           icon: GitBranch,
-          title: "JIRA & GitHub Sync",
-          description: "Connect in 2 minutes, sync automatically"
+          title: "Epic Tracking",
+          description: "Manage epics with dependency mapping and progress visualization"
+        },
+        {
+          icon: Target,
+          title: "Project Command Centre",
+          description: "Centralized view of all projects and team collaboration"
         }
       ]
     },
     {
-      category: "Insights & Retrospectives",
+      category: "Agile Ceremonies",
+      features: [
+        {
+          icon: Calendar,
+          title: "Automated Retrospectives",
+          description: "Anonymous feedback to AI-powered insights"
+        },
+        {
+          icon: Users,
+          title: "Daily Standups",
+          description: "Streamlined standups with automated summaries"
+        }
+      ]
+    },
+    {
+      category: "Integration & Workflows",
       features: [
         {
           icon: Zap,
-          title: "Automated Retros",
-          description: "Anonymous feedback to AI-powered insights"
+          title: "Seamless Integrations",
+          description: "Connect JIRA, GitHub, and Microsoft 365 in minutes"
+        },
+        {
+          icon: BarChart,
+          title: "Team Analytics",
+          description: "Track performance and identify bottlenecks"
         }
       ]
     }
@@ -45,10 +70,10 @@ export function FeaturesSection() {
       <div className="container mx-auto max-w-5xl">
         <header className="text-center mb-12">
           <h2 id="features-heading" className="text-3xl md:text-4xl font-bold mb-4">
-            Everything You Need. Nothing You Don't.
+            Everything You Need for Agile Teams
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Four core capabilities that transform how teams work
+            Streamline your agile workflow from planning to delivery
           </p>
         </header>
         
