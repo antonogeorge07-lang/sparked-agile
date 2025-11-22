@@ -177,11 +177,11 @@ const Index = () => {
         context="newsletter"
       />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="safe">Plan with SAFe 6.0</TabsTrigger>
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-4 sm:mb-8">
+            <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+            <TabsTrigger value="safe" className="text-xs sm:text-sm">Plan with SAFe 6.0</TabsTrigger>
           </TabsList>
           
           <TabsContent value="overview" className="space-y-8">
@@ -193,15 +193,15 @@ const Index = () => {
             )}
             
             {/* Hero Section */}
-            <section className="py-8 md:py-16">
-              <div className="max-w-4xl mx-auto text-center animate-fade-in">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+            <section className="py-4 sm:py-8 md:py-16">
+              <div className="max-w-4xl mx-auto text-center animate-fade-in px-3 sm:px-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-primary bg-clip-text text-transparent">
                   Your AI-Powered Scrum Master
                 </h1>
-                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
                   Streamline your agile workflow with intelligent automation powered by SAFe 6.0. From daily standups to program increments, let AI handle the routine so you can focus on delivering value.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   {isAuthenticated ? (
                     <>
                       <Button size="lg" className="gap-2" onClick={() => navigate("/quick-start")}>

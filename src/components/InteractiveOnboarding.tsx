@@ -177,7 +177,7 @@ export const InteractiveOnboarding = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300 overflow-y-auto">
       <Card className="max-w-2xl w-full shadow-2xl border-2 animate-in slide-in-from-bottom-4 duration-500">
         {!completed ? (
           <>

@@ -169,7 +169,7 @@ export const AIAssistant = () => {
   }
 
   return (
-    <Card className="fixed bottom-6 right-6 w-[380px] h-[600px] shadow-2xl flex flex-col z-50">
+    <Card className="fixed bottom-6 right-6 w-[calc(100vw-3rem)] sm:w-[380px] h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px] shadow-2xl flex flex-col z-[60]">
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
           <MessageCircle className="h-5 w-5 text-primary" />

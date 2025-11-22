@@ -161,8 +161,8 @@ export default function Dashboard() {
       {isGuestMode && <GuestModeBar />}
       <SmartFeedbackTrigger />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
           {isGuestMode && (
             <>
               <GuestWelcomeBanner />
@@ -173,37 +173,37 @@ export default function Dashboard() {
           {!isGuestMode && <CeremonyHealthCheck />}
           
           <BackButton className="mb-4" />
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+          <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row items-start sm:items-center justify-between animate-fade-in mb-4 sm:mb-0">
+            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0">
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
               </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold">Sprint Health Dashboard</h1>
-                <p className="text-sm sm:text-base text-muted-foreground">Monitor performance with integrations</p>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold truncate">Sprint Health Dashboard</h1>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground truncate">Monitor performance with integrations</p>
               </div>
             </div>
-            <div className="flex gap-2 w-full sm:w-auto flex-wrap">
+            <div className="flex gap-2 w-full sm:w-auto">
               <Button 
                 onClick={() => setShowReminderDialog(true)} 
-                className="gap-2 flex-1 sm:flex-none" 
+                className="gap-1 sm:gap-2 flex-1 sm:flex-none text-xs sm:text-sm" 
                 size="sm"
                 variant="outline"
               >
-                <Bell className="w-4 h-4" />
-                <span className="sm:inline">Send Now</span>
+                <Bell className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span>Send</span>
               </Button>
               <Button 
                 onClick={() => setShowScheduleDialog(true)} 
-                className="gap-2 flex-1 sm:flex-none" 
+                className="gap-1 sm:gap-2 flex-1 sm:flex-none text-xs sm:text-sm" 
                 size="sm"
               >
-                <Calendar className="w-4 h-4" />
-                <span className="sm:inline">Schedule</span>
+                <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span>Schedule</span>
               </Button>
-              <Button onClick={handleExportToPowerPoint} className="gap-2 flex-1 sm:flex-none" size="sm" variant="outline">
-                <FileDown className="w-4 h-4" />
-                <span className="sm:inline">Export</span>
+              <Button onClick={handleExportToPowerPoint} className="gap-1 sm:gap-2 flex-1 sm:flex-none text-xs sm:text-sm" size="sm" variant="outline">
+                <FileDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Export</span>
               </Button>
             </div>
           </div>
