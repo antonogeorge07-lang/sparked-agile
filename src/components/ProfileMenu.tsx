@@ -79,9 +79,9 @@ export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/subscription")}>
+          <DropdownMenuItem onClick={() => navigate("/usage-analytics")}>
             <CreditCard className="mr-2 h-4 w-4" />
-            <span>Subscription</span>
+            <span>Usage Analytics</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate("/admin")}>
             <Settings className="mr-2 h-4 w-4" />

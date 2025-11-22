@@ -19,7 +19,7 @@ export function ProjectCommandCentreSection() {
     {
       icon: Users,
       title: "Team Collaboration",
-      description: "Manage up to 5 projects with team members and use PolyLinQ for seamless communication"
+      description: "Manage multiple projects with team members and collaborate seamlessly across ceremonies"
     }
   ];
 
