@@ -34,8 +34,8 @@ export function FooterSection() {
             <ul className="space-y-2 text-sm text-muted-foreground" role="list">
               <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
               <li>
-                <Link to="/subscription" className="hover:text-foreground transition-colors">
-                  Pricing
+                <Link to="/about" className="hover:text-foreground transition-colors">
+                  About Us
                 </Link>
               </li>
               <li><a href="#integrations" className="hover:text-foreground transition-colors">Integrations</a></li>
@@ -51,8 +51,8 @@ export function FooterSection() {
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="hover:text-foreground transition-colors">
-                  Blog
+                <Link to="/contact" className="hover:text-foreground transition-colors">
+                  Contact
                 </Link>
               </li>
               <li>

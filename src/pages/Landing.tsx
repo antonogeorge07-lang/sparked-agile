@@ -98,36 +98,26 @@ export default function Landing() {
               </span>
             </Link>
             <div className="flex items-center gap-2 sm:gap-4">
-              <Link to="/about" className="hidden md:block">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => trackButtonClick('About', 'nav')}
-                  aria-label="Learn about SAAI"
-                >
-                  About
-                </Button>
-              </Link>
-              <Link to="/subscription" className="hidden md:block">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => trackButtonClick('Pricing', 'nav')}
-                  aria-label="View pricing plans"
-                >
-                  Pricing
-                </Button>
-              </Link>
-              <Link to="/blog" className="hidden md:block">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => trackButtonClick('Blog', 'nav')}
-                  aria-label="Read our blog"
-                >
-                  Blog
-                </Button>
-              </Link>
+            <Link to="/about" className="hidden md:block">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => trackButtonClick('About', 'nav')}
+                aria-label="Learn about SAAI"
+              >
+                About
+              </Button>
+            </Link>
+            <Link to="/contact" className="hidden md:block">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => trackButtonClick('Contact', 'nav')}
+                aria-label="Contact us"
+              >
+                Contact
+              </Button>
+            </Link>
               <Link to="/auth" className="hidden sm:block">
                 <Button 
                   variant="ghost" 
