@@ -28,7 +28,7 @@ export const PrivacyBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <Card className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50 border-2 border-primary/20 bg-card/95 backdrop-blur-sm shadow-elevated">
+    <Card className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-[50] border-2 border-primary/20 bg-card/95 backdrop-blur-sm shadow-elevated">
       <div className="p-4">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">

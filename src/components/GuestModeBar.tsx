@@ -23,7 +23,7 @@ export const GuestModeBar = ({ onTryDemo }: GuestModeBarProps) => {
   const isCondensed = visitorData && visitorData.visit_count >= 3;
 
   return (
-    <Card className={`fixed bottom-0 left-0 right-0 z-50 border-t-2 border-primary/20 bg-card/95 backdrop-blur-sm shadow-elevated transition-all duration-300 ${
+    <Card className={`fixed bottom-0 left-0 right-0 z-[45] border-t-2 border-primary/20 bg-card/95 backdrop-blur-sm shadow-elevated transition-all duration-300 ${
       isCondensed ? 'py-2' : 'py-3'
     } safe-area-bottom`}>
       <div className="container mx-auto px-4">

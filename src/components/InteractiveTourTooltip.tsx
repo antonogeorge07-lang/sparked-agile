@@ -88,7 +88,7 @@ export const InteractiveTourTooltip = ({ steps, onComplete, isActive }: Interact
 
   return (
     <div
-      className="fixed z-50 animate-fade-in"
+      className="fixed z-[80] animate-fade-in"
       style={{
         top: `${tooltipPosition.top}px`,
         left: `${tooltipPosition.left}px`,

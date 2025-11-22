@@ -109,18 +109,18 @@ export function ApproveUsersDialog({ open, onOpenChange, onUserApproved }: Appro
             pendingUsers.map((user) => (
               <Card key={user.id} className="border-l-4 border-l-orange-500">
                 <CardContent className="pt-6">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-2 flex-1">
-                      <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-muted-foreground" />
-                        <span className="font-semibold">{user.full_name || 'No name provided'}</span>
-                        <Badge variant="outline" className="bg-orange-500/10 text-orange-700">
+                  <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-0 sm:justify-between">
+                    <div className="space-y-2 flex-1 min-w-0 w-full">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <User className="w-4 h-4 text-muted-foreground shrink-0" />
+                        <span className="font-semibold truncate">{user.full_name || 'No name provided'}</span>
+                        <Badge variant="outline" className="bg-orange-500/10 text-orange-700 shrink-0">
                           Pending
                         </Badge>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Mail className="w-4 h-4" />
-                        {user.email}
+                        <Mail className="w-4 h-4 shrink-0" />
+                        <span className="truncate">{user.email}</span>
                       </div>
                       <p className="text-xs text-muted-foreground">
                         Registered: {new Date(user.created_at).toLocaleDateString()}
@@ -129,7 +129,7 @@ export function ApproveUsersDialog({ open, onOpenChange, onUserApproved }: Appro
                     <Button
                       onClick={() => handleApprove(user.id)}
                       disabled={approvingUserId === user.id}
-                      className="gap-2"
+                      className="gap-2 w-full sm:w-auto shrink-0"
                     >
                       {approvingUserId === user.id ? (
                         "Approving..."

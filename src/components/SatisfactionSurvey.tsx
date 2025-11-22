@@ -74,7 +74,7 @@ export const SatisfactionSurvey = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-in fade-in">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-background/80 backdrop-blur-sm animate-in fade-in p-4">
       <Card className="w-full max-w-md shadow-elevated">
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <div>

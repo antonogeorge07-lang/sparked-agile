@@ -45,30 +45,30 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+      <DialogContent className="max-w-4xl w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="sticky top-0 bg-background z-10 pb-4">
+          <DialogTitle className="text-2xl sm:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
             Experience SAAI
           </DialogTitle>
-          <DialogDescription className="text-base">
+          <DialogDescription className="text-sm sm:text-base">
             See how AI helps with your agile ceremonies and workflow management
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-6 py-4">
+        <div className="space-y-4 sm:space-y-6 py-2 sm:py-4">
           {/* Hero Section */}
-          <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-primary/10 via-accent/10 to-background p-8">
-            <div className="relative z-10 text-center space-y-4">
+          <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-primary/10 via-accent/10 to-background p-4 sm:p-8">
+            <div className="relative z-10 text-center space-y-3 sm:space-y-4">
               <Badge className="mb-2" variant="outline">
                 <Play className="w-3 h-3 mr-1" />
                 Interactive Demo
               </Badge>
-              <h3 className="text-2xl font-bold">Try it yourself!</h3>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <h3 className="text-xl sm:text-2xl font-bold">Try it yourself!</h3>
+              <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
                 Sign up now to access a full demo workspace with sample data. Experience AI-powered 
                 sprint planning, streamlined standups, and intelligent retrospectives.
               </p>
-              <Button size="lg" className="mt-4" onClick={onClose}>
+              <Button size="lg" className="mt-3 sm:mt-4" onClick={onClose}>
                 Start Your Free Trial →
               </Button>
             </div>
@@ -76,19 +76,19 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
           {/* Features Grid */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Key Features</h3>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Key Features</h3>
+            <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
               {features.map((feature, index) => (
                 <div 
                   key={index}
-                  className="flex gap-3 p-4 rounded-lg border bg-card hover:shadow-md transition-shadow"
+                  className="flex gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg border bg-card hover:shadow-md transition-shadow"
                 >
-                  <div className="flex-shrink-0 mt-1">
+                  <div className="flex-shrink-0 mt-0.5 sm:mt-1">
                     {feature.icon}
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">{feature.title}</h4>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  <div className="min-w-0">
+                    <h4 className="font-semibold mb-1 text-sm sm:text-base">{feature.title}</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -96,8 +96,8 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           </div>
 
           {/* Integration Highlights */}
-          <div className="p-6 rounded-lg border bg-muted/30">
-            <h3 className="text-lg font-semibold mb-3">Available Integrations</h3>
+          <div className="p-4 sm:p-6 rounded-lg border bg-muted/30">
+            <h3 className="text-base sm:text-lg font-semibold mb-3">Available Integrations</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
               <div className="space-y-2">
                 <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
@@ -127,15 +127,15 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           </div>
 
           {/* CTA Footer */}
-          <div className="flex justify-between items-center pt-4 border-t">
-            <p className="text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 pt-4 border-t">
+            <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
               Ready to improve your agile workflow?
             </p>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={onClose}>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button variant="outline" onClick={onClose} className="flex-1 sm:flex-initial">
                 Maybe Later
               </Button>
-              <Button onClick={onClose}>
+              <Button onClick={onClose} className="flex-1 sm:flex-initial">
                 Get Started Free
               </Button>
             </div>

@@ -59,7 +59,7 @@ export const FeedbackWidget = () => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 shadow-elevated hover:shadow-xl transition-shadow"
+          className="fixed bottom-6 right-6 z-[55] rounded-full w-14 h-14 shadow-elevated hover:shadow-xl transition-shadow"
           size="icon"
         >
           <MessageSquare className="h-6 w-6" />
@@ -68,7 +68,7 @@ export const FeedbackWidget = () => {
 
       {/* Feedback Form */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 z-50 w-96 shadow-elevated animate-in slide-in-from-bottom-5">
+        <Card className="fixed bottom-6 right-6 z-[60] w-[calc(100vw-3rem)] sm:w-96 max-w-96 shadow-elevated animate-in slide-in-from-bottom-5">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
             <div>
               <CardTitle className="text-lg">Send Feedback</CardTitle>
