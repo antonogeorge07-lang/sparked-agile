@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { TypingIndicator } from "@/components/chat/TypingIndicator";
 import { chatSounds } from "@/utils/chatSounds";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   role: "user" | "assistant";
@@ -19,9 +20,41 @@ export const AIAssistant = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const firstTokenReceived = useRef(false);
+
+  // Load chat history from database
+  useEffect(() => {
+    const loadChatHistory = async () => {
+      setIsLoadingHistory(true);
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data, error } = await supabase
+          .from('chat_messages')
+          .select('role, content, created_at')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setMessages(data.map(msg => ({ role: msg.role as 'user' | 'assistant', content: msg.content })));
+        }
+      } catch (error) {
+        console.error('Error loading chat history:', error);
+      } finally {
+        setIsLoadingHistory(false);
+      }
+    };
+
+    if (isOpen) {
+      loadChatHistory();
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -119,6 +152,23 @@ export const AIAssistant = () => {
         }
       }
     }
+
+    return assistantContent;
+  };
+
+  const saveMessageToDb = async (role: 'user' | 'assistant', content: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('chat_messages')
+        .insert({ user_id: user.id, role, content });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
   };
 
   const handleSend = async () => {
@@ -133,8 +183,16 @@ export const AIAssistant = () => {
     setInput("");
     setIsLoading(true);
 
+    // Save user message to database
+    await saveMessageToDb('user', userMessage.content);
+
     try {
-      await streamChat(newMessages);
+      const assistantResponse = await streamChat(newMessages);
+      
+      // Save assistant response to database
+      if (assistantResponse) {
+        await saveMessageToDb('assistant', assistantResponse);
+      }
     } catch (error) {
       console.error("Chat error:", error);
       setIsTyping(false);
@@ -146,6 +204,33 @@ export const AIAssistant = () => {
     } finally {
       setIsLoading(false);
       setIsTyping(false);
+    }
+  };
+
+  const handleClearChat = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('chat_messages')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setMessages([]);
+      toast({
+        title: "Chat cleared",
+        description: "Your conversation history has been deleted.",
+      });
+    } catch (error) {
+      console.error('Error clearing chat:', error);
+      toast({
+        title: "Error",
+        description: "Failed to clear chat history.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -175,19 +260,36 @@ export const AIAssistant = () => {
           <MessageCircle className="h-5 w-5 text-primary" />
           <h3 className="font-semibold">Omair - AI Assistant</h3>
         </div>
-        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-          <X className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-2">
+          {messages.length > 0 && (
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleClearChat}
+              title="Clear chat history"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-        {messages.length === 0 && (
+        {isLoadingHistory ? (
+          <div className="text-center text-muted-foreground py-8">
+            <Loader2 className="h-8 w-8 mx-auto mb-3 animate-spin" />
+            <p className="text-sm">Loading chat history...</p>
+          </div>
+        ) : messages.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
             <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p className="text-sm font-medium mb-1">Hi! I'm Omair 👋</p>
             <p className="text-xs">Your AI assistant for agile best practices and platform guidance. Ask me anything!</p>
           </div>
-        )}
+        ) : null}
         <div className="space-y-4">
           {messages.map((msg, idx) => (
             <div
