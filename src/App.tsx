@@ -19,7 +19,6 @@ import NotFound from "./pages/NotFound";
 // Lazy load non-critical pages for better performance
 const Admin = lazy(() => import("./pages/Admin"));
 const SecurityIncidents = lazy(() => import("./pages/SecurityIncidents"));
-const Subscription = lazy(() => import("./pages/Subscription"));
 const Workflows = lazy(() => import("./pages/Workflows"));
 const ProjectCommandCentre = lazy(() => import("./pages/ProjectCommandCentre"));
 const Standup = lazy(() => import("./pages/Standup"));
@@ -42,12 +41,7 @@ const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
-const PolyLinQ = lazy(() => import("./pages/PolyLinQ"));
 const FeatureDemo = lazy(() => import("./pages/FeatureDemo"));
-const Blog = lazy(() => import("./pages/Blog"));
-const AITransformingAgileDelivery = lazy(() => import("./pages/blog/AITransformingAgileDelivery"));
-const AutomatedSprintPlanningGuide = lazy(() => import("./pages/blog/AutomatedSprintPlanningGuide"));
-const AgileBacklogPrioritizationAI = lazy(() => import("./pages/blog/AgileBacklogPrioritizationAI"));
 const About = lazy(() => import("./pages/About"));
 const EpicManagement = lazy(() => import("./pages/EpicManagement"));
 const EpicDetail = lazy(() => import("./pages/EpicDetail"));
@@ -87,7 +81,6 @@ const App = () => {
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/admin/incidents" element={<SecurityIncidents />} />
-                  <Route path="/subscription" element={<Subscription />} />
                   <Route path="/workflows" element={<Workflows />} />
                   <Route path="/standup" element={<Standup />} />
                   <Route path="/dashboard" element={<Dashboard />} />
@@ -109,13 +102,8 @@ const App = () => {
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/user-guide" element={<UserGuide />} />
-                  <Route path="/polylinq" element={<PolyLinQ />} />
                   <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
                   <Route path="/feature-demo" element={<FeatureDemo />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/ai-transforming-agile-delivery" element={<AITransformingAgileDelivery />} />
-                  <Route path="/blog/automated-sprint-planning-guide" element={<AutomatedSprintPlanningGuide />} />
-                  <Route path="/blog/agile-backlog-prioritization-ai" element={<AgileBacklogPrioritizationAI />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/epic-management" element={<EpicManagement />} />
                   <Route path="/epic/:id" element={<EpicDetail />} />

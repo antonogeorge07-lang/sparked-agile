@@ -1,6 +1,6 @@
 import { 
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
-  ListFilter, Activity, Calendar, Users, Workflow, Languages, 
+  ListFilter, Activity, Calendar, Users, Workflow, 
   BookOpen, Shield, Settings, Network, Star, TrendingUp
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -66,9 +66,8 @@ const menuSections = [
     ]
   },
   {
-    label: "Content & Tools",
+    label: "Help & Resources",
     items: [
-      { title: "PolyLinQ Translator", url: "/polylinq", icon: Languages },
       { title: "User Guide", url: "/user-guide", icon: BookOpen },
     ]
   },
