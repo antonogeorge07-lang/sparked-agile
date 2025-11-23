@@ -1483,6 +1483,7 @@ export type Database = {
           name: string
           updated_at: string
           user_id: string | null
+          workspace_id: string | null
         }
         Insert: {
           created_at?: string
@@ -1491,6 +1492,7 @@ export type Database = {
           name: string
           updated_at?: string
           user_id?: string | null
+          workspace_id?: string | null
         }
         Update: {
           created_at?: string
@@ -1499,6 +1501,7 @@ export type Database = {
           name?: string
           updated_at?: string
           user_id?: string | null
+          workspace_id?: string | null
         }
         Relationships: [
           {
@@ -1506,6 +1509,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
             referencedColumns: ["id"]
           },
         ]
@@ -2325,6 +2335,71 @@ export type Database = {
           },
         ]
       }
+      workspace_members: {
+        Row: {
+          created_at: string
+          id: string
+          invited_by: string | null
+          joined_at: string
+          role: string
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invited_by?: string | null
+          joined_at?: string
+          role?: string
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invited_by?: string | null
+          joined_at?: string
+          role?: string
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          owner_id: string
+          settings: Json | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          owner_id: string
+          settings?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+          settings?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -2363,6 +2438,16 @@ export type Database = {
       create_epic_progress_snapshot: {
         Args: { epic_id_param: string }
         Returns: undefined
+      }
+      get_platform_stats: {
+        Args: never
+        Returns: {
+          active_users_30d: number
+          new_users_7d: number
+          total_projects: number
+          total_users: number
+          total_workspaces: number
+        }[]
       }
       get_project_limit_info: {
         Args: { user_id_param: string }

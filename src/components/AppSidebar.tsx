@@ -24,7 +24,7 @@ const menuSections = [
     items: [
       { title: "Quick Start Guide", url: "/quick-start", icon: Star, tour: "quick-start" },
       { title: "Home", url: "/home", icon: Home },
-      { title: "My Projects", url: "/my-projects", icon: FolderKanban },
+      { title: "My Workspace", url: "/my-projects", icon: FolderKanban },
     ]
   },
   {
