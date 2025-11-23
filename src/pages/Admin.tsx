@@ -559,15 +559,18 @@ export default function Admin() {
         onUserApproved={loadProfiles}
       />
 
-      {selectedUserForProjects && (
-        <AssignProjectsDialog
-          open={assignProjectsDialogOpen}
-          onOpenChange={setAssignProjectsDialogOpen}
-          userId={selectedUserForProjects.id}
-          userName={selectedUserForProjects.name}
-          onAssigned={loadProfiles}
-        />
-      )}
+      <AssignProjectsDialog
+        open={assignProjectsDialogOpen}
+        onOpenChange={(open) => {
+          setAssignProjectsDialogOpen(open);
+          if (!open) {
+            setSelectedUserForProjects(null);
+          }
+        }}
+        userId={selectedUserForProjects?.id || ''}
+        userName={selectedUserForProjects?.name || ''}
+        onAssigned={loadProfiles}
+      />
     </div>
   );
 }
