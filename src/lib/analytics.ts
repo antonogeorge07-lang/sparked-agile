@@ -24,6 +24,33 @@ declare global {
   }
 }
 
+/**
+ * Analytics Service
+ * 
+ * STATUS: Ready for configuration, currently inactive
+ * 
+ * This analytics system is fully integrated but not actively sending data.
+ * To activate:
+ * 1. Choose an analytics provider (Google Analytics, Mixpanel, Amplitude, etc.)
+ * 2. Add the provider's SDK to dependencies
+ * 3. Configure API keys in Lovable Cloud secrets
+ * 4. Update the methods below to send events to your chosen provider
+ * 
+ * Current integration points:
+ * - AnalyticsProvider: Wraps the app and tracks page views
+ * - useAnalytics hook: Available throughout the app for event tracking
+ * - Landing page: Tracks button clicks and user interactions
+ * 
+ * Events currently tracked (when provider is configured):
+ * - Page views
+ * - Button clicks
+ * - User signup/login
+ * - Feature usage
+ * - Integration connections
+ * - Search queries
+ * - Errors
+ */
+
 class Analytics {
   private enabled: boolean = false;
   private measurementId: string = '';
