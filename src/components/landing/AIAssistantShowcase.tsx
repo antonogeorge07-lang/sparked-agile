@@ -61,8 +61,8 @@ export function AIAssistantShowcase() {
         {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {features.map((feature, index) => (
-            <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-elegant">
-              <CardContent className="pt-6 text-center">
+            <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-elegant h-full">
+              <CardContent className="pt-6 text-center h-full flex flex-col items-center">
                 <div 
                   className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mx-auto mb-4"
                   aria-hidden="true"
@@ -70,17 +70,17 @@ export function AIAssistantShowcase() {
                   <feature.icon className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Interactive Demo Section */}
-        <div className="grid md:grid-cols-2 gap-8 items-start">
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
           {/* Demo Chat Interface */}
-          <Card className="border-2 border-primary/20 shadow-elegant">
-            <CardContent className="p-6">
+          <Card className="border-2 border-primary/20 shadow-elegant h-full flex flex-col">
+            <CardContent className="p-6 flex-1 flex flex-col">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center">
                   <MessageCircle className="h-5 w-5 text-primary-foreground" />
@@ -126,37 +126,37 @@ export function AIAssistantShowcase() {
           </Card>
 
           {/* Benefits & CTA */}
-          <div className="space-y-6">
-            <Card className="border-2">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-xl mb-4">What Omair Can Help You With:</h3>
-                <ul className="space-y-3" role="list">
+          <div className="space-y-6 h-full flex flex-col">
+            <Card className="border-2 flex-1">
+              <CardContent className="p-6 h-full flex flex-col">
+                <h3 className="font-semibold text-xl mb-6">What Omair Can Help You With:</h3>
+                <ul className="space-y-4 flex-1" role="list">
                   <li className="flex gap-3 items-start">
-                    <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
-                    <div>
-                      <p className="font-medium">Sprint Planning Guidance</p>
-                      <p className="text-sm text-muted-foreground">Learn about story point estimation, velocity concepts, and capacity planning strategies</p>
+                    <Sparkles className="h-5 w-5 text-primary mt-1 flex-shrink-0" aria-hidden="true" />
+                    <div className="flex-1">
+                      <p className="font-medium mb-1">Sprint Planning Guidance</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Learn about story point estimation, velocity concepts, and capacity planning strategies</p>
                     </div>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
-                    <div>
-                      <p className="font-medium">Agile Methodology Advice</p>
-                      <p className="text-sm text-muted-foreground">Get tips on standups, retrospectives, reviews, and refinement sessions</p>
+                    <Sparkles className="h-5 w-5 text-primary mt-1 flex-shrink-0" aria-hidden="true" />
+                    <div className="flex-1">
+                      <p className="font-medium mb-1">Agile Methodology Advice</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Get tips on standups, retrospectives, reviews, and refinement sessions</p>
                     </div>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
-                    <div>
-                      <p className="font-medium">Team Best Practices</p>
-                      <p className="text-sm text-muted-foreground">Advice on collaboration, conflict resolution, and productivity improvement</p>
+                    <Sparkles className="h-5 w-5 text-primary mt-1 flex-shrink-0" aria-hidden="true" />
+                    <div className="flex-1">
+                      <p className="font-medium mb-1">Team Best Practices</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Advice on collaboration, conflict resolution, and productivity improvement</p>
                     </div>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <Sparkles className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
-                    <div>
-                      <p className="font-medium">Platform Navigation</p>
-                      <p className="text-sm text-muted-foreground">Help understanding SAAI features and how to use integrations</p>
+                    <Sparkles className="h-5 w-5 text-primary mt-1 flex-shrink-0" aria-hidden="true" />
+                    <div className="flex-1">
+                      <p className="font-medium mb-1">Platform Navigation</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Help understanding SAAI features and how to use integrations</p>
                     </div>
                   </li>
                 </ul>
