@@ -97,7 +97,6 @@ const Integrations = () => {
       return;
     }
 
-    // Don't block pending users, but they won't see projects they're not allocated to
     fetchProjects();
   };
 
