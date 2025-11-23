@@ -22,8 +22,8 @@ export function AIAssistantShowcase() {
     },
     {
       icon: Clock,
-      title: "24/7 Available",
-      description: "Always ready to assist, no matter your timezone or schedule"
+      title: "Quick Responses",
+      description: "Get fast answers to your agile questions during the demo"
     },
     {
       icon: Shield,
