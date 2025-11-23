@@ -90,7 +90,6 @@ export const Navigation = () => {
     { path: "/sprint-planning-assistant", label: "Sprint AI", icon: Sparkles },
     { path: "/sprint-review-coordinator", label: "Review", icon: Presentation },
     { path: "/backlog-refinement", label: "Backlog", icon: ListFilter },
-    { path: "/usage-analytics", label: "Analytics", icon: Activity },
     { path: "/feature-demo", label: "Feature Demo", icon: BookOpen },
   ];
 

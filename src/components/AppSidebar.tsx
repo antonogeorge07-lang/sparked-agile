@@ -54,7 +54,6 @@ const menuSections = [
   {
     label: "Analytics & Insights",
     items: [
-      { title: "Usage Analytics", url: "/usage-analytics", icon: Activity },
       { title: "Flow Metrics", url: "/flow-metrics", icon: TrendingUp },
     ]
   },
