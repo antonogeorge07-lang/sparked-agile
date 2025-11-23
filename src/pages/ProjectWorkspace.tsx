@@ -291,21 +291,25 @@ export default function ProjectWorkspace() {
         </div>
 
         <Tabs value={`step${currentStep}`} onValueChange={(v) => setCurrentStep(parseInt(v.replace("step", "")))}>
-          <TabsList className="w-full flex flex-wrap justify-between gap-2 sm:grid sm:grid-cols-4">
-            <TabsTrigger value="step1" className="flex-1 sm:flex-none text-xs sm:text-sm">
-              {currentStep > 1 ? <CheckCircle2 className="w-4 h-4 mr-1" /> : "1."}
-              <span className="ml-1">Initialize</span>
+          <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 h-auto p-1">
+            <TabsTrigger value="step1" className="text-xs sm:text-sm flex items-center justify-center gap-1 h-auto py-2">
+              {currentStep > 1 ? <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" /> : <span className="font-semibold">1</span>}
+              <span className="hidden sm:inline">Initialize</span>
+              <span className="sm:hidden">Init</span>
             </TabsTrigger>
-            <TabsTrigger value="step2" disabled={!workspaceId} className="flex-1 sm:flex-none text-xs sm:text-sm">
-              {currentStep > 2 ? <CheckCircle2 className="w-4 h-4 mr-1" /> : "2."}
-              <span className="ml-1">Connect Tools</span>
+            <TabsTrigger value="step2" disabled={!workspaceId} className="text-xs sm:text-sm flex items-center justify-center gap-1 h-auto py-2">
+              {currentStep > 2 ? <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" /> : <span className="font-semibold">2</span>}
+              <span className="hidden sm:inline">Connect Tools</span>
+              <span className="sm:hidden">Tools</span>
             </TabsTrigger>
-            <TabsTrigger value="step3" disabled={!workspaceId} className="flex-1 sm:flex-none text-xs sm:text-sm">
-              {currentStep > 3 ? <CheckCircle2 className="w-4 h-4 mr-1" /> : "3."}
-              <span className="ml-1">Team Members</span>
+            <TabsTrigger value="step3" disabled={!workspaceId} className="text-xs sm:text-sm flex items-center justify-center gap-1 h-auto py-2">
+              {currentStep > 3 ? <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" /> : <span className="font-semibold">3</span>}
+              <span className="hidden sm:inline">Team Members</span>
+              <span className="sm:hidden">Team</span>
             </TabsTrigger>
-            <TabsTrigger value="step4" disabled={!workspaceId} className="flex-1 sm:flex-none text-xs sm:text-sm">
-              <span>4. Review</span>
+            <TabsTrigger value="step4" disabled={!workspaceId} className="text-xs sm:text-sm flex items-center justify-center gap-1 h-auto py-2">
+              <span className="font-semibold">4</span>
+              <span className="hidden sm:inline">Review</span>
             </TabsTrigger>
           </TabsList>
 

@@ -14,6 +14,7 @@ import { BackButton } from "@/components/BackButton";
 import { ApproveUsersDialog } from "@/components/ApproveUsersDialog";
 import { useUserRole } from "@/hooks/useUserRole";
 import { AssignProjectsDialog } from "@/components/AssignProjectsDialog";
+import { LoadingState } from "@/components/LoadingState";
 
 interface Profile {
   id: string;
@@ -138,6 +139,8 @@ export default function Admin() {
   const [showApproveDialog, setShowApproveDialog] = useState(false);
   const [assignProjectsDialogOpen, setAssignProjectsDialogOpen] = useState(false);
   const [selectedUserForProjects, setSelectedUserForProjects] = useState<{ id: string; name: string } | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
   const { toast } = useToast();
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -179,20 +182,25 @@ export default function Admin() {
   };
 
   const loadProfiles = async () => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .order('created_at', { ascending: false });
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) {
+      if (error) throw error;
+      
+      setProfiles(data || []);
+    } catch (error: any) {
       console.error('Error loading profiles:', error);
       toast({
-        title: "Error",
-        description: "Failed to load user profiles",
+        title: "Failed to load users",
+        description: error.message || "Please try refreshing the page. If the problem persists, contact support.",
         variant: "destructive",
       });
-    } else {
-      setProfiles(data || []);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -219,46 +227,42 @@ export default function Admin() {
   };
 
   const updateUserRole = async (userId: string, newRole: 'admin' | 'member' | 'pending') => {
-    // Delete existing roles
-    const { error: deleteError } = await supabase
-      .from('user_roles')
-      .delete()
-      .eq('user_id', userId);
+    try {
+      // Delete existing roles
+      const { error: deleteError } = await supabase
+        .from('user_roles')
+        .delete()
+        .eq('user_id', userId);
 
-    if (deleteError) {
+      if (deleteError) throw deleteError;
+
+      // Insert new role
+      const { error: insertError } = await supabase
+        .from('user_roles')
+        .insert({ user_id: userId, role: newRole });
+
+      if (insertError) throw insertError;
+
+      // Update profiles table for display purposes
+      await supabase
+        .from('profiles')
+        .update({ role: newRole })
+        .eq('id', userId);
+
       toast({
-        title: "Error",
-        description: "Failed to update user role",
+        title: "Role updated successfully",
+        description: `User is now ${newRole === 'admin' ? 'an' : 'a'} ${newRole}`,
+      });
+      
+      await loadProfiles();
+    } catch (error: any) {
+      console.error('Error updating role:', error);
+      toast({
+        title: "Failed to update role",
+        description: error.message || "Please check your permissions and try again.",
         variant: "destructive",
       });
-      return;
     }
-
-    // Insert new role
-    const { error: insertError } = await supabase
-      .from('user_roles')
-      .insert({ user_id: userId, role: newRole });
-
-    if (insertError) {
-      toast({
-        title: "Error",
-        description: "Failed to update user role",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Update profiles table for display purposes
-    await supabase
-      .from('profiles')
-      .update({ role: newRole })
-      .eq('id', userId);
-
-    toast({
-      title: "Success",
-      description: `User role updated to ${newRole}`,
-    });
-    await loadProfiles();
   };
 
   const getRoleBadge = (role: string) => {
@@ -278,8 +282,8 @@ export default function Admin() {
     return (
       <div className="min-h-screen bg-gradient-subtle">
         <Navigation />
-        <div className="container mx-auto px-4 py-8 flex items-center justify-center">
-          <p className="text-muted-foreground">Loading...</p>
+        <div className="container mx-auto px-4 py-8">
+          <LoadingState message="Loading admin dashboard..." size="lg" />
         </div>
       </div>
     );
@@ -295,6 +299,17 @@ export default function Admin() {
     const matchesRole = filterRole === "all" || profile.role === filterRole;
     return matchesSearch && matchesRole;
   });
+
+  // Pagination
+  const totalPages = Math.ceil(filteredProfiles.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProfiles = filteredProfiles.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, filterRole]);
 
   const pendingCount = profiles.filter(p => p.role === 'pending').length;
   const memberCount = profiles.filter(p => p.role === 'member').length;
@@ -459,23 +474,78 @@ export default function Admin() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {filteredProfiles.length === 0 ? (
+                {paginatedProfiles.length === 0 ? (
                   <p className="text-muted-foreground text-center py-8">
                     {searchQuery || filterRole !== "all" ? "No users match your filters" : "No users found"}
                   </p>
                 ) : (
-                  filteredProfiles.map((profile) => (
-                    <UserProfileRow
-                      key={profile.id}
-                      profile={profile}
-                      onUpdateRole={updateUserRole}
-                      getRoleBadge={getRoleBadge}
-                      onAssignProjects={(userId, userName) => {
-                        setSelectedUserForProjects({ id: userId, name: userName });
-                        setAssignProjectsDialogOpen(true);
-                      }}
-                    />
-                  ))
+                  <>
+                    {paginatedProfiles.map((profile) => (
+                      <UserProfileRow
+                        key={profile.id}
+                        profile={profile}
+                        onUpdateRole={updateUserRole}
+                        getRoleBadge={getRoleBadge}
+                        onAssignProjects={(userId, userName) => {
+                          setSelectedUserForProjects({ id: userId, name: userName });
+                          setAssignProjectsDialogOpen(true);
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                      <div className="flex items-center justify-between pt-4 border-t">
+                        <p className="text-sm text-muted-foreground">
+                          Showing {startIndex + 1}-{Math.min(endIndex, filteredProfiles.length)} of {filteredProfiles.length} users
+                        </p>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            Previous
+                          </Button>
+                          <div className="flex items-center gap-1">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                              .filter(page => {
+                                // Show first page, last page, current page, and pages around current
+                                return page === 1 || 
+                                       page === totalPages || 
+                                       (page >= currentPage - 1 && page <= currentPage + 1);
+                              })
+                              .map((page, idx, arr) => {
+                                // Add ellipsis if there's a gap
+                                const showEllipsisBefore = idx > 0 && page - arr[idx - 1] > 1;
+                                return (
+                                  <div key={page} className="flex items-center gap-1">
+                                    {showEllipsisBefore && <span className="px-2 text-muted-foreground">...</span>}
+                                    <Button
+                                      variant={currentPage === page ? "default" : "outline"}
+                                      size="sm"
+                                      onClick={() => setCurrentPage(page)}
+                                      className="w-9 h-9 p-0"
+                                    >
+                                      {page}
+                                    </Button>
+                                  </div>
+                                );
+                              })}
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </CardContent>

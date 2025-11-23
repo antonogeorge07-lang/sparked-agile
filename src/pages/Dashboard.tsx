@@ -33,6 +33,7 @@ import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
+import { LoadingState } from "@/components/LoadingState";
 import { 
   sampleVelocityData, 
   sampleImpediments, 
@@ -46,6 +47,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
+  const [isLoadingProjects, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [severityFilter, setSeverityFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
@@ -89,18 +91,30 @@ export default function Dashboard() {
   }, []);
 
   const loadProjects = async () => {
-    // Only load projects that have integrations
-    const { data } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        integrations!inner(id)
-      `)
-      .order('created_at', { ascending: false });
+    setIsLoading(true);
+    try {
+      // Only load projects that have integrations
+      const { data, error } = await supabase
+        .from('projects')
+        .select(`
+          *,
+          integrations!inner(id)
+        `)
+        .order('created_at', { ascending: false });
 
-    if (data && data.length > 0) {
-      setProjects(data);
-      setSelectedProject(data[0].id);
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        setProjects(data);
+        setSelectedProject(data[0].id);
+      }
+    } catch (error: any) {
+      console.error('Error loading projects:', error);
+      toast.error("Failed to load projects", {
+        description: error.message || "Please refresh the page to try again."
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -161,7 +175,12 @@ export default function Dashboard() {
       {isGuestMode && <GuestModeBar />}
       <SmartFeedbackTrigger />
       
-      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+      {isLoadingProjects ? (
+        <div className="container mx-auto px-4 py-8">
+          <LoadingState message="Loading dashboard..." size="lg" />
+        </div>
+      ) : (
+        <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
           {isGuestMode && (
             <>
@@ -477,6 +496,7 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+      )}
 
       {selectedProject && projects.length > 0 && (
         <>
