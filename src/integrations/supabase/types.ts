@@ -2413,7 +2413,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      approve_user: { Args: { user_id_param: string }; Returns: undefined }
       calculate_closure_readiness: {
         Args: { epic_id_param: string }
         Returns: Json
@@ -2493,8 +2492,6 @@ export type Database = {
         Returns: string
       }
       is_admin: { Args: { user_id: string }; Returns: boolean }
-      is_approved_user: { Args: { user_id: string }; Returns: boolean }
-      is_pending_user: { Args: { user_id: string }; Returns: boolean }
       toggle_integration_status: {
         Args: { integration_id: string; new_status: boolean }
         Returns: boolean
