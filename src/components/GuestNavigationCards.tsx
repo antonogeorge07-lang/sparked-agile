@@ -28,19 +28,11 @@ const navigationCards = [
     color: "text-green-500",
     bgColor: "bg-green-500/10",
   },
-  {
-    title: "Analytics",
-    description: "Track velocity, flow metrics, and team performance",
-    icon: BarChart3,
-    path: "/usage-analytics",
-    color: "text-orange-500",
-    bgColor: "bg-orange-500/10",
-  },
 ];
 
 export const GuestNavigationCards = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {navigationCards.map((card) => {
         const Icon = card.icon;
         return (
