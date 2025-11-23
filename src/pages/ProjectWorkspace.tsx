@@ -12,13 +12,10 @@ import { TeamManagement } from "@/components/TeamManagement";
 import { BackButton } from "@/components/BackButton";
 import { CelebrationModal } from "@/components/CelebrationModal";
 import { ProgressTracker } from "@/components/ProgressTracker";
-import { useUserRole } from "@/hooks/useUserRole";
-import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 export default function ProjectWorkspace() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { isPending } = useUserRole();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [projectId, setProjectId] = useState<string | null>(null);
@@ -273,7 +270,6 @@ export default function ProjectWorkspace() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
-      {isPending && <PendingApprovalBanner />}
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <BackButton className="mb-4" />

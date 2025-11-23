@@ -13,14 +13,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BackButton } from "@/components/BackButton";
-import { useUserRole } from "@/hooks/useUserRole";
-import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
 
 export default function SprintReviewCoordinator() {
   const navigate = useNavigate();
-  const { isPending } = useUserRole();
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   
@@ -262,7 +259,6 @@ export default function SprintReviewCoordinator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
-      {isPending && <PendingApprovalBanner />}
       <div className="max-w-6xl mx-auto">
         <BackButton className="mb-4" />
         <div className="mb-8">

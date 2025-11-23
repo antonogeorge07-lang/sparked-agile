@@ -14,8 +14,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ExternalLink, Edit, CheckCircle2, Circle } from "lucide-react";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
-import { useUserRole } from "@/hooks/useUserRole";
-import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 interface JiraIssue {
   key: string;
@@ -40,7 +38,6 @@ interface GithubIssue {
 }
 
 const TaskManagement = () => {
-  const { isPending } = useUserRole();
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>("");
   const [editingTask, setEditingTask] = useState<any>(null);
@@ -203,7 +200,6 @@ const TaskManagement = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      {isPending && <PendingApprovalBanner />}
       <main className="container mx-auto px-4 py-8">
         <BackButton />
         

@@ -10,8 +10,6 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationStatus } from "@/components/IntegrationStatus";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
-import { useUserRole } from "@/hooks/useUserRole";
-import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 interface FeedbackItem {
   wentWell: string;
@@ -20,7 +18,6 @@ interface FeedbackItem {
 }
 
 export default function Retrospective() {
-  const { isPending } = useUserRole();
   const [wentWell, setWentWell] = useState("");
   const [improve, setImprove] = useState("");
   const [actionItems, setActionItems] = useState("");
@@ -103,7 +100,6 @@ export default function Retrospective() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
-      {isPending && <PendingApprovalBanner />}
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">

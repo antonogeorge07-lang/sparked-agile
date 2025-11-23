@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
-import { useUserRole } from "@/hooks/useUserRole";
 import { IntegrationStatus } from "@/components/IntegrationStatus";
 import { IntegrationBanner } from "@/components/IntegrationBanner";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
@@ -57,7 +55,6 @@ export default function Dashboard() {
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
   const { isGuestMode } = useGuestMode();
-  const { isPending } = useUserRole();
   const { isReturningVisitor, incrementPagesVisited } = useVisitorTracking();
   
   useEffect(() => {
@@ -171,7 +168,6 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-      {isPending && <PendingApprovalBanner />}
       {isGuestMode && <GuestModeBar />}
       <SmartFeedbackTrigger />
       
@@ -233,12 +229,6 @@ export default function Dashboard() {
               hasGithub={integrations.hasGithub}
               hasOutlook={integrations.hasOutlook}
             />
-          )}
-
-          {isPending && (
-            <div className="mb-6">
-              <PendingApprovalBanner />
-            </div>
           )}
 
           {selectedProject && projects.length > 0 && (
