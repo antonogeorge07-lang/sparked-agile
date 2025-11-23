@@ -51,20 +51,6 @@ export default function EpicManagement() {
       return;
     }
 
-    const { data: userRole } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', session.user.id)
-      .single();
-
-    if (userRole?.role === 'pending') {
-      toast({
-        title: "Account Pending",
-        description: "Your account is awaiting admin approval",
-        variant: "destructive",
-      });
-      navigate("/");
-    }
   };
 
   const loadProjects = async () => {

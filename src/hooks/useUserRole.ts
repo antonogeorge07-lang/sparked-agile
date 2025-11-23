@@ -23,7 +23,7 @@ export const useUserRole = () => {
           .eq('user_id', session.user.id)
           .maybeSingle();
 
-        setRole(userRole?.role || 'pending');
+        setRole(userRole?.role || null);
       } catch (error) {
         console.error("Error checking user role:", error);
         setRole(null);
