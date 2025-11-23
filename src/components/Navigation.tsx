@@ -82,7 +82,7 @@ export const Navigation = () => {
   const navItems = [
     { path: "/home", label: "Home", icon: Home },
     { path: "/quick-start", label: "Quick Start", icon: Star, highlight: true },
-    { path: "/my-projects", label: "My Projects", icon: FolderKanban },
+    { path: "/my-projects", label: "My Workspace", icon: FolderKanban },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
     { path: "/epic-management", label: "Epics", icon: GitBranch },
     { path: "/epic-portfolio", label: "Epic Portfolio", icon: Target },
