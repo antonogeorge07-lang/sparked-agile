@@ -42,10 +42,29 @@ export const useWorkspaceProjects = (workspaceId: string | undefined) => {
     }
   };
 
+  const deleteProject = async (projectId: string) => {
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', projectId);
+
+      if (error) throw error;
+
+      // Refresh the list after deletion
+      await loadProjects();
+      return { success: true };
+    } catch (error: any) {
+      console.error('Error deleting project:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
   return {
     projects,
     loading,
     error,
-    refresh: loadProjects
+    refresh: loadProjects,
+    deleteProject
   };
 };

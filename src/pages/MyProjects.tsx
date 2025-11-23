@@ -3,18 +3,60 @@ import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FolderKanban, Calendar, ExternalLink, Building2, Plus } from "lucide-react";
+import { FolderKanban, Calendar, ExternalLink, Building2, Plus, Trash2 } from "lucide-react";
 import { LoadingState } from "@/components/LoadingState";
 import { EmptyState } from "@/components/EmptyState";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useWorkspaceProjects } from "@/hooks/useWorkspaceProjects";
+import { toast } from "@/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 
 export default function MyProjects() {
   const navigate = useNavigate();
   const { workspace, loading: workspaceLoading } = useWorkspace();
-  const { projects, loading: projectsLoading } = useWorkspaceProjects(workspace?.id);
+  const { projects, loading: projectsLoading, deleteProject } = useWorkspaceProjects(workspace?.id);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<{ id: string; name: string } | null>(null);
   
   const loading = workspaceLoading || projectsLoading;
+
+  const handleDeleteClick = (e: React.MouseEvent, project: { id: string; name: string }) => {
+    e.stopPropagation();
+    setProjectToDelete(project);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!projectToDelete) return;
+
+    const result = await deleteProject(projectToDelete.id);
+    
+    if (result.success) {
+      toast({
+        title: "Project Deleted",
+        description: `${projectToDelete.name} has been permanently deleted.`,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: result.error || "Failed to delete project. Please try again.",
+        variant: "destructive",
+      });
+    }
+
+    setDeleteDialogOpen(false);
+    setProjectToDelete(null);
+  };
 
   if (loading) {
     return (
@@ -100,7 +142,17 @@ export default function MyProjects() {
                           {project.description || "No description"}
                         </CardDescription>
                       </div>
-                      <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="flex gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                          onClick={(e) => handleDeleteClick(e, { id: project.id, name: project.name })}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                        <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity mt-1" />
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -117,6 +169,32 @@ export default function MyProjects() {
           )}
         </div>
       </div>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Project</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{projectToDelete?.name}"? This action cannot be undone and will permanently delete:
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>All project data and tasks</li>
+                <li>All associated workflows</li>
+                <li>All team members access</li>
+                <li>All integration configurations</li>
+              </ul>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Delete Project
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
