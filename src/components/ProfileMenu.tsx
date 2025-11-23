@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Settings, LogOut, CreditCard } from "lucide-react";
+import { User, Settings, LogOut, CreditCard, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { ProfileDialog } from "./ProfileDialog";
+import { useUserRole } from "@/hooks/useUserRole";
 
 interface ProfileMenuProps {
   userEmail?: string;
@@ -23,6 +24,7 @@ interface ProfileMenuProps {
 
 export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps) => {
   const navigate = useNavigate();
+  const { role } = useUserRole();
   const [showProfileDialog, setShowProfileDialog] = useState(false);
 
   const handleSignOut = async () => {
@@ -79,14 +81,18 @@ export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/usage-analytics")}>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Usage Analytics</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/admin")}>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
+          {role === 'admin' && (
+            <>
+              <DropdownMenuItem onClick={() => navigate("/usage-analytics")}>
+                <CreditCard className="mr-2 h-4 w-4" />
+                <span>Platform Analytics</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/admin")}>
+                <Shield className="mr-2 h-4 w-4" />
+                <span>Admin Panel</span>
+              </DropdownMenuItem>
+            </>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleSignOut}>
             <LogOut className="mr-2 h-4 w-4" />

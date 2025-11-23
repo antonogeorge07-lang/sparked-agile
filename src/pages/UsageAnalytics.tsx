@@ -9,6 +9,9 @@ import { Activity, Users, Zap, DollarSign } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useUserRole } from "@/hooks/useUserRole";
+import { useNavigate } from "react-router-dom";
+import { LoadingState } from "@/components/LoadingState";
 
 // Use semantic colors from design system
 const CHART_COLORS = [
@@ -20,8 +23,31 @@ const CHART_COLORS = [
 ];
 
 export default function UsageAnalytics() {
+  const navigate = useNavigate();
+  const { role, loading: roleLoading } = useUserRole();
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedProject, setSelectedProject] = useState<string>("all");
+
+  useEffect(() => {
+    if (!roleLoading && role !== 'admin') {
+      navigate('/');
+    }
+  }, [role, roleLoading, navigate]);
+
+  if (roleLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto p-6">
+          <LoadingState message="Loading analytics..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (role !== 'admin') {
+    return null;
+  }
 
   const { data: projects } = useQuery({
     queryKey: ["projects-list"],
