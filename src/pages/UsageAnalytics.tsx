@@ -9,8 +9,6 @@ import { Activity, Users, Zap, DollarSign } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useUserRole } from "@/hooks/useUserRole";
-import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 // Use semantic colors from design system
 const CHART_COLORS = [
@@ -22,7 +20,6 @@ const CHART_COLORS = [
 ];
 
 export default function UsageAnalytics() {
-  const { isPending } = useUserRole();
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedProject, setSelectedProject] = useState<string>("all");
 
@@ -115,7 +112,6 @@ export default function UsageAnalytics() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      {isPending && <PendingApprovalBanner />}
       <div className="container mx-auto p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>

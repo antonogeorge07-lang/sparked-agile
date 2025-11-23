@@ -41,5 +41,5 @@ export const useUserRole = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  return { role, loading, isPending: role === 'pending' };
+  return { role, loading };
 };

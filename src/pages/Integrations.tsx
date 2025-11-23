@@ -69,7 +69,7 @@ const Integrations = () => {
   const [selectedType, setSelectedType] = useState<"jira" | "github">("jira");
   const [isLoading, setIsLoading] = useState(true);
   const { activeUsers } = useRealtimePresence('/integrations');
-  const { role, loading: roleLoading, isPending } = useUserRole();
+  const { role, loading: roleLoading } = useUserRole();
   const [newIntegration, setNewIntegration] = useState({
     type: "jira" as "jira" | "github",
     name: "",
@@ -444,21 +444,10 @@ const Integrations = () => {
             <Card>
               <CardContent className="py-12 text-center">
                 <Network className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                {isPending ? (
-                  <>
-                    <h3 className="text-lg font-semibold mb-2">Account Pending Approval</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Your account is awaiting admin approval. Once approved and allocated to a project, you'll be able to manage integrations.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-lg font-semibold mb-2">No Project Access</h3>
-                    <p className="text-muted-foreground mb-4">
-                      You need to be assigned to a project to manage integrations. Contact your admin to request project access.
-                    </p>
-                  </>
-                )}
+                <h3 className="text-lg font-semibold mb-2">No Project Access</h3>
+                <p className="text-muted-foreground mb-4">
+                  You need to be assigned to a project to manage integrations. Contact your admin to request project access.
+                </p>
                 <Button onClick={() => navigate("/dashboard")}>
                   Go to Dashboard
                 </Button>
