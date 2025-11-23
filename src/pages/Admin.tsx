@@ -3,7 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, CheckCircle, XCircle, Clock, Users, Search, Check, Bell, AlertTriangle } from "lucide-react";
+import { Shield, CheckCircle, XCircle, Clock, Users, Search, Check, Bell, AlertTriangle, FolderKanban } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import { HelpTooltip } from "@/components/HelpTooltip";
 import { BackButton } from "@/components/BackButton";
 import { ApproveUsersDialog } from "@/components/ApproveUsersDialog";
 import { useUserRole } from "@/hooks/useUserRole";
+import { AssignProjectsDialog } from "@/components/AssignProjectsDialog";
 
 interface Profile {
   id: string;
@@ -22,10 +23,11 @@ interface Profile {
   created_at: string;
 }
 
-const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
+const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge, onAssignProjects }: {
   profile: Profile;
   onUpdateRole: (userId: string, role: 'admin' | 'member' | 'pending') => void;
   getRoleBadge: (role: string) => JSX.Element;
+  onAssignProjects: (userId: string, userName: string) => void;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const { activeUsers } = useItemPresence(
@@ -61,6 +63,16 @@ const UserProfileRow = ({ profile, onUpdateRole, getRoleBadge }: {
       </div>
 
       <div className="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => onAssignProjects(profile.id, profile.full_name || profile.email)}
+          className="gap-1"
+        >
+          <FolderKanban className="w-4 h-4" />
+          <span className="hidden sm:inline">Projects</span>
+        </Button>
+        
         {profile.role === 'pending' && (
           <>
             <Button
@@ -124,6 +136,8 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterRole, setFilterRole] = useState<"all" | "pending" | "member" | "admin">("all");
   const [showApproveDialog, setShowApproveDialog] = useState(false);
+  const [assignProjectsDialogOpen, setAssignProjectsDialogOpen] = useState(false);
+  const [selectedUserForProjects, setSelectedUserForProjects] = useState<{ id: string; name: string } | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -456,6 +470,10 @@ export default function Admin() {
                       profile={profile}
                       onUpdateRole={updateUserRole}
                       getRoleBadge={getRoleBadge}
+                      onAssignProjects={(userId, userName) => {
+                        setSelectedUserForProjects({ id: userId, name: userName });
+                        setAssignProjectsDialogOpen(true);
+                      }}
                     />
                   ))
                 )}
@@ -470,6 +488,16 @@ export default function Admin() {
         onOpenChange={setShowApproveDialog}
         onUserApproved={loadProfiles}
       />
+
+      {selectedUserForProjects && (
+        <AssignProjectsDialog
+          open={assignProjectsDialogOpen}
+          onOpenChange={setAssignProjectsDialogOpen}
+          userId={selectedUserForProjects.id}
+          userName={selectedUserForProjects.name}
+          onAssigned={loadProfiles}
+        />
+      )}
     </div>
   );
 }
