@@ -1,7 +1,7 @@
 import { 
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
   ListFilter, Activity, Calendar, Users, Workflow, 
-  BookOpen, Shield, Settings, Network, Star, TrendingUp
+  BookOpen, Shield, Settings, Network, Star, TrendingUp, FolderKanban
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -24,6 +24,7 @@ const menuSections = [
     items: [
       { title: "Quick Start Guide", url: "/quick-start", icon: Star, tour: "quick-start" },
       { title: "Home", url: "/home", icon: Home },
+      { title: "My Projects", url: "/my-projects", icon: FolderKanban },
     ]
   },
   {
