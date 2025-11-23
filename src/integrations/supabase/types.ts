@@ -2492,6 +2492,14 @@ export type Database = {
         Returns: string
       }
       is_admin: { Args: { user_id: string }; Returns: boolean }
+      is_workspace_member: {
+        Args: { _user_id: string; _workspace_id: string }
+        Returns: boolean
+      }
+      is_workspace_owner: {
+        Args: { _user_id: string; _workspace_id: string }
+        Returns: boolean
+      }
       toggle_integration_status: {
         Args: { integration_id: string; new_status: boolean }
         Returns: boolean
