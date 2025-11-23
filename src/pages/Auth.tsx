@@ -198,7 +198,7 @@ export default function Auth() {
         });
         
         if (!signInError) {
-          // Pending users get sent to dashboard where they'll see helpful info
+          // Navigate to dashboard or workflows
           navigate("/dashboard");
         }
       }
@@ -241,20 +241,8 @@ export default function Auth() {
         });
         
         // Navigate based on user role (check authoritative user_roles table)
-        const { data: userRole } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', data.user?.id)
-          .maybeSingle();
-        
         const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
-        
-        // If pending, show onboarding to help them understand the platform
-        if (userRole?.role === 'pending') {
-          navigate(hasSeenOnboarding ? "/dashboard" : "/");
-        } else {
-          navigate(hasSeenOnboarding ? "/workflows" : "/");
-        }
+        navigate(hasSeenOnboarding ? "/workflows" : "/");
       }
     } catch (error: any) {
       toast({
@@ -767,7 +755,7 @@ export default function Auth() {
           <Alert className="mt-4 border-primary/20 bg-primary/5">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs">
-              <strong>Quick Start:</strong> New accounts require admin approval for project access. 
+              <strong>Quick Start:</strong> New accounts can immediately access all features. 
               While waiting, you can explore demo features, review guides, and learn the platform.
             </AlertDescription>
           </Alert>

@@ -86,21 +86,6 @@ export default function EpicPortfolio() {
       return;
     }
 
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", session.user.id)
-      .single();
-
-    if (profile?.role === "pending") {
-      toast({
-        title: "Approval Required",
-        description: "Your account is pending approval. Please contact an administrator.",
-        variant: "destructive",
-      });
-      navigate("/");
-      return;
-    }
 
     await loadPortfolioData();
   };
