@@ -15,6 +15,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
+import { useUserRole } from "@/hooks/useUserRole";
+import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 interface StandupUpdate {
   id?: string;
@@ -33,6 +35,7 @@ interface ActionItem {
 }
 
 export default function Standup() {
+  const { isPending } = useUserRole();
   const [name, setName] = useState("");
   const [yesterday, setYesterday] = useState("");
   const [today, setToday] = useState("");
@@ -246,6 +249,7 @@ export default function Standup() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
+      {isPending && <PendingApprovalBanner />}
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-6">

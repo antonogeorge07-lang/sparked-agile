@@ -11,6 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Calendar, Clock, Users, CheckCircle, Link as LinkIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "@/components/BackButton";
+import { useUserRole } from "@/hooks/useUserRole";
+import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 interface CeremonyTemplate {
   id: string;
@@ -68,6 +70,7 @@ const ceremonyTemplates: CeremonyTemplate[] = [
 export default function CeremonySetup() {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { isPending } = useUserRole();
   const [isConnected, setIsConnected] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [attendees, setAttendees] = useState<string>("");
@@ -235,6 +238,7 @@ export default function CeremonySetup() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
+      {isPending && <PendingApprovalBanner />}
       
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto">

@@ -18,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useUserRole } from "@/hooks/useUserRole";
+import { PendingApprovalBanner } from "@/components/PendingApprovalBanner";
 
 interface BacklogItem {
   key: string;
@@ -44,6 +46,7 @@ interface BacklogAnalysis {
 
 const BacklogRefinement = () => {
   const { toast } = useToast();
+  const { isPending } = useUserRole();
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<BacklogAnalysis | null>(null);
@@ -139,6 +142,7 @@ const BacklogRefinement = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      {isPending && <PendingApprovalBanner />}
       <div className="container mx-auto p-6 space-y-6">
         <BackButton className="mb-4" />
         <div>
