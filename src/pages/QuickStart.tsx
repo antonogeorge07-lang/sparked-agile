@@ -36,7 +36,6 @@ const features = [
     description: "Data-driven insights to improve team performance",
     features: [
       { name: "Dashboard", path: "/dashboard", description: "Sprint health, velocity trends, and key metrics" },
-      { name: "Usage Analytics", path: "/usage-analytics", description: "Platform usage and feature adoption metrics" },
       { name: "Flow Metrics", path: "/flow-metrics", description: "Value stream and flow efficiency analysis" }
     ]
   },

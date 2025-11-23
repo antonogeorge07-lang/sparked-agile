@@ -80,17 +80,6 @@ const onboardingSteps: OnboardingStep[] = [
       path: "/integrations"
     },
     benefit: "One platform for all your project data"
-  },
-  {
-    id: "analytics",
-    title: "Track Team Performance",
-    description: "Metrics, velocity tracking, and actionable insights. Make data-driven decisions.",
-    icon: BarChart3,
-    action: {
-      label: "See Analytics",
-      path: "/usage-analytics"
-    },
-    benefit: "Monitor and improve team velocity"
   }
 ];
 
