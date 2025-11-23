@@ -25,9 +25,9 @@ export function CTASection() {
                 size="lg" 
                 variant="secondary" 
                 className="gap-2"
-                aria-label="Start your free trial now"
+                aria-label="Get started with SAAI for free"
               >
-                Start Free Trial
+                Get Started Free
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             </Link>

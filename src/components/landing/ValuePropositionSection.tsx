@@ -11,10 +11,10 @@ export function ValuePropositionSection() {
       title: "For Scrum Masters",
       description: "Orchestrate ceremonies with confidence",
       features: [
-        "Generate standup summaries and track blockers effectively",
-        "Create sprint plans from JIRA with AI-powered velocity analysis",
-        "Run productive retrospectives with anonymous feedback and AI insights",
-        "Schedule and coordinate ceremonies with Outlook integration"
+        "Generate standup summaries and track blockers",
+        "Create sprint plans with AI-powered velocity analysis",
+        "Run retrospectives with AI-generated insights",
+        "Schedule and coordinate ceremonies with Microsoft 365 integration"
       ],
       highlighted: false
     },
@@ -123,10 +123,10 @@ export function ValuePropositionSection() {
             <p className="text-xs sm:text-sm text-muted-foreground">New users this month</p>
           </div>
           <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="100% team satisfaction">
-              100%
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="Beta phase">
+              Beta
             </p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Team satisfaction</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Free during beta phase</p>
           </div>
         </div>
 

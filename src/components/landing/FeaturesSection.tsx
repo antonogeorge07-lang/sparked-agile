@@ -9,7 +9,7 @@ export function FeaturesSection() {
         {
           icon: Sparkles,
           title: "Sprint Planning Assistant",
-          description: "Turn 10-hour planning sessions into 2 hours with AI"
+          description: "AI-powered sprint planning with velocity analysis and recommendations"
         },
         {
           icon: BarChart,
@@ -38,8 +38,8 @@ export function FeaturesSection() {
       features: [
         {
           icon: Calendar,
-          title: "Automated Retrospectives",
-          description: "Anonymous feedback to AI-powered insights"
+          title: "Retrospective Management",
+          description: "AI-generated insights from team feedback and retrospective data"
         },
         {
           icon: Users,
