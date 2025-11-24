@@ -19,35 +19,54 @@ export const FeedbackWidget = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!message.trim()) {
+    const trimmedMessage = message.trim();
+    console.log("Submitting feedback:", { feedbackType, messageLength: trimmedMessage.length });
+    
+    if (!trimmedMessage) {
       toast.error("Please enter your feedback");
+      return;
+    }
+
+    if (trimmedMessage.length > 1000) {
+      toast.error("Feedback must be less than 1000 characters");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      console.log("User auth check:", { userId: user?.id, authError });
 
-      const { error } = await supabase.from("user_feedback").insert({
+      const feedbackData = {
         user_id: user?.id || null,
         page: location.pathname,
         feedback_type: feedbackType,
-        message: message.trim(),
+        message: trimmedMessage,
         metadata: {
           user_agent: navigator.userAgent,
           timestamp: new Date().toISOString(),
         },
-      });
+      };
+      
+      console.log("Inserting feedback data:", feedbackData);
 
-      if (error) throw error;
+      const { data, error } = await supabase.from("user_feedback").insert(feedbackData).select();
 
+      console.log("Insert result:", { data, error });
+
+      if (error) {
+        console.error("Database error:", error);
+        throw error;
+      }
+
+      console.log("Feedback submitted successfully");
       toast.success("Thank you for your feedback! We'll review it soon.");
       setMessage("");
       setIsOpen(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error submitting feedback:", error);
-      toast.error("Failed to submit feedback. Please try again.");
+      toast.error(`Failed to submit feedback: ${error?.message || "Please try again"}`);
     } finally {
       setIsSubmitting(false);
     }
