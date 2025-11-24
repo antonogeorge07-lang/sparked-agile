@@ -22,7 +22,7 @@ export function FeedbackSection() {
         <div className="text-center mb-8">
           <h3 className="text-2xl font-semibold mb-2">What Our Community Says</h3>
           <p className="text-sm text-muted-foreground">
-            Every voice matters. We learn from every piece of feedback.
+            Every voice matters. We learn from every piece of feedback. Share your experience above, and see what others are saying below.
           </p>
         </div>
         
