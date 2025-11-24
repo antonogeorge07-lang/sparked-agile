@@ -110,7 +110,7 @@ export const FeedbackWidget = () => {
                   <SelectTrigger id="feedback-type">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[70]">
                     <SelectItem value="bug">🐛 Bug Report</SelectItem>
                     <SelectItem value="feature">💡 Feature Request</SelectItem>
                     <SelectItem value="improvement">⚡ Improvement</SelectItem>
