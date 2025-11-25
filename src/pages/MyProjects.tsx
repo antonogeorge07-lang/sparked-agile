@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Navigation } from "@/components/Navigation";
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -60,20 +60,17 @@ export default function MyProjects() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-subtle">
-        <Navigation />
+      <DashboardLayout>
         <div className="container mx-auto px-4 py-8">
           <LoadingState message="Loading your projects..." />
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
-      <Navigation />
-      
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <DashboardLayout>
+      <div className="container mx-auto px-4 py-8 max-w-6xl bg-gradient-subtle min-h-screen">
         <BackButton className="mb-6" />
         
         <div className="mb-8">
@@ -195,6 +192,6 @@ export default function MyProjects() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </DashboardLayout>
   );
 }
