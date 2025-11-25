@@ -64,10 +64,24 @@ export default function ProjectWorkspace() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
+    // First get user's workspace
+    const { data: workspace } = await supabase
+      .from("workspaces")
+      .select("id")
+      .eq("owner_id", user.id)
+      .maybeSingle();
+
+    if (!workspace) {
+      toast.error("No workspace found. Please set up your workspace first.");
+      navigate("/my-projects");
+      return;
+    }
+
+    // Then get projects in that workspace
     const { data: projects } = await supabase
       .from("projects")
       .select("id")
-      .eq("user_id", user.id)
+      .eq("workspace_id", workspace.id)
       .maybeSingle();
 
     if (projects) {
@@ -123,7 +137,8 @@ export default function ProjectWorkspace() {
 
   const initializeWorkspace = async () => {
     if (!projectId) {
-      toast.error("No project found. Please create a project first.");
+      toast.error("No project found in your workspace. Please create a project from My Workspace first.");
+      setTimeout(() => navigate("/my-projects"), 2000);
       return;
     }
 
