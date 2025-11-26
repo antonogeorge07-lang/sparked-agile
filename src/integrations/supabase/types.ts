@@ -1391,6 +1391,68 @@ export type Database = {
           },
         ]
       }
+      project_tasks: {
+        Row: {
+          created_at: string
+          dependencies: string[] | null
+          description: string | null
+          due_date: string | null
+          id: string
+          notes: string | null
+          owner: string | null
+          position: number
+          progress: number | null
+          project_id: string
+          stage: string
+          start_date: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dependencies?: string[] | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string | null
+          owner?: string | null
+          position?: number
+          progress?: number | null
+          project_id: string
+          stage?: string
+          start_date?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dependencies?: string[] | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string | null
+          owner?: string | null
+          position?: number
+          progress?: number | null
+          project_id?: string
+          stage?: string
+          start_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_usage_stats: {
         Row: {
           active_users: number
