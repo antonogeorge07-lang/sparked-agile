@@ -2425,6 +2425,10 @@ export type Database = {
         Args: { epic_id_param: string }
         Returns: number
       }
+      can_access_workspace_project: {
+        Args: { _project_id: string; _user_id: string }
+        Returns: boolean
+      }
       can_create_project: { Args: { user_id_param: string }; Returns: boolean }
       check_integration_status: {
         Args: { integration_id: string }
@@ -2492,6 +2496,10 @@ export type Database = {
         Returns: string
       }
       is_admin: { Args: { user_id: string }; Returns: boolean }
+      is_project_member: {
+        Args: { _project_id: string; _user_id: string }
+        Returns: boolean
+      }
       is_workspace_member: {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
