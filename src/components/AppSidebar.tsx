@@ -107,6 +107,9 @@ export function AppSidebar() {
 
   const isActive = (path: string) => currentPath === path;
 
+  // Debug logging
+  console.log('Sidebar - Role:', role, 'Loading:', loading, 'Sections:', filteredSections.length);
+
   if (loading) {
     return (
       <Sidebar collapsible="icon">
@@ -122,6 +125,12 @@ export function AppSidebar() {
       collapsible="icon"
     >
       <SidebarContent className="pt-12">
+        {filteredSections.length === 0 && !loading && (
+          <div className="px-4 py-8 text-center text-muted-foreground text-sm">
+            <p>No menu items available.</p>
+            <p className="mt-2 text-xs">Role: {role || 'none'}</p>
+          </div>
+        )}
         {filteredSections.map((section) => (
           <SidebarGroup key={section.label}>
             {open && (
