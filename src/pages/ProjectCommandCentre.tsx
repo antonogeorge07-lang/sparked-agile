@@ -48,7 +48,8 @@ interface Project {
   id: string;
   name: string;
   description: string | null;
-  status: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export default function ProjectCommandCentre() {
@@ -92,9 +93,28 @@ export default function ProjectCommandCentre() {
 
   const loadProjects = async () => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Get user's workspace
+      const { data: workspace, error: workspaceError } = await supabase
+        .from("workspaces")
+        .select("id")
+        .eq("owner_id", user.id)
+        .maybeSingle();
+
+      if (workspaceError) throw workspaceError;
+      
+      if (!workspace) {
+        toast.error("No workspace found. Please set up your workspace first.");
+        return;
+      }
+
+      // Load projects from workspace
       const { data, error } = await supabase
-        .from("pmi_projects")
+        .from("projects")
         .select("*")
+        .eq("workspace_id", workspace.id)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
