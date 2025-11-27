@@ -1,7 +1,7 @@
 import { 
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
   ListFilter, Activity, Calendar, Users, Workflow, 
-  BookOpen, Shield, Settings, Network, Star, TrendingUp, FolderKanban
+  BookOpen, Shield, Settings, Network, Star, TrendingUp, FolderKanban, Crown
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -74,6 +74,7 @@ const menuSections = [
   {
     label: "Administration",
     items: [
+      { title: "Platform Owner", url: "/platform-owner", icon: Crown },
       { title: "Admin Panel", url: "/admin", icon: Settings },
       { title: "Security Incidents", url: "/security-incidents", icon: Shield },
     ]

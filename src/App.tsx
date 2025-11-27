@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound";
 
 // Lazy load non-critical pages for better performance
 const Admin = lazy(() => import("./pages/Admin"));
+const PlatformOwner = lazy(() => import("./pages/PlatformOwner"));
 const SecurityIncidents = lazy(() => import("./pages/SecurityIncidents"));
 const Workflows = lazy(() => import("./pages/Workflows"));
 const ProjectCommandCentre = lazy(() => import("./pages/ProjectCommandCentre"));
@@ -82,6 +83,8 @@ const App = () => {
                   <Route path="/quick-start" element={<QuickStart />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />
+                  <Route path="/platform-owner" element={<PlatformOwner />} />
+                  <Route path="/security-incidents" element={<SecurityIncidents />} />
                   <Route path="/admin/incidents" element={<SecurityIncidents />} />
                   <Route path="/my-projects" element={<MyProjects />} />
                   <Route path="/workspace/settings" element={<WorkspaceSettings />} />
