@@ -60,17 +60,32 @@ export default function PlatformOwner() {
   const [userGrowth, setUserGrowth] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  const PLATFORM_OWNER_EMAIL = 'antono.george07@gmail.com';
 
   useEffect(() => {
-    if (!roleLoading && role !== 'admin') {
+    checkAccess();
+  }, [roleLoading, navigate]);
+
+  const checkAccess = async () => {
+    if (roleLoading) return;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user || user.email?.toLowerCase() !== PLATFORM_OWNER_EMAIL) {
+        navigate('/');
+        return;
+      }
+
+      setUserEmail(user.email);
+      await loadAllData();
+    } catch (error) {
+      console.error("Access check failed:", error);
       navigate('/');
-      return;
     }
-    
-    if (role === 'admin') {
-      loadAllData();
-    }
-  }, [role, roleLoading, navigate]);
+  };
 
   const loadAllData = async () => {
     try {
@@ -215,7 +230,7 @@ export default function PlatformOwner() {
     );
   }
 
-  if (role !== 'admin') {
+  if (!userEmail || userEmail.toLowerCase() !== PLATFORM_OWNER_EMAIL) {
     return null;
   }
 
