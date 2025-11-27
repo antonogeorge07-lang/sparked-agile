@@ -5,6 +5,8 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
+import { supabase } from "@/integrations/supabase/client";
+import React from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -85,14 +87,29 @@ export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
   const { role, loading } = useUserRole();
+  const [userEmail, setUserEmail] = React.useState<string | null>(null);
 
-  // Filter menu sections based on user role
+  const PLATFORM_OWNER_EMAIL = 'antono.george07@gmail.com';
+
+  React.useEffect(() => {
+    const getUserEmail = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserEmail(user?.email || null);
+    };
+    getUserEmail();
+  }, []);
+
+  // Filter menu sections based on user role and email
   const getFilteredSections = () => {
     if (loading) return [];
     
     return menuSections.map(section => ({
       ...section,
       items: section.items.filter(item => {
+        // Platform Owner exclusive - only for specific email
+        if (item.url === '/platform-owner') {
+          return userEmail?.toLowerCase() === PLATFORM_OWNER_EMAIL;
+        }
         // Admin-only features
         if (item.url === '/admin' || item.url === '/security-incidents') {
           return role === 'admin';
