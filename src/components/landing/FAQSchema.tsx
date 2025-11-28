@@ -21,7 +21,7 @@ export const FAQSchema = () => {
           "name": "How much does SAAI cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "SAAI offers a free forever plan with no credit card required. Premium plans are available for teams that need advanced features, unlimited projects, and priority support. Free tier includes core AI features and up to 10 team members."
+            "text": "SAAI offers a free forever plan with no credit card required. Premium plans are available for teams that need advanced features, unlimited projects, and priority support. Free tier includes core AI features and up to 15 team members."
           }
         },
         {
