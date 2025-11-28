@@ -146,7 +146,7 @@ export default function FAQ() {
                 <AccordionItem value="item-10">
                   <AccordionTrigger>What's included in the Free tier?</AccordionTrigger>
                   <AccordionContent>
-                    The Free tier includes up to 50 projects, 1 workspace per project, 5 team members, basic AI features, 
+                    The Free tier includes up to 50 projects, 1 workspace per project, 15 team members, basic AI features, 
                     and email support. Perfect for small teams getting started with AI-powered agile management.
                   </AccordionContent>
                 </AccordionItem>

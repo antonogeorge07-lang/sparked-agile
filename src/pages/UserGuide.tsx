@@ -516,7 +516,7 @@ export default function UserGuide() {
                       <ul className="list-disc pl-5 space-y-1">
                         <li>Up to 50 projects</li>
                         <li>1 workspace per project</li>
-                        <li>5 team members</li>
+                        <li>15 team members</li>
                         <li>Basic AI features</li>
                       </ul>
                       <p><strong>Upgrade:</strong> Go to Subscription page for higher limits and advanced features</p>
