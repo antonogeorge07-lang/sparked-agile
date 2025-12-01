@@ -30,8 +30,8 @@ const jiraConfigSchema = z.object({
 });
 
 const githubConfigSchema = z.object({
-  repository: z.string().min(1, "Repository required").max(200, "Repository name too long").regex(/^[a-zA-Z0-9._-]+$/, "Invalid repository name format. Use only letters, numbers, dots, hyphens, and underscores"),
-  organization: z.string().min(1, "Organization required").max(200, "Organization name too long").regex(/^[a-zA-Z0-9._-]+$/, "Invalid organization name format. Use only letters, numbers, dots, hyphens, and underscores"),
+  repository: z.string().min(1, "Repository required").max(200, "Repository name too long").regex(/^[a-zA-Z0-9._/-]+$/, "Invalid repository name format"),
+  organization: z.string().min(1, "Organization required").max(200, "Organization name too long").regex(/^[a-zA-Z0-9._/-]+$/, "Invalid organization name format"),
   apiToken: z.string().min(10, "API token too short").max(500, "API token too long"),
 });
 
