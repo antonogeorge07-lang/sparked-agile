@@ -10,6 +10,7 @@ import { LoadingState } from "@/components/LoadingState";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function WorkspaceSettings() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function WorkspaceSettings() {
   const { toast } = useToast();
   const [workspaceName, setWorkspaceName] = useState("");
   const [saving, setSaving] = useState(false);
+  const [limits, setLimits] = useState({ projectLimit: 5, teamMemberLimit: 5 });
 
   // Update local state when workspace loads
   useEffect(() => {
@@ -24,6 +26,35 @@ export default function WorkspaceSettings() {
       setWorkspaceName(workspace.name);
     }
   }, [workspace]);
+
+  // Fetch subscription limits
+  useEffect(() => {
+    const fetchLimits = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('user_subscriptions')
+        .select(`
+          subscription_tiers (
+            project_limit,
+            team_member_limit
+          )
+        `)
+        .eq('user_id', user.id)
+        .single();
+
+      if (data && !error) {
+        const tier = data.subscription_tiers as any;
+        setLimits({
+          projectLimit: tier?.project_limit || 5,
+          teamMemberLimit: tier?.team_member_limit || 5
+        });
+      }
+    };
+
+    fetchLimits();
+  }, []);
 
   const handleSave = async () => {
     setSaving(true);
@@ -118,7 +149,7 @@ export default function WorkspaceSettings() {
                     <p className="text-sm text-muted-foreground">Maximum allowed projects</p>
                   </div>
                 </div>
-                <p className="text-2xl font-bold">5</p>
+                <p className="text-2xl font-bold">{limits.projectLimit}</p>
               </div>
 
               <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
@@ -129,7 +160,7 @@ export default function WorkspaceSettings() {
                     <p className="text-sm text-muted-foreground">Maximum team size</p>
                   </div>
                 </div>
-                <p className="text-2xl font-bold">5</p>
+                <p className="text-2xl font-bold">{limits.teamMemberLimit}</p>
               </div>
 
               <p className="text-sm text-muted-foreground">
