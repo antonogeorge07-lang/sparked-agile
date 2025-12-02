@@ -45,22 +45,8 @@ export function CreateProjectDialog({ open, onOpenChange, onSuccess }: CreatePro
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      // Get user's workspace
-      const { data: workspace, error: workspaceError } = await supabase
-        .from("workspaces")
-        .select("id")
-        .eq("owner_id", user.id)
-        .maybeSingle();
-
-      if (workspaceError) throw workspaceError;
-      if (!workspace) {
-        toast.error("No workspace found. Please set up your workspace first.");
-        return;
-      }
-
-      // Create project in workspace
-      const { error } = await supabase.from("projects").insert({
-        workspace_id: workspace.id,
+      // Create PMI project
+      const { error } = await supabase.from("pmi_projects").insert({
         user_id: user.id,
         name: name.trim(),
         description: description.trim() || null,

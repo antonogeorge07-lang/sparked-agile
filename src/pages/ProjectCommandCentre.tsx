@@ -96,25 +96,11 @@ export default function ProjectCommandCentre() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Get user's workspace
-      const { data: workspace, error: workspaceError } = await supabase
-        .from("workspaces")
-        .select("id")
-        .eq("owner_id", user.id)
-        .maybeSingle();
-
-      if (workspaceError) throw workspaceError;
-      
-      if (!workspace) {
-        toast.error("No workspace found. Please set up your workspace first.");
-        return;
-      }
-
-      // Load projects from workspace
+      // Load PMI projects for this user
       const { data, error } = await supabase
-        .from("projects")
+        .from("pmi_projects")
         .select("*")
-        .eq("workspace_id", workspace.id)
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
