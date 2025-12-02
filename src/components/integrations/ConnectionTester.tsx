@@ -46,13 +46,13 @@ export const ConnectionTester = ({ type, config, onTestComplete }: ConnectionTes
           throw new Error("Missing organization, repository, or token");
         }
 
-        // Validate naming format
-        const nameRegex = /^[a-zA-Z0-9_-]+$/;
+        // Validate naming format (allow letters, numbers, dots, hyphens, and underscores)
+        const nameRegex = /^[a-zA-Z0-9._-]+$/;
         if (!nameRegex.test(config.organization)) {
-          throw new Error("Invalid organization name format");
+          throw new Error("Invalid organization name format. Use only letters, numbers, dots, hyphens, and underscores");
         }
         if (!nameRegex.test(config.repository)) {
-          throw new Error("Invalid repository name format");
+          throw new Error("Invalid repository name format. Use only letters, numbers, dots, hyphens, and underscores");
         }
       }
 
