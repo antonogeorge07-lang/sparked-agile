@@ -50,9 +50,9 @@ export default function UsageAnalytics() {
   }
 
   const { data: projects } = useQuery({
-    queryKey: ["projects-list"],
+    queryKey: ["pmi-projects-list"],
     queryFn: async () => {
-      const { data } = await supabase.from("projects").select("id, name");
+      const { data } = await supabase.from("pmi_projects").select("id, name");
       return data || [];
     },
   });

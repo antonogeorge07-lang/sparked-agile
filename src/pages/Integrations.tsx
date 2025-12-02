@@ -109,10 +109,17 @@ const Integrations = () => {
   const fetchProjects = async () => {
     setIsLoading(true);
     
-    // Query projects - RLS will automatically filter to only show projects user has access to
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setIsLoading(false);
+      return;
+    }
+    
+    // Query PMI projects - user's own projects
     const { data, error } = await supabase
-      .from("projects")
+      .from("pmi_projects")
       .select("id, name")
+      .eq("user_id", user.id)
       .order("name");
 
     if (error) {
