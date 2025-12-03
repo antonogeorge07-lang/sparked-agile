@@ -115,12 +115,12 @@ const Integrations = () => {
       return;
     }
     
-    // Query PMI projects - user's own projects
+    // Query SAFe projects - integrations table has FK to projects table
+    // First get projects where user is a member
     const { data, error } = await supabase
-      .from("pmi_projects")
-      .select("id, name")
-      .eq("user_id", user.id)
-      .order("name");
+      .from("project_members")
+      .select("project_id, projects(id, name)")
+      .eq("user_id", user.id);
 
     if (error) {
       console.error("Error fetching projects:", error);
@@ -133,11 +133,19 @@ const Integrations = () => {
       return;
     }
 
-    setProjects(data || []);
-    if (data && data.length > 0) {
-      setSelectedProject(data[0].id);
+    // Extract project info from the joined data
+    const projectsList = (data || [])
+      .filter(item => item.projects)
+      .map(item => ({
+        id: (item.projects as any).id,
+        name: (item.projects as any).name
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    setProjects(projectsList);
+    if (projectsList.length > 0) {
+      setSelectedProject(projectsList[0].id);
     } else {
-      // User has no project access
       console.log("No projects found for user");
     }
     setIsLoading(false);
