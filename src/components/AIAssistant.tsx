@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageCircle, X, Send, Loader2, Trash2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { X, Send, Loader2, Trash2, Sparkles, Bot, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { TypingIndicator } from "@/components/chat/TypingIndicator";
 import { chatSounds } from "@/utils/chatSounds";
 import { supabase } from "@/integrations/supabase/client";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Message {
   role: "user" | "assistant";
@@ -21,13 +23,31 @@ export const AIAssistant = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const firstTokenReceived = useRef(false);
 
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setIsAuthenticated(!!user);
+    };
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsAuthenticated(!!session?.user);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   // Load chat history from database
   useEffect(() => {
     const loadChatHistory = async () => {
+      if (!isAuthenticated) return;
+      
       setIsLoadingHistory(true);
       try {
         const { data: { user } } = await supabase.auth.getUser();
@@ -51,10 +71,10 @@ export const AIAssistant = () => {
       }
     };
 
-    if (isOpen) {
+    if (isOpen && isAuthenticated) {
       loadChatHistory();
     }
-  }, [isOpen]);
+  }, [isOpen, isAuthenticated]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -157,6 +177,8 @@ export const AIAssistant = () => {
   };
 
   const saveMessageToDb = async (role: 'user' | 'assistant', content: string) => {
+    if (!isAuthenticated) return;
+    
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -208,6 +230,11 @@ export const AIAssistant = () => {
   };
 
   const handleClearChat = async () => {
+    if (!isAuthenticated) {
+      setMessages([]);
+      return;
+    }
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -241,106 +268,226 @@ export const AIAssistant = () => {
     }
   };
 
-  if (!isOpen) {
-    return (
-      <Button
-        onClick={() => setIsOpen(true)}
-        size="icon"
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:scale-110 transition-transform"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
-    );
-  }
+  const quickPrompts = [
+    "How do I create a new project?",
+    "Explain SAFe methodology",
+    "Help with sprint planning",
+    "Best practices for retrospectives"
+  ];
 
   return (
-    <Card className="fixed bottom-6 right-6 w-[calc(100vw-3rem)] sm:w-[380px] h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px] shadow-2xl flex flex-col z-[60]">
-      <div className="flex items-center justify-between p-4 border-b">
-        <div className="flex items-center gap-2">
-          <MessageCircle className="h-5 w-5 text-primary" />
-          <h3 className="font-semibold">Omair - AI Assistant</h3>
-        </div>
-        <div className="flex items-center gap-2">
-          {messages.length > 0 && (
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={handleClearChat}
-              title="Clear chat history"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          )}
-          <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-
-      <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-        {isLoadingHistory ? (
-          <div className="text-center text-muted-foreground py-8">
-            <Loader2 className="h-8 w-8 mx-auto mb-3 animate-spin" />
-            <p className="text-sm">Loading chat history...</p>
-          </div>
-        ) : messages.length === 0 ? (
-          <div className="text-center text-muted-foreground py-8">
-            <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p className="text-sm font-medium mb-1">Hi! I'm Omair 👋</p>
-            <p className="text-xs">Your AI assistant for agile best practices and platform guidance. Ask me anything!</p>
-          </div>
-        ) : null}
-        <div className="space-y-4">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
-            >
-              <div
-                className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                  msg.role === "user"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted"
-                }`}
-              >
-                <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-              </div>
-            </div>
-          ))}
-          
-          {/* Typing Indicator */}
-          {isTyping && (
-            <div className="flex justify-start animate-fade-in">
-              <TypingIndicator />
-            </div>
-          )}
-        </div>
-      </ScrollArea>
-
-      <div className="p-4 border-t">
-        <div className="flex gap-2">
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type your message..."
-            className="min-h-[60px] resize-none"
-            disabled={isLoading}
-          />
-          <Button
-            onClick={handleSend}
-            disabled={isLoading || !input.trim()}
-            size="icon"
-            className="h-[60px] w-[60px]"
+    <>
+      {/* Floating Action Button */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="fixed bottom-6 right-6 z-[60]"
           >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Send className="h-4 w-4" />
-            )}
-          </Button>
-        </div>
-      </div>
-    </Card>
+            <Button
+              onClick={() => setIsOpen(true)}
+              className="h-16 w-16 rounded-full shadow-2xl bg-gradient-to-br from-primary via-primary to-primary/80 hover:scale-110 transition-all duration-300 group relative overflow-hidden"
+            >
+              {/* Animated rings */}
+              <span className="absolute inset-0 rounded-full animate-ping bg-primary/30" />
+              <span className="absolute inset-2 rounded-full animate-pulse bg-primary/20" />
+              
+              {/* Icon */}
+              <div className="relative z-10 flex items-center justify-center">
+                <Bot className="h-7 w-7 text-primary-foreground" />
+              </div>
+              
+              {/* Sparkle effect */}
+              <Sparkles className="absolute top-1 right-1 h-4 w-4 text-primary-foreground/80 animate-pulse" />
+            </Button>
+            
+            {/* Label */}
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="absolute -left-20 top-1/2 -translate-y-1/2 bg-background border rounded-lg px-3 py-1.5 shadow-lg whitespace-nowrap"
+            >
+              <span className="text-sm font-medium">Ask Omair</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Chat Window */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed bottom-6 right-6 z-[60]"
+          >
+            <Card className="w-[calc(100vw-3rem)] sm:w-[420px] h-[calc(100vh-8rem)] sm:h-[650px] max-h-[650px] shadow-2xl flex flex-col overflow-hidden border-2">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-4 border-b">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
+                        <Bot className="h-5 w-5 text-primary-foreground" />
+                      </div>
+                      <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-background" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-lg">Omair</h3>
+                        <Badge variant="secondary" className="text-xs">AI</Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Your Agile Assistant</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {messages.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={handleClearChat}
+                        title="Clear chat history"
+                        className="h-8 w-8"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="h-8 w-8">
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Messages Area */}
+              <ScrollArea className="flex-1 p-4" ref={scrollRef}>
+                {isLoadingHistory ? (
+                  <div className="text-center text-muted-foreground py-8">
+                    <Loader2 className="h-8 w-8 mx-auto mb-3 animate-spin text-primary" />
+                    <p className="text-sm">Loading chat history...</p>
+                  </div>
+                ) : messages.length === 0 ? (
+                  <div className="space-y-6">
+                    {/* Welcome Message */}
+                    <div className="text-center py-6">
+                      <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mx-auto mb-4">
+                        <Bot className="h-8 w-8 text-primary" />
+                      </div>
+                      <h4 className="font-semibold text-lg mb-1">Hi! I'm Omair 👋</h4>
+                      <p className="text-sm text-muted-foreground max-w-[280px] mx-auto">
+                        Your AI-powered assistant for agile best practices, SAFe methodology, and platform guidance.
+                      </p>
+                    </div>
+
+                    {/* Quick Prompts */}
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground text-center mb-3">Quick questions to get started:</p>
+                      <div className="grid gap-2">
+                        {quickPrompts.map((prompt, idx) => (
+                          <Button
+                            key={idx}
+                            variant="outline"
+                            className="justify-start h-auto py-2.5 px-3 text-left text-sm hover:bg-primary/5 hover:border-primary/30 transition-colors"
+                            onClick={() => {
+                              setInput(prompt);
+                            }}
+                          >
+                            <Sparkles className="h-3.5 w-3.5 mr-2 text-primary shrink-0" />
+                            <span className="line-clamp-1">{prompt}</span>
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {messages.map((msg, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
+                      >
+                        {/* Avatar */}
+                        <div className={`shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${
+                          msg.role === "user" 
+                            ? "bg-secondary" 
+                            : "bg-gradient-to-br from-primary to-primary/60"
+                        }`}>
+                          {msg.role === "user" ? (
+                            <User className="h-4 w-4" />
+                          ) : (
+                            <Bot className="h-4 w-4 text-primary-foreground" />
+                          )}
+                        </div>
+                        
+                        {/* Message Bubble */}
+                        <div
+                          className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
+                            msg.role === "user"
+                              ? "bg-primary text-primary-foreground rounded-tr-sm"
+                              : "bg-muted rounded-tl-sm"
+                          }`}
+                        >
+                          <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                    
+                    {/* Typing Indicator */}
+                    {isTyping && (
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="flex gap-3"
+                      >
+                        <div className="shrink-0 h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
+                          <Bot className="h-4 w-4 text-primary-foreground" />
+                        </div>
+                        <TypingIndicator />
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </ScrollArea>
+
+              {/* Input Area */}
+              <div className="p-4 border-t bg-muted/30">
+                <div className="flex gap-2">
+                  <Textarea
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Ask Omair anything..."
+                    className="min-h-[52px] max-h-[120px] resize-none bg-background"
+                    disabled={isLoading}
+                  />
+                  <Button
+                    onClick={handleSend}
+                    disabled={isLoading || !input.trim()}
+                    size="icon"
+                    className="h-[52px] w-[52px] shrink-0 rounded-xl"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <Send className="h-5 w-5" />
+                    )}
+                  </Button>
+                </div>
+                <p className="text-[10px] text-muted-foreground text-center mt-2">
+                  Omair can help with agile practices, platform features & more
+                </p>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
