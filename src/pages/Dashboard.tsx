@@ -30,7 +30,6 @@ import { Bell } from "lucide-react";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
-import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import { LoadingState } from "@/components/LoadingState";
 import { 
   sampleVelocityData, 
@@ -55,11 +54,6 @@ export default function Dashboard() {
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
   const { isGuestMode } = useGuestMode();
-  const { isReturningVisitor, incrementPagesVisited } = useVisitorTracking();
-  
-  useEffect(() => {
-    incrementPagesVisited();
-  }, []);
 
   // Use sample data if no integrations or in guest mode
   const showSampleData = isGuestMode || (!hasJiraIntegration && !hasGithubIntegration);
