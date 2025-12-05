@@ -1345,6 +1345,13 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "project_teammates"
+            referencedColumns: ["id"]
+          },
         ]
       }
       project_milestones: {
@@ -1579,6 +1586,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "project_teammates"
             referencedColumns: ["id"]
           },
           {
@@ -2424,6 +2438,14 @@ export type Database = {
       }
     }
     Views: {
+      project_teammates: {
+        Row: {
+          avatar_url: string | null
+          full_name: string | null
+          id: string | null
+        }
+        Relationships: []
+      }
       user_subscription_info: {
         Row: {
           cancel_at_period_end: boolean | null
@@ -2528,6 +2550,14 @@ export type Database = {
           current_count: number
           limit_count: number
           tier_name: string
+        }[]
+      }
+      get_project_teammate_profile: {
+        Args: { teammate_id: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          id: string
         }[]
       }
       get_public_user_stats: {
