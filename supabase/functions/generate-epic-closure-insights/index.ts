@@ -12,6 +12,37 @@ serve(async (req) => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!
+
+    // Verify JWT authentication
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      console.error('No authorization header provided')
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - No authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Create client with user's JWT to verify authentication
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    })
+
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser()
+    if (authError || !user) {
+      console.error('Authentication failed:', authError?.message)
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - Invalid token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    console.log('Authenticated user:', user.id)
+
     const { epicId, type } = await req.json()
     
     if (!epicId || !type) {
@@ -21,11 +52,23 @@ serve(async (req) => {
       )
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!
-
+    // Use service role client for data access (RLS bypassed, but user is verified)
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+    // Verify user has access to the epic's value stream (basic access check)
+    const { data: epicAccess, error: accessError } = await supabase
+      .from('epics')
+      .select('id, value_stream_id')
+      .eq('id', epicId)
+      .single()
+
+    if (accessError || !epicAccess) {
+      console.error('Epic not found or access denied:', accessError?.message)
+      return new Response(
+        JSON.stringify({ error: 'Epic not found' }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     // Fetch epic data with related information
     const { data: epicData, error: epicError } = await supabase
@@ -165,6 +208,8 @@ Focus on actionable, specific insights that can improve future epic delivery.`
         // Return as-is if parsing fails
       }
     }
+
+    console.log('Successfully generated insights for epic:', epicId, 'type:', type)
 
     return new Response(
       JSON.stringify({ 
