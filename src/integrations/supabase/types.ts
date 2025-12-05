@@ -2310,54 +2310,6 @@ export type Database = {
           },
         ]
       }
-      visitor_tracking: {
-        Row: {
-          created_at: string | null
-          device_fingerprint: string
-          first_visit: string | null
-          has_dismissed_signup_reminder: boolean | null
-          has_seen_onboarding: boolean | null
-          id: string
-          ip_address_hash: string | null
-          last_visit: string | null
-          pages_visited: number | null
-          total_time_on_site: number | null
-          updated_at: string | null
-          user_agent: string | null
-          visit_count: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          device_fingerprint: string
-          first_visit?: string | null
-          has_dismissed_signup_reminder?: boolean | null
-          has_seen_onboarding?: boolean | null
-          id?: string
-          ip_address_hash?: string | null
-          last_visit?: string | null
-          pages_visited?: number | null
-          total_time_on_site?: number | null
-          updated_at?: string | null
-          user_agent?: string | null
-          visit_count?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          device_fingerprint?: string
-          first_visit?: string | null
-          has_dismissed_signup_reminder?: boolean | null
-          has_seen_onboarding?: boolean | null
-          id?: string
-          ip_address_hash?: string | null
-          last_visit?: string | null
-          pages_visited?: number | null
-          total_time_on_site?: number | null
-          updated_at?: string | null
-          user_agent?: string | null
-          visit_count?: number | null
-        }
-        Relationships: []
-      }
       workflow_executions: {
         Row: {
           completed_at: string | null
