@@ -154,9 +154,10 @@ const Integrations = () => {
   const fetchIntegrations = async () => {
     if (!selectedProject) return;
 
+    // Only select metadata fields - exclude sensitive config field with API tokens
     const { data, error } = await supabase
       .from("integrations")
-      .select("*")
+      .select("id, name, integration_type, is_active, project_id, created_at, updated_at")
       .eq("project_id", selectedProject)
       .order("created_at", { ascending: false });
 
@@ -169,42 +170,19 @@ const Integrations = () => {
       return;
     }
 
-    // Add status information to integrations
+    // Add status information to integrations (without config - use ConnectionTester for validation)
     const integrationsWithStatus: IntegrationWithStatus[] = (data || []).map((integration) => {
-      const config = integration.config as any;
-      
-      // Determine status based on activity and config
-      let status: "connected" | "disconnected" | "error" | "warning" = "disconnected";
-      let statusMessage = "";
-
-      if (integration.is_active) {
-        // Check if configuration looks valid
-        if (integration.integration_type === "jira") {
-          if (config?.url && config?.apiToken) {
-            status = "connected";
-            statusMessage = "Active and configured";
-          } else {
-            status = "warning";
-            statusMessage = "Missing configuration";
-          }
-        } else {
-          if (config?.organization && config?.repository && config?.apiToken) {
-            status = "connected";
-            statusMessage = "Active and configured";
-          } else {
-            status = "warning";
-            statusMessage = "Missing configuration";
-          }
-        }
-      } else {
-        status = "disconnected";
-        statusMessage = "Integration is disabled";
-      }
+      // Status is based on is_active flag - actual connection test done via ConnectionTester
+      const status: "connected" | "disconnected" | "error" | "warning" = 
+        integration.is_active ? "connected" : "disconnected";
+      const statusMessage = integration.is_active 
+        ? "Active - use Test Connection to verify" 
+        : "Integration is disabled";
 
       return {
         ...integration,
         integration_type: integration.integration_type as "jira" | "github",
-        config: config,
+        config: {}, // Config not loaded for security - credentials stay server-side
         status,
         statusMessage,
         lastSync: integration.updated_at,
