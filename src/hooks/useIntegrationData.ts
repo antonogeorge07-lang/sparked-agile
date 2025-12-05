@@ -19,7 +19,7 @@ export const useIntegrationData = (projectId: string | null) => {
     setIsLoading(true);
     const { data, error } = await supabase
       .from('integrations')
-      .select('*')
+      .select('id, name, integration_type, is_active, project_id, created_at, updated_at')
       .eq('project_id', projectId)
       .eq('is_active', true);
 
