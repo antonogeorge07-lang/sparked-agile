@@ -8,6 +8,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// HTML escape function to prevent XSS in email templates
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Rate limiting
 const rateLimiter = new Map<string, { count: number; resetAt: number }>();
 
@@ -180,19 +190,23 @@ serve(async (req) => {
       }
     }
 
+    // Escape user-provided content for HTML email
+    const safeName = escapeHtml(name);
+    const safeProjectName = escapeHtml(projectName);
+
     // Send welcome email via Resend REST API (no npm dependency)
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
     
     const welcomeEmailHtml = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; color: #333;">
-        <h1 style="color: #0066cc; font-size: 24px; margin-bottom: 20px;">Welcome to ${projectName}! 🎉</h1>
+        <h1 style="color: #0066cc; font-size: 24px; margin-bottom: 20px;">Welcome to ${safeProjectName}! 🎉</h1>
         
         <p style="font-size: 16px; line-height: 1.6; margin: 20px 0;">
-          Dear ${name},
+          Dear ${safeName},
         </p>
         
         <p style="font-size: 16px; line-height: 1.6; margin: 20px 0;">
-          You've been added to the <strong>${projectName}</strong> team. We're excited to have you on board!
+          You've been added to the <strong>${safeProjectName}</strong> team. We're excited to have you on board!
         </p>
 
         <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0066cc; margin: 25px 0;">
@@ -251,7 +265,7 @@ serve(async (req) => {
           body: JSON.stringify({
             from: 'Scrum Master AI <onboarding@resend.dev>',
             to: [email],
-            subject: `Welcome to ${projectName}! 🎉`,
+            subject: `Welcome to ${safeProjectName}! 🎉`,
             html: welcomeEmailHtml,
           }),
         });

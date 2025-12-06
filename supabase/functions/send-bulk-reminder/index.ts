@@ -8,6 +8,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// HTML escape function to prevent XSS in email templates
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Rate limiting
 const rateLimiter = new Map<string, { count: number; resetAt: number }>();
 
@@ -100,34 +110,38 @@ serve(async (req) => {
       throw new Error('RESEND_API_KEY not configured');
     }
 
+    // Escape user-provided content
+    const safeProjectName = escapeHtml(project?.name || 'Your Project');
+    const safeMessage = message ? escapeHtml(message) : null;
+
     // Get ceremony template
     const ceremonyTemplates = {
       standup: {
-        subject: `📅 Daily Standup Reminder - ${project?.name || 'Project'}`,
+        subject: `📅 Daily Standup Reminder - ${safeProjectName}`,
         emoji: '🗣️',
         title: 'Daily Standup',
         description: 'Time for your daily standup!'
       },
       retrospective: {
-        subject: `🔄 Sprint Retrospective Reminder - ${project?.name || 'Project'}`,
+        subject: `🔄 Sprint Retrospective Reminder - ${safeProjectName}`,
         emoji: '🔄',
         title: 'Sprint Retrospective',
         description: 'Time to reflect on the sprint and improve!'
       },
       sprint_planning: {
-        subject: `📋 Sprint Planning Reminder - ${project?.name || 'Project'}`,
+        subject: `📋 Sprint Planning Reminder - ${safeProjectName}`,
         emoji: '📋',
         title: 'Sprint Planning',
         description: 'Time to plan the next sprint!'
       },
       sprint_review: {
-        subject: `🎯 Sprint Review Reminder - ${project?.name || 'Project'}`,
+        subject: `🎯 Sprint Review Reminder - ${safeProjectName}`,
         emoji: '🎯',
         title: 'Sprint Review',
         description: 'Time to showcase our work!'
       },
       backlog_refinement: {
-        subject: `🔍 Backlog Refinement Reminder - ${project?.name || 'Project'}`,
+        subject: `🔍 Backlog Refinement Reminder - ${safeProjectName}`,
         emoji: '🔍',
         title: 'Backlog Refinement',
         description: 'Time to refine our backlog!'
@@ -140,6 +154,8 @@ serve(async (req) => {
     const emailPromises = members.map(async (member) => {
       if (!member.email) return null;
 
+      const safeMemberName = escapeHtml(member.name || 'Team Member');
+
       const emailHtml = `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; color: #333;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
@@ -148,22 +164,22 @@ serve(async (req) => {
           
           <div style="padding: 30px; background: #f9fafb; border-radius: 0 0 8px 8px;">
             <p style="font-size: 18px; color: #1f2937; margin-bottom: 20px;">
-              Hi ${member.name},
+              Hi ${safeMemberName},
             </p>
             
             <p style="font-size: 16px; color: #4b5563; line-height: 1.6; margin-bottom: 20px;">
               ${template.description}
             </p>
             
-            ${message ? `
+            ${safeMessage ? `
               <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-                <p style="margin: 0; color: #1f2937; line-height: 1.6;">${message}</p>
+                <p style="margin: 0; color: #1f2937; line-height: 1.6;">${safeMessage}</p>
               </div>
             ` : ''}
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
               <p style="font-size: 14px; color: #6b7280; margin: 0;">
-                <strong>Project:</strong> ${project?.name || 'Your Project'}<br/>
+                <strong>Project:</strong> ${safeProjectName}<br/>
                 <strong>Ceremony:</strong> ${template.title}
               </p>
             </div>
@@ -185,7 +201,7 @@ serve(async (req) => {
           body: JSON.stringify({
             from: 'Scrum Master AI <onboarding@resend.dev>',
             to: [member.email],
-            subject: subject || template.subject,
+            subject: subject ? escapeHtml(subject) : template.subject,
             html: emailHtml,
           }),
         });

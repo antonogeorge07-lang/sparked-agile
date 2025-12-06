@@ -7,6 +7,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// HTML escape function to prevent XSS in email templates
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -80,12 +90,17 @@ serve(async (req) => {
           };
 
           const template = ceremonyTemplates[reminder.ceremony_type as keyof typeof ceremonyTemplates];
-          const projectName = reminder.projects?.name || 'Your Project';
+          const projectName = escapeHtml(reminder.projects?.name || 'Your Project');
 
           // Send emails to all members
           const emailResults = await Promise.all(
             members.map(async (member) => {
               if (!member.email) return null;
+
+              const safeMemberName = escapeHtml(member.name || 'Team Member');
+              const safeReminderMessage = reminder.reminder_message 
+                ? escapeHtml(reminder.reminder_message) 
+                : null;
 
               const emailHtml = `
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; color: #333;">
@@ -95,16 +110,16 @@ serve(async (req) => {
                   
                   <div style="padding: 30px; background: #f9fafb; border-radius: 0 0 8px 8px;">
                     <p style="font-size: 18px; color: #1f2937; margin-bottom: 20px;">
-                      Hi ${member.name},
+                      Hi ${safeMemberName},
                     </p>
                     
                     <p style="font-size: 16px; color: #4b5563; line-height: 1.6; margin-bottom: 20px;">
                       ${template.description}
                     </p>
                     
-                    ${reminder.reminder_message ? `
+                    ${safeReminderMessage ? `
                       <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-                        <p style="margin: 0; color: #1f2937; line-height: 1.6;">${reminder.reminder_message}</p>
+                        <p style="margin: 0; color: #1f2937; line-height: 1.6;">${safeReminderMessage}</p>
                       </div>
                     ` : ''}
                     
