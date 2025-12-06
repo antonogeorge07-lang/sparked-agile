@@ -27,28 +27,20 @@ export default function WorkspaceSettings() {
     }
   }, [workspace]);
 
-  // Fetch subscription limits
+  // Fetch subscription limits using secure RPC function (excludes Stripe IDs)
   useEffect(() => {
     const fetchLimits = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('user_subscriptions')
-        .select(`
-          subscription_tiers (
-            project_limit,
-            team_member_limit
-          )
-        `)
-        .eq('user_id', user.id)
+        .rpc('get_user_subscription_limits', { user_id_param: user.id })
         .single();
 
       if (data && !error) {
-        const tier = data.subscription_tiers as any;
         setLimits({
-          projectLimit: tier?.project_limit || 5,
-          teamMemberLimit: tier?.team_member_limit || 5
+          projectLimit: data.project_limit || 5,
+          teamMemberLimit: data.team_member_limit || 15
         });
       }
     };
