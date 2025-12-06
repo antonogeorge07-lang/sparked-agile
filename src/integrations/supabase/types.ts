@@ -2582,6 +2582,15 @@ export type Database = {
         Args: { user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
       }
+      get_user_subscription_limits: {
+        Args: { user_id_param: string }
+        Returns: {
+          project_limit: number
+          status: string
+          team_member_limit: number
+          tier_name: string
+        }[]
+      }
       initialize_epic_closure_review: {
         Args: { epic_id_param: string }
         Returns: string
