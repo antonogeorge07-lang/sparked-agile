@@ -8,6 +8,16 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Escape HTML to prevent XSS attacks in email content
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 interface WelcomeEmailRequest {
   email: string;
   firstName?: string;
@@ -73,7 +83,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const displayName = firstName || "there";
+    const displayName = escapeHtml(firstName || "there");
 
     const emailResponse = await resend.emails.send({
       from: "SAAI Platform <onboarding@resend.dev>",
