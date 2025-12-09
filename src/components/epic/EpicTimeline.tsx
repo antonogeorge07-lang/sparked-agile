@@ -192,7 +192,7 @@ export function EpicTimeline({ projectId }: EpicTimelineProps) {
                       
                       {/* Epic bar */}
                       <div
-                        className={`absolute top-1/2 -translate-y-1/2 h-8 rounded-md border-2 ${getPriorityColor(epic.priority)} flex items-center justify-center text-xs font-medium text-white shadow-lg cursor-pointer hover:scale-105 transition-transform`}
+                        className={`absolute top-1/2 -translate-y-1/2 h-8 rounded-md border-2 ${getPriorityColor(epic.priority)} flex items-center justify-center text-xs font-medium text-primary-foreground shadow-lg cursor-pointer hover:scale-105 transition-transform`}
                         style={position}
                       >
                         <span className="truncate px-2">{epic.title}</span>

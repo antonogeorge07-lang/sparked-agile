@@ -125,8 +125,6 @@ export function AppSidebar() {
 
   const isActive = (path: string) => currentPath === path;
 
-  // Debug logging
-  console.log('Sidebar - Role:', role, 'Loading:', loading, 'Sections:', filteredSections.length);
 
   if (loading) {
     return (

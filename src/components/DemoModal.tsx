@@ -100,25 +100,25 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             <h3 className="text-base sm:text-lg font-semibold mb-3">Available Integrations</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
                   J
                 </div>
                 <p className="text-sm font-medium">Jira</p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
                   G
                 </div>
                 <p className="text-sm font-medium">GitHub</p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
                   M
                 </div>
                 <p className="text-sm font-medium">Microsoft 365</p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold">
+                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
                   T
                 </div>
                 <p className="text-sm font-medium">Teams</p>
