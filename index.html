@@ -119,7 +119,96 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <!-- Static content for crawlers/SEO (hidden when JS loads) -->
+    <div id="root">
+      <div id="static-fallback" style="font-family: system-ui, -apple-system, sans-serif;">
+        <header style="padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e7eb;">
+          <a href="/" style="font-size: 1.5rem; font-weight: bold; color: #4F46E5; text-decoration: none;">SAAI</a>
+          <nav style="display: flex; gap: 1.5rem;">
+            <a href="/about" style="color: #374151; text-decoration: none;">About</a>
+            <a href="/contact" style="color: #374151; text-decoration: none;">Contact</a>
+            <a href="/faq" style="color: #374151; text-decoration: none;">FAQ</a>
+            <a href="/auth" style="color: #374151; text-decoration: none;">Sign In</a>
+            <a href="/auth" style="background: #4F46E5; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; text-decoration: none;">Get Started</a>
+          </nav>
+        </header>
+        
+        <main style="max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; text-align: center;">
+          <h1 style="font-size: 3rem; font-weight: bold; color: #111827; margin-bottom: 1rem;">
+            Spark Agile Active Intelligence
+          </h1>
+          <h2 style="font-size: 1.5rem; color: #6b7280; margin-bottom: 2rem;">
+            AI-Powered Agile Workflow & Team Management
+          </h2>
+          <p style="font-size: 1.125rem; color: #4b5563; max-width: 600px; margin: 0 auto 2rem;">
+            Transform your agile ceremonies with AI assistance. Automate sprint planning, standups, and retrospectives. Integrate with JIRA, GitHub, and Microsoft 365.
+          </p>
+          
+          <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 4rem;">
+            <a href="/auth" style="background: #4F46E5; color: white; padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">Start Free Trial</a>
+            <a href="/about" style="border: 1px solid #d1d5db; color: #374151; padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none;">Learn More</a>
+          </div>
+          
+          <section style="margin-bottom: 4rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 2rem;">Key Features</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: left;">
+              <div style="padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
+                <h4 style="font-weight: 600; margin-bottom: 0.5rem;">AI Sprint Planning</h4>
+                <p style="color: #6b7280;">Automatically generate sprint plans based on team velocity and backlog priority.</p>
+              </div>
+              <div style="padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
+                <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Standup Summaries</h4>
+                <p style="color: #6b7280;">AI-powered summaries of daily standups with automatic blocker detection.</p>
+              </div>
+              <div style="padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
+                <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Retrospective Insights</h4>
+                <p style="color: #6b7280;">Generate actionable insights from retrospectives to improve team performance.</p>
+              </div>
+              <div style="padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
+                <h4 style="font-weight: 600; margin-bottom: 0.5rem;">JIRA & GitHub Integration</h4>
+                <p style="color: #6b7280;">Seamlessly sync with your existing tools for unified workflow management.</p>
+              </div>
+            </div>
+          </section>
+          
+          <section style="margin-bottom: 4rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Trusted Security</h3>
+            <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+              <span style="padding: 0.5rem 1rem; background: #f3f4f6; border-radius: 0.25rem;">GDPR Ready</span>
+              <span style="padding: 0.5rem 1rem; background: #f3f4f6; border-radius: 0.25rem;">Enterprise Security</span>
+              <span style="padding: 0.5rem 1rem; background: #f3f4f6; border-radius: 0.25rem;">99.9% Uptime</span>
+              <span style="padding: 0.5rem 1rem; background: #f3f4f6; border-radius: 0.25rem;">ISO 27001</span>
+            </div>
+          </section>
+        </main>
+        
+        <footer style="border-top: 1px solid #e5e7eb; padding: 2rem; text-align: center;">
+          <nav style="display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 1rem;">
+            <a href="/about" style="color: #6b7280; text-decoration: none;">About</a>
+            <a href="/contact" style="color: #6b7280; text-decoration: none;">Contact</a>
+            <a href="/faq" style="color: #6b7280; text-decoration: none;">FAQ</a>
+            <a href="/privacy-policy" style="color: #6b7280; text-decoration: none;">Privacy Policy</a>
+            <a href="/terms-of-service" style="color: #6b7280; text-decoration: none;">Terms of Service</a>
+          </nav>
+          <p style="color: #9ca3af; font-size: 0.875rem;">© 2024 SAAI. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
+    
+    <noscript>
+      <style>#static-fallback { display: block !important; }</style>
+      <div style="background: #fef3c7; padding: 1rem; text-align: center;">
+        <strong>JavaScript Required:</strong> This application requires JavaScript to run. Please enable JavaScript in your browser for the full experience.
+      </div>
+    </noscript>
+    
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Hide static fallback once React loads
+      document.addEventListener('DOMContentLoaded', function() {
+        var fallback = document.getElementById('static-fallback');
+        if (fallback) fallback.style.display = 'none';
+      });
+    </script>
   </body>
 </html>
