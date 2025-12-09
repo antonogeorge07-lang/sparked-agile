@@ -4,7 +4,7 @@ project_id = "pbrrfxgcksptloiwshiy"
 enabled = true
 
 [functions.chat]
-verify_jwt = true
+verify_jwt = false
 
 [functions.chat-demo]
 verify_jwt = false

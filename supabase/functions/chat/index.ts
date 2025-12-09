@@ -9,21 +9,30 @@ const corsHeaders = {
 // Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
-function checkRateLimit(userId: string, maxRequests: number, windowMs: number): boolean {
+function checkRateLimit(identifier: string, maxRequests: number, windowMs: number): boolean {
   const now = Date.now();
-  const userLimit = rateLimitMap.get(userId);
+  const limit = rateLimitMap.get(identifier);
 
-  if (!userLimit || now > userLimit.resetTime) {
-    rateLimitMap.set(userId, { count: 1, resetTime: now + windowMs });
+  if (!limit || now > limit.resetTime) {
+    rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs });
     return true;
   }
 
-  if (userLimit.count >= maxRequests) {
+  if (limit.count >= maxRequests) {
     return false;
   }
 
-  userLimit.count++;
+  limit.count++;
   return true;
+}
+
+// Get client identifier from request (IP or user ID)
+function getClientIdentifier(req: Request, userId?: string): string {
+  if (userId) return `user:${userId}`;
+  
+  const forwarded = req.headers.get('x-forwarded-for');
+  const ip = forwarded ? forwarded.split(',')[0].trim() : 'anonymous';
+  return `ip:${ip}`;
 }
 
 serve(async (req) => {
@@ -32,54 +41,61 @@ serve(async (req) => {
   }
 
   try {
-    // Create Supabase client with auth context
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
-      }
-    );
+    let user = null;
+    let tierName = 'Guest';
+    let isPremium = false;
 
-    // Verify authentication
-    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
-    if (authError || !user) {
-      console.error("Authentication failed:", authError);
-      return new Response(
-        JSON.stringify({ error: "Unauthorized. Please sign in to use the AI assistant." }),
-        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    // Try to authenticate if authorization header is provided
+    const authHeader = req.headers.get('Authorization');
+    if (authHeader && authHeader !== 'Bearer null' && authHeader !== 'Bearer undefined') {
+      const supabaseClient = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+        {
+          global: {
+            headers: { Authorization: authHeader },
+          },
+        }
       );
+
+      const { data: { user: authUser } } = await supabaseClient.auth.getUser();
+      
+      if (authUser) {
+        user = authUser;
+        
+        // Get user's subscription tier
+        const { data: subscriptionData } = await supabaseClient
+          .from('user_subscriptions')
+          .select(`
+            status,
+            tier_id,
+            subscription_tiers (
+              name,
+              project_limit
+            )
+          `)
+          .eq('user_id', user.id)
+          .eq('status', 'active')
+          .single();
+
+        tierName = subscriptionData?.subscription_tiers?.name || 'Free';
+        isPremium = tierName !== 'Free' && tierName !== 'Guest';
+        
+        console.log(`Authenticated user ${user.id} tier: ${tierName}, isPremium: ${isPremium}`);
+      }
     }
 
-    // Get user's subscription tier
-    const { data: subscriptionData } = await supabaseClient
-      .from('user_subscriptions')
-      .select(`
-        status,
-        tier_id,
-        subscription_tiers (
-          name,
-          project_limit
-        )
-      `)
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .single();
+    // Get client identifier for rate limiting
+    const clientId = getClientIdentifier(req, user?.id);
 
-    const tierName = subscriptionData?.subscription_tiers?.name || 'Free';
-    const isPremium = tierName !== 'Free';
-    
-    console.log(`User ${user.id} tier: ${tierName}, isPremium: ${isPremium}`);
-
-    // Check rate limit based on tier (Free: 5/min, Premium: 20/min)
-    const rateLimit = isPremium ? 20 : 5;
-    if (!checkRateLimit(user.id, rateLimit, 60000)) {
-      console.warn(`Rate limit exceeded for user: ${user.id}`);
+    // Rate limits: Guest: 3/min, Free: 5/min, Premium: 20/min
+    const rateLimit = isPremium ? 20 : (user ? 5 : 3);
+    if (!checkRateLimit(clientId, rateLimit, 60000)) {
+      console.warn(`Rate limit exceeded for: ${clientId}`);
+      const tierLabel = isPremium ? 'Premium' : (user ? 'Free' : 'Guest');
       return new Response(
         JSON.stringify({ 
-          error: `Rate limit exceeded. ${isPremium ? 'Premium' : 'Free'} tier allows ${rateLimit} requests per minute.${!isPremium ? ' Upgrade to Premium for higher limits!' : ''}` 
+          error: `Rate limit exceeded. ${tierLabel} tier allows ${rateLimit} requests per minute.${!user ? ' Sign in for higher limits!' : (!isPremium ? ' Upgrade to Premium for higher limits!' : '')}` 
         }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
@@ -92,7 +108,7 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    console.log(`Chat request from user ${user.id} with ${messages.length} messages`);
+    console.log(`Chat request from ${clientId} with ${messages.length} messages`);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -107,10 +123,25 @@ serve(async (req) => {
             role: "system",
             content: `You are Omair, a helpful and friendly AI assistant specializing in agile project management concepts, best practices, and platform guidance.
 
-**User Subscription: ${tierName} Tier**
-${isPremium ? '✓ Premium features enabled: Priority support, unlimited workspaces, advanced analytics, custom integrations' : '⚠ Free tier: Limited to 5 requests/min. Upgrade for premium features!'}
+**User Status: ${tierName} ${user ? `(User ID: ${user.id})` : '(Not signed in)'}**
+${isPremium ? '✓ Premium features enabled: Priority support, unlimited workspaces, advanced analytics, custom integrations' : 
+  user ? '⚠ Free tier: Limited to 5 requests/min. Upgrade for premium features!' : 
+  '⚠ Guest mode: Limited to 3 requests/min. Sign in for more features!'}
 
-${!isPremium ? `
+${!user ? `
+**Guest Mode Limitations:**
+- 3 AI requests per minute
+- Basic platform guidance only
+- Cannot access personalized features
+
+**Benefits of Signing Up (Free):**
+- 5 AI requests per minute
+- Create your own workspace
+- Track projects and tasks
+- Access all platform features
+
+Encourage guests to sign up when they ask about features requiring an account.
+` : !isPremium ? `
 **Free Tier Limitations:**
 - 5 AI requests per minute (vs 20 for Premium)
 - Basic workspace features only
@@ -168,12 +199,14 @@ The platform can schedule these Scrum ceremonies:
 
 Keep your answers clear, concise, and actionable. Provide step-by-step instructions when needed.
 
-${!isPremium ? 'For free tier users, keep responses focused and suggest premium features when relevant.' : 'Provide comprehensive guidance with full access to all platform features.'}`
+${!user ? 'For guests, provide helpful guidance and encourage signing up for full platform access.' : 
+  !isPremium ? 'For free tier users, keep responses focused and suggest premium features when relevant.' : 
+  'Provide comprehensive guidance with full access to all platform features.'}`
           },
           ...messages,
         ],
         stream: true,
-        max_tokens: isPremium ? 4000 : 1000, // Premium gets longer responses
+        max_tokens: isPremium ? 4000 : (user ? 1000 : 500), // Premium: 4000, Free: 1000, Guest: 500
       }),
     });
 
