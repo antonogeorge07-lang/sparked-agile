@@ -133,7 +133,7 @@ export const AchievementBadge = ({
         sizeClasses[size],
         unlocked ? rarityColors[achievement.rarity] : "from-gray-300 to-gray-400"
       )}>
-        <Icon className={cn(iconSizes[size], "text-white")} />
+        <Icon className={cn(iconSizes[size], "text-primary-foreground")} />
         {unlocked && achievement.rarity === "legendary" && (
           <div className="absolute inset-0 rounded-full animate-pulse bg-amber-400/20" />
         )}

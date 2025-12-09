@@ -20,7 +20,7 @@ export const FeedbackWidget = () => {
     e.preventDefault();
     
     const trimmedMessage = message.trim();
-    console.log("Submitting feedback:", { feedbackType, messageLength: trimmedMessage.length });
+    
     
     if (!trimmedMessage) {
       toast.error("Please enter your feedback");
@@ -36,7 +36,7 @@ export const FeedbackWidget = () => {
 
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser();
-      console.log("User auth check:", { userId: user?.id, authError });
+      
 
       const feedbackData = {
         user_id: user?.id || null,
@@ -49,18 +49,18 @@ export const FeedbackWidget = () => {
         },
       };
       
-      console.log("Inserting feedback data:", feedbackData);
+      
 
       const { data, error } = await supabase.from("user_feedback").insert(feedbackData).select();
 
-      console.log("Insert result:", { data, error });
+      
 
       if (error) {
         console.error("Database error:", error);
         throw error;
       }
 
-      console.log("Feedback submitted successfully");
+      
       toast.success("Thank you for your feedback! We'll review it soon.");
       setMessage("");
       setIsOpen(false);
