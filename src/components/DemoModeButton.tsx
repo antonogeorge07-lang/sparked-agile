@@ -21,13 +21,26 @@ export const DemoModeButton = () => {
         return;
       }
 
+      // Get user's workspace - required for RLS policies
+      const { data: workspace, error: workspaceError } = await supabase
+        .from("workspaces")
+        .select("id")
+        .eq("owner_id", user.id)
+        .single();
+
+      if (workspaceError || !workspace) {
+        toast.error("Please ensure you have a workspace created first.");
+        return;
+      }
+
       // Create demo project
       const { data: project, error: projectError } = await supabase
         .from("projects")
         .insert({
           name: "Demo Project - E-commerce Platform",
           description: "Sample project showcasing SAAI features with realistic data",
-          user_id: user.id
+          user_id: user.id,
+          workspace_id: workspace.id
         })
         .select()
         .single();

@@ -110,12 +110,29 @@ export default function Workflows() {
       return;
     }
 
+    // Get user's workspace - required for RLS policies
+    const { data: workspace, error: workspaceError } = await supabase
+      .from('workspaces')
+      .select('id')
+      .eq('owner_id', user.id)
+      .single();
+
+    if (workspaceError || !workspace) {
+      toast({
+        title: "Error",
+        description: "Please ensure you have a workspace created first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const { data, error } = await supabase
       .from('projects')
       .insert({ 
         name: projectName, 
         description: 'AI Workflow Project',
-        user_id: user.id
+        user_id: user.id,
+        workspace_id: workspace.id
       })
       .select()
       .single();
