@@ -159,11 +159,29 @@ export const OnboardingWizard = ({ isOpen, onClose, userRole = 'member' }: Onboa
         }
       }
 
+      // Get user's workspace - required for RLS policies
+      const { data: workspace, error: workspaceError } = await supabase
+        .from('workspaces')
+        .select('id')
+        .eq('owner_id', user.id)
+        .single();
+
+      if (workspaceError || !workspace) {
+        toast({
+          title: "Workspace not found",
+          description: "Please ensure you have a workspace created first.",
+          variant: "destructive",
+        });
+        return false;
+      }
+
       const { data: project, error } = await supabase
         .from('projects')
         .insert({
           name: projectName,
           description: projectDescription || null,
+          workspace_id: workspace.id,
+          user_id: user.id,
         })
         .select()
         .single();
@@ -176,6 +194,7 @@ export const OnboardingWizard = ({ isOpen, onClose, userRole = 'member' }: Onboa
         .insert({
           project_id: project.id,
           user_id: user.id,
+          role: 'owner',
         });
 
       await updateProgress({
