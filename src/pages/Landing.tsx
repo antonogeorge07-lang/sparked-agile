@@ -22,6 +22,7 @@ const ProjectCommandCentreSection = lazy(() => import("@/components/landing/Proj
 const FeaturesSection = lazy(() => import("@/components/landing/FeaturesSection").then(module => ({ default: module.FeaturesSection })));
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
 const CTASection = lazy(() => import("@/components/landing/CTASection").then(module => ({ default: module.CTASection })));
+const DevelopersSection = lazy(() => import("@/components/landing/DevelopersSection").then(module => ({ default: module.DevelopersSection })));
 const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
 
 const SectionSkeleton = () => (
@@ -188,6 +189,12 @@ export default function Landing() {
         <ScrollReveal fullWidth delay={0.1}>
           <Suspense fallback={<SectionSkeleton />}>
             <FeedbackSection />
+          </Suspense>
+        </ScrollReveal>
+        
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <DevelopersSection />
           </Suspense>
         </ScrollReveal>
         
