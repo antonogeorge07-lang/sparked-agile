@@ -14,3 +14,21 @@ verify_jwt = true
 
 [functions.send-welcome-email]
 verify_jwt = false
+
+[functions.api-projects]
+verify_jwt = true
+
+[functions.api-tasks]
+verify_jwt = true
+
+[functions.api-epics]
+verify_jwt = true
+
+[functions.api-integrations]
+verify_jwt = true
+
+[functions.api-webhooks]
+verify_jwt = true
+
+[functions.deliver-webhooks]
+verify_jwt = false

@@ -16,35 +16,42 @@ import {
   RefreshCw
 } from "lucide-react";
 
+// Live API endpoints - these are actual edge functions
 const apiEndpoints = [
   {
     method: "GET",
-    endpoint: "/api/projects",
+    endpoint: "/functions/v1/api-projects",
     description: "Retrieve all projects for authenticated user"
   },
   {
     method: "POST",
-    endpoint: "/api/tasks",
+    endpoint: "/functions/v1/api-tasks",
     description: "Create a new task in a project"
   },
   {
     method: "GET",
-    endpoint: "/api/epics/:id",
-    description: "Get epic details with features"
+    endpoint: "/functions/v1/api-epics/:id",
+    description: "Get epic details with features and milestones"
   },
   {
     method: "PUT",
-    endpoint: "/api/integrations",
+    endpoint: "/functions/v1/api-integrations",
     description: "Update integration configuration"
+  },
+  {
+    method: "POST",
+    endpoint: "/functions/v1/api-webhooks",
+    description: "Register webhook endpoints for events"
   }
 ];
 
+// Actual webhook events triggered by database changes
 const webhookEvents = [
-  { event: "project.created", description: "Fired when a new project is created" },
-  { event: "task.updated", description: "Fired when a task status changes" },
-  { event: "epic.completed", description: "Fired when an epic is marked complete" },
-  { event: "sprint.started", description: "Fired when a sprint begins" },
-  { event: "integration.synced", description: "Fired after external sync completes" }
+  { event: "projects.insert", description: "Fired when a new project is created" },
+  { event: "project_tasks.update", description: "Fired when a task status changes" },
+  { event: "epics.update", description: "Fired when an epic is updated" },
+  { event: "project_tasks.insert", description: "Fired when a new task is created" },
+  { event: "projects.delete", description: "Fired when a project is deleted" }
 ];
 
 const integrations = [
