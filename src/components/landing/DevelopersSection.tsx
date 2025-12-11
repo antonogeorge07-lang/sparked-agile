@@ -13,8 +13,29 @@ import {
   ExternalLink,
   BookOpen,
   Terminal,
-  RefreshCw
+  RefreshCw,
+  Store,
+  Award
 } from "lucide-react";
+import { motion } from "framer-motion";
+
+// Marketplace listings
+const marketplaceListings = [
+  {
+    name: "Atlassian Marketplace",
+    url: "https://marketplace.atlassian.com",
+    logo: "https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/favicon.png",
+    badge: "Official Partner",
+    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+  },
+  {
+    name: "GitHub Marketplace", 
+    url: "https://github.com/marketplace",
+    logo: "https://github.githubassets.com/favicons/favicon.svg",
+    badge: "Verified",
+    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400"
+  }
+];
 
 // Live API endpoints - these are actual edge functions
 const apiEndpoints = [
@@ -284,6 +305,45 @@ export function DevelopersSection() {
             </Badge>
           </div>
         </div>
+
+        {/* Marketplace Presence */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <div className="inline-flex items-center gap-2 mb-6">
+            <Store className="h-5 w-5 text-primary" />
+            <span className="font-semibold">Available on Official Marketplaces</span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            {marketplaceListings.map((marketplace) => (
+              <a
+                key={marketplace.name}
+                href={marketplace.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center gap-3 px-5 py-3 rounded-xl border ${marketplace.color} hover:scale-105 transition-all group`}
+              >
+                <img 
+                  src={marketplace.logo} 
+                  alt={marketplace.name}
+                  className="w-6 h-6"
+                  loading="lazy"
+                />
+                <div className="text-left">
+                  <div className="font-medium text-sm">{marketplace.name}</div>
+                  <div className="flex items-center gap-1 text-xs opacity-80">
+                    <Award className="h-3 w-3" />
+                    {marketplace.badge}
+                  </div>
+                </div>
+                <ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100" />
+              </a>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
 import { FAQSchema } from "@/components/landing/FAQSchema";
+import { IntegrationSchema } from "@/components/landing/IntegrationSchema";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +22,8 @@ const AIAssistantShowcase = lazy(() => import("@/components/landing/AIAssistantS
 const ProjectCommandCentreSection = lazy(() => import("@/components/landing/ProjectCommandCentreSection").then(module => ({ default: module.ProjectCommandCentreSection })));
 const FeaturesSection = lazy(() => import("@/components/landing/FeaturesSection").then(module => ({ default: module.FeaturesSection })));
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
+const IntegrationShowcase = lazy(() => import("@/components/landing/IntegrationShowcase").then(module => ({ default: module.IntegrationShowcase })));
+const MarketplaceBadges = lazy(() => import("@/components/landing/MarketplaceBadges").then(module => ({ default: module.MarketplaceBadges })));
 const CTASection = lazy(() => import("@/components/landing/CTASection").then(module => ({ default: module.CTASection })));
 const DevelopersSection = lazy(() => import("@/components/landing/DevelopersSection").then(module => ({ default: module.DevelopersSection })));
 const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
@@ -75,8 +78,9 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* SEO: FAQ Structured Data */}
+      {/* SEO: Structured Data */}
       <FAQSchema />
+      <IntegrationSchema />
       
       {/* Navigation */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -189,6 +193,18 @@ export default function Landing() {
         <ScrollReveal fullWidth delay={0.1}>
           <Suspense fallback={<SectionSkeleton />}>
             <FeedbackSection />
+          </Suspense>
+        </ScrollReveal>
+
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <IntegrationShowcase />
+          </Suspense>
+        </ScrollReveal>
+
+        <ScrollReveal fullWidth delay={0.1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <MarketplaceBadges />
           </Suspense>
         </ScrollReveal>
         
