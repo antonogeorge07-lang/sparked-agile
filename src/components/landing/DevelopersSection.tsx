@@ -7,35 +7,15 @@ import {
   Settings2, 
   FileJson, 
   Key, 
-  GitBranch, 
   Zap, 
   Shield,
   ExternalLink,
   BookOpen,
   Terminal,
   RefreshCw,
-  Store,
-  Award
+  ArrowRight
 } from "lucide-react";
-import { motion } from "framer-motion";
-
-// Marketplace listings
-const marketplaceListings = [
-  {
-    name: "Atlassian Marketplace",
-    url: "https://marketplace.atlassian.com",
-    logo: "https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/favicon.png",
-    badge: "Official Partner",
-    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400"
-  },
-  {
-    name: "GitHub Marketplace", 
-    url: "https://github.com/marketplace",
-    logo: "https://github.githubassets.com/favicons/favicon.svg",
-    badge: "Verified",
-    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400"
-  }
-];
+import { Link } from "react-router-dom";
 
 // Live API endpoints - these are actual edge functions
 const apiEndpoints = [
@@ -73,39 +53,6 @@ const webhookEvents = [
   { event: "epics.update", description: "Fired when an epic is updated" },
   { event: "project_tasks.insert", description: "Fired when a new task is created" },
   { event: "projects.delete", description: "Fired when a project is deleted" }
-];
-
-const integrations = [
-  { 
-    name: "Jira", 
-    icon: "🎯", 
-    description: "Sync issues, sprints, and backlog items bidirectionally",
-    status: "available"
-  },
-  { 
-    name: "GitHub", 
-    icon: "🐙", 
-    description: "Link commits, PRs, and branches to tasks",
-    status: "available"
-  },
-  { 
-    name: "Outlook", 
-    icon: "📧", 
-    description: "Create calendar events for ceremonies",
-    status: "available"
-  },
-  { 
-    name: "Slack", 
-    icon: "💬", 
-    description: "Get notifications and updates in channels",
-    status: "coming_soon"
-  },
-  { 
-    name: "Azure DevOps", 
-    icon: "☁️", 
-    description: "Integrate with Azure boards and pipelines",
-    status: "coming_soon"
-  }
 ];
 
 const advancedConfigs = [
@@ -149,8 +96,8 @@ export function DevelopersSection() {
           </p>
         </div>
 
-        {/* Three Column Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        {/* Two Column Grid - API & Webhooks */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
           
           {/* API Documentation */}
           <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
@@ -222,42 +169,17 @@ export function DevelopersSection() {
               </Button>
             </CardContent>
           </Card>
+        </div>
 
-          {/* Integrations */}
-          <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-            <CardHeader>
-              <div className="flex items-center gap-2 mb-2">
-                <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                  <GitBranch className="h-5 w-5" />
-                </div>
-                <CardTitle className="text-xl">Integrations</CardTitle>
-              </div>
-              <CardDescription>
-                Connect your favorite tools with pre-built connectors
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {integrations.map((integration, index) => (
-                <div key={index} className="flex items-center gap-3 text-sm">
-                  <span className="text-lg">{integration.icon}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-foreground">{integration.name}</span>
-                      {integration.status === "coming_soon" && (
-                        <Badge variant="secondary" className="text-[10px] px-1.5 py-0">Soon</Badge>
-                      )}
-                    </div>
-                    <span className="text-xs text-muted-foreground line-clamp-1">{integration.description}</span>
-                  </div>
-                </div>
-              ))}
-              <Button variant="outline" size="sm" className="w-full mt-4 group">
-                <Settings2 className="h-4 w-4 mr-2" />
-                Integration Guides
-                <ExternalLink className="h-3 w-3 ml-2 opacity-50 group-hover:opacity-100" />
-              </Button>
-            </CardContent>
-          </Card>
+        {/* Link to Integrations */}
+        <div className="text-center mb-12">
+          <p className="text-muted-foreground mb-4">Looking for pre-built integrations with Jira, GitHub, and more?</p>
+          <Link to="/integrations">
+            <Button variant="outline" className="group">
+              View All Integrations
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
 
         {/* Advanced Configurations */}
@@ -306,44 +228,6 @@ export function DevelopersSection() {
           </div>
         </div>
 
-        {/* Marketplace Presence */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
-        >
-          <div className="inline-flex items-center gap-2 mb-6">
-            <Store className="h-5 w-5 text-primary" />
-            <span className="font-semibold">Available on Official Marketplaces</span>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {marketplaceListings.map((marketplace) => (
-              <a
-                key={marketplace.name}
-                href={marketplace.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center gap-3 px-5 py-3 rounded-xl border ${marketplace.color} hover:scale-105 transition-all group`}
-              >
-                <img 
-                  src={marketplace.logo} 
-                  alt={marketplace.name}
-                  className="w-6 h-6"
-                  loading="lazy"
-                />
-                <div className="text-left">
-                  <div className="font-medium text-sm">{marketplace.name}</div>
-                  <div className="flex items-center gap-1 text-xs opacity-80">
-                    <Award className="h-3 w-3" />
-                    {marketplace.badge}
-                  </div>
-                </div>
-                <ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100" />
-              </a>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
