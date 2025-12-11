@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
-import { Star, Quote } from "lucide-react";
+import { Bug, Lightbulb, MessageSquare, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 interface Feedback {
   id: string;
-  name: string;
-  role?: string;
-  company?: string;
-  feedback: string;
-  rating: number;
+  feedback_type: string;
+  message: string;
+  page?: string;
+  status?: string;
   created_at: string;
 }
+
+const typeIcons: Record<string, React.ReactNode> = {
+  bug: <Bug className="h-4 w-4" />,
+  improvement: <Lightbulb className="h-4 w-4" />,
+  suggestion: <MessageSquare className="h-4 w-4" />,
+  other: <AlertCircle className="h-4 w-4" />,
+};
+
+const typeLabels: Record<string, string> = {
+  bug: "Bug Report",
+  improvement: "Improvement",
+  suggestion: "Suggestion",
+  other: "Feedback",
+};
+
+const statusColors: Record<string, string> = {
+  resolved: "bg-green-500/20 text-green-400 border-green-500/30",
+  new: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  in_progress: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+};
 
 export const FeedbackDisplay = () => {
   const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
@@ -19,35 +39,15 @@ export const FeedbackDisplay = () => {
 
   useEffect(() => {
     fetchFeedback();
-    
-    const channel = supabase
-      .channel("landing_feedback_changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "landing_feedback",
-          filter: "is_approved=eq.true",
-        },
-        () => {
-          fetchFeedback();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
   const fetchFeedback = async () => {
     try {
       const { data, error } = await supabase
-        .from("landing_feedback")
-        .select("*")
-        .eq("is_approved", true)
-        .order("created_at", { ascending: false });
+        .from("user_feedback")
+        .select("id, feedback_type, message, page, status, created_at")
+        .order("created_at", { ascending: false })
+        .limit(10);
 
       if (error) throw error;
       setFeedbackList(data || []);
@@ -79,13 +79,14 @@ export const FeedbackDisplay = () => {
   return (
     <Tabs defaultValue={feedbackList[0]?.id} className="w-full">
       <TabsList className="flex flex-wrap gap-2 h-auto bg-transparent justify-center mb-6">
-        {feedbackList.map((item) => (
+        {feedbackList.map((item, index) => (
           <TabsTrigger
             key={item.id}
             value={item.id}
-            className="px-4 py-2 text-sm rounded-full border border-border bg-card hover:bg-accent data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+            className="px-3 py-2 text-xs rounded-full border border-border bg-card hover:bg-accent data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all flex items-center gap-1.5"
           >
-            {item.name}
+            {typeIcons[item.feedback_type] || typeIcons.other}
+            <span>#{index + 1}</span>
           </TabsTrigger>
         ))}
       </TabsList>
@@ -97,26 +98,33 @@ export const FeedbackDisplay = () => {
           className="mt-0 animate-in fade-in-50 duration-300"
         >
           <div className="max-w-2xl mx-auto bg-card border border-border rounded-xl p-6 shadow-sm">
-            <div className="flex items-center gap-1 mb-4">
-              {[...Array(item.rating)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              ))}
+            <div className="flex items-center justify-between mb-4">
+              <Badge variant="outline" className="flex items-center gap-1.5">
+                {typeIcons[item.feedback_type] || typeIcons.other}
+                {typeLabels[item.feedback_type] || "Feedback"}
+              </Badge>
+              {item.status && (
+                <Badge variant="outline" className={statusColors[item.status] || ""}>
+                  {item.status === "resolved" ? "Resolved" : item.status === "new" ? "Under Review" : item.status}
+                </Badge>
+              )}
             </div>
             
-            <Quote className="h-6 w-6 text-muted-foreground mb-3" />
-            
-            <p className="text-foreground text-lg leading-relaxed mb-6">
-              {item.feedback}
+            <p className="text-foreground text-lg leading-relaxed mb-4">
+              "{item.message}"
             </p>
             
-            <div className="border-t border-border pt-4">
-              <p className="font-semibold text-foreground">{item.name}</p>
-              {item.role && (
-                <p className="text-sm text-muted-foreground">{item.role}</p>
+            <div className="flex items-center justify-between text-sm text-muted-foreground border-t border-border pt-4">
+              {item.page && (
+                <span>Page: {item.page}</span>
               )}
-              {item.company && (
-                <p className="text-sm text-muted-foreground">{item.company}</p>
-              )}
+              <span>
+                {new Date(item.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
             </div>
           </div>
         </TabsContent>
