@@ -557,27 +557,6 @@ export default function Auth() {
                 </form>
               ) : (
                 <form onSubmit={handleSignIn} className="space-y-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full gap-2"
-                    onClick={handleMicrosoftSignIn}
-                    disabled={isLoading}
-                  >
-                    <Mail className="h-4 w-4" />
-                    Continue with Microsoft
-                  </Button>
-
-                  <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
-                        Or continue with email
-                      </span>
-                    </div>
-                  </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="signin-email">Email</Label>
@@ -651,27 +630,6 @@ export default function Auth() {
 
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full gap-2"
-                  onClick={handleMicrosoftSignIn}
-                  disabled={isLoading}
-                >
-                  <Mail className="h-4 w-4" />
-                  Continue with Microsoft
-                </Button>
-
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                      Or sign up with email
-                    </span>
-                  </div>
-                </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="signup-name">Full Name</Label>
