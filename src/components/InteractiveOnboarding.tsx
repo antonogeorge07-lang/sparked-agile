@@ -210,52 +210,61 @@ export const InteractiveOnboarding = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t">
-                <Button
-                  variant="outline"
-                  onClick={handleBack}
-                  disabled={currentStep === 0}
-                  className="gap-2"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  Back
-                </Button>
+              <div className="flex flex-col gap-3 pt-4 border-t">
+                {/* Primary action row */}
+                <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={handleBack}
+                    disabled={currentStep === 0}
+                    className="gap-2"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    Back
+                  </Button>
 
-                <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    {step.action ? (
+                      <Button
+                        onClick={() => handleAction(step.action)}
+                        className="gap-2 w-full sm:w-auto"
+                      >
+                        {step.action.label}
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={handleNext}
+                        className="gap-2 w-full sm:w-auto"
+                      >
+                        {currentStep === onboardingSteps.length - 1 ? "Get Started" : "Next"}
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Secondary actions row */}
+                <div className="flex flex-wrap items-center justify-center gap-2">
                   {currentStep === 0 && (
                     <Button
                       variant="outline"
                       onClick={handleSkipAndContinueAsGuest}
-                      className="gap-2"
+                      className="gap-2 text-sm"
+                      size="sm"
                     >
                       <Eye className="w-4 h-4" />
-                      Skip & Continue as Guest
+                      Continue as Guest
                     </Button>
                   )}
                   <Button
                     variant="ghost"
                     onClick={handleSkip}
+                    size="sm"
+                    className="text-sm"
                   >
                     Skip Tour
                   </Button>
-
-                  {step.action ? (
-                    <Button
-                      onClick={() => handleAction(step.action)}
-                      className="gap-2"
-                    >
-                      {step.action.label}
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleNext}
-                      className="gap-2"
-                    >
-                      {currentStep === onboardingSteps.length - 1 ? "Get Started" : "Next"}
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  )}
                 </div>
               </div>
 
