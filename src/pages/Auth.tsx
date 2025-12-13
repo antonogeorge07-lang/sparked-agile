@@ -92,9 +92,9 @@ export default function Auth() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        // Check if user has completed workspace setup
-        const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
-        navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
+        // Check if user has completed getting started
+        const hasCompletedGettingStarted = localStorage.getItem("getting_started_completed");
+        navigate(hasCompletedGettingStarted ? "/dashboard" : "/getting-started");
       }
     };
     checkUser();
@@ -104,9 +104,9 @@ export default function Auth() {
       if (event === 'PASSWORD_RECOVERY') {
         setShowUpdatePassword(true);
       } else if (session && event === 'SIGNED_IN') {
-        // Check if user has completed workspace setup
-        const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
-        navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
+        // Check if user has completed getting started
+        const hasCompletedGettingStarted = localStorage.getItem("getting_started_completed");
+        navigate(hasCompletedGettingStarted ? "/dashboard" : "/getting-started");
       }
     });
 

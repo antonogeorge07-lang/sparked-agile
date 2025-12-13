@@ -50,6 +50,7 @@ const EpicPortfolio = lazy(() => import("./pages/EpicPortfolio"));
 const QuickStart = lazy(() => import("./pages/QuickStart"));
 const MyProjects = lazy(() => import("./pages/MyProjects"));
 const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
+const GettingStarted = lazy(() => import("./pages/GettingStarted"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -82,6 +83,7 @@ const App = () => {
                   <Route path="/home" element={<Index />} />
                   <Route path="/quick-start" element={<QuickStart />} />
                   <Route path="/auth" element={<Auth />} />
+                  <Route path="/getting-started" element={<GettingStarted />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/platform-owner" element={<PlatformOwner />} />
                   <Route path="/security-incidents" element={<SecurityIncidents />} />
