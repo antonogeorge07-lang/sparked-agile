@@ -27,19 +27,37 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { githubRepoUrl, workspaceId } = await req.json();
+    const { githubRepoUrl, workspaceId, githubToken } = await req.json();
     
     console.log('Connecting to GitHub repo:', githubRepoUrl);
 
-    const githubToken = Deno.env.get('GITHUB_TOKEN');
-    if (!githubToken) {
-      throw new Error('GitHub token not configured');
+    // Use user-provided token or fall back to system token
+    let tokenToUse = githubToken;
+    
+    if (!tokenToUse) {
+      // Check if user has a stored token
+      const { data: userToken } = await supabaseClient
+        .from('user_github_tokens')
+        .select('github_token')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (userToken?.github_token) {
+        tokenToUse = userToken.github_token;
+      } else {
+        // Fall back to system token
+        tokenToUse = Deno.env.get('GITHUB_TOKEN');
+      }
+    }
+
+    if (!tokenToUse) {
+      throw new Error('No GitHub token available. Please provide your Personal Access Token.');
     }
 
     // Extract owner and repo from URL
-    const repoMatch = githubRepoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+    const repoMatch = githubRepoUrl.match(/github\.com\/([^\/]+)\/([^\/\?#]+)/);
     if (!repoMatch) {
-      throw new Error('Invalid GitHub repository URL');
+      throw new Error('Invalid GitHub repository URL. Please use format: https://github.com/owner/repository');
     }
 
     const [, owner, repo] = repoMatch;
@@ -49,20 +67,50 @@ serve(async (req) => {
     const githubResponse = await fetch(`https://api.github.com/repos/${repoName}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${githubToken}`,
+        'Authorization': `Bearer ${tokenToUse}`,
         'Accept': 'application/vnd.github.v3+json',
         'User-Agent': 'SM-ActiveIntelligence',
       },
     });
 
     if (!githubResponse.ok) {
-      const errorText = await githubResponse.text();
-      console.error('GitHub API error:', errorText);
-      throw new Error(`Failed to connect to GitHub repo: ${githubResponse.status}`);
+      const errorData = await githubResponse.json().catch(() => ({}));
+      console.error('GitHub API error:', errorData);
+      
+      if (githubResponse.status === 401) {
+        throw new Error('Invalid GitHub token. Please check your Personal Access Token has the correct permissions (repo scope).');
+      } else if (githubResponse.status === 404) {
+        throw new Error('Repository not found. Please check the URL and ensure your token has access to this repository.');
+      }
+      
+      throw new Error(`GitHub API error: ${errorData.message || githubResponse.status}`);
     }
 
     const repoData = await githubResponse.json();
     console.log('Successfully connected to GitHub repo:', repoData.full_name);
+
+    // Store user's GitHub token for future use if provided
+    if (githubToken) {
+      // Get GitHub username from API
+      const userResponse = await fetch('https://api.github.com/user', {
+        headers: {
+          'Authorization': `Bearer ${githubToken}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'SM-ActiveIntelligence',
+        },
+      });
+      
+      const githubUser = await userResponse.json().catch(() => ({}));
+      
+      await supabaseClient
+        .from('user_github_tokens')
+        .upsert({
+          user_id: user.id,
+          github_token: githubToken,
+          github_username: githubUser.login || null,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id' });
+    }
 
     // Update workspace with GitHub connection details
     const { error: updateError } = await supabaseClient
@@ -75,7 +123,8 @@ serve(async (req) => {
       .eq('id', workspaceId);
 
     if (updateError) {
-      throw updateError;
+      console.error('Workspace update error:', updateError);
+      // Don't throw - connection was successful, workspace update is secondary
     }
 
     return new Response(
@@ -84,6 +133,7 @@ serve(async (req) => {
         repoName: repoData.full_name,
         repoDescription: repoData.description,
         defaultBranch: repoData.default_branch,
+        openIssues: repoData.open_issues_count,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -26,7 +26,8 @@ import { CeremonyHealthCheck } from "@/components/CeremonyHealthCheck";
 import { SendReminderDialog } from "@/components/SendReminderDialog";
 import { ScheduleReminderDialog } from "@/components/ScheduleReminderDialog";
 import { ReminderManagement } from "@/components/ReminderManagement";
-import { Bell } from "lucide-react";
+import { Bell, GitBranch } from "lucide-react";
+import { GitHubActivityCard } from "@/components/GitHubActivityCard";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
@@ -456,19 +457,36 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Integration Data Section */}
-          {(hasJiraIntegration || hasGithubIntegration) && (
-            <>
-              <div className="flex items-center gap-3 mb-4 mt-8">
-                <Network className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-bold">Integration Data</h2>
-              </div>
-
-              <div className="grid gap-6 lg:grid-cols-2">
-...
-              </div>
-            </>
-          )}
+          {/* GitHub Activity Section */}
+          <div className="mt-8">
+            <div className="flex items-center gap-3 mb-4">
+              <GitBranch className="w-6 h-6 text-primary" />
+              <h2 className="text-2xl font-bold">GitHub Activity</h2>
+            </div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <GitHubActivityCard projectId={selectedProject} />
+              
+              {/* Integration Data Section */}
+              {(hasJiraIntegration || hasGithubIntegration) && (
+                <Card className="shadow-card">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2">
+                      <Network className="w-5 h-5" />
+                      Integration Status
+                    </CardTitle>
+                    <CardDescription>Connected integrations</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <IntegrationStatus
+                      hasJira={hasJiraIntegration}
+                      hasGithub={hasGithubIntegration}
+                      hasOutlook={false}
+                    />
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
 
           {/* Reminder Management Section */}
           <div className="mt-8">
