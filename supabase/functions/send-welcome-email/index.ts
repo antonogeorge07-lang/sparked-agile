@@ -172,7 +172,7 @@ const handler = async (req: Request): Promise<Response> => {
                     <a href="mailto:support@saai-platform.com" style="color: #667eea; text-decoration: none;">support@saai-platform.com</a>
                   </p>
                   <p style="margin: 5px 0; font-size: 13px; color: #9ca3af;">
-                    📧 Questions? Visit our <a href="#" style="color: #667eea; text-decoration: none;">Help Center</a> or reply to this email
+                    📧 Questions? Visit our <a href="https://saai.lovable.app/faq" style="color: #667eea; text-decoration: none;">Help Center</a> or reply to this email
                   </p>
                 </div>
               </div>

@@ -32,14 +32,26 @@ export function FooterSection() {
           <nav aria-label="Product navigation">
             <h3 className="font-semibold mb-4">Product</h3>
             <ul className="space-y-2 text-sm text-muted-foreground" role="list">
-              <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
+              <li>
+                <Link to="/landing#features" className="hover:text-foreground transition-colors">
+                  Features
+                </Link>
+              </li>
               <li>
                 <Link to="/about" className="hover:text-foreground transition-colors">
                   About Us
                 </Link>
               </li>
-              <li><a href="#integrations" className="hover:text-foreground transition-colors">Integrations</a></li>
-              <li><a href="#documentation" className="hover:text-foreground transition-colors">Documentation</a></li>
+              <li>
+                <Link to="/integrations" className="hover:text-foreground transition-colors">
+                  Integrations
+                </Link>
+              </li>
+              <li>
+                <Link to="/user-guide" className="hover:text-foreground transition-colors">
+                  Documentation
+                </Link>
+              </li>
             </ul>
           </nav>
           <nav aria-label="Company navigation">
@@ -56,8 +68,8 @@ export function FooterSection() {
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-foreground transition-colors">
-                  Contact
+                <Link to="/faq" className="hover:text-foreground transition-colors">
+                  FAQ
                 </Link>
               </li>
             </ul>
