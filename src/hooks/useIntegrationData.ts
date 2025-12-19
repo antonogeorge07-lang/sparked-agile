@@ -17,26 +17,83 @@ export const useIntegrationData = (projectId: string | null) => {
     if (!projectId) return;
 
     setIsLoading(true);
-    const { data, error } = await supabase
+    
+    // Fetch integrations
+    const { data: integrationsData, error: integrationsError } = await supabase
       .from('integrations')
       .select('id, name, integration_type, is_active, project_id, created_at, updated_at')
       .eq('project_id', projectId)
       .eq('is_active', true);
 
-    if (!error && data) {
-      setIntegrations(data);
-      
-      // Set null for Jira and GitHub data - will be populated when actual integrations fetch real data
-      const jiraIntegration = data.find(i => i.integration_type === 'jira');
-      const githubIntegration = data.find(i => i.integration_type === 'github');
+    if (integrationsError) {
+      console.error('Error fetching integrations:', integrationsError);
+      setIsLoading(false);
+      return;
+    }
 
-      if (jiraIntegration) {
-        setJiraData({ jiraIssues: [] });
-      }
+    setIntegrations(integrationsData || []);
 
-      if (githubIntegration) {
-        setGithubData({ gitCommits: [], gitPullRequests: [] });
+    // Fetch workspace details for GitHub repo URL and Jira board info
+    const { data: workspace } = await supabase
+      .from('project_workspaces')
+      .select('id, jira_board_id, jira_board_url, github_repo_url, github_repo_name')
+      .eq('project_id', projectId)
+      .maybeSingle();
+
+    const jiraIntegration = integrationsData?.find(i => i.integration_type === 'jira');
+    const githubIntegration = integrationsData?.find(i => i.integration_type === 'github');
+
+    // Fetch real Jira data if integration exists
+    if (jiraIntegration && workspace?.jira_board_id) {
+      try {
+        const { data: jiraResponse, error: jiraError } = await supabase.functions.invoke('fetch-jira-backlog', {
+          body: { workspaceId: workspace.id }
+        });
+        
+        if (!jiraError && jiraResponse?.backlogItems) {
+          setJiraData({ 
+            jiraIssues: jiraResponse.backlogItems,
+            totalCount: jiraResponse.totalCount 
+          });
+        } else {
+          console.log('Jira fetch info:', jiraError || jiraResponse?.error || 'No backlog items');
+          setJiraData(null);
+        }
+      } catch (err) {
+        console.error('Error fetching Jira data:', err);
+        setJiraData(null);
       }
+    } else {
+      setJiraData(null);
+    }
+
+    // Fetch real GitHub data if integration exists
+    if (githubIntegration && workspace?.github_repo_url) {
+      try {
+        const { data: githubResponse, error: githubError } = await supabase.functions.invoke('fetch-github-activity', {
+          body: { 
+            projectId,
+            repoUrl: workspace.github_repo_url 
+          }
+        });
+        
+        if (!githubError && githubResponse) {
+          setGithubData({ 
+            gitCommits: githubResponse.commits || [],
+            gitPullRequests: githubResponse.pullRequests || [],
+            gitIssues: githubResponse.issues || [],
+            repoName: githubResponse.repoName
+          });
+        } else {
+          console.log('GitHub fetch info:', githubError || githubResponse?.message);
+          setGithubData(null);
+        }
+      } catch (err) {
+        console.error('Error fetching GitHub data:', err);
+        setGithubData(null);
+      }
+    } else {
+      setGithubData(null);
     }
 
     setIsLoading(false);
