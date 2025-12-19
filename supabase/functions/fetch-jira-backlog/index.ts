@@ -31,12 +31,44 @@ serve(async (req) => {
     
     console.log('Fetching JIRA backlog for workspace:', workspaceId);
 
-    const jiraApiToken = Deno.env.get('JIRA_API_TOKEN');
-    if (!jiraApiToken) {
-      throw new Error('JIRA API token not configured');
+    // First try to get user's personal Jira token
+    const { data: userToken } = await supabaseClient
+      .from('user_jira_tokens')
+      .select('jira_token, jira_email, jira_site_url')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    let jiraToken: string | null = null;
+    let jiraEmail: string | null = null;
+    let jiraSiteUrl: string | null = null;
+
+    if (userToken) {
+      // Use user's personal token
+      jiraToken = userToken.jira_token;
+      jiraEmail = userToken.jira_email;
+      jiraSiteUrl = userToken.jira_site_url;
+      console.log('Using user personal Jira token');
+    } else {
+      // Fall back to system token
+      jiraToken = Deno.env.get('JIRA_API_TOKEN') ?? null;
+      console.log('Using system Jira token');
     }
 
-    // Get workspace details
+    if (!jiraToken) {
+      return new Response(
+        JSON.stringify({
+          error: 'Jira not connected',
+          needsToken: true,
+          backlogItems: [],
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
+    }
+
+    // Get workspace details for board info
     const { data: workspace, error: workspaceError } = await supabaseClient
       .from('project_workspaces')
       .select('jira_board_id, jira_board_url')
@@ -44,19 +76,40 @@ serve(async (req) => {
       .single();
 
     if (workspaceError || !workspace) {
-      throw new Error('Workspace not found or JIRA not connected');
+      throw new Error('Workspace not found');
     }
 
     if (!workspace.jira_board_id || !workspace.jira_board_url) {
-      throw new Error('JIRA board not connected to this workspace');
+      return new Response(
+        JSON.stringify({
+          error: 'JIRA board not connected to this workspace',
+          backlogItems: [],
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
     }
 
-    // Extract JIRA site URL from board URL
-    const urlMatch = workspace.jira_board_url.match(/(https:\/\/[^\/]+)/);
-    if (!urlMatch) {
-      throw new Error('Invalid JIRA board URL');
+    // Extract JIRA site URL from board URL if not using user token
+    if (!jiraSiteUrl) {
+      const urlMatch = workspace.jira_board_url.match(/(https:\/\/[^\/]+)/);
+      if (!urlMatch) {
+        throw new Error('Invalid JIRA board URL');
+      }
+      jiraSiteUrl = urlMatch[1];
     }
-    const jiraSiteUrl = urlMatch[1];
+
+    // Prepare authorization header
+    let authHeader: string;
+    if (jiraEmail) {
+      // User token uses Basic auth with email:token
+      authHeader = `Basic ${btoa(`${jiraEmail}:${jiraToken}`)}`;
+    } else {
+      // System token uses Bearer auth
+      authHeader = `Bearer ${jiraToken}`;
+    }
 
     // Fetch backlog issues for the board
     const jiraUrl = `${jiraSiteUrl}/rest/agile/1.0/board/${workspace.jira_board_id}/backlog?maxResults=${maxResults}`;
@@ -64,7 +117,7 @@ serve(async (req) => {
     const jiraResponse = await fetch(jiraUrl, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${jiraApiToken}`,
+        'Authorization': authHeader,
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
@@ -109,10 +162,10 @@ serve(async (req) => {
     console.error('Error in fetch-jira-backlog function:', error);
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: errorMessage, backlogItems: [] }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 400,
+        status: 200,
       }
     );
   }

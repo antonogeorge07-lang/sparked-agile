@@ -28,6 +28,7 @@ import { ScheduleReminderDialog } from "@/components/ScheduleReminderDialog";
 import { ReminderManagement } from "@/components/ReminderManagement";
 import { Bell, GitBranch } from "lucide-react";
 import { GitHubActivityCard } from "@/components/GitHubActivityCard";
+import { IntegrationSettings } from "@/components/IntegrationSettings";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
@@ -457,35 +458,38 @@ export default function Dashboard() {
             </div>
           )}
 
+          {/* Integration Settings Section - Easy Connect */}
+          <div className="mt-8">
+            <div className="grid gap-6 lg:grid-cols-2">
+              <IntegrationSettings projectId={selectedProject} />
+              
+              {/* Integration Status */}
+              <Card className="shadow-card">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2">
+                    <Network className="w-5 h-5" />
+                    Integration Status
+                  </CardTitle>
+                  <CardDescription>Connected integrations for this project</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <IntegrationStatus
+                    hasJira={hasJiraIntegration}
+                    hasGithub={hasGithubIntegration}
+                    hasOutlook={false}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
           {/* GitHub Activity Section */}
           <div className="mt-8">
             <div className="flex items-center gap-3 mb-4">
               <GitBranch className="w-6 h-6 text-primary" />
               <h2 className="text-2xl font-bold">GitHub Activity</h2>
             </div>
-            <div className="grid gap-6 lg:grid-cols-2">
-              <GitHubActivityCard projectId={selectedProject} />
-              
-              {/* Integration Data Section */}
-              {(hasJiraIntegration || hasGithubIntegration) && (
-                <Card className="shadow-card">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2">
-                      <Network className="w-5 h-5" />
-                      Integration Status
-                    </CardTitle>
-                    <CardDescription>Connected integrations</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <IntegrationStatus
-                      hasJira={hasJiraIntegration}
-                      hasGithub={hasGithubIntegration}
-                      hasOutlook={false}
-                    />
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+            <GitHubActivityCard projectId={selectedProject} />
           </div>
 
           {/* Reminder Management Section */}
