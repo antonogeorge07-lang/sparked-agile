@@ -710,7 +710,7 @@ export default function EpicPortfolio() {
                           </div>
                           <Button 
                             className="mt-4 w-full" 
-                            onClick={() => navigate(`/epic-management/${epic.id}`)}
+                            onClick={() => navigate(`/epic/${epic.id}`)}
                           >
                             View Details
                             <ArrowUpRight className="h-4 w-4 ml-2" />
