@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,6 +44,7 @@ import {
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [isLoadingProjects, setIsLoading] = useState(true);
@@ -52,13 +53,41 @@ export default function Dashboard() {
   const [showFilters, setShowFilters] = useState(false);
   const [showReminderDialog, setShowReminderDialog] = useState(false);
   const [showScheduleDialog, setShowScheduleDialog] = useState(false);
-  const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
+  const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration, refresh: refreshIntegrations } = useIntegrationData(selectedProject);
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
   const { isGuestMode } = useGuestMode();
 
   // Use sample data if no integrations or in guest mode
   const showSampleData = isGuestMode || (!hasJiraIntegration && !hasGithubIntegration);
+
+  // Handle Microsoft OAuth callback
+  useEffect(() => {
+    const code = searchParams.get("code");
+    if (code) {
+      handleMicrosoftCallback(code);
+      // Clean up URL
+      setSearchParams({});
+    }
+  }, [searchParams]);
+
+  const handleMicrosoftCallback = async (code: string) => {
+    try {
+      const redirectUri = `${window.location.origin}/dashboard`;
+      const { data, error } = await supabase.functions.invoke("get-microsoft-token", {
+        body: { code, redirectUri },
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        toast.success(`Connected to Microsoft as ${data.userEmail || 'user'}`);
+        refreshIntegrations();
+      }
+    } catch (error: any) {
+      toast.error(`Microsoft connection failed: ${error.message}`);
+    }
+  };
 
   // Check authentication
   useEffect(() => {

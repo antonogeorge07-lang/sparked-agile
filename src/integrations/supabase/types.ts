@@ -2303,24 +2303,33 @@ export type Database = {
           github_token: string
           github_username: string | null
           id: string
+          is_valid: boolean | null
+          last_validated_at: string | null
           updated_at: string
           user_id: string
+          validation_error: string | null
         }
         Insert: {
           created_at?: string
           github_token: string
           github_username?: string | null
           id?: string
+          is_valid?: boolean | null
+          last_validated_at?: string | null
           updated_at?: string
           user_id: string
+          validation_error?: string | null
         }
         Update: {
           created_at?: string
           github_token?: string
           github_username?: string | null
           id?: string
+          is_valid?: boolean | null
+          last_validated_at?: string | null
           updated_at?: string
           user_id?: string
+          validation_error?: string | null
         }
         Relationships: []
       }
@@ -2328,29 +2337,83 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_valid: boolean | null
           jira_email: string
           jira_site_url: string
           jira_token: string
+          last_validated_at: string | null
           updated_at: string
           user_id: string
+          validation_error: string | null
         }
         Insert: {
           created_at?: string
           id?: string
+          is_valid?: boolean | null
           jira_email: string
           jira_site_url: string
           jira_token: string
+          last_validated_at?: string | null
           updated_at?: string
           user_id: string
+          validation_error?: string | null
         }
         Update: {
           created_at?: string
           id?: string
+          is_valid?: boolean | null
           jira_email?: string
           jira_site_url?: string
           jira_token?: string
+          last_validated_at?: string | null
           updated_at?: string
           user_id?: string
+          validation_error?: string | null
+        }
+        Relationships: []
+      }
+      user_microsoft_tokens: {
+        Row: {
+          access_token: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_valid: boolean | null
+          last_validated_at: string | null
+          refresh_token: string | null
+          scopes: string[] | null
+          updated_at: string
+          user_email: string | null
+          user_id: string
+          validation_error: string | null
+        }
+        Insert: {
+          access_token: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          refresh_token?: string | null
+          scopes?: string[] | null
+          updated_at?: string
+          user_email?: string | null
+          user_id: string
+          validation_error?: string | null
+        }
+        Update: {
+          access_token?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          refresh_token?: string | null
+          scopes?: string[] | null
+          updated_at?: string
+          user_email?: string | null
+          user_id?: string
+          validation_error?: string | null
         }
         Relationships: []
       }
