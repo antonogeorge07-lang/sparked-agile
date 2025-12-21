@@ -7,10 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { Github, Network, Plus, Trash2, Settings, AlertCircle } from "lucide-react";
+import { Github, Network, Plus, Trash2, Settings, AlertCircle, LayoutDashboard, FolderKanban } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
@@ -19,6 +20,7 @@ import { z } from "zod";
 import { ConnectionStatus } from "@/components/integrations/ConnectionStatus";
 import { IntegrationWizard } from "@/components/integrations/IntegrationWizard";
 import { ConnectionTester } from "@/components/integrations/ConnectionTester";
+import { IntegrationDashboard } from "@/components/integrations/IntegrationDashboard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IntegrationCard } from "@/components/IntegrationCard";
 
@@ -68,6 +70,7 @@ const Integrations = () => {
   const [useWizard, setUseWizard] = useState(true);
   const [selectedType, setSelectedType] = useState<"jira" | "github">("jira");
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("dashboard");
   const { activeUsers } = useRealtimePresence('/integrations');
   const { role, loading: roleLoading } = useUserRole();
   const [newIntegration, setNewIntegration] = useState({
@@ -386,54 +389,71 @@ const Integrations = () => {
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <BackButton className="mb-4" />
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent">
               Integrations
             </h1>
             <p className="text-muted-foreground">
-              Connect your projects to Jira and GitHub for seamless workflow automation
+              Connect your projects to external services for seamless workflow automation
             </p>
           </div>
 
-          {isLoading ? (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-10 max-w-md" />
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <Card key={i}>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 flex-1">
-                          <Skeleton className="h-10 w-10 rounded-lg" />
-                          <div className="space-y-2 flex-1">
-                            <Skeleton className="h-5 w-32" />
-                            <Skeleton className="h-4 w-48" />
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="grid w-full max-w-md grid-cols-2">
+              <TabsTrigger value="dashboard" className="gap-2">
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </TabsTrigger>
+              <TabsTrigger value="projects" className="gap-2">
+                <FolderKanban className="h-4 w-4" />
+                Project Integrations
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="dashboard" className="space-y-6">
+              <IntegrationDashboard />
+            </TabsContent>
+
+            <TabsContent value="projects" className="space-y-6">
+              {isLoading ? (
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-10 max-w-md" />
+                  </div>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <Card key={i}>
+                        <CardHeader>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3 flex-1">
+                              <Skeleton className="h-10 w-10 rounded-lg" />
+                              <div className="space-y-2 flex-1">
+                                <Skeleton className="h-5 w-32" />
+                                <Skeleton className="h-4 w-48" />
+                              </div>
+                            </div>
+                            <Skeleton className="h-5 w-20 rounded-full" />
                           </div>
-                        </div>
-                        <Skeleton className="h-5 w-20 rounded-full" />
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-3/4" />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Skeleton className="h-9 w-24" />
-                        <Skeleton className="h-9 w-24" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          ) : projects.length === 0 ? (
-            <Card>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="space-y-2">
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-3/4" />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Skeleton className="h-9 w-24" />
+                            <Skeleton className="h-9 w-24" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              ) : projects.length === 0 ? (
+                <Card>
               <CardContent className="py-12 text-center">
                 <Network className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                 <h3 className="text-lg font-semibold mb-2">No Project Access</h3>
@@ -641,6 +661,8 @@ const Integrations = () => {
           </div>
             </>
           )}
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </div>
