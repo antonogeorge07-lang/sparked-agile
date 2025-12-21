@@ -2353,37 +2353,58 @@ export type Database = {
       }
       user_jira_tokens: {
         Row: {
+          cloud_id: string | null
           created_at: string
+          encrypted_token: string | null
           id: string
           is_valid: boolean | null
           jira_email: string
           jira_site_url: string
           jira_token: string
           last_validated_at: string | null
+          oauth_provider: string | null
+          refresh_token: string | null
+          refresh_token_encrypted: string | null
+          scopes: string[] | null
+          token_expires_at: string | null
           updated_at: string
           user_id: string
           validation_error: string | null
         }
         Insert: {
+          cloud_id?: string | null
           created_at?: string
+          encrypted_token?: string | null
           id?: string
           is_valid?: boolean | null
           jira_email: string
           jira_site_url: string
           jira_token: string
           last_validated_at?: string | null
+          oauth_provider?: string | null
+          refresh_token?: string | null
+          refresh_token_encrypted?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
           updated_at?: string
           user_id: string
           validation_error?: string | null
         }
         Update: {
+          cloud_id?: string | null
           created_at?: string
+          encrypted_token?: string | null
           id?: string
           is_valid?: boolean | null
           jira_email?: string
           jira_site_url?: string
           jira_token?: string
           last_validated_at?: string | null
+          oauth_provider?: string | null
+          refresh_token?: string | null
+          refresh_token_encrypted?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
           updated_at?: string
           user_id?: string
           validation_error?: string | null
