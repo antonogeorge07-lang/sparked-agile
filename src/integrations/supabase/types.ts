@@ -2198,6 +2198,36 @@ export type Database = {
           },
         ]
       }
+      token_expiry_notifications: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          id: string
+          integration_type: string
+          notification_type: string | null
+          notified_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          integration_type: string
+          notification_type?: string | null
+          notified_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          integration_type?: string
+          notification_type?: string | null
+          notified_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_activity_logs: {
         Row: {
           action: string
@@ -2861,6 +2891,15 @@ export type Database = {
       get_ceremony_outlook_status: {
         Args: { ceremony_id: string }
         Returns: boolean
+      }
+      get_expiring_tokens: {
+        Args: { hours_threshold?: number }
+        Returns: {
+          expires_at: string
+          hours_until_expiry: number
+          integration_type: string
+          user_id: string
+        }[]
       }
       get_platform_stats: {
         Args: never
