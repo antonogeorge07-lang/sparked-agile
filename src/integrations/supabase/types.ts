@@ -879,6 +879,85 @@ export type Database = {
           },
         ]
       }
+      integration_cache: {
+        Row: {
+          cache_key: string
+          created_at: string
+          data: Json
+          expires_at: string
+          id: string
+          integration_type: string
+          project_id: string
+          updated_at: string
+        }
+        Insert: {
+          cache_key: string
+          created_at?: string
+          data?: Json
+          expires_at: string
+          id?: string
+          integration_type: string
+          project_id: string
+          updated_at?: string
+        }
+        Update: {
+          cache_key?: string
+          created_at?: string
+          data?: Json
+          expires_at?: string
+          id?: string
+          integration_type?: string
+          project_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "integration_cache_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      integration_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          integration_type: string
+          payload: Json
+          processed_at: string | null
+          project_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          integration_type: string
+          payload?: Json
+          processed_at?: string | null
+          project_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          integration_type?: string
+          payload?: Json
+          processed_at?: string | null
+          project_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "integration_events_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       integrations: {
         Row: {
           config: Json

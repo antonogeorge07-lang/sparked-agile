@@ -32,3 +32,6 @@ verify_jwt = true
 
 [functions.deliver-webhooks]
 verify_jwt = false
+
+[functions.integration-webhook]
+verify_jwt = false
