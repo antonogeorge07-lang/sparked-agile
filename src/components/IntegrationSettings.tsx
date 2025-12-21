@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Github, ExternalLink, Settings, Unplug, Shield, RefreshCw } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Github, Settings, Unplug, Shield, RefreshCw, Clock, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 import { useIntegrationHealth } from "@/hooks/useIntegrationHealth";
 import { ConnectionHealthIndicator } from "@/components/ConnectionHealthIndicator";
@@ -28,134 +26,102 @@ const JiraIcon = () => (
   </svg>
 );
 
+interface TokenExpiryInfo {
+  github?: { expiresAt: string | null; isOAuth: boolean };
+  jira?: { expiresAt: string | null; isOAuth: boolean };
+  microsoft?: { expiresAt: string | null };
+}
+
 export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => {
   const { health, validateIntegration, checkHealth } = useIntegrationHealth();
   
-  // Dialog states
-  const [showGithubDialog, setShowGithubDialog] = useState(false);
-  const [showJiraDialog, setShowJiraDialog] = useState(false);
-  
-  // Form states
-  const [githubToken, setGithubToken] = useState("");
-  const [jiraToken, setJiraToken] = useState("");
-  const [jiraEmailInput, setJiraEmailInput] = useState("");
-  const [jiraSiteUrl, setJiraSiteUrl] = useState("");
-  
   const [isSaving, setIsSaving] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState<string | null>(null);
+  const [tokenExpiry, setTokenExpiry] = useState<TokenExpiryInfo>({});
 
   useEffect(() => {
     checkHealth();
+    fetchTokenExpiry();
   }, [checkHealth]);
 
-  const connectGithub = async () => {
-    if (!githubToken.trim()) {
-      toast.error("Please enter your GitHub Personal Access Token");
-      return;
-    }
-
-    setIsSaving(true);
+  const fetchTokenExpiry = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) return;
 
-      // Validate token
-      const response = await fetch('https://api.github.com/user', {
-        headers: {
-          'Authorization': `Bearer ${githubToken}`,
-          'Accept': 'application/vnd.github.v3+json',
-        },
+      const [githubResult, jiraResult, msResult] = await Promise.all([
+        supabase.from('user_github_tokens').select('token_expires_at, oauth_provider').eq('user_id', user.id).single(),
+        supabase.from('user_jira_tokens').select('token_expires_at, oauth_provider').eq('user_id', user.id).single(),
+        supabase.from('user_microsoft_tokens').select('expires_at').eq('user_id', user.id).single(),
+      ]);
+
+      setTokenExpiry({
+        github: githubResult.data ? {
+          expiresAt: githubResult.data.token_expires_at,
+          isOAuth: githubResult.data.oauth_provider === 'oauth'
+        } : undefined,
+        jira: jiraResult.data ? {
+          expiresAt: jiraResult.data.token_expires_at,
+          isOAuth: jiraResult.data.oauth_provider === 'oauth'
+        } : undefined,
+        microsoft: msResult.data ? {
+          expiresAt: msResult.data.expires_at
+        } : undefined,
+      });
+    } catch (error) {
+      console.error('Failed to fetch token expiry:', error);
+    }
+  };
+
+  const getExpiryStatus = (expiresAt: string | null) => {
+    if (!expiresAt) return null;
+    
+    const expiry = new Date(expiresAt);
+    const now = new Date();
+    const hoursUntilExpiry = (expiry.getTime() - now.getTime()) / (1000 * 60 * 60);
+    
+    if (hoursUntilExpiry <= 0) {
+      return { status: 'expired', label: 'Expired', variant: 'destructive' as const };
+    } else if (hoursUntilExpiry <= 24) {
+      return { status: 'expiring', label: 'Expires soon', variant: 'secondary' as const };
+    }
+    return null;
+  };
+
+  const connectGithubOAuth = async () => {
+    setIsSaving(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('github-oauth-init', {
+        body: { redirectUrl: window.location.pathname }
       });
 
-      if (!response.ok) {
-        throw new Error('Invalid token. Please check your Personal Access Token.');
-      }
-
-      const githubUser = await response.json();
-
-      // Save token with health tracking
-      const { error } = await supabase
-        .from('user_github_tokens')
-        .upsert({
-          user_id: user.id,
-          github_token: githubToken,
-          github_username: githubUser.login,
-          is_valid: true,
-          last_validated_at: new Date().toISOString(),
-          validation_error: null,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' });
-
       if (error) throw error;
+      if (!data?.authUrl) throw new Error('Failed to get OAuth URL');
 
-      toast.success(`Connected to GitHub as ${githubUser.login}`);
-      setShowGithubDialog(false);
-      setGithubToken("");
-      checkHealth();
+      // Redirect to GitHub OAuth
+      window.location.href = data.authUrl;
     } catch (error: any) {
-      toast.error(error.message || "Failed to connect GitHub");
-    } finally {
+      console.error('GitHub OAuth init error:', error);
+      toast.error(error.message || "Failed to start GitHub OAuth");
       setIsSaving(false);
     }
   };
 
-  const connectJira = async () => {
-    if (!jiraToken.trim() || !jiraEmailInput.trim() || !jiraSiteUrl.trim()) {
-      toast.error("Please fill in all Jira fields");
-      return;
-    }
-
+  const connectJiraOAuth = async () => {
     setIsSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
-
-      // Clean up site URL
-      let siteUrl = jiraSiteUrl.trim();
-      if (!siteUrl.startsWith('https://')) {
-        siteUrl = 'https://' + siteUrl;
-      }
-      if (siteUrl.endsWith('/')) {
-        siteUrl = siteUrl.slice(0, -1);
-      }
-
-      // Validate token
-      const credentials = btoa(`${jiraEmailInput}:${jiraToken}`);
-      const response = await fetch(`${siteUrl}/rest/api/3/myself`, {
-        headers: {
-          'Authorization': `Basic ${credentials}`,
-          'Accept': 'application/json',
-        },
+      const { data, error } = await supabase.functions.invoke('jira-oauth-init', {
+        body: { redirectUrl: window.location.pathname }
       });
 
-      if (!response.ok) {
-        throw new Error('Invalid credentials. Please check your email and API token.');
-      }
-
-      // Save token with health tracking
-      const { error } = await supabase
-        .from('user_jira_tokens')
-        .upsert({
-          user_id: user.id,
-          jira_token: jiraToken,
-          jira_email: jiraEmailInput,
-          jira_site_url: siteUrl,
-          is_valid: true,
-          last_validated_at: new Date().toISOString(),
-          validation_error: null,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' });
-
       if (error) throw error;
+      if (!data?.authUrl) throw new Error('Failed to get OAuth URL');
 
-      toast.success("Connected to Jira successfully");
-      setShowJiraDialog(false);
-      setJiraToken("");
-      setJiraEmailInput("");
-      setJiraSiteUrl("");
-      checkHealth();
+      // Redirect to Jira OAuth
+      window.location.href = data.authUrl;
     } catch (error: any) {
-      toast.error(error.message || "Failed to connect Jira");
-    } finally {
+      console.error('Jira OAuth init error:', error);
+      toast.error(error.message || "Failed to start Jira OAuth");
       setIsSaving(false);
     }
   };
@@ -179,6 +145,26 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
     }
   };
 
+  const refreshToken = async (integrationType: 'jira' | 'microsoft') => {
+    setIsRefreshing(integrationType);
+    try {
+      const { data, error } = await supabase.functions.invoke('refresh-integration-token', {
+        body: { integrationType }
+      });
+
+      if (error) throw error;
+
+      toast.success(`${integrationType === 'jira' ? 'Jira' : 'Microsoft'} token refreshed successfully`);
+      fetchTokenExpiry();
+      checkHealth();
+    } catch (error: any) {
+      console.error('Token refresh error:', error);
+      toast.error(error.message || `Failed to refresh ${integrationType} token`);
+    } finally {
+      setIsRefreshing(null);
+    }
+  };
+
   const disconnectGithub = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -193,6 +179,7 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
 
       toast.success("GitHub disconnected");
       checkHealth();
+      fetchTokenExpiry();
     } catch (error: any) {
       toast.error("Failed to disconnect GitHub");
     }
@@ -212,6 +199,7 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
 
       toast.success("Jira disconnected");
       checkHealth();
+      fetchTokenExpiry();
     } catch (error: any) {
       toast.error("Failed to disconnect Jira");
     }
@@ -227,15 +215,47 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
         .delete()
         .eq('user_id', user.id);
 
-      // Also clear localStorage for backward compatibility
       localStorage.removeItem("microsoft_access_token");
 
       toast.success("Microsoft disconnected");
       checkHealth();
+      fetchTokenExpiry();
     } catch (error: any) {
       toast.error("Failed to disconnect Microsoft");
     }
   };
+
+  // Handle OAuth callback results
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const githubStatus = params.get('github');
+    const jiraStatus = params.get('jira');
+    const errorMessage = params.get('message');
+
+    if (githubStatus === 'success') {
+      toast.success('GitHub connected successfully via OAuth');
+      checkHealth();
+      fetchTokenExpiry();
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (githubStatus === 'error') {
+      toast.error(`GitHub OAuth failed: ${errorMessage || 'Unknown error'}`);
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    if (jiraStatus === 'success') {
+      toast.success('Jira connected successfully via OAuth');
+      checkHealth();
+      fetchTokenExpiry();
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (jiraStatus === 'error') {
+      toast.error(`Jira OAuth failed: ${errorMessage || 'Unknown error'}`);
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
+  const jiraExpiry = getExpiryStatus(tokenExpiry.jira?.expiresAt || null);
+  const msExpiry = getExpiryStatus(tokenExpiry.microsoft?.expiresAt || null);
 
   return (
     <Card>
@@ -247,10 +267,10 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               Integration Settings
             </CardTitle>
             <CardDescription>
-              Securely connect your development tools with real-time health monitoring
+              Securely connect your development tools with OAuth. Tokens are encrypted with AES-256.
             </CardDescription>
           </div>
-          <Button variant="ghost" size="sm" onClick={checkHealth}>
+          <Button variant="ghost" size="sm" onClick={() => { checkHealth(); fetchTokenExpiry(); }}>
             <RefreshCw className="h-4 w-4 mr-1" />
             Refresh
           </Button>
@@ -264,7 +284,12 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               <Github className="h-5 w-5" />
             </div>
             <div>
-              <h4 className="font-medium">GitHub</h4>
+              <div className="flex items-center gap-2">
+                <h4 className="font-medium">GitHub</h4>
+                {tokenExpiry.github?.isOAuth && (
+                  <Badge variant="secondary" className="text-xs">OAuth</Badge>
+                )}
+              </div>
               <p className="text-sm text-muted-foreground">
                 {health.github.connected 
                   ? `Connected as ${health.github.identifier}` 
@@ -287,51 +312,10 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
                 Disconnect
               </Button>
             ) : (
-              <Dialog open={showGithubDialog} onOpenChange={setShowGithubDialog}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Shield className="h-4 w-4 mr-1" />
-                    Connect
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <Github className="h-5 w-5" />
-                      Connect GitHub
-                    </DialogTitle>
-                    <DialogDescription>
-                      Your token is encrypted and stored securely. We only access repository data you authorize.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="github-token">Personal Access Token</Label>
-                      <Input
-                        id="github-token"
-                        type="password"
-                        value={githubToken}
-                        onChange={(e) => setGithubToken(e.target.value)}
-                        placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        <a 
-                          href="https://github.com/settings/tokens/new?scopes=repo" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline inline-flex items-center gap-1"
-                        >
-                          Create a token <ExternalLink className="h-3 w-3" />
-                        </a>
-                        {" "}with <code className="bg-muted px-1 rounded">repo</code> scope
-                      </p>
-                    </div>
-                    <Button onClick={connectGithub} disabled={isSaving} className="w-full">
-                      {isSaving ? "Connecting..." : "Connect Securely"}
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <Button variant="outline" size="sm" onClick={connectGithubOAuth} disabled={isSaving}>
+                <Shield className="h-4 w-4 mr-1" />
+                {isSaving ? "Connecting..." : "Connect with OAuth"}
+              </Button>
             )}
           </div>
         </div>
@@ -343,7 +327,18 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               <JiraIcon />
             </div>
             <div>
-              <h4 className="font-medium">Jira</h4>
+              <div className="flex items-center gap-2">
+                <h4 className="font-medium">Jira</h4>
+                {tokenExpiry.jira?.isOAuth && (
+                  <Badge variant="secondary" className="text-xs">OAuth</Badge>
+                )}
+                {jiraExpiry && (
+                  <Badge variant={jiraExpiry.variant} className="text-xs">
+                    <AlertTriangle className="h-3 w-3 mr-1" />
+                    {jiraExpiry.label}
+                  </Badge>
+                )}
+              </div>
               <p className="text-sm text-muted-foreground">
                 {health.jira.connected 
                   ? `Connected as ${health.jira.identifier}` 
@@ -361,75 +356,28 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               onValidate={() => validateIntegration('jira')}
             />
             {health.jira.connected ? (
-              <Button variant="outline" size="sm" onClick={disconnectJira}>
-                <Unplug className="h-4 w-4 mr-1" />
-                Disconnect
-              </Button>
-            ) : (
-              <Dialog open={showJiraDialog} onOpenChange={setShowJiraDialog}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Shield className="h-4 w-4 mr-1" />
-                    Connect
+              <div className="flex gap-2">
+                {tokenExpiry.jira?.isOAuth && jiraExpiry && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => refreshToken('jira')}
+                    disabled={isRefreshing === 'jira'}
+                  >
+                    <RefreshCw className={`h-4 w-4 mr-1 ${isRefreshing === 'jira' ? 'animate-spin' : ''}`} />
+                    Refresh Token
                   </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <JiraIcon />
-                      Connect Jira
-                    </DialogTitle>
-                    <DialogDescription>
-                      Your credentials are encrypted and stored securely.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="jira-site">Jira Site URL</Label>
-                      <Input
-                        id="jira-site"
-                        value={jiraSiteUrl}
-                        onChange={(e) => setJiraSiteUrl(e.target.value)}
-                        placeholder="yourcompany.atlassian.net"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="jira-email">Email Address</Label>
-                      <Input
-                        id="jira-email"
-                        type="email"
-                        value={jiraEmailInput}
-                        onChange={(e) => setJiraEmailInput(e.target.value)}
-                        placeholder="you@company.com"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="jira-token">API Token</Label>
-                      <Input
-                        id="jira-token"
-                        type="password"
-                        value={jiraToken}
-                        onChange={(e) => setJiraToken(e.target.value)}
-                        placeholder="Your Jira API token"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        <a 
-                          href="https://id.atlassian.com/manage-profile/security/api-tokens" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline inline-flex items-center gap-1"
-                        >
-                          Create an API token <ExternalLink className="h-3 w-3" />
-                        </a>
-                        {" "}in your Atlassian account settings
-                      </p>
-                    </div>
-                    <Button onClick={connectJira} disabled={isSaving} className="w-full">
-                      {isSaving ? "Connecting..." : "Connect Securely"}
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
+                )}
+                <Button variant="outline" size="sm" onClick={disconnectJira}>
+                  <Unplug className="h-4 w-4 mr-1" />
+                  Disconnect
+                </Button>
+              </div>
+            ) : (
+              <Button variant="outline" size="sm" onClick={connectJiraOAuth} disabled={isSaving}>
+                <Shield className="h-4 w-4 mr-1" />
+                {isSaving ? "Connecting..." : "Connect with OAuth"}
+              </Button>
             )}
           </div>
         </div>
@@ -441,7 +389,18 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               <MicrosoftIcon />
             </div>
             <div>
-              <h4 className="font-medium">Microsoft Teams & Outlook</h4>
+              <div className="flex items-center gap-2">
+                <h4 className="font-medium">Microsoft Teams & Outlook</h4>
+                {health.microsoft.connected && (
+                  <Badge variant="secondary" className="text-xs">OAuth</Badge>
+                )}
+                {msExpiry && (
+                  <Badge variant={msExpiry.variant} className="text-xs">
+                    <AlertTriangle className="h-3 w-3 mr-1" />
+                    {msExpiry.label}
+                  </Badge>
+                )}
+              </div>
               <p className="text-sm text-muted-foreground">
                 {health.microsoft.connected 
                   ? `Connected as ${health.microsoft.identifier}` 
@@ -459,10 +418,23 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               onValidate={() => validateIntegration('microsoft')}
             />
             {health.microsoft.connected ? (
-              <Button variant="outline" size="sm" onClick={disconnectMicrosoft}>
-                <Unplug className="h-4 w-4 mr-1" />
-                Disconnect
-              </Button>
+              <div className="flex gap-2">
+                {msExpiry && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => refreshToken('microsoft')}
+                    disabled={isRefreshing === 'microsoft'}
+                  >
+                    <RefreshCw className={`h-4 w-4 mr-1 ${isRefreshing === 'microsoft' ? 'animate-spin' : ''}`} />
+                    Refresh Token
+                  </Button>
+                )}
+                <Button variant="outline" size="sm" onClick={disconnectMicrosoft}>
+                  <Unplug className="h-4 w-4 mr-1" />
+                  Disconnect
+                </Button>
+              </div>
             ) : (
               <Button variant="outline" size="sm" onClick={connectMicrosoft}>
                 <Shield className="h-4 w-4 mr-1" />
@@ -472,10 +444,12 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
           </div>
         </div>
 
-        <p className="text-xs text-muted-foreground text-center pt-2">
-          <Shield className="h-3 w-3 inline mr-1" />
-          All credentials are encrypted and stored securely. Connection health is monitored automatically.
-        </p>
+        <div className="flex items-center justify-center gap-2 pt-2 text-xs text-muted-foreground">
+          <Shield className="h-3 w-3" />
+          <span>All tokens are encrypted with AES-256-GCM before storage.</span>
+          <Clock className="h-3 w-3 ml-2" />
+          <span>Automatic expiry monitoring & refresh.</span>
+        </div>
       </CardContent>
     </Card>
   );

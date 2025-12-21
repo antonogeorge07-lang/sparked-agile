@@ -35,3 +35,21 @@ verify_jwt = false
 
 [functions.integration-webhook]
 verify_jwt = false
+
+[functions.github-oauth-init]
+verify_jwt = true
+
+[functions.github-oauth-callback]
+verify_jwt = false
+
+[functions.jira-oauth-init]
+verify_jwt = true
+
+[functions.jira-oauth-callback]
+verify_jwt = false
+
+[functions.refresh-integration-token]
+verify_jwt = true
+
+[functions.decrypt-token]
+verify_jwt = true
