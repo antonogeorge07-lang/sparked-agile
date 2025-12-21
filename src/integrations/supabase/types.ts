@@ -2300,33 +2300,51 @@ export type Database = {
       user_github_tokens: {
         Row: {
           created_at: string
+          encrypted_token: string | null
           github_token: string
           github_username: string | null
           id: string
           is_valid: boolean | null
           last_validated_at: string | null
+          oauth_provider: string | null
+          refresh_token: string | null
+          refresh_token_encrypted: string | null
+          scopes: string[] | null
+          token_expires_at: string | null
           updated_at: string
           user_id: string
           validation_error: string | null
         }
         Insert: {
           created_at?: string
+          encrypted_token?: string | null
           github_token: string
           github_username?: string | null
           id?: string
           is_valid?: boolean | null
           last_validated_at?: string | null
+          oauth_provider?: string | null
+          refresh_token?: string | null
+          refresh_token_encrypted?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
           updated_at?: string
           user_id: string
           validation_error?: string | null
         }
         Update: {
           created_at?: string
+          encrypted_token?: string | null
           github_token?: string
           github_username?: string | null
           id?: string
           is_valid?: boolean | null
           last_validated_at?: string | null
+          oauth_provider?: string | null
+          refresh_token?: string | null
+          refresh_token_encrypted?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
           updated_at?: string
           user_id?: string
           validation_error?: string | null
