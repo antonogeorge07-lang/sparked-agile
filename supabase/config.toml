@@ -56,3 +56,6 @@ verify_jwt = true
 
 [functions.github-digest]
 verify_jwt = true
+
+[functions.send-digest-email]
+verify_jwt = false
