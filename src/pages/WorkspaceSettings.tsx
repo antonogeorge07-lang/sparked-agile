@@ -5,12 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Building2, Users, Save } from "lucide-react";
+import { Building2, Users, Save, Home, Check } from "lucide-react";
 import { LoadingState } from "@/components/LoadingState";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function WorkspaceSettings() {
   const navigate = useNavigate();
@@ -19,6 +21,32 @@ export default function WorkspaceSettings() {
   const [workspaceName, setWorkspaceName] = useState("");
   const [saving, setSaving] = useState(false);
   const [limits, setLimits] = useState({ projectLimit: 5, teamMemberLimit: 5 });
+  const { preferences, updatePreferences, landingPageOptions, saving: savingPrefs } = useUserPreferences();
+  const [selectedLandingPage, setSelectedLandingPage] = useState(preferences.landingPage || '/dashboard');
+
+  // Update selected landing page when preferences load
+  useEffect(() => {
+    if (preferences.landingPage) {
+      setSelectedLandingPage(preferences.landingPage);
+    }
+  }, [preferences.landingPage]);
+
+  const handleLandingPageChange = async (value: string) => {
+    setSelectedLandingPage(value);
+    const result = await updatePreferences({ landingPage: value });
+    if (result.success) {
+      toast({
+        title: "Preference Saved",
+        description: "Your landing page has been updated.",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: result.error || "Failed to save preference",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Update local state when workspace loads
   useEffect(() => {
@@ -158,6 +186,46 @@ export default function WorkspaceSettings() {
               <p className="text-sm text-muted-foreground">
                 You're on the Free plan. Need more? Contact support for upgrade options.
               </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Home className="w-5 h-5" />
+                User Preferences
+              </CardTitle>
+              <CardDescription>
+                Customize your personal experience
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="landing-page">Default Landing Page</Label>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Choose where you land when you open the app
+                </p>
+                <Select value={selectedLandingPage} onValueChange={handleLandingPageChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a landing page" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {landingPageOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        <div className="flex items-center gap-2">
+                          <span>{option.label}</span>
+                          {selectedLandingPage === option.value && (
+                            <Check className="w-4 h-4 text-primary" />
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {landingPageOptions.find(o => o.value === selectedLandingPage)?.description}
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
