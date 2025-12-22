@@ -53,3 +53,6 @@ verify_jwt = true
 
 [functions.decrypt-token]
 verify_jwt = true
+
+[functions.github-digest]
+verify_jwt = true
