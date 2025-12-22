@@ -50,14 +50,29 @@ export default function Landing() {
   }, []);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkAuthAndPreferences = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
-        navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
+        // Check user's preferred landing page
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('preferences')
+          .eq('id', session.user.id)
+          .single();
+        
+        const preferences = profile?.preferences as { landingPage?: string } | null;
+        const preferredPage = preferences?.landingPage;
+        
+        if (preferredPage) {
+          navigate(preferredPage);
+        } else {
+          // Fallback to workspace check for users without preference set
+          const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
+          navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
+        }
       }
     };
-    checkAuth();
+    checkAuthAndPreferences();
   }, [navigate]);
 
   const handleWatchDemo = () => setIsDemoOpen(true);
