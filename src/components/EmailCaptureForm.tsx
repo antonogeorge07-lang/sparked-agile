@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Mail, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 interface EmailCaptureFormProps {
   isOpen: boolean;
@@ -13,7 +14,8 @@ interface EmailCaptureFormProps {
   context?: "early_access" | "newsletter" | "beta" | "exit_intent";
 }
 
-const emailSchema = z.string().email("Please enter a valid email address");
+const emailSchema = z.string().trim().email("Please enter a valid email address").max(255);
+const nameSchema = z.string().trim().min(2, "Name must be at least 2 characters").max(100);
 
 export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: EmailCaptureFormProps) => {
   const [email, setEmail] = useState("");
@@ -50,6 +52,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
     e.preventDefault();
     setError("");
 
+    // Validate email
     try {
       emailSchema.parse(email);
     } catch {
@@ -57,17 +60,33 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
       return;
     }
 
-    if (!name.trim()) {
-      setError("Please enter your name");
+    // Validate name
+    try {
+      nameSchema.parse(name);
+    } catch {
+      setError("Please enter your name (at least 2 characters)");
       return;
     }
 
     setIsLoading(true);
     
     try {
-      // TODO: Integrate with your email service (Resend, Mailchimp, etc.)
-      // For now, just simulate success
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { data, error: fnError } = await supabase.functions.invoke("capture-email", {
+        body: { 
+          email: email.trim().toLowerCase(), 
+          name: name.trim(), 
+          context 
+        }
+      });
+
+      if (fnError) {
+        console.error("Email capture error:", fnError);
+        throw new Error(fnError.message || "Failed to submit");
+      }
+
+      if (data?.error) {
+        throw new Error(data.error);
+      }
       
       toast.success("🎉 Thank you! Check your email for next steps.");
       
@@ -82,8 +101,13 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
       setEmail("");
       setName("");
       onClose();
-    } catch (err) {
-      toast.error("Something went wrong. Please try again.");
+    } catch (err: any) {
+      console.error("Email capture failed:", err);
+      if (err.message?.includes("Too many requests")) {
+        toast.error("Too many requests. Please try again in a minute.");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +118,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl">
-            <Mail className="h-6 w-6 text-primary" />
+            <Mail className="h-6 w-6 text-tier-free" />
             {config.title}
           </DialogTitle>
           <DialogDescription className="text-base">
@@ -102,8 +126,8 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
           </DialogDescription>
         </DialogHeader>
 
-        <div className="bg-gradient-primary/10 border border-primary/20 p-4 rounded-lg flex items-start gap-3">
-          <Gift className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+        <div className="bg-tier-free/10 border border-tier-free/20 p-4 rounded-lg flex items-start gap-3">
+          <Gift className="h-5 w-5 text-tier-free mt-0.5 flex-shrink-0" />
           <p className="text-sm font-medium">{config.benefit}</p>
         </div>
 
@@ -116,6 +140,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={isLoading}
+              maxLength={100}
             />
           </div>
 
@@ -128,6 +153,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
+              maxLength={255}
             />
           </div>
 
@@ -139,7 +165,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
             <Button type="button" variant="outline" onClick={onClose} disabled={isLoading} className="flex-1">
               Maybe Later
             </Button>
-            <Button type="submit" disabled={isLoading} className="flex-1 gap-2">
+            <Button type="submit" disabled={isLoading} className="flex-1 gap-2 bg-tier-free hover:bg-tier-free/90">
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
