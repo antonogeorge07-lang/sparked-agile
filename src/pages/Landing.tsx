@@ -6,6 +6,7 @@ import { HeroSectionSimple } from "@/components/landing/HeroSectionSimple";
 import { ProofSection } from "@/components/landing/ProofSection";
 import { CapabilityShowcase } from "@/components/landing/CapabilityShowcase";
 import { SimpleCTA } from "@/components/landing/SimpleCTA";
+import { PricingSection } from "@/components/landing/PricingSection";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
 import { FAQSchema } from "@/components/landing/FAQSchema";
@@ -15,9 +16,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import saaiLogo from "@/assets/saai-logo.png";
 import { PrivacyBanner } from "@/components/PrivacyBanner";
+import { Mail } from "lucide-react";
 
 // Lazy load heavier sections
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
+
+// Lazy load heavier sections
 const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
 
 const SectionSkeleton = () => (
@@ -76,6 +80,10 @@ export default function Landing() {
   }, [navigate]);
 
   const handleWatchDemo = () => setIsDemoOpen(true);
+  const handleEarlyAccess = () => {
+    setEmailContext("early_access");
+    setShowEmailCapture(true);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -105,8 +113,9 @@ export default function Landing() {
                 </Button>
               </Link>
               <Link to="/auth">
-                <Button size="sm" onClick={() => trackButtonClick('Get Started', 'nav')}>
-                  Get Started
+                <Button size="sm" className="gap-1.5 bg-tier-free hover:bg-tier-free/90" onClick={() => trackButtonClick('Get Started', 'nav')}>
+                  <Mail className="h-3.5 w-3.5" />
+                  Get Digest
                 </Button>
               </Link>
             </div>
@@ -130,6 +139,10 @@ export default function Landing() {
           <Suspense fallback={<SectionSkeleton />}>
             <FeedbackSection />
           </Suspense>
+        </ScrollReveal>
+
+        <ScrollReveal fullWidth delay={0.1}>
+          <PricingSection onEarlyAccess={handleEarlyAccess} />
         </ScrollReveal>
         
         <ScrollReveal fullWidth delay={0.1}>
