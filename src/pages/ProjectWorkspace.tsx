@@ -52,13 +52,24 @@ export default function ProjectWorkspace() {
       handleMicrosoftCallback(code);
     }
 
-    // Load token from localStorage
-    const storedToken = localStorage.getItem("microsoft_access_token");
-    if (storedToken) {
-      setAccessToken(storedToken);
+    // Check if Microsoft is connected via database (not localStorage for security)
+    checkMicrosoftConnection();
+  }, [searchParams]);
+
+  const checkMicrosoftConnection = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: token } = await supabase
+      .from('user_microsoft_tokens')
+      .select('is_valid, expires_at')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (token && token.is_valid) {
       setOutlookConnected(true);
     }
-  }, [searchParams]);
+  };
 
   const loadProjects = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -98,12 +109,12 @@ export default function ProjectWorkspace() {
 
       if (error) throw error;
 
-      const token = data?.accessToken || data?.access_token;
-      if (token) {
-        localStorage.setItem("microsoft_access_token", token);
-        setAccessToken(token);
+      // Token is now encrypted and stored in database - no localStorage needed
+      if (data?.success) {
         setOutlookConnected(true);
         toast.success("Connected to Microsoft Outlook & Teams");
+        // Clear the code from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
       }
     } catch (error: any) {
       toast.error(`Failed to connect: ${error.message}`);

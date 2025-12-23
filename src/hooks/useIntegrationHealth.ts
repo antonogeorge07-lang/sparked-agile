@@ -27,7 +27,7 @@ export const useIntegrationHealth = () => {
         return;
       }
 
-      // Check all integrations in parallel
+      // Check all integrations in parallel - only fetch non-sensitive metadata
       const [githubResult, jiraResult, microsoftResult] = await Promise.all([
         supabase
           .from('user_github_tokens')
@@ -82,7 +82,7 @@ export const useIntegrationHealth = () => {
     }
   }, []);
 
-  // Validate a specific integration
+  // Validate a specific integration - uses edge function to decrypt and validate tokens securely
   const validateIntegration = useCallback(async (type: 'github' | 'jira' | 'microsoft') => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -93,105 +93,21 @@ export const useIntegrationHealth = () => {
     }));
 
     try {
-      if (type === 'github') {
-        const { data: token } = await supabase
-          .from('user_github_tokens')
-          .select('github_token')
-          .eq('user_id', user.id)
-          .single();
+      // Use edge function to validate tokens securely (tokens never sent to client)
+      const { data, error } = await supabase.functions.invoke('validate-integration-token', {
+        body: { integrationType: type },
+      });
 
-        if (token) {
-          const response = await fetch('https://api.github.com/user', {
-            headers: {
-              'Authorization': `Bearer ${token.github_token}`,
-              'Accept': 'application/vnd.github.v3+json',
-            },
-          });
-
-          const isValid = response.ok;
-          const errorMsg = isValid ? null : `Token expired or invalid (${response.status})`;
-
-          await supabase
-            .from('user_github_tokens')
-            .update({
-              is_valid: isValid,
-              last_validated_at: new Date().toISOString(),
-              validation_error: errorMsg,
-            })
-            .eq('user_id', user.id);
-        }
-      } else if (type === 'jira') {
-        const { data: token } = await supabase
-          .from('user_jira_tokens')
-          .select('jira_token, jira_email, jira_site_url')
-          .eq('user_id', user.id)
-          .single();
-
-        if (token) {
-          const credentials = btoa(`${token.jira_email}:${token.jira_token}`);
-          const response = await fetch(`${token.jira_site_url}/rest/api/3/myself`, {
-            headers: {
-              'Authorization': `Basic ${credentials}`,
-              'Accept': 'application/json',
-            },
-          });
-
-          const isValid = response.ok;
-          const errorMsg = isValid ? null : `Token expired or invalid (${response.status})`;
-
-          await supabase
-            .from('user_jira_tokens')
-            .update({
-              is_valid: isValid,
-              last_validated_at: new Date().toISOString(),
-              validation_error: errorMsg,
-            })
-            .eq('user_id', user.id);
-        }
-      } else if (type === 'microsoft') {
-        const { data: token } = await supabase
-          .from('user_microsoft_tokens')
-          .select('access_token, expires_at')
-          .eq('user_id', user.id)
-          .single();
-
-        if (token) {
-          // Check if token is expired
-          const isExpired = token.expires_at && new Date(token.expires_at) < new Date();
-          
-          if (isExpired) {
-            await supabase
-              .from('user_microsoft_tokens')
-              .update({
-                is_valid: false,
-                last_validated_at: new Date().toISOString(),
-                validation_error: 'Token expired - please reconnect',
-              })
-              .eq('user_id', user.id);
-          } else {
-            // Validate with Microsoft Graph API
-            const response = await fetch('https://graph.microsoft.com/v1.0/me', {
-              headers: {
-                'Authorization': `Bearer ${token.access_token}`,
-              },
-            });
-
-            const isValid = response.ok;
-            const errorMsg = isValid ? null : `Token invalid (${response.status})`;
-
-            await supabase
-              .from('user_microsoft_tokens')
-              .update({
-                is_valid: isValid,
-                last_validated_at: new Date().toISOString(),
-                validation_error: errorMsg,
-              })
-              .eq('user_id', user.id);
-          }
-        }
+      if (error) {
+        console.error(`Error validating ${type}:`, error);
+        setHealth(prev => ({
+          ...prev,
+          [type]: { ...prev[type], isChecking: false, error: 'Validation failed' },
+        }));
+        return;
       }
 
-      // Refresh health status
+      // Refresh health status after validation
       await checkHealth();
     } catch (error) {
       console.error(`Error validating ${type}:`, error);

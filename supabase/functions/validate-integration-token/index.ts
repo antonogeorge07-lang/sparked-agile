@@ -84,12 +84,15 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
     
-    let decryptedToken: string | null = null;
+    let isValid = false;
+    let errorMsg: string | null = null;
+    let tableName: string;
     
     if (integrationType === 'github') {
+      tableName = 'user_github_tokens';
       const { data: tokenRecord, error } = await serviceClient
         .from('user_github_tokens')
-        .select('encrypted_token, github_token, oauth_provider')
+        .select('encrypted_token, github_token')
         .eq('user_id', user.id)
         .single();
       
@@ -97,19 +100,31 @@ serve(async (req) => {
         throw new Error('GitHub token not found');
       }
       
-      // Use encrypted token if available, otherwise fall back to plaintext (legacy)
+      let token: string;
       if (tokenRecord.encrypted_token) {
-        decryptedToken = await decryptToken(tokenRecord.encrypted_token, encryptionKey);
+        token = await decryptToken(tokenRecord.encrypted_token, encryptionKey);
       } else if (tokenRecord.github_token) {
-        decryptedToken = tokenRecord.github_token;
+        token = tokenRecord.github_token;
       } else {
         throw new Error('No token available');
       }
       
+      // Validate with GitHub API
+      const response = await fetch('https://api.github.com/user', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+        },
+      });
+      
+      isValid = response.ok;
+      errorMsg = isValid ? null : `Token expired or invalid (${response.status})`;
+      
     } else if (integrationType === 'jira') {
+      tableName = 'user_jira_tokens';
       const { data: tokenRecord, error } = await serviceClient
         .from('user_jira_tokens')
-        .select('encrypted_token, jira_token, oauth_provider, token_expires_at')
+        .select('encrypted_token, jira_token, jira_email, jira_site_url')
         .eq('user_id', user.id)
         .single();
       
@@ -117,22 +132,29 @@ serve(async (req) => {
         throw new Error('Jira token not found');
       }
       
-      // Check if token is expired
-      if (tokenRecord.token_expires_at) {
-        const expiresAt = new Date(tokenRecord.token_expires_at);
-        if (expiresAt <= new Date()) {
-          throw new Error('Token expired. Please refresh or reconnect.');
-        }
-      }
-      
+      let token: string;
       if (tokenRecord.encrypted_token) {
-        decryptedToken = await decryptToken(tokenRecord.encrypted_token, encryptionKey);
+        token = await decryptToken(tokenRecord.encrypted_token, encryptionKey);
       } else if (tokenRecord.jira_token) {
-        decryptedToken = tokenRecord.jira_token;
+        token = tokenRecord.jira_token;
       } else {
         throw new Error('No token available');
       }
+      
+      // Validate with Jira API
+      const credentials = btoa(`${tokenRecord.jira_email}:${token}`);
+      const response = await fetch(`${tokenRecord.jira_site_url}/rest/api/3/myself`, {
+        headers: {
+          'Authorization': `Basic ${credentials}`,
+          'Accept': 'application/json',
+        },
+      });
+      
+      isValid = response.ok;
+      errorMsg = isValid ? null : `Token expired or invalid (${response.status})`;
+      
     } else if (integrationType === 'microsoft') {
+      tableName = 'user_microsoft_tokens';
       const { data: tokenRecord, error } = await serviceClient
         .from('user_microsoft_tokens')
         .select('encrypted_access_token, access_token, expires_at')
@@ -143,30 +165,69 @@ serve(async (req) => {
         throw new Error('Microsoft token not found');
       }
       
-      // Check if token is expired
+      // Check if token is expired first
       if (tokenRecord.expires_at) {
         const expiresAt = new Date(tokenRecord.expires_at);
-        if (expiresAt <= new Date()) {
-          throw new Error('Token expired. Please refresh or reconnect.');
+        if (expiresAt < new Date()) {
+          isValid = false;
+          errorMsg = 'Token expired - please reconnect';
+          
+          // Update validation status
+          await serviceClient
+            .from('user_microsoft_tokens')
+            .update({
+              is_valid: false,
+              last_validated_at: new Date().toISOString(),
+              validation_error: errorMsg,
+            })
+            .eq('user_id', user.id);
+          
+          return new Response(
+            JSON.stringify({ isValid, error: errorMsg }),
+            {
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+              status: 200,
+            }
+          );
         }
       }
       
-      // Use encrypted token if available, otherwise fall back to plaintext (legacy)
+      let token: string;
       if (tokenRecord.encrypted_access_token) {
-        decryptedToken = await decryptToken(tokenRecord.encrypted_access_token, encryptionKey);
+        token = await decryptToken(tokenRecord.encrypted_access_token, encryptionKey);
       } else if (tokenRecord.access_token && tokenRecord.access_token !== '') {
-        decryptedToken = tokenRecord.access_token;
+        token = tokenRecord.access_token;
       } else {
         throw new Error('No token available');
       }
+      
+      // Validate with Microsoft Graph API
+      const response = await fetch('https://graph.microsoft.com/v1.0/me', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      
+      isValid = response.ok;
+      errorMsg = isValid ? null : `Token invalid (${response.status})`;
+    } else {
+      throw new Error('Invalid integration type');
     }
     
-    // Return the token (this should only be used by other edge functions, not frontend)
-    // For security, we don't log the token
-    console.log(`Token decrypted for ${integrationType} integration`);
+    // Update validation status in database
+    await serviceClient
+      .from(tableName!)
+      .update({
+        is_valid: isValid,
+        last_validated_at: new Date().toISOString(),
+        validation_error: errorMsg,
+      })
+      .eq('user_id', user.id);
+    
+    console.log(`${integrationType} token validated: ${isValid}`);
     
     return new Response(
-      JSON.stringify({ token: decryptedToken }),
+      JSON.stringify({ isValid, error: errorMsg }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200,
@@ -174,10 +235,10 @@ serve(async (req) => {
     );
     
   } catch (error) {
-    console.error('Error in decrypt-token:', error);
+    console.error('Error in validate-integration-token:', error);
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: errorMessage, isValid: false }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,

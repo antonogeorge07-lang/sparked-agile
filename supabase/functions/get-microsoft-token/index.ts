@@ -9,6 +9,48 @@ const corsHeaders = {
 const clientId = Deno.env.get('MICROSOFT_CLIENT_ID');
 const clientSecret = Deno.env.get('MICROSOFT_CLIENT_SECRET');
 
+// AES-256-GCM encryption
+async function encryptToken(token: string, key: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(token);
+  
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(key),
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits", "deriveKey"]
+  );
+  
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const derivedKey = await crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt"]
+  );
+  
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv: iv },
+    derivedKey,
+    data
+  );
+  
+  const combined = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
+  combined.set(salt, 0);
+  combined.set(iv, salt.length);
+  combined.set(new Uint8Array(encrypted), salt.length + iv.length);
+  
+  return btoa(String.fromCharCode(...combined));
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -25,6 +67,11 @@ serve(async (req) => {
 
     if (!code || !redirectUri) {
       throw new Error('Code and redirectUri are required');
+    }
+
+    const encryptionKey = Deno.env.get('TOKEN_ENCRYPTION_KEY');
+    if (!encryptionKey) {
+      throw new Error('Token encryption key not configured');
     }
 
     // Create Supabase client with user's auth
@@ -91,13 +138,24 @@ serve(async (req) => {
     // Calculate expiry time
     const expiresAt = new Date(Date.now() + (tokenData.expires_in * 1000));
 
-    // Store token securely in database
+    // Encrypt tokens before storing
+    const encryptedAccessToken = await encryptToken(tokenData.access_token, encryptionKey);
+    const encryptedRefreshToken = tokenData.refresh_token 
+      ? await encryptToken(tokenData.refresh_token, encryptionKey)
+      : null;
+
+    console.log('Tokens encrypted successfully');
+
+    // Store encrypted tokens securely in database
+    // Keep plaintext fields as null for new connections (legacy compatibility)
     const { error: upsertError } = await supabaseClient
       .from('user_microsoft_tokens')
       .upsert({
         user_id: user.id,
-        access_token: tokenData.access_token,
-        refresh_token: tokenData.refresh_token || null,
+        access_token: '', // Empty string for legacy field (required NOT NULL)
+        refresh_token: null, // Null for legacy field
+        encrypted_access_token: encryptedAccessToken,
+        encrypted_refresh_token: encryptedRefreshToken,
         expires_at: expiresAt.toISOString(),
         scopes: tokenData.scope?.split(' ') || [],
         user_email: userEmail,
@@ -112,7 +170,7 @@ serve(async (req) => {
       throw new Error('Failed to store token securely');
     }
 
-    console.log('Token stored securely in database');
+    console.log('Encrypted token stored securely in database');
 
     return new Response(
       JSON.stringify({
