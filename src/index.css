@@ -41,10 +41,18 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
+    /* Tier colors */
+    --tier-free: 152 76% 45%;
+    --tier-free-foreground: 0 0% 100%;
+    --tier-pro: 262 83% 58%;
+    --tier-pro-foreground: 0 0% 100%;
+
     /* Modern blue-purple gradients */
     --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(262 83% 58%));
     --gradient-accent: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     --gradient-subtle: linear-gradient(180deg, hsl(220 15% 97%), hsl(0 0% 100%));
+    --gradient-free: linear-gradient(135deg, hsl(152 76% 45%), hsl(172 66% 50%));
+    --gradient-pro: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     
     /* Modern shadows */
     --shadow-card: 0 2px 12px -2px hsl(221 83% 53% / 0.1);
@@ -92,11 +100,19 @@ All colors MUST be HSL.
     --border: 220 35% 18%;
     --input: 220 35% 18%;
     --ring: 221 83% 53%;
+
+    /* Tier colors - Dark mode */
+    --tier-free: 152 76% 45%;
+    --tier-free-foreground: 0 0% 100%;
+    --tier-pro: 262 83% 58%;
+    --tier-pro-foreground: 0 0% 100%;
     
     /* Dark mode blue-purple gradients */
     --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(262 83% 58%));
     --gradient-accent: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     --gradient-subtle: linear-gradient(180deg, hsl(220 45% 8%), hsl(220 40% 12%));
+    --gradient-free: linear-gradient(135deg, hsl(152 76% 45%), hsl(172 66% 50%));
+    --gradient-pro: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.4);
     --shadow-elevated: 0 8px 32px -4px hsl(0 0% 0% / 0.5);

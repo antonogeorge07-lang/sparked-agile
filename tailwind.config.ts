@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        tier: {
+          free: "hsl(var(--tier-free))",
+          "free-foreground": "hsl(var(--tier-free-foreground))",
+          pro: "hsl(var(--tier-pro))",
+          "pro-foreground": "hsl(var(--tier-pro-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -66,6 +72,8 @@ export default {
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
         'gradient-subtle': 'var(--gradient-subtle)',
+        'gradient-free': 'var(--gradient-free)',
+        'gradient-pro': 'var(--gradient-pro)',
       },
       boxShadow: {
         'card': 'var(--shadow-card)',
