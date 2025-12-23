@@ -40,7 +40,7 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="h-5 w-5 text-tier-free flex-shrink-0" />
-                <span className="text-sm font-medium">That's it—no daily logins needed</span>
+                <span className="text-sm font-medium">That's it. No daily logins needed.</span>
               </div>
             </div>
 

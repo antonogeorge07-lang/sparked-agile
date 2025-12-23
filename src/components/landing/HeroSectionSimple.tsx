@@ -30,7 +30,7 @@ export function HeroSectionSimple() {
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Get a daily email digest of your team's GitHub activity, sprint progress, and key updates. 
-            No login required—just connect and receive.
+            No login required. Just connect and receive.
           </p>
 
           {/* Value props */}
