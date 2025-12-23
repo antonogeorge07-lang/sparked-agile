@@ -15,7 +15,10 @@ import {
   BarChart3,
   Calendar,
   MessageSquare,
-  Eye
+  Eye,
+  Mail,
+  Github,
+  TrendingUp
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
@@ -36,50 +39,35 @@ interface OnboardingStep {
 const onboardingSteps: OnboardingStep[] = [
   {
     id: "welcome",
-    title: "Welcome to SAAI! 🎉",
-    description: "Streamline your sprint ceremonies with AI assistance. Let me show you the key features in 60 seconds.",
+    title: "Stay Informed, Effortlessly",
+    description: "Get a daily email digest with everything you need to know about your team's progress. No more chasing updates.",
+    icon: Mail,
+    benefit: "Start your day informed in under 2 minutes"
+  },
+  {
+    id: "github",
+    title: "GitHub Activity at a Glance",
+    description: "See commits, PRs, and issues from your repos. Know what shipped and what's in progress without digging through GitHub.",
+    icon: Github,
+    benefit: "Never miss important code changes"
+  },
+  {
+    id: "insights",
+    title: "AI-Powered Insights",
+    description: "Get smart summaries and highlights. Our AI identifies blockers, progress patterns, and what needs your attention.",
+    icon: TrendingUp,
+    benefit: "Focus on what matters most"
+  },
+  {
+    id: "free",
+    title: "Free Forever",
+    description: "Daily Digest is completely free. Connect your GitHub, invite your team, and start receiving insights today.",
     icon: Sparkles,
-    benefit: "Work more efficiently with AI-powered tools"
-  },
-  {
-    id: "ai-assistant",
-    title: "Meet Omair, Your AI Assistant",
-    description: "Get guidance on agile methodologies, best practices, and platform features. Available after you sign up to help with your project management questions.",
-    icon: MessageSquare,
-    benefit: "Get AI-powered answers to project management questions"
-  },
-  {
-    id: "command-centre",
-    title: "Visual Project Management",
-    description: "Drag-and-drop tasks across stages. Collaborate with your team. All your projects in one view.",
-    icon: Target,
     action: {
-      label: "See Command Centre",
-      path: "/project-command-centre"
+      label: "Get Started Free",
+      path: "/auth"
     },
-    benefit: "Manage projects visually with drag-and-drop simplicity"
-  },
-  {
-    id: "ceremonies",
-    title: "Streamline Agile Ceremonies",
-    description: "AI-assisted standups, sprint planning, retrospectives, and reviews. Work more efficiently.",
-    icon: Calendar,
-    action: {
-      label: "Explore Sprint AI",
-      path: "/sprint-planning-assistant"
-    },
-    benefit: "Reduce ceremony overhead significantly"
-  },
-  {
-    id: "integrations",
-    title: "Connect Your Tools",
-    description: "Seamlessly integrate with JIRA, GitHub, and Microsoft 365. Sync your existing workflows.",
-    icon: Zap,
-    action: {
-      label: "View Integrations",
-      path: "/integrations"
-    },
-    benefit: "One platform for all your project data"
+    benefit: "No credit card required"
   }
 ];
 
@@ -126,7 +114,6 @@ export const InteractiveOnboarding = () => {
     localStorage.setItem("saai_onboarding_completed", "true");
     localStorage.setItem("guest_mode", "true");
     setIsOpen(false);
-    navigate("/dashboard");
   };
 
   const handleComplete = () => {
@@ -142,21 +129,19 @@ export const InteractiveOnboarding = () => {
 
     setTimeout(() => {
       setIsOpen(false);
+      navigate("/auth");
     }, 2000);
   };
 
   const handleAction = (action?: OnboardingStep['action']) => {
-    // If there's no actionable path, simply proceed to the next step
     if (!action || !action.path) {
       handleNext();
       return;
     }
 
-    // Only when explicitly navigating do we close and mark in-progress
-    localStorage.setItem("saai_onboarding_in_progress", "true");
-    // Keep the walkthrough open by default; navigate after completion instead.
-    // For now, just advance to next step to avoid interruptions
-    handleNext();
+    localStorage.setItem("saai_onboarding_completed", "true");
+    setIsOpen(false);
+    navigate(action.path);
   };
 
   const progress = ((currentStep + 1) / onboardingSteps.length) * 100;
@@ -173,12 +158,12 @@ export const InteractiveOnboarding = () => {
             <CardHeader className="space-y-4">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <StepIcon className="h-6 w-6 text-primary" />
+                  <div className="h-12 w-12 rounded-full bg-tier-free/20 flex items-center justify-center">
+                    <StepIcon className="h-6 w-6 text-tier-free" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">{step.title}</CardTitle>
-                    <Badge variant="secondary" className="mt-1">
+                    <Badge variant="secondary" className="mt-1 bg-tier-free/10 text-tier-free border-tier-free/20">
                       Step {currentStep + 1} of {onboardingSteps.length}
                     </Badge>
                   </div>
@@ -202,9 +187,9 @@ export const InteractiveOnboarding = () => {
                   {step.description}
                 </p>
                 
-                <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-                  <p className="text-sm font-medium text-green-700 dark:text-green-400">
+                <div className="flex items-center gap-2 p-3 bg-tier-free/10 border border-tier-free/20 rounded-lg">
+                  <CheckCircle2 className="h-5 w-5 text-tier-free flex-shrink-0" />
+                  <p className="text-sm font-medium text-tier-free">
                     {step.benefit}
                   </p>
                 </div>
@@ -227,7 +212,7 @@ export const InteractiveOnboarding = () => {
                     {step.action ? (
                       <Button
                         onClick={() => handleAction(step.action)}
-                        className="gap-2 w-full sm:w-auto"
+                        className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90"
                       >
                         {step.action.label}
                         <ArrowRight className="h-4 w-4" />
@@ -235,9 +220,9 @@ export const InteractiveOnboarding = () => {
                     ) : (
                       <Button
                         onClick={handleNext}
-                        className="gap-2 w-full sm:w-auto"
+                        className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90"
                       >
-                        {currentStep === onboardingSteps.length - 1 ? "Get Started" : "Next"}
+                        Next
                         <ArrowRight className="h-4 w-4" />
                       </Button>
                     )}
@@ -276,9 +261,9 @@ export const InteractiveOnboarding = () => {
                     onClick={() => setCurrentStep(index)}
                     className={`h-2 rounded-full transition-all ${
                       index === currentStep 
-                        ? 'w-8 bg-primary' 
+                        ? 'w-8 bg-tier-free' 
                         : index < currentStep
-                        ? 'w-2 bg-primary/50'
+                        ? 'w-2 bg-tier-free/50'
                         : 'w-2 bg-muted'
                     }`}
                   />
@@ -289,23 +274,23 @@ export const InteractiveOnboarding = () => {
         ) : (
           <CardContent className="py-12 text-center space-y-6">
             <div className="flex justify-center">
-              <div className="h-20 w-20 rounded-full bg-green-500/10 flex items-center justify-center animate-in zoom-in duration-500">
-                <CheckCircle2 className="h-10 w-10 text-green-500" />
+              <div className="h-20 w-20 rounded-full bg-tier-free/10 flex items-center justify-center animate-in zoom-in duration-500">
+                <CheckCircle2 className="h-10 w-10 text-tier-free" />
               </div>
             </div>
             <div className="space-y-2">
               <h3 className="text-2xl font-bold">You're All Set! 🎉</h3>
               <p className="text-muted-foreground">
-                You're ready to supercharge your agile workflow with AI
+                Sign up to start receiving your Daily Digest
               </p>
             </div>
             <Button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/auth")}
               size="lg"
-              className="gap-2"
+              className="gap-2 bg-tier-free hover:bg-tier-free/90"
             >
-              Go to Dashboard
-              <ArrowRight className="h-4 w-4" />
+              <Mail className="h-4 w-4" />
+              Get Your Daily Digest
             </Button>
           </CardContent>
         )}
