@@ -2445,6 +2445,8 @@ export type Database = {
         Row: {
           access_token: string
           created_at: string
+          encrypted_access_token: string | null
+          encrypted_refresh_token: string | null
           expires_at: string | null
           id: string
           is_valid: boolean | null
@@ -2459,6 +2461,8 @@ export type Database = {
         Insert: {
           access_token: string
           created_at?: string
+          encrypted_access_token?: string | null
+          encrypted_refresh_token?: string | null
           expires_at?: string | null
           id?: string
           is_valid?: boolean | null
@@ -2473,6 +2477,8 @@ export type Database = {
         Update: {
           access_token?: string
           created_at?: string
+          encrypted_access_token?: string | null
+          encrypted_refresh_token?: string | null
           expires_at?: string | null
           id?: string
           is_valid?: boolean | null

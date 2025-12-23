@@ -203,7 +203,15 @@ serve(async (req) => {
         throw new Error('Microsoft token not found');
       }
       
-      if (!msToken.refresh_token) {
+      // Check for encrypted refresh token first, fall back to plaintext (legacy)
+      let refreshToken: string | null = null;
+      if (msToken.encrypted_refresh_token) {
+        refreshToken = await decryptToken(msToken.encrypted_refresh_token, encryptionKey);
+      } else if (msToken.refresh_token) {
+        refreshToken = msToken.refresh_token;
+      }
+      
+      if (!refreshToken) {
         throw new Error('No refresh token available. Please reconnect Microsoft.');
       }
       
@@ -218,7 +226,7 @@ serve(async (req) => {
           grant_type: 'refresh_token',
           client_id: clientId!,
           client_secret: clientSecret!,
-          refresh_token: msToken.refresh_token,
+          refresh_token: refreshToken,
           scope: 'Calendars.ReadWrite Mail.Send offline_access',
         }),
       });
@@ -230,12 +238,20 @@ serve(async (req) => {
       const tokenData = await tokenResponse.json();
       const expiresAt = new Date(Date.now() + (tokenData.expires_in * 1000)).toISOString();
       
-      // Update database
+      // Encrypt new tokens
+      const newEncryptedAccess = await encryptToken(tokenData.access_token, encryptionKey);
+      const newEncryptedRefresh = tokenData.refresh_token 
+        ? await encryptToken(tokenData.refresh_token, encryptionKey)
+        : msToken.encrypted_refresh_token;
+      
+      // Update database with encrypted tokens, clear plaintext legacy fields
       const { error: updateError } = await serviceClient
         .from('user_microsoft_tokens')
         .update({
-          access_token: tokenData.access_token,
-          refresh_token: tokenData.refresh_token || msToken.refresh_token,
+          access_token: '', // Clear legacy plaintext field
+          refresh_token: null, // Clear legacy plaintext field
+          encrypted_access_token: newEncryptedAccess,
+          encrypted_refresh_token: newEncryptedRefresh,
           expires_at: expiresAt,
           is_valid: true,
           last_validated_at: new Date().toISOString(),
@@ -245,7 +261,7 @@ serve(async (req) => {
       
       if (updateError) throw updateError;
       
-      console.log('Microsoft token refreshed successfully');
+      console.log('Microsoft token refreshed successfully with encryption');
     }
     
     return new Response(
