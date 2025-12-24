@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
-import { Github, Network, Plus, Trash2, Settings, AlertCircle, LayoutDashboard, FolderKanban } from "lucide-react";
+import { Github, Network, Plus, Trash2, Settings, AlertCircle, LayoutDashboard, FolderKanban, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRealtimePresence } from "@/hooks/useRealtimePresence";
 import { ActiveUsers } from "@/components/ActiveUsers";
@@ -21,8 +21,10 @@ import { ConnectionStatus } from "@/components/integrations/ConnectionStatus";
 import { IntegrationWizard } from "@/components/integrations/IntegrationWizard";
 import { ConnectionTester } from "@/components/integrations/ConnectionTester";
 import { IntegrationDashboard } from "@/components/integrations/IntegrationDashboard";
+import { IntegrationStatusDashboard } from "@/components/integrations/IntegrationStatusDashboard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IntegrationCard } from "@/components/IntegrationCard";
+import { useAutoTokenRefresh } from "@/hooks/useAutoTokenRefresh";
 
 // Validation schemas
 const jiraConfigSchema = z.object({
@@ -70,9 +72,12 @@ const Integrations = () => {
   const [useWizard, setUseWizard] = useState(true);
   const [selectedType, setSelectedType] = useState<"jira" | "github">("jira");
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("status");
   const { activeUsers } = useRealtimePresence('/integrations');
   const { role, loading: roleLoading } = useUserRole();
+  
+  // Enable auto token refresh for integrations
+  useAutoTokenRefresh();
   const [newIntegration, setNewIntegration] = useState({
     type: "jira" as "jira" | "github",
     name: "",
@@ -401,7 +406,11 @@ const Integrations = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsList className="grid w-full max-w-lg grid-cols-3">
+              <TabsTrigger value="status" className="gap-2">
+                <Zap className="h-4 w-4" />
+                Connection Status
+              </TabsTrigger>
               <TabsTrigger value="dashboard" className="gap-2">
                 <LayoutDashboard className="h-4 w-4" />
                 Dashboard
@@ -411,6 +420,10 @@ const Integrations = () => {
                 Project Integrations
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="status" className="space-y-6">
+              <IntegrationStatusDashboard />
+            </TabsContent>
 
             <TabsContent value="dashboard" className="space-y-6">
               <IntegrationDashboard />
