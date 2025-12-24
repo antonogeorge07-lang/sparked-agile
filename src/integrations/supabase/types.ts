@@ -2857,6 +2857,10 @@ export type Database = {
       }
     }
     Functions: {
+      anonymize_deleted_user_data: {
+        Args: { target_user_id: string }
+        Returns: undefined
+      }
       calculate_closure_readiness: {
         Args: { epic_id_param: string }
         Returns: Json
