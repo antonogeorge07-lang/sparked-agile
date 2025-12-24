@@ -74,6 +74,33 @@ export type Database = {
           },
         ]
       }
+      aggregation_access_limits: {
+        Row: {
+          access_count: number
+          created_at: string
+          function_name: string
+          id: string
+          user_id: string
+          window_start: string
+        }
+        Insert: {
+          access_count?: number
+          created_at?: string
+          function_name: string
+          id?: string
+          user_id: string
+          window_start?: string
+        }
+        Update: {
+          access_count?: number
+          created_at?: string
+          function_name?: string
+          id?: string
+          user_id?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       agile_release_trains: {
         Row: {
           created_at: string | null
@@ -2932,6 +2959,36 @@ export type Database = {
       }
     }
     Views: {
+      ai_usage_logs_sanitized: {
+        Row: {
+          created_at: string | null
+          endpoint: string | null
+          id: string | null
+          model: string | null
+          project_id: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint?: string | null
+          id?: string | null
+          model?: string | null
+          project_id?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string | null
+          id?: string | null
+          model?: string | null
+          project_id?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       project_teammates: {
         Row: {
           avatar_url: string | null
@@ -3041,12 +3098,9 @@ export type Database = {
       get_aggregated_ai_usage_stats: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
-          avg_tokens_per_request: number
-          estimated_cost: number
           period: string
           success_rate: number
           total_requests: number
-          total_tokens: number
           unique_users: number
         }[]
       }
@@ -3068,9 +3122,15 @@ export type Database = {
         Returns: {
           last_used: string
           monthly_requests: number
-          monthly_tokens: number
           total_requests: number
-          total_tokens: number
+        }[]
+      }
+      get_platform_cost_analytics: {
+        Args: { end_date?: string; start_date?: string }
+        Returns: {
+          avg_cost_per_request: number
+          period: string
+          total_cost: number
         }[]
       }
       get_platform_stats: {
