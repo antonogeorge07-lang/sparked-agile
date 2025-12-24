@@ -2988,12 +2988,12 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
-          full_name?: string | null
+          full_name?: never
           id?: string | null
         }
         Update: {
           avatar_url?: string | null
-          full_name?: string | null
+          full_name?: never
           id?: string | null
         }
         Relationships: []
@@ -3124,6 +3124,16 @@ export type Database = {
           usage_week: string
         }[]
       }
+      get_my_integration_status: {
+        Args: never
+        Returns: {
+          expires_soon: boolean
+          integration_type: string
+          is_connected: boolean
+          is_valid: boolean
+          last_used: string
+        }[]
+      }
       get_my_recent_ai_usage: {
         Args: { limit_count?: number }
         Returns: {
@@ -3184,6 +3194,14 @@ export type Database = {
           is_active: boolean
           project_id: string
           updated_at: string
+        }[]
+      }
+      get_teammate_profile_safe: {
+        Args: { teammate_id: string }
+        Returns: {
+          avatar_url: string
+          display_name: string
+          id: string
         }[]
       }
       get_user_role: {
