@@ -1477,6 +1477,57 @@ export type Database = {
           },
         ]
       }
+      project_slack_channels: {
+        Row: {
+          channel_id: string
+          channel_name: string | null
+          created_at: string
+          id: string
+          is_active: boolean | null
+          notification_types: string[] | null
+          project_id: string
+          slack_token_id: string
+          updated_at: string
+        }
+        Insert: {
+          channel_id: string
+          channel_name?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          notification_types?: string[] | null
+          project_id: string
+          slack_token_id: string
+          updated_at?: string
+        }
+        Update: {
+          channel_id?: string
+          channel_name?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          notification_types?: string[] | null
+          project_id?: string
+          slack_token_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_slack_channels_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_slack_channels_slack_token_id_fkey"
+            columns: ["slack_token_id"]
+            isOneToOne: false
+            referencedRelation: "user_slack_tokens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_tasks: {
         Row: {
           created_at: string
@@ -2504,6 +2555,60 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_slack_tokens: {
+        Row: {
+          channel_id: string | null
+          channel_name: string | null
+          created_at: string
+          encrypted_access_token: string
+          encrypted_bot_token: string | null
+          id: string
+          is_valid: boolean | null
+          last_validated_at: string | null
+          scopes: string[] | null
+          team_id: string
+          team_name: string | null
+          updated_at: string
+          user_id: string
+          validation_error: string | null
+          webhook_url: string | null
+        }
+        Insert: {
+          channel_id?: string | null
+          channel_name?: string | null
+          created_at?: string
+          encrypted_access_token: string
+          encrypted_bot_token?: string | null
+          id?: string
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          scopes?: string[] | null
+          team_id: string
+          team_name?: string | null
+          updated_at?: string
+          user_id: string
+          validation_error?: string | null
+          webhook_url?: string | null
+        }
+        Update: {
+          channel_id?: string | null
+          channel_name?: string | null
+          created_at?: string
+          encrypted_access_token?: string
+          encrypted_bot_token?: string | null
+          id?: string
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          scopes?: string[] | null
+          team_id?: string
+          team_name?: string | null
+          updated_at?: string
+          user_id?: string
+          validation_error?: string | null
+          webhook_url?: string | null
         }
         Relationships: []
       }

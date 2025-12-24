@@ -3,11 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Github, Settings, Unplug, Shield, RefreshCw, Clock, AlertTriangle } from "lucide-react";
+import { Github, Settings, Unplug, Shield, RefreshCw, Clock, AlertTriangle, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { useIntegrationHealth } from "@/hooks/useIntegrationHealth";
 import { ConnectionHealthIndicator } from "@/components/ConnectionHealthIndicator";
-
+import { useSlackIntegration } from "@/hooks/useSlackIntegration";
 interface IntegrationSettingsProps {
   projectId: string | null;
 }
@@ -34,6 +34,14 @@ interface TokenExpiryInfo {
 
 export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => {
   const { health, validateIntegration, checkHealth } = useIntegrationHealth();
+  const { 
+    connection: slackConnection, 
+    isConnecting: slackConnecting, 
+    connectSlack, 
+    disconnectSlack,
+    handleOAuthCallback: handleSlackCallback,
+    checkConnection: checkSlackConnection
+  } = useSlackIntegration();
   
   const [isSaving, setIsSaving] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState<string | null>(null);
@@ -43,6 +51,27 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
     checkHealth();
     fetchTokenExpiry();
   }, [checkHealth]);
+
+  // Handle Slack OAuth callback
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slackCode = params.get('code');
+    const slackState = params.get('state');
+    const storedState = sessionStorage.getItem('slack_oauth_state');
+    
+    if (slackCode && slackState && storedState === slackState) {
+      sessionStorage.removeItem('slack_oauth_state');
+      handleSlackCallback(slackCode)
+        .then(({ teamName }) => {
+          toast.success(`Slack connected to ${teamName}`);
+          window.history.replaceState({}, '', window.location.pathname);
+        })
+        .catch((error) => {
+          toast.error(`Slack connection failed: ${error.message}`);
+          window.history.replaceState({}, '', window.location.pathname);
+        });
+    }
+  }, [handleSlackCallback]);
 
   const fetchTokenExpiry = async () => {
     try {
@@ -439,6 +468,71 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
               <Button variant="outline" size="sm" onClick={connectMicrosoft}>
                 <Shield className="h-4 w-4 mr-1" />
                 Connect with OAuth
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Slack Connection */}
+        <div className="flex items-center justify-between p-4 border rounded-lg">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-muted rounded-lg">
+              <MessageSquare className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="font-medium">Slack</h4>
+                {slackConnection && (
+                  <Badge variant="secondary" className="text-xs">OAuth</Badge>
+                )}
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {slackConnection 
+                  ? `Connected to ${slackConnection.teamName}` 
+                  : "Connect for notifications & updates"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <ConnectionHealthIndicator
+              connected={!!slackConnection}
+              isValid={slackConnection?.isValid ?? false}
+              lastValidated={slackConnection?.lastValidated ? new Date(slackConnection.lastValidated) : null}
+              error={null}
+              isChecking={slackConnecting}
+              onValidate={() => checkSlackConnection()}
+            />
+            {slackConnection ? (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={async () => {
+                  try {
+                    await disconnectSlack();
+                    toast.success("Slack disconnected");
+                  } catch {
+                    toast.error("Failed to disconnect Slack");
+                  }
+                }}
+              >
+                <Unplug className="h-4 w-4 mr-1" />
+                Disconnect
+              </Button>
+            ) : (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={async () => {
+                  try {
+                    await connectSlack();
+                  } catch (error: any) {
+                    toast.error(error.message || "Failed to start Slack OAuth");
+                  }
+                }}
+                disabled={slackConnecting}
+              >
+                <Shield className="h-4 w-4 mr-1" />
+                {slackConnecting ? "Connecting..." : "Connect with OAuth"}
               </Button>
             )}
           </div>
