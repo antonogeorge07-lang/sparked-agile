@@ -8,6 +8,17 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// HTML escaping to prevent XSS in email content
+function escapeHtml(text: string): string {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 interface DigestSummary {
   done: string;
   blocked: string;
@@ -36,13 +47,20 @@ serve(async (req) => {
       throw new Error("Email and digest data are required");
     }
 
+    // Sanitize all user-controlled content
+    const safeRepo = escapeHtml(digest.repo);
+    const safeDate = escapeHtml(digest.date);
+    const safeDone = escapeHtml(digest.summary.done);
+    const safeBlocked = escapeHtml(digest.summary.blocked);
+    const safeFocus = escapeHtml(digest.summary.focus);
+
     const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Daily Digest - ${digest.date}</title>
+  <title>GitHub Daily Digest - ${safeDate}</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
   <div style="background-color: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
@@ -52,8 +70,8 @@ serve(async (req) => {
         📊 GitHub Daily Digest
       </h1>
       <p style="margin: 8px 0 0 0; font-size: 14px; color: #64748b;">
-        <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">${digest.repo}</code>
-        &nbsp;•&nbsp; ${digest.date}
+        <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">${safeRepo}</code>
+        &nbsp;•&nbsp; ${safeDate}
       </p>
     </div>
 
@@ -63,7 +81,7 @@ serve(async (req) => {
         ✅ Completed
       </h2>
       <p style="margin: 0; font-size: 14px; color: #374151; white-space: pre-wrap; line-height: 1.6;">
-${digest.summary.done}
+${safeDone}
       </p>
     </div>
 
@@ -73,7 +91,7 @@ ${digest.summary.done}
         ⚠️ Pending / Blocked
       </h2>
       <p style="margin: 0; font-size: 14px; color: #374151; white-space: pre-wrap; line-height: 1.6;">
-${digest.summary.blocked}
+${safeBlocked}
       </p>
     </div>
 
@@ -83,7 +101,7 @@ ${digest.summary.blocked}
         🎯 Focus Today
       </h2>
       <p style="margin: 0; font-size: 14px; color: #374151; white-space: pre-wrap; line-height: 1.6;">
-${digest.summary.focus}
+${safeFocus}
       </p>
     </div>
 
@@ -101,7 +119,7 @@ ${digest.summary.focus}
     const emailResponse = await resend.emails.send({
       from: "SM-ActiveIntelligence <onboarding@resend.dev>",
       to: [email],
-      subject: `📊 GitHub Daily Digest - ${digest.repo} (${digest.date})`,
+      subject: `📊 GitHub Daily Digest - ${safeRepo} (${safeDate})`,
       html: htmlContent,
     });
 
