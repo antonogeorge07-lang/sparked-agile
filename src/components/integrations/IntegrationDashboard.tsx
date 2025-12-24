@@ -13,10 +13,12 @@ import {
   Unplug,
   ExternalLink,
   Shield,
-  Loader2
+  Loader2,
+  MessageSquare
 } from "lucide-react";
 import { toast } from "sonner";
 import { useIntegrationHealth } from "@/hooks/useIntegrationHealth";
+import { useSlackIntegration } from "@/hooks/useSlackIntegration";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
 import {
@@ -55,6 +57,14 @@ interface IntegrationCardData {
 
 export const IntegrationDashboard = () => {
   const { health, validateIntegration, checkHealth, isLoading } = useIntegrationHealth();
+  const { 
+    connection: slackConnection, 
+    isConnecting: slackConnecting, 
+    connectSlack, 
+    disconnectSlack,
+    handleOAuthCallback: handleSlackCallback,
+    checkConnection: checkSlackConnection
+  } = useSlackIntegration();
   const [isSaving, setIsSaving] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState<string | null>(null);
   const [disconnectDialog, setDisconnectDialog] = useState<string | null>(null);
@@ -66,6 +76,27 @@ export const IntegrationDashboard = () => {
     fetchTokenExpiry();
     fetchLastSyncTimes();
   }, []);
+
+  // Handle Slack OAuth callback
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slackCode = params.get('code');
+    const slackState = params.get('state');
+    const storedState = sessionStorage.getItem('slack_oauth_state');
+    
+    if (slackCode && slackState && storedState === slackState) {
+      sessionStorage.removeItem('slack_oauth_state');
+      handleSlackCallback(slackCode)
+        .then(({ teamName }) => {
+          toast.success(`Slack connected to ${teamName}`);
+          window.history.replaceState({}, '', window.location.pathname);
+        })
+        .catch((error) => {
+          toast.error(`Slack connection failed: ${error.message}`);
+          window.history.replaceState({}, '', window.location.pathname);
+        });
+    }
+  }, [handleSlackCallback]);
 
   const fetchTokenExpiry = async () => {
     try {
@@ -196,6 +227,13 @@ export const IntegrationDashboard = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
+      if (service === 'slack') {
+        await disconnectSlack();
+        toast.success('Slack disconnected');
+        setDisconnectDialog(null);
+        return;
+      }
+
       const table = service === 'github' 
         ? 'user_github_tokens' 
         : service === 'jira' 
@@ -205,8 +243,6 @@ export const IntegrationDashboard = () => {
       const { error } = await supabase.from(table).delete().eq('user_id', user.id);
       if (error) throw error;
 
-      // No localStorage to remove - tokens stored securely in database
-
       toast.success(`${service.charAt(0).toUpperCase() + service.slice(1)} disconnected`);
       checkHealth();
       fetchTokenExpiry();
@@ -214,6 +250,14 @@ export const IntegrationDashboard = () => {
       toast.error(`Failed to disconnect ${service}`);
     }
     setDisconnectDialog(null);
+  };
+
+  const connectSlackOAuth = async () => {
+    try {
+      await connectSlack();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to start Slack OAuth");
+    }
   };
 
   const integrations: IntegrationCardData[] = [
@@ -241,10 +285,31 @@ export const IntegrationDashboard = () => {
       features: ['Calendar sync', 'Meeting invites', 'Teams channels', 'Outlook events'],
       oauthConnect: connectMicrosoft,
     },
+    {
+      id: 'slack',
+      name: 'Slack',
+      icon: <MessageSquare className="h-6 w-6" />,
+      description: 'Notifications and team updates',
+      features: ['Ceremony reminders', 'Project updates', 'AI summaries', 'Team notifications'],
+      oauthConnect: connectSlackOAuth,
+    },
   ];
 
-  const connectedCount = Object.values(health).filter(h => h.connected).length;
-  const healthyCount = Object.values(health).filter(h => h.connected && h.isValid).length;
+  // Merge Slack into health object for unified display
+  const extendedHealth = {
+    ...health,
+    slack: {
+      connected: !!slackConnection,
+      isValid: slackConnection?.isValid ?? false,
+      identifier: slackConnection?.teamName || null,
+      lastValidated: slackConnection?.lastValidated ? new Date(slackConnection.lastValidated) : null,
+      error: null,
+      isChecking: slackConnecting,
+    }
+  };
+
+  const connectedCount = Object.values(extendedHealth).filter(h => h.connected).length;
+  const healthyCount = Object.values(extendedHealth).filter(h => h.connected && h.isValid).length;
 
   return (
     <div className="space-y-6">
@@ -292,16 +357,16 @@ export const IntegrationDashboard = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-muted" />
-              <span className="text-muted-foreground">{3 - connectedCount} Not Connected</span>
+              <span className="text-muted-foreground">{4 - connectedCount} Not Connected</span>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Integration Cards */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {integrations.map((integration) => {
-          const healthData = health[integration.id];
+          const healthData = extendedHealth[integration.id as keyof typeof extendedHealth];
           const expiry = tokenExpiry[integration.id];
           const expiryStatus = getExpiryStatus(expiry?.expiresAt || null);
           const lastSync = lastSyncTimes[integration.id];
