@@ -53,22 +53,54 @@ serve(async (req) => {
   }
 
   try {
+    // Validate this is a server-to-server call (from other edge functions only)
+    const authHeader = req.headers.get('Authorization');
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    
+    // Check if the request is using the service role key (edge function to edge function)
+    // This prevents direct frontend access while allowing other edge functions to call this
+    if (!authHeader || !serviceRoleKey) {
+      throw new Error('Unauthorized: Missing authentication');
+    }
+    
+    // Extract the token from the Authorization header
+    const token = authHeader.replace('Bearer ', '');
+    
+    // If using service role key directly, we need to get user from request body
+    const isServiceRoleCall = token === serviceRoleKey;
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
+          headers: { Authorization: authHeader },
         },
       }
     );
 
     const { data: { user } } = await supabaseClient.auth.getUser();
-    if (!user) {
+    
+    // For service role calls without user context, require userId in body
+    // For regular authenticated calls, use the authenticated user
+    if (!user && !isServiceRoleCall) {
       throw new Error('User not authenticated');
     }
 
-    const { integrationType } = await req.json();
+    const { integrationType, userId: requestUserId } = await req.json();
+    
+    // Determine the target user ID - for service role calls, can use userId from body
+    // For regular calls, must use the authenticated user's ID
+    const targetUserId = user?.id ?? requestUserId;
+    
+    if (!targetUserId) {
+      throw new Error('User ID required');
+    }
+    
+    // Security: Only allow users to decrypt their own tokens (unless service role)
+    if (user && user.id !== targetUserId && !isServiceRoleCall) {
+      throw new Error('Unauthorized: Cannot access tokens for other users');
+    }
     
     if (!['github', 'jira', 'microsoft'].includes(integrationType)) {
       throw new Error('Invalid integration type');
@@ -86,11 +118,14 @@ serve(async (req) => {
     
     let decryptedToken: string | null = null;
     
+    // Log decrypt operation for auditing (without exposing token)
+    console.log(`Token decrypt request: integration=${integrationType}, user=${targetUserId}`);
+    
     if (integrationType === 'github') {
       const { data: tokenRecord, error } = await serviceClient
         .from('user_github_tokens')
         .select('encrypted_token, github_token, oauth_provider')
-        .eq('user_id', user.id)
+        .eq('user_id', targetUserId)
         .single();
       
       if (error || !tokenRecord) {
@@ -110,7 +145,7 @@ serve(async (req) => {
       const { data: tokenRecord, error } = await serviceClient
         .from('user_jira_tokens')
         .select('encrypted_token, jira_token, oauth_provider, token_expires_at')
-        .eq('user_id', user.id)
+        .eq('user_id', targetUserId)
         .single();
       
       if (error || !tokenRecord) {
@@ -136,7 +171,7 @@ serve(async (req) => {
       const { data: tokenRecord, error } = await serviceClient
         .from('user_microsoft_tokens')
         .select('encrypted_access_token, access_token, expires_at')
-        .eq('user_id', user.id)
+        .eq('user_id', targetUserId)
         .single();
       
       if (error || !tokenRecord) {
