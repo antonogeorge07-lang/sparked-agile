@@ -44,13 +44,30 @@ export const ProfileDialog = ({ isOpen, onClose, userEmail, userName, avatarUrl 
     }
   }, [isOpen]);
 
-  const checkMicrosoftConnection = () => {
-    const token = localStorage.getItem("microsoft_access_token");
-    setMicrosoftConnected(!!token);
+  const checkMicrosoftConnection = async () => {
+    // Check Microsoft connection via secure database storage (not localStorage)
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: tokenData } = await supabase
+      .from('user_microsoft_tokens')
+      .select('is_valid, expires_at')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    setMicrosoftConnected(tokenData?.is_valid && tokenData.expires_at && new Date(tokenData.expires_at) > new Date());
   };
 
-  const handleDisconnectMicrosoft = () => {
-    localStorage.removeItem("microsoft_access_token");
+  const handleDisconnectMicrosoft = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    // Delete from secure database storage
+    await supabase
+      .from('user_microsoft_tokens')
+      .delete()
+      .eq('user_id', user.id);
+
     setMicrosoftConnected(false);
     toast({
       title: "Disconnected",

@@ -205,9 +205,7 @@ export const IntegrationDashboard = () => {
       const { error } = await supabase.from(table).delete().eq('user_id', user.id);
       if (error) throw error;
 
-      if (service === 'microsoft') {
-        localStorage.removeItem("microsoft_access_token");
-      }
+      // No localStorage to remove - tokens stored securely in database
 
       toast.success(`${service.charAt(0).toUpperCase() + service.slice(1)} disconnected`);
       checkHealth();
