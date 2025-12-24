@@ -89,11 +89,16 @@ export default function CeremonySetup() {
       return;
     }
 
-    // Check if we have a stored access token
-    const storedToken = localStorage.getItem('microsoft_access_token');
-    if (storedToken) {
-      setAccessToken(storedToken);
+    // Check Microsoft connection via secure database storage (not localStorage)
+    const { data: tokenData } = await supabase
+      .from('user_microsoft_tokens')
+      .select('is_valid, expires_at')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
+
+    if (tokenData?.is_valid && tokenData.expires_at && new Date(tokenData.expires_at) > new Date()) {
       setIsConnected(true);
+      // Token is retrieved via decrypt-token edge function when needed
     }
   };
 
@@ -103,6 +108,7 @@ export default function CeremonySetup() {
 
     if (code) {
       try {
+        // Token is securely stored in database by get-microsoft-token edge function
         const { data, error } = await supabase.functions.invoke('get-microsoft-token', {
           body: {
             code,
@@ -112,8 +118,7 @@ export default function CeremonySetup() {
 
         if (error) throw error;
 
-        localStorage.setItem('microsoft_access_token', data.accessToken);
-        setAccessToken(data.accessToken);
+        // Token is now encrypted and stored in database - no localStorage needed
         setIsConnected(true);
 
         // Clean up URL

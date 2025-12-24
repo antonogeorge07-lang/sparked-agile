@@ -139,8 +139,16 @@ export default function ProjectWorkspace() {
     }
   };
 
-  const disconnectOutlook = () => {
-    localStorage.removeItem("microsoft_access_token");
+  const disconnectOutlook = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    // Delete from secure database storage
+    await supabase
+      .from('user_microsoft_tokens')
+      .delete()
+      .eq('user_id', user.id);
+
     setAccessToken(null);
     setOutlookConnected(false);
     toast.success("Disconnected from Microsoft Outlook & Teams");

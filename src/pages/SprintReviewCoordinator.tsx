@@ -53,13 +53,23 @@ export default function SprintReviewCoordinator() {
 
   useEffect(() => {
     loadWorkspaces();
-    
-    // Load token from localStorage
-    const storedToken = localStorage.getItem("microsoft_access_token");
-    if (storedToken) {
-      setAccessToken(storedToken);
-    }
+    checkMicrosoftConnection();
   }, []);
+
+  const checkMicrosoftConnection = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: tokenData } = await supabase
+      .from('user_microsoft_tokens')
+      .select('is_valid, expires_at')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (tokenData?.is_valid && tokenData.expires_at && new Date(tokenData.expires_at) > new Date()) {
+      setAccessToken('connected'); // Flag that token exists, actual token retrieved via edge function
+    }
+  };
 
   const loadWorkspaces = async () => {
     const { data: { user } } = await supabase.auth.getUser();

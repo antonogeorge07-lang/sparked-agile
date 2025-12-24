@@ -215,7 +215,7 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
         .delete()
         .eq('user_id', user.id);
 
-      localStorage.removeItem("microsoft_access_token");
+      // No localStorage to remove - tokens stored securely in database
 
       toast.success("Microsoft disconnected");
       checkHealth();

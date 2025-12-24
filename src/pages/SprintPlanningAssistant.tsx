@@ -61,12 +61,9 @@ export default function SprintPlanningAssistant() {
         .invoke('get-microsoft-token', { body: { code, redirectUri } })
         .then(({ data, error }) => {
           if (error) throw error;
-          const token = data?.accessToken || data?.access_token;
-          if (token) {
-            localStorage.setItem('microsoft_access_token', token);
-            setAccessToken(token);
-            toast.success('Connected to Microsoft Outlook');
-          }
+          // Token is now encrypted and stored in database - no localStorage needed
+          toast.success('Connected to Microsoft Outlook');
+          checkMicrosoftConnection();
         })
         .catch((e: any) => {
           toast.error(`Microsoft auth failed: ${e.message}`);
@@ -80,13 +77,23 @@ export default function SprintPlanningAssistant() {
     }
 
     loadWorkspaces();
-    
-    // Load token from localStorage
-    const storedToken = localStorage.getItem("microsoft_access_token");
-    if (storedToken) {
-      setAccessToken(storedToken);
-    }
+    checkMicrosoftConnection();
   }, [searchParams]);
+
+  const checkMicrosoftConnection = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: tokenData } = await supabase
+      .from('user_microsoft_tokens')
+      .select('is_valid, expires_at')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (tokenData?.is_valid && tokenData.expires_at && new Date(tokenData.expires_at) > new Date()) {
+      setAccessToken('connected'); // Flag that token exists, actual token retrieved via edge function
+    }
+  };
 
   const loadWorkspaces = async () => {
     const { data: { user } } = await supabase.auth.getUser();
