@@ -64,17 +64,39 @@ export const Navigation = () => {
   }, []);
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
+    try {
+      // Add fade-out effect to body
+      document.body.classList.add('animate-fade-out');
+      
+      // Wait for animation to complete
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        document.body.classList.remove('animate-fade-out');
+        toast({
+          title: "Error",
+          description: "Failed to sign out",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Signed out",
+          description: "You have been signed out successfully",
+        });
+        
+        // Remove animation class after a brief delay
+        setTimeout(() => {
+          document.body.classList.remove('animate-fade-out');
+        }, 100);
+      }
+    } catch (error) {
+      document.body.classList.remove('animate-fade-out');
       toast({
         title: "Error",
         description: "Failed to sign out",
         variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Signed out",
-        description: "You have been signed out successfully",
       });
     }
   };
