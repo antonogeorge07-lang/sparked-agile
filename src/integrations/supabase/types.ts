@@ -1889,6 +1889,36 @@ export type Database = {
         }
         Relationships: []
       }
+      sensitive_data_access_log: {
+        Row: {
+          access_type: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          query_context: string | null
+          table_accessed: string
+          user_id: string
+        }
+        Insert: {
+          access_type: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          query_context?: string | null
+          table_accessed: string
+          user_id: string
+        }
+        Update: {
+          access_type?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          query_context?: string | null
+          table_accessed?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       sprint_planning_sessions: {
         Row: {
           agenda: string | null
@@ -2970,6 +3000,7 @@ export type Database = {
         Args: { target_user_id: string }
         Returns: undefined
       }
+      anonymize_old_ai_usage_logs: { Args: never; Returns: number }
       calculate_closure_readiness: {
         Args: { epic_id_param: string }
         Returns: Json
@@ -3007,6 +3038,18 @@ export type Database = {
         Args: { epic_id_param: string }
         Returns: undefined
       }
+      get_aggregated_ai_usage_stats: {
+        Args: { end_date?: string; start_date?: string }
+        Returns: {
+          avg_tokens_per_request: number
+          estimated_cost: number
+          period: string
+          success_rate: number
+          total_requests: number
+          total_tokens: number
+          unique_users: number
+        }[]
+      }
       get_ceremony_outlook_status: {
         Args: { ceremony_id: string }
         Returns: boolean
@@ -3018,6 +3061,16 @@ export type Database = {
           hours_until_expiry: number
           integration_type: string
           user_id: string
+        }[]
+      }
+      get_my_ai_usage_summary: {
+        Args: never
+        Returns: {
+          last_used: string
+          monthly_requests: number
+          monthly_tokens: number
+          total_requests: number
+          total_tokens: number
         }[]
       }
       get_platform_stats: {
