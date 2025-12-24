@@ -2443,7 +2443,6 @@ export type Database = {
       }
       user_microsoft_tokens: {
         Row: {
-          access_token: string
           created_at: string
           encrypted_access_token: string | null
           encrypted_refresh_token: string | null
@@ -2451,7 +2450,6 @@ export type Database = {
           id: string
           is_valid: boolean | null
           last_validated_at: string | null
-          refresh_token: string | null
           scopes: string[] | null
           updated_at: string
           user_email: string | null
@@ -2459,7 +2457,6 @@ export type Database = {
           validation_error: string | null
         }
         Insert: {
-          access_token: string
           created_at?: string
           encrypted_access_token?: string | null
           encrypted_refresh_token?: string | null
@@ -2467,7 +2464,6 @@ export type Database = {
           id?: string
           is_valid?: boolean | null
           last_validated_at?: string | null
-          refresh_token?: string | null
           scopes?: string[] | null
           updated_at?: string
           user_email?: string | null
@@ -2475,7 +2471,6 @@ export type Database = {
           validation_error?: string | null
         }
         Update: {
-          access_token?: string
           created_at?: string
           encrypted_access_token?: string | null
           encrypted_refresh_token?: string | null
@@ -2483,7 +2478,6 @@ export type Database = {
           id?: string
           is_valid?: boolean | null
           last_validated_at?: string | null
-          refresh_token?: string | null
           scopes?: string[] | null
           updated_at?: string
           user_email?: string | null
