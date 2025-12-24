@@ -2961,31 +2961,22 @@ export type Database = {
     Views: {
       ai_usage_logs_sanitized: {
         Row: {
-          created_at: string | null
-          endpoint: string | null
           id: string | null
           model: string | null
-          project_id: string | null
           status: string | null
-          user_id: string | null
+          usage_date: string | null
         }
         Insert: {
-          created_at?: string | null
-          endpoint?: string | null
           id?: string | null
-          model?: string | null
-          project_id?: string | null
+          model?: never
           status?: string | null
-          user_id?: string | null
+          usage_date?: never
         }
         Update: {
-          created_at?: string | null
-          endpoint?: string | null
           id?: string | null
-          model?: string | null
-          project_id?: string | null
+          model?: never
           status?: string | null
-          user_id?: string | null
+          usage_date?: never
         }
         Relationships: []
       }
@@ -3123,6 +3114,23 @@ export type Database = {
           last_used: string
           monthly_requests: number
           total_requests: number
+        }[]
+      }
+      get_my_ai_usage_trends: {
+        Args: never
+        Returns: {
+          request_count: number
+          success_count: number
+          usage_week: string
+        }[]
+      }
+      get_my_recent_ai_usage: {
+        Args: { limit_count?: number }
+        Returns: {
+          created_at: string
+          id: string
+          model: string
+          status: string
         }[]
       }
       get_platform_cost_analytics: {
