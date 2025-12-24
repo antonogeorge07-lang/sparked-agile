@@ -6,21 +6,96 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-github-event, x-hub-signature-256, x-atlassian-webhook-identifier',
 };
 
-// Verify GitHub webhook signature
-function verifyGitHubSignature(payload: string, signature: string | null, secret: string): boolean {
-  if (!signature) return false;
-  
+// Timing-safe string comparison to prevent timing attacks
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) {
+    return false;
+  }
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return result === 0;
+}
+
+// Verify GitHub webhook signature using HMAC-SHA256
+async function verifyGitHubSignature(payload: string, signature: string | null, secret: string): Promise<boolean> {
+  if (!signature || !signature.startsWith('sha256=')) {
+    console.log('GitHub signature verification failed: Missing or invalid signature format');
+    return false;
+  }
+
   try {
+    const expectedSignature = signature.substring(7); // Remove 'sha256=' prefix
+    
+    // Create HMAC-SHA256 using Web Crypto API
     const encoder = new TextEncoder();
-    const key = encoder.encode(secret);
+    const keyData = encoder.encode(secret);
     const data = encoder.encode(payload);
     
-    // For production, implement HMAC-SHA256 verification
-    // This is a simplified check - in production use crypto.subtle
-    console.log('GitHub signature verification - signature present');
+    const cryptoKey = await crypto.subtle.importKey(
+      'raw',
+      keyData,
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign']
+    );
+    
+    const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, data);
+    const calculatedSignature = Array.from(new Uint8Array(signatureBuffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+    
+    // Timing-safe comparison
+    const isValid = timingSafeEqual(expectedSignature.toLowerCase(), calculatedSignature.toLowerCase());
+    
+    console.log(`GitHub signature verification: ${isValid ? 'PASSED' : 'FAILED'}`);
+    return isValid;
+  } catch (error) {
+    console.error('GitHub signature verification error:', error);
+    return false;
+  }
+}
+
+// Verify JIRA webhook by checking the webhook identifier against configured integration
+async function verifyJiraWebhook(
+  supabaseClient: any,
+  projectId: string,
+  webhookId: string | null
+): Promise<boolean> {
+  if (!webhookId) {
+    console.log('JIRA webhook verification: No webhook identifier provided');
+    // For JIRA, we check if the project has a valid JIRA integration configured
+    // This provides some level of protection without requiring webhook secret storage
+  }
+
+  try {
+    // Verify the project has an active JIRA integration
+    const { data: integration, error } = await supabaseClient
+      .from('integrations')
+      .select('id, is_active, config')
+      .eq('project_id', projectId)
+      .eq('integration_type', 'jira')
+      .eq('is_active', true)
+      .single();
+
+    if (error || !integration) {
+      console.log('JIRA webhook verification failed: No active JIRA integration for project');
+      return false;
+    }
+
+    // If webhookId is stored in config, verify it matches
+    if (integration.config?.webhookId && webhookId) {
+      const isValid = integration.config.webhookId === webhookId;
+      console.log(`JIRA webhook identifier verification: ${isValid ? 'PASSED' : 'FAILED'}`);
+      return isValid;
+    }
+
+    // If no specific webhookId configured, allow if integration is active
+    console.log('JIRA webhook verification: Passed (active integration exists)');
     return true;
   } catch (error) {
-    console.error('Signature verification failed:', error);
+    console.error('JIRA webhook verification error:', error);
     return false;
   }
 }
@@ -42,7 +117,56 @@ serve(async (req) => {
     
     console.log(`Received ${source} webhook for project: ${projectId}`);
 
+    // Validate required parameters
+    if (!projectId || !source) {
+      console.log('Webhook rejected: Missing project_id or source');
+      return new Response(
+        JSON.stringify({ error: 'Missing required parameters: project_id and source' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const payload = await req.text();
+
+    // Verify webhook signature based on source
+    if (source === 'github') {
+      const signature = req.headers.get('x-hub-signature-256');
+      const webhookSecret = Deno.env.get('GITHUB_WEBHOOK_SECRET');
+      
+      if (!webhookSecret) {
+        console.error('GITHUB_WEBHOOK_SECRET not configured - rejecting webhook');
+        return new Response(
+          JSON.stringify({ error: 'Webhook secret not configured' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      const isValid = await verifyGitHubSignature(payload, signature, webhookSecret);
+      if (!isValid) {
+        console.log('GitHub webhook rejected: Invalid signature');
+        return new Response(
+          JSON.stringify({ error: 'Invalid webhook signature' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    } else if (source === 'jira') {
+      const webhookId = req.headers.get('x-atlassian-webhook-identifier');
+      const isValid = await verifyJiraWebhook(supabaseClient, projectId, webhookId);
+      if (!isValid) {
+        console.log('JIRA webhook rejected: Verification failed');
+        return new Response(
+          JSON.stringify({ error: 'Invalid webhook or no active JIRA integration' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    } else {
+      console.log(`Webhook rejected: Unknown source "${source}"`);
+      return new Response(
+        JSON.stringify({ error: 'Unknown webhook source' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const data = JSON.parse(payload);
 
     // Determine event type based on source
@@ -116,34 +240,32 @@ serve(async (req) => {
     }
 
     // Store the event
-    if (projectId) {
-      const { error: eventError } = await supabaseClient
-        .from('integration_events')
-        .insert({
-          project_id: projectId,
-          integration_type: source,
-          event_type: eventType,
-          payload: integrationData,
-        });
+    const { error: eventError } = await supabaseClient
+      .from('integration_events')
+      .insert({
+        project_id: projectId,
+        integration_type: source,
+        event_type: eventType,
+        payload: integrationData,
+      });
 
-      if (eventError) {
-        console.error('Error storing event:', eventError);
-      } else {
-        console.log(`Stored ${source} event: ${eventType}`);
-      }
+    if (eventError) {
+      console.error('Error storing event:', eventError);
+    } else {
+      console.log(`Stored ${source} event: ${eventType}`);
+    }
 
-      // Invalidate cache for this integration
-      const { error: cacheError } = await supabaseClient
-        .from('integration_cache')
-        .delete()
-        .eq('project_id', projectId)
-        .eq('integration_type', source);
+    // Invalidate cache for this integration
+    const { error: cacheError } = await supabaseClient
+      .from('integration_cache')
+      .delete()
+      .eq('project_id', projectId)
+      .eq('integration_type', source);
 
-      if (cacheError) {
-        console.error('Error invalidating cache:', cacheError);
-      } else {
-        console.log(`Invalidated ${source} cache for project ${projectId}`);
-      }
+    if (cacheError) {
+      console.error('Error invalidating cache:', cacheError);
+    } else {
+      console.log(`Invalidated ${source} cache for project ${projectId}`);
     }
 
     return new Response(
