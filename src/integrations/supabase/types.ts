@@ -2438,8 +2438,9 @@ export type Database = {
       user_github_tokens: {
         Row: {
           created_at: string
+          encrypted_access_token: string | null
           encrypted_token: string | null
-          github_token: string
+          github_token: string | null
           github_username: string | null
           id: string
           is_valid: boolean | null
@@ -2455,8 +2456,9 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          encrypted_access_token?: string | null
           encrypted_token?: string | null
-          github_token: string
+          github_token?: string | null
           github_username?: string | null
           id?: string
           is_valid?: boolean | null
@@ -2472,8 +2474,9 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          encrypted_access_token?: string | null
           encrypted_token?: string | null
-          github_token?: string
+          github_token?: string | null
           github_username?: string | null
           id?: string
           is_valid?: boolean | null
@@ -2493,12 +2496,14 @@ export type Database = {
         Row: {
           cloud_id: string | null
           created_at: string
+          encrypted_access_token: string | null
+          encrypted_refresh_token: string | null
           encrypted_token: string | null
           id: string
           is_valid: boolean | null
           jira_email: string
           jira_site_url: string
-          jira_token: string
+          jira_token: string | null
           last_validated_at: string | null
           oauth_provider: string | null
           refresh_token: string | null
@@ -2512,12 +2517,14 @@ export type Database = {
         Insert: {
           cloud_id?: string | null
           created_at?: string
+          encrypted_access_token?: string | null
+          encrypted_refresh_token?: string | null
           encrypted_token?: string | null
           id?: string
           is_valid?: boolean | null
           jira_email: string
           jira_site_url: string
-          jira_token: string
+          jira_token?: string | null
           last_validated_at?: string | null
           oauth_provider?: string | null
           refresh_token?: string | null
@@ -2531,12 +2538,14 @@ export type Database = {
         Update: {
           cloud_id?: string | null
           created_at?: string
+          encrypted_access_token?: string | null
+          encrypted_refresh_token?: string | null
           encrypted_token?: string | null
           id?: string
           is_valid?: boolean | null
           jira_email?: string
           jira_site_url?: string
-          jira_token?: string
+          jira_token?: string | null
           last_validated_at?: string | null
           oauth_provider?: string | null
           refresh_token?: string | null
@@ -3082,6 +3091,11 @@ export type Database = {
         }
         Returns: boolean
       }
+      cleanup_expired_cache: { Args: never; Returns: number }
+      cleanup_old_access_logs: {
+        Args: { days_to_keep?: number }
+        Returns: number
+      }
       create_epic_progress_snapshot: {
         Args: { epic_id_param: string }
         Returns: undefined
@@ -3122,6 +3136,15 @@ export type Database = {
           request_count: number
           success_count: number
           usage_week: string
+        }[]
+      }
+      get_my_data_access_logs: {
+        Args: { limit_count?: number }
+        Returns: {
+          access_type: string
+          accessed_at: string
+          context: string
+          table_name: string
         }[]
       }
       get_my_integration_status: {
@@ -3217,6 +3240,7 @@ export type Database = {
           tier_name: string
         }[]
       }
+      hash_ip_address: { Args: { ip: string }; Returns: string }
       initialize_epic_closure_review: {
         Args: { epic_id_param: string }
         Returns: string
@@ -3234,6 +3258,7 @@ export type Database = {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
       }
+      sanitize_webhook_payload: { Args: { payload: Json }; Returns: Json }
       toggle_integration_status: {
         Args: { integration_id: string; new_status: boolean }
         Returns: boolean
