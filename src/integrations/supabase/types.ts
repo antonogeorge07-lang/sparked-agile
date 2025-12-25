@@ -72,6 +72,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "action_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       aggregation_access_limits: {
@@ -220,6 +227,13 @@ export type Database = {
             referencedRelation: "project_workspaces"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "fk_workspace"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["workspace_id_legacy"]
+          },
         ]
       }
       ceremony_reminders: {
@@ -263,6 +277,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ceremony_reminders_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -904,6 +925,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "flow_metrics_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       integration_cache: {
@@ -945,6 +973,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "integration_cache_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       integration_events: {
@@ -982,6 +1017,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "integration_events_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1023,6 +1065,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "integrations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1445,6 +1494,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "project_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+          {
             foreignKeyName: "project_members_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -1547,6 +1603,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "project_slack_channels_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+          {
             foreignKeyName: "project_slack_channels_slack_token_id_fkey"
             columns: ["slack_token_id"]
             isOneToOne: false
@@ -1614,6 +1677,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1706,6 +1776,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_project"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1950,15 +2027,19 @@ export type Database = {
         Row: {
           agenda: string | null
           backlog_items: Json | null
+          committed_points: number | null
           created_at: string | null
           created_by: string | null
+          delivered_points: number | null
           discussion_topics: string[] | null
           id: string
           meeting_minutes: string | null
           outlook_event_id: string | null
           project_id: string
+          sprint_end_date: string | null
           sprint_goal: string | null
           sprint_number: number
+          sprint_start_date: string | null
           status: string | null
           story_points_estimate: number | null
           updated_at: string | null
@@ -1968,15 +2049,19 @@ export type Database = {
         Insert: {
           agenda?: string | null
           backlog_items?: Json | null
+          committed_points?: number | null
           created_at?: string | null
           created_by?: string | null
+          delivered_points?: number | null
           discussion_topics?: string[] | null
           id?: string
           meeting_minutes?: string | null
           outlook_event_id?: string | null
           project_id: string
+          sprint_end_date?: string | null
           sprint_goal?: string | null
           sprint_number: number
+          sprint_start_date?: string | null
           status?: string | null
           story_points_estimate?: number | null
           updated_at?: string | null
@@ -1986,15 +2071,19 @@ export type Database = {
         Update: {
           agenda?: string | null
           backlog_items?: Json | null
+          committed_points?: number | null
           created_at?: string | null
           created_by?: string | null
+          delivered_points?: number | null
           discussion_topics?: string[] | null
           id?: string
           meeting_minutes?: string | null
           outlook_event_id?: string | null
           project_id?: string
+          sprint_end_date?: string | null
           sprint_goal?: string | null
           sprint_number?: number
+          sprint_start_date?: string | null
           status?: string | null
           story_points_estimate?: number | null
           updated_at?: string | null
@@ -2010,11 +2099,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "fk_project"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+          {
             foreignKeyName: "fk_workspace"
             columns: ["workspace_id"]
             isOneToOne: false
             referencedRelation: "project_workspaces"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_workspace"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["workspace_id_legacy"]
           },
         ]
       }
@@ -2085,11 +2188,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "fk_project"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+          {
             foreignKeyName: "fk_workspace"
             columns: ["workspace_id"]
             isOneToOne: false
             referencedRelation: "project_workspaces"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_workspace"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["workspace_id_legacy"]
           },
         ]
       }
@@ -2135,6 +2252,73 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "sprint_summaries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
+      sprint_velocity_history: {
+        Row: {
+          committed_points: number | null
+          created_at: string | null
+          delivered_points: number | null
+          id: string
+          notes: string | null
+          project_id: string
+          sprint_end_date: string | null
+          sprint_number: number
+          sprint_start_date: string | null
+          team_size: number | null
+          updated_at: string | null
+          velocity: number | null
+        }
+        Insert: {
+          committed_points?: number | null
+          created_at?: string | null
+          delivered_points?: number | null
+          id?: string
+          notes?: string | null
+          project_id: string
+          sprint_end_date?: string | null
+          sprint_number: number
+          sprint_start_date?: string | null
+          team_size?: number | null
+          updated_at?: string | null
+          velocity?: number | null
+        }
+        Update: {
+          committed_points?: number | null
+          created_at?: string | null
+          delivered_points?: number | null
+          id?: string
+          notes?: string | null
+          project_id?: string
+          sprint_end_date?: string | null
+          sprint_number?: number
+          sprint_start_date?: string | null
+          team_size?: number | null
+          updated_at?: string | null
+          velocity?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sprint_velocity_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sprint_velocity_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       standup_updates: {
@@ -2172,6 +2356,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "standup_updates_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
           {
             foreignKeyName: "standup_updates_team_member_id_fkey"
@@ -2303,6 +2494,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -2761,6 +2959,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "value_streams_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       webhook_deliveries: {
@@ -2852,6 +3057,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "webhooks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       workflow_executions: {
@@ -2898,6 +3110,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_executions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -3006,6 +3225,40 @@ export type Database = {
           id?: string | null
         }
         Relationships: []
+      }
+      unified_project_integrations: {
+        Row: {
+          configuration_status: string | null
+          github_active: boolean | null
+          github_integration_id: string | null
+          github_repo_name: string | null
+          github_repo_url: string | null
+          jira_active: boolean | null
+          jira_board_id: string | null
+          jira_board_url: string | null
+          jira_integration_id: string | null
+          microsoft_active: boolean | null
+          microsoft_integration_id: string | null
+          outlook_calendar_id: string | null
+          project_id: string | null
+          project_name: string | null
+          slack_active: boolean | null
+          slack_integration_id: string | null
+          team_distribution_list: string | null
+          teams_channel_id: string | null
+          workspace_id: string | null
+          workspace_id_legacy: string | null
+          workspace_name: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_subscription_info: {
         Row: {
@@ -3219,6 +3472,16 @@ export type Database = {
           updated_at: string
         }[]
       }
+      get_sprint_commitment_accuracy: {
+        Args: { limit_sprints?: number; project_id_param: string }
+        Returns: {
+          accuracy_percentage: number
+          committed_points: number
+          delivered_points: number
+          sprint_date: string
+          sprint_number: number
+        }[]
+      }
       get_teammate_profile_safe: {
         Args: { teammate_id: string }
         Returns: {
@@ -3226,6 +3489,10 @@ export type Database = {
           display_name: string
           id: string
         }[]
+      }
+      get_unified_integrations: {
+        Args: { project_id_param: string }
+        Returns: Json
       }
       get_user_role: {
         Args: { user_id: string }
@@ -3238,6 +3505,16 @@ export type Database = {
           status: string
           team_member_limit: number
           tier_name: string
+        }[]
+      }
+      get_velocity_trends: {
+        Args: { limit_sprints?: number; project_id_param: string }
+        Returns: {
+          delivered_points: number
+          sprint_date: string
+          sprint_number: number
+          trend: string
+          velocity: number
         }[]
       }
       hash_ip_address: { Args: { ip: string }; Returns: string }
