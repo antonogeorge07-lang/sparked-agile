@@ -62,3 +62,6 @@ verify_jwt = false
 
 [functions.capture-email]
 verify_jwt = false
+
+[functions.generate-project-insights]
+verify_jwt = true
