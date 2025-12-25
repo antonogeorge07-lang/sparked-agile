@@ -3189,22 +3189,22 @@ export type Database = {
     Views: {
       ai_usage_logs_sanitized: {
         Row: {
+          created_at: string | null
           id: string | null
           model: string | null
           status: string | null
-          usage_date: string | null
         }
         Insert: {
+          created_at?: string | null
           id?: string | null
-          model?: never
+          model?: string | null
           status?: string | null
-          usage_date?: never
         }
         Update: {
+          created_at?: string | null
           id?: string | null
-          model?: never
+          model?: string | null
           status?: string | null
-          usage_date?: never
         }
         Relationships: []
       }
@@ -3213,16 +3213,6 @@ export type Database = {
           avatar_url: string | null
           full_name: string | null
           id: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          full_name?: never
-          id?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          full_name?: never
-          id?: string | null
         }
         Relationships: []
       }
@@ -3262,47 +3252,14 @@ export type Database = {
       }
       user_subscription_info: {
         Row: {
-          cancel_at_period_end: boolean | null
-          created_at: string | null
           current_period_end: string | null
-          current_period_start: string | null
-          id: string | null
+          project_limit: number | null
           status: string | null
-          tier_id: string | null
-          updated_at: string | null
+          team_member_limit: number | null
+          tier_name: string | null
           user_id: string | null
         }
-        Insert: {
-          cancel_at_period_end?: boolean | null
-          created_at?: string | null
-          current_period_end?: string | null
-          current_period_start?: string | null
-          id?: string | null
-          status?: string | null
-          tier_id?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          cancel_at_period_end?: boolean | null
-          created_at?: string | null
-          current_period_end?: string | null
-          current_period_start?: string | null
-          id?: string | null
-          status?: string | null
-          tier_id?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_subscriptions_tier_id_fkey"
-            columns: ["tier_id"]
-            isOneToOne: false
-            referencedRelation: "subscription_tiers"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Functions: {
@@ -3435,6 +3392,15 @@ export type Database = {
           total_projects: number
           total_users: number
           total_workspaces: number
+        }[]
+      }
+      get_profile_safe: {
+        Args: { profile_id: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          id: string
+          role: string
         }[]
       }
       get_project_limit_info: {
