@@ -14,10 +14,7 @@ import {
   Calendar,
   GitBranch,
   MessageSquare,
-  Mail,
-  CheckCircle2,
-  TrendingUp,
-  Award
+  Mail
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -52,47 +49,6 @@ export default function About() {
           </div>
         </ScrollReveal>
 
-        {/* Social Proof Metrics */}
-        <ScrollReveal delay={0.05}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <Card className="shadow-card border-primary/10">
-              <CardContent className="pt-4 pb-4 text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
-                  <span className="text-2xl font-bold text-foreground">500+</span>
-                </div>
-                <p className="text-xs text-muted-foreground">Ceremonies Tracked</p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-card border-primary/10">
-              <CardContent className="pt-4 pb-4 text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <TrendingUp className="h-5 w-5 text-primary" />
-                  <span className="text-2xl font-bold text-foreground">35%</span>
-                </div>
-                <p className="text-xs text-muted-foreground">Avg. Velocity Boost</p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-card border-primary/10">
-              <CardContent className="pt-4 pb-4 text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <Users className="h-5 w-5 text-primary" />
-                  <span className="text-2xl font-bold text-foreground">50+</span>
-                </div>
-                <p className="text-xs text-muted-foreground">Teams Empowered</p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-card border-primary/10">
-              <CardContent className="pt-4 pb-4 text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <Award className="h-5 w-5 text-primary" />
-                  <span className="text-2xl font-bold text-foreground">4.8</span>
-                </div>
-                <p className="text-xs text-muted-foreground">User Satisfaction</p>
-              </CardContent>
-            </Card>
-          </div>
-        </ScrollReveal>
 
         {/* Founder Story */}
         <ScrollReveal delay={0.1}>
