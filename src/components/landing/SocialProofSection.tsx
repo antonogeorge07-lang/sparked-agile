@@ -2,40 +2,33 @@ import { Badge } from "@/components/ui/badge";
 
 export const SocialProofSection = () => {
   return (
-    <section className="py-12 px-4 bg-muted/30" aria-label="Trust indicators and time savings">
+    <section className="py-12 px-4 bg-muted/30" aria-label="Trust indicators">
       <div className="container mx-auto max-w-6xl space-y-8">
-        {/* Before/After Time Savings */}
+        {/* Value Statement - No fake metrics */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-4 px-6 py-4 bg-card rounded-lg border-2 border-primary/20">
-            <div className="text-left">
-              <p className="text-sm text-muted-foreground">Sprint Planning Before</p>
-              <p className="text-2xl font-bold text-destructive">10 hours</p>
-            </div>
-            <div className="text-2xl font-bold text-muted-foreground">→</div>
-            <div className="text-left">
-              <p className="text-sm text-muted-foreground">With SAAI</p>
-              <p className="text-2xl font-bold text-primary">2 hours</p>
-            </div>
-            <div className="text-left pl-4 border-l border-border">
-              <p className="text-sm text-muted-foreground">Time Saved</p>
-              <p className="text-2xl font-bold text-green-600">80%</p>
-            </div>
+          <div className="inline-flex flex-col items-center gap-2 px-6 py-4 bg-card rounded-lg border-2 border-primary/20">
+            <p className="text-lg font-semibold text-foreground">
+              Streamline Your Agile Ceremonies
+            </p>
+            <p className="text-sm text-muted-foreground max-w-md">
+              AI-assisted sprint planning, daily digests, and ceremony automation—so you can focus on building great products.
+            </p>
           </div>
         </div>
 
-        {/* Trust Indicators */}
+        {/* Trust Indicators - Only truthful claims */}
         <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground">
           <Badge variant="outline" className="gap-2">
-            ✓ GDPR Compliant
+            ✓ GDPR Ready
           </Badge>
           <Badge variant="outline" className="gap-2">
-            ✓ Enterprise Security
+            ✓ Data Encrypted
           </Badge>
           <Badge variant="outline" className="gap-2">
-            ✓ 99.9% Uptime
+            ✓ Open Feedback
           </Badge>
           <Badge variant="outline" className="gap-2">
-            ✓ 24/7 Support
+            ✓ Free During Beta
           </Badge>
         </div>
       </div>
