@@ -40,9 +40,8 @@ export const useIntegrationHealth = () => {
           .eq('user_id', user.id)
           .maybeSingle(),
         supabase
-          .from('user_microsoft_tokens')
+          .from('user_microsoft_token_status')
           .select('user_email, is_valid, last_validated_at, validation_error, expires_at')
-          .eq('user_id', user.id)
           .maybeSingle(),
       ]);
 

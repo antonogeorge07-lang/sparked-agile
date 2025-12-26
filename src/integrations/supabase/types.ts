@@ -3250,6 +3250,42 @@ export type Database = {
           },
         ]
       }
+      user_microsoft_token_status: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          id: string | null
+          is_valid: boolean | null
+          last_validated_at: string | null
+          updated_at: string | null
+          user_email: string | null
+          user_id: string | null
+          validation_error: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          updated_at?: string | null
+          user_email?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          updated_at?: string | null
+          user_email?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Relationships: []
+      }
       user_subscription_info: {
         Row: {
           current_period_end: string | null
