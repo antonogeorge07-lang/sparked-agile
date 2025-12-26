@@ -39,9 +39,9 @@ export const IntegrationStatusDashboard = () => {
 
   const fetchIntegrationStatus = async () => {
     try {
-      // Check Microsoft tokens
+      // Check Microsoft tokens (using safe view that excludes encrypted tokens)
       const { data: msTokens } = await supabase
-        .from('user_microsoft_tokens')
+        .from('user_microsoft_token_status')
         .select('is_valid, expires_at, user_email, updated_at')
         .maybeSingle();
 

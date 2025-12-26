@@ -64,16 +64,11 @@ export default function UsageAnalytics() {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - daysAgo);
 
-      let query = supabase
-        .from("ai_usage_logs")
+      // Use sanitized view that only shows user's own usage
+      const { data, error } = await supabase
+        .from("ai_usage_logs_sanitized")
         .select("*")
         .gte("created_at", startDate.toISOString());
-
-      if (selectedProject !== "all") {
-        query = query.eq("project_id", selectedProject);
-      }
-
-      const { data, error } = await query;
       if (error) throw error;
 
       return data || [];
@@ -97,10 +92,10 @@ export default function UsageAnalytics() {
     },
   });
 
-  // Calculate metrics
+  // Calculate metrics (tokens_used and cost_estimate excluded from sanitized view for privacy)
   const totalAICalls = aiUsageStats?.length || 0;
-  const totalTokens = aiUsageStats?.reduce((sum, log) => sum + (log.tokens_used || 0), 0) || 0;
-  const totalCost = aiUsageStats?.reduce((sum, log) => sum + (Number(log.cost_estimate) || 0), 0) || 0;
+  const successfulCalls = aiUsageStats?.filter(log => log.status === 'success').length || 0;
+  const successRate = totalAICalls > 0 ? Math.round((successfulCalls / totalAICalls) * 100) : 0;
   const uniqueUsers = new Set(activityStats?.map(log => log.user_id)).size;
 
   // Prepare chart data
@@ -209,13 +204,13 @@ export default function UsageAnalytics() {
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium flex items-center gap-2">
                 <Activity className="h-4 w-4" />
-                Tokens Used
+                Success Rate
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalTokens.toLocaleString()}</div>
+              <div className="text-2xl font-bold">{successRate}%</div>
               <p className="text-xs text-muted-foreground mt-1">
-                Total tokens consumed
+                {successfulCalls} of {totalAICalls} calls
               </p>
             </CardContent>
           </Card>
@@ -224,13 +219,13 @@ export default function UsageAnalytics() {
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium flex items-center gap-2">
                 <DollarSign className="h-4 w-4" />
-                Estimated Cost
+                Models Used
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalCost.toFixed(2)}</div>
+              <div className="text-2xl font-bold">{Object.keys(modelUsage || {}).length}</div>
               <p className="text-xs text-muted-foreground mt-1">
-                AI usage cost
+                Unique AI models
               </p>
             </CardContent>
           </Card>

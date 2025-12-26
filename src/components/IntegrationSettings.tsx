@@ -81,7 +81,7 @@ export const IntegrationSettings = ({ projectId }: IntegrationSettingsProps) => 
       const [githubResult, jiraResult, msResult] = await Promise.all([
         supabase.from('user_github_tokens').select('token_expires_at, oauth_provider').eq('user_id', user.id).single(),
         supabase.from('user_jira_tokens').select('token_expires_at, oauth_provider').eq('user_id', user.id).single(),
-        supabase.from('user_microsoft_tokens').select('expires_at').eq('user_id', user.id).single(),
+        supabase.from('user_microsoft_token_status').select('expires_at').maybeSingle(),
       ]);
 
       setTokenExpiry({

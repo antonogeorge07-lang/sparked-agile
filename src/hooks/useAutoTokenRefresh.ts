@@ -77,11 +77,10 @@ export const useAutoTokenRefresh = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Check Microsoft tokens
+      // Check Microsoft tokens (using safe view)
       const { data: msToken } = await supabase
-        .from('user_microsoft_tokens')
+        .from('user_microsoft_token_status')
         .select('expires_at, is_valid')
-        .eq('user_id', user.id)
         .maybeSingle();
 
       if (msToken?.expires_at && msToken.is_valid) {

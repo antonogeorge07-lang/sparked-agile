@@ -61,9 +61,8 @@ export default function ProjectWorkspace() {
     if (!user) return;
 
     const { data: token } = await supabase
-      .from('user_microsoft_tokens')
+      .from('user_microsoft_token_status')
       .select('is_valid, expires_at')
-      .eq('user_id', user.id)
       .maybeSingle();
 
     if (token && token.is_valid) {
