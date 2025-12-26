@@ -78,26 +78,26 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
                 </Badge>
               </div>
               
-              {/* Mock email content */}
+              {/* Mock email content - Example format */}
               <div className="space-y-3">
                 <div className="p-3 bg-muted/50 rounded-lg">
                   <div className="flex items-center gap-2 mb-1">
                     <GitBranch className="h-4 w-4 text-tier-free" />
-                    <span className="text-sm font-medium">12 commits merged</span>
+                    <span className="text-sm font-medium">Recent commits</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Auth flow, dashboard redesign, API fixes</p>
+                  <p className="text-xs text-muted-foreground">Your team's merged PRs and changes</p>
                 </div>
                 <div className="p-3 bg-muted/50 rounded-lg">
                   <div className="flex items-center gap-2 mb-1">
                     <CheckCircle2 className="h-4 w-4 text-tier-free" />
-                    <span className="text-sm font-medium">5 tickets closed</span>
+                    <span className="text-sm font-medium">Tickets completed</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Sprint velocity: 21 points (+15%)</p>
+                  <p className="text-xs text-muted-foreground">Sprint progress and velocity trends</p>
                 </div>
                 <div className="p-3 bg-tier-free/5 rounded-lg border border-tier-free/20">
                   <div className="text-xs text-tier-free font-medium mb-1">AI Summary</div>
                   <p className="text-xs text-muted-foreground">
-                    Team on track for sprint goal. API integration ahead of schedule.
+                    Personalized insights based on your team's actual activity
                   </p>
                 </div>
               </div>
