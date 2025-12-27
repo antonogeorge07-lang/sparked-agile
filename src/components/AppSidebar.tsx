@@ -103,6 +103,9 @@ export function AppSidebar() {
   const getFilteredSections = () => {
     if (loading) return [];
     
+    // Define items available to all users (including guests/unapproved)
+    const publicItems = ['/quick-start', '/home', '/user-guide'];
+    
     return menuSections.map(section => ({
       ...section,
       items: section.items.filter(item => {
@@ -113,6 +116,10 @@ export function AppSidebar() {
         // Admin-only features
         if (item.url === '/admin' || item.url === '/security-incidents') {
           return role === 'admin';
+        }
+        // Public items available to all users
+        if (publicItems.includes(item.url)) {
+          return true;
         }
         // Features available to approved users (admin or member)
         return role === 'admin' || role === 'member';
@@ -143,8 +150,10 @@ export function AppSidebar() {
       <SidebarContent className="pt-12">
         {filteredSections.length === 0 && !loading && (
           <div className="px-4 py-8 text-center text-muted-foreground text-sm">
-            <p>No menu items available.</p>
-            <p className="mt-2 text-xs">Role: {role || 'none'}</p>
+            <p>Please sign in to access features.</p>
+            <a href="/auth" className="mt-2 text-xs text-primary hover:underline block">
+              Sign In
+            </a>
           </div>
         )}
         {filteredSections.map((section) => (
