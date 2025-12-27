@@ -3303,6 +3303,7 @@ export type Database = {
         Args: { target_user_id: string }
         Returns: undefined
       }
+      anonymize_ip_address: { Args: { ip: string }; Returns: string }
       anonymize_old_ai_usage_logs: { Args: never; Returns: number }
       calculate_closure_readiness: {
         Args: { epic_id_param: string }
@@ -3346,6 +3347,7 @@ export type Database = {
         Args: { epic_id_param: string }
         Returns: undefined
       }
+      enforce_ai_usage_data_retention: { Args: never; Returns: number }
       get_aggregated_ai_usage_stats: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
