@@ -17,7 +17,8 @@ export const ScrollReveal = ({
 }: ScrollRevealProps) => {
   const ref = useRef(null);
   const isMobile = useIsMobile();
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  // Use a smaller margin to trigger animations earlier - shows content when 50px from viewport
+  const isInView = useInView(ref, { once: true, margin: "50px" });
 
   // Disable animations on mobile for better performance
   if (isMobile) {
