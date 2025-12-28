@@ -15,12 +15,12 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
               <p className="text-muted-foreground mb-4">
-                Welcome to SAAI (Spark-Agile Active Intelligence). I'm Antono, the founder of Spark-Agile, 
-                and I'm committed to protecting your privacy. This Privacy Policy explains how I collect, use, 
+                Welcome to SAAI (Spark-Agile Active Intelligence). We at Faith Invictus Studio 
+                are committed to protecting your privacy. This Privacy Policy explains how we collect, use, 
                 and safeguard your information when you use SAAI.
               </p>
               <p className="text-muted-foreground mb-4">
-                As a solo-founder micro-studio, I take data protection seriously and comply with GDPR and 
+                As a micro-studio, we take data protection seriously and comply with GDPR and 
                 other applicable data protection laws.
               </p>
             </section>
@@ -163,7 +163,7 @@ export default function PrivacyPolicy() {
                 <li>Right to withdraw consent at any time</li>
               </ul>
               <p className="text-muted-foreground mb-4">
-                To exercise these rights, please contact me using the information below.
+                To exercise these rights, please contact us using the information below.
               </p>
             </section>
 
@@ -171,12 +171,12 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-semibold mb-4">12. Contact Information</h2>
               <p className="text-muted-foreground mb-4">
                 If you have questions or concerns about this Privacy Policy or want to exercise your rights, 
-                please contact me at:
+                please contact us at:
               </p>
               <p className="text-muted-foreground">
-                <strong>Data Controller:</strong> Antono, Spark-Agile<br />
-                <strong>Email:</strong> privacy@spark-agile.com<br />
-                <strong>Support:</strong> support@spark-agile.com
+                <strong>Data Controller:</strong> Faith Invictus Studio<br />
+                <strong>Email:</strong> privacy@faithinvictus.studio<br />
+                <strong>Support:</strong> support@faithinvictus.studio
               </p>
             </section>
           </CardContent>
