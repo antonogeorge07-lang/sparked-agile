@@ -101,9 +101,9 @@ export function FooterSection() {
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
               <span className="font-medium">
-                Crafted by{" "}
+                Built by{" "}
                 <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                  Antono George
+                  Faith Invictus Studio
                 </span>
               </span>
             </div>
