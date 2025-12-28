@@ -33,7 +33,7 @@ export default function TermsOfService() {
                 please do not use the Service.
               </p>
               <p className="text-muted-foreground mb-4">
-                SAAI is operated by Antono, a solo founder committed to providing quality AI-powered Agile tools.
+                SAAI is operated by Faith Invictus Studio, committed to providing quality AI-powered Agile tools.
               </p>
             </section>
 
@@ -192,12 +192,12 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">14. Contact Information</h2>
               <p className="text-muted-foreground mb-4">
-                If you have questions about these Terms, I'm here to help. Please contact me at:
+                If you have questions about these Terms, we're here to help. Please contact us at:
               </p>
               <p className="text-muted-foreground">
-                <strong>Founder:</strong> Antono, Spark-Agile<br />
-                <strong>Email:</strong> legal@spark-agile.com<br />
-                <strong>Support:</strong> support@spark-agile.com
+                <strong>Company:</strong> Faith Invictus Studio<br />
+                <strong>Email:</strong> legal@faithinvictus.studio<br />
+                <strong>Support:</strong> support@faithinvictus.studio
               </p>
             </section>
           </CardContent>

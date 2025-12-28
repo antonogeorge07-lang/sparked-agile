@@ -59,14 +59,14 @@ export default function About() {
                   <Sparkles className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">My Story</h2>
-                  <p className="text-sm text-muted-foreground">Founded by Antono</p>
+                  <h2 className="text-2xl font-bold">Our Story</h2>
+                  <p className="text-sm text-muted-foreground">By Faith Invictus Studio</p>
                 </div>
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  At Spark-Agile, I believe agility should empower teams to do their best work. 
-                  I created SAAI (Spark + Agile + AI) to help teams improve their agile practices 
+                  At Faith Invictus Studio, we believe agility should empower teams to do their best work. 
+                  We created SAAI (Spark + Agile + AI) to help teams improve their agile practices 
                   and deliver meaningful results.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
@@ -75,7 +75,7 @@ export default function About() {
                   it's about giving teams the space to create, deliver, and thrive.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm working to make AI-powered Agile accessible to modern teams, 
+                  We're working to make AI-powered Agile accessible to modern teams, 
                   helping them move with confidence, purpose, and clarity.
                 </p>
               </div>
@@ -140,8 +140,8 @@ export default function About() {
                 </Badge>
                 <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
                 <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6">
-                  SAAI is a solo-founder, research-driven micro-studio project. Every feature is built 
-                  with intention, every interaction crafted with care. I'm here to create the most 
+                  SAAI is a research-driven micro-studio project by Faith Invictus Studio. Every feature is built 
+                  with intention, every interaction crafted with care. We're here to create the most 
                   purposeful AI-powered Agile tools for teams that value quality, clarity, and progress.
                 </p>
                 <p className="text-primary-foreground/80 max-w-xl mx-auto text-sm">
