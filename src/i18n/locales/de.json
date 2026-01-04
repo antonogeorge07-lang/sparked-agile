@@ -1,0 +1,87 @@
+{
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "close": "Schließen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "settings": "Einstellungen",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "signup": "Registrieren"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "projects": "Projekte",
+    "tasks": "Aufgaben",
+    "epics": "Epics",
+    "integrations": "Integrationen",
+    "admin": "Admin",
+    "help": "Hilfe",
+    "about": "Über uns",
+    "contact": "Kontakt"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "workspaceName": "Arbeitsbereich-Name",
+    "userPreferences": "Benutzereinstellungen",
+    "defaultLandingPage": "Standard-Startseite",
+    "landingPageDescription": "Wählen Sie, wo Sie landen, wenn Sie die App öffnen",
+    "language": "Sprache",
+    "languageDescription": "Wählen Sie Ihre bevorzugte Sprache",
+    "theme": "Design",
+    "notifications": "Benachrichtigungen",
+    "emailNotifications": "E-Mail-Benachrichtigungen",
+    "darkMode": "Dunkelmodus"
+  },
+  "auth": {
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "signOut": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Bereits ein Konto?",
+    "welcomeBack": "Willkommen zurück",
+    "createAccount": "Konto erstellen"
+  },
+  "dashboard": {
+    "welcome": "Willkommen",
+    "overview": "Übersicht",
+    "recentActivity": "Letzte Aktivität",
+    "quickActions": "Schnellaktionen",
+    "statistics": "Statistiken"
+  },
+  "projects": {
+    "title": "Projekte",
+    "createProject": "Projekt erstellen",
+    "noProjects": "Keine Projekte gefunden",
+    "projectName": "Projektname",
+    "description": "Beschreibung",
+    "status": "Status",
+    "members": "Mitglieder"
+  },
+  "languages": {
+    "en": "Englisch",
+    "es": "Spanisch",
+    "fr": "Französisch",
+    "de": "Deutsch",
+    "pt": "Portugiesisch",
+    "zh": "Chinesisch",
+    "ja": "Japanisch",
+    "ar": "Arabisch",
+    "ko": "Koreanisch"
+  }
+}

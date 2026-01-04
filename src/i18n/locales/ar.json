@@ -1,0 +1,87 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "next": "التالي",
+    "close": "إغلاق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "projects": "المشاريع",
+    "tasks": "المهام",
+    "epics": "الملاحم",
+    "integrations": "التكاملات",
+    "admin": "المسؤول",
+    "help": "مساعدة",
+    "about": "حول",
+    "contact": "اتصل بنا"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "workspaceName": "اسم مساحة العمل",
+    "userPreferences": "تفضيلات المستخدم",
+    "defaultLandingPage": "الصفحة الافتراضية",
+    "landingPageDescription": "اختر الصفحة التي تظهر عند فتح التطبيق",
+    "language": "اللغة",
+    "languageDescription": "اختر لغتك المفضلة",
+    "theme": "المظهر",
+    "notifications": "الإشعارات",
+    "emailNotifications": "إشعارات البريد الإلكتروني",
+    "darkMode": "الوضع الداكن"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "welcomeBack": "مرحباً بعودتك",
+    "createAccount": "إنشاء حساب"
+  },
+  "dashboard": {
+    "welcome": "مرحباً",
+    "overview": "نظرة عامة",
+    "recentActivity": "النشاط الأخير",
+    "quickActions": "إجراءات سريعة",
+    "statistics": "الإحصائيات"
+  },
+  "projects": {
+    "title": "المشاريع",
+    "createProject": "إنشاء مشروع",
+    "noProjects": "لم يتم العثور على مشاريع",
+    "projectName": "اسم المشروع",
+    "description": "الوصف",
+    "status": "الحالة",
+    "members": "الأعضاء"
+  },
+  "languages": {
+    "en": "الإنجليزية",
+    "es": "الإسبانية",
+    "fr": "الفرنسية",
+    "de": "الألمانية",
+    "pt": "البرتغالية",
+    "zh": "الصينية",
+    "ja": "اليابانية",
+    "ar": "العربية",
+    "ko": "الكورية"
+  }
+}

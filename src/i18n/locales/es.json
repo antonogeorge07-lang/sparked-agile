@@ -1,0 +1,87 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "projects": "Proyectos",
+    "tasks": "Tareas",
+    "epics": "Épicas",
+    "integrations": "Integraciones",
+    "admin": "Administrador",
+    "help": "Ayuda",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "settings": {
+    "title": "Configuración",
+    "workspaceName": "Nombre del espacio de trabajo",
+    "userPreferences": "Preferencias de usuario",
+    "defaultLandingPage": "Página de inicio predeterminada",
+    "landingPageDescription": "Elige dónde aterrizas cuando abres la aplicación",
+    "language": "Idioma",
+    "languageDescription": "Selecciona tu idioma preferido",
+    "theme": "Tema",
+    "notifications": "Notificaciones",
+    "emailNotifications": "Notificaciones por correo",
+    "darkMode": "Modo oscuro"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "welcomeBack": "Bienvenido de nuevo",
+    "createAccount": "Crear una cuenta"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "overview": "Resumen",
+    "recentActivity": "Actividad reciente",
+    "quickActions": "Acciones rápidas",
+    "statistics": "Estadísticas"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "createProject": "Crear proyecto",
+    "noProjects": "No se encontraron proyectos",
+    "projectName": "Nombre del proyecto",
+    "description": "Descripción",
+    "status": "Estado",
+    "members": "Miembros"
+  },
+  "languages": {
+    "en": "Inglés",
+    "es": "Español",
+    "fr": "Francés",
+    "de": "Alemán",
+    "pt": "Portugués",
+    "zh": "Chino",
+    "ja": "Japonés",
+    "ar": "Árabe",
+    "ko": "Coreano"
+  }
+}
