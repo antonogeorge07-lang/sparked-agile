@@ -32,6 +32,53 @@
     "about": "关于",
     "contact": "联系我们"
   },
+  "landing": {
+    "signIn": "登录",
+    "getDigest": "获取摘要",
+    "hero": {
+      "badge": "免费每日摘要",
+      "title1": "保持信息畅通",
+      "title2": "轻松无忧",
+      "description": "每天收到一封关于团队GitHub活动、冲刺进度和关键更新的邮件摘要。无需登录。只需连接即可接收。",
+      "setup": "2分钟设置",
+      "noCreditCard": "无需信用卡",
+      "freeForever": "永久免费",
+      "cta": "获取您的每日摘要",
+      "proTeaser": "需要更多？",
+      "upgradeToPro": "升级到Pro",
+      "proDescription": "获取冲刺仪式、史诗管理和团队协作功能。"
+    },
+    "capabilities": {
+      "freeIncluded": "所有人免费",
+      "freeTitle": "您的每日摘要",
+      "freeDescription": "每天收到一封邮件，了解团队进度所需的一切信息。",
+      "proTitle": "完整敏捷平台",
+      "proDescription": "准备好后升级，获取AI驱动的冲刺仪式、史诗跟踪和团队协作。",
+      "betaFree": "测试版：免费",
+      "dailyDigest": "每日摘要邮件",
+      "dailyDigestDesc": "自动汇总团队活动",
+      "githubActivity": "GitHub活动",
+      "githubActivityDesc": "一目了然的提交、PR和问题更新",
+      "sprintHighlights": "冲刺亮点",
+      "sprintHighlightsDesc": "关键指标和进度更新",
+      "basicAI": "基础AI洞察",
+      "basicAIDesc": "智能摘要和建议",
+      "sprintCeremonies": "冲刺仪式",
+      "sprintCeremoniesDesc": "自动化规划、评审和回顾",
+      "epicManagement": "史诗管理",
+      "epicManagementDesc": "跟踪大型计划及其依赖关系",
+      "teamCollaboration": "团队协作",
+      "teamCollaborationDesc": "站会、阻塞和行动项",
+      "aiSprintPlanning": "AI冲刺规划",
+      "aiSprintPlanningDesc": "待办事项分析和冲刺建议"
+    },
+    "cta": {
+      "title": "从免费每日摘要开始",
+      "description": "无需信用卡。准备好后随时升级到Pro。",
+      "getFree": "免费获取每日摘要",
+      "explorePro": "探索Pro功能"
+    }
+  },
   "settings": {
     "title": "设置",
     "workspaceName": "工作区名称",

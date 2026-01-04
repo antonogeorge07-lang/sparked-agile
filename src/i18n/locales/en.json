@@ -32,6 +32,53 @@
     "about": "About",
     "contact": "Contact"
   },
+  "landing": {
+    "signIn": "Sign In",
+    "getDigest": "Get Digest",
+    "hero": {
+      "badge": "Free Daily Digest",
+      "title1": "Stay Informed",
+      "title2": "Effortlessly",
+      "description": "Get a daily email digest of your team's GitHub activity, sprint progress, and key updates. No login required. Just connect and receive.",
+      "setup": "2 min setup",
+      "noCreditCard": "No credit card",
+      "freeForever": "Free forever",
+      "cta": "Get Your Daily Digest",
+      "proTeaser": "Need more?",
+      "upgradeToPro": "Upgrade to Pro",
+      "proDescription": "for sprint ceremonies, epic management, and team collaboration."
+    },
+    "capabilities": {
+      "freeIncluded": "Included for everyone",
+      "freeTitle": "Your Daily Digest",
+      "freeDescription": "Get a daily email with everything you need to stay informed about your team's progress.",
+      "proTitle": "Full Agile Platform",
+      "proDescription": "Upgrade when you're ready for AI-powered sprint ceremonies, epic tracking, and team collaboration.",
+      "betaFree": "Beta: Free",
+      "dailyDigest": "Daily Digest Emails",
+      "dailyDigestDesc": "Automated daily summaries of team activity",
+      "githubActivity": "GitHub Activity",
+      "githubActivityDesc": "Commits, PRs, and issue updates at a glance",
+      "sprintHighlights": "Sprint Highlights",
+      "sprintHighlightsDesc": "Key metrics and progress updates",
+      "basicAI": "Basic AI Insights",
+      "basicAIDesc": "Smart summaries and recommendations",
+      "sprintCeremonies": "Sprint Ceremonies",
+      "sprintCeremoniesDesc": "Automated planning, reviews & retros",
+      "epicManagement": "Epic Management",
+      "epicManagementDesc": "Track large initiatives with dependencies",
+      "teamCollaboration": "Team Collaboration",
+      "teamCollaborationDesc": "Standups, blockers, and action items",
+      "aiSprintPlanning": "AI Sprint Planning",
+      "aiSprintPlanningDesc": "Backlog analysis and sprint recommendations"
+    },
+    "cta": {
+      "title": "Start with your free Daily Digest",
+      "description": "No credit card required. Upgrade to Pro whenever you're ready for more.",
+      "getFree": "Get Daily Digest Free",
+      "explorePro": "Explore Pro Features"
+    }
+  },
   "settings": {
     "title": "Settings",
     "workspaceName": "Workspace Name",

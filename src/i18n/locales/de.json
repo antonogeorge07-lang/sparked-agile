@@ -32,6 +32,53 @@
     "about": "Über uns",
     "contact": "Kontakt"
   },
+  "landing": {
+    "signIn": "Anmelden",
+    "getDigest": "Zusammenfassung erhalten",
+    "hero": {
+      "badge": "Kostenlose tägliche Zusammenfassung",
+      "title1": "Bleib informiert",
+      "title2": "Mühelos",
+      "description": "Erhalte eine tägliche E-Mail-Zusammenfassung der GitHub-Aktivitäten deines Teams, Sprint-Fortschritt und wichtige Updates. Keine Anmeldung erforderlich. Einfach verbinden und empfangen.",
+      "setup": "2 Min. Einrichtung",
+      "noCreditCard": "Keine Kreditkarte",
+      "freeForever": "Für immer kostenlos",
+      "cta": "Hol dir deine tägliche Zusammenfassung",
+      "proTeaser": "Mehr benötigt?",
+      "upgradeToPro": "Upgrade auf Pro",
+      "proDescription": "für Sprint-Zeremonien, Epic-Management und Team-Zusammenarbeit."
+    },
+    "capabilities": {
+      "freeIncluded": "Für alle inklusive",
+      "freeTitle": "Deine tägliche Zusammenfassung",
+      "freeDescription": "Erhalte eine tägliche E-Mail mit allem, was du brauchst, um über den Fortschritt deines Teams informiert zu bleiben.",
+      "proTitle": "Vollständige Agile-Plattform",
+      "proDescription": "Upgrade, wenn du bereit bist für KI-gestützte Sprint-Zeremonien, Epic-Tracking und Team-Zusammenarbeit.",
+      "betaFree": "Beta: Kostenlos",
+      "dailyDigest": "Tägliche Zusammenfassungs-E-Mails",
+      "dailyDigestDesc": "Automatisierte tägliche Zusammenfassungen der Team-Aktivität",
+      "githubActivity": "GitHub-Aktivität",
+      "githubActivityDesc": "Commits, PRs und Issue-Updates auf einen Blick",
+      "sprintHighlights": "Sprint-Highlights",
+      "sprintHighlightsDesc": "Wichtige Metriken und Fortschritts-Updates",
+      "basicAI": "Grundlegende KI-Einblicke",
+      "basicAIDesc": "Intelligente Zusammenfassungen und Empfehlungen",
+      "sprintCeremonies": "Sprint-Zeremonien",
+      "sprintCeremoniesDesc": "Automatisierte Planung, Reviews & Retrospektiven",
+      "epicManagement": "Epic-Management",
+      "epicManagementDesc": "Verfolge große Initiativen mit Abhängigkeiten",
+      "teamCollaboration": "Team-Zusammenarbeit",
+      "teamCollaborationDesc": "Standups, Blocker und Aktionspunkte",
+      "aiSprintPlanning": "KI-Sprint-Planung",
+      "aiSprintPlanningDesc": "Backlog-Analyse und Sprint-Empfehlungen"
+    },
+    "cta": {
+      "title": "Starte mit deiner kostenlosen täglichen Zusammenfassung",
+      "description": "Keine Kreditkarte erforderlich. Upgrade auf Pro, wann immer du bereit für mehr bist.",
+      "getFree": "Tägliche Zusammenfassung kostenlos erhalten",
+      "explorePro": "Pro-Funktionen erkunden"
+    }
+  },
   "settings": {
     "title": "Einstellungen",
     "workspaceName": "Arbeitsbereich-Name",

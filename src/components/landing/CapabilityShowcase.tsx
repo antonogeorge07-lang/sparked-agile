@@ -2,54 +2,57 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
 import { Mail, GitBranch, BarChart3, Zap, Users, Target, Calendar, MessageSquare } from "lucide-react";
-
-const freeCapabilities = [
-  {
-    icon: Mail,
-    title: "Daily Digest Emails",
-    description: "Automated daily summaries of team activity",
-  },
-  {
-    icon: GitBranch,
-    title: "GitHub Activity",
-    description: "Commits, PRs, and issue updates at a glance",
-  },
-  {
-    icon: BarChart3,
-    title: "Sprint Highlights",
-    description: "Key metrics and progress updates",
-  },
-  {
-    icon: Zap,
-    title: "Basic AI Insights",
-    description: "Smart summaries and recommendations",
-  },
-];
-
-const proCapabilities = [
-  {
-    icon: Calendar,
-    title: "Sprint Ceremonies",
-    description: "Automated planning, reviews & retros",
-  },
-  {
-    icon: Target,
-    title: "Epic Management",
-    description: "Track large initiatives with dependencies",
-  },
-  {
-    icon: Users,
-    title: "Team Collaboration",
-    description: "Standups, blockers, and action items",
-  },
-  {
-    icon: MessageSquare,
-    title: "AI Sprint Planning",
-    description: "Backlog analysis and sprint recommendations",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export function CapabilityShowcase() {
+  const { t } = useTranslation();
+
+  const freeCapabilities = [
+    {
+      icon: Mail,
+      titleKey: "landing.capabilities.dailyDigest",
+      descKey: "landing.capabilities.dailyDigestDesc",
+    },
+    {
+      icon: GitBranch,
+      titleKey: "landing.capabilities.githubActivity",
+      descKey: "landing.capabilities.githubActivityDesc",
+    },
+    {
+      icon: BarChart3,
+      titleKey: "landing.capabilities.sprintHighlights",
+      descKey: "landing.capabilities.sprintHighlightsDesc",
+    },
+    {
+      icon: Zap,
+      titleKey: "landing.capabilities.basicAI",
+      descKey: "landing.capabilities.basicAIDesc",
+    },
+  ];
+
+  const proCapabilities = [
+    {
+      icon: Calendar,
+      titleKey: "landing.capabilities.sprintCeremonies",
+      descKey: "landing.capabilities.sprintCeremoniesDesc",
+    },
+    {
+      icon: Target,
+      titleKey: "landing.capabilities.epicManagement",
+      descKey: "landing.capabilities.epicManagementDesc",
+    },
+    {
+      icon: Users,
+      titleKey: "landing.capabilities.teamCollaboration",
+      descKey: "landing.capabilities.teamCollaborationDesc",
+    },
+    {
+      icon: MessageSquare,
+      titleKey: "landing.capabilities.aiSprintPlanning",
+      descKey: "landing.capabilities.aiSprintPlanningDesc",
+    },
+  ];
+
   return (
     <section className="py-16 px-4 bg-muted/30" aria-labelledby="capabilities-heading">
       <div className="container mx-auto max-w-6xl">
@@ -58,13 +61,13 @@ export function CapabilityShowcase() {
           <header className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-3 opacity-0 animate-fade-in">
               <TierBadge tier="free" />
-              <span className="text-sm text-muted-foreground">Included for everyone</span>
+              <span className="text-sm text-muted-foreground">{t('landing.capabilities.freeIncluded')}</span>
             </div>
             <h2 id="capabilities-heading" className="text-2xl md:text-3xl font-bold font-heading mb-3 opacity-0 animate-fade-in-up animation-delay-100">
-              Your Daily Digest
+              {t('landing.capabilities.freeTitle')}
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200">
-              Get a daily email with everything you need to stay informed about your team's progress.
+              {t('landing.capabilities.freeDescription')}
             </p>
           </header>
 
@@ -80,8 +83,8 @@ export function CapabilityShowcase() {
                     <cap.icon className="h-5 w-5 text-tier-free" />
                   </div>
                 </div>
-                <h3 className="font-semibold font-heading mb-1">{cap.title}</h3>
-                <p className="text-sm text-muted-foreground">{cap.description}</p>
+                <h3 className="font-semibold font-heading mb-1">{t(cap.titleKey)}</h3>
+                <p className="text-sm text-muted-foreground">{t(cap.descKey)}</p>
               </Card>
             ))}
           </div>
@@ -92,13 +95,13 @@ export function CapabilityShowcase() {
           <header className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-3 opacity-0 animate-fade-in animation-delay-700">
               <TierBadge tier="pro" />
-              <Badge variant="secondary" className="text-xs">Beta: Free</Badge>
+              <Badge variant="secondary" className="text-xs">{t('landing.capabilities.betaFree')}</Badge>
             </div>
             <h3 className="text-2xl md:text-3xl font-bold font-heading mb-3 opacity-0 animate-fade-in-up animation-delay-700">
-              Full Agile Platform
+              {t('landing.capabilities.proTitle')}
             </h3>
             <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-700">
-              Upgrade when you're ready for AI-powered sprint ceremonies, epic tracking, and team collaboration.
+              {t('landing.capabilities.proDescription')}
             </p>
           </header>
 
@@ -114,8 +117,8 @@ export function CapabilityShowcase() {
                     <cap.icon className="h-5 w-5 text-tier-pro" />
                   </div>
                 </div>
-                <h3 className="font-semibold font-heading mb-1">{cap.title}</h3>
-                <p className="text-sm text-muted-foreground">{cap.description}</p>
+                <h3 className="font-semibold font-heading mb-1">{t(cap.titleKey)}</h3>
+                <p className="text-sm text-muted-foreground">{t(cap.descKey)}</p>
               </Card>
             ))}
           </div>
