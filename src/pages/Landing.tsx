@@ -17,6 +17,7 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import saaiLogo from "@/assets/saai-logo.png";
 import { PrivacyBanner } from "@/components/PrivacyBanner";
 import { Mail } from "lucide-react";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 // Lazy load heavier sections
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
@@ -107,6 +108,7 @@ export default function Landing() {
               </span>
             </Link>
             <div className="flex items-center gap-3">
+              <LanguageSwitcher />
               <Link to="/auth" className="hidden sm:block">
                 <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
                   Sign In
