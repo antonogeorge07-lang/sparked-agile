@@ -32,6 +32,53 @@
     "about": "概要",
     "contact": "お問い合わせ"
   },
+  "landing": {
+    "signIn": "ログイン",
+    "getDigest": "ダイジェストを取得",
+    "hero": {
+      "badge": "無料デイリーダイジェスト",
+      "title1": "情報を把握",
+      "title2": "簡単に",
+      "description": "チームのGitHubアクティビティ、スプリントの進捗、重要な更新のデイリーメールダイジェストを受け取りましょう。ログイン不要。接続するだけで受信できます。",
+      "setup": "2分でセットアップ",
+      "noCreditCard": "クレジットカード不要",
+      "freeForever": "永久無料",
+      "cta": "デイリーダイジェストを取得",
+      "proTeaser": "もっと必要ですか？",
+      "upgradeToPro": "Proにアップグレード",
+      "proDescription": "スプリントセレモニー、エピック管理、チームコラボレーションを利用できます。"
+    },
+    "capabilities": {
+      "freeIncluded": "すべての人に含まれます",
+      "freeTitle": "あなたのデイリーダイジェスト",
+      "freeDescription": "チームの進捗状況を把握するために必要なすべての情報を毎日メールで受け取ります。",
+      "proTitle": "完全なアジャイルプラットフォーム",
+      "proDescription": "AI駆動のスプリントセレモニー、エピックトラッキング、チームコラボレーションの準備ができたらアップグレード。",
+      "betaFree": "ベータ版：無料",
+      "dailyDigest": "デイリーダイジェストメール",
+      "dailyDigestDesc": "チームアクティビティの自動サマリー",
+      "githubActivity": "GitHubアクティビティ",
+      "githubActivityDesc": "コミット、PR、課題の更新を一目で確認",
+      "sprintHighlights": "スプリントハイライト",
+      "sprintHighlightsDesc": "重要な指標と進捗の更新",
+      "basicAI": "基本AIインサイト",
+      "basicAIDesc": "スマートなサマリーと推奨事項",
+      "sprintCeremonies": "スプリントセレモニー",
+      "sprintCeremoniesDesc": "自動化された計画、レビュー、レトロスペクティブ",
+      "epicManagement": "エピック管理",
+      "epicManagementDesc": "依存関係のある大規模イニシアチブを追跡",
+      "teamCollaboration": "チームコラボレーション",
+      "teamCollaborationDesc": "スタンドアップ、ブロッカー、アクションアイテム",
+      "aiSprintPlanning": "AIスプリントプランニング",
+      "aiSprintPlanningDesc": "バックログ分析とスプリント推奨"
+    },
+    "cta": {
+      "title": "無料のデイリーダイジェストから始めましょう",
+      "description": "クレジットカード不要。準備ができたらいつでもProにアップグレード。",
+      "getFree": "無料でデイリーダイジェストを取得",
+      "explorePro": "Pro機能を探索"
+    }
+  },
   "settings": {
     "title": "設定",
     "workspaceName": "ワークスペース名",

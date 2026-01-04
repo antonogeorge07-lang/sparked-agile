@@ -32,6 +32,53 @@
     "about": "Sobre",
     "contact": "Contato"
   },
+  "landing": {
+    "signIn": "Entrar",
+    "getDigest": "Obter resumo",
+    "hero": {
+      "badge": "Resumo diário gratuito",
+      "title1": "Mantenha-se informado",
+      "title2": "Sem esforço",
+      "description": "Receba um resumo diário por e-mail da atividade do seu time no GitHub, progresso do sprint e atualizações importantes. Sem necessidade de login. Conecte e receba.",
+      "setup": "2 min de configuração",
+      "noCreditCard": "Sem cartão de crédito",
+      "freeForever": "Grátis para sempre",
+      "cta": "Obtenha seu resumo diário",
+      "proTeaser": "Precisa de mais?",
+      "upgradeToPro": "Atualize para Pro",
+      "proDescription": "para cerimônias de sprint, gestão de épicos e colaboração em equipe."
+    },
+    "capabilities": {
+      "freeIncluded": "Incluído para todos",
+      "freeTitle": "Seu resumo diário",
+      "freeDescription": "Receba um e-mail diário com tudo que você precisa para se manter informado sobre o progresso da sua equipe.",
+      "proTitle": "Plataforma Agile completa",
+      "proDescription": "Atualize quando estiver pronto para cerimônias de sprint com IA, rastreamento de épicos e colaboração em equipe.",
+      "betaFree": "Beta: Grátis",
+      "dailyDigest": "E-mails de resumo diário",
+      "dailyDigestDesc": "Resumos automatizados da atividade da equipe",
+      "githubActivity": "Atividade do GitHub",
+      "githubActivityDesc": "Commits, PRs e atualizações de issues de relance",
+      "sprintHighlights": "Destaques do Sprint",
+      "sprintHighlightsDesc": "Métricas importantes e atualizações de progresso",
+      "basicAI": "Insights básicos de IA",
+      "basicAIDesc": "Resumos inteligentes e recomendações",
+      "sprintCeremonies": "Cerimônias de Sprint",
+      "sprintCeremoniesDesc": "Planejamento, revisões e retrospectivas automatizadas",
+      "epicManagement": "Gestão de Épicos",
+      "epicManagementDesc": "Rastreie grandes iniciativas com dependências",
+      "teamCollaboration": "Colaboração em equipe",
+      "teamCollaborationDesc": "Standups, bloqueios e itens de ação",
+      "aiSprintPlanning": "Planejamento de Sprint com IA",
+      "aiSprintPlanningDesc": "Análise de backlog e recomendações de sprint"
+    },
+    "cta": {
+      "title": "Comece com seu resumo diário gratuito",
+      "description": "Sem cartão de crédito necessário. Atualize para Pro quando estiver pronto para mais.",
+      "getFree": "Obter resumo diário grátis",
+      "explorePro": "Explorar recursos Pro"
+    }
+  },
   "settings": {
     "title": "Configurações",
     "workspaceName": "Nome do espaço de trabalho",

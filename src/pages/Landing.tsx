@@ -18,6 +18,7 @@ import saaiLogo from "@/assets/saai-logo.png";
 import { PrivacyBanner } from "@/components/PrivacyBanner";
 import { Mail } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 // Lazy load heavier sections
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
@@ -35,6 +36,7 @@ const SectionSkeleton = () => (
 
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
+  const { t } = useTranslation();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [emailContext, setEmailContext] = useState<"early_access" | "newsletter" | "beta" | "exit_intent">("newsletter");
@@ -111,13 +113,13 @@ export default function Landing() {
               <LanguageSwitcher />
               <Link to="/auth" className="hidden sm:block">
                 <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
-                  Sign In
+                  {t('landing.signIn')}
                 </Button>
               </Link>
               <Link to="/auth">
                 <Button size="sm" className="gap-1.5 bg-tier-free hover:bg-tier-free/90" onClick={() => trackButtonClick('Get Started', 'nav')}>
                   <Mail className="h-3.5 w-3.5" />
-                  Get Digest
+                  {t('landing.getDigest')}
                 </Button>
               </Link>
             </div>

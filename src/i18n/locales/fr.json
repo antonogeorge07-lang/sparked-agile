@@ -32,6 +32,53 @@
     "about": "À propos",
     "contact": "Contact"
   },
+  "landing": {
+    "signIn": "Connexion",
+    "getDigest": "Recevoir le résumé",
+    "hero": {
+      "badge": "Résumé quotidien gratuit",
+      "title1": "Restez informé",
+      "title2": "Sans effort",
+      "description": "Recevez un résumé quotidien par e-mail de l'activité GitHub de votre équipe, de la progression du sprint et des mises à jour clés. Pas de connexion requise. Connectez et recevez.",
+      "setup": "2 min de configuration",
+      "noCreditCard": "Sans carte bancaire",
+      "freeForever": "Gratuit pour toujours",
+      "cta": "Obtenez votre résumé quotidien",
+      "proTeaser": "Besoin de plus ?",
+      "upgradeToPro": "Passez à Pro",
+      "proDescription": "pour les cérémonies de sprint, la gestion des épopées et la collaboration d'équipe."
+    },
+    "capabilities": {
+      "freeIncluded": "Inclus pour tous",
+      "freeTitle": "Votre résumé quotidien",
+      "freeDescription": "Recevez un e-mail quotidien avec tout ce dont vous avez besoin pour rester informé de la progression de votre équipe.",
+      "proTitle": "Plateforme Agile complète",
+      "proDescription": "Passez à la version supérieure quand vous êtes prêt pour les cérémonies de sprint IA, le suivi des épopées et la collaboration d'équipe.",
+      "betaFree": "Bêta : Gratuit",
+      "dailyDigest": "E-mails de résumé quotidien",
+      "dailyDigestDesc": "Résumés automatisés de l'activité de l'équipe",
+      "githubActivity": "Activité GitHub",
+      "githubActivityDesc": "Commits, PRs et mises à jour d'issues en un coup d'œil",
+      "sprintHighlights": "Points forts du Sprint",
+      "sprintHighlightsDesc": "Métriques clés et mises à jour de progression",
+      "basicAI": "Insights IA de base",
+      "basicAIDesc": "Résumés intelligents et recommandations",
+      "sprintCeremonies": "Cérémonies de Sprint",
+      "sprintCeremoniesDesc": "Planification, revues et rétrospectives automatisées",
+      "epicManagement": "Gestion des Épopées",
+      "epicManagementDesc": "Suivez les grandes initiatives avec les dépendances",
+      "teamCollaboration": "Collaboration d'équipe",
+      "teamCollaborationDesc": "Standups, blocages et éléments d'action",
+      "aiSprintPlanning": "Planification Sprint IA",
+      "aiSprintPlanningDesc": "Analyse du backlog et recommandations de sprint"
+    },
+    "cta": {
+      "title": "Commencez avec votre résumé quotidien gratuit",
+      "description": "Aucune carte bancaire requise. Passez à Pro quand vous êtes prêt pour plus.",
+      "getFree": "Obtenir le résumé quotidien gratuit",
+      "explorePro": "Explorer les fonctionnalités Pro"
+    }
+  },
   "settings": {
     "title": "Paramètres",
     "workspaceName": "Nom de l'espace de travail",
