@@ -1,0 +1,87 @@
+{
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "close": "Fechar",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "settings": "Configurações",
+    "profile": "Perfil",
+    "logout": "Sair",
+    "login": "Entrar",
+    "signup": "Cadastrar"
+  },
+  "navigation": {
+    "home": "Início",
+    "dashboard": "Painel",
+    "projects": "Projetos",
+    "tasks": "Tarefas",
+    "epics": "Épicos",
+    "integrations": "Integrações",
+    "admin": "Admin",
+    "help": "Ajuda",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "settings": {
+    "title": "Configurações",
+    "workspaceName": "Nome do espaço de trabalho",
+    "userPreferences": "Preferências do usuário",
+    "defaultLandingPage": "Página inicial padrão",
+    "landingPageDescription": "Escolha onde você aterrissa ao abrir o aplicativo",
+    "language": "Idioma",
+    "languageDescription": "Selecione seu idioma preferido",
+    "theme": "Tema",
+    "notifications": "Notificações",
+    "emailNotifications": "Notificações por e-mail",
+    "darkMode": "Modo escuro"
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signUp": "Cadastrar",
+    "signOut": "Sair",
+    "email": "E-mail",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu a senha?",
+    "noAccount": "Não tem conta?",
+    "hasAccount": "Já tem conta?",
+    "welcomeBack": "Bem-vindo de volta",
+    "createAccount": "Criar conta"
+  },
+  "dashboard": {
+    "welcome": "Bem-vindo",
+    "overview": "Visão geral",
+    "recentActivity": "Atividade recente",
+    "quickActions": "Ações rápidas",
+    "statistics": "Estatísticas"
+  },
+  "projects": {
+    "title": "Projetos",
+    "createProject": "Criar projeto",
+    "noProjects": "Nenhum projeto encontrado",
+    "projectName": "Nome do projeto",
+    "description": "Descrição",
+    "status": "Status",
+    "members": "Membros"
+  },
+  "languages": {
+    "en": "Inglês",
+    "es": "Espanhol",
+    "fr": "Francês",
+    "de": "Alemão",
+    "pt": "Português",
+    "zh": "Chinês",
+    "ja": "Japonês",
+    "ar": "Árabe",
+    "ko": "Coreano"
+  }
+}

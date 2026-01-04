@@ -1,0 +1,87 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Sign Out",
+    "login": "Sign In",
+    "signup": "Sign Up"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "tasks": "Tasks",
+    "epics": "Epics",
+    "integrations": "Integrations",
+    "admin": "Admin",
+    "help": "Help",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "settings": {
+    "title": "Settings",
+    "workspaceName": "Workspace Name",
+    "userPreferences": "User Preferences",
+    "defaultLandingPage": "Default Landing Page",
+    "landingPageDescription": "Choose where you land when you open the app",
+    "language": "Language",
+    "languageDescription": "Select your preferred language",
+    "theme": "Theme",
+    "notifications": "Notifications",
+    "emailNotifications": "Email Notifications",
+    "darkMode": "Dark Mode"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create an account"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "overview": "Overview",
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions",
+    "statistics": "Statistics"
+  },
+  "projects": {
+    "title": "Projects",
+    "createProject": "Create Project",
+    "noProjects": "No projects found",
+    "projectName": "Project Name",
+    "description": "Description",
+    "status": "Status",
+    "members": "Members"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "de": "German",
+    "pt": "Portuguese",
+    "zh": "Chinese",
+    "ja": "Japanese",
+    "ar": "Arabic",
+    "ko": "Korean"
+  }
+}

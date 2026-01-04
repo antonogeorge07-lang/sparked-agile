@@ -1,0 +1,87 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "confirm": "确认",
+    "back": "返回",
+    "next": "下一步",
+    "close": "关闭",
+    "search": "搜索",
+    "filter": "筛选",
+    "settings": "设置",
+    "profile": "个人资料",
+    "logout": "退出登录",
+    "login": "登录",
+    "signup": "注册"
+  },
+  "navigation": {
+    "home": "首页",
+    "dashboard": "仪表板",
+    "projects": "项目",
+    "tasks": "任务",
+    "epics": "史诗",
+    "integrations": "集成",
+    "admin": "管理员",
+    "help": "帮助",
+    "about": "关于",
+    "contact": "联系我们"
+  },
+  "settings": {
+    "title": "设置",
+    "workspaceName": "工作区名称",
+    "userPreferences": "用户偏好",
+    "defaultLandingPage": "默认首页",
+    "landingPageDescription": "选择打开应用时的默认页面",
+    "language": "语言",
+    "languageDescription": "选择您的首选语言",
+    "theme": "主题",
+    "notifications": "通知",
+    "emailNotifications": "邮件通知",
+    "darkMode": "深色模式"
+  },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出登录",
+    "email": "邮箱",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "noAccount": "没有账户？",
+    "hasAccount": "已有账户？",
+    "welcomeBack": "欢迎回来",
+    "createAccount": "创建账户"
+  },
+  "dashboard": {
+    "welcome": "欢迎",
+    "overview": "概览",
+    "recentActivity": "最近活动",
+    "quickActions": "快捷操作",
+    "statistics": "统计"
+  },
+  "projects": {
+    "title": "项目",
+    "createProject": "创建项目",
+    "noProjects": "未找到项目",
+    "projectName": "项目名称",
+    "description": "描述",
+    "status": "状态",
+    "members": "成员"
+  },
+  "languages": {
+    "en": "英语",
+    "es": "西班牙语",
+    "fr": "法语",
+    "de": "德语",
+    "pt": "葡萄牙语",
+    "zh": "中文",
+    "ja": "日语",
+    "ar": "阿拉伯语",
+    "ko": "韩语"
+  }
+}

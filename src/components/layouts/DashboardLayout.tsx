@@ -5,6 +5,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
 import { SidebarTour } from "@/components/SidebarTour";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import saaiLogo from "@/assets/saai-logo.png";
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
@@ -65,6 +66,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
               {/* Right: Actions */}
               <div className="flex items-center gap-2">
+                <LanguageSwitcher />
                 <NotificationBell />
                 <ThemeToggle />
                 <ProfileMenu />
