@@ -1921,6 +1921,47 @@ export type Database = {
         }
         Relationships: []
       }
+      security_incident_audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          incident_id: string | null
+          ip_address: string | null
+          new_data: Json | null
+          old_data: Json | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          incident_id?: string | null
+          ip_address?: string | null
+          new_data?: Json | null
+          old_data?: Json | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          incident_id?: string | null
+          ip_address?: string | null
+          new_data?: Json | null
+          old_data?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "security_incident_audit_log_incident_id_fkey"
+            columns: ["incident_id"]
+            isOneToOne: false
+            referencedRelation: "security_incidents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       security_incidents: {
         Row: {
           affected_systems: string[] | null
