@@ -11,6 +11,7 @@ import { ActiveUsers } from "@/components/ActiveUsers";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BreadcrumbNav } from "@/components/BreadcrumbNav";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -176,6 +177,7 @@ export const Navigation = () => {
 
             {/* Utility items */}
             <div className="ml-1 flex items-center gap-0.5">
+              <LanguageSwitcher />
               <ThemeToggle />
               {user && <NotificationBell />}
               {user ? (
@@ -190,6 +192,7 @@ export const Navigation = () => {
 
           {/* Mobile Navigation */}
           <div className="flex lg:hidden items-center gap-1.5">
+            <LanguageSwitcher />
             <ThemeToggle />
             {user && <NotificationBell />}
             
