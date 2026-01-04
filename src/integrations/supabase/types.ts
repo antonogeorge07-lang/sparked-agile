@@ -3230,22 +3230,31 @@ export type Database = {
     Views: {
       ai_usage_logs_sanitized: {
         Row: {
+          cost_estimate: number | null
           created_at: string | null
+          endpoint: string | null
           id: string | null
           model: string | null
           status: string | null
+          tokens_used: number | null
         }
         Insert: {
+          cost_estimate?: number | null
           created_at?: string | null
+          endpoint?: string | null
           id?: string | null
           model?: string | null
           status?: string | null
+          tokens_used?: number | null
         }
         Update: {
+          cost_estimate?: number | null
           created_at?: string | null
+          endpoint?: string | null
           id?: string | null
           model?: string | null
           status?: string | null
+          tokens_used?: number | null
         }
         Relationships: []
       }
@@ -3330,6 +3339,8 @@ export type Database = {
       user_subscription_info: {
         Row: {
           current_period_end: string | null
+          current_period_start: string | null
+          features: Json | null
           project_limit: number | null
           status: string | null
           team_member_limit: number | null
