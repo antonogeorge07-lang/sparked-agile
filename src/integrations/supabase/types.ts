@@ -314,6 +314,51 @@ export type Database = {
         }
         Relationships: []
       }
+      data_breach_log: {
+        Row: {
+          affected_data_types: string[] | null
+          affected_user_count: number | null
+          breach_type: string
+          containment_actions: string[] | null
+          created_by: string | null
+          description: string | null
+          detected_at: string | null
+          id: string
+          notification_sent_at: string | null
+          resolved_at: string | null
+          severity: string | null
+          supervisory_authority_notified: boolean | null
+        }
+        Insert: {
+          affected_data_types?: string[] | null
+          affected_user_count?: number | null
+          breach_type: string
+          containment_actions?: string[] | null
+          created_by?: string | null
+          description?: string | null
+          detected_at?: string | null
+          id?: string
+          notification_sent_at?: string | null
+          resolved_at?: string | null
+          severity?: string | null
+          supervisory_authority_notified?: boolean | null
+        }
+        Update: {
+          affected_data_types?: string[] | null
+          affected_user_count?: number | null
+          breach_type?: string
+          containment_actions?: string[] | null
+          created_by?: string | null
+          description?: string | null
+          detected_at?: string | null
+          id?: string
+          notification_sent_at?: string | null
+          resolved_at?: string | null
+          severity?: string | null
+          supervisory_authority_notified?: boolean | null
+        }
+        Relationships: []
+      }
       data_export_requests: {
         Row: {
           completed_date: string | null
@@ -934,6 +979,42 @@ export type Database = {
           },
         ]
       }
+      gdpr_consent_records: {
+        Row: {
+          consent_given: boolean
+          consent_text: string | null
+          consent_type: string
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+          user_id: string
+          withdrawn_at: string | null
+        }
+        Insert: {
+          consent_given: boolean
+          consent_text?: string | null
+          consent_type: string
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id: string
+          withdrawn_at?: string | null
+        }
+        Update: {
+          consent_given?: boolean
+          consent_text?: string | null
+          consent_type?: string
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string
+          withdrawn_at?: string | null
+        }
+        Relationships: []
+      }
       integration_cache: {
         Row: {
           cache_key: string
@@ -1353,31 +1434,46 @@ export type Database = {
       }
       profiles: {
         Row: {
+          anonymized: boolean | null
           avatar_url: string | null
+          consent_timestamp: string | null
           created_at: string | null
+          data_retention_consent: boolean | null
+          deletion_requested_at: string | null
           email: string
           full_name: string | null
           id: string
+          last_activity_at: string | null
           preferences: Json | null
           role: Database["public"]["Enums"]["app_role"] | null
           updated_at: string | null
         }
         Insert: {
+          anonymized?: boolean | null
           avatar_url?: string | null
+          consent_timestamp?: string | null
           created_at?: string | null
+          data_retention_consent?: boolean | null
+          deletion_requested_at?: string | null
           email: string
           full_name?: string | null
           id: string
+          last_activity_at?: string | null
           preferences?: Json | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
         Update: {
+          anonymized?: boolean | null
           avatar_url?: string | null
+          consent_timestamp?: string | null
           created_at?: string | null
+          data_retention_consent?: boolean | null
+          deletion_requested_at?: string | null
           email?: string
           full_name?: string | null
           id?: string
+          last_activity_at?: string | null
           preferences?: Json | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
@@ -1505,6 +1601,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
             referencedColumns: ["id"]
           },
           {
@@ -1826,6 +1929,13 @@ export type Database = {
             foreignKeyName: "projects_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "project_teammates"
             referencedColumns: ["id"]
           },
@@ -2037,27 +2147,36 @@ export type Database = {
       sensitive_data_access_log: {
         Row: {
           access_type: string
+          accessed_user_id: string | null
+          action: string | null
           created_at: string
           id: string
           ip_address: string | null
+          legal_basis: string | null
           query_context: string | null
           table_accessed: string
           user_id: string
         }
         Insert: {
           access_type: string
+          accessed_user_id?: string | null
+          action?: string | null
           created_at?: string
           id?: string
           ip_address?: string | null
+          legal_basis?: string | null
           query_context?: string | null
           table_accessed: string
           user_id: string
         }
         Update: {
           access_type?: string
+          accessed_user_id?: string | null
+          action?: string | null
           created_at?: string
           id?: string
           ip_address?: string | null
+          legal_basis?: string | null
           query_context?: string | null
           table_accessed?: string
           user_id?: string
@@ -2802,9 +2921,11 @@ export type Database = {
           created_at: string
           encrypted_access_token: string | null
           encrypted_refresh_token: string | null
+          encryption_version: number | null
           expires_at: string | null
           id: string
           is_valid: boolean | null
+          key_rotation_required: boolean | null
           last_validated_at: string | null
           scopes: string[] | null
           updated_at: string
@@ -2816,9 +2937,11 @@ export type Database = {
           created_at?: string
           encrypted_access_token?: string | null
           encrypted_refresh_token?: string | null
+          encryption_version?: number | null
           expires_at?: string | null
           id?: string
           is_valid?: boolean | null
+          key_rotation_required?: boolean | null
           last_validated_at?: string | null
           scopes?: string[] | null
           updated_at?: string
@@ -2830,9 +2953,11 @@ export type Database = {
           created_at?: string
           encrypted_access_token?: string | null
           encrypted_refresh_token?: string | null
+          encryption_version?: number | null
           expires_at?: string | null
           id?: string
           is_valid?: boolean | null
+          key_rotation_required?: boolean | null
           last_validated_at?: string | null
           scopes?: string[] | null
           updated_at?: string
@@ -3258,6 +3383,39 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles_safe: {
+        Row: {
+          anonymized: boolean | null
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          anonymized?: boolean | null
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: never
+          full_name?: never
+          id?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          anonymized?: boolean | null
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: never
+          full_name?: never
+          id?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       project_teammates: {
         Row: {
           avatar_url: string | null
@@ -3357,6 +3515,10 @@ export type Database = {
       }
       anonymize_ip_address: { Args: { ip: string }; Returns: string }
       anonymize_old_ai_usage_logs: { Args: never; Returns: number }
+      anonymize_user_data: {
+        Args: { target_user_id: string }
+        Returns: boolean
+      }
       calculate_closure_readiness: {
         Args: { epic_id_param: string }
         Returns: Json
@@ -3400,6 +3562,7 @@ export type Database = {
         Returns: undefined
       }
       enforce_ai_usage_data_retention: { Args: never; Returns: number }
+      export_user_data: { Args: { target_user_id: string }; Returns: Json }
       get_aggregated_ai_usage_stats: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
@@ -3590,6 +3753,10 @@ export type Database = {
       is_workspace_owner: {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
+      }
+      mask_email: {
+        Args: { email_value: string; owner_id: string }
+        Returns: string
       }
       sanitize_webhook_payload: { Args: { payload: Json }; Returns: Json }
       toggle_integration_status: {
