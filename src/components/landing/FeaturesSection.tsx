@@ -1,65 +1,68 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sparkles, Zap, GitBranch, BarChart, Calendar, Users, Target } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function FeaturesSection() {
+  const { t } = useTranslation();
+
   const featureCategories = [
     {
-      category: "AI-Powered Planning",
+      category: t('landing.features.aiPlanning'),
       features: [
         {
           icon: Sparkles,
-          title: "Sprint Planning Assistant",
-          description: "AI-powered sprint planning with velocity analysis and recommendations"
+          title: t('landing.features.sprintAssistant'),
+          description: t('landing.features.sprintAssistantDesc')
         },
         {
           icon: BarChart,
-          title: "Smart Backlog Analysis",
-          description: "AI spots stale items and suggests priorities"
+          title: t('landing.features.backlogAnalysis'),
+          description: t('landing.features.backlogAnalysisDesc')
         }
       ]
     },
     {
-      category: "Epic & Project Management",
+      category: t('landing.features.epicProject'),
       features: [
         {
           icon: GitBranch,
-          title: "Epic Tracking",
-          description: "Manage epics with dependency mapping and progress visualization"
+          title: t('landing.features.epicTracking'),
+          description: t('landing.features.epicTrackingDesc')
         },
         {
           icon: Target,
-          title: "Project Command Centre",
-          description: "Centralized view of all projects and team collaboration"
+          title: t('landing.features.commandCentre'),
+          description: t('landing.features.commandCentreDesc')
         }
       ]
     },
     {
-      category: "Agile Ceremonies",
+      category: t('landing.features.ceremonies'),
       features: [
         {
           icon: Calendar,
-          title: "Retrospective Management",
-          description: "AI-generated insights from team feedback and retrospective data"
+          title: t('landing.features.retroManagement'),
+          description: t('landing.features.retroManagementDesc')
         },
         {
           icon: Users,
-          title: "Daily Standups",
-          description: "Streamlined standups with automated summaries"
+          title: t('landing.features.dailyStandups'),
+          description: t('landing.features.dailyStandupsDesc')
         }
       ]
     },
     {
-      category: "Integration & Workflows",
+      category: t('landing.features.integrationWorkflows'),
       features: [
         {
           icon: Zap,
-          title: "Seamless Integrations",
-          description: "Connect JIRA, GitHub, and Microsoft 365 in minutes"
+          title: t('landing.features.seamlessIntegrations'),
+          description: t('landing.features.seamlessIntegrationsDesc')
         },
         {
           icon: BarChart,
-          title: "Team Analytics",
-          description: "Track performance and identify bottlenecks"
+          title: t('landing.features.teamAnalytics'),
+          description: t('landing.features.teamAnalyticsDesc')
         }
       ]
     }
@@ -70,10 +73,10 @@ export function FeaturesSection() {
       <div className="container mx-auto max-w-5xl">
         <header className="text-center mb-12">
           <h2 id="features-heading" className="text-3xl md:text-4xl font-bold mb-4">
-            Everything You Need for Agile Teams
+            {t('landing.features.title')}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Streamline your agile workflow from planning to delivery
+            {t('landing.features.subtitle')}
           </p>
         </header>
         

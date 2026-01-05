@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUserStats } from "@/hooks/useUserStats";
+import { useTranslation } from "react-i18next";
 
 export function CTASection() {
+  const { t } = useTranslation();
   const { data: userStats, isLoading: statsLoading } = useUserStats();
 
   return (
@@ -13,21 +15,21 @@ export function CTASection() {
         <Card className="bg-gradient-primary text-primary-foreground border-0">
           <CardContent className="p-12 text-center space-y-6">
             <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold">
-              Are You Ready to Transform to an Agile Workflow?
+              {t('landing.cta.title')}
             </h2>
             <p className="text-lg opacity-90">
               {statsLoading 
-                ? "Join our growing community" 
-                : `Join ${userStats?.totalUsers || 0} users already using SAAI`}
+                ? t('landing.cta.descriptionLoading')
+                : t('landing.cta.description', { count: userStats?.totalUsers || 0 })}
             </p>
             <Link to="/auth">
               <Button 
                 size="lg" 
                 variant="secondary" 
                 className="gap-2"
-                aria-label="Get started with SAAI for free"
+                aria-label={t('landing.cta.getFree')}
               >
-                Get Started Free
+                {t('landing.cta.getFree')}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             </Link>
