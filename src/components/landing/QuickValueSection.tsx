@@ -2,15 +2,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const QuickValueSection = () => {
+  const { t } = useTranslation();
+
   const benefits = [
-    "Set up your first project in minutes",
-    "AI assists with sprint planning from your backlog",
-    "Integrate with JIRA, GitHub & Microsoft 365",
-    "Get actionable insights from your retrospectives",
-    "Streamline ceremony preparation and admin work",
-    "Collaborate effectively with your entire team"
+    t('landing.quickValue.benefit1'),
+    t('landing.quickValue.benefit2'),
+    t('landing.quickValue.benefit3'),
+    t('landing.quickValue.benefit4'),
+    t('landing.quickValue.benefit5'),
+    t('landing.quickValue.benefit6')
   ];
 
   return (
@@ -22,10 +25,10 @@ export const QuickValueSection = () => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-3xl font-bold mb-3">
-                    Why Teams Choose SAAI
+                    {t('landing.quickValue.title')}
                   </h2>
                   <p className="text-muted-foreground">
-                    Everything you need to run agile at scale, powered by AI
+                    {t('landing.quickValue.subtitle')}
                   </p>
                 </div>
                 
@@ -40,7 +43,7 @@ export const QuickValueSection = () => {
 
                 <Link to="/auth">
                   <Button size="lg" className="w-full md:w-auto gap-2 group">
-                    Start Free - No Credit Card
+                    {t('landing.quickValue.cta')}
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
@@ -49,22 +52,22 @@ export const QuickValueSection = () => {
               <div className="space-y-4">
                 <Card className="bg-primary/5 border-primary/20">
                   <CardContent className="p-6">
-                    <div className="text-4xl font-bold text-primary mb-2">Quick Setup</div>
-                    <p className="text-sm text-muted-foreground">Get started in minutes with AI-powered sprint planning</p>
+                    <div className="text-4xl font-bold text-primary mb-2">{t('landing.quickValue.quickSetup')}</div>
+                    <p className="text-sm text-muted-foreground">{t('landing.quickValue.quickSetupDesc')}</p>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-green-500/5 border-green-500/20">
                   <CardContent className="p-6">
-                    <div className="text-4xl font-bold text-green-500 mb-2">AI-Powered</div>
-                    <p className="text-sm text-muted-foreground">Intelligent insights for better team performance</p>
+                    <div className="text-4xl font-bold text-green-500 mb-2">{t('landing.quickValue.aiPowered')}</div>
+                    <p className="text-sm text-muted-foreground">{t('landing.quickValue.aiPoweredDesc')}</p>
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-blue-500/5 border-blue-500/20">
                   <CardContent className="p-6">
-                    <div className="text-4xl font-bold text-blue-500 mb-2">Time Saver</div>
-                    <p className="text-sm text-muted-foreground">Streamline ceremony prep and admin work</p>
+                    <div className="text-4xl font-bold text-blue-500 mb-2">{t('landing.quickValue.timeSaver')}</div>
+                    <p className="text-sm text-muted-foreground">{t('landing.quickValue.timeSaverDesc')}</p>
                   </CardContent>
                 </Card>
               </div>
