@@ -61,9 +61,9 @@ export function ProjectMemberManager({ projectId, projectName }: ProjectMemberMa
   };
 
   const loadAvailableUsers = async () => {
-    // Get all approved users
+    // Get all approved users using profiles_safe view to protect email privacy
     const { data: approvedUsers, error } = await supabase
-      .from('profiles')
+      .from('profiles_safe')
       .select('id, email, full_name')
       .in('role', ['admin', 'member']);
 
