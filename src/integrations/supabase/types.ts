@@ -2664,6 +2664,36 @@ export type Database = {
           },
         ]
       }
+      token_access_audit: {
+        Row: {
+          accessed_at: string | null
+          action: string
+          id: string
+          ip_address: string | null
+          token_type: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          accessed_at?: string | null
+          action: string
+          id?: string
+          ip_address?: string | null
+          token_type: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          accessed_at?: string | null
+          action?: string
+          id?: string
+          ip_address?: string | null
+          token_type?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       token_expiry_notifications: {
         Row: {
           created_at: string | null
@@ -3735,6 +3765,13 @@ export type Database = {
           trend: string
           velocity: number
         }[]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
       }
       hash_ip_address: { Args: { ip: string }; Returns: string }
       initialize_epic_closure_review: {
