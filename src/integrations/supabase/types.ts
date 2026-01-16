@@ -3813,34 +3813,22 @@ export type Database = {
       }
       profiles_safe: {
         Row: {
-          anonymized: boolean | null
           avatar_url: string | null
           created_at: string | null
-          email: string | null
           full_name: string | null
           id: string | null
-          role: Database["public"]["Enums"]["app_role"] | null
-          updated_at: string | null
         }
         Insert: {
-          anonymized?: boolean | null
           avatar_url?: string | null
           created_at?: string | null
-          email?: never
-          full_name?: never
+          full_name?: string | null
           id?: string | null
-          role?: Database["public"]["Enums"]["app_role"] | null
-          updated_at?: string | null
         }
         Update: {
-          anonymized?: boolean | null
           avatar_url?: string | null
           created_at?: string | null
-          email?: never
-          full_name?: never
+          full_name?: string | null
           id?: string | null
-          role?: Database["public"]["Enums"]["app_role"] | null
-          updated_at?: string | null
         }
         Relationships: []
       }
@@ -3915,6 +3903,45 @@ export type Database = {
           id?: string | null
           is_valid?: boolean | null
           last_validated_at?: string | null
+          updated_at?: string | null
+          user_email?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Relationships: []
+      }
+      user_microsoft_tokens_safe: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          id: string | null
+          is_valid: boolean | null
+          last_validated_at: string | null
+          scopes: string[] | null
+          updated_at: string | null
+          user_email: string | null
+          user_id: string | null
+          validation_error: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          scopes?: string[] | null
+          updated_at?: string | null
+          user_email?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          scopes?: string[] | null
           updated_at?: string | null
           user_email?: string | null
           user_id?: string | null
