@@ -50,15 +50,13 @@ const Index = () => {
         setUserRole(roleData.role);
       }
 
-      // Redirect to Quick Start for first-time users
-      const hasSeenQuickStart = localStorage.getItem('seen_quick_start');
-      if (!hasSeenQuickStart) {
+      // No automatic redirect - user stays on landing page and can navigate manually
+      // Mark quick start as seen for future reference
+      if (!localStorage.getItem('seen_quick_start')) {
         localStorage.setItem('seen_quick_start', 'true');
-        navigate('/quick-start');
-        return;
       }
 
-      // Check onboarding progress
+      // Check onboarding progress for wizard (non-blocking)
       const { data: progressData } = await supabase
         .from('onboarding_progress')
         .select('*')
