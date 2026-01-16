@@ -88,13 +88,12 @@ export default function Auth() {
       return;
     }
 
-    // Check if user is already logged in
+    // Check if user is already logged in - redirect to landing page
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        // Check if user has completed getting started
-        const hasCompletedGettingStarted = localStorage.getItem("getting_started_completed");
-        navigate(hasCompletedGettingStarted ? "/dashboard" : "/getting-started");
+        // Authenticated users on /auth page go to landing to choose their destination
+        navigate("/");
       }
     };
     checkUser();
@@ -104,9 +103,8 @@ export default function Auth() {
       if (event === 'PASSWORD_RECOVERY') {
         setShowUpdatePassword(true);
       } else if (session && event === 'SIGNED_IN') {
-        // Check if user has completed getting started
-        const hasCompletedGettingStarted = localStorage.getItem("getting_started_completed");
-        navigate(hasCompletedGettingStarted ? "/dashboard" : "/getting-started");
+        // After sign in, redirect to landing page - user can navigate from there
+        navigate("/");
       }
     });
 
@@ -198,8 +196,8 @@ export default function Auth() {
         });
         
         if (!signInError) {
-          // Navigate to dashboard or workflows
-          navigate("/dashboard");
+          // Navigate to landing page - user can choose where to go
+          navigate("/");
         }
       }
     } catch (error: any) {
@@ -240,9 +238,8 @@ export default function Auth() {
           description: "Successfully signed in.",
         });
         
-        // Navigate based on user role (check authoritative user_roles table)
-        const hasSeenOnboarding = localStorage.getItem("onboarding_completed");
-        navigate(hasSeenOnboarding ? "/workflows" : "/");
+        // Navigate to landing page - user can choose where to go
+        navigate("/");
       }
     } catch (error: any) {
       toast({

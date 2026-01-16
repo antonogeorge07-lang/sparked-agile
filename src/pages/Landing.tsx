@@ -56,31 +56,7 @@ export default function Landing() {
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, []);
 
-  useEffect(() => {
-    const checkAuthAndPreferences = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        // Check user's preferred landing page
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('preferences')
-          .eq('id', session.user.id)
-          .single();
-        
-        const preferences = profile?.preferences as { landingPage?: string } | null;
-        const preferredPage = preferences?.landingPage;
-        
-        if (preferredPage) {
-          navigate(preferredPage);
-        } else {
-          // Fallback to workspace check for users without preference set
-          const hasCompletedWorkspace = localStorage.getItem("workspace_setup_completed");
-          navigate(hasCompletedWorkspace ? "/dashboard" : "/project-workspace");
-        }
-      }
-    };
-    checkAuthAndPreferences();
-  }, [navigate]);
+  // No automatic redirect for authenticated users - they can navigate manually
 
   const handleWatchDemo = () => setIsDemoOpen(true);
   const handleEarlyAccess = () => {
