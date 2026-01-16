@@ -143,6 +143,70 @@ export type Database = {
           },
         ]
       }
+      ai_suggestions: {
+        Row: {
+          confidence_score: number | null
+          content: string
+          created_at: string
+          id: string
+          item_id: string | null
+          metadata: Json | null
+          project_id: string
+          sprint_id: string | null
+          status: string
+          suggestion_type: string
+          title: string
+        }
+        Insert: {
+          confidence_score?: number | null
+          content: string
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          metadata?: Json | null
+          project_id: string
+          sprint_id?: string | null
+          status?: string
+          suggestion_type: string
+          title: string
+        }
+        Update: {
+          confidence_score?: number | null
+          content?: string
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          metadata?: Json | null
+          project_id?: string
+          sprint_id?: string | null
+          status?: string
+          suggestion_type?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_suggestions_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "native_backlog_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_suggestions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_suggestions_sprint_id_fkey"
+            columns: ["sprint_id"]
+            isOneToOne: false
+            referencedRelation: "native_sprints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_usage_logs: {
         Row: {
           cost_estimate: number | null
@@ -181,6 +245,47 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      board_columns: {
+        Row: {
+          color: string | null
+          created_at: string
+          id: string
+          is_done_column: boolean | null
+          name: string
+          position: number
+          project_id: string
+          wip_limit: number | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          is_done_column?: boolean | null
+          name: string
+          position?: number
+          project_id: string
+          wip_limit?: number | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          is_done_column?: boolean | null
+          name?: string
+          position?: number
+          project_id?: string
+          wip_limit?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "board_columns_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       ceremony_configs: {
         Row: {
@@ -1156,6 +1261,123 @@ export type Database = {
           },
         ]
       }
+      item_activity_log: {
+        Row: {
+          action_type: string
+          actor_id: string | null
+          created_at: string
+          id: string
+          item_id: string
+          new_value: string | null
+          old_value: string | null
+        }
+        Insert: {
+          action_type: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          item_id: string
+          new_value?: string | null
+          old_value?: string | null
+        }
+        Update: {
+          action_type?: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          item_id?: string
+          new_value?: string | null
+          old_value?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_activity_log_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "native_backlog_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      item_attachments: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          item_id: string
+          mime_type: string | null
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          item_id: string
+          mime_type?: string | null
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          item_id?: string
+          mime_type?: string | null
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_attachments_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "native_backlog_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      item_comments: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          id: string
+          is_ai_generated: boolean | null
+          item_id: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_ai_generated?: boolean | null
+          item_id: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_ai_generated?: boolean | null
+          item_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_comments_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "native_backlog_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       landing_feedback: {
         Row: {
           company: string | null
@@ -1223,6 +1445,144 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "lessons_learned_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      native_backlog_items: {
+        Row: {
+          acceptance_criteria: string[] | null
+          assignee_id: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          item_type: string
+          labels: string[] | null
+          parent_id: string | null
+          position: number
+          priority: string
+          project_id: string
+          reporter_id: string | null
+          sprint_id: string | null
+          status: string
+          story_points: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          acceptance_criteria?: string[] | null
+          assignee_id?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          item_type?: string
+          labels?: string[] | null
+          parent_id?: string | null
+          position?: number
+          priority?: string
+          project_id: string
+          reporter_id?: string | null
+          sprint_id?: string | null
+          status?: string
+          story_points?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          acceptance_criteria?: string[] | null
+          assignee_id?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          item_type?: string
+          labels?: string[] | null
+          parent_id?: string | null
+          position?: number
+          priority?: string
+          project_id?: string
+          reporter_id?: string | null
+          sprint_id?: string | null
+          status?: string
+          story_points?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "native_backlog_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "native_backlog_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "native_backlog_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "native_backlog_items_sprint_id_fkey"
+            columns: ["sprint_id"]
+            isOneToOne: false
+            referencedRelation: "native_sprints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      native_sprints: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          end_date: string
+          goal: string | null
+          id: string
+          name: string
+          project_id: string
+          start_date: string
+          status: string
+          updated_at: string
+          velocity_committed: number | null
+          velocity_completed: number | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          end_date: string
+          goal?: string | null
+          id?: string
+          name: string
+          project_id: string
+          start_date: string
+          status?: string
+          updated_at?: string
+          velocity_committed?: number | null
+          velocity_completed?: number | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          end_date?: string
+          goal?: string | null
+          id?: string
+          name?: string
+          project_id?: string
+          start_date?: string
+          status?: string
+          updated_at?: string
+          velocity_committed?: number | null
+          velocity_completed?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "native_sprints_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "pmi_projects"
@@ -2182,6 +2542,44 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      sprint_burndown: {
+        Row: {
+          added_points: number
+          completed_points: number
+          created_at: string
+          id: string
+          remaining_points: number
+          snapshot_date: string
+          sprint_id: string
+        }
+        Insert: {
+          added_points?: number
+          completed_points?: number
+          created_at?: string
+          id?: string
+          remaining_points?: number
+          snapshot_date: string
+          sprint_id: string
+        }
+        Update: {
+          added_points?: number
+          completed_points?: number
+          created_at?: string
+          id?: string
+          remaining_points?: number
+          snapshot_date?: string
+          sprint_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sprint_burndown_sprint_id_fkey"
+            columns: ["sprint_id"]
+            isOneToOne: false
+            referencedRelation: "native_sprints"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sprint_planning_sessions: {
         Row: {
@@ -3779,6 +4177,10 @@ export type Database = {
         Returns: string
       }
       is_admin: { Args: { user_id: string }; Returns: boolean }
+      is_pmi_project_member: {
+        Args: { p_project_id: string }
+        Returns: boolean
+      }
       is_project_member: {
         Args: { _project_id: string; _user_id: string }
         Returns: boolean
