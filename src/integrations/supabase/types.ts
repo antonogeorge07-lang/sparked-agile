@@ -2086,6 +2086,13 @@ export type Database = {
             referencedRelation: "user_slack_tokens"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "project_slack_channels_slack_token_id_fkey"
+            columns: ["slack_token_id"]
+            isOneToOne: false
+            referencedRelation: "user_slack_tokens_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       project_tasks: {
@@ -2553,6 +2560,72 @@ export type Database = {
           legal_basis?: string | null
           query_context?: string | null
           table_accessed?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      slack_api_rate_limits: {
+        Row: {
+          action_type: string
+          created_at: string | null
+          id: string
+          request_count: number | null
+          user_id: string
+          window_start: string | null
+        }
+        Insert: {
+          action_type: string
+          created_at?: string | null
+          id?: string
+          request_count?: number | null
+          user_id: string
+          window_start?: string | null
+        }
+        Update: {
+          action_type?: string
+          created_at?: string | null
+          id?: string
+          request_count?: number | null
+          user_id?: string
+          window_start?: string | null
+        }
+        Relationships: []
+      }
+      slack_webhook_audit: {
+        Row: {
+          action_type: string
+          created_at: string | null
+          error_message: string | null
+          id: string
+          ip_address: string | null
+          success: boolean | null
+          target_channel: string | null
+          token_id: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action_type: string
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          ip_address?: string | null
+          success?: boolean | null
+          target_channel?: string | null
+          token_id: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action_type?: string
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          ip_address?: string | null
+          success?: boolean | null
+          target_channel?: string | null
+          token_id?: string
+          user_agent?: string | null
           user_id?: string
         }
         Relationships: []
@@ -4044,6 +4117,60 @@ export type Database = {
         }
         Relationships: []
       }
+      user_slack_tokens_safe: {
+        Row: {
+          channel_id: string | null
+          channel_name: string | null
+          created_at: string | null
+          has_access_token: boolean | null
+          has_bot_token: boolean | null
+          has_webhook: boolean | null
+          id: string | null
+          is_valid: boolean | null
+          last_validated_at: string | null
+          scopes: string[] | null
+          team_id: string | null
+          team_name: string | null
+          updated_at: string | null
+          user_id: string | null
+          validation_error: string | null
+        }
+        Insert: {
+          channel_id?: string | null
+          channel_name?: string | null
+          created_at?: string | null
+          has_access_token?: never
+          has_bot_token?: never
+          has_webhook?: never
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          scopes?: string[] | null
+          team_id?: string | null
+          team_name?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Update: {
+          channel_id?: string | null
+          channel_name?: string | null
+          created_at?: string | null
+          has_access_token?: never
+          has_bot_token?: never
+          has_webhook?: never
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          scopes?: string[] | null
+          team_id?: string | null
+          team_name?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Relationships: []
+      }
       user_subscription_info: {
         Row: {
           current_period_end: string | null
@@ -4095,6 +4222,15 @@ export type Database = {
           last_tested: string
         }[]
       }
+      check_slack_rate_limit: {
+        Args: {
+          p_action_type: string
+          p_max_requests?: number
+          p_user_id: string
+          p_window_minutes?: number
+        }
+        Returns: boolean
+      }
       check_user_role: {
         Args: {
           required_role: Database["public"]["Enums"]["app_role"]
@@ -4106,6 +4242,7 @@ export type Database = {
       cleanup_old_access_logs:
         | { Args: never; Returns: undefined }
         | { Args: { days_to_keep?: number }; Returns: number }
+      cleanup_slack_audit_logs: { Args: never; Returns: number }
       create_epic_progress_snapshot: {
         Args: { epic_id_param: string }
         Returns: undefined
@@ -4314,6 +4451,16 @@ export type Database = {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
       }
+      log_slack_webhook_usage: {
+        Args: {
+          p_action_type: string
+          p_error_message?: string
+          p_success?: boolean
+          p_target_channel?: string
+          p_token_id: string
+        }
+        Returns: undefined
+      }
       mask_email: {
         Args: { email_value: string; owner_id: string }
         Returns: string
@@ -4326,6 +4473,10 @@ export type Database = {
       toggle_integration_status: {
         Args: { integration_id: string; new_status: boolean }
         Returns: boolean
+      }
+      validate_slack_webhook_exists: {
+        Args: { p_token_id: string }
+        Returns: Json
       }
     }
     Enums: {
