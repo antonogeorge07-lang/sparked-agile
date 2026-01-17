@@ -1974,6 +1974,13 @@ export type Database = {
             foreignKeyName: "project_members_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
+            referencedRelation: "profiles_teammate_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "project_teammates"
             referencedColumns: ["id"]
           },
@@ -2290,6 +2297,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_teammate_safe"
             referencedColumns: ["id"]
           },
           {
@@ -3832,6 +3846,39 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles_teammate_safe: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string | null
+          last_activity_at: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: never
+          full_name?: string | null
+          id?: string | null
+          last_activity_at?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: never
+          full_name?: string | null
+          id?: string | null
+          last_activity_at?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       project_teammates: {
         Row: {
           avatar_url: string | null
@@ -3873,6 +3920,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_jira_tokens_safe: {
+        Row: {
+          cloud_id: string | null
+          created_at: string | null
+          id: string | null
+          is_valid: boolean | null
+          jira_email: string | null
+          jira_site_url: string | null
+          last_validated_at: string | null
+          oauth_provider: string | null
+          scopes: string[] | null
+          token_expires_at: string | null
+          updated_at: string | null
+          user_id: string | null
+          validation_error: string | null
+        }
+        Insert: {
+          cloud_id?: string | null
+          created_at?: string | null
+          id?: string | null
+          is_valid?: boolean | null
+          jira_email?: string | null
+          jira_site_url?: string | null
+          last_validated_at?: string | null
+          oauth_provider?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Update: {
+          cloud_id?: string | null
+          created_at?: string | null
+          id?: string | null
+          is_valid?: boolean | null
+          jira_email?: string | null
+          jira_site_url?: string | null
+          last_validated_at?: string | null
+          oauth_provider?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Relationships: []
       }
       user_microsoft_token_status: {
         Row: {
@@ -4008,10 +4103,9 @@ export type Database = {
         Returns: boolean
       }
       cleanup_expired_cache: { Args: never; Returns: number }
-      cleanup_old_access_logs: {
-        Args: { days_to_keep?: number }
-        Returns: number
-      }
+      cleanup_old_access_logs:
+        | { Args: never; Returns: undefined }
+        | { Args: { days_to_keep?: number }; Returns: number }
       create_epic_progress_snapshot: {
         Args: { epic_id_param: string }
         Returns: undefined
@@ -4222,6 +4316,10 @@ export type Database = {
       }
       mask_email: {
         Args: { email_value: string; owner_id: string }
+        Returns: string
+      }
+      mask_teammate_email: {
+        Args: { email: string; profile_id: string; viewer_id: string }
         Returns: string
       }
       sanitize_webhook_payload: { Args: { payload: Json }; Returns: Json }
