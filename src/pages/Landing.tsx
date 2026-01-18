@@ -18,6 +18,7 @@ import saaiLogo from "@/assets/saai-logo.png";
 import { PrivacyBanner } from "@/components/PrivacyBanner";
 import { Mail } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { PlatformPDFButton } from "@/components/PlatformPDFButton";
 import { useTranslation } from "react-i18next";
 
 // Lazy load heavier sections
@@ -86,6 +87,7 @@ export default function Landing() {
               </span>
             </Link>
             <div className="flex items-center gap-3">
+              <PlatformPDFButton variant="outline" size="sm" />
               <LanguageSwitcher />
               <Link to="/auth" className="hidden sm:block">
                 <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
