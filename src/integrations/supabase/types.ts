@@ -3313,13 +3313,11 @@ export type Database = {
           created_at: string
           encrypted_access_token: string | null
           encrypted_token: string | null
-          github_token: string | null
           github_username: string | null
           id: string
           is_valid: boolean | null
           last_validated_at: string | null
           oauth_provider: string | null
-          refresh_token: string | null
           refresh_token_encrypted: string | null
           scopes: string[] | null
           token_expires_at: string | null
@@ -3331,13 +3329,11 @@ export type Database = {
           created_at?: string
           encrypted_access_token?: string | null
           encrypted_token?: string | null
-          github_token?: string | null
           github_username?: string | null
           id?: string
           is_valid?: boolean | null
           last_validated_at?: string | null
           oauth_provider?: string | null
-          refresh_token?: string | null
           refresh_token_encrypted?: string | null
           scopes?: string[] | null
           token_expires_at?: string | null
@@ -3349,13 +3345,11 @@ export type Database = {
           created_at?: string
           encrypted_access_token?: string | null
           encrypted_token?: string | null
-          github_token?: string | null
           github_username?: string | null
           id?: string
           is_valid?: boolean | null
           last_validated_at?: string | null
           oauth_provider?: string | null
-          refresh_token?: string | null
           refresh_token_encrypted?: string | null
           scopes?: string[] | null
           token_expires_at?: string | null
@@ -3376,10 +3370,8 @@ export type Database = {
           is_valid: boolean | null
           jira_email: string
           jira_site_url: string
-          jira_token: string | null
           last_validated_at: string | null
           oauth_provider: string | null
-          refresh_token: string | null
           refresh_token_encrypted: string | null
           scopes: string[] | null
           token_expires_at: string | null
@@ -3397,10 +3389,8 @@ export type Database = {
           is_valid?: boolean | null
           jira_email: string
           jira_site_url: string
-          jira_token?: string | null
           last_validated_at?: string | null
           oauth_provider?: string | null
-          refresh_token?: string | null
           refresh_token_encrypted?: string | null
           scopes?: string[] | null
           token_expires_at?: string | null
@@ -3418,10 +3408,8 @@ export type Database = {
           is_valid?: boolean | null
           jira_email?: string
           jira_site_url?: string
-          jira_token?: string | null
           last_validated_at?: string | null
           oauth_provider?: string | null
-          refresh_token?: string | null
           refresh_token_encrypted?: string | null
           scopes?: string[] | null
           token_expires_at?: string | null
