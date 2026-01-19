@@ -12,7 +12,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
 import { exportDashboardToPowerPoint } from "@/utils/exportToPowerPoint";
-import { PlatformPDFButton } from "@/components/PlatformPDFButton";
 import { toast } from "sonner";
 import { WorkflowExecutionChart } from "@/components/charts/WorkflowExecutionChart";
 import { ActionItemsChart } from "@/components/charts/ActionItemsChart";
@@ -246,7 +245,6 @@ export default function Dashboard() {
                 <FileDown className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">PPT</span>
               </Button>
-              <PlatformPDFButton variant="outline" size="sm" className="gap-1 sm:gap-2 flex-1 sm:flex-none text-xs sm:text-sm" />
             </div>
           </div>
 
