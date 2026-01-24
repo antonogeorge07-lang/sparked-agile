@@ -246,6 +246,94 @@ export type Database = {
         }
         Relationships: []
       }
+      approval_requests: {
+        Row: {
+          approved_at: string | null
+          approver_id: string | null
+          created_at: string | null
+          current_value: Json | null
+          description: string | null
+          due_date: string | null
+          email_sent_at: string | null
+          epic_id: string | null
+          id: string
+          priority: string | null
+          project_id: string | null
+          proposed_value: Json | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          request_type: string
+          requester_id: string
+          status: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approver_id?: string | null
+          created_at?: string | null
+          current_value?: Json | null
+          description?: string | null
+          due_date?: string | null
+          email_sent_at?: string | null
+          epic_id?: string | null
+          id?: string
+          priority?: string | null
+          project_id?: string | null
+          proposed_value?: Json | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          request_type: string
+          requester_id: string
+          status?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          approver_id?: string | null
+          created_at?: string | null
+          current_value?: Json | null
+          description?: string | null
+          due_date?: string | null
+          email_sent_at?: string | null
+          epic_id?: string | null
+          id?: string
+          priority?: string | null
+          project_id?: string | null
+          proposed_value?: Json | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          request_type?: string
+          requester_id?: string
+          status?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approval_requests_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_requests_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_requests_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       board_columns: {
         Row: {
           color: string | null
@@ -530,6 +618,130 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "features"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      digest_history: {
+        Row: {
+          ai_summary: string | null
+          delivery_status: string | null
+          digest_content: Json
+          id: string
+          project_id: string | null
+          sent_at: string | null
+          subscription_id: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          delivery_status?: string | null
+          digest_content: Json
+          id?: string
+          project_id?: string | null
+          sent_at?: string | null
+          subscription_id?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_summary?: string | null
+          delivery_status?: string | null
+          digest_content?: Json
+          id?: string
+          project_id?: string | null
+          sent_at?: string | null
+          subscription_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "digest_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "digest_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+          {
+            foreignKeyName: "digest_history_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "digest_subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      digest_subscriptions: {
+        Row: {
+          created_at: string | null
+          delivery_day: number | null
+          delivery_hour: number | null
+          digest_type: string
+          email_address: string | null
+          id: string
+          include_metrics: boolean | null
+          include_recommendations: boolean | null
+          include_risks: boolean | null
+          include_wins: boolean | null
+          is_active: boolean | null
+          last_sent_at: string | null
+          project_id: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          delivery_day?: number | null
+          delivery_hour?: number | null
+          digest_type?: string
+          email_address?: string | null
+          id?: string
+          include_metrics?: boolean | null
+          include_recommendations?: boolean | null
+          include_risks?: boolean | null
+          include_wins?: boolean | null
+          is_active?: boolean | null
+          last_sent_at?: string | null
+          project_id?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          delivery_day?: number | null
+          delivery_hour?: number | null
+          digest_type?: string
+          email_address?: string | null
+          id?: string
+          include_metrics?: boolean | null
+          include_recommendations?: boolean | null
+          include_risks?: boolean | null
+          include_wins?: boolean | null
+          is_active?: boolean | null
+          last_sent_at?: string | null
+          project_id?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "digest_subscriptions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "digest_subscriptions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -2966,6 +3178,114 @@ export type Database = {
           },
         ]
       }
+      stakeholder_alerts: {
+        Row: {
+          alert_type: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_triggered_at: string | null
+          notify_email: boolean | null
+          notify_teams: boolean | null
+          project_id: string | null
+          threshold_operator: string | null
+          threshold_value: number | null
+          user_id: string
+        }
+        Insert: {
+          alert_type: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_triggered_at?: string | null
+          notify_email?: boolean | null
+          notify_teams?: boolean | null
+          project_id?: string | null
+          threshold_operator?: string | null
+          threshold_value?: number | null
+          user_id: string
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_triggered_at?: string | null
+          notify_email?: boolean | null
+          notify_teams?: boolean | null
+          project_id?: string | null
+          threshold_operator?: string | null
+          threshold_value?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stakeholder_alerts_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stakeholder_alerts_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
+      stakeholder_widget_configs: {
+        Row: {
+          config: Json | null
+          created_at: string | null
+          id: string
+          is_visible: boolean | null
+          position: number
+          project_id: string | null
+          updated_at: string | null
+          user_id: string
+          widget_type: string
+        }
+        Insert: {
+          config?: Json | null
+          created_at?: string | null
+          id?: string
+          is_visible?: boolean | null
+          position?: number
+          project_id?: string | null
+          updated_at?: string | null
+          user_id: string
+          widget_type: string
+        }
+        Update: {
+          config?: Json | null
+          created_at?: string | null
+          id?: string
+          is_visible?: boolean | null
+          position?: number
+          project_id?: string | null
+          updated_at?: string | null
+          user_id?: string
+          widget_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stakeholder_widget_configs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stakeholder_widget_configs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       standup_updates: {
         Row: {
           blockers: string | null
@@ -4303,6 +4623,10 @@ export type Database = {
           status: string
         }[]
       }
+      get_pending_approvals_count: {
+        Args: { p_user_id: string }
+        Returns: number
+      }
       get_platform_cost_analytics: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
@@ -4429,6 +4753,10 @@ export type Database = {
       }
       is_project_member: {
         Args: { _project_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_project_stakeholder: {
+        Args: { p_project_id: string; p_user_id: string }
         Returns: boolean
       }
       is_workspace_member: {
