@@ -109,24 +109,13 @@ export function StakeholderWidgetCard({ widgetType, projectId, config }: Stakeho
     setData({ milestones: milestones || [] });
   };
 
-  const loadRiskData = async () => {
-    const { data: risks } = await supabase
-      .from('project_risks')
-      .select('title, probability, impact, status')
-      .eq('project_id', projectId)
-      .order('created_at', { ascending: false })
-      .limit(5);
-
-    setData({ risks: risks || [] });
-  };
-
   const loadSprintProgress = async () => {
     const { data: sprint } = await supabase
       .from('native_sprints')
       .select('name, velocity_committed, velocity_completed, status')
       .eq('project_id', projectId)
       .eq('status', 'active')
-      .single();
+      .maybeSingle();
 
     if (sprint) {
       const progress = sprint.velocity_committed > 0 
