@@ -1,103 +1,135 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Play, ArrowRight, CheckCircle2, Mail, GitBranch, Clock } from "lucide-react";
+import { Play, ArrowRight, CheckCircle2, Mail, GitBranch, Clock, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 interface ProofSectionProps {
   onWatchDemo: () => void;
 }
 
 export function ProofSection({ onWatchDemo }: ProofSectionProps) {
+  const [activeStep, setActiveStep] = useState(0);
+  
+  const steps = [
+    { label: "Connect", desc: "Link your GitHub or JIRA in one click" },
+    { label: "Configure", desc: "Choose digest frequency and preferences" },
+    { label: "Receive", desc: "Get daily AI summaries in your inbox" },
+  ];
+
   return (
-    <section className="py-16 px-4" aria-labelledby="proof-heading">
+    <section className="py-20 px-4" aria-labelledby="proof-heading">
       <div className="container mx-auto max-w-5xl">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Left: Proof points */}
-          <div className="space-y-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Interactive steps */}
+          <div className="space-y-8">
             <div>
-              <Badge variant="outline" className="mb-3 border-tier-free/30 text-tier-free">How It Works</Badge>
-              <h2 id="proof-heading" className="text-2xl md:text-3xl font-bold mb-3">
-                From Setup to Inbox in 2 Minutes
+              <Badge variant="outline" className="mb-4 border-tier-free/30 text-tier-free gap-1.5">
+                <Clock className="h-3 w-3" />
+                2-minute setup
+              </Badge>
+              <h2 id="proof-heading" className="text-3xl md:text-4xl font-bold font-heading mb-4">
+                From zero to insights
               </h2>
-              <p className="text-muted-foreground">
-                Connect your GitHub or JIRA, and start receiving daily digests. No complex configuration required.
+              <p className="text-muted-foreground text-lg">
+                No complex configuration. No daily logins required.
               </p>
             </div>
 
+            {/* Interactive step indicators */}
             <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-tier-free/10 flex items-center justify-center text-sm font-medium text-tier-free">1</div>
-                <span className="text-sm">Connect your GitHub repository or JIRA board</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-tier-free/10 flex items-center justify-center text-sm font-medium text-tier-free">2</div>
-                <span className="text-sm">Choose your digest frequency and preferences</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-tier-free/10 flex items-center justify-center text-sm font-medium text-tier-free">3</div>
-                <span className="text-sm">Receive daily emails with your team's progress</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="h-5 w-5 text-tier-free flex-shrink-0" />
-                <span className="text-sm font-medium">That's it. No daily logins needed.</span>
-              </div>
+              {steps.map((step, i) => (
+                <button
+                  key={i}
+                  className={`w-full text-left p-4 rounded-xl transition-all duration-300 group
+                    ${activeStep === i 
+                      ? 'bg-tier-free/10 border-2 border-tier-free/30 shadow-sm' 
+                      : 'bg-muted/50 border-2 border-transparent hover:bg-muted'}`}
+                  onMouseEnter={() => setActiveStep(i)}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300
+                      ${activeStep === i 
+                        ? 'bg-tier-free text-tier-free-foreground scale-110' 
+                        : 'bg-muted-foreground/20 text-muted-foreground group-hover:bg-muted-foreground/30'}`}>
+                      {i + 1}
+                    </div>
+                    <div>
+                      <div className="font-semibold">{step.label}</div>
+                      <div className={`text-sm transition-all duration-300 ${activeStep === i ? 'text-foreground' : 'text-muted-foreground'}`}>
+                        {step.desc}
+                      </div>
+                    </div>
+                    {activeStep === i && (
+                      <CheckCircle2 className="h-5 w-5 text-tier-free ml-auto animate-scale-in" />
+                    )}
+                  </div>
+                </button>
+              ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link to="/auth">
-                <Button className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90">
+                <Button size="lg" className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90">
                   Get Started Free
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button variant="outline" className="gap-2" onClick={onWatchDemo}>
+              <Button variant="outline" size="lg" className="gap-2" onClick={onWatchDemo}>
                 <Play className="h-4 w-4" />
                 Watch Demo
               </Button>
             </div>
           </div>
 
-          {/* Right: Visual demo card - Email Preview */}
-          <Card className="p-1 bg-gradient-to-br from-tier-free/5 to-primary/5 border-tier-free/20">
+          {/* Right: Animated email preview */}
+          <Card className="relative p-1 bg-gradient-to-br from-tier-free/10 via-transparent to-primary/10 border-tier-free/20 overflow-hidden group">
+            {/* Shimmer effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            
             <div className="bg-card rounded-lg p-6 space-y-4">
-              {/* Mock email header */}
-              <div className="flex items-center justify-between border-b border-border pb-3">
+              {/* Email header */}
+              <div className="flex items-center justify-between border-b border-border pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center">
+                  <div className="w-11 h-11 rounded-full bg-gradient-primary flex items-center justify-center shadow-lg">
                     <Mail className="h-5 w-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">Daily Digest - Dec 23</div>
-                    <div className="text-xs text-muted-foreground">from SAAI Digest</div>
+                    <div className="font-semibold">Your Daily Digest</div>
+                    <div className="text-xs text-muted-foreground">from SAAI • Today at 9:00 AM</div>
                   </div>
                 </div>
-                <Badge className="bg-tier-free/10 text-tier-free border-tier-free/20 text-xs">
-                  <Clock className="h-3 w-3 mr-1" />
-                  9:00 AM
+                <Badge className="bg-tier-free/10 text-tier-free border-tier-free/20 text-xs animate-pulse">
+                  New
                 </Badge>
               </div>
               
-              {/* Mock email content - Example format */}
+              {/* Email content cards */}
               <div className="space-y-3">
-                <div className="p-3 bg-muted/50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-1">
-                    <GitBranch className="h-4 w-4 text-tier-free" />
-                    <span className="text-sm font-medium">Recent commits</span>
+                <div className="p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors cursor-default group/card">
+                  <div className="flex items-center gap-3 mb-2">
+                    <GitBranch className="h-5 w-5 text-tier-free" />
+                    <span className="font-medium">12 commits merged</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Your team's merged PRs and changes</p>
+                  <p className="text-sm text-muted-foreground">Auth refactor, API optimization, bug fixes...</p>
                 </div>
-                <div className="p-3 bg-muted/50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-1">
-                    <CheckCircle2 className="h-4 w-4 text-tier-free" />
-                    <span className="text-sm font-medium">Tickets completed</span>
+                
+                <div className="p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors cursor-default">
+                  <div className="flex items-center gap-3 mb-2">
+                    <CheckCircle2 className="h-5 w-5 text-tier-free" />
+                    <span className="font-medium">8 tasks completed</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Sprint progress and velocity trends</p>
+                  <p className="text-sm text-muted-foreground">Sprint velocity up 15% from last week</p>
                 </div>
-                <div className="p-3 bg-tier-free/5 rounded-lg border border-tier-free/20">
-                  <div className="text-xs text-tier-free font-medium mb-1">AI Summary</div>
-                  <p className="text-xs text-muted-foreground">
-                    Personalized insights based on your team's actual activity
+                
+                <div className="p-4 bg-gradient-to-r from-tier-free/10 to-primary/5 rounded-xl border border-tier-free/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="h-4 w-4 text-tier-free" />
+                    <span className="text-sm font-medium text-tier-free">AI Summary</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    "Great progress on the auth module. Consider prioritizing the API rate limiting before the demo on Friday."
                   </p>
                 </div>
               </div>

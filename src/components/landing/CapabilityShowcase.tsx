@@ -1,127 +1,124 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { Mail, GitBranch, BarChart3, Zap, Users, Target, Calendar, MessageSquare } from "lucide-react";
+import { Mail, GitBranch, BarChart3, Zap, Users, Target, Calendar, MessageSquare, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export function CapabilityShowcase() {
   const { t } = useTranslation();
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const freeCapabilities = [
+  const capabilities = [
     {
       icon: Mail,
-      titleKey: "landing.capabilities.dailyDigest",
-      descKey: "landing.capabilities.dailyDigestDesc",
+      title: "Daily Digest",
+      desc: "AI-curated team updates delivered to your inbox every morning",
+      tier: "free" as const,
     },
     {
       icon: GitBranch,
-      titleKey: "landing.capabilities.githubActivity",
-      descKey: "landing.capabilities.githubActivityDesc",
+      title: "GitHub Sync",
+      desc: "Automatic commit summaries and PR tracking",
+      tier: "free" as const,
     },
     {
       icon: BarChart3,
-      titleKey: "landing.capabilities.sprintHighlights",
-      descKey: "landing.capabilities.sprintHighlightsDesc",
+      title: "Sprint Insights",
+      desc: "Velocity trends and progress visualization",
+      tier: "free" as const,
     },
-    {
-      icon: Zap,
-      titleKey: "landing.capabilities.basicAI",
-      descKey: "landing.capabilities.basicAIDesc",
-    },
-  ];
-
-  const proCapabilities = [
     {
       icon: Calendar,
-      titleKey: "landing.capabilities.sprintCeremonies",
-      descKey: "landing.capabilities.sprintCeremoniesDesc",
+      title: "Ceremonies",
+      desc: "Standup, planning, review & retro automation",
+      tier: "pro" as const,
     },
     {
       icon: Target,
-      titleKey: "landing.capabilities.epicManagement",
-      descKey: "landing.capabilities.epicManagementDesc",
+      title: "Epic Management",
+      desc: "ROI tracking and milestone monitoring",
+      tier: "pro" as const,
     },
     {
       icon: Users,
-      titleKey: "landing.capabilities.teamCollaboration",
-      descKey: "landing.capabilities.teamCollaborationDesc",
-    },
-    {
-      icon: MessageSquare,
-      titleKey: "landing.capabilities.aiSprintPlanning",
-      descKey: "landing.capabilities.aiSprintPlanningDesc",
+      title: "Team Collaboration",
+      desc: "Real-time presence and activity feeds",
+      tier: "pro" as const,
     },
   ];
 
   return (
-    <section className="py-16 px-4 bg-muted/30" aria-labelledby="capabilities-heading">
-      <div className="container mx-auto max-w-6xl">
-        {/* Free Tier */}
-        <div className="mb-12">
-          <header className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3 opacity-0 animate-fade-in">
-              <TierBadge tier="free" />
-              <span className="text-sm text-muted-foreground">{t('landing.capabilities.freeIncluded')}</span>
-            </div>
-            <h2 id="capabilities-heading" className="text-2xl md:text-3xl font-bold font-heading mb-3 opacity-0 animate-fade-in-up animation-delay-100">
-              {t('landing.capabilities.freeTitle')}
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200">
-              {t('landing.capabilities.freeDescription')}
-            </p>
-          </header>
+    <section className="py-20 px-4 bg-muted/30 relative overflow-hidden" aria-labelledby="capabilities-heading">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--tier-free)/0.1)_0%,transparent_50%)]" />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,hsl(var(--tier-pro)/0.1)_0%,transparent_50%)]" />
+      </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {freeCapabilities.map((cap, index) => (
+      <div className="container mx-auto max-w-5xl relative z-10">
+        <header className="text-center mb-12">
+          <h2 id="capabilities-heading" className="text-3xl md:text-4xl font-bold font-heading mb-4 opacity-0 animate-fade-in-up">
+            Everything you need, nothing you don't
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200">
+            Start free with daily digests. Upgrade when you need full agile orchestration.
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {capabilities.map((cap, index) => {
+            const isFree = cap.tier === "free";
+            const isHovered = hoveredCard === index;
+            
+            return (
               <Card 
-                key={index} 
-                className={`p-5 hover:border-tier-free/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group border-tier-free/20 opacity-0 animate-fade-in-up`}
-                style={{ animationDelay: `${300 + index * 100}ms` }}
+                key={index}
+                className={`group relative p-6 cursor-pointer transition-all duration-300 overflow-hidden
+                  ${isHovered ? 'scale-[1.02] shadow-elevated' : 'hover:shadow-card'}
+                  ${isFree ? 'border-tier-free/20 hover:border-tier-free/40' : 'border-tier-pro/20 hover:border-tier-pro/40'}
+                  opacity-0 animate-fade-in-up`}
+                style={{ animationDelay: `${200 + index * 80}ms` }}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-tier-free/10 flex items-center justify-center group-hover:bg-tier-free/20 group-hover:scale-110 transition-all duration-300">
-                    <cap.icon className="h-5 w-5 text-tier-free" />
+                {/* Hover gradient overlay */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                  ${isFree ? 'bg-gradient-to-br from-tier-free/5 to-transparent' : 'bg-gradient-to-br from-tier-pro/5 to-transparent'}`} 
+                />
+                
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
+                      ${isFree ? 'bg-tier-free/10 group-hover:bg-tier-free/20' : 'bg-tier-pro/10 group-hover:bg-tier-pro/20'}`}>
+                      <cap.icon className={`h-6 w-6 transition-transform duration-300 group-hover:rotate-[-5deg]
+                        ${isFree ? 'text-tier-free' : 'text-tier-pro'}`} />
+                    </div>
+                    <TierBadge tier={cap.tier} className="text-xs" />
                   </div>
+                  
+                  <h3 className="font-semibold font-heading text-lg mb-2 group-hover:text-foreground transition-colors">
+                    {cap.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {cap.desc}
+                  </p>
                 </div>
-                <h3 className="font-semibold font-heading mb-1">{t(cap.titleKey)}</h3>
-                <p className="text-sm text-muted-foreground">{t(cap.descKey)}</p>
               </Card>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
-        {/* Pro Tier */}
-        <div>
-          <header className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3 opacity-0 animate-fade-in animation-delay-700">
-              <TierBadge tier="pro" />
-              <Badge variant="secondary" className="text-xs">{t('landing.capabilities.betaFree')}</Badge>
-            </div>
-            <h3 className="text-2xl md:text-3xl font-bold font-heading mb-3 opacity-0 animate-fade-in-up animation-delay-700">
-              {t('landing.capabilities.proTitle')}
-            </h3>
-            <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-700">
-              {t('landing.capabilities.proDescription')}
-            </p>
-          </header>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {proCapabilities.map((cap, index) => (
-              <Card 
-                key={index} 
-                className={`p-5 hover:border-tier-pro/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group border-tier-pro/20 bg-card/50 opacity-0 animate-fade-in-up`}
-                style={{ animationDelay: `${800 + index * 100}ms` }}
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-tier-pro/10 flex items-center justify-center group-hover:bg-tier-pro/20 group-hover:scale-110 transition-all duration-300">
-                    <cap.icon className="h-5 w-5 text-tier-pro" />
-                  </div>
-                </div>
-                <h3 className="font-semibold font-heading mb-1">{t(cap.titleKey)}</h3>
-                <p className="text-sm text-muted-foreground">{t(cap.descKey)}</p>
-              </Card>
-            ))}
-          </div>
+        {/* CTA */}
+        <div className="text-center mt-10 opacity-0 animate-fade-in animation-delay-700">
+          <Link to="/auth">
+            <Button variant="outline" className="gap-2 group">
+              See all features
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
