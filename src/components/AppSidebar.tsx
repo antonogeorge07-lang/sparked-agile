@@ -8,6 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
 import { supabase } from "@/integrations/supabase/client";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Sidebar,
   SidebarContent,
@@ -22,7 +23,7 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface MenuItem {
-  title: string;
+  titleKey: string;
   url: string;
   icon: LucideIcon;
   tour?: string;
@@ -30,7 +31,7 @@ interface MenuItem {
 }
 
 interface MenuSection {
-  label: string;
+  labelKey: string;
   defaultOpen: boolean;
   adminOnly?: boolean;
   items: MenuItem[];
@@ -39,59 +40,59 @@ interface MenuSection {
 // Simplified menu structure with 4 main groups
 const menuSections: MenuSection[] = [
   {
-    label: "Get Started",
+    labelKey: "sidebar.getStarted",
     defaultOpen: true,
     items: [
-      { title: "Home", url: "/home", icon: Home },
-      { title: "Quick Start", url: "/quick-start", icon: Star, tour: "quick-start" },
-      { title: "My Workspace", url: "/my-projects", icon: FolderKanban },
+      { titleKey: "sidebar.home", url: "/home", icon: Home },
+      { titleKey: "sidebar.quickStart", url: "/quick-start", icon: Star, tour: "quick-start" },
+      { titleKey: "sidebar.myWorkspace", url: "/my-projects", icon: FolderKanban },
     ]
   },
   {
-    label: "Plan & Track",
+    labelKey: "sidebar.planAndTrack",
     defaultOpen: true,
     items: [
-      { title: "Dashboard", url: "/dashboard", icon: BarChart3, tour: "dashboard" },
-      { title: "Command Centre", url: "/project-command-centre", icon: Briefcase, tour: "command-centre" },
-      { title: "Epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
-      { title: "Sprint Planning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
+      { titleKey: "sidebar.dashboard", url: "/dashboard", icon: BarChart3, tour: "dashboard" },
+      { titleKey: "sidebar.commandCentre", url: "/project-command-centre", icon: Briefcase, tour: "command-centre" },
+      { titleKey: "sidebar.epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
+      { titleKey: "sidebar.sprintPlanning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
     ]
   },
   {
-    label: "Ceremonies",
+    labelKey: "sidebar.ceremonies",
     defaultOpen: false,
     items: [
-      { title: "Daily Standup", url: "/standup", icon: Users },
-      { title: "Sprint Review", url: "/sprint-review-coordinator", icon: Presentation },
-      { title: "Retrospective", url: "/retrospective", icon: Calendar },
-      { title: "Backlog Refinement", url: "/backlog-refinement", icon: ListFilter },
+      { titleKey: "sidebar.dailyStandup", url: "/standup", icon: Users },
+      { titleKey: "sidebar.sprintReview", url: "/sprint-review-coordinator", icon: Presentation },
+      { titleKey: "sidebar.retrospective", url: "/retrospective", icon: Calendar },
+      { titleKey: "sidebar.backlogRefinement", url: "/backlog-refinement", icon: ListFilter },
     ]
   },
   {
-    label: "Insights & Tools",
+    labelKey: "sidebar.insightsAndTools",
     defaultOpen: false,
     items: [
-      { title: "Flow Metrics", url: "/flow-metrics", icon: TrendingUp },
-      { title: "Workflows", url: "/workflows", icon: Workflow },
-      { title: "Integrations", url: "/integrations", icon: Network, tour: "integrations" },
-      { title: "Ceremony Setup", url: "/ceremony-setup", icon: Calendar },
+      { titleKey: "sidebar.flowMetrics", url: "/flow-metrics", icon: TrendingUp },
+      { titleKey: "sidebar.workflows", url: "/workflows", icon: Workflow },
+      { titleKey: "sidebar.integrations", url: "/integrations", icon: Network, tour: "integrations" },
+      { titleKey: "sidebar.ceremonySetup", url: "/ceremony-setup", icon: Calendar },
     ]
   },
   {
-    label: "Help",
+    labelKey: "sidebar.help",
     defaultOpen: false,
     items: [
-      { title: "User Guide", url: "/user-guide", icon: BookOpen },
+      { titleKey: "sidebar.userGuide", url: "/user-guide", icon: BookOpen },
     ]
   },
   {
-    label: "Admin",
+    labelKey: "sidebar.admin",
     adminOnly: true,
     defaultOpen: false,
     items: [
-      { title: "Platform Owner", url: "/platform-owner", icon: Crown, ownerOnly: true },
-      { title: "Admin Panel", url: "/admin", icon: Settings },
-      { title: "Security", url: "/security-incidents", icon: Shield },
+      { titleKey: "sidebar.platformOwner", url: "/platform-owner", icon: Crown, ownerOnly: true },
+      { titleKey: "sidebar.adminPanel", url: "/admin", icon: Settings },
+      { titleKey: "sidebar.security", url: "/security-incidents", icon: Shield },
     ]
   }
 ];
@@ -100,6 +101,7 @@ export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
   const { role, loading } = useUserRole();
+  const { t } = useTranslation();
   const [userEmail, setUserEmail] = React.useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
 
@@ -120,16 +122,16 @@ export function AppSidebar() {
     
     menuSections.forEach(section => {
       const hasActiveItem = section.items.some(item => item.url === currentPath);
-      newExpanded[section.label] = hasActiveItem || section.defaultOpen;
+      newExpanded[section.labelKey] = hasActiveItem || section.defaultOpen;
     });
     
     setExpandedSections(newExpanded);
   }, [location.pathname]);
 
-  const toggleSection = (label: string) => {
+  const toggleSection = (labelKey: string) => {
     setExpandedSections(prev => ({
       ...prev,
-      [label]: !prev[label]
+      [labelKey]: !prev[labelKey]
     }));
   };
 
@@ -176,7 +178,7 @@ export function AppSidebar() {
     return (
       <Sidebar collapsible="icon">
         <SidebarContent className="flex items-center justify-center pt-12">
-          <div className="text-muted-foreground text-sm">Loading...</div>
+          <div className="text-muted-foreground text-sm">{t('common.loading')}</div>
         </SidebarContent>
       </Sidebar>
     );
@@ -187,24 +189,24 @@ export function AppSidebar() {
       <SidebarContent className="pt-12">
         {filteredSections.length === 0 && !loading && (
           <div className="px-4 py-8 text-center text-muted-foreground text-sm">
-            <p>Please sign in to access features.</p>
+            <p>{t('common.signInRequired')}</p>
             <a href="/auth" className="mt-2 text-xs text-primary hover:underline block">
-              Sign In
+              {t('common.signInLink')}
             </a>
           </div>
         )}
         
         {filteredSections.map((section) => (
-          <SidebarGroup key={section.label}>
+          <SidebarGroup key={section.labelKey}>
             {open ? (
               <Collapsible
-                open={expandedSections[section.label]}
-                onOpenChange={() => toggleSection(section.label)}
+                open={expandedSections[section.labelKey]}
+                onOpenChange={() => toggleSection(section.labelKey)}
               >
                 <CollapsibleTrigger className="w-full">
                   <SidebarGroupLabel className="flex items-center justify-between text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2 hover:bg-muted/50 rounded-lg cursor-pointer transition-colors">
-                    <span>{section.label}</span>
-                    {expandedSections[section.label] ? (
+                    <span>{t(section.labelKey)}</span>
+                    {expandedSections[section.labelKey] ? (
                       <ChevronDown className="h-3.5 w-3.5" />
                     ) : (
                       <ChevronRight className="h-3.5 w-3.5" />
@@ -215,11 +217,11 @@ export function AppSidebar() {
                   <SidebarGroupContent>
                     <SidebarMenu>
                       {section.items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
+                        <SidebarMenuItem key={item.titleKey}>
                           <SidebarMenuButton 
                             asChild 
                             isActive={isActive(item.url)}
-                            tooltip={!open ? item.title : undefined}
+                            tooltip={!open ? t(item.titleKey) : undefined}
                           >
                             <Link 
                               to={item.url}
@@ -233,7 +235,7 @@ export function AppSidebar() {
                               `}
                             >
                               <item.icon className="h-4 w-4 shrink-0" />
-                              <span className="text-sm">{item.title}</span>
+                              <span className="text-sm">{t(item.titleKey)}</span>
                             </Link>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
@@ -246,11 +248,11 @@ export function AppSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {section.items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
+                    <SidebarMenuItem key={item.titleKey}>
                       <SidebarMenuButton 
                         asChild 
                         isActive={isActive(item.url)}
-                        tooltip={item.title}
+                        tooltip={t(item.titleKey)}
                       >
                         <Link 
                           to={item.url}

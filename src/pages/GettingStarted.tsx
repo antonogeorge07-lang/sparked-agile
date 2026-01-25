@@ -20,35 +20,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatAIResponse } from "@/utils/textFormatting";
-
-const quickActions = [
-  {
-    icon: FolderPlus,
-    title: "Create my first project",
-    description: "Set up a new project to start tracking work",
-    prompt: "I want to create my first project. Can you guide me through the process?"
-  },
-  {
-    icon: Compass,
-    title: "Take a tour",
-    description: "Let Omair show you around the platform",
-    prompt: "I'm new here and would like a tour of the platform. What are the main features and how do I use them?"
-  },
-  {
-    icon: Users,
-    title: "Set up my team",
-    description: "Add team members and configure your workspace",
-    prompt: "I want to set up my team. How do I add team members and configure my workspace?"
-  },
-  {
-    icon: BarChart3,
-    title: "Explore features",
-    description: "Discover what you can do with the platform",
-    prompt: "What are all the features available in this platform? I want to understand what I can do here."
-  }
-];
+import { useTranslation } from "react-i18next";
 
 export default function GettingStarted() {
+  const { t } = useTranslation();
   const [userName, setUserName] = useState<string>("");
   const [showChat, setShowChat] = useState(false);
   const [input, setInput] = useState("");
@@ -57,6 +32,33 @@ export default function GettingStarted() {
   const [isTyping, setIsTyping] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const quickActions = [
+    {
+      icon: FolderPlus,
+      titleKey: "gettingStarted.createProject",
+      descriptionKey: "gettingStarted.createProjectDesc",
+      prompt: "I want to create my first project. Can you guide me through the process?"
+    },
+    {
+      icon: Compass,
+      titleKey: "gettingStarted.takeTour",
+      descriptionKey: "gettingStarted.takeTourDesc",
+      prompt: "I'm new here and would like a tour of the platform. What are the main features and how do I use them?"
+    },
+    {
+      icon: Users,
+      titleKey: "gettingStarted.setupTeam",
+      descriptionKey: "gettingStarted.setupTeamDesc",
+      prompt: "I want to set up my team. How do I add team members and configure my workspace?"
+    },
+    {
+      icon: BarChart3,
+      titleKey: "gettingStarted.exploreFeatures",
+      descriptionKey: "gettingStarted.exploreFeaturesDesc",
+      prompt: "What are all the features available in this platform? I want to understand what I can do here."
+    }
+  ];
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -143,8 +145,8 @@ export default function GettingStarted() {
     } catch (error) {
       console.error("Chat error:", error);
       toast({
-        title: "Error",
-        description: "Failed to get response from Omair. Please try again.",
+        title: t('common.error'),
+        description: t('gettingStarted.errorOmair'),
         variant: "destructive"
       });
     } finally {
@@ -196,10 +198,10 @@ export default function GettingStarted() {
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Welcome{userName ? `, ${userName}` : ""}! 👋
+            {t('gettingStarted.welcome')}{userName ? `, ${userName}` : ""}! 👋
           </h1>
           <p className="text-muted-foreground text-lg">
-            I'm <span className="font-semibold text-primary">Omair</span>, your AI assistant. How can I help you get started today?
+            {t('gettingStarted.welcomeMessage')}
           </p>
         </motion.div>
 
@@ -216,7 +218,7 @@ export default function GettingStarted() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {quickActions.map((action, index) => (
                   <motion.div
-                    key={action.title}
+                    key={action.titleKey}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
@@ -232,10 +234,10 @@ export default function GettingStarted() {
                           </div>
                           <div className="flex-1">
                             <CardTitle className="text-base group-hover:text-primary transition-colors">
-                              {action.title}
+                              {t(action.titleKey)}
                             </CardTitle>
                             <CardDescription className="text-sm mt-1">
-                              {action.description}
+                              {t(action.descriptionKey)}
                             </CardDescription>
                           </div>
                           <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -256,11 +258,11 @@ export default function GettingStarted() {
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-2 mb-3">
                       <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm font-medium">Or ask me anything</span>
+                      <span className="text-sm font-medium">{t('gettingStarted.askAnything')}</span>
                     </div>
                     <div className="flex gap-2">
                       <Textarea
-                        placeholder="What would you like to do? I can help with projects, teams, workflows, and more..."
+                        placeholder={t('gettingStarted.askPlaceholder')}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => {
@@ -294,7 +296,7 @@ export default function GettingStarted() {
                 className="text-center"
               >
                 <Button variant="ghost" onClick={handleSkip} className="text-muted-foreground">
-                  Skip and go to Dashboard
+                  {t('gettingStarted.skipToDashboard')}
                 </Button>
               </motion.div>
             </motion.div>
@@ -311,8 +313,8 @@ export default function GettingStarted() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Bot className="h-5 w-5 text-primary" />
-                      <CardTitle className="text-base">Chat with Omair</CardTitle>
-                      <Badge variant="secondary" className="text-xs">AI Assistant</Badge>
+                      <CardTitle className="text-base">{t('gettingStarted.chatWithOmair')}</CardTitle>
+                      <Badge variant="secondary" className="text-xs">{t('gettingStarted.aiAssistant')}</Badge>
                     </div>
                     <Button 
                       variant="ghost" 
@@ -322,7 +324,7 @@ export default function GettingStarted() {
                         setMessages([]);
                       }}
                     >
-                      Start Over
+                      {t('common.startOver')}
                     </Button>
                   </div>
                 </CardHeader>
@@ -360,7 +362,7 @@ export default function GettingStarted() {
                 <div className="p-4 border-t">
                   <div className="flex gap-2">
                     <Textarea
-                      placeholder="Type your message..."
+                      placeholder={t('gettingStarted.askPlaceholder')}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={(e) => {
@@ -394,10 +396,10 @@ export default function GettingStarted() {
                   setShowChat(false);
                   setMessages([]);
                 }}>
-                  Back to Options
+                  {t('common.backToOptions')}
                 </Button>
                 <Button onClick={handleSkip}>
-                  Continue to Dashboard
+                  {t('common.continueToDashboard')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
