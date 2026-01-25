@@ -1,44 +1,46 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, Users, Target, Shield } from "lucide-react";
 import { useUserStats } from "@/hooks/useUserStats";
+import { useTranslation } from "react-i18next";
 
 export function ValuePropositionSection() {
+  const { t } = useTranslation();
   const { data: userStats, isLoading: statsLoading } = useUserStats();
 
   const roles = [
     {
       icon: Users,
-      title: "For Scrum Masters",
-      description: "Orchestrate ceremonies with confidence",
-      features: [
-        "Generate standup summaries and track blockers",
-        "Create sprint plans with AI-powered velocity analysis",
-        "Run retrospectives with AI-generated insights",
-        "Schedule and coordinate ceremonies with Microsoft 365 integration"
+      titleKey: "landing.value.scrumMasters",
+      descriptionKey: "landing.value.scrumMastersDesc",
+      featureKeys: [
+        "landing.value.scrumFeature1",
+        "landing.value.scrumFeature2",
+        "landing.value.scrumFeature3",
+        "landing.value.scrumFeature4"
       ],
       highlighted: false
     },
     {
       icon: Target,
-      title: "For Project Managers",
-      description: "Drive projects to successful completion",
-      features: [
-        "Monitor project health with flow metrics and burndown charts",
-        "Identify risks early with AI-powered backlog analysis",
-        "Track team velocity and predictability across multiple sprints",
-        "Generate executive-ready reports with one click"
+      titleKey: "landing.value.projectManagers",
+      descriptionKey: "landing.value.projectManagersDesc",
+      featureKeys: [
+        "landing.value.pmFeature1",
+        "landing.value.pmFeature2",
+        "landing.value.pmFeature3",
+        "landing.value.pmFeature4"
       ],
       highlighted: true
     },
     {
       icon: Shield,
-      title: "For Stakeholders",
-      description: "Stay informed without the noise",
-      features: [
-        "Access dashboards showing project progress and milestones",
-        "Review sprint outcomes and team achievements at a glance",
-        "Get summary reports and insights from ceremonies",
-        "Make data-driven decisions with AI-powered recommendations"
+      titleKey: "landing.value.stakeholders",
+      descriptionKey: "landing.value.stakeholdersDesc",
+      featureKeys: [
+        "landing.value.stakeholderFeature1",
+        "landing.value.stakeholderFeature2",
+        "landing.value.stakeholderFeature3",
+        "landing.value.stakeholderFeature4"
       ],
       highlighted: false
     }
@@ -49,11 +51,10 @@ export function ValuePropositionSection() {
       <div className="container mx-auto max-w-6xl">
         <header className="text-center mb-8 sm:mb-12">
           <h2 id="value-prop-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 px-2">
-            Built for Modern Agile Teams
+            {t('landing.value.title')}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4">
-            Whether you're running sprints, managing stakeholders, or driving project success, 
-            SAAI adapts to your workflow and amplifies your impact
+            {t('landing.value.subtitle')}
           </p>
         </header>
         
@@ -78,21 +79,21 @@ export function ValuePropositionSection() {
                     }`}
                   />
                 </div>
-                <CardTitle className="text-2xl">{role.title}</CardTitle>
+                <CardTitle className="text-2xl">{t(role.titleKey)}</CardTitle>
                 <CardDescription className="text-base">
-                  {role.description}
+                  {t(role.descriptionKey)}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <ul className="space-y-3" role="list">
-                  {role.features.map((feature, featureIndex) => (
+                  {role.featureKeys.map((featureKey, featureIndex) => (
                     <li key={featureIndex} className="flex gap-2 items-start">
                       <Check 
                         className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" 
                         aria-hidden="true"
                       />
                       <span className="text-sm text-muted-foreground">
-                        {feature}
+                        {t(featureKey)}
                       </span>
                     </li>
                   ))}
@@ -108,32 +109,32 @@ export function ValuePropositionSection() {
             <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`${statsLoading ? 'Loading' : userStats?.totalUsers || 0} active users`}>
               {statsLoading ? "..." : userStats?.totalUsers || 0}
             </p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Active Users</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{t('landing.value.activeUsers')}</p>
           </div>
           <div className="space-y-2">
             <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`${statsLoading ? 'Loading' : userStats?.locations.length || 0} countries`}>
               {statsLoading ? "..." : userStats?.locations.length || 0}
             </p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Countries</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{t('landing.value.countries')}</p>
           </div>
           <div className="space-y-2">
             <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label={`Plus ${statsLoading ? 'loading' : userStats?.recentSignups || 0} new users this month`}>
               {statsLoading ? "..." : `+${userStats?.recentSignups || 0}`}
             </p>
-            <p className="text-xs sm:text-sm text-muted-foreground">New users this month</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{t('landing.value.newThisMonth')}</p>
           </div>
           <div className="space-y-2">
             <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="Beta phase">
-              Beta
+              {t('common.beta')}
             </p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Free during beta phase</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{t('landing.value.betaPhase')}</p>
           </div>
         </div>
 
         {/* User Locations */}
         {!statsLoading && userStats && userStats.locations.length > 0 && (
           <div className="mt-12 p-6 rounded-lg bg-card border">
-            <h3 className="text-lg font-semibold mb-4 text-center">Our Global Community</h3>
+            <h3 className="text-lg font-semibold mb-4 text-center">{t('landing.value.globalCommunity')}</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {userStats.locations.map(loc => (
                 <div key={loc.location} className="text-center space-y-1">
