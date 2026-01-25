@@ -1296,6 +1296,51 @@ export type Database = {
           },
         ]
       }
+      gdpr_consent_history: {
+        Row: {
+          action: string
+          consent_given: boolean
+          consent_record_id: string
+          consent_text: string | null
+          consent_type: string
+          id: string
+          ip_address_hash: string | null
+          previous_value: boolean | null
+          record_hash: string
+          recorded_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          consent_given: boolean
+          consent_record_id: string
+          consent_text?: string | null
+          consent_type: string
+          id?: string
+          ip_address_hash?: string | null
+          previous_value?: boolean | null
+          record_hash: string
+          recorded_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          consent_given?: boolean
+          consent_record_id?: string
+          consent_text?: string | null
+          consent_type?: string
+          id?: string
+          ip_address_hash?: string | null
+          previous_value?: boolean | null
+          record_hash?: string
+          recorded_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       gdpr_consent_records: {
         Row: {
           consent_given: boolean
@@ -4557,6 +4602,15 @@ export type Database = {
       }
       enforce_ai_usage_data_retention: { Args: never; Returns: number }
       export_user_data: { Args: { target_user_id: string }; Returns: Json }
+      generate_consent_hash: {
+        Args: {
+          p_consent_given: boolean
+          p_consent_type: string
+          p_recorded_at: string
+          p_user_id: string
+        }
+        Returns: string
+      }
       get_aggregated_ai_usage_stats: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
@@ -4593,6 +4647,16 @@ export type Database = {
           request_count: number
           success_count: number
           usage_week: string
+        }[]
+      }
+      get_my_consent_status: {
+        Args: never
+        Returns: {
+          consent_given: boolean
+          consent_type: string
+          granted_at: string
+          history_count: number
+          withdrawn_at: string
         }[]
       }
       get_my_data_access_logs: {
@@ -4785,6 +4849,16 @@ export type Database = {
         Args: { email: string; profile_id: string; viewer_id: string }
         Returns: string
       }
+      record_consent_change: {
+        Args: {
+          p_consent_given: boolean
+          p_consent_text?: string
+          p_consent_type: string
+          p_ip_address?: string
+          p_user_agent?: string
+        }
+        Returns: string
+      }
       sanitize_webhook_payload: { Args: { payload: Json }; Returns: Json }
       toggle_integration_status: {
         Args: { integration_id: string; new_status: boolean }
@@ -4793,6 +4867,10 @@ export type Database = {
       validate_slack_webhook_exists: {
         Args: { p_token_id: string }
         Returns: Json
+      }
+      verify_consent_integrity: {
+        Args: { p_history_id: string }
+        Returns: boolean
       }
     }
     Enums: {
