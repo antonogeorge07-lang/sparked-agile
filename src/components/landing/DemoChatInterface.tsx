@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "react-router-dom";
 import { TypingIndicator } from "@/components/chat/TypingIndicator";
 import { chatSounds } from "@/utils/chatSounds";
+import { formatAIResponse } from "@/utils/textFormatting";
 
 interface Message {
   role: "user" | "assistant";
@@ -194,7 +195,9 @@ export function DemoChatInterface({ onClose }: DemoChatInterfaceProps) {
                     : "bg-muted"
                 }`}
               >
-                <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                <p className="text-sm whitespace-pre-wrap">
+                  {msg.role === "assistant" ? formatAIResponse(msg.content) : msg.content}
+                </p>
               </div>
             </div>
           ))}

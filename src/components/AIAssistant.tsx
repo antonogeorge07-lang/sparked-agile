@@ -10,6 +10,7 @@ import { TypingIndicator } from "@/components/chat/TypingIndicator";
 import { chatSounds } from "@/utils/chatSounds";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatAIResponse } from "@/utils/textFormatting";
 
 interface Message {
   role: "user" | "assistant";
@@ -434,7 +435,9 @@ export const AIAssistant = () => {
                               : "bg-muted rounded-tl-sm"
                           }`}
                         >
-                          <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                          <p className="text-sm whitespace-pre-wrap leading-relaxed">
+                            {msg.role === "assistant" ? formatAIResponse(msg.content) : msg.content}
+                          </p>
                         </div>
                       </motion.div>
                     ))}
