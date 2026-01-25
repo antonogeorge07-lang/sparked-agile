@@ -4,50 +4,53 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const integrations = [
-  {
-    name: "GitHub",
-    icon: "🐙",
-    description: "Connect repositories for Daily Digest",
-    features: [
-      "Commit summaries",
-      "PR status tracking",
-      "Activity highlights",
-      "Team contributions"
-    ],
-    category: "Version Control",
-    popular: true,
-    free: true
-  },
-  {
-    name: "Jira",
-    icon: "🎯",
-    description: "Bidirectional sync with Jira Cloud",
-    features: [
-      "Sprint & backlog sync",
-      "Real-time status updates",
-      "Custom field mapping",
-      "Bulk import/export"
-    ],
-    category: "Project Management",
-    popular: true
-  },
-  {
-    name: "Outlook",
-    icon: "📧",
-    description: "Calendar integration for ceremonies",
-    features: [
-      "Auto-schedule standups",
-      "Meeting reminders",
-      "Calendar sync",
-      "Attendee management"
-    ],
-    category: "Communication"
-  }
-];
+import { useTranslation } from "react-i18next";
 
 export function IntegrationShowcase() {
+  const { t } = useTranslation();
+
+  const integrations = [
+    {
+      nameKey: "landing.integrations.github",
+      icon: "🐙",
+      descriptionKey: "landing.integrations.githubDesc",
+      featureKeys: [
+        "landing.integrations.commitSummaries",
+        "landing.integrations.prTracking",
+        "landing.integrations.activityHighlights",
+        "landing.integrations.teamContributions"
+      ],
+      categoryKey: "landing.integrations.versionControl",
+      popular: true,
+      free: true
+    },
+    {
+      nameKey: "landing.integrations.jira",
+      icon: "🎯",
+      descriptionKey: "landing.integrations.jiraDesc",
+      featureKeys: [
+        "landing.integrations.sprintSync",
+        "landing.integrations.realtimeUpdates",
+        "landing.integrations.fieldMapping",
+        "landing.integrations.bulkImport"
+      ],
+      categoryKey: "landing.integrations.projectManagement",
+      popular: true
+    },
+    {
+      nameKey: "landing.integrations.outlook",
+      icon: "📧",
+      descriptionKey: "landing.integrations.outlookDesc",
+      featureKeys: [
+        "landing.integrations.autoSchedule",
+        "landing.integrations.meetingReminders",
+        "landing.integrations.calendarSync",
+        "landing.integrations.attendeeManagement"
+      ],
+      categoryKey: "landing.integrations.communication"
+    }
+  ];
+
   return (
     <section className="py-20 px-4" aria-labelledby="integrations-heading">
       <div className="container mx-auto max-w-6xl">
@@ -55,13 +58,13 @@ export function IntegrationShowcase() {
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 border-tier-free/30 text-tier-free">
             <Zap className="h-3 w-3 mr-1" />
-            Native Integrations
+            {t('landing.integrations.badge')}
           </Badge>
           <h2 id="integrations-heading" className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Connect Your Workflow
+            {t('landing.integrations.title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Seamlessly integrate with the tools your team already uses. GitHub is included free.
+            {t('landing.integrations.subtitle')}
           </p>
         </div>
 
@@ -69,7 +72,7 @@ export function IntegrationShowcase() {
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           {integrations.map((integration, index) => (
             <motion.div
-              key={integration.name}
+              key={integration.nameKey}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -81,35 +84,35 @@ export function IntegrationShowcase() {
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{integration.icon}</span>
                       <div>
-                        <h3 className="font-semibold text-lg">{integration.name}</h3>
+                        <h3 className="font-semibold text-lg">{t(integration.nameKey)}</h3>
                         <Badge variant="secondary" className="text-[10px]">
-                          {integration.category}
+                          {t(integration.categoryKey)}
                         </Badge>
                       </div>
                     </div>
                     <div className="flex gap-1">
                       {integration.free && (
                         <Badge className="bg-tier-free/10 text-tier-free border-tier-free/20">
-                          Free
+                          {t('common.free')}
                         </Badge>
                       )}
                       {integration.popular && !integration.free && (
                         <Badge className="bg-tier-pro/10 text-tier-pro border-tier-pro/20">
-                          Pro
+                          {t('common.pro')}
                         </Badge>
                       )}
                     </div>
                   </div>
                   
                   <p className="text-sm text-muted-foreground mb-4">
-                    {integration.description}
+                    {t(integration.descriptionKey)}
                   </p>
                   
                   <ul className="space-y-2">
-                    {integration.features.map((feature, i) => (
+                    {integration.featureKeys.map((featureKey, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm">
                         <Check className="h-4 w-4 text-tier-free shrink-0" />
-                        <span>{feature}</span>
+                        <span>{t(featureKey)}</span>
                       </li>
                     ))}
                   </ul>
@@ -123,12 +126,12 @@ export function IntegrationShowcase() {
         <div className="text-center">
           <Link to="/integrations">
             <Button size="lg" className="group bg-tier-free hover:bg-tier-free/90">
-              View All Integrations
+              {t('landing.integrations.viewAll')}
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
           <p className="text-sm text-muted-foreground mt-3">
-            Need a custom integration? <Link to="/contact" className="text-tier-free hover:underline">Contact us</Link>
+            {t('landing.integrations.customIntegration')} <Link to="/contact" className="text-tier-free hover:underline">{t('landing.integrations.contactUs')}</Link>
           </p>
         </div>
       </div>
