@@ -4,18 +4,20 @@ import { Badge } from "@/components/ui/badge";
 import { Play, ArrowRight, CheckCircle2, Mail, GitBranch, Clock, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ProofSectionProps {
   onWatchDemo: () => void;
 }
 
 export function ProofSection({ onWatchDemo }: ProofSectionProps) {
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   
   const steps = [
-    { label: "Connect", desc: "Link your GitHub or JIRA in one click" },
-    { label: "Configure", desc: "Choose digest frequency and preferences" },
-    { label: "Receive", desc: "Get daily AI summaries in your inbox" },
+    { labelKey: "landing.proof.stepConnect", descKey: "landing.proof.stepConnectDesc" },
+    { labelKey: "landing.proof.stepConfigure", descKey: "landing.proof.stepConfigureDesc" },
+    { labelKey: "landing.proof.stepReceive", descKey: "landing.proof.stepReceiveDesc" },
   ];
 
   return (
@@ -27,13 +29,13 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
             <div>
               <Badge variant="outline" className="mb-4 border-tier-free/30 text-tier-free gap-1.5">
                 <Clock className="h-3 w-3" />
-                2-minute setup
+                {t('landing.proof.setupTime')}
               </Badge>
               <h2 id="proof-heading" className="text-3xl md:text-4xl font-bold font-heading mb-4">
-                From zero to insights
+                {t('landing.proof.title')}
               </h2>
               <p className="text-muted-foreground text-lg">
-                No complex configuration. No daily logins required.
+                {t('landing.proof.subtitle')}
               </p>
             </div>
 
@@ -56,9 +58,9 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
                       {i + 1}
                     </div>
                     <div>
-                      <div className="font-semibold">{step.label}</div>
+                      <div className="font-semibold">{t(step.labelKey)}</div>
                       <div className={`text-sm transition-all duration-300 ${activeStep === i ? 'text-foreground' : 'text-muted-foreground'}`}>
-                        {step.desc}
+                        {t(step.descKey)}
                       </div>
                     </div>
                     {activeStep === i && (
@@ -72,13 +74,13 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link to="/auth">
                 <Button size="lg" className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90">
-                  Get Started Free
+                  {t('landing.proof.getStarted')}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Button variant="outline" size="lg" className="gap-2" onClick={onWatchDemo}>
                 <Play className="h-4 w-4" />
-                Watch Demo
+                {t('landing.proof.watchDemo')}
               </Button>
             </div>
           </div>
@@ -96,12 +98,12 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
                     <Mail className="h-5 w-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <div className="font-semibold">Your Daily Digest</div>
-                    <div className="text-xs text-muted-foreground">from SAAI • Today at 9:00 AM</div>
+                    <div className="font-semibold">{t('landing.proof.emailTitle')}</div>
+                    <div className="text-xs text-muted-foreground">{t('landing.proof.emailFrom')}</div>
                   </div>
                 </div>
                 <Badge className="bg-tier-free/10 text-tier-free border-tier-free/20 text-xs animate-pulse">
-                  New
+                  {t('common.new')}
                 </Badge>
               </div>
               
@@ -110,26 +112,26 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
                 <div className="p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors cursor-default group/card">
                   <div className="flex items-center gap-3 mb-2">
                     <GitBranch className="h-5 w-5 text-tier-free" />
-                    <span className="font-medium">12 commits merged</span>
+                    <span className="font-medium">{t('landing.proof.commitsMerged')}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">Auth refactor, API optimization, bug fixes...</p>
+                  <p className="text-sm text-muted-foreground">{t('landing.proof.commitsDesc')}</p>
                 </div>
                 
                 <div className="p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors cursor-default">
                   <div className="flex items-center gap-3 mb-2">
                     <CheckCircle2 className="h-5 w-5 text-tier-free" />
-                    <span className="font-medium">8 tasks completed</span>
+                    <span className="font-medium">{t('landing.proof.tasksCompleted')}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">Sprint velocity up 15% from last week</p>
+                  <p className="text-sm text-muted-foreground">{t('landing.proof.tasksDesc')}</p>
                 </div>
                 
                 <div className="p-4 bg-gradient-to-r from-tier-free/10 to-primary/5 rounded-xl border border-tier-free/20">
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="h-4 w-4 text-tier-free" />
-                    <span className="text-sm font-medium text-tier-free">AI Summary</span>
+                    <span className="text-sm font-medium text-tier-free">{t('landing.proof.aiSummaryLabel')}</span>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    "Great progress on the auth module. Consider prioritizing the API rate limiting before the demo on Friday."
+                    {t('landing.proof.aiSummaryText')}
                   </p>
                 </div>
               </div>
