@@ -16,9 +16,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import saaiLogo from "@/assets/saai-logo.png";
 import { PrivacyBanner } from "@/components/PrivacyBanner";
-import { Mail } from "lucide-react";
+import { Mail, LayoutDashboard, LogOut } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import { User } from "@supabase/supabase-js";
+import { useToast } from "@/hooks/use-toast";
 
 // Lazy load heavier sections
 const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
@@ -37,12 +39,25 @@ const SectionSkeleton = () => (
 export default function Landing() {
   const { trackButtonClick } = useAnalytics();
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [emailContext, setEmailContext] = useState<"early_access" | "newsletter" | "beta" | "exit_intent">("newsletter");
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  // Exit intent detection
+  // Check authentication state
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
   useEffect(() => {
     let exitIntentShown = false;
     const handleMouseLeave = (e: MouseEvent) => {
@@ -62,6 +77,22 @@ export default function Landing() {
   const handleEarlyAccess = () => {
     setEmailContext("early_access");
     setShowEmailCapture(true);
+  };
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign out",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully",
+      });
+    }
   };
 
   return (
@@ -87,17 +118,34 @@ export default function Landing() {
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSwitcher />
-              <Link to="/auth" className="hidden sm:block">
-                <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
-                  {t('landing.signIn')}
-                </Button>
-              </Link>
-              <Link to="/auth">
-                <Button size="sm" className="gap-1.5 bg-tier-free hover:bg-tier-free/90" onClick={() => trackButtonClick('Get Started', 'nav')}>
-                  <Mail className="h-3.5 w-3.5" />
-                  {t('landing.getDigest')}
-                </Button>
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/home">
+                    <Button size="sm" className="gap-1.5" onClick={() => trackButtonClick('Go to Dashboard', 'nav')}>
+                      <LayoutDashboard className="h-3.5 w-3.5" />
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-1.5">
+                    <LogOut className="h-3.5 w-3.5" />
+                    <span className="hidden sm:inline">Sign Out</span>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth" className="hidden sm:block">
+                    <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
+                      {t('landing.signIn')}
+                    </Button>
+                  </Link>
+                  <Link to="/auth">
+                    <Button size="sm" className="gap-1.5 bg-tier-free hover:bg-tier-free/90" onClick={() => trackButtonClick('Get Started', 'nav')}>
+                      <Mail className="h-3.5 w-3.5" />
+                      {t('landing.getDigest')}
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </nav>
