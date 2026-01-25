@@ -39,18 +39,19 @@
   },
   "landing": {
     "signIn": "Sign In",
-    "getDigest": "Get Digest",
+    "getDigest": "Get Started",
     "hero": {
-      "badge": "AI-Powered Agile Management",
-      "title1": "Spark Agile Active Intelligence",
-      "title2": "Streamline Your Agile Workflow",
+      "badge": "Experience-Driven. AI-Assisted.",
+      "title1": "Active Intelligence",
+      "title2": "Not Artificial, But Genuine",
       "title3": "AI-Powered Team Management",
-      "description": "AI-assisted sprint ceremonies, actionable insights, and team performance tracking. All in one platform.",
+      "description": "Built from real experience working with teams. An intelligent partner that understands agile, not just automates it.",
       "subDescription": "Make sprint planning faster and more effective.",
-      "setup": "Setup in 2 minutes",
-      "noCreditCard": "Free • No credit card",
+      "setup": "Ready in 2 minutes",
+      "noCreditCard": "Free to start",
+      "freeForever": "No commitment",
       "aiPowered": "AI-powered insights",
-      "cta": "Start Free Today",
+      "cta": "Try It Free",
       "watchDemo": "Watch Demo",
       "proTeaser": "Get early access to premium features",
       "upgradeToPro": "Upgrade to Pro",
@@ -308,6 +309,12 @@
       "aiPoweredDesc": "Intelligent insights for better team performance",
       "timeSaver": "Time Saver",
       "timeSaverDesc": "Streamline ceremony prep and admin work"
+    },
+    "cta": {
+      "title": "Ready to Work Smarter?",
+      "description": "Start with what you need. Grow when you're ready. No pressure, no tricks.",
+      "getFree": "Try It Free",
+      "explorePro": "See Pro Features"
     },
     "footer": {
       "description": "AI-powered agile ceremonies and team management",

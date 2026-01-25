@@ -7,6 +7,7 @@ import { ProofSection } from "@/components/landing/ProofSection";
 import { CapabilityShowcase } from "@/components/landing/CapabilityShowcase";
 import { SimpleCTA } from "@/components/landing/SimpleCTA";
 import { PricingSection } from "@/components/landing/PricingSection";
+import { OurPhilosophySection } from "@/components/landing/OurPhilosophySection";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
 import { FAQSchema } from "@/components/landing/FAQSchema";
@@ -161,6 +162,10 @@ export default function Landing() {
         
         <ScrollReveal fullWidth delay={0.1}>
           <ProofSection onWatchDemo={handleWatchDemo} />
+        </ScrollReveal>
+
+        <ScrollReveal fullWidth delay={0.1}>
+          <OurPhilosophySection />
         </ScrollReveal>
         
         <ScrollReveal fullWidth delay={0.1}>

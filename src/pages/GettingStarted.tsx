@@ -19,6 +19,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatAIResponse } from "@/utils/textFormatting";
 
 const quickActions = [
   {
@@ -338,7 +339,9 @@ export default function GettingStarted() {
                             : "bg-muted"
                         }`}
                       >
-                        <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                        <p className="text-sm whitespace-pre-wrap">
+                          {msg.role === "assistant" ? formatAIResponse(msg.content) : msg.content}
+                        </p>
                       </div>
                     </div>
                   ))}
