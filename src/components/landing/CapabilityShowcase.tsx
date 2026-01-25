@@ -14,38 +14,38 @@ export function CapabilityShowcase() {
   const capabilities = [
     {
       icon: Mail,
-      title: "Daily Digest",
-      desc: "AI-curated team updates delivered to your inbox every morning",
+      titleKey: "landing.capabilities.dailyDigest",
+      descKey: "landing.capabilities.dailyDigestDesc",
       tier: "free" as const,
     },
     {
       icon: GitBranch,
-      title: "GitHub Sync",
-      desc: "Automatic commit summaries and PR tracking",
+      titleKey: "landing.capabilities.githubActivity",
+      descKey: "landing.capabilities.githubActivityDesc",
       tier: "free" as const,
     },
     {
       icon: BarChart3,
-      title: "Sprint Insights",
-      desc: "Velocity trends and progress visualization",
+      titleKey: "landing.capabilities.sprintHighlights",
+      descKey: "landing.capabilities.sprintHighlightsDesc",
       tier: "free" as const,
     },
     {
       icon: Calendar,
-      title: "Ceremonies",
-      desc: "Standup, planning, review & retro automation",
+      titleKey: "landing.capabilities.sprintCeremonies",
+      descKey: "landing.capabilities.sprintCeremoniesDesc",
       tier: "pro" as const,
     },
     {
       icon: Target,
-      title: "Epic Management",
-      desc: "ROI tracking and milestone monitoring",
+      titleKey: "landing.capabilities.epicManagement",
+      descKey: "landing.capabilities.epicManagementDesc",
       tier: "pro" as const,
     },
     {
       icon: Users,
-      title: "Team Collaboration",
-      desc: "Real-time presence and activity feeds",
+      titleKey: "landing.capabilities.teamCollaboration",
+      descKey: "landing.capabilities.teamCollaborationDesc",
       tier: "pro" as const,
     },
   ];
@@ -61,10 +61,10 @@ export function CapabilityShowcase() {
       <div className="container mx-auto max-w-5xl relative z-10">
         <header className="text-center mb-12">
           <h2 id="capabilities-heading" className="text-3xl md:text-4xl font-bold font-heading mb-4 opacity-0 animate-fade-in-up">
-            Everything you need, nothing you don't
+            {t('landing.capabilities.title')}
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200">
-            Start free with daily digests. Upgrade when you need full agile orchestration.
+            {t('landing.capabilities.subtitle')}
           </p>
         </header>
 
@@ -100,10 +100,10 @@ export function CapabilityShowcase() {
                   </div>
                   
                   <h3 className="font-semibold font-heading text-lg mb-2 group-hover:text-foreground transition-colors">
-                    {cap.title}
+                    {t(cap.titleKey)}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    {cap.desc}
+                    {t(cap.descKey)}
                   </p>
                 </div>
               </Card>
@@ -115,7 +115,7 @@ export function CapabilityShowcase() {
         <div className="text-center mt-10 opacity-0 animate-fade-in animation-delay-700">
           <Link to="/auth">
             <Button variant="outline" className="gap-2 group">
-              See all features
+              {t('landing.capabilities.seeAllFeatures')}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
