@@ -33,9 +33,11 @@ export function HeroSectionSimple() {
 
           {/* Authentic headline */}
           <h1 id="hero-heading" className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading leading-[1.15] tracking-tight">
-            <span className="block opacity-0 animate-fade-in-up animation-delay-100">
-              {t('landing.hero.title1')}
-            </span>
+          <span className="block opacity-0 animate-fade-in-up animation-delay-100">
+            Spark-Agile
+            <br />
+            Active Intelligence
+          </span>
             <span className="block mt-2 text-muted-foreground text-3xl sm:text-4xl md:text-5xl font-medium opacity-0 animate-fade-in-up animation-delay-300">
               {t('landing.hero.title2')}
             </span>
