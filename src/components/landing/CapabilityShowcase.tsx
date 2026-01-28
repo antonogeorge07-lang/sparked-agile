@@ -34,19 +34,19 @@ export function CapabilityShowcase() {
       icon: Calendar,
       titleKey: "landing.capabilities.sprintCeremonies",
       descKey: "landing.capabilities.sprintCeremoniesDesc",
-      tier: "pro" as const,
+      tier: "coming-soon" as const,
     },
     {
       icon: Target,
       titleKey: "landing.capabilities.epicManagement",
       descKey: "landing.capabilities.epicManagementDesc",
-      tier: "pro" as const,
+      tier: "coming-soon" as const,
     },
     {
       icon: Users,
       titleKey: "landing.capabilities.teamCollaboration",
       descKey: "landing.capabilities.teamCollaborationDesc",
-      tier: "pro" as const,
+      tier: "coming-soon" as const,
     },
   ];
 
@@ -71,6 +71,7 @@ export function CapabilityShowcase() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {capabilities.map((cap, index) => {
             const isFree = cap.tier === "free";
+            const isComingSoon = cap.tier === "coming-soon";
             const isHovered = hoveredCard === index;
             
             return (
@@ -78,7 +79,8 @@ export function CapabilityShowcase() {
                 key={index}
                 className={`group relative p-6 cursor-pointer transition-all duration-300 overflow-hidden
                   ${isHovered ? 'scale-[1.02] shadow-elevated' : 'hover:shadow-card'}
-                  ${isFree ? 'border-tier-free/20 hover:border-tier-free/40' : 'border-tier-pro/20 hover:border-tier-pro/40'}
+                  ${isFree ? 'border-tier-free/20 hover:border-tier-free/40' : 'border-border hover:border-muted-foreground/30'}
+                  ${isComingSoon ? 'opacity-80' : ''}
                   opacity-0 animate-fade-in-up`}
                 style={{ animationDelay: `${200 + index * 80}ms` }}
                 onMouseEnter={() => setHoveredCard(index)}
@@ -86,15 +88,15 @@ export function CapabilityShowcase() {
               >
                 {/* Hover gradient overlay */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                  ${isFree ? 'bg-gradient-to-br from-tier-free/5 to-transparent' : 'bg-gradient-to-br from-tier-pro/5 to-transparent'}`} 
+                  ${isFree ? 'bg-gradient-to-br from-tier-free/5 to-transparent' : 'bg-gradient-to-br from-muted/30 to-transparent'}`} 
                 />
                 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-4">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
-                      ${isFree ? 'bg-tier-free/10 group-hover:bg-tier-free/20' : 'bg-tier-pro/10 group-hover:bg-tier-pro/20'}`}>
+                      ${isFree ? 'bg-tier-free/10 group-hover:bg-tier-free/20' : 'bg-muted group-hover:bg-muted/80'}`}>
                       <cap.icon className={`h-6 w-6 transition-transform duration-300 group-hover:rotate-[-5deg]
-                        ${isFree ? 'text-tier-free' : 'text-tier-pro'}`} />
+                        ${isFree ? 'text-tier-free' : 'text-muted-foreground'}`} />
                     </div>
                     <TierBadge tier={cap.tier} className="text-xs" />
                   </div>
