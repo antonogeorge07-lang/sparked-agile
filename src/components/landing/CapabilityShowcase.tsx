@@ -55,7 +55,7 @@ export function CapabilityShowcase() {
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--tier-free)/0.1)_0%,transparent_50%)]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,hsl(var(--tier-pro)/0.1)_0%,transparent_50%)]" />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,hsl(var(--muted)/0.2)_0%,transparent_50%)]" />
       </div>
 
       <div className="container mx-auto max-w-5xl relative z-10">
