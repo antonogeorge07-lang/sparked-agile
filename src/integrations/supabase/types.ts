@@ -507,6 +507,45 @@ export type Database = {
         }
         Relationships: []
       }
+      data_breach_access_audit: {
+        Row: {
+          access_granted: boolean
+          accessed_at: string
+          action: string
+          breach_id: string | null
+          id: string
+          ip_address_hash: string | null
+          record_hash: string
+          user_agent: string | null
+          user_email: string | null
+          user_id: string
+        }
+        Insert: {
+          access_granted?: boolean
+          accessed_at?: string
+          action: string
+          breach_id?: string | null
+          id?: string
+          ip_address_hash?: string | null
+          record_hash: string
+          user_agent?: string | null
+          user_email?: string | null
+          user_id: string
+        }
+        Update: {
+          access_granted?: boolean
+          accessed_at?: string
+          action?: string
+          breach_id?: string | null
+          id?: string
+          ip_address_hash?: string | null
+          record_hash?: string
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       data_breach_log: {
         Row: {
           affected_data_types: string[] | null
@@ -4611,6 +4650,15 @@ export type Database = {
       }
       enforce_ai_usage_data_retention: { Args: never; Returns: number }
       export_user_data: { Args: { target_user_id: string }; Returns: Json }
+      generate_breach_audit_hash: {
+        Args: {
+          p_accessed_at: string
+          p_action: string
+          p_breach_id: string
+          p_user_id: string
+        }
+        Returns: string
+      }
       generate_consent_hash: {
         Args: {
           p_consent_given: boolean
@@ -4628,6 +4676,52 @@ export type Database = {
           total_requests: number
           unique_users: number
         }[]
+      }
+      get_breach_log_by_id: {
+        Args: { breach_id_param: string }
+        Returns: {
+          affected_data_types: string[] | null
+          affected_user_count: number | null
+          breach_type: string
+          containment_actions: string[] | null
+          created_by: string | null
+          description: string | null
+          detected_at: string | null
+          id: string
+          notification_sent_at: string | null
+          resolved_at: string | null
+          severity: string | null
+          supervisory_authority_notified: boolean | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "data_breach_log"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      get_breach_logs_with_audit: {
+        Args: never
+        Returns: {
+          affected_data_types: string[] | null
+          affected_user_count: number | null
+          breach_type: string
+          containment_actions: string[] | null
+          created_by: string | null
+          description: string | null
+          detected_at: string | null
+          id: string
+          notification_sent_at: string | null
+          resolved_at: string | null
+          severity: string | null
+          supervisory_authority_notified: boolean | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "data_breach_log"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
       get_ceremony_outlook_status: {
         Args: { ceremony_id: string }
