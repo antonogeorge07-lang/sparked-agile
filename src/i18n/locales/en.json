@@ -651,5 +651,102 @@
     "ja": "Japanese",
     "ar": "Arabic",
     "ko": "Korean"
+  },
+  "features": {
+    "hero": {
+      "title": "Problems We Solve",
+      "subtitle": "Every feature exists to eliminate a real pain point you face daily. See how SAAI transforms your workflow."
+    },
+    "painPoints": {
+      "meetingChaos": {
+        "title": "Eliminate Status Meeting Chaos",
+        "description": "No more 30-minute standups where half the team zones out. Get updates asynchronously.",
+        "features": {
+          "aiStandup": {
+            "title": "AI Standup Summaries",
+            "description": "Automatically aggregate updates from your tools and generate concise daily summaries without meetings."
+          },
+          "asyncUpdates": {
+            "title": "Async Team Updates",
+            "description": "Team members submit updates on their schedule. AI compiles and surfaces what matters."
+          }
+        }
+      },
+      "progressTracking": {
+        "title": "Stop Losing Track of Progress",
+        "description": "Scattered tools mean scattered insights. See everything in one place.",
+        "features": {
+          "commandCentre": {
+            "title": "Project Command Centre",
+            "description": "Unified dashboard showing tasks, blockers, velocity, and health scores at a glance."
+          },
+          "epicTracking": {
+            "title": "Epic & Feature Tracking",
+            "description": "Break down large initiatives into manageable pieces with dependency mapping and burndown charts."
+          }
+        }
+      },
+      "manualReporting": {
+        "title": "End Manual Reporting Drudgery",
+        "description": "Stop spending hours compiling status reports. Let AI do the heavy lifting.",
+        "features": {
+          "aiDigest": {
+            "title": "AI Daily Digest",
+            "description": "Receive automated daily summaries of what's done, what's blocked, and what needs attention."
+          },
+          "autoMetrics": {
+            "title": "Auto-Generated Metrics",
+            "description": "Velocity, cycle time, and throughput calculated automatically from your actual work."
+          }
+        }
+      },
+      "contextSwitching": {
+        "title": "Reduce Context Switching",
+        "description": "Jumping between Jira, GitHub, Slack, and email kills productivity.",
+        "features": {
+          "unifiedView": {
+            "title": "Unified Work View",
+            "description": "All your tasks, PRs, messages, and updates aggregated in a single intelligent interface."
+          },
+          "integrations": {
+            "title": "Deep Integrations",
+            "description": "Connect GitHub, Jira, Slack, and Outlook. SAAI becomes your single source of truth."
+          }
+        }
+      },
+      "stakeholderComms": {
+        "title": "Streamline Stakeholder Communication",
+        "description": "Executives want updates, not excuses. Give them self-service insights.",
+        "features": {
+          "portal": {
+            "title": "Stakeholder Portal",
+            "description": "Executive-friendly dashboards with ROI tracking, milestone progress, and customizable widgets."
+          },
+          "approvals": {
+            "title": "Approval Workflows",
+            "description": "Route budget changes, scope adjustments, and epic closures through proper approval chains."
+          }
+        }
+      },
+      "sprintPlanning": {
+        "title": "Simplify Sprint Planning",
+        "description": "Planning sessions shouldn't feel like herding cats. Get AI-powered recommendations.",
+        "features": {
+          "aiPlanning": {
+            "title": "AI Sprint Assistant",
+            "description": "Get intelligent suggestions for sprint capacity, story selection, and risk identification."
+          },
+          "ceremonies": {
+            "title": "Ceremony Management",
+            "description": "Structured templates for retrospectives, reviews, and refinement with built-in best practices."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Solve These Problems?",
+      "subtitle": "Join teams who've eliminated workflow chaos with SAAI.",
+      "button": "Get Started Free"
+    }
   }
 }
