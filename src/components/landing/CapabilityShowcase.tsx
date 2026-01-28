@@ -113,12 +113,12 @@ export function CapabilityShowcase() {
 
         {/* CTA */}
         <div className="text-center mt-10 opacity-0 animate-fade-in animation-delay-700">
-          <Link to="/auth">
-            <Button variant="outline" className="gap-2 group">
-              {t('landing.capabilities.seeAllFeatures')}
+          <Button asChild variant="outline" className="gap-2 group">
+            <Link to="/features">
+              {t("landing.capabilities.seeAllFeatures")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
