@@ -4936,6 +4936,16 @@ export type Database = {
         Args: { epic_id_param: string }
         Returns: string
       }
+      insert_security_incident_audit: {
+        Args: {
+          p_action: string
+          p_incident_id: string
+          p_new_data: Json
+          p_old_data: Json
+          p_user_id: string
+        }
+        Returns: string
+      }
       is_admin: { Args: { user_id: string }; Returns: boolean }
       is_platform_owner: { Args: { user_id: string }; Returns: boolean }
       is_pmi_project_member: {
