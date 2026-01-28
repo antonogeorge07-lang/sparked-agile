@@ -1,10 +1,32 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+// Secure CORS with origin validation
+function getCorsHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get('Origin') || '';
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+  
+  // Extract the project ID from Supabase URL for allowed origins
+  const projectMatch = supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/);
+  const projectId = projectMatch ? projectMatch[1] : '';
+  
+  // Define allowed origins - Lovable preview, published app, and Supabase functions
+  const allowedOrigins = [
+    `https://${projectId}.supabase.co`,
+    'https://lovable.dev',
+    'https://sparked-agile.lovable.app',
+  ];
+  
+  // Also allow any Lovable preview URLs
+  const isLovablePreview = origin.includes('.lovable.app') || origin.includes('.lovableproject.com');
+  const isAllowed = allowedOrigins.includes(origin) || isLovablePreview;
+  
+  return {
+    'Access-Control-Allow-Origin': isAllowed ? origin : allowedOrigins[0],
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Credentials': 'true',
+  };
+}
 
 // AES-256-GCM decryption
 async function decryptToken(encryptedData: string, key: string): Promise<string> {
@@ -47,27 +69,49 @@ async function decryptToken(encryptedData: string, key: string): Promise<string>
   return decoder.decode(decrypted);
 }
 
+// Allowlist of edge functions that can call decrypt-token with service role
+const ALLOWED_CALLER_FUNCTIONS = [
+  'fetch-github-activity',
+  'fetch-github-issues',
+  'fetch-jira-backlog',
+  'github-digest',
+  'update-github-issue',
+  'update-jira-issue',
+  'create-outlook-event',
+  'create-review-outlook-invite',
+  'create-sprint-outlook-invite',
+  'refresh-integration-token',
+];
+
 serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req);
+  
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Validate this is a server-to-server call (from other edge functions only)
     const authHeader = req.headers.get('Authorization');
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     
-    // Check if the request is using the service role key (edge function to edge function)
-    // This prevents direct frontend access while allowing other edge functions to call this
     if (!authHeader || !serviceRoleKey) {
       throw new Error('Unauthorized: Missing authentication');
     }
     
-    // Extract the token from the Authorization header
     const token = authHeader.replace('Bearer ', '');
-    
-    // If using service role key directly, we need to get user from request body
     const isServiceRoleCall = token === serviceRoleKey;
+    
+    // SECURITY: For service role calls, require caller identification
+    // This prevents arbitrary service role access to token decryption
+    const callerFunction = req.headers.get('X-Caller-Function');
+    
+    if (isServiceRoleCall) {
+      if (!callerFunction || !ALLOWED_CALLER_FUNCTIONS.includes(callerFunction)) {
+        console.error(`Unauthorized service role call from: ${callerFunction || 'unknown'}`);
+        throw new Error('Unauthorized: Invalid caller function');
+      }
+      console.log(`Service role call authorized from: ${callerFunction}`);
+    }
     
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -81,26 +125,16 @@ serve(async (req) => {
 
     const { data: { user } } = await supabaseClient.auth.getUser();
     
-    // For service role calls without user context, require userId in body
-    // For regular authenticated calls, use the authenticated user
-    if (!user && !isServiceRoleCall) {
+    // SECURITY FIX: Service role calls MUST still have a user context
+    // We no longer accept userId from request body - this prevents RLS bypass
+    if (!user) {
       throw new Error('User not authenticated');
     }
 
-    const { integrationType, userId: requestUserId } = await req.json();
+    const { integrationType } = await req.json();
     
-    // Determine the target user ID - for service role calls, can use userId from body
-    // For regular calls, must use the authenticated user's ID
-    const targetUserId = user?.id ?? requestUserId;
-    
-    if (!targetUserId) {
-      throw new Error('User ID required');
-    }
-    
-    // Security: Only allow users to decrypt their own tokens (unless service role)
-    if (user && user.id !== targetUserId && !isServiceRoleCall) {
-      throw new Error('Unauthorized: Cannot access tokens for other users');
-    }
+    // SECURITY: Always use the authenticated user's ID, never from request body
+    const targetUserId = user.id;
     
     if (!['github', 'jira', 'microsoft'].includes(integrationType)) {
       throw new Error('Invalid integration type');
@@ -116,9 +150,21 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
     
+    // Audit log the decryption request
+    try {
+      await serviceClient.from('sensitive_data_access_log').insert({
+        user_id: targetUserId,
+        table_accessed: `user_${integrationType}_tokens`,
+        access_type: 'token_decryption',
+        query_context: `Decrypted ${integrationType} token${callerFunction ? ` via ${callerFunction}` : ''}`,
+      });
+    } catch (auditError) {
+      console.warn('Failed to log audit entry:', auditError);
+      // Don't fail the request if audit logging fails
+    }
+    
     let decryptedToken: string | null = null;
     
-    // Log decrypt operation for auditing (without exposing token)
     console.log(`Token decrypt request: integration=${integrationType}, user=${targetUserId}`);
     
     if (integrationType === 'github') {
@@ -132,7 +178,6 @@ serve(async (req) => {
         throw new Error('GitHub token not found');
       }
       
-      // Use encrypted token if available, otherwise fall back to plaintext (legacy)
       if (tokenRecord.encrypted_token) {
         decryptedToken = await decryptToken(tokenRecord.encrypted_token, encryptionKey);
       } else if (tokenRecord.github_token) {
@@ -152,7 +197,6 @@ serve(async (req) => {
         throw new Error('Jira token not found');
       }
       
-      // Check if token is expired
       if (tokenRecord.token_expires_at) {
         const expiresAt = new Date(tokenRecord.token_expires_at);
         if (expiresAt <= new Date()) {
@@ -178,7 +222,6 @@ serve(async (req) => {
         throw new Error('Microsoft token not found');
       }
       
-      // Check if token is expired
       if (tokenRecord.expires_at) {
         const expiresAt = new Date(tokenRecord.expires_at);
         if (expiresAt <= new Date()) {
@@ -186,7 +229,6 @@ serve(async (req) => {
         }
       }
       
-      // Use encrypted token if available, otherwise fall back to plaintext (legacy)
       if (tokenRecord.encrypted_access_token) {
         decryptedToken = await decryptToken(tokenRecord.encrypted_access_token, encryptionKey);
       } else if (tokenRecord.access_token && tokenRecord.access_token !== '') {
@@ -196,8 +238,6 @@ serve(async (req) => {
       }
     }
     
-    // Return the token (this should only be used by other edge functions, not frontend)
-    // For security, we don't log the token
     console.log(`Token decrypted for ${integrationType} integration`);
     
     return new Response(
@@ -214,7 +254,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ error: errorMessage }),
       {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' },
         status: 400,
       }
     );
