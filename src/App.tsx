@@ -53,6 +53,7 @@ const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
 const GettingStarted = lazy(() => import("./pages/GettingStarted"));
 const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
+const Features = lazy(() => import("./pages/Features"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -122,6 +123,7 @@ const App = () => {
                   <Route path="/epic-portfolio" element={<EpicPortfolio />} />
                   <Route path="/onboarding-guide" element={<OnboardingGuide />} />
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
+                  <Route path="/features" element={<Features />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
