@@ -118,7 +118,7 @@ export default function Landing() {
               </span>
             </Link>
             <div className="flex items-center gap-3">
-              <Link to="/features" className="hidden sm:block">
+              <Link to="/features">
                 <Button variant="ghost" size="sm">
                   {t('landing.features.title', 'Features')}
                 </Button>

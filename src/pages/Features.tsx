@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import type { ElementType } from "react";
 import { 
   Clock, MessageSquareOff, BarChart3, Brain, Users, Target, 
   GitBranch, Calendar, Zap, ArrowRight, CheckCircle2 
@@ -13,11 +14,11 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 interface PainPointSection {
   painPoint: string;
   description: string;
-  icon: React.ElementType;
+  icon: ElementType;
   features: {
     title: string;
     description: string;
-    icon: React.ElementType;
+    icon: ElementType;
   }[];
 }
 
@@ -152,7 +153,7 @@ export default function Features() {
               <LanguageSwitcher />
               <Link to="/auth">
                 <Button size="sm">
-                  {t('landing.getStarted')}
+                  {t("landing.getStarted", "Get Started")}
                 </Button>
               </Link>
             </div>
@@ -191,7 +192,7 @@ export default function Features() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4 pl-0 md:pl-18">
+              <div className="grid md:grid-cols-2 gap-4 pl-0 md:pl-16">
                 {section.features.map((feature, featureIndex) => (
                   <Card key={featureIndex} className="border-2 hover:border-primary/50 transition-colors">
                     <CardHeader className="pb-2">
