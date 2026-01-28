@@ -61,9 +61,16 @@ export default function Landing() {
   }, []);
   useEffect(() => {
     let exitIntentShown = false;
+    
+    // Mark that user has authenticated before (persists across sessions)
+    if (user) {
+      localStorage.setItem('has_authenticated', 'true');
+    }
+    
     const handleMouseLeave = (e: MouseEvent) => {
-      // Don't show email capture for authenticated users
-      if (e.clientY <= 0 && !exitIntentShown && !user) {
+      // Don't show email capture for authenticated users or users who have ever logged in
+      const hasAuthenticated = localStorage.getItem('has_authenticated') === 'true';
+      if (e.clientY <= 0 && !exitIntentShown && !user && !hasAuthenticated) {
         exitIntentShown = true;
         setEmailContext("exit_intent");
         setShowEmailCapture(true);
