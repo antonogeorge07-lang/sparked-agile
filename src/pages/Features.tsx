@@ -151,11 +151,9 @@ export default function Features() {
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSwitcher />
-              <Link to="/auth">
-                <Button size="sm">
-                  {t("landing.getStarted", "Get Started")}
-                </Button>
-              </Link>
+              <Button asChild size="sm">
+                <Link to="/auth">{t("landing.getStarted", "Get Started")}</Link>
+              </Button>
             </div>
           </div>
         </nav>
@@ -225,12 +223,12 @@ export default function Features() {
           <p className="text-muted-foreground mb-6">
             {t('features.cta.subtitle')}
           </p>
-          <Link to="/auth">
-            <Button size="lg" className="gap-2 group">
+          <Button asChild size="lg" className="gap-2 group">
+            <Link to="/auth">
               {t('features.cta.button')}
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </section>
     </div>

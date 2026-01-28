@@ -118,20 +118,23 @@ export default function Landing() {
               </span>
             </Link>
             <div className="flex items-center gap-3">
-              <Link to="/features">
-                <Button variant="ghost" size="sm">
-                  {t('landing.features.title', 'Features')}
-                </Button>
-              </Link>
+              <Button asChild variant="ghost" size="sm">
+                <a href="/features">{t("landing.features.title", "Features")}</a>
+              </Button>
               <LanguageSwitcher />
               {user ? (
                 <>
-                  <Link to="/home">
-                    <Button size="sm" className="gap-1.5" onClick={() => trackButtonClick('Go to Dashboard', 'nav')}>
+                  <Button
+                    asChild
+                    size="sm"
+                    className="gap-1.5"
+                    onClick={() => trackButtonClick("Go to Dashboard", "nav")}
+                  >
+                    <a href="/home">
                       <LayoutDashboard className="h-3.5 w-3.5" />
                       Dashboard
-                    </Button>
-                  </Link>
+                    </a>
+                  </Button>
                   <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-1.5">
                     <LogOut className="h-3.5 w-3.5" />
                     <span className="hidden sm:inline">Sign Out</span>
@@ -139,17 +142,26 @@ export default function Landing() {
                 </>
               ) : (
                 <>
-                  <Link to="/auth" className="hidden sm:block">
-                    <Button variant="ghost" size="sm" onClick={() => trackButtonClick('Sign In', 'nav')}>
-                      {t('landing.signIn')}
-                    </Button>
-                  </Link>
-                  <Link to="/auth">
-                    <Button size="sm" className="gap-1.5 bg-tier-free hover:bg-tier-free/90" onClick={() => trackButtonClick('Get Started', 'nav')}>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    size="sm"
+                    className="hidden sm:inline-flex"
+                    onClick={() => trackButtonClick("Sign In", "nav")}
+                  >
+                    <a href="/auth">{t("landing.signIn")}</a>
+                  </Button>
+                  <Button
+                    asChild
+                    size="sm"
+                    className="gap-1.5 bg-tier-free hover:bg-tier-free/90"
+                    onClick={() => trackButtonClick("Get Started", "nav")}
+                  >
+                    <a href="/auth">
                       <Mail className="h-3.5 w-3.5" />
-                      {t('landing.getDigest')}
-                    </Button>
-                  </Link>
+                      {t("landing.getDigest")}
+                    </a>
+                  </Button>
                 </>
               )}
             </div>
