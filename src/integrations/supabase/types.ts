@@ -4727,6 +4727,29 @@ export type Database = {
         Args: { ceremony_id: string }
         Returns: boolean
       }
+      get_data_breach_with_audit: {
+        Args: { breach_id_param?: string }
+        Returns: {
+          affected_data_types: string[] | null
+          affected_user_count: number | null
+          breach_type: string
+          containment_actions: string[] | null
+          created_by: string | null
+          description: string | null
+          detected_at: string | null
+          id: string
+          notification_sent_at: string | null
+          resolved_at: string | null
+          severity: string | null
+          supervisory_authority_notified: boolean | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "data_breach_log"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       get_expiring_tokens: {
         Args: { hours_threshold?: number }
         Returns: {
@@ -4914,6 +4937,7 @@ export type Database = {
         Returns: string
       }
       is_admin: { Args: { user_id: string }; Returns: boolean }
+      is_platform_owner: { Args: { user_id: string }; Returns: boolean }
       is_pmi_project_member: {
         Args: { p_project_id: string }
         Returns: boolean
@@ -4926,6 +4950,7 @@ export type Database = {
         Args: { p_project_id: string; p_user_id: string }
         Returns: boolean
       }
+      is_security_admin: { Args: { user_id: string }; Returns: boolean }
       is_workspace_member: {
         Args: { _user_id: string; _workspace_id: string }
         Returns: boolean
@@ -4948,10 +4973,15 @@ export type Database = {
         Args: { email_value: string; owner_id: string }
         Returns: string
       }
-      mask_teammate_email: {
-        Args: { email: string; profile_id: string; viewer_id: string }
-        Returns: string
-      }
+      mask_teammate_email:
+        | {
+            Args: { email: string; profile_id: string; viewer_id: string }
+            Returns: string
+          }
+        | {
+            Args: { email_value: string; profile_owner_id: string }
+            Returns: string
+          }
       record_consent_change: {
         Args: {
           p_consent_given: boolean
