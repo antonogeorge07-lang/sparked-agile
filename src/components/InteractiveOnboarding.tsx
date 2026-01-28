@@ -20,14 +20,15 @@ import {
   Github,
   TrendingUp
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import type { ElementType } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 
 interface OnboardingStep {
   id: string;
   title: string;
   description: string;
-  icon: React.ElementType;
+  icon: ElementType;
   action?: {
     label: string;
     path?: string;
@@ -73,6 +74,7 @@ const onboardingSteps: OnboardingStep[] = [
 
 export const InteractiveOnboarding = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [completed, setCompleted] = useState(false);
@@ -90,6 +92,13 @@ export const InteractiveOnboarding = () => {
       localStorage.setItem("saai_visited_before", "true");
     }
   }, []);
+
+  // Never let the onboarding modal block navigation.
+  // If the route changes for any reason, close the modal.
+  useEffect(() => {
+    if (isOpen) setIsOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
@@ -151,7 +160,7 @@ export const InteractiveOnboarding = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300 overflow-y-auto">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex items-center justify-center p-4 animate-in fade-in duration-300 overflow-y-auto">
       <Card className="max-w-2xl w-full shadow-2xl border-2 animate-in slide-in-from-bottom-4 duration-500">
         {!completed ? (
           <>
