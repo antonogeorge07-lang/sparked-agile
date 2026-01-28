@@ -62,7 +62,8 @@ export default function Landing() {
   useEffect(() => {
     let exitIntentShown = false;
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !exitIntentShown) {
+      // Don't show email capture for authenticated users
+      if (e.clientY <= 0 && !exitIntentShown && !user) {
         exitIntentShown = true;
         setEmailContext("exit_intent");
         setShowEmailCapture(true);
@@ -70,7 +71,7 @@ export default function Landing() {
     };
     document.addEventListener('mouseleave', handleMouseLeave);
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
-  }, []);
+  }, [user]);
 
   // No automatic redirect for authenticated users - they can navigate manually
 
