@@ -1,9 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Crown, Zap } from "lucide-react";
+import { Clock, Crown, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface TierBadgeProps {
-  tier: "free" | "pro";
+  tier: "free" | "coming-soon";
   className?: string;
   showIcon?: boolean;
 }
@@ -26,12 +26,12 @@ export function TierBadge({ tier, className, showIcon = true }: TierBadgeProps) 
   return (
     <Badge 
       className={cn(
-        "bg-tier-pro/10 text-tier-pro border-tier-pro/20 hover:bg-tier-pro/20",
+        "bg-muted text-muted-foreground border-border hover:bg-muted/80",
         className
       )}
     >
-      {showIcon && <Crown className="h-3 w-3 mr-1" />}
-      Pro
+      {showIcon && <Clock className="h-3 w-3 mr-1" />}
+      Coming Soon
     </Badge>
   );
 }
