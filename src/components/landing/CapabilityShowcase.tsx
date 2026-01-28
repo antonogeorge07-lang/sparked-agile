@@ -51,7 +51,7 @@ export function CapabilityShowcase() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-muted/30 relative overflow-hidden" aria-labelledby="capabilities-heading">
+    <section id="features" className="py-20 px-4 bg-muted/30 relative overflow-hidden" aria-labelledby="capabilities-heading">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--tier-free)/0.1)_0%,transparent_50%)]" />
