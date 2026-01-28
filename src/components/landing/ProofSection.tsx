@@ -5,23 +5,27 @@ import { Play, ArrowRight, CheckCircle2, Mail, GitBranch, Clock, Sparkles } from
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-
 interface ProofSectionProps {
   onWatchDemo: () => void;
 }
-
-export function ProofSection({ onWatchDemo }: ProofSectionProps) {
-  const { t } = useTranslation();
+export function ProofSection({
+  onWatchDemo
+}: ProofSectionProps) {
+  const {
+    t
+  } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
-  
-  const steps = [
-    { labelKey: "landing.proof.stepConnect", descKey: "landing.proof.stepConnectDesc" },
-    { labelKey: "landing.proof.stepConfigure", descKey: "landing.proof.stepConfigureDesc" },
-    { labelKey: "landing.proof.stepReceive", descKey: "landing.proof.stepReceiveDesc" },
-  ];
-
-  return (
-    <section className="py-20 px-4" aria-labelledby="proof-heading">
+  const steps = [{
+    labelKey: "landing.proof.stepConnect",
+    descKey: "landing.proof.stepConnectDesc"
+  }, {
+    labelKey: "landing.proof.stepConfigure",
+    descKey: "landing.proof.stepConfigureDesc"
+  }, {
+    labelKey: "landing.proof.stepReceive",
+    descKey: "landing.proof.stepReceiveDesc"
+  }];
+  return <section className="py-20 px-4" aria-labelledby="proof-heading">
       <div className="container mx-auto max-w-5xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Interactive steps */}
@@ -41,20 +45,11 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
 
             {/* Interactive step indicators */}
             <div className="space-y-3">
-              {steps.map((step, i) => (
-                <button
-                  key={i}
-                  className={`w-full text-left p-4 rounded-xl transition-all duration-300 group
-                    ${activeStep === i 
-                      ? 'bg-tier-free/10 border-2 border-tier-free/30 shadow-sm' 
-                      : 'bg-muted/50 border-2 border-transparent hover:bg-muted'}`}
-                  onMouseEnter={() => setActiveStep(i)}
-                >
+              {steps.map((step, i) => <button key={i} className={`w-full text-left p-4 rounded-xl transition-all duration-300 group
+                    ${activeStep === i ? 'bg-tier-free/10 border-2 border-tier-free/30 shadow-sm' : 'bg-muted/50 border-2 border-transparent hover:bg-muted'}`} onMouseEnter={() => setActiveStep(i)}>
                   <div className="flex items-center gap-4">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300
-                      ${activeStep === i 
-                        ? 'bg-tier-free text-tier-free-foreground scale-110' 
-                        : 'bg-muted-foreground/20 text-muted-foreground group-hover:bg-muted-foreground/30'}`}>
+                      ${activeStep === i ? 'bg-tier-free text-tier-free-foreground scale-110' : 'bg-muted-foreground/20 text-muted-foreground group-hover:bg-muted-foreground/30'}`}>
                       {i + 1}
                     </div>
                     <div>
@@ -63,25 +58,19 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
                         {t(step.descKey)}
                       </div>
                     </div>
-                    {activeStep === i && (
-                      <CheckCircle2 className="h-5 w-5 text-tier-free ml-auto animate-scale-in" />
-                    )}
+                    {activeStep === i && <CheckCircle2 className="h-5 w-5 text-tier-free ml-auto animate-scale-in" />}
                   </div>
-                </button>
-              ))}
+                </button>)}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex-col sm:flex-row gap-3 pt-2 flex items-start justify-center">
               <Link to="/auth">
-                <Button size="lg" className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90">
+                <Button size="lg" className="gap-2 w-full sm:w-auto bg-tier-free hover:bg-tier-free/90 text-center">
                   {t('landing.proof.getStarted')}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="gap-2" onClick={onWatchDemo}>
-                <Play className="h-4 w-4" />
-                {t('landing.proof.watchDemo')}
-              </Button>
+              
             </div>
           </div>
 
@@ -139,6 +128,5 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
           </Card>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
