@@ -97,8 +97,8 @@ export function IntegrationShowcase() {
                         </Badge>
                       )}
                       {integration.popular && !integration.free && (
-                        <Badge className="bg-tier-pro/10 text-tier-pro border-tier-pro/20">
-                          {t('common.pro')}
+                        <Badge variant="outline" className="text-muted-foreground">
+                          Coming Soon
                         </Badge>
                       )}
                     </div>

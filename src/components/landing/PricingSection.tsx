@@ -172,7 +172,7 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
 
         {/* Beta banner - simplified */}
         <div className="mt-10 text-center">
-          <Card className="inline-block bg-gradient-to-r from-tier-free/10 via-primary/10 to-tier-pro/10 border-primary/20">
+          <Card className="inline-block bg-gradient-to-r from-tier-free/10 via-primary/10 to-muted/20 border-primary/20">
             <CardContent className="p-6 flex flex-col sm:flex-row items-center gap-4">
               <div className="text-left">
                 <h3 className="font-bold mb-1">{t('landing.pricing.betaAccess')}</h3>
