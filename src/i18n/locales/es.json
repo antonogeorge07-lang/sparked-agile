@@ -450,5 +450,102 @@
     "ja": "Japonés",
     "ar": "Árabe",
     "ko": "Coreano"
+  },
+  "features": {
+    "hero": {
+      "title": "Problemas que Resolvemos",
+      "subtitle": "Cada función existe para eliminar un punto de dolor real que enfrentas a diario. Mira cómo SAAI transforma tu flujo de trabajo."
+    },
+    "painPoints": {
+      "meetingChaos": {
+        "title": "Elimina el Caos de las Reuniones de Estado",
+        "description": "No más standups de 30 minutos donde la mitad del equipo se desconecta. Obtén actualizaciones asíncronas.",
+        "features": {
+          "aiStandup": {
+            "title": "Resúmenes de Standup con IA",
+            "description": "Agrega automáticamente actualizaciones de tus herramientas y genera resúmenes diarios concisos sin reuniones."
+          },
+          "asyncUpdates": {
+            "title": "Actualizaciones Asíncronas del Equipo",
+            "description": "Los miembros del equipo envían actualizaciones en su horario. La IA compila y resalta lo que importa."
+          }
+        }
+      },
+      "progressTracking": {
+        "title": "Deja de Perder el Rastro del Progreso",
+        "description": "Herramientas dispersas significan insights dispersos. Ve todo en un solo lugar.",
+        "features": {
+          "commandCentre": {
+            "title": "Centro de Comando del Proyecto",
+            "description": "Panel unificado que muestra tareas, bloqueos, velocidad y puntuaciones de salud de un vistazo."
+          },
+          "epicTracking": {
+            "title": "Seguimiento de Épicas y Características",
+            "description": "Divide grandes iniciativas en piezas manejables con mapeo de dependencias y gráficos de burndown."
+          }
+        }
+      },
+      "manualReporting": {
+        "title": "Acaba con el Trabajo Manual de Reportes",
+        "description": "Deja de pasar horas compilando informes de estado. Deja que la IA haga el trabajo pesado.",
+        "features": {
+          "aiDigest": {
+            "title": "Resumen Diario con IA",
+            "description": "Recibe resúmenes diarios automatizados de lo completado, lo bloqueado y lo que necesita atención."
+          },
+          "autoMetrics": {
+            "title": "Métricas Auto-generadas",
+            "description": "Velocidad, tiempo de ciclo y rendimiento calculados automáticamente de tu trabajo real."
+          }
+        }
+      },
+      "contextSwitching": {
+        "title": "Reduce el Cambio de Contexto",
+        "description": "Saltar entre Jira, GitHub, Slack y correo mata la productividad.",
+        "features": {
+          "unifiedView": {
+            "title": "Vista de Trabajo Unificada",
+            "description": "Todas tus tareas, PRs, mensajes y actualizaciones agregadas en una interfaz inteligente."
+          },
+          "integrations": {
+            "title": "Integraciones Profundas",
+            "description": "Conecta GitHub, Jira, Slack y Outlook. SAAI se convierte en tu única fuente de verdad."
+          }
+        }
+      },
+      "stakeholderComms": {
+        "title": "Agiliza la Comunicación con Stakeholders",
+        "description": "Los ejecutivos quieren actualizaciones, no excusas. Dales insights de autoservicio.",
+        "features": {
+          "portal": {
+            "title": "Portal de Stakeholders",
+            "description": "Paneles amigables para ejecutivos con seguimiento de ROI, progreso de hitos y widgets personalizables."
+          },
+          "approvals": {
+            "title": "Flujos de Aprobación",
+            "description": "Enruta cambios de presupuesto, ajustes de alcance y cierres de épicas a través de cadenas de aprobación apropiadas."
+          }
+        }
+      },
+      "sprintPlanning": {
+        "title": "Simplifica la Planificación del Sprint",
+        "description": "Las sesiones de planificación no deberían ser caóticas. Obtén recomendaciones impulsadas por IA.",
+        "features": {
+          "aiPlanning": {
+            "title": "Asistente de Sprint con IA",
+            "description": "Obtén sugerencias inteligentes para capacidad del sprint, selección de historias e identificación de riesgos."
+          },
+          "ceremonies": {
+            "title": "Gestión de Ceremonias",
+            "description": "Plantillas estructuradas para retrospectivas, revisiones y refinamiento con mejores prácticas integradas."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para Resolver Estos Problemas?",
+      "subtitle": "Únete a los equipos que han eliminado el caos del flujo de trabajo con SAAI.",
+      "button": "Comienza Gratis"
+    }
   }
 }

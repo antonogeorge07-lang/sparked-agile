@@ -305,5 +305,102 @@
     "ja": "일본어",
     "ar": "아랍어",
     "ko": "한국어"
+  },
+  "features": {
+    "hero": {
+      "title": "우리가 해결하는 문제",
+      "subtitle": "모든 기능은 매일 직면하는 실제 고충점을 없애기 위해 존재합니다. SAAI가 워크플로우를 어떻게 변화시키는지 확인하세요."
+    },
+    "painPoints": {
+      "meetingChaos": {
+        "title": "상태 회의 혼란 제거",
+        "description": "팀의 절반이 집중력을 잃는 30분짜리 스탠드업은 이제 그만. 비동기 업데이트를 받으세요.",
+        "features": {
+          "aiStandup": {
+            "title": "AI 스탠드업 요약",
+            "description": "도구에서 업데이트를 자동으로 집계하고 회의 없이 간결한 일일 요약을 생성합니다."
+          },
+          "asyncUpdates": {
+            "title": "비동기 팀 업데이트",
+            "description": "팀원들이 자신의 일정에 맞춰 업데이트를 제출합니다. AI가 중요한 것을 정리하고 강조합니다."
+          }
+        }
+      },
+      "progressTracking": {
+        "title": "진행 상황 추적을 놓치지 마세요",
+        "description": "분산된 도구는 분산된 인사이트를 의미합니다. 한 곳에서 모든 것을 확인하세요.",
+        "features": {
+          "commandCentre": {
+            "title": "프로젝트 커맨드 센터",
+            "description": "작업, 블로커, 속도 및 건강 점수를 한눈에 보여주는 통합 대시보드."
+          },
+          "epicTracking": {
+            "title": "에픽 및 기능 추적",
+            "description": "대규모 이니셔티브를 관리 가능한 조각으로 분해하고 의존성 매핑과 번다운 차트를 제공합니다."
+          }
+        }
+      },
+      "manualReporting": {
+        "title": "수동 보고 작업 종료",
+        "description": "상태 보고서 작성에 시간을 낭비하지 마세요. AI가 무거운 작업을 처리하게 하세요.",
+        "features": {
+          "aiDigest": {
+            "title": "AI 일일 다이제스트",
+            "description": "완료된 것, 차단된 것, 주의가 필요한 것에 대한 자동화된 일일 요약을 받습니다."
+          },
+          "autoMetrics": {
+            "title": "자동 생성 메트릭",
+            "description": "실제 작업에서 속도, 사이클 타임 및 처리량이 자동으로 계산됩니다."
+          }
+        }
+      },
+      "contextSwitching": {
+        "title": "컨텍스트 스위칭 줄이기",
+        "description": "Jira, GitHub, Slack, 이메일 사이를 오가는 것은 생산성을 죽입니다.",
+        "features": {
+          "unifiedView": {
+            "title": "통합 작업 뷰",
+            "description": "모든 작업, PR, 메시지 및 업데이트를 단일 지능형 인터페이스에 집계합니다."
+          },
+          "integrations": {
+            "title": "딥 인테그레이션",
+            "description": "GitHub, Jira, Slack 및 Outlook을 연결하세요. SAAI가 유일한 진실의 원천이 됩니다."
+          }
+        }
+      },
+      "stakeholderComms": {
+        "title": "이해관계자 커뮤니케이션 간소화",
+        "description": "임원들은 변명이 아니라 업데이트를 원합니다. 셀프 서비스 인사이트를 제공하세요.",
+        "features": {
+          "portal": {
+            "title": "이해관계자 포털",
+            "description": "ROI 추적, 마일스톤 진행 상황 및 사용자 정의 가능한 위젯이 있는 임원 친화적 대시보드."
+          },
+          "approvals": {
+            "title": "승인 워크플로우",
+            "description": "예산 변경, 범위 조정 및 에픽 종료를 적절한 승인 체인을 통해 라우팅합니다."
+          }
+        }
+      },
+      "sprintPlanning": {
+        "title": "스프린트 계획 간소화",
+        "description": "계획 세션이 혼란스러워서는 안 됩니다. AI 기반 권장 사항을 받으세요.",
+        "features": {
+          "aiPlanning": {
+            "title": "AI 스프린트 어시스턴트",
+            "description": "스프린트 용량, 스토리 선택 및 위험 식별에 대한 지능적인 제안을 받습니다."
+          },
+          "ceremonies": {
+            "title": "세레모니 관리",
+            "description": "회고, 리뷰 및 리파인먼트를 위한 구조화된 템플릿과 내장된 모범 사례."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "이 문제들을 해결할 준비가 되셨나요?",
+      "subtitle": "SAAI로 워크플로우 혼란을 제거한 팀에 합류하세요.",
+      "button": "무료로 시작"
+    }
   }
 }
