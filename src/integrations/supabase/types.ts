@@ -2215,6 +2215,36 @@ export type Database = {
           },
         ]
       }
+      project_member_access_log: {
+        Row: {
+          access_type: string
+          accessed_at: string
+          id: string
+          ip_address: string | null
+          members_accessed: number
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          access_type: string
+          accessed_at?: string
+          id?: string
+          ip_address?: string | null
+          members_accessed?: number
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          access_type?: string
+          accessed_at?: string
+          id?: string
+          ip_address?: string | null
+          members_accessed?: number
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       project_members: {
         Row: {
           created_at: string | null
@@ -4614,6 +4644,10 @@ export type Database = {
         Returns: boolean
       }
       can_create_project: { Args: { user_id_param: string }; Returns: boolean }
+      can_view_project_roster: {
+        Args: { p_project_id: string }
+        Returns: boolean
+      }
       check_integration_status: {
         Args: { integration_id: string }
         Returns: {
@@ -4643,6 +4677,10 @@ export type Database = {
       cleanup_old_access_logs:
         | { Args: never; Returns: undefined }
         | { Args: { days_to_keep?: number }; Returns: number }
+      cleanup_project_member_access_logs: {
+        Args: { days_to_keep?: number }
+        Returns: number
+      }
       cleanup_slack_audit_logs: { Args: never; Returns: number }
       create_epic_progress_snapshot: {
         Args: { epic_id_param: string }
@@ -4851,6 +4889,23 @@ export type Database = {
           current_count: number
           limit_count: number
           tier_name: string
+        }[]
+      }
+      get_project_member_count: {
+        Args: { p_project_id: string }
+        Returns: number
+      }
+      get_project_members_gdpr: {
+        Args: { p_project_id: string }
+        Returns: {
+          created_at: string
+          id: string
+          is_full_access: boolean
+          member_avatar: string
+          member_name: string
+          project_id: string
+          role: string
+          user_id: string
         }[]
       }
       get_project_teammate_profile: {
