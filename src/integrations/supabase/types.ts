@@ -2310,6 +2310,13 @@ export type Database = {
             referencedRelation: "project_teammates"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "project_teammates_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       project_milestones: {
@@ -2644,6 +2651,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "project_teammates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "project_teammates_safe"
             referencedColumns: ["id"]
           },
           {
@@ -3502,6 +3516,7 @@ export type Database = {
           created_at: string
           feedback_text: string | null
           id: string
+          is_anonymous: boolean | null
           nps_score: number | null
           page: string | null
           rating: number | null
@@ -3513,6 +3528,7 @@ export type Database = {
           created_at?: string
           feedback_text?: string | null
           id?: string
+          is_anonymous?: boolean | null
           nps_score?: number | null
           page?: string | null
           rating?: number | null
@@ -3524,6 +3540,7 @@ export type Database = {
           created_at?: string
           feedback_text?: string | null
           id?: string
+          is_anonymous?: boolean | null
           nps_score?: number | null
           page?: string | null
           rating?: number | null
@@ -4357,7 +4374,6 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string | null
-          last_activity_at: string | null
           role: Database["public"]["Enums"]["app_role"] | null
           updated_at: string | null
         }
@@ -4367,7 +4383,6 @@ export type Database = {
           email?: never
           full_name?: string | null
           id?: string | null
-          last_activity_at?: string | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
@@ -4377,7 +4392,6 @@ export type Database = {
           email?: never
           full_name?: string | null
           id?: string | null
-          last_activity_at?: string | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
@@ -4388,6 +4402,15 @@ export type Database = {
           avatar_url: string | null
           full_name: string | null
           id: string | null
+        }
+        Relationships: []
+      }
+      project_teammates_safe: {
+        Row: {
+          avatar_url: string | null
+          full_name: string | null
+          id: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
         }
         Relationships: []
       }
@@ -4425,10 +4448,60 @@ export type Database = {
           },
         ]
       }
+      user_github_tokens_safe: {
+        Row: {
+          created_at: string | null
+          github_username: string | null
+          has_refresh_token: boolean | null
+          has_token: boolean | null
+          id: string | null
+          is_valid: boolean | null
+          last_validated_at: string | null
+          oauth_provider: string | null
+          scopes: string[] | null
+          token_expires_at: string | null
+          updated_at: string | null
+          user_id: string | null
+          validation_error: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          github_username?: string | null
+          has_refresh_token?: never
+          has_token?: never
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          oauth_provider?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          github_username?: string | null
+          has_refresh_token?: never
+          has_token?: never
+          id?: string | null
+          is_valid?: boolean | null
+          last_validated_at?: string | null
+          oauth_provider?: string | null
+          scopes?: string[] | null
+          token_expires_at?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          validation_error?: string | null
+        }
+        Relationships: []
+      }
       user_jira_tokens_safe: {
         Row: {
           cloud_id: string | null
           created_at: string | null
+          has_refresh_token: boolean | null
+          has_token: boolean | null
           id: string | null
           is_valid: boolean | null
           jira_email: string | null
@@ -4444,6 +4517,8 @@ export type Database = {
         Insert: {
           cloud_id?: string | null
           created_at?: string | null
+          has_refresh_token?: never
+          has_token?: never
           id?: string | null
           is_valid?: boolean | null
           jira_email?: string | null
@@ -4459,6 +4534,8 @@ export type Database = {
         Update: {
           cloud_id?: string | null
           created_at?: string | null
+          has_refresh_token?: never
+          has_token?: never
           id?: string | null
           is_valid?: boolean | null
           jira_email?: string | null
@@ -4513,38 +4590,35 @@ export type Database = {
         Row: {
           created_at: string | null
           expires_at: string | null
+          has_access_token: boolean | null
+          has_refresh_token: boolean | null
           id: string | null
           is_valid: boolean | null
-          last_validated_at: string | null
           scopes: string[] | null
           updated_at: string | null
-          user_email: string | null
           user_id: string | null
-          validation_error: string | null
         }
         Insert: {
           created_at?: string | null
           expires_at?: string | null
+          has_access_token?: never
+          has_refresh_token?: never
           id?: string | null
           is_valid?: boolean | null
-          last_validated_at?: string | null
           scopes?: string[] | null
           updated_at?: string | null
-          user_email?: string | null
           user_id?: string | null
-          validation_error?: string | null
         }
         Update: {
           created_at?: string | null
           expires_at?: string | null
+          has_access_token?: never
+          has_refresh_token?: never
           id?: string | null
           is_valid?: boolean | null
-          last_validated_at?: string | null
           scopes?: string[] | null
           updated_at?: string | null
-          user_email?: string | null
           user_id?: string | null
-          validation_error?: string | null
         }
         Relationships: []
       }
