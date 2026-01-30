@@ -2307,13 +2307,6 @@ export type Database = {
             foreignKeyName: "project_members_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "project_teammates"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "project_members_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
             referencedRelation: "project_teammates_safe"
             referencedColumns: ["id"]
           },
@@ -2644,13 +2637,6 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles_teammate_safe"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "projects_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "project_teammates"
             referencedColumns: ["id"]
           },
           {
@@ -3815,6 +3801,8 @@ export type Database = {
           cloud_id: string | null
           created_at: string
           encrypted_access_token: string | null
+          encrypted_jira_email: string | null
+          encrypted_jira_site_url: string | null
           encrypted_refresh_token: string | null
           encrypted_token: string | null
           id: string
@@ -3834,6 +3822,8 @@ export type Database = {
           cloud_id?: string | null
           created_at?: string
           encrypted_access_token?: string | null
+          encrypted_jira_email?: string | null
+          encrypted_jira_site_url?: string | null
           encrypted_refresh_token?: string | null
           encrypted_token?: string | null
           id?: string
@@ -3853,6 +3843,8 @@ export type Database = {
           cloud_id?: string | null
           created_at?: string
           encrypted_access_token?: string | null
+          encrypted_jira_email?: string | null
+          encrypted_jira_site_url?: string | null
           encrypted_refresh_token?: string | null
           encrypted_token?: string | null
           id?: string
@@ -4370,30 +4362,18 @@ export type Database = {
       profiles_teammate_safe: {
         Row: {
           avatar_url: string | null
-          created_at: string | null
-          email: string | null
           full_name: string | null
           id: string | null
-          role: Database["public"]["Enums"]["app_role"] | null
-          updated_at: string | null
         }
         Insert: {
           avatar_url?: string | null
-          created_at?: string | null
-          email?: never
           full_name?: string | null
           id?: string | null
-          role?: Database["public"]["Enums"]["app_role"] | null
-          updated_at?: string | null
         }
         Update: {
           avatar_url?: string | null
-          created_at?: string | null
-          email?: never
           full_name?: string | null
           id?: string | null
-          role?: Database["public"]["Enums"]["app_role"] | null
-          updated_at?: string | null
         }
         Relationships: []
       }
@@ -4401,9 +4381,54 @@ export type Database = {
         Row: {
           avatar_url: string | null
           full_name: string | null
-          id: string | null
+          member_role: string | null
+          project_id: string | null
+          user_id: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "project_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_teammate_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "project_teammates_safe"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       project_teammates_safe: {
         Row: {
@@ -4500,53 +4525,53 @@ export type Database = {
         Row: {
           cloud_id: string | null
           created_at: string | null
+          has_jira_email: boolean | null
           has_refresh_token: boolean | null
+          has_site_url: boolean | null
           has_token: boolean | null
           id: string | null
           is_valid: boolean | null
-          jira_email: string | null
-          jira_site_url: string | null
           last_validated_at: string | null
           oauth_provider: string | null
           scopes: string[] | null
           token_expires_at: string | null
           updated_at: string | null
           user_id: string | null
-          validation_error: string | null
+          validation_status: string | null
         }
         Insert: {
           cloud_id?: string | null
           created_at?: string | null
+          has_jira_email?: never
           has_refresh_token?: never
+          has_site_url?: never
           has_token?: never
           id?: string | null
           is_valid?: boolean | null
-          jira_email?: string | null
-          jira_site_url?: string | null
           last_validated_at?: string | null
           oauth_provider?: string | null
           scopes?: string[] | null
           token_expires_at?: string | null
           updated_at?: string | null
           user_id?: string | null
-          validation_error?: string | null
+          validation_status?: never
         }
         Update: {
           cloud_id?: string | null
           created_at?: string | null
+          has_jira_email?: never
           has_refresh_token?: never
+          has_site_url?: never
           has_token?: never
           id?: string | null
           is_valid?: boolean | null
-          jira_email?: string | null
-          jira_site_url?: string | null
           last_validated_at?: string | null
           oauth_provider?: string | null
           scopes?: string[] | null
           token_expires_at?: string | null
           updated_at?: string | null
           user_id?: string | null
-          validation_error?: string | null
+          validation_status?: never
         }
         Relationships: []
       }
