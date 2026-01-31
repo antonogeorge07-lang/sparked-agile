@@ -44,8 +44,8 @@ export default function FAQ() {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>What is SAAI?</AccordionTrigger>
                   <AccordionContent>
-                    SAAI (Spark-Agile Active Intelligence) is your AI Chief of Staff — a Command Center for Remote Teams. 
-                    It's the "missing cognitive layer" that unifies context from all your tools (GitHub, Jira, Slack, Outlook) 
+                    SAAI (Spark-Agile Active Intelligence) is your AI Chief of Staff, a Command Center for Remote Teams. 
+                    It is the "missing cognitive layer" that unifies context from all your tools (GitHub, Jira, Slack, Outlook) 
                     and delivers actionable insights in 5 minutes. No more tool chaos, no more missed updates.
                   </AccordionContent>
                 </AccordionItem>
@@ -55,9 +55,9 @@ export default function FAQ() {
                   <AccordionContent>
                     SAAI uses a multi-agent AI system powered by Gemini:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>Omair</strong> — Your support assistant for onboarding and platform help</li>
-                      <li><strong>AI Co-Pilot</strong> — Generates user stories, estimates story points, detects blockers, and forecasts sprints</li>
-                      <li><strong>Specialist Agents</strong> — Dedicated agents for retrospective insights, sprint planning, and GitHub digests</li>
+                      <li><strong>Omair</strong>: Your support assistant for onboarding and platform help</li>
+                      <li><strong>AI Co-Pilot</strong>: Generates user stories, estimates story points, detects blockers, and forecasts sprints</li>
+                      <li><strong>Specialist Agents</strong>: Dedicated agents for retrospective insights, sprint planning, and GitHub digests</li>
                     </ul>
                     All agents share project context and persist recommendations for continuous learning.
                   </AccordionContent>
@@ -101,12 +101,12 @@ export default function FAQ() {
                   <AccordionContent>
                     SAAI includes a complete project management system:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>Kanban Boards</strong> — Visual task management with customizable columns</li>
-                      <li><strong>Sprint Management</strong> — Plan, track, and review sprints</li>
-                      <li><strong>Backlog Tracking</strong> — Prioritize and manage your product backlog</li>
-                      <li><strong>Task Management</strong> — Create, assign, and track tasks with full history</li>
+                      <li><strong>Kanban Boards</strong>: Visual task management with customizable columns</li>
+                      <li><strong>Sprint Management</strong>: Plan, track, and review sprints</li>
+                      <li><strong>Backlog Tracking</strong>: Prioritize and manage your product backlog</li>
+                      <li><strong>Task Management</strong>: Create, assign, and track tasks with full history</li>
                     </ul>
-                    This means SAAI works as a standalone tool — external integrations like Jira are optional.
+                    This means SAAI works as a standalone tool. External integrations like Jira are optional.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -115,10 +115,10 @@ export default function FAQ() {
                   <AccordionContent>
                     The AI Co-Pilot (powered by Gemini) provides four key actions:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>Generate User Stories</strong> — Create well-structured user stories from requirements</li>
-                      <li><strong>Estimate Story Points</strong> — AI-powered estimation based on historical data</li>
-                      <li><strong>Detect Blockers</strong> — Proactively identify potential roadblocks</li>
-                      <li><strong>Forecast Sprints</strong> — Predict sprint outcomes based on velocity and capacity</li>
+                      <li><strong>Generate User Stories</strong>: Create well-structured user stories from requirements</li>
+                      <li><strong>Estimate Story Points</strong>: AI-powered estimation based on historical data</li>
+                      <li><strong>Detect Blockers</strong>: Proactively identify potential roadblocks</li>
+                      <li><strong>Forecast Sprints</strong>: Predict sprint outcomes based on velocity and capacity</li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
@@ -128,11 +128,11 @@ export default function FAQ() {
                   <AccordionContent>
                     SAAI integrates with the tools your team already uses:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>Jira</strong> — Sync backlog items, sprints, and issues</li>
-                      <li><strong>GitHub</strong> — Track commits, PRs, and repository activity</li>
-                      <li><strong>Microsoft Outlook</strong> — Create calendar events for ceremonies</li>
-                      <li><strong>Microsoft Teams</strong> — Send notifications and updates</li>
-                      <li><strong>Slack</strong> — Team notifications and channel updates</li>
+                      <li><strong>Jira</strong>: Sync backlog items, sprints, and issues</li>
+                      <li><strong>GitHub</strong>: Track commits, PRs, and repository activity</li>
+                      <li><strong>Microsoft Outlook</strong>: Create calendar events for ceremonies</li>
+                      <li><strong>Microsoft Teams</strong>: Send notifications and updates</li>
+                      <li><strong>Slack</strong>: Team notifications and channel updates</li>
                     </ul>
                     Users manage their own Personal Access Tokens for secure, per-user integration.
                   </AccordionContent>
@@ -157,10 +157,10 @@ export default function FAQ() {
                   <AccordionContent>
                     SAAI uses enterprise-grade security:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>196+ RLS Policies</strong> — Row-Level Security ensures data isolation</li>
-                      <li><strong>AES-256-GCM Encryption</strong> — All sensitive data encrypted at rest</li>
-                      <li><strong>GDPR Compliance</strong> — Full data privacy controls and consent management</li>
-                      <li><strong>Prompt Injection Protection</strong> — Role enforcement, character limits, and regex detection</li>
+                      <li><strong>196+ RLS Policies</strong>: Row-Level Security ensures data isolation</li>
+                      <li><strong>AES-256-GCM Encryption</strong>: All sensitive data encrypted at rest</li>
+                      <li><strong>GDPR Compliance</strong>: Full data privacy controls and consent management</li>
+                      <li><strong>Prompt Injection Protection</strong>: Role enforcement, character limits, and regex detection</li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
@@ -214,12 +214,12 @@ export default function FAQ() {
                   <AccordionContent>
                     We're launching these features in the next 30 days:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>Sprint Ceremonies</strong> — Full standup, retrospective, and planning workflows</li>
-                      <li><strong>AI Standup Summaries</strong> — Automated daily updates from your team</li>
-                      <li><strong>Epic Management</strong> — ROI tracking, dependency visualization, and milestone management</li>
-                      <li><strong>Real-time Collaboration</strong> — Live presence indicators and co-editing</li>
-                      <li><strong>Advanced Flow Metrics</strong> — Velocity trends, cycle time analytics, and throughput tracking</li>
-                      <li><strong>Stakeholder Portal</strong> — Executive dashboards and digest subscriptions</li>
+                      <li><strong>Sprint Ceremonies</strong>: Full standup, retrospective, and planning workflows</li>
+                      <li><strong>AI Standup Summaries</strong>: Automated daily updates from your team</li>
+                      <li><strong>Epic Management</strong>: ROI tracking, dependency visualization, and milestone management</li>
+                      <li><strong>Real-time Collaboration</strong>: Live presence indicators and co-editing</li>
+                      <li><strong>Advanced Flow Metrics</strong>: Velocity trends, cycle time analytics, and throughput tracking</li>
+                      <li><strong>Stakeholder Portal</strong>: Executive dashboards and digest subscriptions</li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
@@ -277,9 +277,9 @@ export default function FAQ() {
                   <AccordionContent>
                     Yes, API rate limits ensure fair usage:
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li><strong>Free tier</strong> — 100 requests/minute</li>
-                      <li><strong>Pro tier (coming soon)</strong> — 1,000 requests/minute</li>
-                      <li><strong>Enterprise (coming soon)</strong> — Unlimited</li>
+                      <li><strong>Free tier</strong>: 100 requests/minute</li>
+                      <li><strong>Pro tier (coming soon)</strong>: 1,000 requests/minute</li>
+                      <li><strong>Enterprise (coming soon)</strong>: Unlimited</li>
                     </ul>
                     AI-specific endpoints have additional tiered limits to manage costs.
                   </AccordionContent>

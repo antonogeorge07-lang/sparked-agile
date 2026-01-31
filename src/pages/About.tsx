@@ -98,7 +98,7 @@ export default function About() {
               Spark-Agile Active Intelligence
             </p>
             <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto">
-              Your AI Chief of Staff — the Command Center for Remote Teams
+              Your AI Chief of Staff: the Command Center for Remote Teams
             </p>
           </div>
         </ScrollReveal>
@@ -122,11 +122,11 @@ export default function About() {
                   juggling Jira, GitHub, Slack, and Outlook, I spent more time switching tabs than actually leading my team.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  We built SAAI as the "missing cognitive layer" — an AI Chief of Staff that understands context across 
+                  We built SAAI as the "missing cognitive layer", an AI Chief of Staff that understands context across 
                   all your tools and delivers what matters in 5 minutes. No more tool chaos. No more missed updates.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Our philosophy is "Active Intelligence" — AI that empowers teams rather than replacing them. 
+                  Our philosophy is "Active Intelligence": AI that empowers teams rather than replacing them. 
                   Every feature is designed to give you clarity, focus, and the confidence to lead.
                 </p>
               </div>
@@ -173,7 +173,7 @@ export default function About() {
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Vision</h3>
                   <p className="text-sm text-muted-foreground">
-                    Get your 5-minute team pulse — no meeting required
+                    Get your 5-minute team pulse, no meeting required
                   </p>
                 </div>
               </CardContent>
@@ -302,7 +302,7 @@ export default function About() {
                   purposeful AI-powered tools for teams that value quality, clarity, and progress.
                 </p>
                 <p className="text-primary-foreground/80 max-w-xl mx-auto text-sm">
-                  This is the first step toward a new era of engagement—one where AI empowers people, 
+                  This is the first step toward a new era of engagement, one where AI empowers people, 
                   rather than replacing them.
                 </p>
               </div>
