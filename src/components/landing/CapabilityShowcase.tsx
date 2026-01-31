@@ -51,7 +51,7 @@ export function CapabilityShowcase() {
   ];
 
   return (
-    <section id="features" className="py-20 px-4 bg-muted/30 relative overflow-hidden" aria-labelledby="capabilities-heading">
+    <section id="features" className="py-12 sm:py-20 px-4 bg-muted/30 relative overflow-hidden" aria-labelledby="capabilities-heading">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--tier-free)/0.1)_0%,transparent_50%)]" />
@@ -59,16 +59,16 @@ export function CapabilityShowcase() {
       </div>
 
       <div className="container mx-auto max-w-5xl relative z-10">
-        <header className="text-center mb-12">
-          <h2 id="capabilities-heading" className="text-3xl md:text-4xl font-bold font-heading mb-4 opacity-0 animate-fade-in-up">
+        <header className="text-center mb-8 sm:mb-12">
+          <h2 id="capabilities-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-3 sm:mb-4 opacity-0 animate-fade-in-up">
             {t('landing.capabilities.title')}
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200 px-2">
             {t('landing.capabilities.subtitle')}
           </p>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {capabilities.map((cap, index) => {
             const isFree = cap.tier === "free";
             const isComingSoon = cap.tier === "coming-soon";
@@ -77,7 +77,7 @@ export function CapabilityShowcase() {
             return (
               <Card 
                 key={index}
-                className={`group relative p-6 cursor-pointer transition-all duration-300 overflow-hidden
+                className={`group relative p-4 sm:p-6 cursor-pointer transition-all duration-300 overflow-hidden
                   ${isHovered ? 'scale-[1.02] shadow-elevated' : 'hover:shadow-card'}
                   ${isFree ? 'border-tier-free/20 hover:border-tier-free/40' : 'border-border hover:border-muted-foreground/30'}
                   ${isComingSoon ? 'opacity-80' : ''}
@@ -92,19 +92,19 @@ export function CapabilityShowcase() {
                 />
                 
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
+                  <div className="flex items-start justify-between mb-3 sm:mb-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
                       ${isFree ? 'bg-tier-free/10 group-hover:bg-tier-free/20' : 'bg-muted group-hover:bg-muted/80'}`}>
-                      <cap.icon className={`h-6 w-6 transition-transform duration-300 group-hover:rotate-[-5deg]
+                      <cap.icon className={`h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-300 group-hover:rotate-[-5deg]
                         ${isFree ? 'text-tier-free' : 'text-muted-foreground'}`} />
                     </div>
-                    <TierBadge tier={cap.tier} className="text-xs" />
+                    <TierBadge tier={cap.tier} className="text-[10px] sm:text-xs" />
                   </div>
                   
-                  <h3 className="font-semibold font-heading text-lg mb-2 group-hover:text-foreground transition-colors">
+                  <h3 className="font-semibold font-heading text-base sm:text-lg mb-1.5 sm:mb-2 group-hover:text-foreground transition-colors">
                     {t(cap.titleKey)}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {t(cap.descKey)}
                   </p>
                 </div>
@@ -114,11 +114,11 @@ export function CapabilityShowcase() {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-10 opacity-0 animate-fade-in animation-delay-700">
-          <Button asChild variant="outline" className="gap-2 group">
+        <div className="text-center mt-8 sm:mt-10 opacity-0 animate-fade-in animation-delay-700">
+          <Button asChild variant="outline" className="gap-2 group text-sm sm:text-base">
             <Link to="/features">
               {t("landing.capabilities.seeAllFeatures")}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </div>
