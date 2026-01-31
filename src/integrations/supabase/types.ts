@@ -4526,10 +4526,9 @@ export type Database = {
           cloud_id: string | null
           created_at: string | null
           has_jira_email: boolean | null
+          has_jira_site_url: boolean | null
           has_refresh_token: boolean | null
-          has_site_url: boolean | null
           has_token: boolean | null
-          id: string | null
           is_valid: boolean | null
           last_validated_at: string | null
           oauth_provider: string | null
@@ -4537,16 +4536,15 @@ export type Database = {
           token_expires_at: string | null
           updated_at: string | null
           user_id: string | null
-          validation_status: string | null
+          validation_error: string | null
         }
         Insert: {
           cloud_id?: string | null
           created_at?: string | null
           has_jira_email?: never
+          has_jira_site_url?: never
           has_refresh_token?: never
-          has_site_url?: never
           has_token?: never
-          id?: string | null
           is_valid?: boolean | null
           last_validated_at?: string | null
           oauth_provider?: string | null
@@ -4554,16 +4552,15 @@ export type Database = {
           token_expires_at?: string | null
           updated_at?: string | null
           user_id?: string | null
-          validation_status?: never
+          validation_error?: string | null
         }
         Update: {
           cloud_id?: string | null
           created_at?: string | null
           has_jira_email?: never
+          has_jira_site_url?: never
           has_refresh_token?: never
-          has_site_url?: never
           has_token?: never
-          id?: string | null
           is_valid?: boolean | null
           last_validated_at?: string | null
           oauth_provider?: string | null
@@ -4571,7 +4568,7 @@ export type Database = {
           token_expires_at?: string | null
           updated_at?: string | null
           user_id?: string | null
-          validation_status?: never
+          validation_error?: string | null
         }
         Relationships: []
       }

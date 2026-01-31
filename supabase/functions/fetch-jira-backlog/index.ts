@@ -31,10 +31,10 @@ serve(async (req) => {
     
     console.log('Fetching JIRA backlog for workspace:', workspaceId);
 
-    // First try to get user's personal Jira token
-    const { data: userToken } = await supabaseClient
-      .from('user_jira_tokens')
-      .select('jira_token, jira_email, jira_site_url')
+    // Check if user has Jira token configured via safe view
+    const { data: userTokenInfo } = await supabaseClient
+      .from('user_jira_tokens_safe')
+      .select('has_token, has_jira_email, has_jira_site_url')
       .eq('user_id', user.id)
       .maybeSingle();
 
@@ -42,16 +42,42 @@ serve(async (req) => {
     let jiraEmail: string | null = null;
     let jiraSiteUrl: string | null = null;
 
-    if (userToken) {
-      // Use user's personal token
-      jiraToken = userToken.jira_token;
-      jiraEmail = userToken.jira_email;
-      jiraSiteUrl = userToken.jira_site_url;
-      console.log('Using user personal Jira token');
-    } else {
+    if (userTokenInfo?.has_token) {
+      // Decrypt credentials via decrypt-token edge function
+      console.log('Decrypting user Jira credentials...');
+      const decryptResponse = await fetch(
+        `${Deno.env.get('SUPABASE_URL')}/functions/v1/decrypt-token`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': req.headers.get('Authorization')!,
+            'Content-Type': 'application/json',
+            'X-Caller-Function': 'fetch-jira-backlog',
+          },
+          body: JSON.stringify({ 
+            integrationType: 'jira',
+            includeMetadata: true 
+          }),
+        }
+      );
+
+      if (decryptResponse.ok) {
+        const decryptedData = await decryptResponse.json();
+        jiraToken = decryptedData.token;
+        jiraEmail = decryptedData.metadata?.jira_email || null;
+        jiraSiteUrl = decryptedData.metadata?.jira_site_url || null;
+        console.log('Using user personal Jira token (decrypted)');
+      } else {
+        console.warn('Failed to decrypt Jira token:', await decryptResponse.text());
+      }
+    }
+    
+    if (!jiraToken) {
       // Fall back to system token
       jiraToken = Deno.env.get('JIRA_API_TOKEN') ?? null;
-      console.log('Using system Jira token');
+      if (jiraToken) {
+        console.log('Using system Jira token');
+      }
     }
 
     if (!jiraToken) {

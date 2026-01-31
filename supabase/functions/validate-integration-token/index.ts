@@ -124,7 +124,7 @@ serve(async (req) => {
       tableName = 'user_jira_tokens';
       const { data: tokenRecord, error } = await serviceClient
         .from('user_jira_tokens')
-        .select('encrypted_token, jira_token, jira_email, jira_site_url')
+        .select('encrypted_token, jira_token, encrypted_jira_email, jira_email, encrypted_jira_site_url, jira_site_url, cloud_id')
         .eq('user_id', user.id)
         .single();
       
@@ -132,6 +132,7 @@ serve(async (req) => {
         throw new Error('Jira token not found');
       }
       
+      // Decrypt token
       let token: string;
       if (tokenRecord.encrypted_token) {
         token = await decryptToken(tokenRecord.encrypted_token, encryptionKey);
@@ -141,14 +142,44 @@ serve(async (req) => {
         throw new Error('No token available');
       }
       
-      // Validate with Jira API
-      const credentials = btoa(`${tokenRecord.jira_email}:${token}`);
-      const response = await fetch(`${tokenRecord.jira_site_url}/rest/api/3/myself`, {
-        headers: {
-          'Authorization': `Basic ${credentials}`,
-          'Accept': 'application/json',
-        },
-      });
+      // Decrypt email
+      let jiraEmail: string | null = null;
+      if (tokenRecord.encrypted_jira_email) {
+        jiraEmail = await decryptToken(tokenRecord.encrypted_jira_email, encryptionKey);
+      } else if (tokenRecord.jira_email) {
+        jiraEmail = tokenRecord.jira_email;
+      }
+      
+      // Decrypt site URL
+      let jiraSiteUrl: string | null = null;
+      if (tokenRecord.encrypted_jira_site_url) {
+        jiraSiteUrl = await decryptToken(tokenRecord.encrypted_jira_site_url, encryptionKey);
+      } else if (tokenRecord.jira_site_url) {
+        jiraSiteUrl = tokenRecord.jira_site_url;
+      }
+      
+      // Validate with Jira API - use OAuth if we have cloud_id, otherwise Basic auth
+      let response: Response;
+      if (tokenRecord.cloud_id) {
+        // OAuth 2.0 - use cloud ID
+        response = await fetch(`https://api.atlassian.com/ex/jira/${tokenRecord.cloud_id}/rest/api/3/myself`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+          },
+        });
+      } else if (jiraEmail && jiraSiteUrl) {
+        // Basic auth with API token
+        const credentials = btoa(`${jiraEmail}:${token}`);
+        response = await fetch(`${jiraSiteUrl}/rest/api/3/myself`, {
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Accept': 'application/json',
+          },
+        });
+      } else {
+        throw new Error('Missing credentials for validation');
+      }
       
       isValid = response.ok;
       errorMsg = isValid ? null : `Token expired or invalid (${response.status})`;

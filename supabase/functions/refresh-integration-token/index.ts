@@ -174,13 +174,18 @@ serve(async (req) => {
       
       const expiresAt = new Date(Date.now() + (tokenData.expires_in * 1000)).toISOString();
       
-      // Update database
+      // Update database - keep existing encrypted email/site URL, clear plaintext
       const { error: updateError } = await serviceClient
         .from('user_jira_tokens')
         .update({
+          jira_token: null, // Clear legacy plaintext
           encrypted_token: newEncryptedAccess,
+          refresh_token: null, // Clear legacy plaintext
           refresh_token_encrypted: newEncryptedRefresh,
           token_expires_at: expiresAt,
+          jira_email: null, // Clear legacy plaintext
+          jira_site_url: null, // Clear legacy plaintext
+          // Keep encrypted_jira_email and encrypted_jira_site_url as-is
           is_valid: true,
           last_validated_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
