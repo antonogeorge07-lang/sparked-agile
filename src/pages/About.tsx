@@ -14,11 +14,65 @@ import {
   Calendar,
   GitBranch,
   MessageSquare,
-  Mail
+  Mail,
+  Shield,
+  Brain,
+  LayoutDashboard,
+  ListTodo,
+  BarChart3,
+  Clock,
+  Globe,
+  Lock,
+  Cpu
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function About() {
+  const { t } = useTranslation();
+
+  const currentFeatures = [
+    {
+      icon: LayoutDashboard,
+      title: "Native PM Ecosystem",
+      description: "Full Kanban boards, Sprint management, and Backlog tracking built-in"
+    },
+    {
+      icon: Brain,
+      title: "AI Co-Pilot (Gemini)",
+      description: "User story generation, story point estimation, blocker detection, sprint forecasting"
+    },
+    {
+      icon: Sparkles,
+      title: "Multi-Agent AI System",
+      description: "Omair (support), AI Co-Pilot (intelligence), and Specialist agents for retros, sprints, and digests"
+    },
+    {
+      icon: Shield,
+      title: "Enterprise Security",
+      description: "196+ RLS policies, AES-256-GCM encryption, GDPR compliance"
+    },
+    {
+      icon: Globe,
+      title: "9-Language Support",
+      description: "EN, ES, FR, DE, PT, ZH, JA, AR, KO - fully localized interface"
+    },
+    {
+      icon: Lock,
+      title: "Role-Based Access",
+      description: "Only allocated members can see project data. Admin approval required for new profiles"
+    }
+  ];
+
+  const comingSoonFeatures = [
+    { title: "Sprint Ceremonies", description: "Standups, retrospectives, and planning sessions" },
+    { title: "AI Standup Summaries", description: "Automated daily updates from your team" },
+    { title: "Epic Management", description: "ROI tracking and dependency visualization" },
+    { title: "Real-time Collaboration", description: "Live presence and co-editing" },
+    { title: "Advanced Flow Metrics", description: "Velocity trends and cycle time analytics" },
+    { title: "Stakeholder Portal", description: "Executive dashboards and digest subscriptions" }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <main className="container mx-auto px-4 py-12 max-w-4xl">
@@ -44,11 +98,10 @@ export default function About() {
               Spark-Agile Active Intelligence
             </p>
             <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto">
-              AI-powered agile tools that help teams focus on what matters most
+              Your AI Chief of Staff — the Command Center for Remote Teams
             </p>
           </div>
         </ScrollReveal>
-
 
         {/* Founder Story */}
         <ScrollReveal delay={0.1}>
@@ -65,18 +118,16 @@ export default function About() {
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  At Faith Invictus Studio, we believe agility should empower teams to do their best work. 
-                  We created SAAI (Spark + Agile + AI) to help teams improve their agile practices 
-                  and deliver meaningful results.
+                  SAAI was born from a simple frustration: too many tools, too little context. As a project manager 
+                  juggling Jira, GitHub, Slack, and Outlook, I spent more time switching tabs than actually leading my team.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  SAAI helps teams collaborate more effectively, providing clarity, focus, 
-                  and insights for meaningful impact. It's not about managing tools; 
-                  it's about giving teams the space to create, deliver, and thrive.
+                  We built SAAI as the "missing cognitive layer" — an AI Chief of Staff that understands context across 
+                  all your tools and delivers what matters in 5 minutes. No more tool chaos. No more missed updates.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  We're working to make AI-powered Agile accessible to modern teams, 
-                  helping them move with confidence, purpose, and clarity.
+                  Our philosophy is "Active Intelligence" — AI that empowers teams rather than replacing them. 
+                  Every feature is designed to give you clarity, focus, and the confidence to lead.
                 </p>
               </div>
             </CardContent>
@@ -94,7 +145,7 @@ export default function About() {
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Mission</h3>
                   <p className="text-sm text-muted-foreground">
-                    Empower teams to unlock their full potential through AI-powered Agile practices
+                    Unify context from all your tools into a single AI-powered command center
                   </p>
                 </div>
               </CardContent>
@@ -104,11 +155,11 @@ export default function About() {
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
-                    <Users className="h-6 w-6 text-primary-foreground" />
+                    <Cpu className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">Approach</h3>
+                  <h3 className="text-lg font-semibold mb-2">Architecture</h3>
                   <p className="text-sm text-muted-foreground">
-                    Carefully crafted solutions, not mass-market products. Every feature is designed with care
+                    Multi-agent AI system with specialized agents for different project needs
                   </p>
                 </div>
               </CardContent>
@@ -122,7 +173,7 @@ export default function About() {
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Vision</h3>
                   <p className="text-sm text-muted-foreground">
-                    Help make AI-powered Agile accessible to modern teams worldwide
+                    Get your 5-minute team pulse — no meeting required
                   </p>
                 </div>
               </CardContent>
@@ -130,24 +181,49 @@ export default function About() {
           </div>
         </ScrollReveal>
 
-        {/* Micro-Studio Positioning */}
+        {/* Current Features */}
         <ScrollReveal delay={0.1}>
-          <Card className="shadow-card bg-gradient-primary text-primary-foreground mb-10">
+          <Card className="mb-8 shadow-card">
             <CardContent className="pt-6">
-              <div className="text-center">
-                <Badge variant="secondary" className="mb-4">
-                  Micro-Studio
+              <div className="flex items-center gap-2 mb-6">
+                <Badge className="bg-tier-free text-white">Available Now</Badge>
+                <h2 className="text-2xl font-bold">Platform Capabilities</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {currentFeatures.map((feature, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <feature.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-sm">{feature.title}</h4>
+                      <p className="text-xs text-muted-foreground">{feature.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
+
+        {/* Coming Soon Features */}
+        <ScrollReveal delay={0.1}>
+          <Card className="mb-8 shadow-card border-dashed">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-2 mb-6">
+                <Badge variant="outline" className="gap-1">
+                  <Clock className="h-3 w-3" />
+                  Coming in 30 Days
                 </Badge>
-                <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
-                <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6">
-                  SAAI is a research-driven micro-studio project by Faith Invictus Studio. Every feature is built 
-                  with intention, every interaction crafted with care. We're here to create the most 
-                  purposeful AI-powered Agile tools for teams that value quality, clarity, and progress.
-                </p>
-                <p className="text-primary-foreground/80 max-w-xl mx-auto text-sm">
-                  This is the first step toward a new era of engagement—one where AI empowers people, 
-                  rather than replacing them.
-                </p>
+                <h2 className="text-2xl font-bold">Roadmap</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {comingSoonFeatures.map((feature, index) => (
+                  <div key={index} className="p-3 rounded-lg border border-dashed border-muted-foreground/20">
+                    <h4 className="font-medium text-sm mb-1">{feature.title}</h4>
+                    <p className="text-xs text-muted-foreground">{feature.description}</p>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -158,7 +234,7 @@ export default function About() {
           <div className="mb-10 text-center">
             <h2 className="text-2xl font-bold mb-4">Available Integrations</h2>
             <p className="text-muted-foreground mb-6">
-              SAAI integrates with the tools your team already uses
+              Connect with the tools your team already uses
             </p>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <Card className="shadow-card hover:shadow-lg transition-all hover:-translate-y-1">
@@ -211,14 +287,37 @@ export default function About() {
           </div>
         </ScrollReveal>
 
+        {/* Micro-Studio Positioning */}
+        <ScrollReveal delay={0.1}>
+          <Card className="shadow-card bg-gradient-primary text-primary-foreground mb-10">
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <Badge variant="secondary" className="mb-4">
+                  Micro-Studio
+                </Badge>
+                <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
+                <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6">
+                  SAAI is a research-driven micro-studio project by Faith Invictus Studio. Every feature is built 
+                  with intention, every interaction crafted with care. We're here to create the most 
+                  purposeful AI-powered tools for teams that value quality, clarity, and progress.
+                </p>
+                <p className="text-primary-foreground/80 max-w-xl mx-auto text-sm">
+                  This is the first step toward a new era of engagement—one where AI empowers people, 
+                  rather than replacing them.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
+
         {/* CTA Section */}
         <ScrollReveal delay={0.15}>
           <Card className="shadow-card border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5">
             <CardContent className="pt-8 pb-8">
               <div className="text-center">
-                <h2 className="text-2xl font-bold mb-3">Ready to Transform Your Agile Process?</h2>
+                <h2 className="text-2xl font-bold mb-3">Ready to Get Your Team Pulse?</h2>
                 <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-                  Join teams already using SAAI to streamline their ceremonies and boost productivity.
+                  Join teams already using SAAI as their AI Chief of Staff. Free to start, no credit card required.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Button asChild size="lg" className="gap-2">
