@@ -66,6 +66,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "action_items_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "team_members_safe"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "action_items_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
@@ -3450,6 +3457,13 @@ export type Database = {
             referencedRelation: "team_members"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "standup_updates_team_member_id_fkey"
+            columns: ["team_member_id"]
+            isOneToOne: false
+            referencedRelation: "team_members_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       subscription_tiers: {
@@ -4125,6 +4139,13 @@ export type Database = {
             referencedRelation: "webhooks"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "webhook_deliveries_webhook_id_fkey"
+            columns: ["webhook_id"]
+            isOneToOne: false
+            referencedRelation: "webhooks_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       webhooks: {
@@ -4439,6 +4460,48 @@ export type Database = {
         }
         Relationships: []
       }
+      team_members_safe: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string | null
+          name: string | null
+          project_id: string | null
+          role: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: never
+          id?: string | null
+          name?: string | null
+          project_id?: string | null
+          role?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: never
+          id?: string | null
+          name?: string | null
+          project_id?: string | null
+          role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       unified_project_integrations: {
         Row: {
           configuration_status: string | null
@@ -4710,6 +4773,57 @@ export type Database = {
           user_id: string | null
         }
         Relationships: []
+      }
+      webhooks_safe: {
+        Row: {
+          created_at: string | null
+          events: string[] | null
+          has_secret: boolean | null
+          id: string | null
+          is_active: boolean | null
+          project_id: string | null
+          updated_at: string | null
+          url: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          events?: string[] | null
+          has_secret?: never
+          id?: string | null
+          is_active?: boolean | null
+          project_id?: string | null
+          updated_at?: string | null
+          url?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          events?: string[] | null
+          has_secret?: never
+          id?: string | null
+          is_active?: boolean | null
+          project_id?: string | null
+          updated_at?: string | null
+          url?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhooks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "webhooks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
       }
     }
     Functions: {
