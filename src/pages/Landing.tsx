@@ -12,6 +12,10 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
 import { FAQSchema } from "@/components/landing/FAQSchema";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { LivePlatformStats } from "@/components/landing/LivePlatformStats";
+import { CreatorStorySection } from "@/components/landing/CreatorStorySection";
+import { TrustSignals } from "@/components/landing/TrustSignals";
+import { InteractivePreview } from "@/components/landing/InteractivePreview";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -181,16 +185,34 @@ export default function Landing() {
       <main>
         <HeroSectionSimple />
         
+        {/* Live Platform Stats - Real data */}
+        <ScrollReveal fullWidth>
+          <div className="container mx-auto px-4 max-w-5xl">
+            <LivePlatformStats />
+          </div>
+        </ScrollReveal>
+        
         <ScrollReveal fullWidth>
           <CapabilityShowcase />
+        </ScrollReveal>
+
+        {/* Interactive AI Preview */}
+        <ScrollReveal fullWidth delay={0.1}>
+          <InteractivePreview />
         </ScrollReveal>
         
         <ScrollReveal fullWidth delay={0.1}>
           <ProofSection onWatchDemo={handleWatchDemo} />
         </ScrollReveal>
 
+        {/* Trust Signals - Security & Open Development */}
         <ScrollReveal fullWidth delay={0.1}>
-          <OurPhilosophySection />
+          <TrustSignals />
+        </ScrollReveal>
+
+        {/* Creator Story - Authentic narrative */}
+        <ScrollReveal fullWidth delay={0.1}>
+          <CreatorStorySection />
         </ScrollReveal>
         
         <ScrollReveal fullWidth delay={0.1}>
