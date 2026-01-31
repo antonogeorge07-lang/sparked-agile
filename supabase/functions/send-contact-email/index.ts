@@ -113,7 +113,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send notification email to admin
     const adminEmailResponse = await resend.emails.send({
       from: "SAAI <onboarding@resend.dev>",
-      to: ["info@smactiveintelligence.com"],
+      to: ["Antono.George1@outlook.com"],
       subject: `New Contact Form: ${safeSubject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

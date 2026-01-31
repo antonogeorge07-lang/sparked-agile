@@ -62,7 +62,7 @@ export default function PlatformOwner() {
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  const PLATFORM_OWNER_EMAIL = 'antono.george07@gmail.com';
+  const PLATFORM_OWNER_EMAIL = 'Antono.George1@outlook.com';
 
   useEffect(() => {
     checkAccess();
