@@ -175,8 +175,8 @@ export default function PrivacyPolicy() {
               </p>
               <p className="text-muted-foreground">
                 <strong>Data Controller:</strong> Faith Invictus Studio<br />
-                <strong>Email:</strong> privacy@faithinvictus.studio<br />
-                <strong>Support:</strong> support@faithinvictus.studio
+                <strong>Email:</strong> Antono.George1@outlook.com<br />
+                <strong>Support:</strong> Antono.George1@outlook.com
               </p>
             </section>
           </CardContent>

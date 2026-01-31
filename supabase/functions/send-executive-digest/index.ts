@@ -198,7 +198,7 @@ serve(async (req) => {
 
     const resend = new Resend(RESEND_API_KEY);
     const emailResult = await resend.emails.send({
-      from: "SAAI Digest <digest@smactiveintelligence.com>",
+      from: "SAAI Digest <onboarding@resend.dev>",
       to: [email],
       subject: `${isTest ? '[TEST] ' : ''}📊 Weekly Executive Digest - ${project?.name || 'Project'}`,
       html: emailHtml,

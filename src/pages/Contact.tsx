@@ -232,22 +232,22 @@ export default function Contact() {
                 <CardContent className="space-y-4">
                   <div>
                     <h3 className="font-semibold mb-1">General Inquiries</h3>
-                    <a href="mailto:info@smactiveintelligence.com" className="text-primary hover:underline">
-                      info@smactiveintelligence.com
+                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline">
+                      Antono.George1@outlook.com
                     </a>
                   </div>
                   
                   <div>
                     <h3 className="font-semibold mb-1">Sales</h3>
-                    <a href="mailto:sales@smactiveintelligence.com" className="text-primary hover:underline">
-                      sales@smactiveintelligence.com
+                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline">
+                      Antono.George1@outlook.com
                     </a>
                   </div>
                   
                   <div>
                     <h3 className="font-semibold mb-1">Support</h3>
-                    <a href="mailto:support@smactiveintelligence.com" className="text-primary hover:underline">
-                      support@smactiveintelligence.com
+                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline">
+                      Antono.George1@outlook.com
                     </a>
                   </div>
                 </CardContent>

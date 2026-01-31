@@ -105,7 +105,7 @@ export function AppSidebar() {
   const [userEmail, setUserEmail] = React.useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
 
-  const PLATFORM_OWNER_EMAIL = 'antono.george07@gmail.com';
+  const PLATFORM_OWNER_EMAIL = 'Antono.George1@outlook.com';
 
   React.useEffect(() => {
     const getUserEmail = async () => {

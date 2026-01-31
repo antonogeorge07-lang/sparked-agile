@@ -196,8 +196,8 @@ export default function TermsOfService() {
               </p>
               <p className="text-muted-foreground">
                 <strong>Company:</strong> Faith Invictus Studio<br />
-                <strong>Email:</strong> legal@faithinvictus.studio<br />
-                <strong>Support:</strong> support@faithinvictus.studio
+                <strong>Email:</strong> Antono.George1@outlook.com<br />
+                <strong>Support:</strong> Antono.George1@outlook.com
               </p>
             </section>
           </CardContent>

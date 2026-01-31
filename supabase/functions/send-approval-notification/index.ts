@@ -129,7 +129,7 @@ serve(async (req) => {
     `;
 
     const emailResult = await resend.emails.send({
-      from: "SAAI <notifications@smactiveintelligence.com>",
+      from: "SAAI <onboarding@resend.dev>",
       to: [requesterProfile.email],
       subject: `${statusIcon} Your request "${request.title}" was ${statusText.toLowerCase()}`,
       html: emailHtml,
