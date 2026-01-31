@@ -156,12 +156,14 @@ serve(async (req) => {
       userEmail = userData.emailAddress || '';
     }
     
-    // Encrypt tokens
-    console.log('Encrypting tokens...');
+    // Encrypt all sensitive data (tokens, email, and site URL)
+    console.log('Encrypting sensitive credentials...');
     const encryptedAccessToken = await encryptToken(accessToken, encryptionKey);
     const encryptedRefreshToken = refreshToken ? await encryptToken(refreshToken, encryptionKey) : null;
+    const encryptedJiraEmail = userEmail ? await encryptToken(userEmail, encryptionKey) : null;
+    const encryptedJiraSiteUrl = await encryptToken(primaryResource.url, encryptionKey);
     
-    // Store in database
+    // Store in database with encrypted values only
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -176,8 +178,10 @@ serve(async (req) => {
         refresh_token: null, // Don't store plaintext
         refresh_token_encrypted: encryptedRefreshToken,
         token_expires_at: expiresAt,
-        jira_email: userEmail,
-        jira_site_url: primaryResource.url,
+        jira_email: null, // Don't store plaintext - use encrypted
+        encrypted_jira_email: encryptedJiraEmail,
+        jira_site_url: null, // Don't store plaintext - use encrypted
+        encrypted_jira_site_url: encryptedJiraSiteUrl,
         cloud_id: primaryResource.id,
         oauth_provider: 'oauth',
         scopes: scopes,
@@ -193,7 +197,7 @@ serve(async (req) => {
       throw upsertError;
     }
     
-    console.log('Jira OAuth completed successfully');
+    console.log('Jira OAuth completed successfully with encrypted credentials');
     
     const redirectUrl = stateData.redirectUrl || '/integrations';
     return new Response(null, {

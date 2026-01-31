@@ -81,6 +81,7 @@ const ALLOWED_CALLER_FUNCTIONS = [
   'create-review-outlook-invite',
   'create-sprint-outlook-invite',
   'refresh-integration-token',
+  'validate-integration-token',
 ];
 
 serve(async (req) => {
@@ -131,7 +132,7 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { integrationType } = await req.json();
+    const { integrationType, includeMetadata } = await req.json();
     
     // SECURITY: Always use the authenticated user's ID, never from request body
     const targetUserId = user.id;
@@ -164,6 +165,7 @@ serve(async (req) => {
     }
     
     let decryptedToken: string | null = null;
+    let metadata: Record<string, string | null> = {};
     
     console.log(`Token decrypt request: integration=${integrationType}, user=${targetUserId}`);
     
@@ -189,7 +191,7 @@ serve(async (req) => {
     } else if (integrationType === 'jira') {
       const { data: tokenRecord, error } = await serviceClient
         .from('user_jira_tokens')
-        .select('encrypted_token, jira_token, oauth_provider, token_expires_at')
+        .select('encrypted_token, jira_token, oauth_provider, token_expires_at, encrypted_jira_email, jira_email, encrypted_jira_site_url, jira_site_url, cloud_id')
         .eq('user_id', targetUserId)
         .single();
       
@@ -211,6 +213,26 @@ serve(async (req) => {
       } else {
         throw new Error('No token available');
       }
+      
+      // Decrypt metadata if requested (for functions that need email/site URL)
+      if (includeMetadata) {
+        // Decrypt jira_email
+        if (tokenRecord.encrypted_jira_email) {
+          metadata.jira_email = await decryptToken(tokenRecord.encrypted_jira_email, encryptionKey);
+        } else if (tokenRecord.jira_email) {
+          metadata.jira_email = tokenRecord.jira_email;
+        }
+        
+        // Decrypt jira_site_url
+        if (tokenRecord.encrypted_jira_site_url) {
+          metadata.jira_site_url = await decryptToken(tokenRecord.encrypted_jira_site_url, encryptionKey);
+        } else if (tokenRecord.jira_site_url) {
+          metadata.jira_site_url = tokenRecord.jira_site_url;
+        }
+        
+        metadata.cloud_id = tokenRecord.cloud_id;
+      }
+      
     } else if (integrationType === 'microsoft') {
       const { data: tokenRecord, error } = await serviceClient
         .from('user_microsoft_tokens')
@@ -240,8 +262,14 @@ serve(async (req) => {
     
     console.log(`Token decrypted for ${integrationType} integration`);
     
+    // Build response based on whether metadata was requested
+    const responseData: Record<string, unknown> = { token: decryptedToken };
+    if (includeMetadata && Object.keys(metadata).length > 0) {
+      responseData.metadata = metadata;
+    }
+    
     return new Response(
-      JSON.stringify({ token: decryptedToken }),
+      JSON.stringify(responseData),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200,
