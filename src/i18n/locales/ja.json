@@ -237,6 +237,63 @@
       "accessCta": "コマンドセンターにアクセス",
       "kanbanDesc": "カンバンボード • タスク管理 • 進捗追跡"
     },
+    "liveStats": {
+      "title": "リアルタイムプラットフォーム活動",
+      "teamsUsing": "SAAIを使用するチーム",
+      "projectsManaged": "管理されたプロジェクト",
+      "activeWorkspaces": "アクティブワークスペース",
+      "newThisMonth": "今月の新規"
+    },
+    "interactivePreview": {
+      "badge": "ライブで試す",
+      "title": "Omairの動作を見る",
+      "subtitle": "実際のプラットフォーム機能に基づく本物のAI応答",
+      "nextExample": "例",
+      "tryFullChat": "チャット",
+      "online": "オンライン",
+      "features": {
+        "sprintPlanning": "スプリント計画",
+        "standupSummaries": "スタンドアップ要約",
+        "blockerDetection": "ブロッカー検出",
+        "velocityInsights": "ベロシティインサイト"
+      }
+    },
+    "trustSignals": {
+      "badge": "エンタープライズグレードセキュリティ",
+      "title": "データは設計により保護されています",
+      "subtitle": "約束だけではありません—これらはプラットフォームに実装された実際のセキュリティ対策です",
+      "features": {
+        "encryption": "AES-256暗号化",
+        "encryptionDesc": "すべてのトークンを暗号化して保存",
+        "rls": "196以上のRLSポリシー",
+        "rlsDesc": "すべてのテーブルに行レベルセキュリティ",
+        "gdpr": "GDPR準拠",
+        "gdprDesc": "データエクスポートと匿名化",
+        "audit": "監査ログ",
+        "auditDesc": "すべての機密アクセスを追跡",
+        "edge": "エッジ関数",
+        "edgeDesc": "安全なサーバーレスバックエンド",
+        "open": "オープンアーキテクチャ",
+        "openDesc": "実績のある基盤上に構築"
+      },
+      "activeDevelopment": "積極的に開発中",
+      "newFeatures": "毎週新機能を出荷"
+    },
+    "creatorStory": {
+      "badge": "SAAIの背景にあるストーリー",
+      "title": "工場ではなく実践者が構築",
+      "problemTitle": "私が経験した問題",
+      "problemDesc": "アジャイルチームを何年も管理した後、同じパターンを見ました：素晴らしいツールがより多くの仕事を生み出し、少なくはしませんでした。スタンドアップはステータス劇場になりました。レトロは消えてしまうアクションアイテムを生成しました。",
+      "solutionTitle": "私が構築したソリューション",
+      "solutionDesc": "SAAIは知的であるふりをする別のプロジェクト管理ツールではありません。アジャイルコンテキストを理解する認知レイヤーです—Jira、GitHub、Slackを接続して、質問する前に重要なことを表示します。",
+      "philosophyTitle": "哲学",
+      "philosophyQuote": "アクティブインテリジェンス、人工的ではなく本物",
+      "philosophyDesc": "AIはあなたの専門知識を増幅すべきであり、判断を置き換えるべきではありません。すべての機能は、チェックする別のダッシュボードを追加するのではなく、時間を返すように設計されています。",
+      "honestTitle": "限界について正直",
+      "honestDesc": "SAAIは成長しています。いくつかの統合は「近日公開」です。そうでないふりはしません。存在するものは、実際のニーズから構築されたため機能します。",
+      "createdBy": "作成者",
+      "studio": "Faith Invictus Studio"
+    },
     "footer": {
       "description": "AI駆動のアジャイルセレモニーとチーム管理",
       "product": "製品",

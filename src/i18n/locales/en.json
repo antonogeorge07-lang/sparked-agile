@@ -590,6 +590,71 @@
       "timeSaver": "Time Saver",
       "timeSaverDesc": "Streamline ceremony prep and admin work"
     },
+    "liveStats": {
+      "title": "Real-Time Platform Activity",
+      "teamsUsing": "Teams Using SAAI",
+      "projectsManaged": "Projects Managed",
+      "activeWorkspaces": "Active Workspaces",
+      "newThisMonth": "New This Month"
+    },
+    "interactivePreview": {
+      "badge": "Try It Live",
+      "title": "See How Omair Works",
+      "subtitle": "Real AI responses based on actual platform capabilities",
+      "nextExample": "Example",
+      "tryFullChat": "Chat",
+      "online": "Online",
+      "features": {
+        "sprintPlanning": "Sprint Planning",
+        "standupSummaries": "Standup Summaries",
+        "blockerDetection": "Blocker Detection",
+        "velocityInsights": "Velocity Insights"
+      },
+      "conversations": {
+        "q1": "What blockers does my team have this week?",
+        "a1": "Based on your standup data: 3 blockers identified. Sarah is waiting on API docs, Mike needs design approval, and the deployment pipeline has a failing test. Want me to prioritize these?",
+        "q2": "Help me plan next sprint",
+        "a2": "Looking at your velocity (24 pts/sprint avg) and backlog: I recommend pulling 8 stories totaling 26 points. This includes 2 high-priority bug fixes and 6 feature items. Should I draft the sprint goal?",
+        "q3": "Summarize yesterday's standup",
+        "a3": "5 team members reported. Key updates: Frontend auth flow complete, backend API 80% done. 1 new blocker (database migration). Overall team velocity on track for sprint commitment."
+      }
+    },
+    "trustSignals": {
+      "badge": "Enterprise-Grade Security",
+      "title": "Your Data is Protected by Design",
+      "subtitle": "Not just promises—these are actual security measures implemented in the platform",
+      "features": {
+        "encryption": "AES-256 Encryption",
+        "encryptionDesc": "All tokens encrypted at rest",
+        "rls": "196+ RLS Policies",
+        "rlsDesc": "Row-level security on every table",
+        "gdpr": "GDPR Compliant",
+        "gdprDesc": "Data export & anonymization",
+        "audit": "Audit Logging",
+        "auditDesc": "All sensitive access tracked",
+        "edge": "Edge Functions",
+        "edgeDesc": "Secure serverless backend",
+        "open": "Open Architecture",
+        "openDesc": "Built on proven foundations"
+      },
+      "activeDevelopment": "Actively Developed",
+      "newFeatures": "New features shipping weekly"
+    },
+    "creatorStory": {
+      "badge": "The Story Behind SAAI",
+      "title": "Built by a Practitioner, Not a Factory",
+      "problemTitle": "The Problem I Lived",
+      "problemDesc": "After years managing agile teams, I saw the same pattern: brilliant tools that created more work, not less. Stand-ups became status theater. Retros generated action items that vanished. Sprint planning felt like guesswork wrapped in process.",
+      "solutionTitle": "The Solution I Built",
+      "solutionDesc": "SAAI isn't another project management tool pretending to be intelligent. It's a cognitive layer that understands agile context—connecting your Jira, GitHub, and Slack to surface what matters before you ask.",
+      "philosophyTitle": "Philosophy",
+      "philosophyQuote": "Active Intelligence, Not Artificial But Genuine",
+      "philosophyDesc": "AI should amplify your expertise, not replace your judgment. Every feature is designed to give you time back, not add another dashboard to check.",
+      "honestTitle": "Honest About Limits",
+      "honestDesc": "SAAI is growing. Some integrations are \"Coming Soon.\" I won't pretend otherwise. What exists works because it was built from real needs, not feature checklists.",
+      "createdBy": "Created by",
+      "studio": "Faith Invictus Studio"
+    },
     "footer": {
       "description": "AI-powered agile ceremonies and team management",
       "product": "Product",

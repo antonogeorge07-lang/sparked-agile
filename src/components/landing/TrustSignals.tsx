@@ -1,48 +1,51 @@
 import { motion } from "framer-motion";
 import { Shield, Lock, Eye, Code2, FileCheck, Server } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 export const TrustSignals = () => {
+  const { t } = useTranslation();
+
   const securityFeatures = [
     {
       icon: Lock,
-      label: "AES-256 Encryption",
-      description: "All tokens encrypted at rest",
+      labelKey: "landing.trustSignals.features.encryption",
+      descKey: "landing.trustSignals.features.encryptionDesc",
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/10",
     },
     {
       icon: Shield,
-      label: "196+ RLS Policies",
-      description: "Row-level security on every table",
+      labelKey: "landing.trustSignals.features.rls",
+      descKey: "landing.trustSignals.features.rlsDesc",
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
     },
     {
       icon: Eye,
-      label: "GDPR Compliant",
-      description: "Data export & anonymization",
+      labelKey: "landing.trustSignals.features.gdpr",
+      descKey: "landing.trustSignals.features.gdprDesc",
       color: "text-violet-500",
       bgColor: "bg-violet-500/10",
     },
     {
       icon: FileCheck,
-      label: "Audit Logging",
-      description: "All sensitive access tracked",
+      labelKey: "landing.trustSignals.features.audit",
+      descKey: "landing.trustSignals.features.auditDesc",
       color: "text-amber-500",
       bgColor: "bg-amber-500/10",
     },
     {
       icon: Server,
-      label: "Edge Functions",
-      description: "Secure serverless backend",
+      labelKey: "landing.trustSignals.features.edge",
+      descKey: "landing.trustSignals.features.edgeDesc",
       color: "text-cyan-500",
       bgColor: "bg-cyan-500/10",
     },
     {
       icon: Code2,
-      label: "Open Architecture",
-      description: "Built on proven foundations",
+      labelKey: "landing.trustSignals.features.open",
+      descKey: "landing.trustSignals.features.openDesc",
       color: "text-rose-500",
       bgColor: "bg-rose-500/10",
     },
@@ -59,13 +62,13 @@ export const TrustSignals = () => {
         >
           <Badge variant="outline" className="mb-3 gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs">
             <Shield className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-emerald-500" />
-            Enterprise-Grade Security
+            {t('landing.trustSignals.badge')}
           </Badge>
           <h3 className="text-lg sm:text-xl md:text-2xl font-bold">
-            Your Data is Protected by Design
+            {t('landing.trustSignals.title')}
           </h3>
           <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-lg mx-auto px-2">
-            Not just promises—these are actual security measures implemented in the platform
+            {t('landing.trustSignals.subtitle')}
           </p>
         </motion.div>
 
@@ -74,7 +77,7 @@ export const TrustSignals = () => {
             const Icon = feature.icon;
             return (
               <motion.div
-                key={feature.label}
+                key={feature.labelKey}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -85,8 +88,8 @@ export const TrustSignals = () => {
                   <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${feature.color}`} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-xs sm:text-sm truncate">{feature.label}</p>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground line-clamp-2 sm:truncate">{feature.description}</p>
+                  <p className="font-medium text-xs sm:text-sm truncate">{t(feature.labelKey)}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground line-clamp-2 sm:truncate">{t(feature.descKey)}</p>
                 </div>
               </motion.div>
             );
@@ -107,10 +110,10 @@ export const TrustSignals = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-500"></span>
               </span>
-              <span className="text-xs sm:text-sm font-medium">Actively Developed</span>
+              <span className="text-xs sm:text-sm font-medium">{t('landing.trustSignals.activeDevelopment')}</span>
             </div>
             <span className="text-muted-foreground hidden sm:inline">•</span>
-            <span className="text-[10px] sm:text-xs text-muted-foreground">New features shipping weekly</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground">{t('landing.trustSignals.newFeatures')}</span>
           </div>
         </motion.div>
       </div>
