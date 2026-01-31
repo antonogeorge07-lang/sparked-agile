@@ -34,22 +34,22 @@ export const InteractivePreview = () => {
   };
 
   return (
-    <section className="py-12 px-4">
+    <section className="py-8 sm:py-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
-            <Sparkles className="h-4 w-4" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium mb-3">
+            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             Try It Live
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
             See How Omair Works
           </h2>
-          <p className="text-muted-foreground mt-2 max-w-lg mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground mt-2 max-w-lg mx-auto px-2">
             Real AI responses based on actual platform capabilities
           </p>
         </motion.div>
@@ -62,47 +62,47 @@ export const InteractivePreview = () => {
         >
           <Card className="overflow-hidden border-2 border-primary/20 bg-gradient-to-b from-background to-muted/20">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/30">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 border-b border-border bg-muted/30">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-primary/10">
-                  <Bot className="h-4 w-4 text-primary" />
+                <div className="p-1 sm:p-1.5 rounded-lg bg-primary/10">
+                  <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                 </div>
-                <span className="font-medium text-sm">Omair AI Assistant</span>
+                <span className="font-medium text-xs sm:text-sm">Omair AI Assistant</span>
               </div>
               <div className="flex items-center gap-1">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs text-muted-foreground">Online</span>
+                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] sm:text-xs text-muted-foreground">Online</span>
               </div>
             </div>
 
             {/* Chat Area */}
-            <div className="p-4 min-h-[200px] space-y-4">
+            <div className="p-3 sm:p-4 min-h-[180px] sm:min-h-[200px] space-y-3 sm:space-y-4">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeConversation}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="space-y-4"
+                  className="space-y-3 sm:space-y-4"
                 >
                   {/* User Message */}
                   <div className="flex justify-end">
-                    <div className="bg-primary text-primary-foreground px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%]">
-                      <p className="text-sm">{sampleConversations[activeConversation].user}</p>
+                    <div className="bg-primary text-primary-foreground px-3 sm:px-4 py-2 rounded-2xl rounded-tr-sm max-w-[85%] sm:max-w-[80%]">
+                      <p className="text-xs sm:text-sm">{sampleConversations[activeConversation].user}</p>
                     </div>
                   </div>
 
                   {/* AI Response */}
                   <div className="flex justify-start">
-                    <div className="bg-muted px-4 py-3 rounded-2xl rounded-tl-sm max-w-[85%]">
+                    <div className="bg-muted px-3 sm:px-4 py-2 sm:py-3 rounded-2xl rounded-tl-sm max-w-[90%] sm:max-w-[85%]">
                       {isTyping ? (
                         <div className="flex gap-1">
-                          <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                          <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                         </div>
                       ) : (
-                        <p className="text-sm">{sampleConversations[activeConversation].ai}</p>
+                        <p className="text-xs sm:text-sm">{sampleConversations[activeConversation].ai}</p>
                       )}
                     </div>
                   </div>
@@ -111,26 +111,27 @@ export const InteractivePreview = () => {
             </div>
 
             {/* Actions */}
-            <div className="px-4 py-3 border-t border-border bg-muted/20 flex items-center justify-between">
-              <div className="flex gap-1">
+            <div className="px-3 sm:px-4 py-2.5 sm:py-3 border-t border-border bg-muted/20 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
+              <div className="flex gap-1 order-2 sm:order-1">
                 {sampleConversations.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveConversation(idx)}
-                    className={`h-1.5 rounded-full transition-all ${
+                    className={`h-1.5 rounded-full transition-all min-h-0 min-w-0 ${
                       idx === activeConversation ? 'w-6 bg-primary' : 'w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50'
                     }`}
+                    aria-label={`View example ${idx + 1}`}
                   />
                 ))}
               </div>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="sm" onClick={handleNext}>
-                  Next Example
+              <div className="flex gap-2 order-1 sm:order-2 w-full sm:w-auto">
+                <Button variant="ghost" size="sm" onClick={handleNext} className="flex-1 sm:flex-none text-xs sm:text-sm h-9 sm:h-auto min-h-9">
+                  <span className="hidden xs:inline">Next </span>Example
                   <ArrowRight className="ml-1 h-3 w-3" />
                 </Button>
-                <Button size="sm" onClick={() => navigate('/auth')} className="gap-1.5">
-                  <MessageSquare className="h-3.5 w-3.5" />
-                  Try Full Chat
+                <Button size="sm" onClick={() => navigate('/auth')} className="flex-1 sm:flex-none gap-1.5 text-xs sm:text-sm h-9 sm:h-auto min-h-9">
+                  <MessageSquare className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                  <span className="hidden xs:inline">Try Full </span>Chat
                 </Button>
               </div>
             </div>
@@ -143,12 +144,12 @@ export const InteractivePreview = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-6 flex flex-wrap justify-center gap-2"
+          className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-1.5 sm:gap-2"
         >
           {['Sprint Planning', 'Standup Summaries', 'Blocker Detection', 'Velocity Insights'].map((feature) => (
             <span
               key={feature}
-              className="text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground"
+              className="text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-muted text-muted-foreground"
             >
               {feature}
             </span>

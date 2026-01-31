@@ -85,13 +85,13 @@ export const LivePlatformStats = () => {
   }
 
   return (
-    <section className="py-8">
-      <div className="text-center mb-6">
-        <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium">
+    <section className="py-6 sm:py-8">
+      <div className="text-center mb-4 sm:mb-6">
+        <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider font-medium">
           Real-Time Platform Activity
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
         {statItems.map((stat, index) => {
           const Icon = stat.icon;
           return (
@@ -100,17 +100,17 @@ export const LivePlatformStats = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="relative overflow-hidden rounded-xl border border-border bg-card p-4 text-center group hover:border-primary/30 transition-colors"
+              className="relative overflow-hidden rounded-lg sm:rounded-xl border border-border bg-card p-3 sm:p-4 text-center group hover:border-primary/30 transition-colors"
             >
               <div className={`absolute inset-0 ${stat.bgColor} opacity-0 group-hover:opacity-100 transition-opacity`} />
               <div className="relative">
-                <div className={`mx-auto w-10 h-10 rounded-full ${stat.bgColor} flex items-center justify-center mb-2`}>
-                  <Icon className={`h-5 w-5 ${stat.color}`} />
+                <div className={`mx-auto w-8 h-8 sm:w-10 sm:h-10 rounded-full ${stat.bgColor} flex items-center justify-center mb-1.5 sm:mb-2`}>
+                  <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${stat.color}`} />
                 </div>
-                <div className={`text-2xl md:text-3xl font-bold ${stat.color}`}>
+                <div className={`text-xl sm:text-2xl md:text-3xl font-bold ${stat.color}`}>
                   <AnimatedCounter value={stat.value} />
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 line-clamp-1">{stat.label}</p>
               </div>
             </motion.div>
           );
