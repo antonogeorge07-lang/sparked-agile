@@ -237,6 +237,63 @@
       "accessCta": "Acessar Centro de Comando",
       "kanbanDesc": "Quadro Kanban • Gestão de Tarefas • Rastreamento de Progresso"
     },
+    "liveStats": {
+      "title": "Atividade da Plataforma em Tempo Real",
+      "teamsUsing": "Equipes Usando SAAI",
+      "projectsManaged": "Projetos Gerenciados",
+      "activeWorkspaces": "Espaços Ativos",
+      "newThisMonth": "Novos Este Mês"
+    },
+    "interactivePreview": {
+      "badge": "Teste ao Vivo",
+      "title": "Veja Como o Omair Funciona",
+      "subtitle": "Respostas de IA reais baseadas nas capacidades reais da plataforma",
+      "nextExample": "Exemplo",
+      "tryFullChat": "Chat",
+      "online": "Online",
+      "features": {
+        "sprintPlanning": "Planejamento Sprint",
+        "standupSummaries": "Resumos Standup",
+        "blockerDetection": "Detecção Bloqueios",
+        "velocityInsights": "Insights Velocidade"
+      }
+    },
+    "trustSignals": {
+      "badge": "Segurança Empresarial",
+      "title": "Seus Dados São Protegidos por Design",
+      "subtitle": "Não apenas promessas—estas são medidas de segurança reais implementadas na plataforma",
+      "features": {
+        "encryption": "Criptografia AES-256",
+        "encryptionDesc": "Todos os tokens criptografados em repouso",
+        "rls": "196+ Políticas RLS",
+        "rlsDesc": "Segurança em nível de linha em cada tabela",
+        "gdpr": "Compatível com LGPD",
+        "gdprDesc": "Exportação e anonimização de dados",
+        "audit": "Log de Auditoria",
+        "auditDesc": "Todo acesso sensível rastreado",
+        "edge": "Funções Edge",
+        "edgeDesc": "Backend serverless seguro",
+        "open": "Arquitetura Aberta",
+        "openDesc": "Construído sobre bases comprovadas"
+      },
+      "activeDevelopment": "Em Desenvolvimento Ativo",
+      "newFeatures": "Novos recursos toda semana"
+    },
+    "creatorStory": {
+      "badge": "A História por Trás do SAAI",
+      "title": "Construído por um Praticante, Não uma Fábrica",
+      "problemTitle": "O Problema Que Vivi",
+      "problemDesc": "Após anos gerenciando equipes ágeis, vi o mesmo padrão: ferramentas brilhantes que criavam mais trabalho, não menos. Standups viraram teatro de status. Retros geravam ações que desapareciam.",
+      "solutionTitle": "A Solução Que Construí",
+      "solutionDesc": "SAAI não é mais uma ferramenta de gestão fingindo ser inteligente. É uma camada cognitiva que entende o contexto ágil—conectando seu Jira, GitHub e Slack para mostrar o que importa antes de você perguntar.",
+      "philosophyTitle": "Filosofia",
+      "philosophyQuote": "Inteligência Ativa, Não Artificial Mas Genuína",
+      "philosophyDesc": "IA deve amplificar sua expertise, não substituir seu julgamento. Cada recurso foi projetado para devolver seu tempo, não adicionar mais um painel para verificar.",
+      "honestTitle": "Honestos Sobre Limites",
+      "honestDesc": "SAAI está crescendo. Algumas integrações estão \"Em Breve\". Não vou fingir o contrário. O que existe funciona porque foi construído a partir de necessidades reais.",
+      "createdBy": "Criado por",
+      "studio": "Faith Invictus Studio"
+    },
     "footer": {
       "description": "Cerimônias ágeis e gestão de equipe com IA",
       "product": "Produto",

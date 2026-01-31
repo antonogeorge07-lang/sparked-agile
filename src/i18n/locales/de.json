@@ -237,6 +237,63 @@
       "accessCta": "Zur Kommandozentrale",
       "kanbanDesc": "Kanban-Board • Aufgabenverwaltung • Fortschrittsverfolgung"
     },
+    "liveStats": {
+      "title": "Echtzeit-Plattformaktivität",
+      "teamsUsing": "Teams nutzen SAAI",
+      "projectsManaged": "Verwaltete Projekte",
+      "activeWorkspaces": "Aktive Arbeitsbereiche",
+      "newThisMonth": "Neu diesen Monat"
+    },
+    "interactivePreview": {
+      "badge": "Live testen",
+      "title": "So funktioniert Omair",
+      "subtitle": "Echte KI-Antworten basierend auf tatsächlichen Plattformfunktionen",
+      "nextExample": "Beispiel",
+      "tryFullChat": "Chat",
+      "online": "Online",
+      "features": {
+        "sprintPlanning": "Sprint-Planung",
+        "standupSummaries": "Standup-Zusammenfassungen",
+        "blockerDetection": "Blocker-Erkennung",
+        "velocityInsights": "Velocity-Insights"
+      }
+    },
+    "trustSignals": {
+      "badge": "Enterprise-Sicherheit",
+      "title": "Ihre Daten sind von Grund auf geschützt",
+      "subtitle": "Nicht nur Versprechen—das sind tatsächliche Sicherheitsmaßnahmen in der Plattform",
+      "features": {
+        "encryption": "AES-256-Verschlüsselung",
+        "encryptionDesc": "Alle Tokens verschlüsselt gespeichert",
+        "rls": "196+ RLS-Richtlinien",
+        "rlsDesc": "Sicherheit auf Zeilenebene für jede Tabelle",
+        "gdpr": "DSGVO-konform",
+        "gdprDesc": "Datenexport & Anonymisierung",
+        "audit": "Audit-Protokollierung",
+        "auditDesc": "Alle sensiblen Zugriffe verfolgt",
+        "edge": "Edge-Funktionen",
+        "edgeDesc": "Sicheres serverless Backend",
+        "open": "Offene Architektur",
+        "openDesc": "Auf bewährten Grundlagen gebaut"
+      },
+      "activeDevelopment": "Aktiv entwickelt",
+      "newFeatures": "Neue Funktionen wöchentlich"
+    },
+    "creatorStory": {
+      "badge": "Die Geschichte hinter SAAI",
+      "title": "Von einem Praktiker gebaut, nicht einer Fabrik",
+      "problemTitle": "Das Problem, das ich erlebt habe",
+      "problemDesc": "Nach Jahren der Führung agiler Teams sah ich dasselbe Muster: brillante Tools, die mehr Arbeit schufen, nicht weniger. Standups wurden zu Status-Theater. Retros erzeugten Aktionspunkte, die verschwanden.",
+      "solutionTitle": "Die Lösung, die ich gebaut habe",
+      "solutionDesc": "SAAI ist kein weiteres Projektmanagement-Tool, das vorgibt, intelligent zu sein. Es ist eine kognitive Schicht, die agilen Kontext versteht—verbindet Jira, GitHub und Slack, um das Wichtige zu zeigen, bevor Sie fragen.",
+      "philosophyTitle": "Philosophie",
+      "philosophyQuote": "Aktive Intelligenz, Nicht Künstlich Sondern Echt",
+      "philosophyDesc": "KI sollte Ihre Expertise verstärken, nicht Ihr Urteil ersetzen. Jede Funktion gibt Ihnen Zeit zurück, nicht ein weiteres Dashboard zum Prüfen.",
+      "honestTitle": "Ehrlich über Grenzen",
+      "honestDesc": "SAAI wächst. Einige Integrationen sind \"Demnächst verfügbar\". Ich werde nichts anderes behaupten. Was existiert, funktioniert, weil es aus echten Bedürfnissen gebaut wurde.",
+      "createdBy": "Erstellt von",
+      "studio": "Faith Invictus Studio"
+    },
     "footer": {
       "description": "KI-gestützte agile Zeremonien und Team-Management",
       "product": "Produkt",

@@ -365,6 +365,63 @@
       "openFeedback": "Feedback Abierto",
       "freeBeta": "Gratis Durante Beta"
     },
+    "liveStats": {
+      "title": "Actividad de Plataforma en Tiempo Real",
+      "teamsUsing": "Equipos Usando SAAI",
+      "projectsManaged": "Proyectos Gestionados",
+      "activeWorkspaces": "Espacios Activos",
+      "newThisMonth": "Nuevos Este Mes"
+    },
+    "interactivePreview": {
+      "badge": "Pruébalo en Vivo",
+      "title": "Mira Cómo Funciona Omair",
+      "subtitle": "Respuestas de IA reales basadas en capacidades reales de la plataforma",
+      "nextExample": "Ejemplo",
+      "tryFullChat": "Chat",
+      "online": "En línea",
+      "features": {
+        "sprintPlanning": "Planificación Sprint",
+        "standupSummaries": "Resúmenes Standup",
+        "blockerDetection": "Detección Bloqueos",
+        "velocityInsights": "Insights Velocidad"
+      }
+    },
+    "trustSignals": {
+      "badge": "Seguridad de Nivel Empresarial",
+      "title": "Tus Datos Están Protegidos por Diseño",
+      "subtitle": "No solo promesas—estas son medidas de seguridad reales implementadas en la plataforma",
+      "features": {
+        "encryption": "Encriptación AES-256",
+        "encryptionDesc": "Todos los tokens encriptados en reposo",
+        "rls": "196+ Políticas RLS",
+        "rlsDesc": "Seguridad a nivel de fila en cada tabla",
+        "gdpr": "Cumple con GDPR",
+        "gdprDesc": "Exportación y anonimización de datos",
+        "audit": "Registro de Auditoría",
+        "auditDesc": "Todo acceso sensible rastreado",
+        "edge": "Funciones Edge",
+        "edgeDesc": "Backend serverless seguro",
+        "open": "Arquitectura Abierta",
+        "openDesc": "Construido sobre bases probadas"
+      },
+      "activeDevelopment": "En Desarrollo Activo",
+      "newFeatures": "Nuevas funciones cada semana"
+    },
+    "creatorStory": {
+      "badge": "La Historia Detrás de SAAI",
+      "title": "Construido por un Practicante, No una Fábrica",
+      "problemTitle": "El Problema Que Viví",
+      "problemDesc": "Después de años gestionando equipos ágiles, vi el mismo patrón: herramientas brillantes que creaban más trabajo, no menos. Los standups se convirtieron en teatro de estado.",
+      "solutionTitle": "La Solución Que Construí",
+      "solutionDesc": "SAAI no es otra herramienta de gestión pretendiendo ser inteligente. Es una capa cognitiva que entiende el contexto ágil—conectando tu Jira, GitHub y Slack para mostrar lo que importa.",
+      "philosophyTitle": "Filosofía",
+      "philosophyQuote": "Inteligencia Activa, No Artificial Sino Genuina",
+      "philosophyDesc": "La IA debe amplificar tu experiencia, no reemplazar tu juicio. Cada función está diseñada para devolverte tiempo.",
+      "honestTitle": "Honestos Sobre Límites",
+      "honestDesc": "SAAI está creciendo. Algunas integraciones están \"Próximamente\". No pretenderé lo contrario. Lo que existe funciona porque fue construido desde necesidades reales.",
+      "createdBy": "Creado por",
+      "studio": "Faith Invictus Studio"
+    },
     "quickValue": {
       "title": "Por Qué los Equipos Eligen SAAI",
       "subtitle": "Todo lo que necesitas para ejecutar ágil a escala, impulsado por IA",

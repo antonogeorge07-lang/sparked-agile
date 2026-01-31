@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { Quote, Lightbulb, Heart, Target } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useTranslation } from "react-i18next";
 
 export const CreatorStorySection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-10 sm:py-16 px-4">
       <div className="container mx-auto max-w-4xl">
@@ -14,10 +17,10 @@ export const CreatorStorySection = () => {
           className="text-center mb-6 sm:mb-10"
         >
           <span className="text-xs sm:text-sm font-medium text-primary uppercase tracking-wider">
-            The Story Behind SAAI
+            {t('landing.creatorStory.badge')}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 bg-gradient-primary bg-clip-text text-transparent">
-            Built by a Practitioner, Not a Factory
+            {t('landing.creatorStory.title')}
           </h2>
         </motion.div>
 
@@ -34,11 +37,9 @@ export const CreatorStorySection = () => {
                   <Quote className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">The Problem I Lived</h3>
+                  <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">{t('landing.creatorStory.problemTitle')}</h3>
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                    After years managing agile teams, I saw the same pattern: brilliant tools that 
-                    created more work, not less. Stand-ups became status theater. Retros generated 
-                    action items that vanished. Sprint planning felt like guesswork wrapped in process.
+                    {t('landing.creatorStory.problemDesc')}
                   </p>
                 </div>
               </div>
@@ -57,11 +58,9 @@ export const CreatorStorySection = () => {
                   <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-500" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">The Solution I Built</h3>
+                  <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">{t('landing.creatorStory.solutionTitle')}</h3>
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                    SAAI isn't another project management tool pretending to be intelligent. 
-                    It's a cognitive layer that understands agile context—connecting your Jira, 
-                    GitHub, and Slack to surface what matters before you ask.
+                    {t('landing.creatorStory.solutionDesc')}
                   </p>
                 </div>
               </div>
@@ -82,12 +81,11 @@ export const CreatorStorySection = () => {
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-amber-500" />
               </div>
               <div className="min-w-0">
-                <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">Philosophy</h3>
+                <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">{t('landing.creatorStory.philosophyTitle')}</h3>
                 <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                  <span className="font-medium text-foreground">"Active Intelligence, Not Artificial But Genuine"</span>
+                  <span className="font-medium text-foreground">"{t('landing.creatorStory.philosophyQuote')}"</span>
                   <br />
-                  AI should amplify your expertise, not replace your judgment. Every feature 
-                  is designed to give you time back, not add another dashboard to check.
+                  {t('landing.creatorStory.philosophyDesc')}
                 </p>
               </div>
             </div>
@@ -99,11 +97,9 @@ export const CreatorStorySection = () => {
                 <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-violet-500" />
               </div>
               <div className="min-w-0">
-                <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">Honest About Limits</h3>
+                <h3 className="font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">{t('landing.creatorStory.honestTitle')}</h3>
                 <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                  SAAI is growing. Some integrations are "Coming Soon." I won't pretend 
-                  otherwise. What exists works because it was built from real needs, 
-                  not feature checklists.
+                  {t('landing.creatorStory.honestDesc')}
                 </p>
               </div>
             </div>
@@ -118,7 +114,7 @@ export const CreatorStorySection = () => {
           className="mt-6 sm:mt-10 text-center"
         >
           <p className="text-xs sm:text-sm text-muted-foreground">
-            Created by <span className="font-medium text-foreground">George Antono</span> • Faith Invictus Studio
+            {t('landing.creatorStory.createdBy')} <span className="font-medium text-foreground">George Antono</span> • {t('landing.creatorStory.studio')}
           </p>
         </motion.div>
       </div>

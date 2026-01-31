@@ -237,6 +237,63 @@
       "accessCta": "访问指挥中心",
       "kanbanDesc": "看板 • 任务管理 • 进度跟踪"
     },
+    "liveStats": {
+      "title": "实时平台活动",
+      "teamsUsing": "使用SAAI的团队",
+      "projectsManaged": "管理的项目",
+      "activeWorkspaces": "活跃工作区",
+      "newThisMonth": "本月新增"
+    },
+    "interactivePreview": {
+      "badge": "实时体验",
+      "title": "了解Omair如何工作",
+      "subtitle": "基于实际平台功能的真实AI响应",
+      "nextExample": "示例",
+      "tryFullChat": "聊天",
+      "online": "在线",
+      "features": {
+        "sprintPlanning": "冲刺规划",
+        "standupSummaries": "站会摘要",
+        "blockerDetection": "阻塞检测",
+        "velocityInsights": "速度洞察"
+      }
+    },
+    "trustSignals": {
+      "badge": "企业级安全",
+      "title": "您的数据受到设计保护",
+      "subtitle": "不只是承诺——这些是平台中实施的实际安全措施",
+      "features": {
+        "encryption": "AES-256加密",
+        "encryptionDesc": "所有令牌静态加密",
+        "rls": "196+行级安全策略",
+        "rlsDesc": "每个表都有行级安全",
+        "gdpr": "符合GDPR",
+        "gdprDesc": "数据导出和匿名化",
+        "audit": "审计日志",
+        "auditDesc": "跟踪所有敏感访问",
+        "edge": "边缘函数",
+        "edgeDesc": "安全的无服务器后端",
+        "open": "开放架构",
+        "openDesc": "基于经过验证的基础构建"
+      },
+      "activeDevelopment": "积极开发中",
+      "newFeatures": "每周发布新功能"
+    },
+    "creatorStory": {
+      "badge": "SAAI背后的故事",
+      "title": "由实践者构建，而非工厂",
+      "problemTitle": "我经历的问题",
+      "problemDesc": "在管理敏捷团队多年后，我看到了同样的模式：出色的工具创造了更多的工作，而不是更少。站会变成了状态剧场。回顾生成的行动项目消失了。",
+      "solutionTitle": "我构建的解决方案",
+      "solutionDesc": "SAAI不是另一个假装智能的项目管理工具。它是一个理解敏捷上下文的认知层——连接您的Jira、GitHub和Slack，在您询问之前显示重要内容。",
+      "philosophyTitle": "理念",
+      "philosophyQuote": "主动智能，不是人工的而是真实的",
+      "philosophyDesc": "AI应该增强您的专业知识，而不是取代您的判断。每个功能都旨在让您节省时间，而不是增加另一个需要检查的仪表板。",
+      "honestTitle": "坦诚面对限制",
+      "honestDesc": "SAAI正在成长。一些集成是\"即将推出\"。我不会假装不是这样。存在的功能之所以有效，是因为它是从真实需求构建的。",
+      "createdBy": "创建者",
+      "studio": "Faith Invictus Studio"
+    },
     "footer": {
       "description": "AI驱动的敏捷仪式和团队管理",
       "product": "产品",

@@ -237,6 +237,63 @@
       "accessCta": "커맨드 센터 액세스",
       "kanbanDesc": "칸반 보드 • 작업 관리 • 진행 추적"
     },
+    "liveStats": {
+      "title": "실시간 플랫폼 활동",
+      "teamsUsing": "SAAI 사용 팀",
+      "projectsManaged": "관리 중인 프로젝트",
+      "activeWorkspaces": "활성 워크스페이스",
+      "newThisMonth": "이번 달 신규"
+    },
+    "interactivePreview": {
+      "badge": "라이브 체험",
+      "title": "Omair 작동 방식 보기",
+      "subtitle": "실제 플랫폼 기능을 기반으로 한 실제 AI 응답",
+      "nextExample": "예시",
+      "tryFullChat": "채팅",
+      "online": "온라인",
+      "features": {
+        "sprintPlanning": "스프린트 계획",
+        "standupSummaries": "스탠드업 요약",
+        "blockerDetection": "블로커 감지",
+        "velocityInsights": "속도 인사이트"
+      }
+    },
+    "trustSignals": {
+      "badge": "엔터프라이즈급 보안",
+      "title": "데이터는 설계로 보호됩니다",
+      "subtitle": "약속만이 아닙니다—플랫폼에 구현된 실제 보안 조치입니다",
+      "features": {
+        "encryption": "AES-256 암호화",
+        "encryptionDesc": "모든 토큰을 암호화하여 저장",
+        "rls": "196개 이상의 RLS 정책",
+        "rlsDesc": "모든 테이블에 행 수준 보안",
+        "gdpr": "GDPR 준수",
+        "gdprDesc": "데이터 내보내기 및 익명화",
+        "audit": "감사 로깅",
+        "auditDesc": "모든 민감한 액세스 추적",
+        "edge": "엣지 함수",
+        "edgeDesc": "안전한 서버리스 백엔드",
+        "open": "오픈 아키텍처",
+        "openDesc": "검증된 기반 위에 구축"
+      },
+      "activeDevelopment": "활발히 개발 중",
+      "newFeatures": "매주 새로운 기능 출시"
+    },
+    "creatorStory": {
+      "badge": "SAAI 뒤에 숨겨진 이야기",
+      "title": "공장이 아닌 실무자가 구축",
+      "problemTitle": "내가 겪은 문제",
+      "problemDesc": "애자일 팀을 수년간 관리한 후 같은 패턴을 보았습니다: 일을 줄이는 것이 아니라 더 많이 만드는 훌륭한 도구들. 스탠드업은 상태 극장이 되었습니다. 회고는 사라지는 액션 아이템을 생성했습니다.",
+      "solutionTitle": "내가 구축한 솔루션",
+      "solutionDesc": "SAAI는 지능적인 척하는 또 다른 프로젝트 관리 도구가 아닙니다. 애자일 컨텍스트를 이해하는 인지 계층입니다—Jira, GitHub, Slack을 연결하여 질문하기 전에 중요한 것을 표시합니다.",
+      "philosophyTitle": "철학",
+      "philosophyQuote": "인공적이지 않은 진정한 액티브 인텔리전스",
+      "philosophyDesc": "AI는 판단을 대체하는 것이 아니라 전문성을 증폭해야 합니다. 모든 기능은 확인할 대시보드를 추가하는 것이 아니라 시간을 돌려주도록 설계되었습니다.",
+      "honestTitle": "한계에 대해 솔직함",
+      "honestDesc": "SAAI는 성장하고 있습니다. 일부 통합은 \"출시 예정\"입니다. 그렇지 않은 척하지 않겠습니다. 존재하는 것은 실제 필요에서 구축되었기 때문에 작동합니다.",
+      "createdBy": "제작자",
+      "studio": "Faith Invictus Studio"
+    },
     "footer": {
       "description": "AI 기반 애자일 세레모니 및 팀 관리",
       "product": "제품",
