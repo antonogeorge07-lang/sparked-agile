@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Sparkles, Loader2, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+
 export const DemoModeButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const createDemoProject = async () => {
     setIsLoading(true);
     try {
@@ -176,7 +180,15 @@ export const DemoModeButton = () => {
     }
   };
   return <>
-      
+      <Button 
+        variant="outline" 
+        size="lg" 
+        onClick={() => setIsOpen(true)}
+        className="gap-2 px-6 sm:px-8 h-12 sm:h-14 text-sm sm:text-base w-full sm:w-auto border-2 hover:bg-muted/50"
+      >
+        <Play className="h-4 w-4 sm:h-5 sm:w-5" />
+        {t('landing.hero.tryDemo', 'Try Demo Mode')}
+      </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[500px]">
