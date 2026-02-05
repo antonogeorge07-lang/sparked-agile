@@ -3810,6 +3810,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_google_tokens: {
+        Row: {
+          access_token_encrypted: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          refresh_token_encrypted: string | null
+          scopes: string[] | null
+          token_type: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_token_encrypted: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          refresh_token_encrypted?: string | null
+          scopes?: string[] | null
+          token_type?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_token_encrypted?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          refresh_token_encrypted?: string | null
+          scopes?: string[] | null
+          token_type?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_jira_tokens: {
         Row: {
           cloud_id: string | null
