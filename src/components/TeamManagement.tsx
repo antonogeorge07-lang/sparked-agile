@@ -36,12 +36,12 @@ export const TeamManagement = ({ projectId, projectName, accessToken }: TeamMana
   
   const queryClient = useQueryClient();
 
-  // Fetch team members
+  // Fetch team members using safe view for privacy protection
   const { data: teamMembers = [], isLoading } = useQuery({
     queryKey: ["team-members", projectId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("team_members")
+        .from("team_members_safe")
         .select("*")
         .eq("project_id", projectId)
         .order("created_at", { ascending: false });
@@ -86,7 +86,7 @@ export const TeamManagement = ({ projectId, projectName, accessToken }: TeamMana
     },
   });
 
-  // Remove team member mutation
+  // Remove team member mutation - note: delete operations must use base table
   const removeMemberMutation = useMutation({
     mutationFn: async (memberId: string) => {
       const { error } = await supabase

@@ -113,10 +113,10 @@ export default function Standup() {
 
       if (error) throw error;
 
-      // Get profile names separately
+      // Get profile names using teammate safe view - excludes email for privacy
       const userIds = updates?.map(u => u.team_member_id).filter(Boolean) || [];
       const { data: profiles } = await supabase
-        .from("profiles")
+        .from("profiles_teammate_safe")
         .select("id, full_name")
         .in("id", userIds);
 
