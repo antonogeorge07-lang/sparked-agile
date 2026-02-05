@@ -4393,6 +4393,8 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string | null
+          last_activity_at: string | null
+          preferences: Json | null
           role: Database["public"]["Enums"]["app_role"] | null
           updated_at: string | null
         }
@@ -4402,6 +4404,8 @@ export type Database = {
           email?: never
           full_name?: string | null
           id?: string | null
+          last_activity_at?: string | null
+          preferences?: Json | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
@@ -4411,6 +4415,8 @@ export type Database = {
           email?: never
           full_name?: string | null
           id?: string | null
+          last_activity_at?: string | null
+          preferences?: Json | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
