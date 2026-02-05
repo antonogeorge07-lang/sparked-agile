@@ -19,7 +19,18 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { OutlookConnectionWizard } from './OutlookConnectionWizard';
+import { GoogleConnectionWizard } from './GoogleConnectionWizard';
 import { formatDistanceToNow } from 'date-fns';
+
+// Google icon component
+const GoogleIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24">
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+);
 
 interface IntegrationStatus {
   type: string;
@@ -36,6 +47,7 @@ export const IntegrationStatusDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState<string | null>(null);
   const [showOutlookWizard, setShowOutlookWizard] = useState(false);
+  const [showGoogleWizard, setShowGoogleWizard] = useState(false);
 
   const fetchIntegrationStatus = async () => {
     try {
@@ -43,6 +55,12 @@ export const IntegrationStatusDashboard = () => {
       const { data: msTokens } = await supabase
         .from('user_microsoft_token_status')
         .select('is_valid, expires_at, user_email, updated_at')
+        .maybeSingle();
+
+      // Check Google tokens
+      const { data: googleTokens } = await supabase
+        .from('user_google_tokens')
+        .select('id, expires_at, updated_at')
         .maybeSingle();
 
       // Check Slack tokens
@@ -76,6 +94,28 @@ export const IntegrationStatusDashboard = () => {
       } else {
         statuses.push({
           type: 'outlook',
+          isConnected: false,
+          isValid: false,
+          expiresSoon: false
+        });
+      }
+
+      // Google
+      if (googleTokens) {
+        const expiresAt = googleTokens.expires_at ? new Date(googleTokens.expires_at) : undefined;
+        const expiresSoon = expiresAt ? expiresAt.getTime() - Date.now() < 24 * 60 * 60 * 1000 : false;
+        
+        statuses.push({
+          type: 'google',
+          isConnected: true,
+          isValid: true, // If token exists, consider it valid
+          expiresSoon,
+          expiresAt,
+          lastUsed: googleTokens.updated_at ? new Date(googleTokens.updated_at) : undefined,
+        });
+      } else {
+        statuses.push({
+          type: 'google',
           isConnected: false,
           isValid: false,
           expiresSoon: false
@@ -153,6 +193,7 @@ export const IntegrationStatusDashboard = () => {
   const getIntegrationIcon = (type: string) => {
     switch (type) {
       case 'outlook': return Calendar;
+      case 'google': return GoogleIcon;
       case 'slack': return MessageSquare;
       case 'github': return GitBranch;
       default: return Settings;
@@ -162,9 +203,20 @@ export const IntegrationStatusDashboard = () => {
   const getIntegrationLabel = (type: string) => {
     switch (type) {
       case 'outlook': return 'Microsoft Outlook';
+      case 'google': return 'Google Workspace';
       case 'slack': return 'Slack';
       case 'github': return 'GitHub';
       default: return type;
+    }
+  };
+
+  const getIntegrationDescription = (type: string) => {
+    switch (type) {
+      case 'outlook': return 'Calendar & Teams';
+      case 'google': return 'Calendar & Gmail';
+      case 'slack': return 'Notifications';
+      case 'github': return 'Repository sync';
+      default: return '';
     }
   };
 
@@ -186,6 +238,14 @@ export const IntegrationStatusDashboard = () => {
     return Math.round((connected / Math.max(integrations.length, 1)) * 100);
   };
 
+  const handleConnect = (type: string) => {
+    if (type === 'outlook') {
+      setShowOutlookWizard(true);
+    } else if (type === 'google') {
+      setShowGoogleWizard(true);
+    }
+  };
+
   if (loading) {
     return (
       <Card>
@@ -194,7 +254,7 @@ export const IntegrationStatusDashboard = () => {
           <Skeleton className="h-4 w-64" />
         </CardHeader>
         <CardContent className="space-y-4">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3, 4].map(i => (
             <Skeleton key={i} className="h-20 w-full" />
           ))}
         </CardContent>
@@ -226,6 +286,7 @@ export const IntegrationStatusDashboard = () => {
         <CardContent className="space-y-4">
           {integrations.map((integration) => {
             const Icon = getIntegrationIcon(integration.type);
+            const isGoogleIcon = integration.type === 'google';
             
             return (
               <div 
@@ -238,11 +299,18 @@ export const IntegrationStatusDashboard = () => {
                       ? 'bg-primary/10 text-primary' 
                       : 'bg-muted text-muted-foreground'
                   }`}>
-                    <Icon className="h-5 w-5" />
+                    {isGoogleIcon ? (
+                      <GoogleIcon className="h-5 w-5" />
+                    ) : (
+                      <Icon className="h-5 w-5" />
+                    )}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{getIntegrationLabel(integration.type)}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {getIntegrationDescription(integration.type)}
+                      </span>
                       {getStatusBadge(integration)}
                     </div>
                     {integration.isConnected && (
@@ -267,7 +335,7 @@ export const IntegrationStatusDashboard = () => {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  {integration.isConnected && integration.type === 'outlook' && (
+                  {integration.isConnected && (integration.type === 'outlook' || integration.type === 'google') && (
                     <Button 
                       variant="ghost" 
                       size="sm"
@@ -278,20 +346,20 @@ export const IntegrationStatusDashboard = () => {
                     </Button>
                   )}
                   
-                  {!integration.isConnected && integration.type === 'outlook' && (
+                  {!integration.isConnected && (integration.type === 'outlook' || integration.type === 'google') && (
                     <Button 
                       size="sm"
-                      onClick={() => setShowOutlookWizard(true)}
+                      onClick={() => handleConnect(integration.type)}
                     >
                       Connect
                     </Button>
                   )}
                   
-                  {integration.isConnected && !integration.isValid && integration.type === 'outlook' && (
+                  {integration.isConnected && !integration.isValid && (integration.type === 'outlook' || integration.type === 'google') && (
                     <Button 
                       size="sm"
                       variant="outline"
-                      onClick={() => setShowOutlookWizard(true)}
+                      onClick={() => handleConnect(integration.type)}
                     >
                       Reconnect
                     </Button>
@@ -308,6 +376,15 @@ export const IntegrationStatusDashboard = () => {
         onClose={() => setShowOutlookWizard(false)}
         onSuccess={() => {
           setShowOutlookWizard(false);
+          fetchIntegrationStatus();
+        }}
+      />
+
+      <GoogleConnectionWizard 
+        isOpen={showGoogleWizard}
+        onClose={() => setShowGoogleWizard(false)}
+        onSuccess={() => {
+          setShowGoogleWizard(false);
           fetchIntegrationStatus();
         }}
       />
