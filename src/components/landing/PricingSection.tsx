@@ -32,13 +32,16 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
       "Team Collaboration",
       "Retrospective Insights",
       "Advanced Analytics",
+      "Stakeholder Portal",
+      "SAFe Workflows",
+      "Executive Digest",
     ],
   };
 
   const comingSoonFeatures = [
-    { name: "Stakeholder Portal", status: "Planned" },
-    { name: "SAFe Workflows", status: "Planned" },
-    { name: "Executive Digest", status: "Planned" },
+    { name: "Custom Integrations API", status: "Planned" },
+    { name: "White-label Options", status: "Planned" },
+    { name: "Enterprise SSO", status: "Planned" },
   ];
 
   return (
