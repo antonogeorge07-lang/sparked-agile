@@ -39,9 +39,9 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
   };
 
   const comingSoonFeatures = [
-    { name: "Custom Integrations API", status: "Planned" },
-    { name: "White-label Options", status: "Planned" },
-    { name: "Enterprise SSO", status: "Planned" },
+    { name: "White-label Branding", status: "Planned" },
+    { name: "Enterprise SSO (SAML)", status: "Planned" },
+    { name: "Priority Support Tiers", status: "Planned" },
   ];
 
   return (
