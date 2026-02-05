@@ -26,15 +26,16 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
       t('landing.pricing.freeFeature2'),
       t('landing.pricing.freeFeature3'),
       t('landing.pricing.freeFeature4'),
+      "Sprint Ceremonies",
+      "AI Standup Summaries", 
+      "Epic Management",
     ],
   };
 
   const comingSoonFeatures = [
-    { name: "Sprint Ceremonies", status: "In Development" },
-    { name: "AI Standup Summaries", status: "In Development" },
-    { name: "Epic Management", status: "Planned" },
     { name: "Team Collaboration", status: "Planned" },
     { name: "Retrospective Insights", status: "Planned" },
+    { name: "Advanced Analytics", status: "Planned" },
   ];
 
   return (
