@@ -46,7 +46,7 @@ export function CapabilityShowcase() {
       icon: Users,
       titleKey: "landing.capabilities.teamCollaboration",
       descKey: "landing.capabilities.teamCollaborationDesc",
-      tier: "coming-soon" as const,
+      tier: "free" as const,
     },
   ];
 
@@ -71,7 +71,7 @@ export function CapabilityShowcase() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {capabilities.map((cap, index) => {
             const isFree = cap.tier === "free";
-            const isComingSoon = cap.tier === "coming-soon";
+          const isComingSoon = false;
             const isHovered = hoveredCard === index;
             
             return (
