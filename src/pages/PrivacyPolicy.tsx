@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
               <p className="text-muted-foreground mb-4">
-                Welcome to SAAI (Spark-Agile Active Intelligence). We at Faith Invictus Studio 
+                Welcome to SAAI (Spark-Agile Active Intelligence). We at Antono George 
                 are committed to protecting your privacy. This Privacy Policy explains how we collect, use, 
                 and safeguard your information when you use SAAI.
               </p>
@@ -174,7 +174,7 @@ export default function PrivacyPolicy() {
                 please contact us at:
               </p>
               <p className="text-muted-foreground">
-                <strong>Data Controller:</strong> Faith Invictus Studio<br />
+                <strong>Data Controller:</strong> Antono George<br />
                 <strong>Email:</strong> Antono.George1@outlook.com<br />
                 <strong>Support:</strong> Antono.George1@outlook.com
               </p>

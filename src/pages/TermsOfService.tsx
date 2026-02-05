@@ -33,7 +33,7 @@ export default function TermsOfService() {
                 please do not use the Service.
               </p>
               <p className="text-muted-foreground mb-4">
-                SAAI is operated by Faith Invictus Studio, committed to providing quality AI-powered Agile tools.
+                SAAI is operated by Antono George, committed to providing quality AI-powered Agile tools.
               </p>
             </section>
 
@@ -195,7 +195,7 @@ export default function TermsOfService() {
                 If you have questions about these Terms, we're here to help. Please contact us at:
               </p>
               <p className="text-muted-foreground">
-                <strong>Company:</strong> Faith Invictus Studio<br />
+                <strong>Company:</strong> Antono George<br />
                 <strong>Email:</strong> Antono.George1@outlook.com<br />
                 <strong>Support:</strong> Antono.George1@outlook.com
               </p>
