@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { Mail, GitBranch, BarChart3, Zap, Users, Target, Calendar, MessageSquare, ArrowRight } from "lucide-react";
+import { Mail, GitBranch, BarChart3, Zap, Users, Target, Calendar, MessageSquare, ArrowRight, Sparkles, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -34,13 +34,13 @@ export function CapabilityShowcase() {
       icon: Calendar,
       titleKey: "landing.capabilities.sprintCeremonies",
       descKey: "landing.capabilities.sprintCeremoniesDesc",
-      tier: "coming-soon" as const,
+      tier: "free" as const,
     },
     {
       icon: Target,
       titleKey: "landing.capabilities.epicManagement",
       descKey: "landing.capabilities.epicManagementDesc",
-      tier: "coming-soon" as const,
+      tier: "free" as const,
     },
     {
       icon: Users,
