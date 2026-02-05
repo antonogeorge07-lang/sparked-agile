@@ -29,13 +29,16 @@ export function PricingSection({ onEarlyAccess }: PricingSectionProps) {
       "Sprint Ceremonies",
       "AI Standup Summaries", 
       "Epic Management",
+      "Team Collaboration",
+      "Retrospective Insights",
+      "Advanced Analytics",
     ],
   };
 
   const comingSoonFeatures = [
-    { name: "Team Collaboration", status: "Planned" },
-    { name: "Retrospective Insights", status: "Planned" },
-    { name: "Advanced Analytics", status: "Planned" },
+    { name: "Stakeholder Portal", status: "Planned" },
+    { name: "SAFe Workflows", status: "Planned" },
+    { name: "Executive Digest", status: "Planned" },
   ];
 
   return (
