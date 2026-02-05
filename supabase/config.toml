@@ -71,3 +71,9 @@ verify_jwt = true
 
 [functions.send-approval-notification]
 verify_jwt = true
+
+[functions.google-oauth-init]
+verify_jwt = true
+
+[functions.google-oauth-callback]
+verify_jwt = false
