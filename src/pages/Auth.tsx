@@ -496,7 +496,7 @@ export default function Auth() {
               <Target className="w-8 h-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl">SM ActiveInteligence</CardTitle>
+          <CardTitle className="text-2xl">SAAI</CardTitle>
           <CardDescription>Sign in to your account or create a new one</CardDescription>
         </CardHeader>
         <CardContent>
