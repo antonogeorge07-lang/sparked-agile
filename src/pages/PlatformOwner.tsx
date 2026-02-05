@@ -134,8 +134,10 @@ export default function PlatformOwner() {
   };
 
   const loadUserGrowth = async () => {
+    // Use profiles_safe view - platform owner has admin access so can see all profiles
+    // This view masks email for non-admins but allows access to created_at for metrics
     const { data, error } = await supabase
-      .from('profiles')
+      .from('profiles_safe')
       .select('created_at')
       .order('created_at', { ascending: true });
     
