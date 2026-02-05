@@ -1,11 +1,11 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { Mail, GitBranch, BarChart3, Zap, Users, Target, Calendar, MessageSquare, ArrowRight, Sparkles, RefreshCw } from "lucide-react";
+import { Mail, GitBranch, BarChart3, Users, Target, Calendar, ArrowRight, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 export function CapabilityShowcase() {
   const { t } = useTranslation();
@@ -17,111 +17,190 @@ export function CapabilityShowcase() {
       titleKey: "landing.capabilities.dailyDigest",
       descKey: "landing.capabilities.dailyDigestDesc",
       tier: "free" as const,
+      accent: "from-violet-500/20 to-violet-500/5 border-violet-500/30",
+      iconBg: "bg-violet-500/10 group-hover:bg-violet-500/20",
+      iconColor: "text-violet-400",
     },
     {
       icon: GitBranch,
       titleKey: "landing.capabilities.githubActivity",
       descKey: "landing.capabilities.githubActivityDesc",
       tier: "free" as const,
+      accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
+      iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
+      iconColor: "text-emerald-400",
     },
     {
       icon: BarChart3,
       titleKey: "landing.capabilities.sprintHighlights",
       descKey: "landing.capabilities.sprintHighlightsDesc",
       tier: "free" as const,
+      accent: "from-blue-500/20 to-blue-500/5 border-blue-500/30",
+      iconBg: "bg-blue-500/10 group-hover:bg-blue-500/20",
+      iconColor: "text-blue-400",
     },
     {
       icon: Calendar,
       titleKey: "landing.capabilities.sprintCeremonies",
       descKey: "landing.capabilities.sprintCeremoniesDesc",
       tier: "free" as const,
+      accent: "from-amber-500/20 to-amber-500/5 border-amber-500/30",
+      iconBg: "bg-amber-500/10 group-hover:bg-amber-500/20",
+      iconColor: "text-amber-400",
     },
     {
       icon: Target,
       titleKey: "landing.capabilities.epicManagement",
       descKey: "landing.capabilities.epicManagementDesc",
       tier: "free" as const,
+      accent: "from-rose-500/20 to-rose-500/5 border-rose-500/30",
+      iconBg: "bg-rose-500/10 group-hover:bg-rose-500/20",
+      iconColor: "text-rose-400",
     },
     {
       icon: Users,
       titleKey: "landing.capabilities.teamCollaboration",
       descKey: "landing.capabilities.teamCollaborationDesc",
       tier: "free" as const,
+      accent: "from-cyan-500/20 to-cyan-500/5 border-cyan-500/30",
+      iconBg: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
+      iconColor: "text-cyan-400",
     },
   ];
 
   return (
-    <section id="features" className="py-12 sm:py-20 px-4 bg-muted/30 relative overflow-hidden" aria-labelledby="capabilities-heading">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,hsl(var(--tier-free)/0.1)_0%,transparent_50%)]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,hsl(var(--muted)/0.2)_0%,transparent_50%)]" />
-      </div>
+    <section id="features" className="relative py-24 px-4 overflow-hidden" aria-labelledby="capabilities-heading">
+      {/* Dramatic background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--primary)/0.08),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--accent)/0.06),transparent_50%)]" />
+      
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
+                          linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
+        backgroundSize: '50px 50px'
+      }} />
 
-      <div className="container mx-auto max-w-5xl relative z-10">
-        <header className="text-center mb-8 sm:mb-12">
-          <h2 id="capabilities-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-3 sm:mb-4 opacity-0 animate-fade-in-up">
+      <div className="container relative mx-auto max-w-6xl">
+        {/* Header */}
+        <motion.header 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium text-primary">Powerful Features</span>
+          </motion.div>
+
+          <h2 
+            id="capabilities-heading" 
+            className="text-4xl md:text-5xl font-bold mb-5 bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent"
+          >
             {t('landing.capabilities.title')}
           </h2>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in animation-delay-200 px-2">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {t('landing.capabilities.subtitle')}
           </p>
-        </header>
+        </motion.header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        {/* Capability Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {capabilities.map((cap, index) => {
-            const isFree = cap.tier === "free";
-          const isComingSoon = false;
             const isHovered = hoveredCard === index;
             
             return (
-              <Card 
+              <motion.div
                 key={index}
-                className={`group relative p-4 sm:p-6 cursor-pointer transition-all duration-300 overflow-hidden
-                  ${isHovered ? 'scale-[1.02] shadow-elevated' : 'hover:shadow-card'}
-                  ${isFree ? 'border-tier-free/20 hover:border-tier-free/40' : 'border-border hover:border-muted-foreground/30'}
-                  ${isComingSoon ? 'opacity-80' : ''}
-                  opacity-0 animate-fade-in-up`}
-                style={{ animationDelay: `${200 + index * 80}ms` }}
+                className="relative group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Hover gradient overlay */}
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                  ${isFree ? 'bg-gradient-to-br from-tier-free/5 to-transparent' : 'bg-gradient-to-br from-muted/30 to-transparent'}`} 
-                />
+                {/* Glow effect on hover */}
+                <div className={`
+                  absolute -inset-1 bg-gradient-to-r ${cap.accent} rounded-2xl blur-xl 
+                  transition-opacity duration-500 ${isHovered ? 'opacity-70' : 'opacity-0'}
+                `} />
                 
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-3 sm:mb-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
-                      ${isFree ? 'bg-tier-free/10 group-hover:bg-tier-free/20' : 'bg-muted group-hover:bg-muted/80'}`}>
-                      <cap.icon className={`h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-300 group-hover:rotate-[-5deg]
-                        ${isFree ? 'text-tier-free' : 'text-muted-foreground'}`} />
-                    </div>
-                    <TierBadge tier={cap.tier} className="text-[10px] sm:text-xs" />
-                  </div>
+                {/* Card */}
+                <div className={`
+                  relative h-full p-6 rounded-2xl border backdrop-blur-sm
+                  bg-card/80 transition-all duration-300
+                  ${isHovered 
+                    ? 'border-border shadow-2xl scale-[1.02]' 
+                    : 'border-border/50 hover:border-border'
+                  }
+                `}>
+                  {/* Top accent line */}
+                  <div className={`
+                    absolute top-0 left-6 right-6 h-px transition-opacity duration-300
+                    bg-gradient-to-r from-transparent via-primary/40 to-transparent
+                    ${isHovered ? 'opacity-100' : 'opacity-0'}
+                  `} />
                   
-                  <h3 className="font-semibold font-heading text-base sm:text-lg mb-1.5 sm:mb-2 group-hover:text-foreground transition-colors">
-                    {t(cap.titleKey)}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    {t(cap.descKey)}
-                  </p>
+                  <div className="relative z-10">
+                    {/* Header Row */}
+                    <div className="flex items-start justify-between mb-5">
+                      <motion.div 
+                        className={`
+                          w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300
+                          ${cap.iconBg}
+                        `}
+                        animate={isHovered ? { rotate: -5, scale: 1.1 } : { rotate: 0, scale: 1 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <cap.icon className={`h-6 w-6 ${cap.iconColor}`} />
+                      </motion.div>
+                      <TierBadge tier={cap.tier} className="text-xs" />
+                    </div>
+                    
+                    {/* Content */}
+                    <h3 className="font-semibold text-lg mb-2 group-hover:text-foreground transition-colors">
+                      {t(cap.titleKey)}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {t(cap.descKey)}
+                    </p>
+                  </div>
                 </div>
-              </Card>
+              </motion.div>
             );
           })}
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-8 sm:mt-10 opacity-0 animate-fade-in animation-delay-700">
-          <Button asChild variant="outline" className="gap-2 group text-sm sm:text-base">
+        <motion.div 
+          className="text-center mt-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
+        >
+          <Button 
+            asChild 
+            variant="outline" 
+            size="lg"
+            className="gap-2 group px-8 h-12 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+          >
             <Link to="/features">
               {t("landing.capabilities.seeAllFeatures")}
-              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
