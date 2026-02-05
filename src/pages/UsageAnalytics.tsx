@@ -28,33 +28,14 @@ export default function UsageAnalytics() {
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedProject, setSelectedProject] = useState<string>("all");
 
-  useEffect(() => {
-    if (!roleLoading && role !== 'admin') {
-      navigate('/');
-    }
-  }, [role, roleLoading, navigate]);
-
-  if (roleLoading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="container mx-auto p-6">
-          <LoadingState message="Loading analytics..." />
-        </div>
-      </div>
-    );
-  }
-
-  if (role !== 'admin') {
-    return null;
-  }
-
+  // All hooks must be called before any conditional returns
   const { data: projects } = useQuery({
     queryKey: ["pmi-projects-list"],
     queryFn: async () => {
       const { data } = await supabase.from("pmi_projects").select("id, name");
       return data || [];
     },
+    enabled: role === 'admin',
   });
 
   const { data: aiUsageStats } = useQuery({
@@ -73,6 +54,7 @@ export default function UsageAnalytics() {
 
       return data || [];
     },
+    enabled: role === 'admin',
   });
 
   const { data: activityStats } = useQuery({
@@ -90,13 +72,36 @@ export default function UsageAnalytics() {
       if (error) throw error;
       return data || [];
     },
+    enabled: role === 'admin',
   });
+
+  useEffect(() => {
+    if (!roleLoading && role !== 'admin') {
+      navigate('/');
+    }
+  }, [role, roleLoading, navigate]);
 
   // Calculate metrics (tokens_used and cost_estimate excluded from sanitized view for privacy)
   const totalAICalls = aiUsageStats?.length || 0;
   const successfulCalls = aiUsageStats?.filter(log => log.status === 'success').length || 0;
   const successRate = totalAICalls > 0 ? Math.round((successfulCalls / totalAICalls) * 100) : 0;
   const uniqueUsers = new Set(activityStats?.map(log => log.user_id)).size;
+
+  // Conditional returns after all hooks
+  if (roleLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto p-6">
+          <LoadingState message="Loading analytics..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (role !== 'admin') {
+    return null;
+  }
 
   // Prepare chart data
   const aiCallsByDay = aiUsageStats?.reduce((acc: any, log) => {
