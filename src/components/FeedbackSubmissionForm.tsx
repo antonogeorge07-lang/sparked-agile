@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Star } from "lucide-react";
+import { Star, Send, User, Briefcase, Building2, MessageSquare, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 export const FeedbackSubmissionForm = () => {
   const { toast } = useToast();
@@ -47,10 +47,9 @@ export const FeedbackSubmissionForm = () => {
 
       toast({
         title: "Thank You!",
-        description: "Your feedback has been submitted and will be reviewed shortly. We appreciate your honest input!",
+        description: "Your feedback has been submitted and will be reviewed shortly.",
       });
 
-      // Reset form
       setName("");
       setRole("");
       setCompany("");
@@ -69,18 +68,37 @@ export const FeedbackSubmissionForm = () => {
   };
 
   return (
-    <Card className="border-2">
-      <CardHeader>
-        <CardTitle>Share Your Experience</CardTitle>
-        <CardDescription>
-          Your honest feedback helps us improve. All feedback, positive and negative, will be displayed publicly.
-          We believe in transparency and continuous improvement.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <motion.div
+      className="relative group"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Glow effect */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Card */}
+      <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-8 shadow-2xl">
+        {/* Accent line */}
+        <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2.5 rounded-xl bg-primary/10 border border-primary/20">
+            <MessageSquare className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold">Share Your Experience</h3>
+            <p className="text-sm text-muted-foreground">Your honest feedback shapes our product</p>
+          </div>
+          <Sparkles className="h-4 w-4 text-primary/60 ml-auto animate-pulse" />
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Name Field */}
           <div className="space-y-2">
-            <Label htmlFor="name">
+            <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium">
+              <User className="h-3.5 w-3.5 text-muted-foreground" />
               Name <span className="text-destructive">*</span>
             </Label>
             <Input
@@ -88,58 +106,81 @@ export const FeedbackSubmissionForm = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your full name"
+              className="bg-background/50 border-border/50 focus:border-primary/50 transition-colors"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="role">Role (Optional)</Label>
-            <Input
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              placeholder="e.g., Scrum Master, Product Owner"
-            />
+          {/* Role & Company Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="role" className="flex items-center gap-2 text-sm font-medium">
+                <Briefcase className="h-3.5 w-3.5 text-muted-foreground" />
+                Role
+                <span className="text-xs text-muted-foreground">(Optional)</span>
+              </Label>
+              <Input
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                placeholder="e.g., Scrum Master"
+                className="bg-background/50 border-border/50 focus:border-primary/50 transition-colors"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="company" className="flex items-center gap-2 text-sm font-medium">
+                <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
+                Company
+                <span className="text-xs text-muted-foreground">(Optional)</span>
+              </Label>
+              <Input
+                id="company"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Your company"
+                className="bg-background/50 border-border/50 focus:border-primary/50 transition-colors"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="company">Company (Optional)</Label>
-            <Input
-              id="company"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="Your company name"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label>
+          {/* Rating */}
+          <div className="space-y-3">
+            <Label className="flex items-center gap-2 text-sm font-medium">
               Rating <span className="text-destructive">*</span>
             </Label>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-1.5 p-3 rounded-xl bg-background/30 border border-border/30 w-fit">
               {[1, 2, 3, 4, 5].map((star) => (
-                <button
+                <motion.button
                   key={star}
                   type="button"
                   onClick={() => setRating(star)}
                   onMouseEnter={() => setHoveredRating(star)}
                   onMouseLeave={() => setHoveredRating(0)}
-                  className="transition-transform hover:scale-110"
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-1 transition-colors"
                 >
                   <Star
-                    className={`h-8 w-8 ${
+                    className={`h-7 w-7 transition-all duration-200 ${
                       star <= (hoveredRating || rating)
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-muted-foreground"
+                        ? "fill-amber-400 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+                        : "text-muted-foreground/40 hover:text-muted-foreground/60"
                     }`}
                   />
-                </button>
+                </motion.button>
               ))}
+              {rating > 0 && (
+                <span className="ml-3 text-sm text-muted-foreground">
+                  {rating === 5 ? "Excellent!" : rating === 4 ? "Great" : rating === 3 ? "Good" : rating === 2 ? "Fair" : "Poor"}
+                </span>
+              )}
             </div>
           </div>
 
+          {/* Feedback Textarea */}
           <div className="space-y-2">
-            <Label htmlFor="feedback">
+            <Label htmlFor="feedback" className="flex items-center gap-2 text-sm font-medium">
               Your Feedback <span className="text-destructive">*</span>
             </Label>
             <Textarea
@@ -147,16 +188,36 @@ export const FeedbackSubmissionForm = () => {
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Tell us about your experience with SAAI..."
-              rows={5}
+              rows={4}
+              className="bg-background/50 border-border/50 focus:border-primary/50 transition-colors resize-none"
               required
             />
           </div>
 
-          <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? "Submitting..." : "Submit Feedback"}
+          {/* Submit Button */}
+          <Button 
+            type="submit" 
+            disabled={isSubmitting} 
+            className="w-full h-12 text-base font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/20 transition-all duration-300"
+          >
+            {isSubmitting ? (
+              <span className="flex items-center gap-2">
+                <motion.div
+                  className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                />
+                Submitting...
+              </span>
+            ) : (
+              <span className="flex items-center gap-2">
+                <Send className="h-4 w-4" />
+                Submit Feedback
+              </span>
+            )}
           </Button>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </motion.div>
   );
 };
