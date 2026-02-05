@@ -109,7 +109,7 @@ export function FooterSection() {
               <span className="font-medium">
                 {t('landing.footer.builtBy')}{" "}
                 <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                  Faith Invictus Studio
+                  Antono George
                 </span>
               </span>
             </div>

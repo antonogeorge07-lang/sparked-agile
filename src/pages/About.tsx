@@ -113,7 +113,7 @@ export default function About() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Our Story</h2>
-                  <p className="text-sm text-muted-foreground">Created by <span className="font-medium text-foreground">Antono George</span> • Faith Invictus Studio</p>
+                  <p className="text-sm text-muted-foreground">Created by <span className="font-medium text-foreground">Antono George</span></p>
                 </div>
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
@@ -297,7 +297,7 @@ export default function About() {
                 </Badge>
                 <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
                 <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6">
-                  SAAI is a research-driven micro-studio project by Faith Invictus Studio. Every feature is built 
+                  SAAI is a research-driven micro-studio project by Antono George. Every feature is built 
                   with intention, every interaction crafted with care. We're here to create the most 
                   purposeful AI-powered tools for teams that value quality, clarity, and progress.
                 </p>

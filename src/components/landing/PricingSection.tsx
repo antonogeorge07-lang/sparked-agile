@@ -203,7 +203,7 @@
                  </div>
                  
                  <p className="text-muted-foreground">
-                   Advanced features being developed by Faith Invictus Studio
+                   Advanced features being developed by Antono George
                  </p>
                </CardHeader>
  
