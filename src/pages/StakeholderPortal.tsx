@@ -73,28 +73,48 @@ function SortableWidget({ widget, onToggleVisibility, projectId }: {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
   };
 
   const widgetInfo = WIDGET_TYPES.find(w => w.type === widget.widget_type);
 
   return (
-    <div ref={setNodeRef} style={style} className={`${!widget.is_visible ? 'opacity-50' : ''}`}>
-      <Card className="relative">
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      className={`group transition-all duration-300 ${isDragging ? 'scale-105 z-50' : ''} ${!widget.is_visible ? 'opacity-60' : ''}`}
+    >
+      <Card className={`
+        relative overflow-hidden h-full
+        bg-gradient-to-br from-card via-card to-card/80
+        border border-border/50 hover:border-primary/30
+        shadow-sm hover:shadow-lg hover:shadow-primary/5
+        transition-all duration-300
+        ${isDragging ? 'ring-2 ring-primary/50 shadow-xl shadow-primary/20' : ''}
+      `}>
+        {/* Decorative gradient accent */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/60 via-primary to-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        {/* Drag handle */}
         <div 
           {...attributes} 
           {...listeners}
-          className="absolute top-3 left-3 cursor-grab active:cursor-grabbing p-1 hover:bg-muted rounded"
+          className="absolute top-3 left-3 cursor-grab active:cursor-grabbing p-1.5 hover:bg-primary/10 rounded-md transition-colors z-10"
         >
-          <GripVertical className="h-4 w-4 text-muted-foreground" />
+          <GripVertical className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
         </div>
+        
+        {/* Visibility toggle */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-3 right-3 h-8 w-8"
+          className="absolute top-3 right-3 h-8 w-8 hover:bg-primary/10 z-10"
           onClick={() => onToggleVisibility(widget.id, !widget.is_visible)}
         >
-          {widget.is_visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+          {widget.is_visible ? (
+            <Eye className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
+          ) : (
+            <EyeOff className="h-4 w-4 text-muted-foreground" />
+          )}
         </Button>
         
         {widget.is_visible && (
@@ -106,12 +126,14 @@ function SortableWidget({ widget, onToggleVisibility, projectId }: {
         )}
         
         {!widget.is_visible && (
-          <CardHeader className="pl-10">
-            <CardTitle className="text-lg flex items-center gap-2">
+          <CardHeader className="pl-12 pr-12">
+            <CardTitle className="text-lg flex items-center gap-2 text-muted-foreground">
               {widgetInfo && <widgetInfo.icon className="h-5 w-5" />}
               {widgetInfo?.label || widget.widget_type}
             </CardTitle>
-            <CardDescription>Widget hidden - click eye icon to show</CardDescription>
+            <CardDescription className="text-muted-foreground/70">
+              Widget hidden — click eye icon to show
+            </CardDescription>
           </CardHeader>
         )}
       </Card>
@@ -297,38 +319,44 @@ export default function StakeholderPortal() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
       <Navigation />
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <BackButton />
-            <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
-                <LayoutDashboard className="h-8 w-8 text-primary" />
-                Stakeholder Portal
-              </h1>
-              <p className="text-muted-foreground">
-                Personalized insights, approvals, and executive digests
-              </p>
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Header with elegant styling */}
+        <div className="relative mb-10">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 rounded-2xl blur-3xl" />
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50">
+            <div className="flex items-center gap-4">
+              <BackButton />
+              <div>
+                <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-3 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20">
+                    <LayoutDashboard className="h-7 w-7 text-primary" />
+                  </div>
+                  Stakeholder Portal
+                </h1>
+                <p className="text-muted-foreground mt-1.5 text-sm sm:text-base">
+                  Personalized insights, approvals, and executive digests
+                </p>
+              </div>
             </div>
-          </div>
 
-          {pendingApprovals > 0 && (
-            <Badge variant="destructive" className="text-lg px-4 py-2">
-              <Bell className="h-4 w-4 mr-2" />
-              {pendingApprovals} Pending Approval{pendingApprovals > 1 ? 's' : ''}
-            </Badge>
-          )}
+            {pendingApprovals > 0 && (
+              <Badge variant="destructive" className="text-base px-4 py-2 shadow-lg shadow-destructive/20 animate-pulse">
+                <Bell className="h-4 w-4 mr-2" />
+                {pendingApprovals} Pending Approval{pendingApprovals > 1 ? 's' : ''}
+              </Badge>
+            )}
+          </div>
         </div>
 
-        {/* Project Selector */}
+        {/* Project Selector with improved styling */}
         {projects.length > 1 && (
-          <div className="mb-6">
+          <div className="mb-8">
             <select
               value={selectedProject || ''}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="px-4 py-2 border rounded-lg bg-background"
+              className="px-4 py-2.5 border border-border/50 rounded-xl bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors focus:ring-2 focus:ring-primary/20 focus:outline-none"
             >
               {projects.map((project: any) => (
                 <option key={project.id} value={project.id}>
@@ -339,36 +367,41 @@ export default function StakeholderPortal() {
           </div>
         )}
 
-        <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="w-full lg:w-auto flex-wrap">
-            <TabsTrigger value="dashboard" className="gap-2">
+        <Tabs defaultValue="dashboard" className="space-y-8">
+          <TabsList className="w-full lg:w-auto flex-wrap bg-muted/50 backdrop-blur-sm p-1.5 rounded-xl border border-border/30">
+            <TabsTrigger value="dashboard" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
               <LayoutDashboard className="h-4 w-4" />
               <span className="hidden sm:inline">Dashboard</span>
             </TabsTrigger>
-            <TabsTrigger value="approvals" className="gap-2">
+            <TabsTrigger value="approvals" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
               <CheckCircle2 className="h-4 w-4" />
               <span className="hidden sm:inline">Approvals</span>
               {pendingApprovals > 0 && (
-                <Badge variant="destructive" className="ml-1">{pendingApprovals}</Badge>
+                <Badge variant="destructive" className="ml-1 text-xs">{pendingApprovals}</Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger value="digests" className="gap-2">
+            <TabsTrigger value="digests" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
               <Mail className="h-4 w-4" />
               <span className="hidden sm:inline">Email Digests</span>
             </TabsTrigger>
-            <TabsTrigger value="alerts" className="gap-2">
+            <TabsTrigger value="alerts" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
               <Bell className="h-4 w-4" />
               <span className="hidden sm:inline">Alerts</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="dashboard">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold">Your Dashboard</h2>
+          <TabsContent value="dashboard" className="mt-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="text-2xl font-semibold">Your Dashboard</h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Drag widgets to reorder • Click the eye icon to show/hide
+                </p>
+              </div>
               <div className="flex gap-2">
                 {WIDGET_TYPES.filter(wt => !widgets.some(w => w.widget_type === wt.type)).length > 0 && (
                   <select
-                    className="px-3 py-2 border rounded-lg text-sm"
+                    className="px-4 py-2.5 border border-border/50 rounded-xl text-sm bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors cursor-pointer"
                     onChange={(e) => {
                       if (e.target.value) {
                         addWidget(e.target.value);
@@ -389,13 +422,9 @@ export default function StakeholderPortal() {
               </div>
             </div>
 
-            <p className="text-sm text-muted-foreground mb-6">
-              Drag widgets to reorder. Click the eye icon to show/hide.
-            </p>
-
             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
               <SortableContext items={widgets.map(w => w.id)} strategy={verticalListSortingStrategy}>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {widgets.map((widget) => (
                     <SortableWidget
                       key={widget.id}
@@ -409,16 +438,21 @@ export default function StakeholderPortal() {
             </DndContext>
 
             {widgets.length === 0 && (
-              <Card className="p-12 text-center">
-                <LayoutDashboard className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No widgets configured</h3>
-                <p className="text-muted-foreground mb-4">
-                  Add widgets to customize your stakeholder dashboard
-                </p>
-                <Button onClick={() => addWidget('velocity_trend')}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add First Widget
-                </Button>
+              <Card className="relative overflow-hidden p-16 text-center bg-gradient-to-br from-card via-card to-muted/20 border-dashed border-2 border-border/50">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-50" />
+                <div className="relative">
+                  <div className="mx-auto w-fit p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 mb-6">
+                    <LayoutDashboard className="h-10 w-10 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">No widgets configured</h3>
+                  <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
+                    Add widgets to customize your stakeholder dashboard with the metrics that matter most
+                  </p>
+                  <Button onClick={() => addWidget('velocity_trend')} className="shadow-lg shadow-primary/20">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add First Widget
+                  </Button>
+                </div>
               </Card>
             )}
           </TabsContent>
