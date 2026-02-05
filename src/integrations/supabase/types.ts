@@ -3693,7 +3693,7 @@ export type Database = {
           consent_date: string | null
           functional_consent: boolean | null
           id: string
-          ip_address: string | null
+          ip_address_hash: string | null
           marketing_consent: boolean | null
           updated_at: string | null
           user_agent: string | null
@@ -3704,7 +3704,7 @@ export type Database = {
           consent_date?: string | null
           functional_consent?: boolean | null
           id?: string
-          ip_address?: string | null
+          ip_address_hash?: string | null
           marketing_consent?: boolean | null
           updated_at?: string | null
           user_agent?: string | null
@@ -3715,7 +3715,7 @@ export type Database = {
           consent_date?: string | null
           functional_consent?: boolean | null
           id?: string
-          ip_address?: string | null
+          ip_address_hash?: string | null
           marketing_consent?: boolean | null
           updated_at?: string | null
           user_agent?: string | null
