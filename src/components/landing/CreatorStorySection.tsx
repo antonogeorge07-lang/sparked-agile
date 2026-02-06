@@ -185,9 +185,7 @@ export const CreatorStorySection = () => {
             <Zap className="h-4 w-4 text-primary" />
             <p className="text-sm text-muted-foreground">
               {t('landing.creatorStory.createdBy')}{' '}
-              <span className="font-semibold text-foreground">George Antono</span>
-              {' '}•{' '}
-              <span className="text-primary">{t('landing.creatorStory.studio')}</span>
+              <span className="font-semibold text-foreground">{t('landing.creatorStory.studio')}</span>
             </p>
           </div>
         </motion.div>
