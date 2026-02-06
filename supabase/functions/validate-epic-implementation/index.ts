@@ -47,7 +47,6 @@ serve(async (req) => {
       });
     }
 
-    // Validate UUID format
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!uuidRegex.test(epicId)) {
       return new Response(JSON.stringify({ error: 'Invalid epic ID format' }), {
@@ -58,13 +57,10 @@ serve(async (req) => {
 
     console.log('Validating epic implementation:', epicId, 'by user:', user.id);
 
-    // Fetch epic data with related information
+    // Fetch epic data
     const { data: epic, error: epicError } = await supabaseClient
       .from('epics')
-      .select(`
-        *,
-        value_streams(id, name, description)
-      `)
+      .select(`*, value_streams(id, name, description)`)
       .eq('id', epicId)
       .single();
 
@@ -75,7 +71,7 @@ serve(async (req) => {
       });
     }
 
-    // Fetch features for this epic
+    // Fetch features
     const { data: features, error: featuresError } = await supabaseClient
       .from('features')
       .select('*')
@@ -90,15 +86,10 @@ serve(async (req) => {
     // Fetch dependencies
     const { data: dependencies, error: depsError } = await supabaseClient
       .from('epic_dependencies')
-      .select(`
-        *,
-        depends_on:depends_on_epic_id(id, title, status)
-      `)
+      .select(`*, depends_on:depends_on_epic_id(id, title, status)`)
       .eq('epic_id', epicId);
 
-    if (depsError) {
-      console.error('Error fetching dependencies:', depsError);
-    }
+    if (depsError) console.error('Error fetching dependencies:', depsError);
 
     // Fetch milestones
     const { data: milestones, error: milestonesError } = await supabaseClient
@@ -107,11 +98,11 @@ serve(async (req) => {
       .eq('epic_id', epicId)
       .order('target_date', { ascending: true });
 
-    if (milestonesError) {
-      console.error('Error fetching milestones:', milestonesError);
-    }
+    if (milestonesError) console.error('Error fetching milestones:', milestonesError);
 
-    // Build the context payload for AI analysis
+    // Build feature map for linking results back
+    const featureMap = new Map((features || []).map(f => [f.title.toLowerCase().trim(), f]));
+
     const epicContext = {
       epic: {
         title: epic.title,
@@ -153,41 +144,38 @@ serve(async (req) => {
     };
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
-    }
+    if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY not configured');
 
     const systemPrompt = `You are the Lovable LLM — an intelligent Agile validation companion integrated within Spark Agile.
 Your role is to ensure every Epic, Feature, or Story that is marked as "Yet to Implement" truly deserves to be implemented.
 
-You must analyze the provided epic data, goals, dependencies, and current feature items.
+Analyse the provided epic data, goals, dependencies, and current feature items.
 
 For each feature/item, determine:
 - ✅ IMPLEMENT — if implementation is necessary and aligned to the Epic's strategic intent.
 - ⚠️ REVIEW — if it is partially redundant, already covered by another deliverable, or conflicting with dependencies.
 - ❌ DO NOT IMPLEMENT — if it should not be implemented, due to duplication, lack of business value, or outdated context.
 
-You MUST respond with valid JSON using this exact schema:
+IMPORTANT: The "item" field in validationItems MUST exactly match the feature title from the input data.
+
+Respond with valid JSON using this exact schema:
 {
   "epicSummary": "Brief recap of the epic's strategic intent",
   "validationItems": [
     {
-      "item": "Feature/item name",
+      "item": "Exact feature title from the data",
       "status": "Current status",
       "decision": "implement" | "review" | "do_not_implement",
       "reasoning": "Why this decision was made",
       "recommendation": "Actionable next step"
     }
   ],
-  "deliveryAlignmentCheck": "Assessment of whether remaining items align with original goals, OKRs, and DoD criteria",
+  "deliveryAlignmentCheck": "Assessment of alignment with original goals, OKRs, and DoD criteria",
   "verdict": {
     "alignment": "aligned" | "misaligned" | "requires_review",
     "summary": "Concise judgment statement"
   },
-  "nextSteps": [
-    "Clear actionable step 1",
-    "Clear actionable step 2"
-  ],
+  "nextSteps": ["Clear actionable step 1", "Clear actionable step 2"],
   "effortAnalysis": {
     "totalEstimatedPoints": number or null,
     "implementPoints": number or null,
@@ -197,13 +185,9 @@ You MUST respond with valid JSON using this exact schema:
   }
 }
 
-Be specific, data-driven, and actionable in your analysis. Reference actual feature names and statuses from the data provided.`;
+Be specific, data-driven, and actionable. Reference actual feature names from the data.`;
 
-    const userPrompt = `Analyse the following Epic data from the Spark Agile workspace and validate each feature's implementation status:
-
-${JSON.stringify(epicContext, null, 2)}
-
-Provide your implementation validation analysis as JSON.`;
+    const userPrompt = `Analyse the following Epic data from the Spark Agile workspace and validate each feature's implementation status:\n\n${JSON.stringify(epicContext, null, 2)}\n\nProvide your implementation validation analysis as JSON.`;
 
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -224,14 +208,12 @@ Provide your implementation validation analysis as JSON.`;
     if (!aiResponse.ok) {
       if (aiResponse.status === 429) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
-          status: 429,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
       if (aiResponse.status === 402) {
         return new Response(JSON.stringify({ error: 'AI credits exhausted. Please add funds to your workspace.' }), {
-          status: 402,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
       const errorText = await aiResponse.text();
@@ -251,10 +233,110 @@ Provide your implementation validation analysis as JSON.`;
       throw new Error('Invalid AI response format');
     }
 
+    // ====== PERSIST VALIDATION RESULTS ======
+
+    // Use service role for writes to avoid RLS complexity during insert
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    if (!supabaseServiceKey) throw new Error('Service role key not configured');
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+    // 1. Create the validation run record
+    const { data: validationRun, error: runError } = await supabaseAdmin
+      .from('epic_validation_runs')
+      .insert({
+        epic_id: epicId,
+        run_by: user.id,
+        status: 'pending_review',
+        ai_summary: parsedResult.epicSummary,
+        verdict_alignment: parsedResult.verdict?.alignment,
+        verdict_summary: parsedResult.verdict?.summary,
+        delivery_alignment_check: parsedResult.deliveryAlignmentCheck,
+        effort_analysis: parsedResult.effortAnalysis || {},
+        next_steps: parsedResult.nextSteps || [],
+        features_analysed: features?.length || 0,
+        dependencies_checked: dependencies?.length || 0,
+      })
+      .select()
+      .single();
+
+    if (runError) {
+      console.error('Error creating validation run:', runError);
+      throw new Error('Failed to persist validation run');
+    }
+
+    console.log('Validation run created:', validationRun.id);
+
+    // 2. Create per-item validation records and tag features
+    const validationItems = parsedResult.validationItems || [];
+    for (const item of validationItems) {
+      // Try to match to an actual feature
+      const matchedFeature = featureMap.get(item.item?.toLowerCase()?.trim());
+      
+      const { error: itemError } = await supabaseAdmin
+        .from('epic_validation_items')
+        .insert({
+          validation_run_id: validationRun.id,
+          feature_id: matchedFeature?.id || null,
+          item_name: item.item,
+          current_status: item.status,
+          ai_decision: item.decision,
+          ai_reasoning: item.reasoning,
+          ai_recommendation: item.recommendation,
+        });
+
+      if (itemError) {
+        console.error('Error inserting validation item:', itemError);
+      }
+
+      // 3. Tag the feature with validation status
+      if (matchedFeature) {
+        const validationStatus = item.decision === 'implement' ? 'validated' 
+          : item.decision === 'review' ? 'flagged' 
+          : 'rejected';
+
+        const { error: tagError } = await supabaseAdmin
+          .from('features')
+          .update({ 
+            validation_status: validationStatus,
+            validation_notes: item.reasoning,
+          })
+          .eq('id', matchedFeature.id);
+
+        if (tagError) {
+          console.error('Error tagging feature:', tagError);
+        }
+      }
+    }
+
+    // 4. Initialize default readiness checks for this epic
+    const defaultChecks = [
+      { check_type: 'dor_compliance', check_name: 'All features meet Definition of Ready' },
+      { check_type: 'technical_dependency', check_name: 'Technical dependencies resolved' },
+      { check_type: 'environment_ready', check_name: 'Dev/staging environments provisioned' },
+      { check_type: 'api_ready', check_name: 'API contracts defined and available' },
+      { check_type: 'data_ready', check_name: 'Data schemas and migrations ready' },
+      { check_type: 'devops_ready', check_name: 'CI/CD pipelines configured' },
+      { check_type: 'stakeholder_signoff', check_name: 'Stakeholder sign-off obtained' },
+    ];
+
+    for (const check of defaultChecks) {
+      const { error: checkError } = await supabaseAdmin
+        .from('epic_readiness_checks')
+        .insert({
+          epic_id: epicId,
+          validation_run_id: validationRun.id,
+          ...check,
+        });
+      if (checkError) console.error('Error creating readiness check:', checkError);
+    }
+
+    console.log('Validation workflow fully persisted for run:', validationRun.id);
+
     return new Response(
       JSON.stringify({
         success: true,
         validation: parsedResult,
+        validationRunId: validationRun.id,
         metadata: {
           epicId,
           featuresAnalysed: features?.length || 0,
