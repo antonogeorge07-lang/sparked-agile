@@ -72,7 +72,7 @@ export const InteractivePreview = () => {
                 <span className="font-medium text-xs sm:text-sm">Omair AI Assistant</span>
               </div>
               <div className="flex items-center gap-1">
-                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-primary animate-pulse" />
                 <span className="text-[10px] sm:text-xs text-muted-foreground">{t('landing.interactivePreview.online')}</span>
               </div>
             </div>
