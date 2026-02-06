@@ -23,6 +23,7 @@ import { EpicClosureWorkflow } from "@/components/epic/EpicClosureWorkflow";
 import { EpicImpactTracking } from "@/components/epic/EpicImpactTracking";
 import { EpicROIDashboard } from "@/components/epic/EpicROIDashboard";
 import { EpicLessonsLearned } from "@/components/epic/EpicLessonsLearned";
+import { EpicImplementationValidator } from "@/components/epic/EpicImplementationValidator";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
@@ -283,6 +284,7 @@ export default function EpicDetail() {
               <TabsTrigger value="dependencies">Dependencies</TabsTrigger>
               <TabsTrigger value="progress">Progress & Analytics</TabsTrigger>
               <TabsTrigger value="milestones">Milestones</TabsTrigger>
+              <TabsTrigger value="validation">AI Validator</TabsTrigger>
               <TabsTrigger value="closure">Closure & Impact</TabsTrigger>
             </TabsList>
 
@@ -450,9 +452,13 @@ export default function EpicDetail() {
               />
             </TabsContent>
 
+            <TabsContent value="validation">
+              <EpicImplementationValidator epicId={id!} />
+            </TabsContent>
+
             <TabsContent value="closure">
               <div className="space-y-6">
-                <EpicClosureWorkflow 
+                <EpicClosureWorkflow
                   epicId={id!}
                   onClosureUpdate={loadEpicDetails}
                 />
