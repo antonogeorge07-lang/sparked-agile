@@ -1051,6 +1051,124 @@ export type Database = {
           },
         ]
       }
+      epic_readiness_checks: {
+        Row: {
+          check_name: string
+          check_type: string
+          checked_at: string | null
+          checked_by: string | null
+          created_at: string
+          epic_id: string
+          id: string
+          is_passed: boolean | null
+          notes: string | null
+          updated_at: string
+          validation_run_id: string | null
+        }
+        Insert: {
+          check_name: string
+          check_type: string
+          checked_at?: string | null
+          checked_by?: string | null
+          created_at?: string
+          epic_id: string
+          id?: string
+          is_passed?: boolean | null
+          notes?: string | null
+          updated_at?: string
+          validation_run_id?: string | null
+        }
+        Update: {
+          check_name?: string
+          check_type?: string
+          checked_at?: string | null
+          checked_by?: string | null
+          created_at?: string
+          epic_id?: string
+          id?: string
+          is_passed?: boolean | null
+          notes?: string | null
+          updated_at?: string
+          validation_run_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_readiness_checks_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "epic_readiness_checks_validation_run_id_fkey"
+            columns: ["validation_run_id"]
+            isOneToOne: false
+            referencedRelation: "epic_validation_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      epic_recalibration_log: {
+        Row: {
+          action_type: string
+          created_at: string
+          description: string
+          epic_id: string
+          id: string
+          new_value: Json | null
+          old_value: Json | null
+          performed_by: string
+          target_feature_id: string | null
+          validation_run_id: string
+        }
+        Insert: {
+          action_type: string
+          created_at?: string
+          description: string
+          epic_id: string
+          id?: string
+          new_value?: Json | null
+          old_value?: Json | null
+          performed_by: string
+          target_feature_id?: string | null
+          validation_run_id: string
+        }
+        Update: {
+          action_type?: string
+          created_at?: string
+          description?: string
+          epic_id?: string
+          id?: string
+          new_value?: Json | null
+          old_value?: Json | null
+          performed_by?: string
+          target_feature_id?: string | null
+          validation_run_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_recalibration_log_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "epic_recalibration_log_target_feature_id_fkey"
+            columns: ["target_feature_id"]
+            isOneToOne: false
+            referencedRelation: "features"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "epic_recalibration_log_validation_run_id_fkey"
+            columns: ["validation_run_id"]
+            isOneToOne: false
+            referencedRelation: "epic_validation_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       epic_roi_tracking: {
         Row: {
           calculation_notes: string | null
@@ -1135,6 +1253,140 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "epic_stakeholders_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      epic_validation_items: {
+        Row: {
+          ai_decision: string
+          ai_reasoning: string | null
+          ai_recommendation: string | null
+          created_at: string
+          current_status: string | null
+          decided_at: string | null
+          decided_by: string | null
+          feature_id: string | null
+          final_decision: string | null
+          id: string
+          item_name: string
+          stakeholder_notes: string | null
+          validation_run_id: string
+        }
+        Insert: {
+          ai_decision: string
+          ai_reasoning?: string | null
+          ai_recommendation?: string | null
+          created_at?: string
+          current_status?: string | null
+          decided_at?: string | null
+          decided_by?: string | null
+          feature_id?: string | null
+          final_decision?: string | null
+          id?: string
+          item_name: string
+          stakeholder_notes?: string | null
+          validation_run_id: string
+        }
+        Update: {
+          ai_decision?: string
+          ai_reasoning?: string | null
+          ai_recommendation?: string | null
+          created_at?: string
+          current_status?: string | null
+          decided_at?: string | null
+          decided_by?: string | null
+          feature_id?: string | null
+          final_decision?: string | null
+          id?: string
+          item_name?: string
+          stakeholder_notes?: string | null
+          validation_run_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_validation_items_feature_id_fkey"
+            columns: ["feature_id"]
+            isOneToOne: false
+            referencedRelation: "features"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "epic_validation_items_validation_run_id_fkey"
+            columns: ["validation_run_id"]
+            isOneToOne: false
+            referencedRelation: "epic_validation_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      epic_validation_runs: {
+        Row: {
+          ai_summary: string | null
+          created_at: string
+          delivery_alignment_check: string | null
+          dependencies_checked: number | null
+          effort_analysis: Json | null
+          epic_id: string
+          features_analysed: number | null
+          id: string
+          metadata: Json | null
+          next_steps: string[] | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          run_by: string
+          status: string
+          updated_at: string
+          verdict_alignment: string | null
+          verdict_summary: string | null
+        }
+        Insert: {
+          ai_summary?: string | null
+          created_at?: string
+          delivery_alignment_check?: string | null
+          dependencies_checked?: number | null
+          effort_analysis?: Json | null
+          epic_id: string
+          features_analysed?: number | null
+          id?: string
+          metadata?: Json | null
+          next_steps?: string[] | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          run_by: string
+          status?: string
+          updated_at?: string
+          verdict_alignment?: string | null
+          verdict_summary?: string | null
+        }
+        Update: {
+          ai_summary?: string | null
+          created_at?: string
+          delivery_alignment_check?: string | null
+          dependencies_checked?: number | null
+          effort_analysis?: Json | null
+          epic_id?: string
+          features_analysed?: number | null
+          id?: string
+          metadata?: Json | null
+          next_steps?: string[] | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          run_by?: string
+          status?: string
+          updated_at?: string
+          verdict_alignment?: string | null
+          verdict_summary?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "epic_validation_runs_epic_id_fkey"
             columns: ["epic_id"]
             isOneToOne: false
             referencedRelation: "epics"
@@ -1250,6 +1502,8 @@ export type Database = {
           status: string | null
           title: string
           updated_at: string | null
+          validation_notes: string | null
+          validation_status: string | null
         }
         Insert: {
           created_at?: string | null
@@ -1263,6 +1517,8 @@ export type Database = {
           status?: string | null
           title: string
           updated_at?: string | null
+          validation_notes?: string | null
+          validation_status?: string | null
         }
         Update: {
           created_at?: string | null
@@ -1276,6 +1532,8 @@ export type Database = {
           status?: string | null
           title?: string
           updated_at?: string | null
+          validation_notes?: string | null
+          validation_status?: string | null
         }
         Relationships: [
           {
