@@ -57,45 +57,47 @@ async function verifyGitHubSignature(payload: string, signature: string | null, 
   }
 }
 
-// Verify JIRA webhook by checking the webhook identifier against configured integration
+// Verify JIRA webhook using HMAC-SHA256 signature verification
 async function verifyJiraWebhook(
-  supabaseClient: any,
-  projectId: string,
-  webhookId: string | null
+  payload: string,
+  signature: string | null,
+  secret: string
 ): Promise<boolean> {
-  if (!webhookId) {
-    console.log('JIRA webhook verification: No webhook identifier provided');
-    // For JIRA, we check if the project has a valid JIRA integration configured
-    // This provides some level of protection without requiring webhook secret storage
+  if (!signature) {
+    console.log('JIRA webhook verification failed: Missing signature header');
+    return false;
   }
 
   try {
-    // Verify the project has an active JIRA integration
-    const { data: integration, error } = await supabaseClient
-      .from('integrations')
-      .select('id, is_active, config')
-      .eq('project_id', projectId)
-      .eq('integration_type', 'jira')
-      .eq('is_active', true)
-      .single();
+    // JIRA sends HMAC-SHA256 signature — verify it
+    const expectedSignature = signature.startsWith('sha256=') 
+      ? signature.substring(7) 
+      : signature;
 
-    if (error || !integration) {
-      console.log('JIRA webhook verification failed: No active JIRA integration for project');
-      return false;
-    }
+    const encoder = new TextEncoder();
+    const keyData = encoder.encode(secret);
+    const data = encoder.encode(payload);
 
-    // If webhookId is stored in config, verify it matches
-    if (integration.config?.webhookId && webhookId) {
-      const isValid = integration.config.webhookId === webhookId;
-      console.log(`JIRA webhook identifier verification: ${isValid ? 'PASSED' : 'FAILED'}`);
-      return isValid;
-    }
+    const cryptoKey = await crypto.subtle.importKey(
+      'raw',
+      keyData,
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign']
+    );
 
-    // If no specific webhookId configured, allow if integration is active
-    console.log('JIRA webhook verification: Passed (active integration exists)');
-    return true;
+    const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, data);
+    const calculatedSignature = Array.from(new Uint8Array(signatureBuffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    // Timing-safe comparison
+    const isValid = timingSafeEqual(expectedSignature.toLowerCase(), calculatedSignature.toLowerCase());
+
+    console.log(`JIRA signature verification: ${isValid ? 'PASSED' : 'FAILED'}`);
+    return isValid;
   } catch (error) {
-    console.error('JIRA webhook verification error:', error);
+    console.error('JIRA webhook signature verification error:', error);
     return false;
   }
 }
@@ -150,12 +152,22 @@ serve(async (req) => {
         );
       }
     } else if (source === 'jira') {
-      const webhookId = req.headers.get('x-atlassian-webhook-identifier');
-      const isValid = await verifyJiraWebhook(supabaseClient, projectId, webhookId);
-      if (!isValid) {
-        console.log('JIRA webhook rejected: Verification failed');
+      const jiraSignature = req.headers.get('x-hub-signature-256') || req.headers.get('x-atlassian-webhook-identifier');
+      const jiraWebhookSecret = Deno.env.get('JIRA_WEBHOOK_SECRET');
+      
+      if (!jiraWebhookSecret) {
+        console.error('JIRA_WEBHOOK_SECRET not configured - rejecting webhook');
         return new Response(
-          JSON.stringify({ error: 'Invalid webhook or no active JIRA integration' }),
+          JSON.stringify({ error: 'Webhook secret not configured' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      const isValid = await verifyJiraWebhook(payload, jiraSignature, jiraWebhookSecret);
+      if (!isValid) {
+        console.log('JIRA webhook rejected: Invalid signature');
+        return new Response(
+          JSON.stringify({ error: 'Invalid webhook signature' }),
           { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
