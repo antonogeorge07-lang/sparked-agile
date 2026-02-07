@@ -27,6 +27,7 @@ import { useEpicValidator, type ValidationItem } from "@/hooks/useEpicValidator"
 import { StakeholderReviewPanel } from "./StakeholderReviewPanel";
 import { ExecutionReadinessPanel } from "./ExecutionReadinessPanel";
 import { RecalibrationLogPanel } from "./RecalibrationLogPanel";
+import { RecalibrationActionsPanel } from "./RecalibrationActionsPanel";
 import { ValidationWorkflowTracker } from "./ValidationWorkflowTracker";
 
 interface EpicImplementationValidatorProps {
@@ -489,7 +490,13 @@ export function EpicImplementationValidator({ epicId }: EpicImplementationValida
         </TabsContent>
 
         {/* Phase 3: Recalibration */}
-        <TabsContent value="recalibration">
+        <TabsContent value="recalibration" className="space-y-6">
+          <RecalibrationActionsPanel
+            epicId={epicId}
+            validationRunId={activeRun.id}
+            items={items}
+            onLogRecalibration={logRecalibration}
+          />
           <RecalibrationLogPanel entries={recalibrationLog} />
         </TabsContent>
 
