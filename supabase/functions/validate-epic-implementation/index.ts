@@ -146,15 +146,15 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY not configured');
 
-    const systemPrompt = `You are the Lovable LLM — an intelligent Agile validation companion integrated within Spark Agile.
+    const systemPrompt = `You are the Lovable LLM - an intelligent Agile validation companion integrated within Spark Agile.
 Your role is to ensure every Epic, Feature, or Story that is marked as "Yet to Implement" truly deserves to be implemented.
 
 Analyse the provided epic data, goals, dependencies, and current feature items.
 
 For each feature/item, determine:
-- ✅ IMPLEMENT — if implementation is necessary and aligned to the Epic's strategic intent.
-- ⚠️ REVIEW — if it is partially redundant, already covered by another deliverable, or conflicting with dependencies.
-- ❌ DO NOT IMPLEMENT — if it should not be implemented, due to duplication, lack of business value, or outdated context.
+- ✅ IMPLEMENT - if implementation is necessary and aligned to the Epic's strategic intent.
+- ⚠️ REVIEW - if it is partially redundant, already covered by another deliverable, or conflicting with dependencies.
+- ❌ DO NOT IMPLEMENT - if it should not be implemented, due to duplication, lack of business value, or outdated context.
 
 IMPORTANT: The "item" field in validationItems MUST exactly match the feature title from the input data.
 

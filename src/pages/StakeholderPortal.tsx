@@ -132,7 +132,7 @@ function SortableWidget({ widget, onToggleVisibility, projectId }: {
               {widgetInfo?.label || widget.widget_type}
             </CardTitle>
             <CardDescription className="text-muted-foreground/70">
-              Widget hidden — click eye icon to show
+              Widget hidden - click eye icon to show
             </CardDescription>
           </CardHeader>
         )}

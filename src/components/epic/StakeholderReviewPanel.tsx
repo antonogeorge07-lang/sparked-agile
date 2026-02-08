@@ -236,7 +236,7 @@ export function StakeholderReviewPanel({
                       />
                     ) : (
                       <span className="text-xs text-muted-foreground">
-                        {item.stakeholderNotes || '—'}
+                        {item.stakeholderNotes || '-'}
                       </span>
                     )}
                   </TableCell>
