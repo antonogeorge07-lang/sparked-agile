@@ -69,7 +69,7 @@ async function verifyJiraWebhook(
   }
 
   try {
-    // JIRA sends HMAC-SHA256 signature — verify it
+    // JIRA sends HMAC-SHA256 signature - verify it
     const expectedSignature = signature.startsWith('sha256=') 
       ? signature.substring(7) 
       : signature;

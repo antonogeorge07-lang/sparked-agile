@@ -127,7 +127,7 @@ export function ExecutionReadinessPanel({
           <div className="rounded-lg border-2 border-emerald-500/30 bg-emerald-500/5 p-4 text-center">
             <CheckCircle2 className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
             <p className="text-sm font-semibold text-emerald-600">
-              All readiness checks passed — Epic is ready for Sprint/PI commitment
+              All readiness checks passed - Epic is ready for Sprint/PI commitment
             </p>
           </div>
         )}

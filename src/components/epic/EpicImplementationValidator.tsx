@@ -156,7 +156,7 @@ export function EpicImplementationValidator({ epicId }: EpicImplementationValida
     readinessPercent
   );
 
-  // Pre-validation state — no runs exist
+  // Pre-validation state - no runs exist
   if (!isLoading && !isValidating && runs.length === 0) {
     return (
       <Card>
@@ -177,7 +177,7 @@ export function EpicImplementationValidator({ epicId }: EpicImplementationValida
           <div className="text-center py-8">
             <Sparkles className="h-12 w-12 mx-auto mb-4 text-primary/60" />
             <h3 className="text-lg font-semibold mb-2">
-              Yet to Implement — or Not to Implement?
+              Yet to Implement - or Not to Implement?
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
               Run AI validation to analyse all features against this Epic&apos;s strategic goals,
@@ -246,7 +246,7 @@ export function EpicImplementationValidator({ epicId }: EpicImplementationValida
       {runs.length > 1 && (
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <History className="h-4 w-4" />
-          <span>{runs.length} validation runs — showing latest from {new Date(activeRun.created_at).toLocaleDateString()}</span>
+          <span>{runs.length} validation runs - showing latest from {new Date(activeRun.created_at).toLocaleDateString()}</span>
         </div>
       )}
 

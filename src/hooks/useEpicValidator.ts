@@ -234,7 +234,7 @@ export function useEpicValidator(epicId?: string) {
       // Reload everything
       await loadRuns(eid);
       
-      toast.success('Epic implementation validation complete — results stored');
+      toast.success('Epic implementation validation complete - results stored');
       return data.validation;
     } catch (err: any) {
       const message = err?.message || 'Validation request failed';

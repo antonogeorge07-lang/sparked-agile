@@ -147,7 +147,7 @@ export function RecalibrationActionsPanel({
         <CardHeader>
           <CardTitle className="text-lg">Recalibration Actions</CardTitle>
           <CardDescription>
-            Trigger backlog changes based on validation findings — each action is logged for governance.
+            Trigger backlog changes based on validation findings - each action is logged for governance.
           </CardDescription>
         </CardHeader>
         <CardContent>

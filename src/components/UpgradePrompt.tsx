@@ -88,7 +88,7 @@ export function UpgradeBanner({ className }: UpgradeBannerProps) {
           <Clock className="h-5 w-5 text-muted-foreground" />
           <div>
             <p className="font-medium">More features coming soon</p>
-            <p className="text-sm text-muted-foreground">Sprint ceremonies, epic management, and team collaboration — launching in 30 days</p>
+            <p className="text-sm text-muted-foreground">Sprint ceremonies, epic management, and team collaboration - launching in 30 days</p>
           </div>
         </div>
       </div>
