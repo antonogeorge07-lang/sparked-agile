@@ -360,7 +360,7 @@
     },
     "socialProof": {
       "valueStatement": "Optimiza Tus Ceremonias Ágiles",
-      "valueDescription": "Planificación de sprint asistida por IA, resúmenes diarios y automatización de ceremonias—para que puedas enfocarte en construir grandes productos.",
+      "valueDescription": "Planificación de sprint asistida por IA, resúmenes diarios y automatización de ceremonias - para que puedas enfocarte en construir grandes productos.",
       "gdprReady": "Listo para GDPR",
       "dataEncrypted": "Datos Encriptados",
       "openFeedback": "Feedback Abierto",
@@ -390,7 +390,7 @@
     "trustSignals": {
       "badge": "Seguridad de Nivel Empresarial",
       "title": "Tus Datos Están Protegidos por Diseño",
-      "subtitle": "No solo promesas—estas son medidas de seguridad reales implementadas en la plataforma",
+      "subtitle": "No solo promesas - estas son medidas de seguridad reales implementadas en la plataforma",
       "features": {
         "encryption": "Encriptación AES-256",
         "encryptionDesc": "Todos los tokens encriptados en reposo",
@@ -414,7 +414,7 @@
       "problemTitle": "El Problema Que Viví",
       "problemDesc": "Después de años gestionando equipos ágiles, vi el mismo patrón: herramientas brillantes que creaban más trabajo, no menos. Los standups se convirtieron en teatro de estado.",
       "solutionTitle": "La Solución Que Construí",
-      "solutionDesc": "SAAI no es otra herramienta de gestión pretendiendo ser inteligente. Es una capa cognitiva que entiende el contexto ágil—conectando tu Jira, GitHub y Slack para mostrar lo que importa.",
+      "solutionDesc": "SAAI no es otra herramienta de gestión pretendiendo ser inteligente. Es una capa cognitiva que entiende el contexto ágil, conectando tu Jira, GitHub y Slack para mostrar lo que importa.",
       "philosophyTitle": "Filosofía",
       "philosophyQuote": "Inteligencia Activa, No Artificial Sino Genuina",
       "philosophyDesc": "La IA debe amplificar tu experiencia, no reemplazar tu juicio. Cada función está diseñada para devolverte tiempo.",

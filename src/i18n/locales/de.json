@@ -262,7 +262,7 @@
     "trustSignals": {
       "badge": "Enterprise-Sicherheit",
       "title": "Ihre Daten sind von Grund auf geschützt",
-      "subtitle": "Nicht nur Versprechen—das sind tatsächliche Sicherheitsmaßnahmen in der Plattform",
+      "subtitle": "Nicht nur Versprechen - das sind tatsächliche Sicherheitsmaßnahmen in der Plattform",
       "features": {
         "encryption": "AES-256-Verschlüsselung",
         "encryptionDesc": "Alle Tokens verschlüsselt gespeichert",
@@ -286,7 +286,7 @@
       "problemTitle": "Das Problem, das ich erlebt habe",
       "problemDesc": "Nach Jahren der Führung agiler Teams sah ich dasselbe Muster: brillante Tools, die mehr Arbeit schufen, nicht weniger. Standups wurden zu Status-Theater. Retros erzeugten Aktionspunkte, die verschwanden.",
       "solutionTitle": "Die Lösung, die ich gebaut habe",
-      "solutionDesc": "SAAI ist kein weiteres Projektmanagement-Tool, das vorgibt, intelligent zu sein. Es ist eine kognitive Schicht, die agilen Kontext versteht—verbindet Jira, GitHub und Slack, um das Wichtige zu zeigen, bevor Sie fragen.",
+      "solutionDesc": "SAAI ist kein weiteres Projektmanagement-Tool, das vorgibt, intelligent zu sein. Es ist eine kognitive Schicht, die agilen Kontext versteht, verbindet Jira, GitHub und Slack, um das Wichtige zu zeigen, bevor Sie fragen.",
       "philosophyTitle": "Philosophie",
       "philosophyQuote": "Aktive Intelligenz, Nicht Künstlich Sondern Echt",
       "philosophyDesc": "KI sollte Ihre Expertise verstärken, nicht Ihr Urteil ersetzen. Jede Funktion gibt Ihnen Zeit zurück, nicht ein weiteres Dashboard zum Prüfen.",
