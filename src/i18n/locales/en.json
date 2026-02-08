@@ -568,7 +568,7 @@
     },
     "socialProof": {
       "valueStatement": "Streamline Your Agile Ceremonies",
-      "valueDescription": "AI-assisted sprint planning, daily digests, and ceremony automation—so you can focus on building great products.",
+      "valueDescription": "AI-assisted sprint planning, daily digests, and ceremony automation - so you can focus on building great products.",
       "gdprReady": "GDPR Ready",
       "dataEncrypted": "Data Encrypted",
       "openFeedback": "Open Feedback",
@@ -623,7 +623,7 @@
     "trustSignals": {
       "badge": "Enterprise-Grade Security",
       "title": "Your Data is Protected by Design",
-      "subtitle": "Not just promises—these are actual security measures implemented in the platform",
+      "subtitle": "Not just promises - these are actual security measures implemented in the platform",
       "features": {
         "encryption": "AES-256 Encryption",
         "encryptionDesc": "All tokens encrypted at rest",
@@ -647,7 +647,7 @@
       "problemTitle": "The Problem I Lived",
       "problemDesc": "After years managing agile teams, I saw the same pattern: brilliant tools that created more work, not less. Stand-ups became status theater. Retros generated action items that vanished. Sprint planning felt like guesswork wrapped in process.",
       "solutionTitle": "The Solution I Built",
-      "solutionDesc": "SAAI isn't another project management tool pretending to be intelligent. It's a cognitive layer that understands agile context—connecting your Jira, GitHub, and Slack to surface what matters before you ask.",
+      "solutionDesc": "SAAI isn't another project management tool pretending to be intelligent. It's a cognitive layer that understands agile context, connecting your Jira, GitHub, and Slack to surface what matters before you ask.",
       "philosophyTitle": "Philosophy",
       "philosophyQuote": "Active Intelligence, Not Artificial But Genuine",
       "philosophyDesc": "AI should amplify your expertise, not replace your judgment. Every feature is designed to give you time back, not add another dashboard to check.",

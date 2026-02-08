@@ -262,7 +262,7 @@
     "trustSignals": {
       "badge": "企业级安全",
       "title": "您的数据受到设计保护",
-      "subtitle": "不只是承诺——这些是平台中实施的实际安全措施",
+      "subtitle": "不只是承诺，这些是平台中实施的实际安全措施",
       "features": {
         "encryption": "AES-256加密",
         "encryptionDesc": "所有令牌静态加密",
@@ -286,7 +286,7 @@
       "problemTitle": "我经历的问题",
       "problemDesc": "在管理敏捷团队多年后，我看到了同样的模式：出色的工具创造了更多的工作，而不是更少。站会变成了状态剧场。回顾生成的行动项目消失了。",
       "solutionTitle": "我构建的解决方案",
-      "solutionDesc": "SAAI不是另一个假装智能的项目管理工具。它是一个理解敏捷上下文的认知层——连接您的Jira、GitHub和Slack，在您询问之前显示重要内容。",
+      "solutionDesc": "SAAI不是另一个假装智能的项目管理工具。它是一个理解敏捷上下文的认知层，连接您的Jira、GitHub和Slack，在您询问之前显示重要内容。",
       "philosophyTitle": "理念",
       "philosophyQuote": "主动智能，不是人工的而是真实的",
       "philosophyDesc": "AI应该增强您的专业知识，而不是取代您的判断。每个功能都旨在让您节省时间，而不是增加另一个需要检查的仪表板。",

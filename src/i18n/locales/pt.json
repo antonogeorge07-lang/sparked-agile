@@ -262,7 +262,7 @@
     "trustSignals": {
       "badge": "Segurança Empresarial",
       "title": "Seus Dados São Protegidos por Design",
-      "subtitle": "Não apenas promessas—estas são medidas de segurança reais implementadas na plataforma",
+      "subtitle": "Não apenas promessas - estas são medidas de segurança reais implementadas na plataforma",
       "features": {
         "encryption": "Criptografia AES-256",
         "encryptionDesc": "Todos os tokens criptografados em repouso",
@@ -286,7 +286,7 @@
       "problemTitle": "O Problema Que Vivi",
       "problemDesc": "Após anos gerenciando equipes ágeis, vi o mesmo padrão: ferramentas brilhantes que criavam mais trabalho, não menos. Standups viraram teatro de status. Retros geravam ações que desapareciam.",
       "solutionTitle": "A Solução Que Construí",
-      "solutionDesc": "SAAI não é mais uma ferramenta de gestão fingindo ser inteligente. É uma camada cognitiva que entende o contexto ágil—conectando seu Jira, GitHub e Slack para mostrar o que importa antes de você perguntar.",
+      "solutionDesc": "SAAI não é mais uma ferramenta de gestão fingindo ser inteligente. É uma camada cognitiva que entende o contexto ágil, conectando seu Jira, GitHub e Slack para mostrar o que importa antes de você perguntar.",
       "philosophyTitle": "Filosofia",
       "philosophyQuote": "Inteligência Ativa, Não Artificial Mas Genuína",
       "philosophyDesc": "IA deve amplificar sua expertise, não substituir seu julgamento. Cada recurso foi projetado para devolver seu tempo, não adicionar mais um painel para verificar.",

@@ -305,7 +305,7 @@
     },
     "socialProof": {
       "valueStatement": "Simplifiez Vos Cérémonies Agiles",
-      "valueDescription": "Planification de sprint assistée par IA, résumés quotidiens et automatisation des cérémonies—pour que vous puissiez vous concentrer sur la création de superbes produits.",
+      "valueDescription": "Planification de sprint assistée par IA, résumés quotidiens et automatisation des cérémonies - pour que vous puissiez vous concentrer sur la création de superbes produits.",
       "gdprReady": "Conforme RGPD",
       "dataEncrypted": "Données Chiffrées",
       "openFeedback": "Feedback Ouvert",
@@ -335,7 +335,7 @@
     "trustSignals": {
       "badge": "Sécurité Entreprise",
       "title": "Vos Données Sont Protégées par Conception",
-      "subtitle": "Pas seulement des promesses—ce sont des mesures de sécurité réelles implémentées dans la plateforme",
+      "subtitle": "Pas seulement des promesses - ce sont des mesures de sécurité réelles implémentées dans la plateforme",
       "features": {
         "encryption": "Chiffrement AES-256",
         "encryptionDesc": "Tous les tokens chiffrés au repos",
@@ -359,7 +359,7 @@
       "problemTitle": "Le Problème Que J'ai Vécu",
       "problemDesc": "Après des années à gérer des équipes agiles, j'ai vu le même schéma: des outils brillants qui créaient plus de travail, pas moins. Les standups devenaient du théâtre de statut. Les rétros généraient des actions qui disparaissaient.",
       "solutionTitle": "La Solution Que J'ai Construite",
-      "solutionDesc": "SAAI n'est pas un autre outil de gestion prétendant être intelligent. C'est une couche cognitive qui comprend le contexte agile—connectant votre Jira, GitHub et Slack pour faire émerger ce qui compte avant que vous ne demandiez.",
+      "solutionDesc": "SAAI n'est pas un autre outil de gestion prétendant être intelligent. C'est une couche cognitive qui comprend le contexte agile, connectant votre Jira, GitHub et Slack pour faire émerger ce qui compte avant que vous ne demandiez.",
       "philosophyTitle": "Philosophie",
       "philosophyQuote": "Intelligence Active, Pas Artificielle Mais Authentique",
       "philosophyDesc": "L'IA devrait amplifier votre expertise, pas remplacer votre jugement. Chaque fonctionnalité est conçue pour vous rendre du temps, pas ajouter un autre tableau de bord à vérifier.",
