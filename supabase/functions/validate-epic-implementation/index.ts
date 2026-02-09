@@ -7,14 +7,37 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
+// In-memory rate limiter: max 10 validations per user per hour
+const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
+const RATE_LIMIT_MAX = 10;
+const RATE_LIMIT_WINDOW_MS = 3600000; // 1 hour
+
+function checkRateLimit(userId: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(userId);
+
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(userId, { count: 1, windowStart: now });
+    return true;
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+
+  entry.count++;
+  return true;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Authentication: validate JWT via getClaims()
     const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
+    if (!authHeader?.startsWith('Bearer ')) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -24,24 +47,42 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
     if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error('Supabase credentials not configured');
+      console.error('Supabase credentials not configured');
+      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
       global: { headers: { Authorization: authHeader } },
     });
 
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
-    if (userError || !user) {
-      return new Response(JSON.stringify({ error: 'Unauthorized: Invalid token' }), {
+    // Use getClaims() for efficient JWT verification
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await supabaseClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
+    const userId = claimsData.claims.sub as string;
+
+    // Rate limiting per user
+    if (!checkRateLimit(userId)) {
+      console.log(`Rate limit exceeded for user: ${userId}`);
+      return new Response(JSON.stringify({ error: 'Rate limit exceeded. Maximum 10 validations per hour.' }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Input validation
     const { epicId } = await req.json();
     if (!epicId) {
-      return new Response(JSON.stringify({ error: 'Missing epicId' }), {
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -49,15 +90,15 @@ serve(async (req) => {
 
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!uuidRegex.test(epicId)) {
-      return new Response(JSON.stringify({ error: 'Invalid epic ID format' }), {
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    console.log('Validating epic implementation:', epicId, 'by user:', user.id);
+    console.log('Validating epic implementation:', epicId, 'by user:', userId);
 
-    // Fetch epic data
+    // Fetch epic data using user context (RLS enforced - verifies access)
     const { data: epic, error: epicError } = await supabaseClient
       .from('epics')
       .select(`*, value_streams(id, name, description)`)
@@ -65,13 +106,14 @@ serve(async (req) => {
       .single();
 
     if (epicError || !epic) {
-      return new Response(JSON.stringify({ error: 'Epic not found or access denied' }), {
+      // Generic error to prevent enumeration
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Fetch features
+    // Fetch features using user context (RLS enforced)
     const { data: features, error: featuresError } = await supabaseClient
       .from('features')
       .select('*')
@@ -80,10 +122,13 @@ serve(async (req) => {
 
     if (featuresError) {
       console.error('Error fetching features:', featuresError);
-      throw new Error('Failed to fetch features');
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    // Fetch dependencies
+    // Fetch dependencies using user context (RLS enforced)
     const { data: dependencies, error: depsError } = await supabaseClient
       .from('epic_dependencies')
       .select(`*, depends_on:depends_on_epic_id(id, title, status)`)
@@ -91,7 +136,7 @@ serve(async (req) => {
 
     if (depsError) console.error('Error fetching dependencies:', depsError);
 
-    // Fetch milestones
+    // Fetch milestones using user context (RLS enforced)
     const { data: milestones, error: milestonesError } = await supabaseClient
       .from('epic_milestones')
       .select('*')
@@ -144,7 +189,13 @@ serve(async (req) => {
     };
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY not configured');
+    if (!LOVABLE_API_KEY) {
+      console.error('LOVABLE_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     const systemPrompt = `You are the Lovable LLM - an intelligent Agile validation companion integrated within Spark Agile.
 Your role is to ensure every Epic, Feature, or Story that is marked as "Yet to Implement" truly deserves to be implemented.
@@ -152,9 +203,9 @@ Your role is to ensure every Epic, Feature, or Story that is marked as "Yet to I
 Analyse the provided epic data, goals, dependencies, and current feature items.
 
 For each feature/item, determine:
-- ✅ IMPLEMENT - if implementation is necessary and aligned to the Epic's strategic intent.
-- ⚠️ REVIEW - if it is partially redundant, already covered by another deliverable, or conflicting with dependencies.
-- ❌ DO NOT IMPLEMENT - if it should not be implemented, due to duplication, lack of business value, or outdated context.
+- IMPLEMENT - if implementation is necessary and aligned to the Epic's strategic intent.
+- REVIEW - if it is partially redundant, already covered by another deliverable, or conflicting with dependencies.
+- DO NOT IMPLEMENT - if it should not be implemented, due to duplication, lack of business value, or outdated context.
 
 IMPORTANT: The "item" field in validationItems MUST exactly match the feature title from the input data.
 
@@ -218,7 +269,10 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
       }
       const errorText = await aiResponse.text();
       console.error('AI gateway error:', aiResponse.status, errorText);
-      throw new Error('AI processing failed');
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const aiData = await aiResponse.json();
@@ -230,14 +284,22 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
       parsedResult = JSON.parse(content);
     } catch (e) {
       console.error('Failed to parse AI response:', content);
-      throw new Error('Invalid AI response format');
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // ====== PERSIST VALIDATION RESULTS ======
-
-    // Use service role for writes to avoid RLS complexity during insert
+    // Use service role ONLY for writes (inserts/updates) - reads used user context above
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    if (!supabaseServiceKey) throw new Error('Service role key not configured');
+    if (!supabaseServiceKey) {
+      console.error('Service role key not configured');
+      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
     // 1. Create the validation run record
@@ -245,7 +307,7 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
       .from('epic_validation_runs')
       .insert({
         epic_id: epicId,
-        run_by: user.id,
+        run_by: userId,
         status: 'pending_review',
         ai_summary: parsedResult.epicSummary,
         verdict_alignment: parsedResult.verdict?.alignment,
@@ -261,7 +323,10 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
 
     if (runError) {
       console.error('Error creating validation run:', runError);
-      throw new Error('Failed to persist validation run');
+      return new Response(JSON.stringify({ error: 'Validation failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Validation run created:', validationRun.id);
@@ -269,7 +334,6 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
     // 2. Create per-item validation records and tag features
     const validationItems = parsedResult.validationItems || [];
     for (const item of validationItems) {
-      // Try to match to an actual feature
       const matchedFeature = featureMap.get(item.item?.toLowerCase()?.trim());
       
       const { error: itemError } = await supabaseAdmin
@@ -330,6 +394,14 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
       if (checkError) console.error('Error creating readiness check:', checkError);
     }
 
+    // 5. Audit log for service role operations
+    await supabaseAdmin.from('sensitive_data_access_log').insert({
+      user_id: userId,
+      table_accessed: 'epic_validation_runs',
+      access_type: 'service_role_write',
+      query_context: `Epic validation run created: ${validationRun.id} for epic: ${epicId}`,
+    });
+
     console.log('Validation workflow fully persisted for run:', validationRun.id);
 
     return new Response(
@@ -352,7 +424,7 @@ Be specific, data-driven, and actionable. Reference actual feature names from th
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error: 'Validation failed',
       }),
       {
         status: 500,
