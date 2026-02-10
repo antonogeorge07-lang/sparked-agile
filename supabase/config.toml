@@ -80,3 +80,6 @@ verify_jwt = false
 
 [functions.validate-epic-implementation]
 verify_jwt = false
+
+[functions.agent-debate]
+verify_jwt = false
