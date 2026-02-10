@@ -88,6 +88,156 @@ export type Database = {
           },
         ]
       }
+      agent_consensus_votes: {
+        Row: {
+          agent_name: string
+          conditions: string | null
+          created_at: string
+          id: string
+          session_id: string
+          vote: string
+          weight: number
+        }
+        Insert: {
+          agent_name: string
+          conditions?: string | null
+          created_at?: string
+          id?: string
+          session_id: string
+          vote: string
+          weight?: number
+        }
+        Update: {
+          agent_name?: string
+          conditions?: string | null
+          created_at?: string
+          id?: string
+          session_id?: string
+          vote?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_consensus_votes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "agent_debate_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_debate_responses: {
+        Row: {
+          agent_name: string
+          agent_role: string
+          agrees_with: Json | null
+          confidence_score: number | null
+          content: string
+          created_at: string
+          disagrees_with: Json | null
+          id: string
+          metadata: Json | null
+          reasoning: string | null
+          response_type: string
+          round_number: number
+          session_id: string
+        }
+        Insert: {
+          agent_name: string
+          agent_role: string
+          agrees_with?: Json | null
+          confidence_score?: number | null
+          content: string
+          created_at?: string
+          disagrees_with?: Json | null
+          id?: string
+          metadata?: Json | null
+          reasoning?: string | null
+          response_type: string
+          round_number?: number
+          session_id: string
+        }
+        Update: {
+          agent_name?: string
+          agent_role?: string
+          agrees_with?: Json | null
+          confidence_score?: number | null
+          content?: string
+          created_at?: string
+          disagrees_with?: Json | null
+          id?: string
+          metadata?: Json | null
+          reasoning?: string | null
+          response_type?: string
+          round_number?: number
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_debate_responses_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "agent_debate_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_debate_sessions: {
+        Row: {
+          completed_at: string | null
+          consensus_confidence: number | null
+          consensus_result: Json | null
+          context: Json | null
+          created_at: string
+          final_recommendation: string | null
+          id: string
+          initiated_by: string
+          project_id: string | null
+          status: string
+          topic: string
+          topic_type: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          consensus_confidence?: number | null
+          consensus_result?: Json | null
+          context?: Json | null
+          created_at?: string
+          final_recommendation?: string | null
+          id?: string
+          initiated_by: string
+          project_id?: string | null
+          status?: string
+          topic: string
+          topic_type: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          consensus_confidence?: number | null
+          consensus_result?: Json | null
+          context?: Json | null
+          created_at?: string
+          final_recommendation?: string | null
+          id?: string
+          initiated_by?: string
+          project_id?: string | null
+          status?: string
+          topic?: string
+          topic_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_debate_sessions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       aggregation_access_limits: {
         Row: {
           access_count: number
