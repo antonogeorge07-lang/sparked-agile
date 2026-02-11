@@ -116,6 +116,15 @@ const AGENTS: Record<string, AgentConfig[]> = {
   ],
 };
 
+const AGENT_TIMEOUT_MS = 25000; // 25s per agent call
+
+async function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms)
+  );
+  return Promise.race([promise, timeout]);
+}
+
 async function invokeAgent(
   agent: AgentConfig,
   round: number,
@@ -128,23 +137,27 @@ async function invokeAgent(
     ? `Provide your initial analysis of the following topic. Be specific and evidence-based.`
     : `Review the other agents' perspectives below and provide your critique or validation. Identify areas of agreement, disagreement, and blind spots. Then refine your position.\n\nPrevious agent responses:\n${previousResponses}`;
 
-  const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
-      messages: [
-        { role: "system", content: agent.systemPrompt },
-        {
-          role: "user",
-          content: `${roundInstructions}\n\nTopic: ${topic}\n\nContext:\n${context}\n\nProvide your analysis in this format:\n## Assessment\n[Your analysis]\n\n## Confidence Level\n[HIGH/MEDIUM/LOW with brief justification]\n\n## Key Concerns\n[Bullet points of concerns or validations]`
-        },
-      ],
+  const response = await withTimeout(
+    fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [
+          { role: "system", content: agent.systemPrompt },
+          {
+            role: "user",
+            content: `${roundInstructions}\n\nTopic: ${topic}\n\nContext:\n${context}\n\nProvide your analysis in this format:\n## Assessment\n[Your analysis]\n\n## Confidence Level\n[HIGH/MEDIUM/LOW with brief justification]\n\n## Key Concerns\n[Bullet points of concerns or validations]`
+          },
+        ],
+      }),
     }),
-  });
+    AGENT_TIMEOUT_MS,
+    `Agent ${agent.name} Round ${round}`
+  );
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -305,9 +318,11 @@ serve(async (req) => {
 
     const allResponses: Array<{ agent: string; content: string; round: number; confidence: number }> = [];
 
-    // ROUND 1: Initial proposals
-    for (const agent of agents) {
-      try {
+    const QUORUM_THRESHOLD = 2; // Minimum agents needed for valid consensus
+
+    // ROUND 1: Initial proposals (parallel execution)
+    const round1Results = await Promise.allSettled(
+      agents.map(async (agent) => {
         const result = await invokeAgent(
           agent, 1, topic, JSON.stringify(context || {}), '', LOVABLE_API_KEY
         );
@@ -323,24 +338,43 @@ serve(async (req) => {
           reasoning: `Initial ${agent.role} assessment`,
         });
 
-        allResponses.push({
+        return {
           agent: agent.name,
           content: result.content,
           round: 1,
           confidence: result.confidence,
-        });
-      } catch (err) {
-        console.error(`Round 1 agent ${agent.name} failed:`, err);
+        };
+      })
+    );
+
+    // Collect successful Round 1 responses
+    for (const result of round1Results) {
+      if (result.status === 'fulfilled') {
+        allResponses.push(result.value);
+      } else {
+        console.error('Round 1 agent failed:', result.reason?.message || result.reason);
       }
     }
 
-    // ROUND 2: Critique & validation
+    // Quorum check: abort if too few agents responded
+    if (allResponses.length < QUORUM_THRESHOLD) {
+      await supabase
+        .from('agent_debate_sessions')
+        .update({ status: 'failed', completed_at: new Date().toISOString() })
+        .eq('id', session.id);
+      throw new Error(`Quorum not met: only ${allResponses.length}/${agents.length} agents responded (need ${QUORUM_THRESHOLD})`);
+    }
+
+    // ROUND 2: Critique & validation (parallel, only for agents that responded in R1)
     const round1Summary = allResponses
       .map(r => `**${r.agent}:** ${r.content}`)
       .join('\n\n');
 
-    for (const agent of agents) {
-      try {
+    const round1AgentNames = new Set(allResponses.map(r => r.agent));
+    const round2Agents = agents.filter(a => round1AgentNames.has(a.name));
+
+    const round2Results = await Promise.allSettled(
+      round2Agents.map(async (agent) => {
         const result = await invokeAgent(
           agent, 2, topic, JSON.stringify(context || {}), round1Summary, LOVABLE_API_KEY
         );
@@ -363,17 +397,23 @@ serve(async (req) => {
           confidence_score: result.confidence,
           agrees_with: agrees,
           disagrees_with: disagrees,
-          reasoning: `Critique after reviewing ${agents.length - 1} peer analyses`,
+          reasoning: `Critique after reviewing ${round2Agents.length - 1} peer analyses`,
         });
 
-        allResponses.push({
+        return {
           agent: agent.name,
           content: result.content,
           round: 2,
           confidence: result.confidence,
-        });
-      } catch (err) {
-        console.error(`Round 2 agent ${agent.name} failed:`, err);
+        };
+      })
+    );
+
+    for (const result of round2Results) {
+      if (result.status === 'fulfilled') {
+        allResponses.push(result.value);
+      } else {
+        console.error('Round 2 agent failed:', result.reason?.message || result.reason);
       }
     }
 
@@ -383,7 +423,11 @@ serve(async (req) => {
       .update({ status: 'voting' })
       .eq('id', session.id);
 
-    const consensus = await generateConsensus(agents, allResponses, topic, LOVABLE_API_KEY);
+    const consensus = await withTimeout(
+      generateConsensus(agents, allResponses, topic, LOVABLE_API_KEY),
+      30000,
+      'Consensus generation'
+    );
 
     // Record votes
     for (const vote of consensus.votes) {
