@@ -4992,48 +4992,36 @@ export type Database = {
       user_github_tokens_safe: {
         Row: {
           created_at: string | null
-          github_username: string | null
           has_refresh_token: boolean | null
           has_token: boolean | null
-          id: string | null
           is_valid: boolean | null
           last_validated_at: string | null
           oauth_provider: string | null
-          scopes: string[] | null
           token_expires_at: string | null
           updated_at: string | null
           user_id: string | null
-          validation_error: string | null
         }
         Insert: {
           created_at?: string | null
-          github_username?: string | null
           has_refresh_token?: never
           has_token?: never
-          id?: string | null
           is_valid?: boolean | null
           last_validated_at?: string | null
           oauth_provider?: string | null
-          scopes?: string[] | null
           token_expires_at?: string | null
           updated_at?: string | null
           user_id?: string | null
-          validation_error?: string | null
         }
         Update: {
           created_at?: string | null
-          github_username?: string | null
           has_refresh_token?: never
           has_token?: never
-          id?: string | null
           is_valid?: boolean | null
           last_validated_at?: string | null
           oauth_provider?: string | null
-          scopes?: string[] | null
           token_expires_at?: string | null
           updated_at?: string | null
           user_id?: string | null
-          validation_error?: string | null
         }
         Relationships: []
       }
