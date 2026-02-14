@@ -24,13 +24,17 @@ import { EpicImpactTracking } from "@/components/epic/EpicImpactTracking";
 import { EpicROIDashboard } from "@/components/epic/EpicROIDashboard";
 import { EpicLessonsLearned } from "@/components/epic/EpicLessonsLearned";
 import { EpicImplementationValidator } from "@/components/epic/EpicImplementationValidator";
+import { EditEpicDialog } from "@/components/epic/EditEpicDialog";
+import { EpicActions } from "@/components/epic/EpicActions";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
   const [epic, setEpic] = useState<any>(null);
   const [features, setFeatures] = useState<any[]>([]);
   const [stakeholders, setStakeholders] = useState<any[]>([]);
+  const [valueStreams, setValueStreams] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -93,6 +97,15 @@ export default function EpicDetail() {
 
       if (stakeholdersError) throw stakeholdersError;
       setStakeholders(stakeholdersData || []);
+
+      // Load value streams for edit dialog
+      if (epicData?.value_streams?.project_id) {
+        const { data: vsData } = await supabase
+          .from('value_streams')
+          .select('*')
+          .eq('project_id', epicData.value_streams.project_id);
+        setValueStreams(vsData || []);
+      }
 
     } catch (error: any) {
       console.error('Error loading epic details:', error);
@@ -210,10 +223,13 @@ export default function EpicDetail() {
                   {epic.value_streams?.name}
                 </p>
               </div>
-              <Button>
-                <Edit className="mr-2 h-4 w-4" />
-                Edit Epic
-              </Button>
+              <div className="flex gap-2">
+                <Button onClick={() => setIsEditOpen(true)}>
+                  <Edit className="mr-2 h-4 w-4" />
+                  Edit Epic
+                </Button>
+                <EpicActions epic={epic} onEdit={() => setIsEditOpen(true)} onUpdate={loadEpicDetails} />
+              </div>
             </div>
 
             {/* Quick Stats */}
@@ -477,6 +493,17 @@ export default function EpicDetail() {
           </Tabs>
         </div>
       </div>
+
+      <EditEpicDialog
+        open={isEditOpen}
+        onOpenChange={setIsEditOpen}
+        epic={epic}
+        valueStreams={valueStreams}
+        onSuccess={() => {
+          loadEpicDetails();
+          toast({ title: "Success", description: "Epic updated successfully" });
+        }}
+      />
     </>
   );
 }

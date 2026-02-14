@@ -20,6 +20,7 @@ export interface NativeBacklogItem {
   project_id: string;
   sprint_id: string | null;
   parent_id: string | null;
+  epic_id: string | null;
   item_type: 'epic' | 'story' | 'task' | 'bug' | 'subtask';
   title: string;
   description: string | null;

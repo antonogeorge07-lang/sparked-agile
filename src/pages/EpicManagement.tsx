@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
 import { EpicTimeline } from "@/components/epic/EpicTimeline";
+import { EpicGanttChart } from "@/components/epic/EpicGanttChart";
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -220,7 +221,7 @@ export default function EpicManagement() {
                 </SelectContent>
               </Select>
 
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+               <Select value={selectedStatus} onValueChange={setSelectedStatus}>
                 <SelectTrigger>
                   <SelectValue placeholder="All Statuses" />
                 </SelectTrigger>
@@ -230,6 +231,7 @@ export default function EpicManagement() {
                   <SelectItem value="planning">Planning</SelectItem>
                   <SelectItem value="in_progress">In Progress</SelectItem>
                   <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="archived">Archived</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -286,6 +288,7 @@ export default function EpicManagement() {
               <TabsList>
                 <TabsTrigger value="board">Board View</TabsTrigger>
                 <TabsTrigger value="timeline">Timeline View</TabsTrigger>
+                <TabsTrigger value="gantt">Gantt Chart</TabsTrigger>
               </TabsList>
 
               <TabsContent value="board">
@@ -358,6 +361,10 @@ export default function EpicManagement() {
 
               <TabsContent value="timeline">
                 <EpicTimeline projectId={selectedProject} />
+              </TabsContent>
+
+              <TabsContent value="gantt">
+                <EpicGanttChart projectId={selectedProject!} />
               </TabsContent>
             </Tabs>
           ) : (
