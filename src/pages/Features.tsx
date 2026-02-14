@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { BackButton } from "@/components/BackButton";
 import type { ElementType } from "react";
 import { 
   Clock, MessageSquareOff, BarChart3, Brain, Users, Target, 
@@ -96,19 +97,22 @@ export default function Features() {
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <nav className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
-                <OptimizedImage 
-                  src={saaiLogo} 
-                  alt="SAAI" 
-                  className="h-7 w-7 object-contain"
-                  priority={true}
-                />
-              </div>
-              <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                SAAI
-              </span>
-            </Link>
+            <div className="flex items-center gap-2">
+              <BackButton label={t('common.back', 'Back')} fallbackPath="/" variant="ghost" />
+              <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
+                  <OptimizedImage 
+                    src={saaiLogo} 
+                    alt="SAAI" 
+                    className="h-7 w-7 object-contain"
+                    priority={true}
+                  />
+                </div>
+                <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                  SAAI
+                </span>
+              </Link>
+            </div>
             <div className="flex items-center gap-3">
               <LanguageSwitcher />
               <Button asChild size="sm">
