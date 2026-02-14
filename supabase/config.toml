@@ -83,3 +83,6 @@ verify_jwt = false
 
 [functions.agent-debate]
 verify_jwt = false
+
+[functions.create-google-calendar-event]
+verify_jwt = true
