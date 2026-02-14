@@ -1,15 +1,26 @@
+import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield } from "lucide-react";
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-12 max-w-4xl">
-        <BackButton fallbackPath="/" className="mb-4" />
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-4xl">Privacy Policy</CardTitle>
+      <Navigation />
+      <main className="container mx-auto px-4 py-12 mt-16 max-w-4xl">
+        <BackButton fallbackPath="/" className="mb-6" />
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shadow-lg">
+            <Shield className="w-6 h-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-4xl font-bold">Privacy Policy</h1>
             <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+          </div>
+        </div>
+        <Card className="shadow-card border-primary/10">
+          <CardHeader>
+            <CardTitle className="text-2xl">Data Protection & Privacy</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-slate dark:prose-invert max-w-none">
             <section className="mb-8">

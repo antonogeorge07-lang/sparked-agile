@@ -1,3 +1,4 @@
+import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +9,6 @@ import saaiLogo from "@/assets/saai-logo-optimized.webp";
 import { 
   Sparkles, 
   Target, 
-  Users, 
   Zap, 
   ArrowRight,
   Calendar,
@@ -18,12 +18,13 @@ import {
   Shield,
   Brain,
   LayoutDashboard,
-  ListTodo,
-  BarChart3,
-  Clock,
   Globe,
   Lock,
-  Cpu
+  Cpu,
+  Users,
+  BarChart3,
+  Presentation,
+  Bot
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -35,7 +36,7 @@ export default function About() {
     {
       icon: LayoutDashboard,
       title: "Native PM Ecosystem",
-      description: "Full Kanban boards, Sprint management, and Backlog tracking built-in"
+      description: "Full Kanban boards, Sprint management, Backlog tracking, and Task management built-in"
     },
     {
       icon: Brain,
@@ -43,39 +44,62 @@ export default function About() {
       description: "User story generation, story point estimation, blocker detection, sprint forecasting"
     },
     {
-      icon: Sparkles,
+      icon: Bot,
       title: "Multi-Agent AI System",
-      description: "Omair (support), AI Co-Pilot (intelligence), and Specialist agents for retros, sprints, and digests"
+      description: "Omair (support), AI Co-Pilot (intelligence), Multi-Agent Debate, and Specialist agents for retros, sprints, and digests"
+    },
+    {
+      icon: Calendar,
+      title: "Sprint Ceremonies",
+      description: "Full standup, retrospective, sprint review, and planning workflows with AI summaries"
+    },
+    {
+      icon: GitBranch,
+      title: "Epic Lifecycle Management",
+      description: "ROI tracking, dependency visualization, milestone management, and closure workflows"
+    },
+    {
+      icon: BarChart3,
+      title: "Advanced Flow Metrics",
+      description: "Velocity trends, cycle time analytics, throughput tracking, and commitment accuracy"
+    },
+    {
+      icon: Presentation,
+      title: "Stakeholder Portal",
+      description: "Executive dashboards, digest subscriptions, approval workflows, and stakeholder reviews"
+    },
+    {
+      icon: Users,
+      title: "Real-time Collaboration",
+      description: "Live presence indicators, team management, and workspace-based project organisation"
     },
     {
       icon: Shield,
       title: "Enterprise Security",
-      description: "196+ RLS policies, AES-256-GCM encryption, GDPR compliance"
+      description: "196+ RLS policies, AES-256-GCM encryption, GDPR compliance, and immutable audit logs"
     },
     {
       icon: Globe,
       title: "9-Language Support",
-      description: "EN, ES, FR, DE, PT, ZH, JA, AR, KO - fully localized interface"
+      description: "EN, ES, FR, DE, PT, ZH, JA, AR, KO with full RTL support for Arabic"
     },
     {
       icon: Lock,
       title: "Role-Based Access",
       description: "Only allocated members can see project data. Admin approval required for new profiles"
+    },
+    {
+      icon: Sparkles,
+      title: "5 Integrations",
+      description: "Jira, GitHub, Microsoft Outlook, Microsoft Teams, and Slack — connect the tools you already use"
     }
-  ];
-
-  const comingSoonFeatures = [
-    { title: "Sprint Ceremonies", description: "Standups, retrospectives, and planning sessions" },
-    { title: "AI Standup Summaries", description: "Automated daily updates from your team" },
-    { title: "Epic Management", description: "ROI tracking and dependency visualization" },
-    { title: "Real-time Collaboration", description: "Live presence and co-editing" },
-    { title: "Advanced Flow Metrics", description: "Velocity trends and cycle time analytics" },
-    { title: "Stakeholder Portal", description: "Executive dashboards and digest subscriptions" }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
-      <main className="container mx-auto px-4 py-12 max-w-4xl">
+      <Navigation />
+
+      <main className="container mx-auto px-4 py-12 mt-16 max-w-4xl">
         <BackButton fallbackPath="/" className="mb-6" />
         
         {/* Hero Section */}
@@ -98,17 +122,17 @@ export default function About() {
               Spark-Agile Active Intelligence
             </p>
             <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto">
-              Your AI Chief of Staff: the Command Center for Remote Teams
+              Your AI Chief of Staff: the Command Centre for Remote Teams
             </p>
           </div>
         </ScrollReveal>
 
         {/* Founder Story */}
         <ScrollReveal delay={0.1}>
-          <Card className="mb-8 shadow-card overflow-hidden">
+          <Card className="mb-8 shadow-card overflow-hidden border-primary/10">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center shadow-lg">
                   <Sparkles className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
@@ -117,15 +141,15 @@ export default function About() {
                 </div>
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
-                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
                   SAAI was born from a simple frustration: too many tools, too little context. As a project manager 
                   juggling Jira, GitHub, Slack, and Outlook, I spent more time switching tabs than actually leading my team.
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  We built SAAI as the "missing cognitive layer", an AI Chief of Staff that understands context across 
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+                  We built SAAI as the "missing cognitive layer" — an AI Chief of Staff that understands context across 
                   all your tools and delivers what matters in 5 minutes. No more tool chaos. No more missed updates.
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                   Our philosophy is "Active Intelligence": AI that empowers teams rather than replacing them. 
                   Every feature is designed to give you clarity, focus, and the confidence to lead.
                 </p>
@@ -136,44 +160,44 @@ export default function About() {
 
         {/* Vision & Values */}
         <ScrollReveal delay={0.1}>
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <Card className="shadow-card hover:shadow-lg transition-shadow">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8">
+            <Card className="shadow-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4 shadow-lg">
                     <Target className="h-6 w-6 text-primary-foreground" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Mission</h3>
                   <p className="text-sm text-muted-foreground">
-                    Unify context from all your tools into a single AI-powered command center
+                    Unify context from all your tools into a single AI-powered command centre
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card hover:shadow-lg transition-shadow">
+            <Card className="shadow-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4 shadow-lg">
                     <Cpu className="h-6 w-6 text-primary-foreground" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Architecture</h3>
                   <p className="text-sm text-muted-foreground">
-                    Multi-agent AI system with specialized agents for different project needs
+                    Multi-agent AI system with specialised agents for different project needs
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card hover:shadow-lg transition-shadow">
+            <Card className="shadow-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4 shadow-lg">
                     <Zap className="h-6 w-6 text-primary-foreground" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Vision</h3>
                   <p className="text-sm text-muted-foreground">
-                    Get your 5-minute team pulse, no meeting required
+                    Get your 5-minute team pulse — no meeting required
                   </p>
                 </div>
               </CardContent>
@@ -181,47 +205,24 @@ export default function About() {
           </div>
         </ScrollReveal>
 
-        {/* Current Features */}
+        {/* Platform Capabilities */}
         <ScrollReveal delay={0.1}>
-          <Card className="mb-8 shadow-card">
+          <Card className="mb-8 shadow-card border-primary/10">
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-6">
-                <Badge className="bg-tier-free text-white">Available Now</Badge>
+                <Badge className="bg-tier-free text-white">Live Platform</Badge>
                 <h2 className="text-2xl font-bold">Platform Capabilities</h2>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {currentFeatures.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                       <feature.icon className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <h4 className="font-medium text-sm">{feature.title}</h4>
-                      <p className="text-xs text-muted-foreground">{feature.description}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{feature.description}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </ScrollReveal>
-
-        {/* Coming Soon Features */}
-        <ScrollReveal delay={0.1}>
-          <Card className="mb-8 shadow-card border-dashed">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-2 mb-6">
-                <Badge variant="outline" className="gap-1">
-                  <Clock className="h-3 w-3" />
-                  Coming in 30 Days
-                </Badge>
-                <h2 className="text-2xl font-bold">Roadmap</h2>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {comingSoonFeatures.map((feature, index) => (
-                  <div key={index} className="p-3 rounded-lg border border-dashed border-muted-foreground/20">
-                    <h4 className="font-medium text-sm mb-1">{feature.title}</h4>
-                    <p className="text-xs text-muted-foreground">{feature.description}</p>
                   </div>
                 ))}
               </div>
@@ -236,53 +237,23 @@ export default function About() {
             <p className="text-muted-foreground mb-6">
               Connect with the tools your team already uses
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <Card className="shadow-card hover:shadow-lg transition-all hover:-translate-y-1">
-                <CardContent className="pt-4 pb-4 flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                    <svg className="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M11.571 11.429H0v1.143h11.571zM24 11.429H12.429v1.143H24zM11.571 0H0v1.143h11.571zM24 0H12.429v1.143H24zM7.143 3.429H0v1.142h7.143zM24 3.429h-7.143v1.142H24zM4.857 6.857H0V8h4.857zM24 6.857h-4.857V8H24zM0 17.143h4.857v1.143H0zM24 17.143h-4.857v1.143H24zM0 20.571h7.143v1.143H0zM24 20.571h-7.143v1.143H24zM0 14.286h11.571v1.143H0zM24 14.286H12.429v1.143H24z"/>
-                    </svg>
-                  </div>
-                  <span className="text-sm font-medium">Jira</span>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-card hover:shadow-lg transition-all hover:-translate-y-1">
-                <CardContent className="pt-4 pb-4 flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-lg bg-gray-500/10 flex items-center justify-center">
-                    <GitBranch className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                  </div>
-                  <span className="text-sm font-medium">GitHub</span>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-card hover:shadow-lg transition-all hover:-translate-y-1">
-                <CardContent className="pt-4 pb-4 flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                    <MessageSquare className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <span className="text-sm font-medium">Teams</span>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-card hover:shadow-lg transition-all hover:-translate-y-1">
-                <CardContent className="pt-4 pb-4 flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-lg bg-blue-400/10 flex items-center justify-center">
-                    <Calendar className="h-6 w-6 text-blue-500" />
-                  </div>
-                  <span className="text-sm font-medium">Outlook</span>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-card hover:shadow-lg transition-all hover:-translate-y-1">
-                <CardContent className="pt-4 pb-4 flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-                    <Mail className="h-6 w-6 text-green-600" />
-                  </div>
-                  <span className="text-sm font-medium">Slack</span>
-                </CardContent>
-              </Card>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
+              {[
+                { name: "Jira", icon: <svg className="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 11.429H0v1.143h11.571zM24 11.429H12.429v1.143H24zM11.571 0H0v1.143h11.571zM24 0H12.429v1.143H24zM7.143 3.429H0v1.142h7.143zM24 3.429h-7.143v1.142H24zM4.857 6.857H0V8h4.857zM24 6.857h-4.857V8H24zM0 17.143h4.857v1.143H0zM24 17.143h-4.857v1.143H24zM0 20.571h7.143v1.143H0zM24 20.571h-7.143v1.143H24zM0 14.286h11.571v1.143H0zM24 14.286H12.429v1.143H24z"/></svg>, color: "bg-blue-500/10" },
+                { name: "GitHub", icon: <GitBranch className="h-6 w-6 text-gray-700 dark:text-gray-300" />, color: "bg-gray-500/10" },
+                { name: "Teams", icon: <MessageSquare className="h-6 w-6 text-purple-600" />, color: "bg-purple-500/10" },
+                { name: "Outlook", icon: <Calendar className="h-6 w-6 text-blue-500" />, color: "bg-blue-400/10" },
+                { name: "Slack", icon: <Mail className="h-6 w-6 text-green-600" />, color: "bg-green-500/10" },
+              ].map((integration) => (
+                <Card key={integration.name} className="shadow-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
+                  <CardContent className="pt-4 pb-4 flex flex-col items-center gap-2">
+                    <div className={`w-10 h-10 rounded-lg ${integration.color} flex items-center justify-center`}>
+                      {integration.icon}
+                    </div>
+                    <span className="text-sm font-medium">{integration.name}</span>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </ScrollReveal>
@@ -290,19 +261,19 @@ export default function About() {
         {/* Micro-Studio Positioning */}
         <ScrollReveal delay={0.1}>
           <Card className="shadow-card bg-gradient-primary text-primary-foreground mb-10">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 pb-6">
               <div className="text-center">
                 <Badge variant="secondary" className="mb-4">
                   Micro-Studio
                 </Badge>
                 <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
-                <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6">
+                <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6 text-base md:text-lg">
                   SAAI is a research-driven micro-studio project by Antono George. Every feature is built 
                   with intention, every interaction crafted with care. We're here to create the most 
                   purposeful AI-powered tools for teams that value quality, clarity, and progress.
                 </p>
                 <p className="text-primary-foreground/80 max-w-xl mx-auto text-sm">
-                  This is the first step toward a new era of engagement, one where AI empowers people, 
+                  This is the first step toward a new era of engagement — one where AI empowers people, 
                   rather than replacing them.
                 </p>
               </div>

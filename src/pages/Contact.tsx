@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MessageSquare, Send, AlertCircle } from "lucide-react";
+import { Mail, MessageSquare, Send, AlertCircle, Clock, Globe } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -43,7 +43,6 @@ export default function Contact() {
     e.preventDefault();
     setErrors({});
 
-    // Validate input
     const result = contactSchema.safeParse({ name, email, subject, message });
     
     if (!result.success) {
@@ -105,17 +104,20 @@ export default function Contact() {
         <div className="max-w-4xl mx-auto">
           <BackButton className="mb-6" />
           <div className="text-center mb-12">
+            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Mail className="h-8 w-8 text-primary" />
+            </div>
             <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
             <p className="text-xl text-muted-foreground">
               Have questions? We'd love to hear from you.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <Card className="border-primary/10 shadow-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5" />
+                  <MessageSquare className="h-5 w-5 text-primary" />
                   Send us a Message
                 </CardTitle>
                 <CardDescription>
@@ -221,47 +223,50 @@ export default function Contact() {
               </CardContent>
             </Card>
 
-            <div className="space-y-6">
-              <Card>
+            <div className="space-y-4 md:space-y-6">
+              <Card className="border-primary/10 shadow-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Mail className="h-5 w-5" />
+                    <Globe className="h-5 w-5 text-primary" />
                     Direct Contact
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold mb-1">General Inquiries</h3>
-                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline">
+                  <div className="p-3 rounded-lg bg-muted/30">
+                    <h3 className="font-semibold mb-1 text-sm">General Inquiries</h3>
+                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline text-sm">
                       Antono.George1@outlook.com
                     </a>
                   </div>
                   
-                  <div>
-                    <h3 className="font-semibold mb-1">Sales</h3>
-                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline">
+                  <div className="p-3 rounded-lg bg-muted/30">
+                    <h3 className="font-semibold mb-1 text-sm">Sales</h3>
+                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline text-sm">
                       Antono.George1@outlook.com
                     </a>
                   </div>
                   
-                  <div>
-                    <h3 className="font-semibold mb-1">Support</h3>
-                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline">
+                  <div className="p-3 rounded-lg bg-muted/30">
+                    <h3 className="font-semibold mb-1 text-sm">Support</h3>
+                    <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline text-sm">
                       Antono.George1@outlook.com
                     </a>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="border-primary/10 shadow-card">
                 <CardHeader>
-                  <CardTitle>Business Hours</CardTitle>
+                  <CardTitle className="flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-primary" />
+                    Business Hours
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Monday - Friday: 9:00 AM - 6:00 PM EST
+                  <p className="text-muted-foreground text-sm">
+                    Monday – Friday: 9:00 AM – 6:00 PM EST
                   </p>
-                  <p className="text-muted-foreground mt-2">
+                  <p className="text-muted-foreground mt-2 text-sm">
                     We typically respond within 24 hours during business days.
                   </p>
                 </CardContent>
