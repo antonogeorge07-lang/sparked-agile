@@ -18,8 +18,7 @@
   const freeFeatures = [
     { name: "Native Kanban & Sprint Board", icon: Zap },
     { name: "AI Co-Pilot (Gemini-powered)", icon: Sparkles },
-    { name: "Google Calendar Sync", icon: Zap },
-    { name: "Google Sign-In", icon: Zap },
+    { name: "Google Integration (Sign-In + Calendar)", icon: Zap },
     { name: "Sprint Ceremonies", icon: Users },
     { name: "AI Standup Summaries", icon: Sparkles },
     { name: "Epic Management & Gantt Charts", icon: Rocket },
