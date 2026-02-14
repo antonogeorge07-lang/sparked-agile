@@ -366,98 +366,68 @@
   },
   "features": {
     "hero": {
-      "title": "我们解决的问题",
-      "subtitle": "每个功能都是为了消除您每天面临的真实痛点。看看SAAI如何改变您的工作流程。"
+      "title": "每个功能都解决一个真实问题",
+      "subtitle": "SAAI围绕拖慢团队的痛点而构建。了解每个功能如何映射到您今天面临的问题。"
     },
     "painPoints": {
-      "meetingChaos": {
-        "title": "消除状态会议混乱",
-        "description": "不再需要30分钟的站会，一半团队心不在焉。获取异步更新。",
+      "scatteredTools": {
+        "title": "工具分散，零可见性",
+        "description": "在Jira、Trello、电子表格和Slack之间来回切换浪费时间并破坏上下文。SAAI为您提供一个原生生态系统。",
         "features": {
-          "aiStandup": {
-            "title": "AI站会摘要",
-            "description": "自动聚合来自您工具的更新，生成简洁的每日摘要，无需开会。"
-          },
-          "asyncUpdates": {
-            "title": "异步团队更新",
-            "description": "团队成员按自己的时间表提交更新。AI编译并突出重要内容。"
-          }
+          "nativeBoard": { "title": "原生看板和冲刺板", "description": "内置看板、冲刺和待办事项板，支持拖放、WIP限制和泳道 - 无需外部工具。" },
+          "epicLifecycle": { "title": "史诗生命周期管理", "description": "完整的史诗跟踪，包括甘特图、里程碑、燃尽分析、ROI仪表板和关闭工作流。" },
+          "commandCentre": { "title": "项目指挥中心", "description": "统一仪表板，包含实时任务阶段、风险登记、经验教训和AI驱动的项目洞察。" }
         }
       },
-      "progressTracking": {
-        "title": "不再丢失进度跟踪",
-        "description": "分散的工具意味着分散的洞察。在一个地方查看所有内容。",
+      "meetingChaos": {
+        "title": "会议混乱与浪费的仪式",
+        "description": "拖延的站会、毫无结果的回顾和无人准备的冲刺评审。SAAI自动化繁琐工作。",
         "features": {
-          "commandCentre": {
-            "title": "项目指挥中心",
-            "description": "统一仪表板一目了然地显示任务、阻塞、速度和健康评分。"
-          },
-          "epicTracking": {
-            "title": "史诗和特性跟踪",
-            "description": "将大型计划分解为可管理的部分，具有依赖关系映射和燃尽图。"
-          }
+          "aiStandup": { "title": "AI站会摘要", "description": "Gemini驱动的摘要，自动从异步更新中捕获阻碍、进展和行动项。" },
+          "ceremonies": { "title": "冲刺仪式套件", "description": "冲刺规划、评审协调和回顾洞察的专用工具 - 全部AI辅助。" },
+          "googleCalendar": { "title": "Google日历同步", "description": "自动将仪式日程推送到Google日历，支持参与者管理和智能提醒。" }
         }
       },
       "manualReporting": {
-        "title": "结束手动报告工作",
-        "description": "停止花费数小时编写状态报告。让AI来完成繁重的工作。",
+        "title": "手动报告与状态更新",
+        "description": "花数小时编写发送时已过时的报告。SAAI在几秒内生成它们。",
         "features": {
-          "aiDigest": {
-            "title": "AI每日摘要",
-            "description": "接收自动化的每日摘要，了解完成的内容、阻塞的内容和需要关注的内容。"
-          },
-          "autoMetrics": {
-            "title": "自动生成指标",
-            "description": "从您的实际工作中自动计算速度、周期时间和吞吐量。"
-          }
+          "executiveDigest": { "title": "执行摘要", "description": "AI生成的每日和每周摘要，涵盖冲刺健康、风险、成果和建议 - 自动交付。" },
+          "advancedAnalytics": { "title": "高级分析", "description": "速度趋势、承诺交付图表、工作流执行指标和流量分析 - 全部自动计算。" },
+          "retroInsights": { "title": "回顾洞察", "description": "AI分析回顾反馈，发现模式，生成行动项，并跟踪随时间的改进。" }
         }
       },
-      "contextSwitching": {
-        "title": "减少上下文切换",
-        "description": "在Jira、GitHub、Slack和电子邮件之间跳转会扼杀生产力。",
+      "aiBoltOn": {
+        "title": "AI是附加的，而非内置的",
+        "description": "大多数PM工具将AI视为事后补充。SAAI的AI副驾驶融入每个工作流。",
         "features": {
-          "unifiedView": {
-            "title": "统一工作视图",
-            "description": "将您所有的任务、PR、消息和更新聚合在一个智能界面中。"
-          },
-          "integrations": {
-            "title": "深度集成",
-            "description": "连接GitHub、Jira、Slack和Outlook。SAAI成为您的唯一真实来源。"
-          }
+          "aiCopilot": { "title": "AI副驾驶（Gemini驱动）", "description": "用户故事生成、点数估算、阻碍检测和冲刺预测 - 直接在您的看板中。" },
+          "multiAgent": { "title": "多智能体AI辩论", "description": "多个AI代理就冲刺范围、技术决策和风险缓解进行权衡辩论 - 然后达成共识。" },
+          "backlogHealth": { "title": "待办事项健康分析", "description": "AI扫描您的待办事项，查找过时项目、缺失的验收标准和优先级错位。" }
         }
       },
       "stakeholderComms": {
-        "title": "简化利益相关者沟通",
-        "description": "高管想要更新，不是借口。给他们自助洞察。",
+        "title": "利益相关者被蒙在鼓里",
+        "description": "高管问'我们进展如何？'，团队手忙脚乱地做演示文稿。SAAI自动通知每个人。",
         "features": {
-          "portal": {
-            "title": "利益相关者门户",
-            "description": "对高管友好的仪表板，具有ROI跟踪、里程碑进度和可定制的小部件。"
-          },
-          "approvals": {
-            "title": "审批工作流",
-            "description": "通过适当的审批链路由预算变更、范围调整和史诗关闭。"
-          }
+          "portal": { "title": "利益相关者门户", "description": "为利益相关者提供的专用视图，包含进度仪表板、审批工作流和摘要订阅。" },
+          "approvals": { "title": "审批工作流", "description": "结构化审批请求，包含优先级、截止日期和电子邮件通知。" },
+          "teamCollab": { "title": "团队协作", "description": "实时在线状态指示器、团队成员管理和所有项目工作区的基于角色的访问。" }
         }
       },
-      "sprintPlanning": {
-        "title": "简化冲刺规划",
-        "description": "规划会议不应该感觉像赶羊。获取AI驱动的建议。",
+      "scalingAgile": {
+        "title": "敏捷扩展很痛苦",
+        "description": "从一个团队扩展到企业级项目需要的不仅仅是便利贴。SAAI原生支持SAFe。",
         "features": {
-          "aiPlanning": {
-            "title": "AI冲刺助手",
-            "description": "获取关于冲刺容量、故事选择和风险识别的智能建议。"
-          },
-          "ceremonies": {
-            "title": "仪式管理",
-            "description": "用于回顾、评审和精炼的结构化模板，内置最佳实践。"
-          }
+          "safe": { "title": "SAFe工作流", "description": "价值流、敏捷发布火车和项目增量规划 - 为企业级敏捷而构建。" },
+          "i18n": { "title": "9种语言支持", "description": "完整本地化，支持英语、法语、德语、西班牙语、葡萄牙语、阿拉伯语、日语、韩语和中文。" },
+          "security": { "title": "企业级安全", "description": "196+条RLS策略、AES-256令牌加密、GDPR合规和全面的审计日志。" }
         }
       }
     },
     "cta": {
-      "title": "准备好解决这些问题了吗？",
-      "subtitle": "加入已经用SAAI消除工作流混乱的团队。",
+      "title": "准备好转变您的交付了吗？",
+      "subtitle": "所有功能全部包含。无需信用卡。无需API密钥。登录即可开始。",
       "button": "免费开始"
     }
   }
