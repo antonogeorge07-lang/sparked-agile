@@ -152,7 +152,7 @@ export function EpicGanttChart({ projectId }: EpicGanttChartProps) {
                         borderColor: epic.color_hex || undefined,
                         minWidth: '60px',
                       }}
-                      title={`${epic.title}\n${format(start, 'dd MMM')} — ${format(end, 'dd MMM')}`}
+                      title={`${epic.title}\n${format(start, 'dd MMM')} - ${format(end, 'dd MMM')}`}
                     >
                       <span className="text-xs font-medium truncate">{epic.title}</span>
                     </div>
