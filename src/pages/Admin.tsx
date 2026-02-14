@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +71,7 @@ export default function Admin() {
       <Navigation />
       
       <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <BackButton className="mb-4" fallbackPath="/home" />
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">

@@ -18,7 +18,8 @@ export const BackButton = ({
   const navigate = useNavigate();
 
   const handleBack = () => {
-    if (window.history.length > 2) {
+    // Try browser back if there's history, otherwise use fallback
+    if (window.history.length > 1) {
       navigate(-1);
     } else {
       navigate(fallbackPath);
