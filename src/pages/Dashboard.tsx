@@ -28,6 +28,7 @@ import { ScheduleReminderDialog } from "@/components/ScheduleReminderDialog";
 import { ReminderManagement } from "@/components/ReminderManagement";
 import { Bell, GitBranch } from "lucide-react";
 import { GitHubActivityCard } from "@/components/GitHubActivityCard";
+import { EpicDashboardWidget } from "@/components/epic/EpicDashboardWidget";
 import { IntegrationSettings } from "@/components/IntegrationSettings";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
@@ -448,6 +449,11 @@ export default function Dashboard() {
               <WorkflowExecutionChart />
               <ActionItemsChart />
             </div>
+          </div>
+
+          {/* Epic Health Widget */}
+          <div className="mt-8 mb-6">
+            <EpicDashboardWidget />
           </div>
 
           {/* Quick Wins - Sample Insights Section */}

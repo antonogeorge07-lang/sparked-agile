@@ -8,6 +8,8 @@ interface UseNativeBoardReturn {
   columns: BoardColumn[];
   isLoading: boolean;
   error: string | null;
+  epicFilter: string | null;
+  setEpicFilter: (epicId: string | null) => void;
   createItem: (item: Partial<NativeBacklogItem>) => Promise<NativeBacklogItem | null>;
   updateItem: (id: string, updates: Partial<NativeBacklogItem>) => Promise<boolean>;
   deleteItem: (id: string) => Promise<boolean>;
@@ -19,14 +21,20 @@ interface UseNativeBoardReturn {
 }
 
 export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
-  const [items, setItems] = useState<NativeBacklogItem[]>([]);
+  const [allItems, setAllItems] = useState<NativeBacklogItem[]>([]);
+  const [epicFilter, setEpicFilter] = useState<string | null>(null);
   const [columns, setColumns] = useState<BoardColumn[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Filter items by epic
+  const items = epicFilter 
+    ? allItems.filter(item => item.epic_id === epicFilter)
+    : allItems;
+
   const loadData = useCallback(async () => {
     if (!projectId) {
-      setItems([]);
+      setAllItems([]);
       setColumns([]);
       setIsLoading(false);
       return;
@@ -74,7 +82,7 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
         .order('position', { ascending: true });
 
       if (itemsError) throw itemsError;
-      setItems(itemsData as NativeBacklogItem[]);
+      setAllItems(itemsData as NativeBacklogItem[]);
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to load board data';
@@ -104,13 +112,13 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            setItems(prev => [...prev, payload.new as NativeBacklogItem]);
+            setAllItems(prev => [...prev, payload.new as NativeBacklogItem]);
           } else if (payload.eventType === 'UPDATE') {
-            setItems(prev => prev.map(item => 
+            setAllItems(prev => prev.map(item => 
               item.id === payload.new.id ? payload.new as NativeBacklogItem : item
             ));
           } else if (payload.eventType === 'DELETE') {
-            setItems(prev => prev.filter(item => item.id !== payload.old.id));
+            setAllItems(prev => prev.filter(item => item.id !== payload.old.id));
           }
         }
       )
@@ -257,6 +265,8 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
     columns,
     isLoading,
     error,
+    epicFilter,
+    setEpicFilter,
     createItem,
     updateItem,
     deleteItem,
