@@ -14,12 +14,12 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { motion } from "framer-motion";
 
 interface PainPointSection {
-  painPoint: string;
-  description: string;
+  painPointKey: string;
+  descriptionKey: string;
   icon: ElementType;
   features: {
-    title: string;
-    description: string;
+    titleKey: string;
+    descriptionKey: string;
     icon: ElementType;
   }[];
 }
@@ -29,135 +29,63 @@ export default function Features() {
 
   const painPointSections: PainPointSection[] = [
     {
-      painPoint: "Scattered Tools, Zero Visibility",
-      description: "Juggling Jira, Trello, spreadsheets, and Slack wastes time and kills context. SAAI gives you one native ecosystem.",
+      painPointKey: "features.painPoints.scatteredTools.title",
+      descriptionKey: "features.painPoints.scatteredTools.description",
       icon: Kanban,
       features: [
-        {
-          title: "Native Kanban & Sprint Board",
-          description: "Built-in Kanban, Sprint, and Backlog boards with drag-and-drop, WIP limits, and swimlanes - no external tools needed.",
-          icon: Kanban
-        },
-        {
-          title: "Epic Lifecycle Management",
-          description: "Full epic tracking with Gantt charts, milestones, burndown analytics, ROI dashboards, and closure workflows.",
-          icon: GitBranch
-        },
-        {
-          title: "Project Command Centre",
-          description: "A unified dashboard with real-time task stages, risk registers, lessons learned, and AI-powered project insights.",
-          icon: Target
-        }
+        { titleKey: "features.painPoints.scatteredTools.features.nativeBoard.title", descriptionKey: "features.painPoints.scatteredTools.features.nativeBoard.description", icon: Kanban },
+        { titleKey: "features.painPoints.scatteredTools.features.epicLifecycle.title", descriptionKey: "features.painPoints.scatteredTools.features.epicLifecycle.description", icon: GitBranch },
+        { titleKey: "features.painPoints.scatteredTools.features.commandCentre.title", descriptionKey: "features.painPoints.scatteredTools.features.commandCentre.description", icon: Target }
       ]
     },
     {
-      painPoint: "Meeting Chaos & Wasted Ceremonies",
-      description: "Standups that drag on, retros that go nowhere, and sprint reviews nobody prepares for. SAAI automates the busywork.",
+      painPointKey: "features.painPoints.meetingChaos.title",
+      descriptionKey: "features.painPoints.meetingChaos.description",
       icon: MessageSquareOff,
       features: [
-        {
-          title: "AI Standup Summaries",
-          description: "Gemini-powered summaries that capture blockers, progress, and action items automatically from async updates.",
-          icon: Brain
-        },
-        {
-          title: "Sprint Ceremonies Suite",
-          description: "Dedicated tools for Sprint Planning, Review Coordination, and Retrospective Insights - all AI-assisted.",
-          icon: Calendar
-        },
-        {
-          title: "Google Calendar Sync",
-          description: "Automatically push ceremony schedules to Google Calendar with attendee management and smart reminders.",
-          icon: Calendar
-        }
+        { titleKey: "features.painPoints.meetingChaos.features.aiStandup.title", descriptionKey: "features.painPoints.meetingChaos.features.aiStandup.description", icon: Brain },
+        { titleKey: "features.painPoints.meetingChaos.features.ceremonies.title", descriptionKey: "features.painPoints.meetingChaos.features.ceremonies.description", icon: Calendar },
+        { titleKey: "features.painPoints.meetingChaos.features.googleCalendar.title", descriptionKey: "features.painPoints.meetingChaos.features.googleCalendar.description", icon: Calendar }
       ]
     },
     {
-      painPoint: "Manual Reporting & Status Updates",
-      description: "Hours spent compiling reports that are outdated by the time they're sent. SAAI generates them in seconds.",
+      painPointKey: "features.painPoints.manualReporting.title",
+      descriptionKey: "features.painPoints.manualReporting.description",
       icon: Clock,
       features: [
-        {
-          title: "Executive Digest",
-          description: "AI-generated daily and weekly digests summarising sprint health, risks, wins, and recommendations - delivered automatically.",
-          icon: FileText
-        },
-        {
-          title: "Advanced Analytics",
-          description: "Velocity trends, commitment delivery charts, workflow execution metrics, and flow analytics - all auto-calculated.",
-          icon: BarChart3
-        },
-        {
-          title: "Retrospective Insights",
-          description: "AI analyses retro feedback to surface patterns, generate action items, and track improvement over time.",
-          icon: Sparkles
-        }
+        { titleKey: "features.painPoints.manualReporting.features.executiveDigest.title", descriptionKey: "features.painPoints.manualReporting.features.executiveDigest.description", icon: FileText },
+        { titleKey: "features.painPoints.manualReporting.features.advancedAnalytics.title", descriptionKey: "features.painPoints.manualReporting.features.advancedAnalytics.description", icon: BarChart3 },
+        { titleKey: "features.painPoints.manualReporting.features.retroInsights.title", descriptionKey: "features.painPoints.manualReporting.features.retroInsights.description", icon: Sparkles }
       ]
     },
     {
-      painPoint: "AI is a Bolt-on, Not Built-in",
-      description: "Most PM tools treat AI as an afterthought. SAAI's AI Co-Pilot is woven into every workflow.",
+      painPointKey: "features.painPoints.aiBoltOn.title",
+      descriptionKey: "features.painPoints.aiBoltOn.description",
       icon: Bot,
       features: [
-        {
-          title: "AI Co-Pilot (Gemini-powered)",
-          description: "User story generation, point estimation, blocker detection, and sprint forecasting - directly inside your board.",
-          icon: Brain
-        },
-        {
-          title: "Multi-Agent AI Debate",
-          description: "Multiple AI agents debate trade-offs on sprint scope, technical decisions, and risk mitigation - then reach consensus.",
-          icon: Sparkles
-        },
-        {
-          title: "Backlog Health Analysis",
-          description: "AI scans your backlog for stale items, missing acceptance criteria, and priority misalignment.",
-          icon: Zap
-        }
+        { titleKey: "features.painPoints.aiBoltOn.features.aiCopilot.title", descriptionKey: "features.painPoints.aiBoltOn.features.aiCopilot.description", icon: Brain },
+        { titleKey: "features.painPoints.aiBoltOn.features.multiAgent.title", descriptionKey: "features.painPoints.aiBoltOn.features.multiAgent.description", icon: Sparkles },
+        { titleKey: "features.painPoints.aiBoltOn.features.backlogHealth.title", descriptionKey: "features.painPoints.aiBoltOn.features.backlogHealth.description", icon: Zap }
       ]
     },
     {
-      painPoint: "Stakeholders Left in the Dark",
-      description: "Executives asking 'where are we?' and teams scrambling to create decks. SAAI keeps everyone informed automatically.",
+      painPointKey: "features.painPoints.stakeholderComms.title",
+      descriptionKey: "features.painPoints.stakeholderComms.description",
       icon: Users,
       features: [
-        {
-          title: "Stakeholder Portal",
-          description: "A dedicated view for stakeholders with progress dashboards, approval workflows, and digest subscriptions.",
-          icon: Presentation
-        },
-        {
-          title: "Approval Workflows",
-          description: "Structured approval requests with priority levels, due dates, and email notifications to keep decisions moving.",
-          icon: CheckCircle2
-        },
-        {
-          title: "Team Collaboration",
-          description: "Real-time presence indicators, team member management, and role-based access across all project workspaces.",
-          icon: Users
-        }
+        { titleKey: "features.painPoints.stakeholderComms.features.portal.title", descriptionKey: "features.painPoints.stakeholderComms.features.portal.description", icon: Presentation },
+        { titleKey: "features.painPoints.stakeholderComms.features.approvals.title", descriptionKey: "features.painPoints.stakeholderComms.features.approvals.description", icon: CheckCircle2 },
+        { titleKey: "features.painPoints.stakeholderComms.features.teamCollab.title", descriptionKey: "features.painPoints.stakeholderComms.features.teamCollab.description", icon: Users }
       ]
     },
     {
-      painPoint: "Scaling Agile is Painful",
-      description: "Scaling from one team to an enterprise programme needs more than sticky notes. SAAI supports SAFe out of the box.",
+      painPointKey: "features.painPoints.scalingAgile.title",
+      descriptionKey: "features.painPoints.scalingAgile.description",
       icon: Workflow,
       features: [
-        {
-          title: "SAFe Workflows",
-          description: "Value streams, Agile Release Trains, and Program Increment planning - built for enterprise-scale agility.",
-          icon: Workflow
-        },
-        {
-          title: "9-Language Support",
-          description: "Full localisation across English, French, German, Spanish, Portuguese, Arabic, Japanese, Korean, and Chinese.",
-          icon: Globe
-        },
-        {
-          title: "Enterprise-Grade Security",
-          description: "196+ RLS policies, AES-256 token encryption, GDPR compliance, and comprehensive audit logging.",
-          icon: Shield
-        }
+        { titleKey: "features.painPoints.scalingAgile.features.safe.title", descriptionKey: "features.painPoints.scalingAgile.features.safe.description", icon: Workflow },
+        { titleKey: "features.painPoints.scalingAgile.features.i18n.title", descriptionKey: "features.painPoints.scalingAgile.features.i18n.description", icon: Globe },
+        { titleKey: "features.painPoints.scalingAgile.features.security.title", descriptionKey: "features.painPoints.scalingAgile.features.security.description", icon: Shield }
       ]
     }
   ];
@@ -195,10 +123,10 @@ export default function Features() {
       <section className="py-16 px-4 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto max-w-4xl text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Every Feature Solves a Real Problem
+            {t('features.hero.title')}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            SAAI is built around the pain points that slow teams down. Here's how every capability maps to a problem you're facing today.
+            {t('features.hero.subtitle')}
           </p>
         </div>
       </section>
@@ -222,10 +150,10 @@ export default function Features() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-destructive mb-1">
-                    {section.painPoint}
+                    {t(section.painPointKey)}
                   </h2>
                   <p className="text-muted-foreground">
-                    {section.description}
+                    {t(section.descriptionKey)}
                   </p>
                 </div>
               </div>
@@ -245,12 +173,12 @@ export default function Features() {
                           <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center">
                             <feature.icon className="h-5 w-5 text-primary-foreground" />
                           </div>
-                          <CardTitle className="text-base">{feature.title}</CardTitle>
+                          <CardTitle className="text-base">{t(feature.titleKey)}</CardTitle>
                         </div>
                       </CardHeader>
                       <CardContent>
                         <CardDescription className="text-sm">
-                          {feature.description}
+                          {t(feature.descriptionKey)}
                         </CardDescription>
                       </CardContent>
                     </Card>
@@ -266,14 +194,14 @@ export default function Features() {
       <section className="py-16 px-4 bg-gradient-to-t from-primary/5 to-background">
         <div className="container mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Ready to Transform Your Delivery?
+            {t('features.cta.title')}
           </h2>
           <p className="text-muted-foreground mb-6">
-            All features included. No credit card. No API keys. Just sign in and start.
+            {t('features.cta.subtitle')}
           </p>
           <Button asChild size="lg" className="gap-2 group">
             <Link to="/auth">
-              Get Started Free
+              {t('features.cta.button')}
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>

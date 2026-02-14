@@ -366,99 +366,69 @@
   },
   "features": {
     "hero": {
-      "title": "Problemas que Resolvemos",
-      "subtitle": "Cada funcionalidade existe para eliminar um ponto de dor real que você enfrenta diariamente. Veja como o SAAI transforma seu fluxo de trabalho."
+      "title": "Cada Funcionalidade Resolve um Problema Real",
+      "subtitle": "SAAI e construido em torno dos pontos de dor que atrasam equipes. Veja como cada capacidade se mapeia a um problema que voce enfrenta hoje."
     },
     "painPoints": {
-      "meetingChaos": {
-        "title": "Elimine o Caos das Reuniões de Status",
-        "description": "Chega de standups de 30 minutos onde metade da equipe se desliga. Obtenha atualizações assíncronas.",
+      "scatteredTools": {
+        "title": "Ferramentas Dispersas, Zero Visibilidade",
+        "description": "Malabares com Jira, Trello, planilhas e Slack desperdicam tempo e matam o contexto. SAAI oferece um ecossistema nativo.",
         "features": {
-          "aiStandup": {
-            "title": "Resumos de Standup com IA",
-            "description": "Agregue automaticamente atualizações de suas ferramentas e gere resumos diários concisos sem reuniões."
-          },
-          "asyncUpdates": {
-            "title": "Atualizações Assíncronas da Equipe",
-            "description": "Os membros da equipe enviam atualizações em seu próprio horário. A IA compila e destaca o que importa."
-          }
+          "nativeBoard": { "title": "Kanban e Sprint Board Nativo", "description": "Boards Kanban, Sprint e Backlog integrados com arrastar e soltar, limites WIP e raias - sem ferramentas externas." },
+          "epicLifecycle": { "title": "Gestao do Ciclo de Vida de Epicos", "description": "Rastreamento completo de epicos com graficos de Gantt, marcos, analiticas de burndown, dashboards de ROI e workflows de encerramento." },
+          "commandCentre": { "title": "Centro de Comando do Projeto", "description": "Um dashboard unificado com estagios de tarefas em tempo real, registros de riscos, licoes aprendidas e insights de IA." }
         }
       },
-      "progressTracking": {
-        "title": "Pare de Perder o Controle do Progresso",
-        "description": "Ferramentas dispersas significam insights dispersos. Veja tudo em um só lugar.",
+      "meetingChaos": {
+        "title": "Caos em Reunioes e Cerimonias Desperdicadas",
+        "description": "Standups que se arrastam, retros que nao levam a nada e revisoes de sprint sem preparacao. SAAI automatiza o trabalho repetitivo.",
         "features": {
-          "commandCentre": {
-            "title": "Centro de Comando do Projeto",
-            "description": "Painel unificado mostrando tarefas, bloqueios, velocidade e pontuações de saúde de relance."
-          },
-          "epicTracking": {
-            "title": "Rastreamento de Épicos e Funcionalidades",
-            "description": "Divida grandes iniciativas em partes gerenciáveis com mapeamento de dependências e gráficos de burndown."
-          }
+          "aiStandup": { "title": "Resumos de Standup com IA", "description": "Resumos com Gemini que capturam bloqueios, progresso e acoes automaticamente de atualizacoes assincronas." },
+          "ceremonies": { "title": "Suite de Cerimonias Sprint", "description": "Ferramentas dedicadas para Planejamento de Sprint, Coordenacao de Revisao e Insights de Retrospectiva - tudo assistido por IA." },
+          "googleCalendar": { "title": "Sincronizacao com Google Calendar", "description": "Envie automaticamente agendas de cerimonias para o Google Calendar com gestao de participantes e lembretes inteligentes." }
         }
       },
       "manualReporting": {
-        "title": "Acabe com o Trabalho Manual de Relatórios",
-        "description": "Pare de gastar horas compilando relatórios de status. Deixe a IA fazer o trabalho pesado.",
+        "title": "Relatorios Manuais e Atualizacoes de Status",
+        "description": "Horas compilando relatorios que estao desatualizados quando sao enviados. SAAI os gera em segundos.",
         "features": {
-          "aiDigest": {
-            "title": "Resumo Diário com IA",
-            "description": "Receba resumos diários automatizados do que foi feito, bloqueado e precisa de atenção."
-          },
-          "autoMetrics": {
-            "title": "Métricas Auto-geradas",
-            "description": "Velocidade, tempo de ciclo e throughput calculados automaticamente do seu trabalho real."
-          }
+          "executiveDigest": { "title": "Resumo Executivo", "description": "Resumos diarios e semanais gerados por IA sobre saude do sprint, riscos, conquistas e recomendacoes - entregues automaticamente." },
+          "advancedAnalytics": { "title": "Analiticas Avancadas", "description": "Tendencias de velocidade, graficos de entrega de compromissos, metricas de execucao de fluxo - tudo auto-calculado." },
+          "retroInsights": { "title": "Insights de Retrospectiva", "description": "IA analisa feedback de retros para identificar padroes, gerar acoes e rastrear melhorias ao longo do tempo." }
         }
       },
-      "contextSwitching": {
-        "title": "Reduza a Troca de Contexto",
-        "description": "Pular entre Jira, GitHub, Slack e email mata a produtividade.",
+      "aiBoltOn": {
+        "title": "IA e um Complemento, Nao Integrada",
+        "description": "A maioria das ferramentas PM trata IA como algo secundario. O Co-Piloto IA do SAAI esta integrado em cada workflow.",
         "features": {
-          "unifiedView": {
-            "title": "Visão de Trabalho Unificada",
-            "description": "Todas as suas tarefas, PRs, mensagens e atualizações agregadas em uma interface inteligente única."
-          },
-          "integrations": {
-            "title": "Integrações Profundas",
-            "description": "Conecte GitHub, Jira, Slack e Outlook. O SAAI se torna sua única fonte da verdade."
-          }
+          "aiCopilot": { "title": "Co-Piloto IA (Gemini)", "description": "Geracao de historias de usuario, estimativa de pontos, deteccao de bloqueios e previsao de sprints - diretamente no seu board." },
+          "multiAgent": { "title": "Debate Multi-Agente IA", "description": "Multiplos agentes IA debatem trade-offs sobre escopo de sprint, decisoes tecnicas e mitigacao de riscos - e entao alcancam consenso." },
+          "backlogHealth": { "title": "Analise de Saude do Backlog", "description": "IA escaneia seu backlog em busca de itens obsoletos, criterios de aceitacao ausentes e desalinhamento de prioridades." }
         }
       },
       "stakeholderComms": {
-        "title": "Agilize a Comunicação com Stakeholders",
-        "description": "Executivos querem atualizações, não desculpas. Dê a eles insights de autoatendimento.",
+        "title": "Stakeholders no Escuro",
+        "description": "Executivos perguntando 'onde estamos?' e equipes improvisando apresentacoes. SAAI mantem todos informados automaticamente.",
         "features": {
-          "portal": {
-            "title": "Portal de Stakeholders",
-            "description": "Painéis amigáveis para executivos com rastreamento de ROI, progresso de marcos e widgets personalizáveis."
-          },
-          "approvals": {
-            "title": "Fluxos de Aprovação",
-            "description": "Encaminhe mudanças de orçamento, ajustes de escopo e fechamentos de épicos através de cadeias de aprovação apropriadas."
-          }
+          "portal": { "title": "Portal de Stakeholders", "description": "Uma visao dedicada para stakeholders com dashboards de progresso, workflows de aprovacao e assinaturas de resumos." },
+          "approvals": { "title": "Workflows de Aprovacao", "description": "Solicitacoes de aprovacao estruturadas com niveis de prioridade, prazos e notificacoes por email." },
+          "teamCollab": { "title": "Colaboracao de Equipe", "description": "Indicadores de presenca em tempo real, gestao de membros da equipe e acesso baseado em funcoes em todos os espacos de trabalho." }
         }
       },
-      "sprintPlanning": {
-        "title": "Simplifique o Planejamento do Sprint",
-        "description": "Sessões de planejamento não deveriam parecer caóticas. Obtenha recomendações impulsionadas por IA.",
+      "scalingAgile": {
+        "title": "Escalar Agile e Doloroso",
+        "description": "Escalar de uma equipe para um programa empresarial precisa mais que post-its. SAAI suporta SAFe nativamente.",
         "features": {
-          "aiPlanning": {
-            "title": "Assistente de Sprint com IA",
-            "description": "Obtenha sugestões inteligentes para capacidade do sprint, seleção de histórias e identificação de riscos."
-          },
-          "ceremonies": {
-            "title": "Gestão de Cerimônias",
-            "description": "Modelos estruturados para retrospectivas, revisões e refinamento com melhores práticas integradas."
-          }
+          "safe": { "title": "Workflows SAFe", "description": "Value streams, Agile Release Trains e planejamento de Program Increment - construido para agilidade em escala empresarial." },
+          "i18n": { "title": "Suporte em 9 Idiomas", "description": "Localizacao completa em ingles, frances, alemao, espanhol, portugues, arabe, japones, coreano e chines." },
+          "security": { "title": "Seguranca Empresarial", "description": "196+ politicas RLS, criptografia AES-256, conformidade LGPD e registro de auditoria abrangente." }
         }
       }
     },
     "cta": {
-      "title": "Pronto para Resolver Esses Problemas?",
-      "subtitle": "Junte-se às equipes que eliminaram o caos do fluxo de trabalho com o SAAI.",
-      "button": "Comece Grátis"
+      "title": "Pronto para Transformar sua Entrega?",
+      "subtitle": "Todas as funcionalidades incluidas. Sem cartao de credito. Sem chaves API. Faca login e comece.",
+      "button": "Comece Gratis"
     }
   }
 }

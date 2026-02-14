@@ -732,98 +732,68 @@
   },
   "features": {
     "hero": {
-      "title": "Problems We Solve",
-      "subtitle": "Every feature exists to eliminate a real pain point you face daily. See how SAAI transforms your workflow."
+      "title": "Every Feature Solves a Real Problem",
+      "subtitle": "SAAI is built around the pain points that slow teams down. Here's how every capability maps to a problem you're facing today."
     },
     "painPoints": {
-      "meetingChaos": {
-        "title": "Eliminate Status Meeting Chaos",
-        "description": "No more 30-minute standups where half the team zones out. Get updates asynchronously.",
+      "scatteredTools": {
+        "title": "Scattered Tools, Zero Visibility",
+        "description": "Juggling Jira, Trello, spreadsheets, and Slack wastes time and kills context. SAAI gives you one native ecosystem.",
         "features": {
-          "aiStandup": {
-            "title": "AI Standup Summaries",
-            "description": "Automatically aggregate updates from your tools and generate concise daily summaries without meetings."
-          },
-          "asyncUpdates": {
-            "title": "Async Team Updates",
-            "description": "Team members submit updates on their schedule. AI compiles and surfaces what matters."
-          }
+          "nativeBoard": { "title": "Native Kanban & Sprint Board", "description": "Built-in Kanban, Sprint, and Backlog boards with drag-and-drop, WIP limits, and swimlanes - no external tools needed." },
+          "epicLifecycle": { "title": "Epic Lifecycle Management", "description": "Full epic tracking with Gantt charts, milestones, burndown analytics, ROI dashboards, and closure workflows." },
+          "commandCentre": { "title": "Project Command Centre", "description": "A unified dashboard with real-time task stages, risk registers, lessons learned, and AI-powered project insights." }
         }
       },
-      "progressTracking": {
-        "title": "Stop Losing Track of Progress",
-        "description": "Scattered tools mean scattered insights. See everything in one place.",
+      "meetingChaos": {
+        "title": "Meeting Chaos & Wasted Ceremonies",
+        "description": "Standups that drag on, retros that go nowhere, and sprint reviews nobody prepares for. SAAI automates the busywork.",
         "features": {
-          "commandCentre": {
-            "title": "Project Command Centre",
-            "description": "Unified dashboard showing tasks, blockers, velocity, and health scores at a glance."
-          },
-          "epicTracking": {
-            "title": "Epic & Feature Tracking",
-            "description": "Break down large initiatives into manageable pieces with dependency mapping and burndown charts."
-          }
+          "aiStandup": { "title": "AI Standup Summaries", "description": "Gemini-powered summaries that capture blockers, progress, and action items automatically from async updates." },
+          "ceremonies": { "title": "Sprint Ceremonies Suite", "description": "Dedicated tools for Sprint Planning, Review Coordination, and Retrospective Insights - all AI-assisted." },
+          "googleCalendar": { "title": "Google Calendar Sync", "description": "Automatically push ceremony schedules to Google Calendar with attendee management and smart reminders." }
         }
       },
       "manualReporting": {
-        "title": "End Manual Reporting Drudgery",
-        "description": "Stop spending hours compiling status reports. Let AI do the heavy lifting.",
+        "title": "Manual Reporting & Status Updates",
+        "description": "Hours spent compiling reports that are outdated by the time they're sent. SAAI generates them in seconds.",
         "features": {
-          "aiDigest": {
-            "title": "AI Daily Digest",
-            "description": "Receive automated daily summaries of what's done, what's blocked, and what needs attention."
-          },
-          "autoMetrics": {
-            "title": "Auto-Generated Metrics",
-            "description": "Velocity, cycle time, and throughput calculated automatically from your actual work."
-          }
+          "executiveDigest": { "title": "Executive Digest", "description": "AI-generated daily and weekly digests summarising sprint health, risks, wins, and recommendations - delivered automatically." },
+          "advancedAnalytics": { "title": "Advanced Analytics", "description": "Velocity trends, commitment delivery charts, workflow execution metrics, and flow analytics - all auto-calculated." },
+          "retroInsights": { "title": "Retrospective Insights", "description": "AI analyses retro feedback to surface patterns, generate action items, and track improvement over time." }
         }
       },
-      "contextSwitching": {
-        "title": "Reduce Context Switching",
-        "description": "Jumping between Jira, GitHub, Slack, and email kills productivity.",
+      "aiBoltOn": {
+        "title": "AI is a Bolt-on, Not Built-in",
+        "description": "Most PM tools treat AI as an afterthought. SAAI's AI Co-Pilot is woven into every workflow.",
         "features": {
-          "unifiedView": {
-            "title": "Unified Work View",
-            "description": "All your tasks, PRs, messages, and updates aggregated in a single intelligent interface."
-          },
-          "integrations": {
-            "title": "Deep Integrations",
-            "description": "Connect GitHub, Jira, Slack, and Outlook. SAAI becomes your single source of truth."
-          }
+          "aiCopilot": { "title": "AI Co-Pilot (Gemini-powered)", "description": "User story generation, point estimation, blocker detection, and sprint forecasting - directly inside your board." },
+          "multiAgent": { "title": "Multi-Agent AI Debate", "description": "Multiple AI agents debate trade-offs on sprint scope, technical decisions, and risk mitigation - then reach consensus." },
+          "backlogHealth": { "title": "Backlog Health Analysis", "description": "AI scans your backlog for stale items, missing acceptance criteria, and priority misalignment." }
         }
       },
       "stakeholderComms": {
-        "title": "Streamline Stakeholder Communication",
-        "description": "Executives want updates, not excuses. Give them self-service insights.",
+        "title": "Stakeholders Left in the Dark",
+        "description": "Executives asking 'where are we?' and teams scrambling to create decks. SAAI keeps everyone informed automatically.",
         "features": {
-          "portal": {
-            "title": "Stakeholder Portal",
-            "description": "Executive-friendly dashboards with ROI tracking, milestone progress, and customizable widgets."
-          },
-          "approvals": {
-            "title": "Approval Workflows",
-            "description": "Route budget changes, scope adjustments, and epic closures through proper approval chains."
-          }
+          "portal": { "title": "Stakeholder Portal", "description": "A dedicated view for stakeholders with progress dashboards, approval workflows, and digest subscriptions." },
+          "approvals": { "title": "Approval Workflows", "description": "Structured approval requests with priority levels, due dates, and email notifications to keep decisions moving." },
+          "teamCollab": { "title": "Team Collaboration", "description": "Real-time presence indicators, team member management, and role-based access across all project workspaces." }
         }
       },
-      "sprintPlanning": {
-        "title": "Simplify Sprint Planning",
-        "description": "Planning sessions shouldn't feel like herding cats. Get AI-powered recommendations.",
+      "scalingAgile": {
+        "title": "Scaling Agile is Painful",
+        "description": "Scaling from one team to an enterprise programme needs more than sticky notes. SAAI supports SAFe out of the box.",
         "features": {
-          "aiPlanning": {
-            "title": "AI Sprint Assistant",
-            "description": "Get intelligent suggestions for sprint capacity, story selection, and risk identification."
-          },
-          "ceremonies": {
-            "title": "Ceremony Management",
-            "description": "Structured templates for retrospectives, reviews, and refinement with built-in best practices."
-          }
+          "safe": { "title": "SAFe Workflows", "description": "Value streams, Agile Release Trains, and Program Increment planning - built for enterprise-scale agility." },
+          "i18n": { "title": "9-Language Support", "description": "Full localisation across English, French, German, Spanish, Portuguese, Arabic, Japanese, Korean, and Chinese." },
+          "security": { "title": "Enterprise-Grade Security", "description": "196+ RLS policies, AES-256 token encryption, GDPR compliance, and comprehensive audit logging." }
         }
       }
     },
     "cta": {
-      "title": "Ready to Solve These Problems?",
-      "subtitle": "Join teams who've eliminated workflow chaos with SAAI.",
+      "title": "Ready to Transform Your Delivery?",
+      "subtitle": "All features included. No credit card. No API keys. Just sign in and start.",
       "button": "Get Started Free"
     }
   }
