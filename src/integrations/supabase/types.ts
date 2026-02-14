@@ -2173,6 +2173,7 @@ export type Database = {
           created_at: string
           description: string | null
           due_date: string | null
+          epic_id: string | null
           id: string
           item_type: string
           labels: string[] | null
@@ -2193,6 +2194,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           due_date?: string | null
+          epic_id?: string | null
           id?: string
           item_type?: string
           labels?: string[] | null
@@ -2213,6 +2215,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           due_date?: string | null
+          epic_id?: string | null
           id?: string
           item_type?: string
           labels?: string[] | null
@@ -2228,6 +2231,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "native_backlog_items_epic_id_fkey"
+            columns: ["epic_id"]
+            isOneToOne: false
+            referencedRelation: "epics"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "native_backlog_items_parent_id_fkey"
             columns: ["parent_id"]
@@ -2303,6 +2313,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean | null
+          link: string | null
+          message: string | null
+          title: string
+          type: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          link?: string | null
+          message?: string | null
+          title: string
+          type?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          link?: string | null
+          message?: string | null
+          title?: string
+          type?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       okrs: {
         Row: {
