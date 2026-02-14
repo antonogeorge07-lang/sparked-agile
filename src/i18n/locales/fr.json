@@ -21,7 +21,7 @@
     "signup": "Inscription",
     "free": "Gratuit",
     "pro": "Pro",
-    "beta": "Bêta",
+    "beta": "En ligne",
     "new": "Nouveau",
     "mostPopular": "Plus Populaire"
   },
@@ -67,7 +67,7 @@
       "freeDescription": "Recevez un e-mail quotidien avec tout ce dont vous avez besoin pour rester informé de la progression de votre équipe.",
       "proTitle": "Plateforme Agile complète",
       "proDescription": "Passez à la version supérieure quand vous êtes prêt pour les cérémonies de sprint IA, le suivi des épopées et la collaboration d'équipe.",
-      "betaFree": "Bêta : Gratuit",
+      "betaFree": "Gratuit pour Tous",
       "dailyDigest": "Résumé Quotidien",
       "dailyDigestDesc": "Mises à jour d'équipe sélectionnées par l'IA dans votre boîte chaque matin",
       "githubActivity": "Synchronisation GitHub",
@@ -162,9 +162,9 @@
       "proDescription": "Plateforme SAAI complète avec cérémonies, épopées et outils de collaboration.",
       "proCta": "Commencer l'Essai Gratuit",
       "perMonth": "/mois",
-      "betaAccess": "Accès Bêta",
-      "betaDescription": "Les deux niveaux sont actuellement gratuits pendant la bêta. Verrouillez le prix early adopter au lancement.",
-      "getNotified": "Me Notifier au Lancement",
+      "betaAccess": "Accès Gratuit",
+      "betaDescription": "Toutes les fonctionnalités principales sont gratuites. Les modules premium comme la marque blanche et le SSO entreprise arrivent bientôt.",
+      "getNotified": "Commencer Gratuitement",
       "freeFeature1": "E-mails de résumé quotidien",
       "freeFeature2": "Résumés d'activité GitHub",
       "freeFeature3": "Points forts du sprint",
@@ -206,7 +206,7 @@
       "activeUsers": "Utilisateurs Actifs",
       "countries": "Pays",
       "newThisMonth": "Nouveaux utilisateurs ce mois",
-      "betaPhase": "Gratuit pendant la phase bêta",
+      "betaPhase": "Gratuit à utiliser",
       "globalCommunity": "Notre Communauté Mondiale"
     },
     "integrations": {
@@ -309,7 +309,7 @@
       "gdprReady": "Conforme RGPD",
       "dataEncrypted": "Données Chiffrées",
       "openFeedback": "Feedback Ouvert",
-      "freeBeta": "Gratuit Pendant le Bêta"
+      "freeBeta": "Gratuit à Utiliser"
     },
     "liveStats": {
       "title": "Activité Plateforme en Temps Réel",

@@ -65,7 +65,7 @@ const achievements: Record<AchievementType, Achievement> = {
   early_adopter: {
     id: "early_adopter",
     title: "Early Adopter",
-    description: "Joined during beta",
+    description: "Joined as an early adopter",
     icon: Sparkles,
     color: "text-pink-500",
     rarity: "epic"

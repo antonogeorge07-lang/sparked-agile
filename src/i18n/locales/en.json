@@ -21,7 +21,7 @@
     "signup": "Sign Up",
     "free": "Free",
     "pro": "Pro",
-    "beta": "Beta",
+    "beta": "Live",
     "new": "New",
     "mostPopular": "Most Popular",
     "send": "Send",
@@ -325,7 +325,7 @@
       "freeDescription": "Get a daily email with everything you need to stay informed about your team's progress.",
       "proTitle": "Full Agile Platform",
       "proDescription": "Upgrade when you're ready for AI-powered sprint ceremonies, epic tracking, and team collaboration.",
-      "betaFree": "Beta: Free",
+      "betaFree": "Free for All",
       "nativeBoard": "Native PM Board",
       "nativeBoardDesc": "Built-in Kanban, Sprints, and Backlog - no external tools needed",
       "aiCopilot": "AI Co-Pilot",
@@ -398,9 +398,9 @@
       "proDescription": "Full SAAI platform with ceremonies, epics, and team collaboration tools.",
       "proCta": "Start Free Trial",
       "perMonth": "/month",
-      "betaAccess": "Beta Access",
-      "betaDescription": "Both tiers are currently free during beta. Lock in early adopter pricing when we launch.",
-      "getNotified": "Get Notified at Launch",
+      "betaAccess": "Free Access",
+      "betaDescription": "All core features are free. Premium add-ons like white-label branding and enterprise SSO are coming soon.",
+      "getNotified": "Get Started Free",
       "freeFeature1": "Daily Digest emails",
       "freeFeature2": "GitHub activity summaries",
       "freeFeature3": "Sprint highlights",
@@ -442,7 +442,7 @@
       "activeUsers": "Active Users",
       "countries": "Countries",
       "newThisMonth": "New users this month",
-      "betaPhase": "Free during beta phase",
+      "betaPhase": "Free to use",
       "globalCommunity": "Our Global Community"
     },
     "integrations": {
@@ -584,7 +584,7 @@
       "gdprReady": "GDPR Ready",
       "dataEncrypted": "Data Encrypted",
       "openFeedback": "Open Feedback",
-      "freeBeta": "Free During Beta"
+      "freeBeta": "Free to Use"
     },
     "quickValue": {
       "title": "Why Teams Choose SAAI",

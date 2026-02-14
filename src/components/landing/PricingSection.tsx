@@ -266,7 +266,7 @@
            </motion.div>
          </motion.div>
  
-         {/* Beta banner */}
+         {/* Free access banner */}
          <motion.div 
            className="mt-16 text-center"
            initial={{ opacity: 0, y: 20 }}
