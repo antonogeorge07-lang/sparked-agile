@@ -21,7 +21,7 @@
     "signup": "Registrarse",
     "free": "Gratis",
     "pro": "Pro",
-    "beta": "Beta",
+    "beta": "Activo",
     "new": "Nuevo",
     "mostPopular": "Más Popular",
     "signInRequired": "Por favor inicia sesión para acceder.",
@@ -122,7 +122,7 @@
       "freeDescription": "Recibe un correo diario con todo lo que necesitas para estar informado sobre el progreso de tu equipo.",
       "proTitle": "Plataforma Agile completa",
       "proDescription": "Actualiza cuando estés listo para ceremonias de sprint con IA, seguimiento de épicas y colaboración en equipo.",
-      "betaFree": "Beta: Gratis",
+      "betaFree": "Gratis para Todos",
       "dailyDigest": "Resumen Diario",
       "dailyDigestDesc": "Actualizaciones del equipo curadas por IA en tu bandeja cada mañana",
       "githubActivity": "Sincronización GitHub",
@@ -217,9 +217,9 @@
       "proDescription": "Plataforma SAAI completa con ceremonias, épicas y herramientas de colaboración.",
       "proCta": "Iniciar Prueba Gratis",
       "perMonth": "/mes",
-      "betaAccess": "Acceso Beta",
-      "betaDescription": "Ambos niveles son actualmente gratuitos durante beta. Asegura precios de adoptador temprano cuando lancemos.",
-      "getNotified": "Notificarme al Lanzamiento",
+      "betaAccess": "Acceso Gratuito",
+      "betaDescription": "Todas las funciones principales son gratuitas. Complementos premium como marca blanca y SSO empresarial próximamente.",
+      "getNotified": "Comenzar Gratis",
       "freeFeature1": "Correos de resumen diario",
       "freeFeature2": "Resúmenes de actividad GitHub",
       "freeFeature3": "Destacados del sprint",
@@ -261,7 +261,7 @@
       "activeUsers": "Usuarios Activos",
       "countries": "Países",
       "newThisMonth": "Nuevos usuarios este mes",
-      "betaPhase": "Gratis durante fase beta",
+      "betaPhase": "Gratis para usar",
       "globalCommunity": "Nuestra Comunidad Global"
     },
     "integrations": {
@@ -364,7 +364,7 @@
       "gdprReady": "Listo para GDPR",
       "dataEncrypted": "Datos Encriptados",
       "openFeedback": "Feedback Abierto",
-      "freeBeta": "Gratis Durante Beta"
+      "freeBeta": "Gratis para Usar"
     },
     "liveStats": {
       "title": "Actividad de Plataforma en Tiempo Real",

@@ -124,7 +124,7 @@ export function ValuePropositionSection() {
             <p className="text-xs sm:text-sm text-muted-foreground">{t('landing.value.newThisMonth')}</p>
           </div>
           <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="Beta phase">
+             <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent" aria-label="Live platform">
               {t('common.beta')}
             </p>
             <p className="text-xs sm:text-sm text-muted-foreground">{t('landing.value.betaPhase')}</p>
