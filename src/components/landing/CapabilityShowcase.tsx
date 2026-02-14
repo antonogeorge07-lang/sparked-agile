@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { Mail, GitBranch, BarChart3, Users, Target, Calendar, ArrowRight, Sparkles } from "lucide-react";
+import { Mail, GitBranch, BarChart3, Users, Target, Calendar, ArrowRight, Sparkles, Kanban, Brain, Presentation, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,40 +13,22 @@ export function CapabilityShowcase() {
 
   const capabilities = [
     {
-      icon: Mail,
-      titleKey: "landing.capabilities.dailyDigest",
-      descKey: "landing.capabilities.dailyDigestDesc",
+      icon: Kanban,
+      titleKey: "landing.capabilities.nativeBoard",
+      descKey: "landing.capabilities.nativeBoardDesc",
+      tier: "free" as const,
+      accent: "from-indigo-500/20 to-indigo-500/5 border-indigo-500/30",
+      iconBg: "bg-indigo-500/10 group-hover:bg-indigo-500/20",
+      iconColor: "text-indigo-400",
+    },
+    {
+      icon: Brain,
+      titleKey: "landing.capabilities.aiCopilot",
+      descKey: "landing.capabilities.aiCopilotDesc",
       tier: "free" as const,
       accent: "from-violet-500/20 to-violet-500/5 border-violet-500/30",
       iconBg: "bg-violet-500/10 group-hover:bg-violet-500/20",
       iconColor: "text-violet-400",
-    },
-    {
-      icon: GitBranch,
-      titleKey: "landing.capabilities.githubActivity",
-      descKey: "landing.capabilities.githubActivityDesc",
-      tier: "free" as const,
-      accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
-      iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
-      iconColor: "text-emerald-400",
-    },
-    {
-      icon: BarChart3,
-      titleKey: "landing.capabilities.sprintHighlights",
-      descKey: "landing.capabilities.sprintHighlightsDesc",
-      tier: "free" as const,
-      accent: "from-blue-500/20 to-blue-500/5 border-blue-500/30",
-      iconBg: "bg-blue-500/10 group-hover:bg-blue-500/20",
-      iconColor: "text-blue-400",
-    },
-    {
-      icon: Calendar,
-      titleKey: "landing.capabilities.sprintCeremonies",
-      descKey: "landing.capabilities.sprintCeremoniesDesc",
-      tier: "free" as const,
-      accent: "from-amber-500/20 to-amber-500/5 border-amber-500/30",
-      iconBg: "bg-amber-500/10 group-hover:bg-amber-500/20",
-      iconColor: "text-amber-400",
     },
     {
       icon: Target,
@@ -58,13 +40,58 @@ export function CapabilityShowcase() {
       iconColor: "text-rose-400",
     },
     {
-      icon: Users,
-      titleKey: "landing.capabilities.teamCollaboration",
-      descKey: "landing.capabilities.teamCollaborationDesc",
+      icon: Calendar,
+      titleKey: "landing.capabilities.googleCalendar",
+      descKey: "landing.capabilities.googleCalendarDesc",
+      tier: "free" as const,
+      accent: "from-amber-500/20 to-amber-500/5 border-amber-500/30",
+      iconBg: "bg-amber-500/10 group-hover:bg-amber-500/20",
+      iconColor: "text-amber-400",
+    },
+    {
+      icon: Presentation,
+      titleKey: "landing.capabilities.stakeholderPortal",
+      descKey: "landing.capabilities.stakeholderPortalDesc",
+      tier: "free" as const,
+      accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
+      iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
+      iconColor: "text-emerald-400",
+    },
+    {
+      icon: GitBranch,
+      titleKey: "landing.capabilities.crossToolIntel",
+      descKey: "landing.capabilities.crossToolIntelDesc",
       tier: "free" as const,
       accent: "from-cyan-500/20 to-cyan-500/5 border-cyan-500/30",
       iconBg: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
       iconColor: "text-cyan-400",
+    },
+    {
+      icon: BarChart3,
+      titleKey: "landing.capabilities.sprintHighlights",
+      descKey: "landing.capabilities.sprintHighlightsDesc",
+      tier: "free" as const,
+      accent: "from-blue-500/20 to-blue-500/5 border-blue-500/30",
+      iconBg: "bg-blue-500/10 group-hover:bg-blue-500/20",
+      iconColor: "text-blue-400",
+    },
+    {
+      icon: Globe,
+      titleKey: "landing.capabilities.multiLanguage",
+      descKey: "landing.capabilities.multiLanguageDesc",
+      tier: "free" as const,
+      accent: "from-teal-500/20 to-teal-500/5 border-teal-500/30",
+      iconBg: "bg-teal-500/10 group-hover:bg-teal-500/20",
+      iconColor: "text-teal-400",
+    },
+    {
+      icon: Users,
+      titleKey: "landing.capabilities.teamCollaboration",
+      descKey: "landing.capabilities.teamCollaborationDesc",
+      tier: "free" as const,
+      accent: "from-pink-500/20 to-pink-500/5 border-pink-500/30",
+      iconBg: "bg-pink-500/10 group-hover:bg-pink-500/20",
+      iconColor: "text-pink-400",
     },
   ];
 

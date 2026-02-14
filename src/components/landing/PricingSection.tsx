@@ -15,21 +15,23 @@
    const { t } = useTranslation();
    const [hoveredTier, setHoveredTier] = useState<'free' | 'coming-soon' | null>(null);
  
-   const freeFeatures = [
-     { name: t('landing.pricing.freeFeature1'), icon: Zap },
-     { name: t('landing.pricing.freeFeature2'), icon: Zap },
-     { name: t('landing.pricing.freeFeature3'), icon: Zap },
-     { name: t('landing.pricing.freeFeature4'), icon: Zap },
-     { name: "Sprint Ceremonies", icon: Users },
-     { name: "AI Standup Summaries", icon: Sparkles },
-     { name: "Epic Management", icon: Rocket },
-     { name: "Team Collaboration", icon: Users },
-     { name: "Retrospective Insights", icon: Sparkles },
-     { name: "Advanced Analytics", icon: Star },
-     { name: "Stakeholder Portal", icon: Shield },
-     { name: "SAFe Workflows", icon: Rocket },
-     { name: "Executive Digest", icon: Star },
-   ];
+  const freeFeatures = [
+    { name: "Native Kanban & Sprint Board", icon: Zap },
+    { name: "AI Co-Pilot (Gemini-powered)", icon: Sparkles },
+    { name: "Google Calendar Sync", icon: Zap },
+    { name: "Google Sign-In", icon: Zap },
+    { name: "Sprint Ceremonies", icon: Users },
+    { name: "AI Standup Summaries", icon: Sparkles },
+    { name: "Epic Management & Gantt Charts", icon: Rocket },
+    { name: "Multi-Agent AI Debate", icon: Sparkles },
+    { name: "Stakeholder Portal", icon: Shield },
+    { name: "Executive Digest", icon: Star },
+    { name: "9-Language Support", icon: Zap },
+    { name: "SAFe Workflows", icon: Rocket },
+    { name: "Advanced Analytics", icon: Star },
+    { name: "Team Collaboration", icon: Users },
+    { name: "Retrospective Insights", icon: Sparkles },
+  ];
  
    const comingSoonFeatures = [
      { name: "White-label Branding", status: "Planned", icon: Star },
@@ -257,7 +259,7 @@
                          <span className="text-xs font-bold">Q2</span>
                        </div>
                      </div>
-                     <span>Rolling out throughout 2025</span>
+                     <span>Rolling out throughout 2026</span>
                    </div>
                  </div>
                </CardContent>
