@@ -12,6 +12,7 @@ import {
   BookOpen, ArrowRight, Sparkles, ListFilter
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
+import { BackButton } from "@/components/BackButton";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface Feature {
@@ -255,6 +256,7 @@ export default function FeatureDemo() {
       <Navigation />
       
       <div className="container mx-auto px-4 py-8 mt-16">
+        <BackButton className="mb-4" />
         {/* Header */}
         <div className="text-center mb-12">
           <Badge className="mb-4" variant="secondary">
