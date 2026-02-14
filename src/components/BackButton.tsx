@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface BackButtonProps {
   label?: string;
@@ -16,10 +16,13 @@ export const BackButton = ({
   className = ""
 }: BackButtonProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBack = () => {
-    // Try browser back if there's history, otherwise use fallback
-    if (window.history.length > 1) {
+    // Use fallback if this is the first page in the session (no prior app navigation)
+    // window.history.state?.idx tracks React Router's internal navigation index
+    const routerIdx = window.history.state?.idx;
+    if (typeof routerIdx === "number" && routerIdx > 0) {
       navigate(-1);
     } else {
       navigate(fallbackPath);
