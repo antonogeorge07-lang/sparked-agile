@@ -364,6 +364,69 @@ export type Database = {
           },
         ]
       }
+      ai_test_scenarios: {
+        Row: {
+          acceptance_criteria: string | null
+          backlog_item_id: string | null
+          created_at: string
+          generated_by: string
+          generated_scenarios: Json
+          id: string
+          project_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          scenario_count: number
+          status: string
+          updated_at: string
+          user_story: string
+        }
+        Insert: {
+          acceptance_criteria?: string | null
+          backlog_item_id?: string | null
+          created_at?: string
+          generated_by: string
+          generated_scenarios?: Json
+          id?: string
+          project_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          scenario_count?: number
+          status?: string
+          updated_at?: string
+          user_story: string
+        }
+        Update: {
+          acceptance_criteria?: string | null
+          backlog_item_id?: string | null
+          created_at?: string
+          generated_by?: string
+          generated_scenarios?: Json
+          id?: string
+          project_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          scenario_count?: number
+          status?: string
+          updated_at?: string
+          user_story?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_test_scenarios_backlog_item_id_fkey"
+            columns: ["backlog_item_id"]
+            isOneToOne: false
+            referencedRelation: "native_backlog_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_test_scenarios_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_usage_logs: {
         Row: {
           cost_estimate: number | null
@@ -2166,6 +2229,68 @@ export type Database = {
           },
         ]
       }
+      meeting_notes: {
+        Row: {
+          ai_summary: string | null
+          attendees: string[] | null
+          created_at: string
+          created_by: string
+          extracted_action_items: Json | null
+          extracted_decisions: Json | null
+          extracted_key_topics: Json | null
+          id: string
+          meeting_date: string
+          meeting_type: string
+          processed_at: string | null
+          project_id: string
+          raw_notes: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          attendees?: string[] | null
+          created_at?: string
+          created_by: string
+          extracted_action_items?: Json | null
+          extracted_decisions?: Json | null
+          extracted_key_topics?: Json | null
+          id?: string
+          meeting_date?: string
+          meeting_type?: string
+          processed_at?: string | null
+          project_id: string
+          raw_notes: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          ai_summary?: string | null
+          attendees?: string[] | null
+          created_at?: string
+          created_by?: string
+          extracted_action_items?: Json | null
+          extracted_decisions?: Json | null
+          extracted_key_topics?: Json | null
+          id?: string
+          meeting_date?: string
+          meeting_type?: string
+          processed_at?: string | null
+          project_id?: string
+          raw_notes?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meeting_notes_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       native_backlog_items: {
         Row: {
           acceptance_criteria: string[] | null
@@ -3116,6 +3241,59 @@ export type Database = {
           },
         ]
       }
+      resource_forecasts: {
+        Row: {
+          ai_analysis: string | null
+          confidence_level: string
+          created_at: string
+          forecast_data: Json
+          forecast_type: string
+          generated_by: string
+          id: string
+          project_id: string
+          recommendations: Json | null
+          sprints_ahead: number
+          updated_at: string
+          valid_until: string | null
+        }
+        Insert: {
+          ai_analysis?: string | null
+          confidence_level?: string
+          created_at?: string
+          forecast_data?: Json
+          forecast_type?: string
+          generated_by: string
+          id?: string
+          project_id: string
+          recommendations?: Json | null
+          sprints_ahead?: number
+          updated_at?: string
+          valid_until?: string | null
+        }
+        Update: {
+          ai_analysis?: string | null
+          confidence_level?: string
+          created_at?: string
+          forecast_data?: Json
+          forecast_type?: string
+          generated_by?: string
+          id?: string
+          project_id?: string
+          recommendations?: Json | null
+          sprints_ahead?: number
+          updated_at?: string
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_forecasts_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       risk_register: {
         Row: {
           category: string | null
@@ -3416,6 +3594,65 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      smart_nudges: {
+        Row: {
+          created_at: string
+          dismissed_at: string | null
+          expires_at: string | null
+          id: string
+          is_dismissed: boolean
+          is_read: boolean
+          message: string
+          nudge_type: string
+          project_id: string
+          related_item_id: string | null
+          related_item_type: string | null
+          severity: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dismissed_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_dismissed?: boolean
+          is_read?: boolean
+          message: string
+          nudge_type: string
+          project_id: string
+          related_item_id?: string | null
+          related_item_type?: string | null
+          severity?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dismissed_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_dismissed?: boolean
+          is_read?: boolean
+          message?: string
+          nudge_type?: string
+          project_id?: string
+          related_item_id?: string | null
+          related_item_type?: string | null
+          severity?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "smart_nudges_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "pmi_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sprint_burndown: {
         Row: {
