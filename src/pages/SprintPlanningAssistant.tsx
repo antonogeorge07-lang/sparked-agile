@@ -8,11 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Loader2, Sparkles, Calendar, FileText, CheckCircle2, Download } from "lucide-react";
+import { Loader2, Sparkles, Calendar, FileText, CheckCircle2, Download, TrendingUp } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BackButton } from "@/components/BackButton";
+import { ResourceForecastPanel } from "@/components/ResourceForecastPanel";
 
 export default function SprintPlanningAssistant() {
   const navigate = useNavigate();
@@ -352,11 +353,15 @@ export default function SprintPlanningAssistant() {
         )}
 
         <Tabs value={`step${currentStep}`} onValueChange={(v) => setCurrentStep(parseInt(v.replace("step", "")))}>
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="step1">1. Setup</TabsTrigger>
             <TabsTrigger value="step2" disabled={backlogItems.length === 0}>2. Select Items</TabsTrigger>
             <TabsTrigger value="step3" disabled={!agenda}>3. Review Plan</TabsTrigger>
-            <TabsTrigger value="step4" disabled={!outlookEventId}>4. Meeting Minutes</TabsTrigger>
+            <TabsTrigger value="step4" disabled={!outlookEventId}>4. Minutes</TabsTrigger>
+            <TabsTrigger value="step5">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              Forecast
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="step1" className="space-y-6 mt-6">
@@ -682,6 +687,11 @@ export default function SprintPlanningAssistant() {
                 </Button>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Resource Forecast Tab */}
+          <TabsContent value="step5" className="space-y-6 mt-6">
+            <ResourceForecastPanel projectId={null} />
           </TabsContent>
         </Tabs>
       </div>

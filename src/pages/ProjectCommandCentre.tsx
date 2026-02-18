@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Filter, AlertCircle, LayoutDashboard, Kanban, Shield, Lightbulb, FileText } from "lucide-react";
+import { Plus, Filter, AlertCircle, LayoutDashboard, Kanban, Shield, Lightbulb, FileText, FlaskConical, MessageSquare, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import { LoadingState } from "@/components/LoadingState";
 import { StageColumn } from "@/components/command-centre/StageColumn";
@@ -20,6 +20,10 @@ import { DndContext, DragEndEvent, DragOverlay, closestCorners } from "@dnd-kit/
 import { TaskCard } from "@/components/command-centre/TaskCard";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
 import { Card, CardContent } from "@/components/ui/card";
+import { TestScenarioGenerator } from "@/components/TestScenarioGenerator";
+import { MeetingNotesProcessor } from "@/components/MeetingNotesProcessor";
+import { ResourceForecastPanel } from "@/components/ResourceForecastPanel";
+import { SmartNudgesPanel } from "@/components/SmartNudgesPanel";
 
 const PMI_STAGES = [
   { id: "initiation", title: "Initiation", color: "from-blue-500 to-cyan-500" },
@@ -251,6 +255,18 @@ export default function ProjectCommandCentre() {
                 <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="hidden sm:inline">Reports</span>
               </TabsTrigger>
+              <TabsTrigger value="test-scenarios" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <FlaskConical className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Tests</span>
+              </TabsTrigger>
+              <TabsTrigger value="meeting-notes" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Meetings</span>
+              </TabsTrigger>
+              <TabsTrigger value="forecast" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Forecast</span>
+              </TabsTrigger>
             </TabsList>
 
             {/* Project Overview Tab */}
@@ -372,6 +388,45 @@ export default function ProjectCommandCentre() {
                 <div className="space-y-4">
                   <ControlDeck projectId={selectedProject} tasks={tasks} />
                   <AIInsightPlaceholders />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Test Scenarios Tab */}
+            <TabsContent value="test-scenarios">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <TestScenarioGenerator projectId={selectedProject} />
+                </div>
+                <div className="space-y-4">
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <SmartNudgesPanel projectId={selectedProject} />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Meeting Notes Tab */}
+            <TabsContent value="meeting-notes">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <MeetingNotesProcessor projectId={selectedProject} />
+                </div>
+                <div className="space-y-4">
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <SmartNudgesPanel projectId={selectedProject} />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Resource Forecast Tab */}
+            <TabsContent value="forecast">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <ResourceForecastPanel projectId={selectedProject} />
+                </div>
+                <div className="space-y-4">
+                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <SmartNudgesPanel projectId={selectedProject} />
                 </div>
               </div>
             </TabsContent>
