@@ -18,12 +18,16 @@ export const InteractivePreview = () => {
       ai: t('landing.interactivePreview.conversations.a1', "Based on your standup data: 3 blockers identified. Sarah is waiting on API docs, Mike needs design approval, and the deployment pipeline has a failing test. Want me to prioritize these?"),
     },
     {
-      user: t('landing.interactivePreview.conversations.q2', "Help me plan next sprint"),
-      ai: t('landing.interactivePreview.conversations.a2', "Looking at your velocity (24 pts/sprint avg) and backlog: I recommend pulling 8 stories totaling 26 points. This includes 2 high-priority bug fixes and 6 feature items. Should I draft the sprint goal?"),
+      user: t('landing.interactivePreview.conversations.q2', "Generate test scenarios for the login user story"),
+      ai: t('landing.interactivePreview.conversations.a2', "I've generated 6 test scenarios: 3 happy path (valid credentials, SSO, remember me), 2 edge cases (expired session, concurrent logins), and 1 security test (brute force protection). Ready to export to your backlog?"),
     },
     {
-      user: t('landing.interactivePreview.conversations.q3', "Summarize yesterday's standup"),
-      ai: t('landing.interactivePreview.conversations.a3', "5 team members reported. Key updates: Frontend auth flow complete, backend API 80% done. 1 new blocker (database migration). Overall team velocity on track for sprint commitment."),
+      user: t('landing.interactivePreview.conversations.q3', "Forecast capacity for next sprint"),
+      ai: t('landing.interactivePreview.conversations.a3', "Based on 6-sprint velocity (avg 24 pts): recommended capacity is 22 pts (accounting for 1 team member on leave). Risk of overcommitment is low at 12%. I suggest 3 feature stories and 2 tech debt items."),
+    },
+    {
+      user: t('landing.interactivePreview.conversations.q4', "Summarise yesterday's retro notes"),
+      ai: t('landing.interactivePreview.conversations.a4', "From the retro transcript: 3 wins (faster CI, improved code reviews, better standups), 2 improvements needed (deploy frequency, documentation). I've created 2 action items and assigned them to the next sprint."),
     },
   ];
 
@@ -150,9 +154,10 @@ export const InteractivePreview = () => {
         >
           {[
             t('landing.interactivePreview.features.sprintPlanning'),
-            t('landing.interactivePreview.features.standupSummaries'),
-            t('landing.interactivePreview.features.blockerDetection'),
-            t('landing.interactivePreview.features.velocityInsights')
+            t('landing.interactivePreview.features.testScenarios', 'Test Scenarios'),
+            t('landing.interactivePreview.features.resourceForecast', 'Resource Forecast'),
+            t('landing.interactivePreview.features.meetingActions', 'Meeting Actions'),
+            t('landing.interactivePreview.features.smartNudges', 'Smart Nudges')
           ].map((feature) => (
             <span
               key={feature}

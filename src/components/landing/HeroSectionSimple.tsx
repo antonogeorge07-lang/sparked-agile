@@ -70,10 +70,10 @@ export function HeroSectionSimple() {
           delay: 0.1
         }}>
             <span className="block bg-gradient-to-r from-foreground via-foreground to-foreground/80 bg-clip-text text-transparent">
-              Spark-Agile
+              18+ AI Agents.
             </span>
             <span className="block mt-1 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
-              Active Intelligence
+              One Agile Platform.
             </span>
             <motion.span className="block mt-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-muted-foreground" initial={{
             opacity: 0
