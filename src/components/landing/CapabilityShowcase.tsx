@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { Mail, GitBranch, BarChart3, Users, Target, Calendar, ArrowRight, Sparkles, Kanban, Brain, Presentation, Globe } from "lucide-react";
+import { Mail, GitBranch, BarChart3, Users, Target, Calendar, ArrowRight, Sparkles, Kanban, Brain, Presentation, Globe, FlaskConical, FileText, TrendingUp, Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -92,6 +92,42 @@ export function CapabilityShowcase() {
       accent: "from-pink-500/20 to-pink-500/5 border-pink-500/30",
       iconBg: "bg-pink-500/10 group-hover:bg-pink-500/20",
       iconColor: "text-pink-400",
+    },
+    {
+      icon: FlaskConical,
+      titleKey: "landing.capabilities.testScenarios",
+      descKey: "landing.capabilities.testScenariosDesc",
+      tier: "free" as const,
+      accent: "from-orange-500/20 to-orange-500/5 border-orange-500/30",
+      iconBg: "bg-orange-500/10 group-hover:bg-orange-500/20",
+      iconColor: "text-orange-400",
+    },
+    {
+      icon: FileText,
+      titleKey: "landing.capabilities.meetingNotes",
+      descKey: "landing.capabilities.meetingNotesDesc",
+      tier: "free" as const,
+      accent: "from-sky-500/20 to-sky-500/5 border-sky-500/30",
+      iconBg: "bg-sky-500/10 group-hover:bg-sky-500/20",
+      iconColor: "text-sky-400",
+    },
+    {
+      icon: TrendingUp,
+      titleKey: "landing.capabilities.resourceForecast",
+      descKey: "landing.capabilities.resourceForecastDesc",
+      tier: "free" as const,
+      accent: "from-lime-500/20 to-lime-500/5 border-lime-500/30",
+      iconBg: "bg-lime-500/10 group-hover:bg-lime-500/20",
+      iconColor: "text-lime-400",
+    },
+    {
+      icon: Bell,
+      titleKey: "landing.capabilities.smartNudges",
+      descKey: "landing.capabilities.smartNudgesDesc",
+      tier: "free" as const,
+      accent: "from-fuchsia-500/20 to-fuchsia-500/5 border-fuchsia-500/30",
+      iconBg: "bg-fuchsia-500/10 group-hover:bg-fuchsia-500/20",
+      iconColor: "text-fuchsia-400",
     },
   ];
 
