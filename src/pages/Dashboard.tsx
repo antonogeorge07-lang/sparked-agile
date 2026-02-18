@@ -30,6 +30,7 @@ import { Bell, GitBranch } from "lucide-react";
 import { GitHubActivityCard } from "@/components/GitHubActivityCard";
 import { EpicDashboardWidget } from "@/components/epic/EpicDashboardWidget";
 import { IntegrationSettings } from "@/components/IntegrationSettings";
+import { SmartNudgesPanel } from "@/components/SmartNudgesPanel";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
@@ -450,6 +451,13 @@ export default function Dashboard() {
               <ActionItemsChart />
             </div>
           </div>
+
+          {/* Smart Nudges */}
+          {!isGuestMode && selectedProject && (
+            <div className="mt-8 mb-6">
+              <SmartNudgesPanel projectId={selectedProject} />
+            </div>
+          )}
 
           {/* Epic Health Widget */}
           <div className="mt-8 mb-6">

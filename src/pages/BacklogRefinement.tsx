@@ -8,8 +8,9 @@ import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertCircle, GitBranch, TrendingUp, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+import { AlertCircle, GitBranch, TrendingUp, CheckCircle2, Clock, AlertTriangle, FlaskConical } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { TestScenarioGenerator } from "@/components/TestScenarioGenerator";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
@@ -334,6 +335,13 @@ const BacklogRefinement = () => {
               </CardContent>
             </Card>
           </>
+        )}
+
+        {/* Test Scenario Generator */}
+        {selectedProject && (
+          <div className="mt-8">
+            <TestScenarioGenerator projectId={selectedProject} />
+          </div>
         )}
       </div>
     </div>

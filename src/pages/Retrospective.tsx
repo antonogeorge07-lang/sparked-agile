@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Target, Sparkles, Send, Loader2 } from "lucide-react";
+import { Target, Sparkles, Send, Loader2, FileText } from "lucide-react";
+import { MeetingNotesProcessor } from "@/components/MeetingNotesProcessor";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationStatus } from "@/components/IntegrationStatus";
@@ -252,6 +253,17 @@ export default function Retrospective() {
             )}
           </div>
         </div>
+
+        {/* Meeting Notes Processor */}
+        {selectedProject && (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <FileText className="w-6 h-6" />
+              Process Meeting Notes
+            </h2>
+            <MeetingNotesProcessor projectId={selectedProject} />
+          </div>
+        )}
       </main>
     </div>
   );

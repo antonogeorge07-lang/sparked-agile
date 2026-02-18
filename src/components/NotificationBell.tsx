@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell, AlertTriangle, Zap, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -14,7 +14,8 @@ import { formatDistanceToNow } from "date-fns";
 interface Notification {
   id: string;
   title: string;
-  type: "action_item" | "workflow" | "integration";
+  type: "action_item" | "workflow" | "integration" | "nudge";
+  severity?: "info" | "warning" | "urgent";
   created_at: string;
   read: boolean;
 }
@@ -26,16 +27,11 @@ export const NotificationBell = () => {
   useEffect(() => {
     loadRecentNotifications();
     
-    // Listen for new notifications in real-time
     const channel = supabase
       .channel('notifications-bell')
       .on(
         'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'action_items'
-        },
+        { event: 'INSERT', schema: 'public', table: 'action_items' },
         (payload) => {
           const newNotification: Notification = {
             id: payload.new.id,
@@ -44,7 +40,23 @@ export const NotificationBell = () => {
             created_at: payload.new.created_at,
             read: false,
           };
-          setNotifications(prev => [newNotification, ...prev].slice(0, 10));
+          setNotifications(prev => [newNotification, ...prev].slice(0, 15));
+          setUnreadCount(prev => prev + 1);
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'smart_nudges' },
+        (payload) => {
+          const newNotification: Notification = {
+            id: payload.new.id,
+            title: payload.new.title,
+            type: "nudge",
+            severity: payload.new.severity,
+            created_at: payload.new.created_at,
+            read: false,
+          };
+          setNotifications(prev => [newNotification, ...prev].slice(0, 15));
           setUnreadCount(prev => prev + 1);
         }
       )
@@ -60,24 +72,42 @@ export const NotificationBell = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Load recent action items as notifications
+      // Load action items
       const { data: actionItems } = await supabase
         .from('action_items')
         .select('id, title, created_at')
         .order('created_at', { ascending: false })
+        .limit(5);
+
+      // Load smart nudges
+      const { data: nudges } = await supabase
+        .from('smart_nudges')
+        .select('id, title, severity, created_at, is_read')
+        .eq('user_id', user.id)
+        .eq('is_dismissed', false)
+        .order('created_at', { ascending: false })
         .limit(10);
 
-      if (actionItems) {
-        const notifs: Notification[] = actionItems.map(item => ({
+      const allNotifs: Notification[] = [
+        ...(nudges || []).map(n => ({
+          id: n.id,
+          title: n.title,
+          type: "nudge" as const,
+          severity: n.severity as "info" | "warning" | "urgent",
+          created_at: n.created_at,
+          read: n.is_read,
+        })),
+        ...(actionItems || []).map(item => ({
           id: item.id,
           title: `Action item: ${item.title}`,
-          type: "action_item",
+          type: "action_item" as const,
           created_at: item.created_at,
           read: false,
-        }));
-        setNotifications(notifs);
-        setUnreadCount(notifs.length);
-      }
+        })),
+      ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+      setNotifications(allNotifs.slice(0, 15));
+      setUnreadCount(allNotifs.filter(n => !n.read).length);
     } catch (error) {
       console.error("Error loading notifications:", error);
     }
@@ -122,19 +152,33 @@ export const NotificationBell = () => {
           <ScrollArea className="h-[300px]">
             {notifications.length > 0 ? (
               <div className="space-y-2">
-                {notifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className={`p-3 rounded-lg border text-sm ${
-                      !notification.read ? "bg-primary/5 border-primary/20" : "bg-muted/30"
-                    }`}
-                  >
-                    <p className="font-medium">{notification.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
-                    </p>
-                  </div>
-                ))}
+                {notifications.map((notification) => {
+                  const NudgeIcon = notification.severity === 'urgent' ? AlertTriangle : 
+                                    notification.severity === 'warning' ? Zap : Info;
+                  return (
+                    <div
+                      key={notification.id}
+                      className={`p-3 rounded-lg border text-sm ${
+                        !notification.read ? "bg-primary/5 border-primary/20" : "bg-muted/30"
+                      }`}
+                    >
+                      <div className="flex items-start gap-2">
+                        {notification.type === 'nudge' && (
+                          <NudgeIcon className={`w-3.5 h-3.5 mt-0.5 shrink-0 ${
+                            notification.severity === 'urgent' ? 'text-destructive' : 
+                            notification.severity === 'warning' ? 'text-orange-500' : 'text-blue-500'
+                          }`} />
+                        )}
+                        <div>
+                          <p className="font-medium">{notification.title}</p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <div className="text-center py-8 text-muted-foreground text-sm">
