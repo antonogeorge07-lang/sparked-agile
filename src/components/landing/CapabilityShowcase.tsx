@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { Mail, GitBranch, BarChart3, Users, Target, Calendar, ArrowRight, Sparkles, Kanban, Brain, Presentation, Globe, FlaskConical, FileText, TrendingUp, Bell } from "lucide-react";
+import { GitBranch, Target, ArrowRight, Sparkles, Kanban, Brain, Presentation, FlaskConical } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -40,15 +40,6 @@ export function CapabilityShowcase() {
       iconColor: "text-rose-400",
     },
     {
-      icon: Calendar,
-      titleKey: "landing.capabilities.googleCalendar",
-      descKey: "landing.capabilities.googleCalendarDesc",
-      tier: "free" as const,
-      accent: "from-amber-500/20 to-amber-500/5 border-amber-500/30",
-      iconBg: "bg-amber-500/10 group-hover:bg-amber-500/20",
-      iconColor: "text-amber-400",
-    },
-    {
       icon: Presentation,
       titleKey: "landing.capabilities.stakeholderPortal",
       descKey: "landing.capabilities.stakeholderPortalDesc",
@@ -67,33 +58,6 @@ export function CapabilityShowcase() {
       iconColor: "text-cyan-400",
     },
     {
-      icon: BarChart3,
-      titleKey: "landing.capabilities.sprintHighlights",
-      descKey: "landing.capabilities.sprintHighlightsDesc",
-      tier: "free" as const,
-      accent: "from-blue-500/20 to-blue-500/5 border-blue-500/30",
-      iconBg: "bg-blue-500/10 group-hover:bg-blue-500/20",
-      iconColor: "text-blue-400",
-    },
-    {
-      icon: Globe,
-      titleKey: "landing.capabilities.multiLanguage",
-      descKey: "landing.capabilities.multiLanguageDesc",
-      tier: "free" as const,
-      accent: "from-teal-500/20 to-teal-500/5 border-teal-500/30",
-      iconBg: "bg-teal-500/10 group-hover:bg-teal-500/20",
-      iconColor: "text-teal-400",
-    },
-    {
-      icon: Users,
-      titleKey: "landing.capabilities.teamCollaboration",
-      descKey: "landing.capabilities.teamCollaborationDesc",
-      tier: "free" as const,
-      accent: "from-pink-500/20 to-pink-500/5 border-pink-500/30",
-      iconBg: "bg-pink-500/10 group-hover:bg-pink-500/20",
-      iconColor: "text-pink-400",
-    },
-    {
       icon: FlaskConical,
       titleKey: "landing.capabilities.testScenarios",
       descKey: "landing.capabilities.testScenariosDesc",
@@ -101,33 +65,6 @@ export function CapabilityShowcase() {
       accent: "from-orange-500/20 to-orange-500/5 border-orange-500/30",
       iconBg: "bg-orange-500/10 group-hover:bg-orange-500/20",
       iconColor: "text-orange-400",
-    },
-    {
-      icon: FileText,
-      titleKey: "landing.capabilities.meetingNotes",
-      descKey: "landing.capabilities.meetingNotesDesc",
-      tier: "free" as const,
-      accent: "from-sky-500/20 to-sky-500/5 border-sky-500/30",
-      iconBg: "bg-sky-500/10 group-hover:bg-sky-500/20",
-      iconColor: "text-sky-400",
-    },
-    {
-      icon: TrendingUp,
-      titleKey: "landing.capabilities.resourceForecast",
-      descKey: "landing.capabilities.resourceForecastDesc",
-      tier: "free" as const,
-      accent: "from-lime-500/20 to-lime-500/5 border-lime-500/30",
-      iconBg: "bg-lime-500/10 group-hover:bg-lime-500/20",
-      iconColor: "text-lime-400",
-    },
-    {
-      icon: Bell,
-      titleKey: "landing.capabilities.smartNudges",
-      descKey: "landing.capabilities.smartNudgesDesc",
-      tier: "free" as const,
-      accent: "from-fuchsia-500/20 to-fuchsia-500/5 border-fuchsia-500/30",
-      iconBg: "bg-fuchsia-500/10 group-hover:bg-fuchsia-500/20",
-      iconColor: "text-fuchsia-400",
     },
   ];
 
