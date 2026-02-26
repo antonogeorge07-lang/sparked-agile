@@ -35,6 +35,8 @@ export default function ProjectWorkspace() {
   const [githubConnected, setGithubConnected] = useState(false);
   const [outlookConnected, setOutlookConnected] = useState(false);
   const [teamsConnected, setTeamsConnected] = useState(false);
+  const [googleConnected, setGoogleConnected] = useState(false);
+  const [googleConnecting, setGoogleConnecting] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationConfig, setCelebrationConfig] = useState({
     title: "",
@@ -54,6 +56,15 @@ export default function ProjectWorkspace() {
 
     // Check if Microsoft is connected via database (not localStorage for security)
     checkMicrosoftConnection();
+    checkGoogleConnection();
+
+    // Check URL params for Google connection success
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('google_connected') === 'true') {
+      setGoogleConnected(true);
+      toast.success('Google Calendar connected successfully!');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
   }, [searchParams]);
 
   const checkMicrosoftConnection = async () => {
@@ -67,6 +78,66 @@ export default function ProjectWorkspace() {
 
     if (token && token.is_valid) {
       setOutlookConnected(true);
+    }
+  };
+
+  const checkGoogleConnection = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data } = await supabase
+      .from('user_google_tokens')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (data) {
+      setGoogleConnected(true);
+    }
+  };
+
+  const connectGoogle = async () => {
+    setGoogleConnecting(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Please log in first');
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('google-oauth-init', {
+        body: { redirectUri: window.location.href },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No authorization URL returned');
+      }
+    } catch (error: any) {
+      console.error('Google connection error:', error);
+      toast.error(error.message || 'Failed to start Google connection');
+    } finally {
+      setGoogleConnecting(false);
+    }
+  };
+
+  const disconnectGoogle = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('user_google_tokens')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+      setGoogleConnected(false);
+      toast.success('Google account disconnected');
+    } catch (error: any) {
+      toast.error('Failed to disconnect Google account');
     }
   };
 
@@ -298,6 +369,7 @@ export default function ProjectWorkspace() {
     { id: "outlook", title: "Outlook Connected", completed: outlookConnected },
     { id: "jira", title: "JIRA Connected", completed: jiraConnected },
     { id: "github", title: "GitHub Connected", completed: githubConnected },
+    { id: "google", title: "Google Calendar", completed: googleConnected },
     { id: "teams", title: "Teams Channel Setup", completed: teamsConnected }
   ];
 
@@ -524,6 +596,42 @@ export default function ProjectWorkspace() {
                       >
                         {teamsConnected ? "Channel Created" : "Setup Teams Channel"}
                       </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start justify-between p-4 border rounded-lg">
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-medium">Google Calendar</h3>
+                        {googleConnected && <CheckCircle2 className="text-success w-5 h-5" />}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {googleConnected
+                          ? "Connected — ceremonies will sync to your Google Calendar"
+                          : "Sync sprint ceremonies and meetings with Google Calendar"
+                        }
+                      </p>
+                      {googleConnected ? (
+                        <Button onClick={disconnectGoogle} variant="destructive" size="sm">
+                          Disconnect
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={connectGoogle}
+                          disabled={googleConnecting}
+                          variant="outline"
+                          className="w-full"
+                        >
+                          {googleConnecting ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Connecting...
+                            </>
+                          ) : (
+                            "Connect Google Calendar"
+                          )}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
