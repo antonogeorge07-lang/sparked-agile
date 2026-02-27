@@ -51,11 +51,7 @@ export function FooterSection() {
                   {t('landing.footer.integrations')}
                 </Link>
               </li>
-              <li>
-                <Link to="/landing#pricing" className="hover:text-foreground transition-colors">
-                  {t('landing.footer.pricing')}
-                </Link>
-              </li>
+              {/* Pricing link hidden until monetisation is active */}
             </ul>
           </nav>
           <nav aria-label="Company navigation">

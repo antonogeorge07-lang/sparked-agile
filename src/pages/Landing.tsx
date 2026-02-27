@@ -6,7 +6,7 @@ import { HeroSectionSimple } from "@/components/landing/HeroSectionSimple";
 import { ProofSection } from "@/components/landing/ProofSection";
 import { CapabilityShowcase } from "@/components/landing/CapabilityShowcase";
 import { SimpleCTA } from "@/components/landing/SimpleCTA";
-import { PricingSection } from "@/components/landing/PricingSection";
+// import { PricingSection } from "@/components/landing/PricingSection"; // Hidden until monetisation is active
 import { OurPhilosophySection } from "@/components/landing/OurPhilosophySection";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
@@ -221,9 +221,7 @@ export default function Landing() {
           </Suspense>
         </ScrollReveal>
 
-        <ScrollReveal fullWidth delay={0.1}>
-          <PricingSection onEarlyAccess={handleEarlyAccess} />
-        </ScrollReveal>
+        {/* Pricing section hidden - revisit when monetisation is active */}
         
         <ScrollReveal fullWidth delay={0.1}>
           <SimpleCTA />
