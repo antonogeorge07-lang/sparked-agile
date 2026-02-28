@@ -88,6 +88,38 @@ serve(async (req) => {
       `Feedback ${index + 1}:\n- What went well: ${item.wentWell}\n- What could improve: ${item.improve}\n- Action items: ${item.actionItems || 'None suggested'}`
     ).join('\n\n');
 
+    // RAG: Retrieve historical context before generating insights
+    let historicalContext = '';
+    if (projectId) {
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const { generateEmbedding, vectorToSql } = await import("../_shared/rag-utils.ts");
+        const serviceClient = createClient(supabaseUrl, supabaseServiceKey);
+
+        const queryText = `retrospective feedback themes: ${feedback.map((f: any) => f.improve).join(', ')}`;
+        const queryEmbedding = await generateEmbedding(queryText, LOVABLE_API_KEY);
+
+        const { data: ragResults } = await serviceClient.rpc('search_project_knowledge', {
+          query_embedding: vectorToSql(queryEmbedding),
+          query_text: queryText,
+          target_project_id: projectId,
+          match_count: 5,
+          similarity_threshold: 0.25,
+          content_types: ['retro_insight', 'lesson_learned', 'decision'],
+        });
+
+        if (ragResults && ragResults.length > 0) {
+          historicalContext = `\n\n--- HISTORICAL CONTEXT (from past retrospectives and decisions) ---\n` +
+            ragResults.map((r: any) => `[${r.content_type}] ${r.title}: ${r.content}`).join('\n\n') +
+            `\n--- END HISTORICAL CONTEXT ---\n\nUse this historical context to identify recurring patterns, track improvement over time, and provide more targeted recommendations.`;
+          console.log(`RAG: Injected ${ragResults.length} historical entries`);
+        }
+      } catch (ragError) {
+        console.warn('RAG retrieval failed (non-blocking):', ragError);
+      }
+    }
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -99,11 +131,11 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are a Scrum Master assistant analyzing retrospective feedback. Identify patterns, themes, and actionable insights to help teams improve."
+            content: "You are a Scrum Master assistant analyzing retrospective feedback. Identify patterns, themes, and actionable insights to help teams improve. When historical context is provided, reference past patterns and track whether previous issues have been resolved."
           },
           {
             role: "user",
-            content: `Analyze this sprint retrospective feedback and provide:\n\n${feedbackText}\n\n1. Top 3 positive themes (what worked well)\n2. Top 3 areas for improvement\n3. 3-5 specific, actionable recommendations\n4. Overall team health assessment`
+            content: `Analyze this sprint retrospective feedback and provide:\n\n${feedbackText}${historicalContext}\n\n1. Top 3 positive themes (what worked well)\n2. Top 3 areas for improvement\n3. 3-5 specific, actionable recommendations\n4. Overall team health assessment\n5. Recurring patterns (if historical context available)`
           }
         ],
       }),
@@ -117,6 +149,34 @@ serve(async (req) => {
 
     const data = await response.json();
     const insights = data.choices[0].message.content;
+
+    // RAG: Ingest generated insights for future retrieval
+    if (projectId) {
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const { generateEmbedding, vectorToSql } = await import("../_shared/rag-utils.ts");
+        const serviceClient = createClient(supabaseUrl, supabaseServiceKey);
+
+        const embedding = await generateEmbedding(
+          `Retrospective insights: ${insights.slice(0, 3000)}`,
+          LOVABLE_API_KEY
+        );
+
+        await serviceClient.from('project_knowledge_base').insert({
+          project_id: projectId,
+          content_type: 'retro_insight',
+          title: `Sprint Retrospective Insights - ${new Date().toISOString().split('T')[0]}`,
+          content: insights.slice(0, 10000),
+          metadata: { feedback_count: feedback.length, generated_at: new Date().toISOString() },
+          embedding: vectorToSql(embedding),
+          created_by: user.id,
+        });
+        console.log('RAG: Ingested retro insights');
+      } catch (ingestError) {
+        console.warn('RAG ingestion failed (non-blocking):', ingestError);
+      }
+    }
 
     return new Response(
       JSON.stringify({ insights }),

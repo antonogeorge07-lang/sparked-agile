@@ -99,6 +99,38 @@ serve(async (req) => {
 
     if (workflowError) throw workflowError;
 
+    // RAG: Retrieve relevant historical context
+    let historicalContext = '';
+    try {
+      const { generateEmbedding, vectorToSql } = await import("../_shared/rag-utils.ts");
+      const queryText = `${workflowType}: ${JSON.stringify(inputData).slice(0, 500)}`;
+      const queryEmbedding = await generateEmbedding(queryText, LOVABLE_API_KEY);
+
+      const contentTypeMap: Record<string, string[]> = {
+        'standup_analysis': ['standup_insight', 'action_item', 'decision'],
+        'sprint_extraction': ['sprint_summary', 'lesson_learned', 'retro_insight'],
+        'retro_insights': ['retro_insight', 'lesson_learned', 'decision'],
+      };
+
+      const { data: ragResults } = await supabase.rpc('search_project_knowledge', {
+        query_embedding: vectorToSql(queryEmbedding),
+        query_text: queryText,
+        target_project_id: projectId,
+        match_count: 5,
+        similarity_threshold: 0.25,
+        content_types: contentTypeMap[workflowType] || null,
+      });
+
+      if (ragResults && ragResults.length > 0) {
+        historicalContext = `\n\n--- HISTORICAL PROJECT CONTEXT ---\n` +
+          ragResults.map((r: any) => `[${r.content_type}] ${r.title}: ${r.content}`).join('\n\n') +
+          `\n--- END CONTEXT ---\n\nLeverage this historical context to identify recurring patterns and provide more targeted insights.`;
+        console.log(`RAG: Injected ${ragResults.length} entries into ${workflowType}`);
+      }
+    } catch (ragError) {
+      console.warn('RAG retrieval failed (non-blocking):', ragError);
+    }
+
     let systemPrompt = '';
     let userPrompt = '';
     let actionItems: any[] = [];
@@ -107,9 +139,9 @@ serve(async (req) => {
     switch (workflowType) {
       case 'standup_analysis':
         systemPrompt = `You are an AI assistant that analyzes daily standup updates and extracts actionable items. 
-        Focus on identifying blockers, impediments, and tasks that need attention.`;
+        Focus on identifying blockers, impediments, and tasks that need attention. When historical context is provided, reference past patterns.`;
         userPrompt = `Analyze these standup updates and extract action items with priority levels:
-        ${JSON.stringify(inputData.updates, null, 2)}
+        ${JSON.stringify(inputData.updates, null, 2)}${historicalContext}
         
         For each blocker or important item, create an action item with:
         - title: Brief description
@@ -121,29 +153,31 @@ serve(async (req) => {
 
       case 'sprint_extraction':
         systemPrompt = `You are an AI assistant that analyzes sprint summaries and generates insights.
-        Extract key achievements, identify patterns, and suggest improvements.`;
+        Extract key achievements, identify patterns, and suggest improvements. Reference historical patterns when context is available.`;
         userPrompt = `Analyze this sprint data and provide insights:
-        ${JSON.stringify(inputData, null, 2)}
+        ${JSON.stringify(inputData, null, 2)}${historicalContext}
         
         Provide:
         1. Key achievements (array of strings)
         2. Blockers identified (array of strings)
         3. AI insights and recommendations (text)
         4. Action items for next sprint (array with title, description, priority)
+        5. Recurring patterns (if historical context available)
         
         Return as JSON.`;
         break;
 
       case 'retro_insights':
         systemPrompt = `You are an AI assistant that analyzes retrospective feedback and identifies themes.
-        Look for patterns across team feedback and suggest actionable improvements.`;
+        Look for patterns across team feedback and suggest actionable improvements. Track recurring themes from historical context.`;
         userPrompt = `Analyze this retrospective feedback:
-        ${JSON.stringify(inputData.feedback, null, 2)}
+        ${JSON.stringify(inputData.feedback, null, 2)}${historicalContext}
         
         Provide:
         1. Common themes (array of strings)
         2. Action items to address concerns (array with title, description, priority)
         3. Positive patterns to continue (array of strings)
+        4. Recurring issues from past retrospectives (if context available)
         
         Return as JSON.`;
         break;
@@ -230,6 +264,37 @@ serve(async (req) => {
       .eq('id', workflowExecution.id);
 
     if (updateError) throw updateError;
+
+    // RAG: Ingest workflow output for future retrieval
+    try {
+      const { generateEmbedding, vectorToSql } = await import("../_shared/rag-utils.ts");
+      const contentTypeMap: Record<string, string> = {
+        'standup_analysis': 'standup_insight',
+        'sprint_extraction': 'sprint_summary',
+        'retro_insights': 'retro_insight',
+      };
+
+      const summaryContent = JSON.stringify(parsedResult).slice(0, 5000);
+      const embedding = await generateEmbedding(summaryContent, LOVABLE_API_KEY);
+
+      await supabase.from('project_knowledge_base').insert({
+        project_id: projectId,
+        content_type: contentTypeMap[workflowType] || 'workflow_output',
+        title: `${workflowType.replace(/_/g, ' ')} - ${new Date().toISOString().split('T')[0]}`,
+        content: summaryContent,
+        metadata: {
+          workflow_id: workflowExecution.id,
+          execution_time_ms: executionTime,
+          action_items_count: actionItems.length,
+        },
+        embedding: vectorToSql(embedding),
+        source_id: workflowExecution.id,
+        created_by: user.id,
+      });
+      console.log('RAG: Ingested workflow output');
+    } catch (ingestError) {
+      console.warn('RAG ingestion failed (non-blocking):', ingestError);
+    }
 
     return new Response(
       JSON.stringify({
