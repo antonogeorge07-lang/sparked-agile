@@ -2801,6 +2801,66 @@ export type Database = {
           },
         ]
       }
+      project_knowledge_base: {
+        Row: {
+          content: string
+          content_type: string
+          created_at: string
+          created_by: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          project_id: string
+          search_vector: unknown
+          source_id: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          content_type: string
+          created_at?: string
+          created_by?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          project_id: string
+          search_vector?: unknown
+          source_id?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          content_type?: string
+          created_at?: string
+          created_by?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          project_id?: string
+          search_vector?: unknown
+          source_id?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_knowledge_base_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_knowledge_base_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "unified_project_integrations"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       project_member_access_log: {
         Row: {
           access_type: string
@@ -5608,6 +5668,10 @@ export type Database = {
       cleanup_old_access_logs:
         | { Args: never; Returns: undefined }
         | { Args: { days_to_keep?: number }; Returns: number }
+      cleanup_old_knowledge_entries: {
+        Args: { days_to_keep?: number }
+        Returns: number
+      }
       cleanup_project_member_access_logs: {
         Args: { days_to_keep?: number }
         Returns: number
@@ -5989,6 +6053,27 @@ export type Database = {
         Returns: string
       }
       sanitize_webhook_payload: { Args: { payload: Json }; Returns: Json }
+      search_project_knowledge: {
+        Args: {
+          content_types?: string[]
+          match_count?: number
+          query_embedding: string
+          query_text: string
+          similarity_threshold?: number
+          target_project_id: string
+        }
+        Returns: {
+          combined_score: number
+          content: string
+          content_type: string
+          created_at: string
+          id: string
+          metadata: Json
+          similarity: number
+          text_rank: number
+          title: string
+        }[]
+      }
       toggle_integration_status: {
         Args: { integration_id: string; new_status: boolean }
         Returns: boolean
