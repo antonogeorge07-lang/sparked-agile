@@ -92,11 +92,11 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}>
 
-              <span className="block text-foreground">
-                Your Agile Co-Pilot.
+              <span className="block text-foreground">Your Agile
+Co-Pilot.
               </span>
-              <span className="block mt-1 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Always On. Always Smart.
+              <span className="block mt-1 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Always On.
+Always Smart.
               </span>
             </motion.h1>
 
