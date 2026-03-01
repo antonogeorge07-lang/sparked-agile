@@ -46,7 +46,7 @@ export default function FAQ() {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>What is SAAI?</AccordionTrigger>
                   <AccordionContent>
-                    SAAI (Spark-Agile Active Intelligence) is your AI Chief of Staff — a Command Centre for Remote Teams. 
+                    SAAI (Spark-Agile Active Intelligence) is your AI Chief of Staff - a Command Centre for Remote Teams. 
                     It is the "missing cognitive layer" that unifies context from all your tools (GitHub, Jira, Slack, Outlook) 
                     and delivers actionable insights in 5 minutes. No more tool chaos, no more missed updates.
                   </AccordionContent>

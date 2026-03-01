@@ -106,7 +106,7 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}>
 
-              18 specialist AI agents handle sprint planning, retros, forecasting and more —
+              18 specialist AI agents handle sprint planning, retros, forecasting and more,
               so you focus on delivering value, not admin.
             </motion.p>
 
