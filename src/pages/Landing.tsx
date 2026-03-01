@@ -15,7 +15,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { LivePlatformStats } from "@/components/landing/LivePlatformStats";
 import { CreatorStorySection } from "@/components/landing/CreatorStorySection";
 import { TrustSignals } from "@/components/landing/TrustSignals";
-import { InteractivePreview } from "@/components/landing/InteractivePreview";
+
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -196,10 +196,7 @@ export default function Landing() {
           <CapabilityShowcase />
         </ScrollReveal>
 
-        {/* Interactive AI Preview */}
-        <ScrollReveal fullWidth delay={0.1}>
-          <InteractivePreview />
-        </ScrollReveal>
+        {/* Interactive AI Preview moved into hero section */}
         
         <ScrollReveal fullWidth delay={0.1}>
           <ProofSection onWatchDemo={handleWatchDemo} />
