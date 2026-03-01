@@ -1,5 +1,5 @@
 /**
- * RAG Utilities — Shared embedding generation and retrieval helpers
+ * RAG Utilities - Shared embedding generation and retrieval helpers
  * 
  * Uses a 32-dimensional "semantic fingerprint" approach:
  * Instead of generic embeddings (which require a dedicated embeddings API),

@@ -607,7 +607,7 @@ export default function ProjectWorkspace() {
                       </div>
                       <p className="text-sm text-muted-foreground">
                         {googleConnected
-                          ? "Connected — ceremonies will sync to your Google Calendar"
+                          ? "Connected - ceremonies will sync to your Google Calendar"
                           : "Sync sprint ceremonies and meetings with Google Calendar"
                         }
                       </p>

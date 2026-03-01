@@ -91,7 +91,7 @@ export default function About() {
     {
       icon: Sparkles,
       title: "5 Integrations",
-      description: "Jira, GitHub, Microsoft Outlook, Microsoft Teams, and Slack — connect the tools you already use"
+      description: "Jira, GitHub, Microsoft Outlook, Microsoft Teams, and Slack - connect the tools you already use"
     }
   ];
 
@@ -146,7 +146,7 @@ export default function About() {
                   juggling Jira, GitHub, Slack, and Outlook, I spent more time switching tabs than actually leading my team.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
-                  We built SAAI as the "missing cognitive layer" — an AI Chief of Staff that understands context across 
+                  We built SAAI as the "missing cognitive layer" - an AI Chief of Staff that understands context across 
                   all your tools and delivers what matters in 5 minutes. No more tool chaos. No more missed updates.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -197,7 +197,7 @@ export default function About() {
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Vision</h3>
                   <p className="text-sm text-muted-foreground">
-                    Get your 5-minute team pulse — no meeting required
+                    Get your 5-minute team pulse - no meeting required
                   </p>
                 </div>
               </CardContent>
@@ -273,7 +273,7 @@ export default function About() {
                   purposeful AI-powered tools for teams that value quality, clarity, and progress.
                 </p>
                 <p className="text-primary-foreground/80 max-w-xl mx-auto text-sm">
-                  This is the first step toward a new era of engagement — one where AI empowers people, 
+                  This is the first step toward a new era of engagement, one where AI empowers people, 
                   rather than replacing them.
                 </p>
               </div>
