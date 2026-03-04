@@ -271,7 +271,7 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              18 specialist AI agents handle sprint planning, retros, forecasting and more —
+              18 specialist AI agents handle sprint planning, retros, forecasting and more,
               <span className="text-foreground font-normal"> so you ship value, not paperwork.</span>
             </motion.p>
 
