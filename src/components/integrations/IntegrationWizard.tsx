@@ -131,7 +131,7 @@ export const IntegrationWizard = ({ type, onComplete, onCancel }: IntegrationWiz
                   id="url"
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                  placeholder="https://your-domain.atlassian.net"
+                  placeholder="your-domain.atlassian.net"
                   className="h-11"
                 />
                 <p className="text-xs text-muted-foreground">

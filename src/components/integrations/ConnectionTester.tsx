@@ -30,11 +30,15 @@ export const ConnectionTester = ({ type, config, onTestComplete }: ConnectionTes
           throw new Error("Missing URL or API token");
         }
         
-        // Validate URL format
+        // Normalise and validate URL format
+        let testUrl = config.url.trim();
+        if (!/^https?:\/\//i.test(testUrl)) {
+          testUrl = `https://${testUrl}`;
+        }
         try {
-          new URL(config.url);
+          new URL(testUrl);
         } catch {
-          throw new Error("Invalid URL format");
+          throw new Error("Invalid URL format. Example: yourcompany.atlassian.net");
         }
 
         // Check if URL is an Atlassian domain

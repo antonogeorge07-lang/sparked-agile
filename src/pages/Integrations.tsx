@@ -26,9 +26,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { IntegrationCard } from "@/components/IntegrationCard";
 import { useAutoTokenRefresh } from "@/hooks/useAutoTokenRefresh";
 
+// Helper to normalise URLs - auto-prepend https:// if missing
+const normaliseUrl = (url: string): string => {
+  const trimmed = url.trim();
+  if (!trimmed) return trimmed;
+  if (!/^https?:\/\//i.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+  return trimmed;
+};
+
 // Validation schemas
 const jiraConfigSchema = z.object({
-  url: z.string().url({ message: "Invalid URL format" }).max(500, "URL too long"),
+  url: z.string()
+    .transform(normaliseUrl)
+    .pipe(z.string().url({ message: "Invalid URL format. Example: yourcompany.atlassian.net" }).max(500, "URL too long")),
   email: z.string().email({ message: "Invalid email format" }).optional(),
   apiToken: z.string().min(10, "API token too short").max(500, "API token too long"),
 });
