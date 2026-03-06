@@ -93,8 +93,8 @@ export default function Auth() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        // Authenticated users on /auth page go to landing to choose their destination
-        navigate("/");
+        // Authenticated users go to dashboard, not landing
+        navigate("/home");
       }
     };
     checkUser();
@@ -104,8 +104,8 @@ export default function Auth() {
       if (event === 'PASSWORD_RECOVERY') {
         setShowUpdatePassword(true);
       } else if (session && event === 'SIGNED_IN') {
-        // After sign in, redirect to landing page - user can navigate from there
-        navigate("/");
+        // After sign in, redirect to dashboard
+        navigate("/home");
       }
     });
 
@@ -197,8 +197,8 @@ export default function Auth() {
         });
         
         if (!signInError) {
-          // Navigate to landing page - user can choose where to go
-          navigate("/");
+          // Navigate to dashboard after signup
+          navigate("/home");
         }
       }
     } catch (error: any) {
@@ -239,8 +239,8 @@ export default function Auth() {
           description: "Successfully signed in.",
         });
         
-        // Navigate to landing page - user can choose where to go
-        navigate("/");
+        // Navigate to dashboard after sign in
+        navigate("/home");
       }
     } catch (error: any) {
       toast({
