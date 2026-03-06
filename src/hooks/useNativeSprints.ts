@@ -58,7 +58,44 @@ export function useNativeSprints(projectId: string | null): UseNativeSprintsRetu
 
   useEffect(() => {
     loadSprints();
-  }, [loadSprints]);
+
+    if (!projectId) return;
+
+    // Subscribe to realtime sprint changes
+    const channel = supabase
+      .channel(`sprints-${projectId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'native_sprints',
+          filter: `project_id=eq.${projectId}`,
+        },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            setSprints(prev => [payload.new as NativeSprint, ...prev]);
+          } else if (payload.eventType === 'UPDATE') {
+            const updated = payload.new as NativeSprint;
+            setSprints(prev => prev.map(s => s.id === updated.id ? updated : s));
+            // Update active sprint reference
+            if (updated.status === 'active') {
+              setActiveSprint(updated);
+            } else if (updated.status === 'completed') {
+              setActiveSprint(prev => prev?.id === updated.id ? null : prev);
+            }
+          } else if (payload.eventType === 'DELETE') {
+            setSprints(prev => prev.filter(s => s.id !== payload.old.id));
+            setActiveSprint(prev => prev?.id === payload.old.id ? null : prev);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [loadSprints, projectId]);
 
   const createSprint = async (sprint: Partial<NativeSprint>): Promise<NativeSprint | null> => {
     if (!projectId) return null;
