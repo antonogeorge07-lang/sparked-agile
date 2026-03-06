@@ -99,7 +99,7 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
 
     if (!projectId) return;
 
-    // Subscribe to realtime changes
+    // Subscribe to realtime changes for items AND columns
     const channel = supabase
       .channel(`board-${projectId}`)
       .on(
@@ -119,6 +119,26 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
             ));
           } else if (payload.eventType === 'DELETE') {
             setAllItems(prev => prev.filter(item => item.id !== payload.old.id));
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'board_columns',
+          filter: `project_id=eq.${projectId}`,
+        },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            setColumns(prev => [...prev, payload.new as BoardColumn].sort((a, b) => a.position - b.position));
+          } else if (payload.eventType === 'UPDATE') {
+            setColumns(prev => prev.map(col => 
+              col.id === payload.new.id ? payload.new as BoardColumn : col
+            ).sort((a, b) => a.position - b.position));
+          } else if (payload.eventType === 'DELETE') {
+            setColumns(prev => prev.filter(col => col.id !== payload.old.id));
           }
         }
       )

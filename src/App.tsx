@@ -6,9 +6,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
-import { PerformanceMonitor } from "@/components/PerformanceMonitor";
-import { FeedbackWidget } from "@/components/FeedbackWidget";
-import { AIAssistant } from "@/components/AIAssistant";
+// Lazy load global widgets to reduce initial bundle
+const PerformanceMonitor = lazy(() => import("@/components/PerformanceMonitor").then(m => ({ default: m.PerformanceMonitor })));
+const FeedbackWidget = lazy(() => import("@/components/FeedbackWidget").then(m => ({ default: m.FeedbackWidget })));
+const AIAssistant = lazy(() => import("@/components/AIAssistant").then(m => ({ default: m.AIAssistant })));
 import ScrollRestoration from "@/components/ScrollRestoration";
 // Eager load critical pages
 import Landing from "./pages/Landing";
@@ -77,9 +78,11 @@ const App = () => {
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <AnalyticsProvider>
               <ScrollRestoration />
-              <PerformanceMonitor />
-              <FeedbackWidget />
-              <AIAssistant />
+              <Suspense fallback={null}>
+                <PerformanceMonitor />
+                <FeedbackWidget />
+                <AIAssistant />
+              </Suspense>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />

@@ -28,16 +28,39 @@ export const useWorkspace = () => {
         return;
       }
 
-      // Get workspace owned by user
-      const { data, error } = await supabase
+      // First try workspace owned by user
+      const { data: ownedWorkspace, error: ownedError } = await supabase
         .from('workspaces')
         .select('*')
         .eq('owner_id', user.id)
         .maybeSingle();
 
-      if (error) throw error;
+      if (ownedError) throw ownedError;
 
-      setWorkspace(data);
+      if (ownedWorkspace) {
+        setWorkspace(ownedWorkspace);
+      } else {
+        // Fall back to workspaces the user is a member of
+        const { data: membership, error: memberError } = await supabase
+          .from('workspace_members')
+          .select('workspace_id')
+          .eq('user_id', user.id)
+          .limit(1)
+          .maybeSingle();
+
+        if (memberError) throw memberError;
+
+        if (membership) {
+          const { data: memberWorkspace, error: wsError } = await supabase
+            .from('workspaces')
+            .select('*')
+            .eq('id', membership.workspace_id)
+            .single();
+
+          if (wsError) throw wsError;
+          setWorkspace(memberWorkspace);
+        }
+      }
     } catch (error: any) {
       console.error('Error loading workspace:', error);
       setError(error.message);
