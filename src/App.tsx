@@ -78,9 +78,11 @@ const App = () => {
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <AnalyticsProvider>
               <ScrollRestoration />
-              <PerformanceMonitor />
-              <FeedbackWidget />
-              <AIAssistant />
+              <Suspense fallback={null}>
+                <PerformanceMonitor />
+                <FeedbackWidget />
+                <AIAssistant />
+              </Suspense>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />
