@@ -38,8 +38,7 @@ export function FirstProjectPrompt({ onProjectCreated }: FirstProjectPromptProps
         .insert({
           name: name.trim(),
           description: description.trim() || null,
-          workspace_id: workspace.id,
-          created_by: user.id,
+          user_id: user.id,
           status: 'active',
         });
 
