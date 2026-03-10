@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import type { AISuggestion } from '@/types/native-pm';
+import { trackAIUsage } from '@/hooks/useActivityTracking';
 
 type CopilotAction = 
   | 'generate_user_story'
