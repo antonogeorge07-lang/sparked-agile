@@ -23,7 +23,8 @@ import {
   Plus,
   Eye,
   EyeOff,
-  RefreshCw
+  RefreshCw,
+  UserPlus
 } from "lucide-react";
 import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
