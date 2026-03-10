@@ -35,6 +35,7 @@ import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
 import { LoadingState } from "@/components/LoadingState";
+import { FirstProjectPrompt } from "@/components/FirstProjectPrompt";
 import { 
   sampleVelocityData, 
   sampleImpediments, 
