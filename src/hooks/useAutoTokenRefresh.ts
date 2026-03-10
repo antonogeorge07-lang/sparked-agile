@@ -14,8 +14,8 @@ const REFRESH_BUFFER_MS = 30 * 60 * 1000;
 const CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
 export const useAutoTokenRefresh = () => {
-  const refreshTimeouts = useRef<Map<string, NodeJS.Timeout>>(new Map());
-  const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const refreshTimeouts = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const checkIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const refreshToken = useCallback(async (integrationType: string) => {
     try {
