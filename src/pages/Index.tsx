@@ -37,37 +37,9 @@ const Index = () => {
     const { data: { session } } = await supabase.auth.getSession();
     
     if (session) {
-      setIsAuthenticated(true);
-      
-      // Get user role
-      const { data: roleData } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', session.user.id)
-        .maybeSingle();
-      
-      if (roleData) {
-        setUserRole(roleData.role);
-      }
-
-      // No automatic redirect - user stays on landing page and can navigate manually
-      // Mark quick start as seen for future reference
-      if (!localStorage.getItem('seen_quick_start')) {
-        localStorage.setItem('seen_quick_start', 'true');
-      }
-
-      // Check onboarding progress for wizard (non-blocking)
-      const { data: progressData } = await supabase
-        .from('onboarding_progress')
-        .select('*')
-        .eq('user_id', session.user.id)
-        .maybeSingle();
-
-      // Show wizard if onboarding not completed and not dismissed
-      const dismissedWizard = localStorage.getItem('dismissed_onboarding_wizard');
-      if (progressData && !progressData.onboarding_completed && !dismissedWizard) {
-        setTimeout(() => setShowWizard(true), 1000);
-      }
+      // Authenticated users get redirected to dashboard
+      navigate("/dashboard", { replace: true });
+      return;
     } else {
       // For non-authenticated users, show the old tour
       const hasSeenOnboarding = localStorage.getItem("onboarding_completed");

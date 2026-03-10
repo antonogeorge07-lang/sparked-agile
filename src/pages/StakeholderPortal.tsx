@@ -23,7 +23,8 @@ import {
   Plus,
   Eye,
   EyeOff,
-  RefreshCw
+  RefreshCw,
+  UserPlus
 } from "lucide-react";
 import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -32,6 +33,7 @@ import { StakeholderWidgetCard } from "@/components/stakeholder/StakeholderWidge
 import { ApprovalRequestsList } from "@/components/stakeholder/ApprovalRequestsList";
 import { DigestSubscriptionManager } from "@/components/stakeholder/DigestSubscriptionManager";
 import { AlertsConfigPanel } from "@/components/stakeholder/AlertsConfigPanel";
+import { StakeholderInviteForm } from "@/components/stakeholder/StakeholderInviteForm";
 
 interface WidgetConfig {
   id: string;
@@ -388,6 +390,10 @@ export default function StakeholderPortal() {
               <Bell className="h-4 w-4" />
               <span className="hidden sm:inline">Alerts</span>
             </TabsTrigger>
+            <TabsTrigger value="invite" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <UserPlus className="h-4 w-4" />
+              <span className="hidden sm:inline">Invite</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="mt-8">
@@ -471,6 +477,10 @@ export default function StakeholderPortal() {
 
           <TabsContent value="alerts">
             <AlertsConfigPanel userId={user?.id} projectId={selectedProject} />
+          </TabsContent>
+
+          <TabsContent value="invite">
+            <StakeholderInviteForm projectId={selectedProject} />
           </TabsContent>
         </Tabs>
       </div>

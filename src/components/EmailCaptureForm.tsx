@@ -91,8 +91,8 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
       toast.success("🎉 Thank you! Check your email for next steps.");
       
       // Track conversion
-      if (window.gtag) {
-        window.gtag('event', 'email_capture', {
+      if ((window as any).gtag) {
+        (window as any).gtag('event', 'email_capture', {
           context: context,
           email_domain: email.split('@')[1]
         });
