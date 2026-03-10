@@ -32,6 +32,7 @@ import { StakeholderWidgetCard } from "@/components/stakeholder/StakeholderWidge
 import { ApprovalRequestsList } from "@/components/stakeholder/ApprovalRequestsList";
 import { DigestSubscriptionManager } from "@/components/stakeholder/DigestSubscriptionManager";
 import { AlertsConfigPanel } from "@/components/stakeholder/AlertsConfigPanel";
+import { StakeholderInviteForm } from "@/components/stakeholder/StakeholderInviteForm";
 
 interface WidgetConfig {
   id: string;
