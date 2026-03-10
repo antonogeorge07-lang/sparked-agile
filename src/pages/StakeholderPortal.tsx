@@ -478,6 +478,10 @@ export default function StakeholderPortal() {
           <TabsContent value="alerts">
             <AlertsConfigPanel userId={user?.id} projectId={selectedProject} />
           </TabsContent>
+
+          <TabsContent value="invite">
+            <StakeholderInviteForm projectId={selectedProject} />
+          </TabsContent>
         </Tabs>
       </div>
     </div>
