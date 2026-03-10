@@ -389,6 +389,10 @@ export default function StakeholderPortal() {
               <Bell className="h-4 w-4" />
               <span className="hidden sm:inline">Alerts</span>
             </TabsTrigger>
+            <TabsTrigger value="invite" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <UserPlus className="h-4 w-4" />
+              <span className="hidden sm:inline">Invite</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="mt-8">

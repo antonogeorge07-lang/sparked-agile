@@ -214,6 +214,11 @@ export default function Dashboard() {
           )}
           
           {!isGuestMode && <CeremonyHealthCheck />}
+
+          {/* First project prompt for users with zero projects */}
+          {!isGuestMode && !isLoadingProjects && projects.length === 0 && (
+            <FirstProjectPrompt onProjectCreated={loadProjects} />
+          )}
           
           <BackButton className="mb-4" />
           <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row items-start sm:items-center justify-between animate-fade-in mb-4 sm:mb-0">
