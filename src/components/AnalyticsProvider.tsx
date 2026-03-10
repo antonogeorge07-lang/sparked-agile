@@ -2,14 +2,13 @@ import { useEffect } from 'react';
 import { usePageTracking } from '@/hooks/useAnalytics';
 import { supabase } from '@/integrations/supabase/client';
 import { analytics } from '@/lib/analytics';
-import { PerformanceMonitor } from './PerformanceMonitor';
 
 /**
  * Analytics Provider Component
- * Handles automatic page tracking and user identification
+ * Handles automatic page view tracking and user identification
  */
 export const AnalyticsProvider = ({ children }: { children: React.ReactNode }) => {
-  // Enable automatic page view tracking
+  // Enable automatic page view tracking (DB-backed)
   usePageTracking();
 
   // Track authenticated user
@@ -44,10 +43,5 @@ export const AnalyticsProvider = ({ children }: { children: React.ReactNode }) =
     };
   }, []);
 
-  return (
-    <>
-      <PerformanceMonitor />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };

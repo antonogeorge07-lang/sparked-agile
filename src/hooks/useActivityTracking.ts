@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
+/**
+ * Hook to track page views for authenticated users.
+ * This is now supplementary to the unified analytics system in src/lib/analytics.ts.
+ * Use analytics.pageView() for the primary tracking; use this hook only
+ * when you need explicit per-page DB logging with custom metadata.
+ */
 export const useActivityTracking = (page: string) => {
   useEffect(() => {
     const trackPageView = async () => {
@@ -18,7 +24,7 @@ export const useActivityTracking = (page: string) => {
           },
         });
       } catch (error) {
-        console.error("Failed to track activity:", error);
+        console.debug("Failed to track activity:", error);
       }
     };
 
@@ -37,7 +43,7 @@ export const trackAction = async (action: string, metadata?: Record<string, any>
       metadata: metadata || {},
     });
   } catch (error) {
-    console.error("Failed to track action:", error);
+    console.debug("Failed to track action:", error);
   }
 };
 
@@ -59,6 +65,6 @@ export const trackAIUsage = async (params: {
       ...params,
     });
   } catch (error) {
-    console.error("Failed to track AI usage:", error);
+    console.debug("Failed to track AI usage:", error);
   }
 };

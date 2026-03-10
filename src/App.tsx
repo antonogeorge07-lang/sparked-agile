@@ -2,12 +2,12 @@ import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, MutationCache, QueryCache } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
+import { analytics } from "@/lib/analytics";
 // Lazy load global widgets to reduce initial bundle
-const PerformanceMonitor = lazy(() => import("@/components/PerformanceMonitor").then(m => ({ default: m.PerformanceMonitor })));
 const FeedbackWidget = lazy(() => import("@/components/FeedbackWidget").then(m => ({ default: m.FeedbackWidget })));
 const AIAssistant = lazy(() => import("@/components/AIAssistant").then(m => ({ default: m.AIAssistant })));
 import ScrollRestoration from "@/components/ScrollRestoration";
@@ -66,7 +66,31 @@ const PageLoader = () => (
   </div>
 );
 
-const queryClient = new QueryClient();
+// Global error handler for QueryClient - tracks all failed queries/mutations
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      const endpoint = Array.isArray(query.queryKey) ? query.queryKey[0] : String(query.queryKey);
+      analytics.trackApiError(
+        String(endpoint),
+        0,
+        error instanceof Error ? error.message : 'Unknown query error'
+      );
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error, _variables, _context, mutation) => {
+      const key = mutation.options.mutationKey
+        ? String(mutation.options.mutationKey)
+        : 'unknown_mutation';
+      analytics.trackApiError(
+        key,
+        0,
+        error instanceof Error ? error.message : 'Unknown mutation error'
+      );
+    },
+  }),
+});
 
 const App = () => {
   return (
@@ -79,7 +103,6 @@ const App = () => {
             <AnalyticsProvider>
               <ScrollRestoration />
               <Suspense fallback={null}>
-                <PerformanceMonitor />
                 <FeedbackWidget />
                 <AIAssistant />
               </Suspense>
