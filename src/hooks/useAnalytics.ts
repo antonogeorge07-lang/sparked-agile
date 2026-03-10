@@ -9,7 +9,6 @@ export const usePageTracking = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Track page view on route change
     analytics.pageView(location.pathname, document.title);
   }, [location]);
 };
@@ -27,6 +26,8 @@ export const useAnalytics = () => {
     trackIntegrationConnect: analytics.trackIntegrationConnect.bind(analytics),
     trackSearch: analytics.trackSearch.bind(analytics),
     trackError: analytics.trackError.bind(analytics),
+    trackCrash: analytics.trackCrash.bind(analytics),
+    trackApiError: analytics.trackApiError.bind(analytics),
     setUserId: analytics.setUserId.bind(analytics),
     setUserProperties: analytics.setUserProperties.bind(analytics),
   };

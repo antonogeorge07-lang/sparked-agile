@@ -2,6 +2,7 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { analytics } from '@/lib/analytics';
 
 interface Props {
   children: ReactNode;
@@ -24,6 +25,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Error caught by boundary:', error, errorInfo);
+    // Report crash to DB-backed analytics
+    analytics.trackCrash(error, errorInfo.componentStack ?? undefined);
   }
 
   private handleReset = () => {
