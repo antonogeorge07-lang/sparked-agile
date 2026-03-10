@@ -3,7 +3,7 @@ import { analytics } from '@/lib/analytics';
 
 /**
  * PerformanceMonitor Component
- * Tracks Core Web Vitals and reports to analytics
+ * Tracks Core Web Vitals and reports to DB-backed analytics
  */
 export const PerformanceMonitor = () => {
   useEffect(() => {
@@ -11,7 +11,7 @@ export const PerformanceMonitor = () => {
       return;
     }
 
-    // Track Largest Contentful Paint (LCP) - report once
+    // Track Largest Contentful Paint (LCP)
     try {
       let lcpReported = false;
       const lcpObserver = new PerformanceObserver((list) => {
@@ -35,10 +35,10 @@ export const PerformanceMonitor = () => {
 
       lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
     } catch (e) {
-      console.warn('LCP tracking not supported');
+      // LCP tracking not supported
     }
 
-    // Track First Input Delay (FID) - report once
+    // Track First Input Delay (FID)
     try {
       let fidReported = false;
       const fidObserver = new PerformanceObserver((list) => {
@@ -63,10 +63,10 @@ export const PerformanceMonitor = () => {
 
       fidObserver.observe({ entryTypes: ['first-input'] });
     } catch (e) {
-      console.warn('FID tracking not supported');
+      // FID tracking not supported
     }
 
-    // Track Cumulative Layout Shift (CLS) - report once on unload
+    // Track Cumulative Layout Shift (CLS)
     try {
       let clsValue = 0;
       let clsReported = false;
@@ -81,7 +81,6 @@ export const PerformanceMonitor = () => {
 
       clsObserver.observe({ entryTypes: ['layout-shift'] });
 
-      // Report CLS when page is hidden or unloaded (only once)
       const reportCLS = () => {
         if (!clsReported && clsValue > 0) {
           clsReported = true;
@@ -103,7 +102,7 @@ export const PerformanceMonitor = () => {
 
       window.addEventListener('beforeunload', reportCLS, { once: true });
     } catch (e) {
-      console.warn('CLS tracking not supported');
+      // CLS tracking not supported
     }
 
     // Track Time to First Byte (TTFB)
@@ -121,9 +120,9 @@ export const PerformanceMonitor = () => {
         });
       }
     } catch (e) {
-      console.warn('TTFB tracking not supported');
+      // TTFB tracking not supported
     }
   }, []);
 
-  return null; // This component doesn't render anything
+  return null;
 };

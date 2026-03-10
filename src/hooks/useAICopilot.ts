@@ -58,6 +58,14 @@ export function useAICopilot(): UseAICopilotReturn {
       if (error) throw error;
 
       if (data.error) {
+        trackAIUsage({
+          model: data.model || 'unknown',
+          tokens_used: data.tokens_used || 0,
+          endpoint: 'ai-copilot',
+          project_id: params.projectId,
+          status: 'error',
+          error_message: data.error,
+        });
         if (data.error.includes('Rate limit')) {
           toast.error('AI is busy. Please try again in a moment.');
         } else if (data.error.includes('credits')) {
@@ -68,12 +76,29 @@ export function useAICopilot(): UseAICopilotReturn {
         return null;
       }
 
+      // Track successful AI usage
+      trackAIUsage({
+        model: data.model || 'gemini-2.5-flash',
+        tokens_used: data.tokens_used || 0,
+        endpoint: 'ai-copilot',
+        project_id: params.projectId,
+        status: 'success',
+      });
+
       setLastSuggestion(data.suggestion);
       toast.success('AI suggestion generated');
       return data.suggestion;
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'AI request failed';
+      trackAIUsage({
+        model: 'unknown',
+        tokens_used: 0,
+        endpoint: 'ai-copilot',
+        project_id: params.projectId,
+        status: 'error',
+        error_message: message,
+      });
       toast.error(message);
       return null;
     } finally {
