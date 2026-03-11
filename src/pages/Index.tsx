@@ -26,8 +26,6 @@ const Index = () => {
   const [activeFeature, setActiveFeature] = useState(0);
   const { isGuestMode, enableGuestMode } = useGuestMode();
   const [showWizard, setShowWizard] = useState(false);
-  const [userRole, setUserRole] = useState<string>('member');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     checkAuthAndOnboarding();
