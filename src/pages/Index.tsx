@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { ArrowRight, GitBranch, Target, Calendar, Users, BarChart3, Zap, Bot, CheckCircle2, Star } from "lucide-react";
+import { ArrowRight, GitBranch, Target, Calendar, Users, BarChart3, Zap, Bot, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
