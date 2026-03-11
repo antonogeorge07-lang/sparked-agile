@@ -1,10 +1,10 @@
 import { Navigation } from "@/components/Navigation";
-import { BackButton } from "@/components/BackButton";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCard } from "@/components/FeatureCard";
-import { ArrowRight, GitBranch, Target, Calendar, Users, BarChart3, Zap, Bot, CheckCircle2, Star } from "lucide-react";
+import { ArrowRight, GitBranch, Target, Calendar, Users, BarChart3, Zap, Bot, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OnboardingTour } from "@/components/OnboardingTour";
@@ -14,8 +14,6 @@ import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { WelcomePopup } from "@/components/WelcomePopup";
-import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
-import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist";
 import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
@@ -26,8 +24,6 @@ const Index = () => {
   const [activeFeature, setActiveFeature] = useState(0);
   const { isGuestMode, enableGuestMode } = useGuestMode();
   const [showWizard, setShowWizard] = useState(false);
-  const [userRole, setUserRole] = useState<string>('member');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     checkAuthAndOnboarding();
@@ -124,18 +120,6 @@ const Index = () => {
         onClose={() => setShowOnboarding(false)} 
       />
       
-      {/* New onboarding wizard for authenticated users */}
-      {isAuthenticated && (
-        <OnboardingWizard
-          isOpen={showWizard}
-          onClose={() => {
-            setShowWizard(false);
-            localStorage.setItem('dismissed_onboarding_wizard', 'true');
-          }}
-          userRole={userRole}
-        />
-      )}
-      
       <DemoModal 
         isOpen={showDemoModal} 
         onClose={() => setShowDemoModal(false)} 
@@ -154,13 +138,6 @@ const Index = () => {
           </TabsList>
           
           <TabsContent value="overview" className="space-y-8">
-            {/* Onboarding Checklist for authenticated users */}
-            {isAuthenticated && (
-              <div className="max-w-xl mx-auto mb-8">
-                <OnboardingChecklist />
-              </div>
-            )}
-            
             {/* Hero Section */}
             <section className="py-4 sm:py-8 md:py-16">
               <div className="max-w-4xl mx-auto text-center animate-fade-in px-3 sm:px-4">
@@ -171,26 +148,11 @@ const Index = () => {
                   Streamline your agile workflow with intelligent automation. From daily standups to sprint planning, let AI handle the routine so you can focus on delivering value.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                  {isAuthenticated ? (
-                    <>
-                      <Button size="lg" className="gap-2" onClick={() => navigate("/quick-start")}>
-                        <Star className="w-4 h-4" />
-                        Quick Start Guide
-                      </Button>
-                      <Button size="lg" variant="outline" className="gap-2" onClick={() => navigate("/dashboard")}>
-                        Go to Dashboard
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
-                        Get Started
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                      <DemoModeButton />
-                    </>
-                  )}
+                  <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
+                    Get Started
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                  <DemoModeButton />
                 </div>
               </div>
             </section>
@@ -318,7 +280,7 @@ const Index = () => {
         </Tabs>
       </main>
 
-      {isGuestMode && !isAuthenticated && <GuestModeBar onTryDemo={() => setShowDemoModal(true)} />}
+      {isGuestMode && <GuestModeBar onTryDemo={() => setShowDemoModal(true)} />}
     </div>
   );
 };
