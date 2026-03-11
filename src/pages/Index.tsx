@@ -122,18 +122,6 @@ const Index = () => {
         onClose={() => setShowOnboarding(false)} 
       />
       
-      {/* New onboarding wizard for authenticated users */}
-      {isAuthenticated && (
-        <OnboardingWizard
-          isOpen={showWizard}
-          onClose={() => {
-            setShowWizard(false);
-            localStorage.setItem('dismissed_onboarding_wizard', 'true');
-          }}
-          userRole={userRole}
-        />
-      )}
-      
       <DemoModal 
         isOpen={showDemoModal} 
         onClose={() => setShowDemoModal(false)} 
