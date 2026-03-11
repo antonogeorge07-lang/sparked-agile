@@ -14,8 +14,6 @@ import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { WelcomePopup } from "@/components/WelcomePopup";
-import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
-import { OnboardingChecklist } from "@/components/onboarding/OnboardingChecklist";
 import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
