@@ -140,13 +140,6 @@ const Index = () => {
           </TabsList>
           
           <TabsContent value="overview" className="space-y-8">
-            {/* Onboarding Checklist for authenticated users */}
-            {isAuthenticated && (
-              <div className="max-w-xl mx-auto mb-8">
-                <OnboardingChecklist />
-              </div>
-            )}
-            
             {/* Hero Section */}
             <section className="py-4 sm:py-8 md:py-16">
               <div className="max-w-4xl mx-auto text-center animate-fade-in px-3 sm:px-4">
