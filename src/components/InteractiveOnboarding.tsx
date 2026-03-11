@@ -80,18 +80,22 @@ export const InteractiveOnboarding = () => {
   const [completed, setCompleted] = useState(false);
   
   useEffect(() => {
-    // Check if user has seen onboarding (now managed by visitor tracking)
+    // Never show onboarding wizard on public landing pages — let visitors browse freely
+    const publicPaths = ['/', '/landing', '/features', '/about', '/contact', '/faq', '/privacy', '/terms'];
+    if (publicPaths.includes(location.pathname)) {
+      return;
+    }
+
     const hasSeenOnboarding = localStorage.getItem("saai_onboarding_completed");
     const isFirstVisit = !localStorage.getItem("saai_visited_before");
     
     if (!hasSeenOnboarding && isFirstVisit) {
-      // Quick delay to show engagement immediately
       setTimeout(() => {
         setIsOpen(true);
       }, 500);
       localStorage.setItem("saai_visited_before", "true");
     }
-  }, []);
+  }, [location.pathname]);
 
   // Never let the onboarding modal block navigation.
   // If the route changes for any reason, close the modal.
