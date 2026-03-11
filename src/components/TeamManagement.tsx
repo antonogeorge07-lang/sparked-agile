@@ -25,14 +25,8 @@ interface TeamManagementProps {
 }
 
 export const TeamManagement = ({ projectId, projectName, accessToken }: TeamManagementProps) => {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [grantJiraAccess, setGrantJiraAccess] = useState(true);
-  const [grantGithubAccess, setGrantGithubAccess] = useState(true);
-  const [grantTeamsAccess, setGrantTeamsAccess] = useState(true);
-  
   const queryClient = useQueryClient();
+  const { integrations } = useUnifiedIntegrations(projectId);
 
   // Fetch team members using safe view for privacy protection
   const { data: teamMembers = [], isLoading } = useQuery({
@@ -50,48 +44,13 @@ export const TeamManagement = ({ projectId, projectName, accessToken }: TeamMana
     enabled: !!projectId,
   });
 
-  // Add team member mutation
-  const addMemberMutation = useMutation({
-    mutationFn: async (memberData: {
-      name: string;
-      email: string;
-      projectId: string;
-      projectName: string;
-      accessToken?: string;
-      grantJiraAccess: boolean;
-      grantGithubAccess: boolean;
-      grantTeamsAccess: boolean;
-    }) => {
-      const { data, error } = await supabase.functions.invoke("add-team-member", {
-        body: memberData,
-      });
-
-      if (error) throw error;
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["team-members", projectId] });
-      toast.success("Team member added successfully! Welcome email sent.");
-      setOpen(false);
-      setName("");
-      setEmail("");
-      setGrantJiraAccess(true);
-      setGrantGithubAccess(true);
-      setGrantTeamsAccess(true);
-    },
-    onError: (error: any) => {
-      toast.error(`Failed to add team member: ${error.message}`);
-    },
-  });
-
-  // Remove team member mutation - note: delete operations must use base table
+  // Remove team member mutation
   const removeMemberMutation = useMutation({
     mutationFn: async (memberId: string) => {
       const { error } = await supabase
         .from("team_members")
         .delete()
         .eq("id", memberId);
-
       if (error) throw error;
     },
     onSuccess: () => {
@@ -103,31 +62,8 @@ export const TeamManagement = ({ projectId, projectName, accessToken }: TeamMana
     },
   });
 
-  const handleAddMember = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!name.trim() || !email.trim()) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-
-    addMemberMutation.mutate({
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      projectId,
-      projectName,
-      accessToken,
-      grantJiraAccess,
-      grantGithubAccess,
-      grantTeamsAccess,
-    });
+  const handleMemberAdded = () => {
+    queryClient.invalidateQueries({ queryKey: ["team-members", projectId] });
   };
 
   return (
@@ -137,89 +73,19 @@ export const TeamManagement = ({ projectId, projectName, accessToken }: TeamMana
           <div>
             <CardTitle>Team Members</CardTitle>
             <CardDescription>
-              Manage team members and grant access to integrations
+              Add members manually or import from GitHub, Jira, or Slack
             </CardDescription>
           </div>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                Add Member
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
-              <DialogHeader>
-                <DialogTitle>Add Team Member</DialogTitle>
-                <DialogDescription>
-                  Add a new team member to {projectName}. They'll receive access to selected integrations and all Scrum ceremonies.
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleAddMember} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="John Doe"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="john@example.com"
-                    required
-                  />
-                </div>
-                <div className="space-y-3 pt-2">
-                  <Label className="text-base">Grant Access To:</Label>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="jira"
-                      checked={grantJiraAccess}
-                      onCheckedChange={(checked) => setGrantJiraAccess(checked as boolean)}
-                    />
-                    <label htmlFor="jira" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      JIRA Board
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="github"
-                      checked={grantGithubAccess}
-                      onCheckedChange={(checked) => setGrantGithubAccess(checked as boolean)}
-                    />
-                    <label htmlFor="github" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      GitHub Repository
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="teams"
-                      checked={grantTeamsAccess}
-                      onCheckedChange={(checked) => setGrantTeamsAccess(checked as boolean)}
-                    />
-                    <label htmlFor="teams" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      Microsoft Teams Channel
-                    </label>
-                  </div>
-                </div>
-                <div className="flex justify-end gap-2 pt-4">
-                  <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={addMemberMutation.isPending}>
-                    {addMemberMutation.isPending ? "Adding..." : "Add Member"}
-                  </Button>
-                </div>
-              </form>
-            </DialogContent>
-          </Dialog>
+          <AddMemberMultiSource
+            projectId={projectId}
+            projectName={projectName}
+            accessToken={accessToken}
+            onMemberAdded={handleMemberAdded}
+            hasGithub={integrations?.github?.active || false}
+            hasJira={integrations?.jira?.active || false}
+            hasSlack={integrations?.slack?.active || false}
+            githubRepoName={integrations?.github?.repo_name}
+          />
         </div>
       </CardHeader>
       <CardContent>
