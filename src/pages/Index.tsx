@@ -150,26 +150,11 @@ const Index = () => {
                   Streamline your agile workflow with intelligent automation. From daily standups to sprint planning, let AI handle the routine so you can focus on delivering value.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                  {isAuthenticated ? (
-                    <>
-                      <Button size="lg" className="gap-2" onClick={() => navigate("/quick-start")}>
-                        <Star className="w-4 h-4" />
-                        Quick Start Guide
-                      </Button>
-                      <Button size="lg" variant="outline" className="gap-2" onClick={() => navigate("/dashboard")}>
-                        Go to Dashboard
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
-                        Get Started
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                      <DemoModeButton />
-                    </>
-                  )}
+                  <Button size="lg" className="gap-2" onClick={() => navigate("/auth")}>
+                    Get Started
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                  <DemoModeButton />
                 </div>
               </div>
             </section>
