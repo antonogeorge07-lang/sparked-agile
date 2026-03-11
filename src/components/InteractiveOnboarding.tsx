@@ -98,7 +98,7 @@ export const InteractiveOnboarding = () => {
   }, [location.pathname]);
 
   // Close the onboarding modal when navigating to a different route
-  const prevPathRef = React.useRef(location.pathname);
+  const prevPathRef = useRef(location.pathname);
   useEffect(() => {
     if (isOpen && location.pathname !== prevPathRef.current) {
       setIsOpen(false);
