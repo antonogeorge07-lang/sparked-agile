@@ -97,12 +97,14 @@ export const InteractiveOnboarding = () => {
     }
   }, [location.pathname]);
 
-  // Never let the onboarding modal block navigation.
-  // If the route changes for any reason, close the modal.
+  // Close the onboarding modal when navigating to a different route
+  const prevPathRef = React.useRef(location.pathname);
   useEffect(() => {
-    if (isOpen) setIsOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+    if (isOpen && location.pathname !== prevPathRef.current) {
+      setIsOpen(false);
+    }
+    prevPathRef.current = location.pathname;
+  }, [location.pathname, isOpen]);
 
   const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
