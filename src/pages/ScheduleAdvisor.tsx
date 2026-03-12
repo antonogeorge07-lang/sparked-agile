@@ -116,18 +116,19 @@ export default function ScheduleAdvisor() {
     if (!selectedProject) return;
     setLoading(true);
     try {
-      const { data: pmiProject } = await (supabase
+      const pmiQuery = supabase
         .from('pmi_projects')
         .select('id')
-        .eq('project_id', selectedProject) as any)
-        .maybeSingle();
+        .eq('project_id', selectedProject)
+        .maybeSingle() as unknown as Promise<{ data: any; error: any }>;
+      const { data: pmiProject } = await pmiQuery;
 
       if (pmiProject) {
-        const { data: items, error: itemsError } = await (supabase
+        const itemsQuery = supabase
           .from('native_backlog_items')
           .select('id, title, status, priority, story_points, assignee_id, sprint_id, created_at')
-          .eq('project_id', pmiProject.id) as any)
-          .order('created_at', { ascending: true });
+          .eq('project_id', pmiProject.id) as unknown as Promise<{ data: any[]; error: any }>;
+        const { data: items, error: itemsError } = await itemsQuery;
 
         if (!itemsError && items && items.length >= 4) {
           setTasks(items);
