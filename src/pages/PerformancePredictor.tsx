@@ -245,13 +245,13 @@ export default function PerformancePredictor() {
   };
 
   const getTrendIcon = () => {
-    if (trend === 'improving') return <ArrowUpRight className="h-4 w-4 text-green-500" />;
+    if (trend === 'improving') return <ArrowUpRight className="h-4 w-4 text-success" />;
     if (trend === 'declining') return <ArrowDownRight className="h-4 w-4 text-destructive" />;
     return <Minus className="h-4 w-4 text-muted-foreground" />;
   };
 
   const getTrendBadge = () => {
-    if (trend === 'improving') return <Badge className="bg-green-500/10 text-green-600 border-green-500/30">Improving</Badge>;
+    if (trend === 'improving') return <Badge className="bg-success/10 text-success border-success/30">Improving</Badge>;
     if (trend === 'declining') return <Badge variant="destructive">Declining</Badge>;
     return <Badge variant="secondary">Stable</Badge>;
   };
@@ -259,17 +259,16 @@ export default function PerformancePredictor() {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
-                <Brain className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">
                 Performance Predictor
               </h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground">
                 Predictive analytics for velocity, utilisation, and delivery forecasting
               </p>
             </div>
@@ -287,12 +286,10 @@ export default function PerformancePredictor() {
           </div>
 
           {usingSample && (
-            <Alert className="mb-6 border-primary/20 bg-primary/5">
-              <BarChart3 className="h-4 w-4" />
-              <AlertDescription>
-                Showing sample data — complete at least 3 sprints with velocity tracking enabled to see real predictions.
-              </AlertDescription>
-            </Alert>
+            <div className="mb-6 p-3 rounded-lg border border-border bg-muted/50 flex items-center gap-2 text-sm text-muted-foreground">
+              <BarChart3 className="h-4 w-4 shrink-0" />
+              Showing sample data — complete at least 3 sprints with velocity tracking enabled to see real predictions.
+            </div>
           )}
 
           {loading ? (
@@ -303,7 +300,7 @@ export default function PerformancePredictor() {
             <div className="space-y-8">
               {/* KPI Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -311,14 +308,14 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{avgVelocity}</p>
                         <p className="text-xs text-muted-foreground mt-1">pts / sprint</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Zap className="h-6 w-6 text-primary" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -326,14 +323,14 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{avgAccuracy}%</p>
                         <div className="mt-1">{getTrendBadge()}</div>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                        <Target className="h-6 w-6 text-green-500" />
+                      <div className="h-12 w-12 rounded-xl bg-success/10 flex items-center justify-center">
+                        <Target className="h-6 w-6 text-success" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -341,14 +338,14 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{deliveryForecast.sprintsRemaining}</p>
                         <p className="text-xs text-muted-foreground mt-1">{deliveryForecast.predictedDate}</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-accent/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center">
                         <Calendar className="h-6 w-6 text-accent" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -356,8 +353,8 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{deliveryForecast.confidence}%</p>
                         <Progress value={deliveryForecast.confidence} className="mt-2 h-2" />
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                        <Gauge className="h-6 w-6 text-yellow-500" />
+                      <div className="h-12 w-12 rounded-xl bg-warning/10 flex items-center justify-center">
+                        <Gauge className="h-6 w-6 text-warning" />
                       </div>
                     </div>
                   </CardContent>
@@ -430,7 +427,7 @@ export default function PerformancePredictor() {
                         </div>
 
                         <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                          <CheckCircle2 className="h-4 w-4 text-green-500" />
+                          <CheckCircle2 className="h-4 w-4 text-success" />
                           <div>
                             <p className="text-sm font-medium">Best Sprint</p>
                             <p className="text-xs text-muted-foreground">
@@ -542,14 +539,14 @@ export default function PerformancePredictor() {
 
                       <Card>
                         <CardHeader className="pb-3">
-                          <CardTitle className="text-base flex items-center gap-2">
-                            <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                         <CardTitle className="text-base flex items-center gap-2">
+                             <AlertTriangle className="h-4 w-4 text-warning" />
                             Risk Factors
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
                           {deliveryForecast.riskFactors.length === 0 ? (
-                            <div className="flex items-center gap-2 text-sm text-green-600">
+                            <div className="flex items-center gap-2 text-sm text-success">
                               <CheckCircle2 className="h-4 w-4" />
                               No significant risks identified
                             </div>
@@ -557,7 +554,7 @@ export default function PerformancePredictor() {
                             <ul className="space-y-2">
                               {deliveryForecast.riskFactors.map((r, i) => (
                                 <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                  <AlertTriangle className="h-3.5 w-3.5 text-yellow-500 mt-0.5 flex-shrink-0" />
+                                  <AlertTriangle className="h-3.5 w-3.5 text-warning mt-0.5 flex-shrink-0" />
                                   {r}
                                 </li>
                               ))}
@@ -681,9 +678,9 @@ export default function PerformancePredictor() {
                           <div key={m.metric} className="space-y-1.5">
                             <div className="flex justify-between text-sm">
                               <span className="text-muted-foreground">{m.metric}</span>
-                              <span className={`font-medium ${
-                                m.value >= 80 ? 'text-green-500' : m.value >= 60 ? 'text-yellow-500' : 'text-destructive'
-                              }`}>{m.value}/100</span>
+                               <span className={`font-medium ${
+                                 m.value >= 80 ? 'text-success' : m.value >= 60 ? 'text-warning' : 'text-destructive'
+                               }`}>{m.value}/100</span>
                             </div>
                             <Progress value={m.value} className="h-2" />
                           </div>
@@ -696,7 +693,7 @@ export default function PerformancePredictor() {
                               {Math.round(sampleHealthRadar.reduce((a, b) => a + b.value, 0) / sampleHealthRadar.length)}
                             </p>
                             <div>
-                              <Badge className="bg-green-500/10 text-green-600 border-green-500/30">Good</Badge>
+                              <Badge className="bg-success/10 text-success border-success/30">Good</Badge>
                               <p className="text-xs text-muted-foreground mt-1">Above team average</p>
                             </div>
                           </div>

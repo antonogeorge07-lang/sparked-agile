@@ -91,7 +91,7 @@ export default function FlowMetrics() {
   const totalThroughput = displayMetrics.reduce((sum: number, m: any) => sum + (m.throughput || 0), 0);
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
@@ -102,7 +102,7 @@ export default function FlowMetrics() {
               <Activity className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Flow Metrics Dashboard</h1>
+              <h1 className="text-3xl font-bold page-header-gradient">Flow Metrics Dashboard</h1>
               <p className="text-muted-foreground">Monitor and optimize your value delivery flow</p>
             </div>
           </div>

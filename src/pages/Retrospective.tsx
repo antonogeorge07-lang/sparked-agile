@@ -99,7 +99,7 @@ export default function Retrospective() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
@@ -110,7 +110,7 @@ export default function Retrospective() {
               <Target className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Sprint Retrospective</h1>
+              <h1 className="text-3xl font-bold page-header-gradient">Sprint Retrospective</h1>
               <p className="text-muted-foreground">Reflect and improve as a team</p>
             </div>
           </div>

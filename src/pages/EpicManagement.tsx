@@ -147,34 +147,34 @@ export default function EpicManagement() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-500/10 text-green-500';
-      case 'in_progress': return 'bg-blue-500/10 text-blue-500';
-      case 'planning': return 'bg-yellow-500/10 text-yellow-500';
-      case 'backlog': return 'bg-gray-500/10 text-gray-500';
-      default: return 'bg-gray-500/10 text-gray-500';
+      case 'completed': return 'bg-success/10 text-success';
+      case 'in_progress': return 'bg-primary/10 text-primary';
+      case 'planning': return 'bg-warning/10 text-warning';
+      case 'backlog': return 'bg-muted text-muted-foreground';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
   const getHealthColor = (health: string) => {
     switch (health) {
-      case 'on_track': return 'text-green-500';
-      case 'at_risk': return 'text-yellow-500';
-      case 'critical': return 'text-red-500';
-      default: return 'text-gray-500';
+      case 'on_track': return 'text-success';
+      case 'at_risk': return 'text-warning';
+      case 'critical': return 'text-destructive';
+      default: return 'text-muted-foreground';
     }
   };
 
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h1 className="text-4xl font-bold mb-2">Epic Management</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">Epic Management</h1>
                 <p className="text-muted-foreground">
                   Create, track, and manage Epics across your value streams
                 </p>

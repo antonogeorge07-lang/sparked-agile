@@ -184,7 +184,7 @@ export default function ScheduleAdvisor() {
 
   const getSuggestionIcon = (type: string) => {
     if (type === 'critical') return <AlertTriangle className="h-4 w-4 text-destructive" />;
-    if (type === 'warning') return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+    if (type === 'warning') return <AlertTriangle className="h-4 w-4 text-warning" />;
     return <Lightbulb className="h-4 w-4 text-primary" />;
   };
 
@@ -204,17 +204,16 @@ export default function ScheduleAdvisor() {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
-                <Route className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">
                 Schedule Advisor
               </h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground">
                 Intelligent scheduling with critical path analysis and optimisation suggestions
               </p>
             </div>
@@ -232,12 +231,10 @@ export default function ScheduleAdvisor() {
           </div>
 
           {usingSample && (
-            <Alert className="mb-6 border-primary/20 bg-primary/5">
-              <BarChart3 className="h-4 w-4" />
-              <AlertDescription>
-                Showing sample data — add tasks with dependencies in your Command Centre to see real schedule analysis.
-              </AlertDescription>
-            </Alert>
+            <div className="mb-6 p-3 rounded-lg border border-border bg-muted/50 flex items-center gap-2 text-sm text-muted-foreground">
+              <BarChart3 className="h-4 w-4 shrink-0" />
+              Showing sample data — add tasks with dependencies in your Command Centre to see real schedule analysis.
+            </div>
           )}
 
           {loading ? (
@@ -248,7 +245,7 @@ export default function ScheduleAdvisor() {
             <div className="space-y-8">
               {/* KPI Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -256,14 +253,14 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{totalDuration}</p>
                         <p className="text-xs text-muted-foreground mt-1">working days</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Timer className="h-6 w-6 text-primary" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -271,14 +268,14 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{criticalTasks.length}</p>
                         <p className="text-xs text-muted-foreground mt-1">of {criticalPath.length} total tasks</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-destructive/10 flex items-center justify-center">
                         <AlertTriangle className="h-6 w-6 text-destructive" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -286,14 +283,14 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{criticalProgress}%</p>
                         <Progress value={criticalProgress} className="mt-2 h-2" />
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                        <TrendingUp className="h-6 w-6 text-green-500" />
+                      <div className="h-12 w-12 rounded-xl bg-success/10 flex items-center justify-center">
+                        <TrendingUp className="h-6 w-6 text-success" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -301,8 +298,8 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{suggestions.filter(s => s.impact === 'high').length}</p>
                         <p className="text-xs text-muted-foreground mt-1">high-impact findings</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                        <Shield className="h-6 w-6 text-yellow-500" />
+                      <div className="h-12 w-12 rounded-xl bg-warning/10 flex items-center justify-center">
+                        <Shield className="h-6 w-6 text-warning" />
                       </div>
                     </div>
                   </CardContent>
@@ -439,7 +436,7 @@ export default function ScheduleAdvisor() {
                             {criticalTasks.map((t, i) => (
                               <div key={t.id} className="flex items-center gap-2">
                                 <div className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                                  t.status === 'completed' ? 'bg-green-500/10 text-green-600' :
+                                  t.status === 'completed' ? 'bg-success/10 text-success' :
                                   t.status === 'in_progress' ? 'bg-primary/10 text-primary' :
                                   'bg-muted text-muted-foreground'
                                 }`}>
@@ -494,15 +491,15 @@ export default function ScheduleAdvisor() {
                       </div>
 
                       {suggestions.map(s => (
-                        <Card key={s.id} className={`transition-all hover:shadow-md ${
+                        <Card key={s.id} className={`transition-all hover:shadow-elevated ${
                           s.type === 'critical' ? 'border-destructive/30' :
-                          s.type === 'warning' ? 'border-yellow-500/30' : ''
+                          s.type === 'warning' ? 'border-warning/30' : ''
                         }`}>
                           <CardContent className="pt-5">
                             <div className="flex items-start gap-4">
                               <div className={`h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
                                 s.type === 'critical' ? 'bg-destructive/10' :
-                                s.type === 'warning' ? 'bg-yellow-500/10' : 'bg-primary/10'
+                                s.type === 'warning' ? 'bg-warning/10' : 'bg-primary/10'
                               }`}>
                                 {getSuggestionIcon(s.type)}
                               </div>
@@ -637,7 +634,7 @@ export default function ScheduleAdvisor() {
                               <div className="flex justify-between text-sm">
                                 <span className="font-medium flex items-center gap-2">
                                   {r.name}
-                                  {isOverloaded && <AlertTriangle className="h-3 w-3 text-yellow-500" />}
+                                  {isOverloaded && <AlertTriangle className="h-3 w-3 text-warning" />}
                                 </span>
                                 <span className="text-muted-foreground">{r.total} days</span>
                               </div>

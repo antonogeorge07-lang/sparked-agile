@@ -39,7 +39,20 @@ All colors MUST be HSL.
     --input: 220 15% 88%;
     --ring: 221 83% 53%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Chart colors for themed consistency */
+    --chart-1: 221 83% 53%;
+    --chart-2: 152 76% 45%;
+    --chart-3: 262 83% 58%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 0 72% 51%;
+
+    /* Success/warning semantic */
+    --success: 152 76% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
 
     /* Tier colors */
     --tier-free: 152 76% 45%;
@@ -55,9 +68,10 @@ All colors MUST be HSL.
     --gradient-pro: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 83% 65%));
     
     /* Modern shadows */
-    --shadow-card: 0 2px 12px -2px hsl(221 83% 53% / 0.1);
-    --shadow-elevated: 0 8px 32px -4px hsl(221 83% 53% / 0.15);
+    --shadow-card: 0 2px 12px -2px hsl(221 83% 53% / 0.08);
+    --shadow-elevated: 0 8px 32px -4px hsl(221 83% 53% / 0.12);
     --shadow-gold: 0 4px 20px -2px hsl(262 83% 58% / 0.25);
+    --shadow-glass: 0 8px 32px 0 hsl(221 83% 53% / 0.06);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -101,6 +115,19 @@ All colors MUST be HSL.
     --input: 220 35% 18%;
     --ring: 221 83% 53%;
 
+    /* Chart colors - Dark mode */
+    --chart-1: 221 83% 60%;
+    --chart-2: 152 76% 50%;
+    --chart-3: 262 83% 65%;
+    --chart-4: 38 92% 55%;
+    --chart-5: 0 72% 55%;
+
+    /* Success/warning semantic - Dark mode */
+    --success: 152 76% 50%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 100%;
+
     /* Tier colors - Dark mode */
     --tier-free: 152 76% 45%;
     --tier-free-foreground: 0 0% 100%;
@@ -117,6 +144,7 @@ All colors MUST be HSL.
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.4);
     --shadow-elevated: 0 8px 32px -4px hsl(0 0% 0% / 0.5);
     --shadow-gold: 0 4px 20px -2px hsl(262 83% 58% / 0.3);
+    --shadow-glass: 0 8px 32px 0 hsl(0 0% 0% / 0.3);
 
     --sidebar-background: 240 6% 10%;
     --sidebar-foreground: 240 5% 96%;
@@ -231,7 +259,40 @@ All colors MUST be HSL.
     padding-bottom: env(safe-area-inset-bottom, 0px);
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Glassmorphism card variant */
+@layer components {
+  .glass-card {
+    @apply bg-card/70 border border-border/50 shadow-card;
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
   }
+
+  .glass-card-elevated {
+    @apply bg-card/60 border border-border/40 shadow-elevated;
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    backdrop-filter: blur(24px) saturate(200%);
+  }
+
+  .page-header-gradient {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+
+  .kpi-card {
+    @apply bg-card/80 border border-border/50 rounded-xl shadow-card transition-all duration-300 hover:shadow-elevated hover:-translate-y-0.5;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .chart-tooltip {
+    background: hsl(var(--card)) !important;
+    border: 1px solid hsl(var(--border)) !important;
+    border-radius: var(--radius) !important;
+    color: hsl(var(--card-foreground)) !important;
+    box-shadow: var(--shadow-elevated) !important;
+  }
+}
 
   /* iOS-specific backdrop filter fallback */
   .backdrop-blur-ios {
