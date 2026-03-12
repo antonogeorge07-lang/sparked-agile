@@ -205,7 +205,7 @@ export default function ProjectProgress() {
                       {hasGithubIntegration && (
                         <div className="flex gap-4">
                           <div className="flex flex-col items-center">
-                            <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-accent-foreground"></div>
                             {projectStats && <div className="w-0.5 h-full bg-border"></div>}
                           </div>
                           <div className="flex-1 pb-4">
