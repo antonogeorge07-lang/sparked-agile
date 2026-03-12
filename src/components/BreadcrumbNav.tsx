@@ -30,7 +30,7 @@ const routeConfig: Record<string, { label: string; parent?: string }> = {
   "/program-increment": { label: "Program Increment", parent: "/" },
   "/task-management": { label: "Task Management", parent: "/" },
   "/workflows": { label: "Workflows", parent: "/" },
-  "/feature-demo": { label: "Feature Demo", parent: "/" },
+  
   "/integrations": { label: "Integrations", parent: "/" },
   "/ceremony-setup": { label: "Ceremony Setup", parent: "/" },
   "/user-guide": { label: "User Guide", parent: "/" },

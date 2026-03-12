@@ -43,7 +43,7 @@ const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
-const FeatureDemo = lazy(() => import("./pages/FeatureDemo"));
+
 const About = lazy(() => import("./pages/About"));
 const EpicManagement = lazy(() => import("./pages/EpicManagement"));
 const EpicDetail = lazy(() => import("./pages/EpicDetail"));
@@ -51,8 +51,8 @@ const EpicPortfolio = lazy(() => import("./pages/EpicPortfolio"));
 const QuickStart = lazy(() => import("./pages/QuickStart"));
 const MyProjects = lazy(() => import("./pages/MyProjects"));
 const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
-const GettingStarted = lazy(() => import("./pages/GettingStarted"));
-const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
+
+
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
 const VisualDemo = lazy(() => import("./pages/VisualDemo"));
@@ -113,15 +113,13 @@ const App = () => {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />
-                  <Route path="/landing" element={<Landing />} />
                   <Route path="/home" element={<Index />} />
                   <Route path="/quick-start" element={<QuickStart />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/getting-started" element={<GettingStarted />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/platform-owner" element={<PlatformOwner />} />
                   <Route path="/security-incidents" element={<SecurityIncidents />} />
-                  <Route path="/admin/incidents" element={<SecurityIncidents />} />
+                  
                   <Route path="/my-projects" element={<MyProjects />} />
                   <Route path="/workspace/settings" element={<WorkspaceSettings />} />
                   <Route path="/workflows" element={<Workflows />} />
@@ -146,12 +144,12 @@ const App = () => {
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/user-guide" element={<UserGuide />} />
                   <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
-                  <Route path="/feature-demo" element={<FeatureDemo />} />
+                  
                   <Route path="/about" element={<About />} />
                   <Route path="/epic-management" element={<EpicManagement />} />
                   <Route path="/epic/:id" element={<EpicDetail />} />
                   <Route path="/epic-portfolio" element={<EpicPortfolio />} />
-                  <Route path="/onboarding-guide" element={<OnboardingGuide />} />
+                  
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
                   <Route path="/visual-demo" element={<VisualDemo />} />

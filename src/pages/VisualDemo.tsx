@@ -33,7 +33,7 @@ const pages: PageDemo[] = [
   { id: "landing", title: "Landing Page", description: "Public-facing marketing page with hero, features, and pricing", icon: Globe, category: "core", path: "/", tag: "Public" },
   { id: "home", title: "Home Dashboard", description: "Main authenticated user home with project overview", icon: Home, category: "core", path: "/home" },
   { id: "quick-start", title: "Quick Start", description: "Guided onboarding to get new users up and running", icon: Rocket, category: "core", path: "/quick-start" },
-  { id: "getting-started", title: "Getting Started", description: "Step-by-step setup guide for the platform", icon: BookOpen, category: "core", path: "/getting-started" },
+  
   { id: "auth", title: "Authentication", description: "Sign in and sign up flows with email verification", icon: Shield, category: "core", path: "/auth", tag: "Auth" },
 
   // Planning
@@ -67,7 +67,7 @@ const pages: PageDemo[] = [
 
   // Info
   { id: "features", title: "Features", description: "Comprehensive overview of all platform capabilities", icon: Sparkles, category: "info", path: "/features", tag: "Public" },
-  { id: "feature-demo", title: "Feature Demos", description: "Interactive walkthroughs of key platform features", icon: Play, category: "info", path: "/feature-demo", tag: "Public" },
+  
   { id: "about", title: "About", description: "Our mission, team, and the story behind SAAI", icon: BookOpen, category: "info", path: "/about", tag: "Public" },
   { id: "faq", title: "FAQ", description: "Frequently asked questions and troubleshooting", icon: ClipboardList, category: "info", path: "/faq", tag: "Public" },
   { id: "contact", title: "Contact", description: "Get in touch with the SAAI team", icon: MessageSquare, category: "info", path: "/contact", tag: "Public" },

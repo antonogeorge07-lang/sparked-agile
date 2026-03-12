@@ -37,7 +37,7 @@ export function FooterSection() {
             <h3 className="font-semibold mb-4">{t('landing.footer.product')}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground" role="list">
               <li>
-                <Link to="/landing#features" className="hover:text-foreground transition-colors">
+                <Link to="/#features" className="hover:text-foreground transition-colors">
                   {t('landing.footer.features')}
                 </Link>
               </li>

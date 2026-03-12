@@ -81,7 +81,7 @@ export const InteractiveOnboarding = () => {
   
   useEffect(() => {
     // Never show onboarding wizard on public landing pages — let visitors browse freely
-    const publicPaths = ['/', '/landing', '/features', '/about', '/contact', '/faq', '/privacy', '/terms'];
+    const publicPaths = ['/', '/features', '/about', '/contact', '/faq', '/privacy', '/terms'];
     if (publicPaths.includes(location.pathname)) {
       return;
     }
