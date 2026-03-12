@@ -210,7 +210,7 @@ export default function FlowMetrics() {
                         </div>
                       </div>
                       {index === 0 && (
-                        <div className="flex items-center gap-1 text-xs text-green-600">
+                        <div className="flex items-center gap-1 text-xs text-primary">
                           <TrendingUp className="w-3 h-3" />
                           <span>Latest</span>
                         </div>
