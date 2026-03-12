@@ -115,6 +115,19 @@ All colors MUST be HSL.
     --input: 220 35% 18%;
     --ring: 221 83% 53%;
 
+    /* Chart colors - Dark mode */
+    --chart-1: 221 83% 60%;
+    --chart-2: 152 76% 50%;
+    --chart-3: 262 83% 65%;
+    --chart-4: 38 92% 55%;
+    --chart-5: 0 72% 55%;
+
+    /* Success/warning semantic - Dark mode */
+    --success: 152 76% 50%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 100%;
+
     /* Tier colors - Dark mode */
     --tier-free: 152 76% 45%;
     --tier-free-foreground: 0 0% 100%;
@@ -131,6 +144,7 @@ All colors MUST be HSL.
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.4);
     --shadow-elevated: 0 8px 32px -4px hsl(0 0% 0% / 0.5);
     --shadow-gold: 0 4px 20px -2px hsl(262 83% 58% / 0.3);
+    --shadow-glass: 0 8px 32px 0 hsl(0 0% 0% / 0.3);
 
     --sidebar-background: 240 6% 10%;
     --sidebar-foreground: 240 5% 96%;
