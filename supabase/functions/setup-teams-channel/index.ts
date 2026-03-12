@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { upsertIntegrationConfig, resolveProjectId } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,45 +28,15 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { accessToken, workspaceId, projectName } = await req.json();
+    const { teamId, teamName, channelName, workspaceId, projectId: inputProjectId, accessToken } = await req.json();
     
-    console.log('Setting up Teams channel for project:', projectName);
+    console.log('Setting up Teams channel:', channelName, 'in team:', teamName);
 
     if (!accessToken) {
       throw new Error('Microsoft access token required');
     }
 
-    // Create a team channel for the project
-    // First, get user's teams
-    const teamsResponse = await fetch('https://graph.microsoft.com/v1.0/me/joinedTeams', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!teamsResponse.ok) {
-      throw new Error('Failed to fetch teams');
-    }
-
-    const teamsData = await teamsResponse.json();
-    
-    if (!teamsData.value || teamsData.value.length === 0) {
-      throw new Error('No teams found. Please create a team in Microsoft Teams first.');
-    }
-
-    // Use the first team or let user select
-    const teamId = teamsData.value[0].id;
-    const teamName = teamsData.value[0].displayName;
-
-    // Create a channel in the team
-    const channelData = {
-      displayName: `Project: ${projectName}`,
-      description: `Agile project workspace for ${projectName}`,
-      membershipType: 'standard',
-    };
-
+    // Create the channel in Microsoft Teams
     const createChannelResponse = await fetch(
       `https://graph.microsoft.com/v1.0/teams/${teamId}/channels`,
       {
@@ -74,7 +45,10 @@ serve(async (req) => {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(channelData),
+        body: JSON.stringify({
+          displayName: channelName,
+          description: `Project channel for ${teamName}`,
+        }),
       }
     );
 
@@ -87,17 +61,25 @@ serve(async (req) => {
     const channelResult = await createChannelResponse.json();
     console.log('Successfully created Teams channel:', channelResult.displayName);
 
-    // Update workspace with Teams connection details
-    const { error: updateError } = await supabaseClient
-      .from('project_workspaces')
-      .update({
-        teams_channel_id: channelResult.id,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', workspaceId);
+    // Resolve project ID
+    const projectId = inputProjectId || (workspaceId ? await resolveProjectId(supabaseClient, workspaceId) : null);
 
-    if (updateError) {
-      throw updateError;
+    if (projectId) {
+      // Save to unified integrations table
+      await upsertIntegrationConfig(supabaseClient, projectId, 'microsoft', {
+        teams_channel_id: channelResult.id,
+      }, 'Microsoft');
+    }
+
+    // Also update legacy project_workspaces for backward compatibility
+    if (workspaceId) {
+      await supabaseClient
+        .from('project_workspaces')
+        .update({
+          teams_channel_id: channelResult.id,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', workspaceId);
     }
 
     return new Response(

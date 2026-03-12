@@ -39,7 +39,6 @@ interface GithubIssue {
 
 const TaskManagement = () => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>("");
   const [editingTask, setEditingTask] = useState<any>(null);
   const [editForm, setEditForm] = useState({ title: "", description: "", status: "" });
   const { toast } = useToast();
@@ -62,63 +61,46 @@ const TaskManagement = () => {
     },
   });
 
-  // Fetch workspaces for selected project
-  const { data: workspaces } = useQuery({
-    queryKey: ["workspaces", selectedProjectId],
-    queryFn: async () => {
-      if (!selectedProjectId) return [];
-      
-      const { data, error } = await supabase
-        .from("project_workspaces")
-        .select("*")
-        .eq("project_id", selectedProjectId);
-
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!selectedProjectId,
-  });
-
   // Check integrations
   const { data: integrations } = useProjectIntegrations(selectedProjectId);
 
-  // Fetch JIRA issues
+  // Fetch JIRA issues using projectId directly
   const { data: jiraData, isLoading: jiraLoading } = useQuery({
-    queryKey: ["jira-issues", selectedWorkspaceId],
+    queryKey: ["jira-issues", selectedProjectId],
     queryFn: async () => {
-      if (!selectedWorkspaceId || !integrations?.hasJira) return { backlogItems: [] };
+      if (!selectedProjectId || !integrations?.hasJira) return { backlogItems: [] };
 
       const { data, error } = await supabase.functions.invoke("fetch-jira-backlog", {
-        body: { workspaceId: selectedWorkspaceId },
+        body: { projectId: selectedProjectId },
       });
 
       if (error) throw error;
       return data;
     },
-    enabled: !!selectedWorkspaceId && !!integrations?.hasJira,
+    enabled: !!selectedProjectId && !!integrations?.hasJira,
   });
 
-  // Fetch GitHub issues
+  // Fetch GitHub issues using projectId directly
   const { data: githubData, isLoading: githubLoading } = useQuery({
-    queryKey: ["github-issues", selectedWorkspaceId],
+    queryKey: ["github-issues", selectedProjectId],
     queryFn: async () => {
-      if (!selectedWorkspaceId || !integrations?.hasGithub) return { issues: [] };
+      if (!selectedProjectId || !integrations?.hasGithub) return { issues: [] };
 
       const { data, error } = await supabase.functions.invoke("fetch-github-issues", {
-        body: { workspaceId: selectedWorkspaceId },
+        body: { projectId: selectedProjectId },
       });
 
       if (error) throw error;
       return data;
     },
-    enabled: !!selectedWorkspaceId && !!integrations?.hasGithub,
+    enabled: !!selectedProjectId && !!integrations?.hasGithub,
   });
 
   // Update JIRA issue mutation
   const updateJiraMutation = useMutation({
     mutationFn: async ({ issueKey, updates }: { issueKey: string; updates: any }) => {
       const { data, error } = await supabase.functions.invoke("update-jira-issue", {
-        body: { workspaceId: selectedWorkspaceId, issueKey, updates },
+        body: { projectId: selectedProjectId, issueKey, updates },
       });
       if (error) throw error;
       return data;
@@ -137,7 +119,7 @@ const TaskManagement = () => {
   const updateGithubMutation = useMutation({
     mutationFn: async ({ issueNumber, updates }: { issueNumber: number; updates: any }) => {
       const { data, error } = await supabase.functions.invoke("update-github-issue", {
-        body: { workspaceId: selectedWorkspaceId, issueNumber, updates },
+        body: { projectId: selectedProjectId, issueNumber, updates },
       });
       if (error) throw error;
       return data;
@@ -191,12 +173,6 @@ const TaskManagement = () => {
     }
   }, [projects]);
 
-  useEffect(() => {
-    if (workspaces && workspaces.length > 0 && !selectedWorkspaceId) {
-      setSelectedWorkspaceId(workspaces[0].id);
-    }
-  }, [workspaces]);
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -210,7 +186,7 @@ const TaskManagement = () => {
           </p>
         </div>
 
-        <div className="grid gap-4 mb-6 md:grid-cols-2">
+        <div className="grid gap-4 mb-6">
           <div>
             <label className="text-sm font-medium mb-2 block">Select Project</label>
             <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
@@ -221,22 +197,6 @@ const TaskManagement = () => {
                 {projects?.map((project) => (
                   <SelectItem key={project.id} value={project.id}>
                     {project.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">Select Workspace</label>
-            <Select value={selectedWorkspaceId} onValueChange={setSelectedWorkspaceId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose a workspace" />
-              </SelectTrigger>
-              <SelectContent>
-                {workspaces?.map((workspace) => (
-                  <SelectItem key={workspace.id} value={workspace.id}>
-                    {workspace.name}
                   </SelectItem>
                 ))}
               </SelectContent>

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { resolveIntegrationConfig } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,7 +28,7 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { workspaceId, issueNumber, updates } = await req.json();
+    const { workspaceId, projectId, issueNumber, updates } = await req.json();
     
     console.log('Updating GitHub issue:', issueNumber, 'Updates:', updates);
 
@@ -36,26 +37,31 @@ serve(async (req) => {
       throw new Error('GitHub token not configured');
     }
 
-    // Get workspace details
-    const { data: workspace, error: workspaceError } = await supabaseClient
-      .from('project_workspaces')
-      .select('github_repo_url, github_repo_name')
-      .eq('id', workspaceId)
-      .single();
+    // Resolve integration config from unified integrations table
+    const githubConfig = await resolveIntegrationConfig(supabaseClient, 'github', { projectId, workspaceId });
 
-    if (workspaceError || !workspace) {
-      throw new Error('Workspace not found or GitHub not configured');
+    if (!githubConfig) {
+      throw new Error('GitHub not configured for this project');
     }
+
+    const repoUrl = githubConfig.config?.repo_url;
+    const repoName = githubConfig.config?.repo_name;
 
     // Extract owner and repo
     let owner = '';
     let repo = '';
     
-    if (workspace.github_repo_url) {
-      const match = workspace.github_repo_url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+    if (repoUrl) {
+      const match = repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       if (match) {
         owner = match[1];
         repo = match[2].replace('.git', '');
+      }
+    } else if (repoName) {
+      const parts = repoName.split('/');
+      if (parts.length === 2) {
+        owner = parts[0];
+        repo = parts[1];
       }
     }
 
@@ -73,7 +79,7 @@ serve(async (req) => {
       updatePayload.body = updates.body;
     }
     if (updates.state) {
-      updatePayload.state = updates.state; // 'open' or 'closed'
+      updatePayload.state = updates.state;
     }
     if (updates.assignees) {
       updatePayload.assignees = Array.isArray(updates.assignees) ? updates.assignees : [updates.assignees];

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { upsertIntegrationConfig, resolveProjectId } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,7 +28,7 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { jiraBoardUrl, jiraSiteUrl, workspaceId } = await req.json();
+    const { jiraBoardUrl, jiraSiteUrl, workspaceId, projectId: inputProjectId } = await req.json();
     
     console.log('Connecting to JIRA board:', jiraBoardUrl);
 
@@ -66,18 +67,29 @@ serve(async (req) => {
     const boardData = await jiraResponse.json();
     console.log('Successfully connected to JIRA board:', boardData.name);
 
-    // Update workspace with JIRA connection details
-    const { error: updateError } = await supabaseClient
-      .from('project_workspaces')
-      .update({
-        jira_board_url: jiraBoardUrl,
-        jira_board_id: boardId,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', workspaceId);
+    // Resolve project ID
+    const projectId = inputProjectId || (workspaceId ? await resolveProjectId(supabaseClient, workspaceId) : null);
+    
+    if (!projectId) {
+      throw new Error('Could not determine project ID');
+    }
 
-    if (updateError) {
-      throw updateError;
+    // Save to unified integrations table
+    await upsertIntegrationConfig(supabaseClient, projectId, 'jira', {
+      board_url: jiraBoardUrl,
+      board_id: boardId,
+    }, 'Jira');
+
+    // Also update legacy project_workspaces for backward compatibility
+    if (workspaceId) {
+      await supabaseClient
+        .from('project_workspaces')
+        .update({
+          jira_board_url: jiraBoardUrl,
+          jira_board_id: boardId,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', workspaceId);
     }
 
     return new Response(

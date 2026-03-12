@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { resolveIntegrationConfig, resolveProjectId } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,20 +28,12 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { workspaceId, sprintNumber, sprintStartDate, sprintEndDate } = await req.json();
+    const { workspaceId, projectId: inputProjectId, sprintNumber, sprintStartDate, sprintEndDate } = await req.json();
     
     console.log(`Fetching completed work for Sprint ${sprintNumber}`);
 
-    // Get workspace details
-    const { data: workspace, error: workspaceError } = await supabaseClient
-      .from('project_workspaces')
-      .select('*')
-      .eq('id', workspaceId)
-      .single();
-
-    if (workspaceError || !workspace) {
-      throw new Error('Workspace not found');
-    }
+    // Resolve project ID
+    const projectId = inputProjectId || (workspaceId ? await resolveProjectId(supabaseClient, workspaceId) : null);
 
     const jiraApiToken = Deno.env.get('JIRA_API_TOKEN');
     const githubToken = Deno.env.get('GITHUB_TOKEN');
@@ -51,15 +44,19 @@ serve(async (req) => {
       githubCommits: [],
     };
 
+    // Get Jira config from integrations table
+    const jiraConfig = projectId ? await resolveIntegrationConfig(supabaseClient, 'jira', { projectId }) : null;
+    const boardId = jiraConfig?.config?.board_id;
+    const boardUrl = jiraConfig?.config?.board_url;
+
     // Fetch JIRA completed tickets
-    if (workspace.jira_board_id && workspace.jira_board_url && jiraApiToken) {
+    if (boardId && boardUrl && jiraApiToken) {
       try {
-        const urlMatch = workspace.jira_board_url.match(/(https:\/\/[^\/]+)/);
+        const urlMatch = boardUrl.match(/(https:\/\/[^\/]+)/);
         if (urlMatch) {
           const jiraSiteUrl = urlMatch[1];
           
-          // Search for completed issues in the sprint
-          const jql = `board = ${workspace.jira_board_id} AND status IN (Done, Closed, Resolved) AND resolved >= "${sprintStartDate}" AND resolved <= "${sprintEndDate}"`;
+          const jql = `board = ${boardId} AND status IN (Done, Closed, Resolved) AND resolved >= "${sprintStartDate}" AND resolved <= "${sprintEndDate}"`;
           const jiraUrl = `${jiraSiteUrl}/rest/api/3/search?jql=${encodeURIComponent(jql)}&maxResults=100&fields=key,summary,description,status,priority,assignee,issuetype,resolutiondate,customfield_10016`;
           
           const jiraResponse = await fetch(jiraUrl, {
@@ -90,16 +87,19 @@ serve(async (req) => {
         }
       } catch (jiraError) {
         console.error('JIRA fetch error:', jiraError);
-        // Continue even if JIRA fails
       }
     }
 
+    // Get GitHub config from integrations table
+    const githubConfig = projectId ? await resolveIntegrationConfig(supabaseClient, 'github', { projectId }) : null;
+    const repoName = githubConfig?.config?.repo_name;
+
     // Fetch GitHub commits
-    if (workspace.github_repo_name && githubToken) {
+    if (repoName && githubToken) {
       try {
         const since = new Date(sprintStartDate).toISOString();
         const until = new Date(sprintEndDate).toISOString();
-        const githubUrl = `https://api.github.com/repos/${workspace.github_repo_name}/commits?since=${since}&until=${until}&per_page=100`;
+        const githubUrl = `https://api.github.com/repos/${repoName}/commits?since=${since}&until=${until}&per_page=100`;
         
         const githubResponse = await fetch(githubUrl, {
           method: 'GET',
@@ -123,7 +123,6 @@ serve(async (req) => {
         }
       } catch (githubError) {
         console.error('GitHub fetch error:', githubError);
-        // Continue even if GitHub fails
       }
     }
 

@@ -80,6 +80,8 @@ export default function SprintReviewCoordinator() {
 
     if (!projects || projects.length === 0) return;
 
+    // Still load workspaces for ceremony config compatibility
+    // Integration config is now read from integrations table
     const { data: workspaceData } = await supabase
       .from("project_workspaces")
       .select("*")

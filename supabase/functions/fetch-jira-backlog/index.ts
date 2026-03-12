@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { resolveIntegrationConfig } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,9 +28,9 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { workspaceId, maxResults = 20 } = await req.json();
+    const { workspaceId, projectId, maxResults = 20 } = await req.json();
     
-    console.log('Fetching JIRA backlog for workspace:', workspaceId);
+    console.log('Fetching JIRA backlog for project/workspace:', projectId || workspaceId);
 
     // Check if user has Jira token configured via safe view
     const { data: userTokenInfo } = await supabaseClient
@@ -43,7 +44,6 @@ serve(async (req) => {
     let jiraSiteUrl: string | null = null;
 
     if (userTokenInfo?.has_token) {
-      // Decrypt credentials via decrypt-token edge function
       console.log('Decrypting user Jira credentials...');
       const decryptResponse = await fetch(
         `${Deno.env.get('SUPABASE_URL')}/functions/v1/decrypt-token`,
@@ -73,7 +73,6 @@ serve(async (req) => {
     }
     
     if (!jiraToken) {
-      // Fall back to system token
       jiraToken = Deno.env.get('JIRA_API_TOKEN') ?? null;
       if (jiraToken) {
         console.log('Using system Jira token');
@@ -94,21 +93,16 @@ serve(async (req) => {
       );
     }
 
-    // Get workspace details for board info
-    const { data: workspace, error: workspaceError } = await supabaseClient
-      .from('project_workspaces')
-      .select('jira_board_id, jira_board_url')
-      .eq('id', workspaceId)
-      .single();
+    // Resolve integration config from unified integrations table
+    const jiraConfig = await resolveIntegrationConfig(supabaseClient, 'jira', { projectId, workspaceId });
 
-    if (workspaceError || !workspace) {
-      throw new Error('Workspace not found');
-    }
+    const boardId = jiraConfig?.config?.board_id;
+    const boardUrl = jiraConfig?.config?.board_url;
 
-    if (!workspace.jira_board_id || !workspace.jira_board_url) {
+    if (!boardId || !boardUrl) {
       return new Response(
         JSON.stringify({
-          error: 'JIRA board not connected to this workspace',
+          error: 'JIRA board not connected to this project',
           backlogItems: [],
         }),
         {
@@ -120,7 +114,7 @@ serve(async (req) => {
 
     // Extract JIRA site URL from board URL if not using user token
     if (!jiraSiteUrl) {
-      const urlMatch = workspace.jira_board_url.match(/(https:\/\/[^\/]+)/);
+      const urlMatch = boardUrl.match(/(https:\/\/[^\/]+)/);
       if (!urlMatch) {
         throw new Error('Invalid JIRA board URL');
       }
@@ -130,15 +124,13 @@ serve(async (req) => {
     // Prepare authorization header
     let authHeader: string;
     if (jiraEmail) {
-      // User token uses Basic auth with email:token
       authHeader = `Basic ${btoa(`${jiraEmail}:${jiraToken}`)}`;
     } else {
-      // System token uses Bearer auth
       authHeader = `Bearer ${jiraToken}`;
     }
 
     // Fetch backlog issues for the board
-    const jiraUrl = `${jiraSiteUrl}/rest/agile/1.0/board/${workspace.jira_board_id}/backlog?maxResults=${maxResults}`;
+    const jiraUrl = `${jiraSiteUrl}/rest/agile/1.0/board/${boardId}/backlog?maxResults=${maxResults}`;
     
     const jiraResponse = await fetch(jiraUrl, {
       method: 'GET',
@@ -157,7 +149,6 @@ serve(async (req) => {
 
     const jiraData = await jiraResponse.json();
     
-    // Transform JIRA issues to simplified format
     const backlogItems = jiraData.issues?.map((issue: any) => ({
       key: issue.key,
       summary: issue.fields.summary,

@@ -51,56 +51,13 @@ export const useUnifiedIntegrations = (projectId: string | null): UseUnifiedInte
     setError(null);
 
     try {
-      // Try the unified view first
-      const { data: viewData, error: viewError } = await supabase
-        .from('unified_project_integrations')
-        .select('*')
-        .eq('project_id', projectId)
-        .maybeSingle();
-
-      if (!viewError && viewData) {
-        setIntegrations({
-          jira: {
-            active: viewData.jira_active || false,
-            integration_id: viewData.jira_integration_id,
-            board_url: viewData.jira_board_url,
-            board_id: viewData.jira_board_id
-          },
-          github: {
-            active: viewData.github_active || false,
-            integration_id: viewData.github_integration_id,
-            repo_url: viewData.github_repo_url,
-            repo_name: viewData.github_repo_name
-          },
-          microsoft: {
-            active: viewData.microsoft_active || false,
-            integration_id: viewData.microsoft_integration_id,
-            calendar_id: viewData.outlook_calendar_id,
-            teams_channel_id: viewData.teams_channel_id,
-            distribution_list: viewData.team_distribution_list
-          },
-          slack: {
-            active: viewData.slack_active || false,
-            integration_id: viewData.slack_integration_id
-          }
-        });
-        return;
-      }
-
-      // Fallback: query integrations table directly
+      // Query integrations table directly (single source of truth)
       const { data: integrationsData, error: integrationsError } = await supabase
         .from('integrations')
         .select('id, integration_type, is_active, config')
         .eq('project_id', projectId);
 
       if (integrationsError) throw integrationsError;
-
-      // Also get legacy workspace data
-      const { data: workspace } = await supabase
-        .from('project_workspaces')
-        .select('jira_board_url, jira_board_id, github_repo_url, github_repo_name, outlook_calendar_id, teams_channel_id, team_distribution_list')
-        .eq('project_id', projectId)
-        .maybeSingle();
 
       const result: UnifiedIntegrations = { ...defaultIntegrations };
 
@@ -114,23 +71,6 @@ export const useUnifiedIntegrations = (projectId: string | null): UseUnifiedInte
             integration_id: integration.id,
             ...config
           };
-        }
-      }
-
-      // Merge with legacy workspace data if integration config is missing
-      if (workspace) {
-        if (!result.jira.board_url && workspace.jira_board_url) {
-          result.jira.board_url = workspace.jira_board_url;
-          result.jira.board_id = workspace.jira_board_id || undefined;
-        }
-        if (!result.github.repo_url && workspace.github_repo_url) {
-          result.github.repo_url = workspace.github_repo_url;
-          result.github.repo_name = workspace.github_repo_name || undefined;
-        }
-        if (!result.microsoft.calendar_id && workspace.outlook_calendar_id) {
-          result.microsoft.calendar_id = workspace.outlook_calendar_id;
-          result.microsoft.teams_channel_id = workspace.teams_channel_id || undefined;
-          result.microsoft.distribution_list = workspace.team_distribution_list || undefined;
         }
       }
 

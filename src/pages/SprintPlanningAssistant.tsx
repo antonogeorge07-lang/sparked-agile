@@ -105,6 +105,8 @@ export default function SprintPlanningAssistant() {
 
     if (!projects || projects.length === 0) return;
 
+    // Use integrations table to find projects with active integrations, 
+    // but still load workspaces for ceremony config compatibility
     const { data: workspaceData } = await supabase
       .from("project_workspaces")
       .select("*")
