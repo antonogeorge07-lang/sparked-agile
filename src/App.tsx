@@ -55,6 +55,7 @@ const GettingStarted = lazy(() => import("./pages/GettingStarted"));
 const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
+const VisualDemo = lazy(() => import("./pages/VisualDemo"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -150,6 +151,7 @@ const App = () => {
                   <Route path="/onboarding-guide" element={<OnboardingGuide />} />
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
+                  <Route path="/visual-demo" element={<VisualDemo />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
