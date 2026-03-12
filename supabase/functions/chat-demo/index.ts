@@ -136,11 +136,12 @@ serve(async (req) => {
   }
 
   try {
-    // Check demo limit with enhanced fingerprinting
-    const limitCheck = checkDemoLimit(req);
-    
-    if (!limitCheck.allowed) {
-      console.warn(`Demo limit exceeded for fingerprint`);
+    const fingerprint = generateFingerprint(req);
+
+    // Layer 1: In-memory rate limit (fast, catches bursts)
+    const inMemoryCheck = checkInMemoryDemoLimit(fingerprint);
+    if (!inMemoryCheck.allowed) {
+      console.warn(`In-memory demo limit exceeded`);
       return new Response(
         JSON.stringify({ 
           error: "Demo limit reached. Sign up for unlimited access!",
@@ -149,6 +150,21 @@ serve(async (req) => {
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    // Layer 2: Persistent rate limit (survives restarts)
+    const persistentCheck = await checkPersistentDemoLimit(fingerprint);
+    if (!persistentCheck.allowed) {
+      console.warn(`Persistent demo limit exceeded`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Demo limit reached. Sign up for unlimited access!",
+          remaining: 0
+        }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const limitCheck = { remaining: Math.min(inMemoryCheck.remaining, persistentCheck.remaining) };
 
     // Parse and validate input
     let requestData;

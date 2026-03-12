@@ -62,6 +62,10 @@ serve(async (req) => {
       .lt('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
     results.old_nudges_cleaned = !nudgesError;
 
+    // 6. Clean old chat rate limit entries (older than 1 hour)
+    const { data: chatRateLimitResult } = await supabase.rpc('cleanup_chat_rate_limits');
+    results.chat_rate_limits_cleaned = chatRateLimitResult ?? 0;
+
     console.log('Scheduled cleanup completed:', results);
 
     return new Response(JSON.stringify({ success: true, results }), {
