@@ -158,15 +158,9 @@ serve(async (req) => {
       }
     }
 
-    // Fetch recent GitHub activity for velocity estimation
-    const { data: githubIntegration } = await supabase
-      .from('integrations')
-      .select('config')
-      .eq('project_id', projectId)
-      .eq('integration_type', 'github')
-      .single();
-
+    // Use GitHub integration already fetched above
     let githubActivity = null;
+    const githubConfig = githubIntegration?.config as any;
     if (githubIntegration?.config) {
       const githubConfig = githubIntegration.config as any;
       const githubResponse = await fetch(
