@@ -109,28 +109,29 @@ serve(async (req) => {
 
     const jiraConfig = jiraIntegration?.config as any;
     
-    // Parse Jira config - handle both old and new format
-    let domain: string;
-    let projectKey: string;
-    let email: string;
+    let issues: any[] = [];
+    let domain = '';
+    let projectKey = '';
 
-    if (jiraConfig.domain && jiraConfig.project_key) {
-      // New format
-      domain = jiraConfig.domain;
-      projectKey = jiraConfig.project_key;
-      email = jiraConfig.email || '';
-    } else if (jiraConfig.url) {
-      // Old format - extract from URL
-      const urlMatch = jiraConfig.url.match(/https?:\/\/([^\/]+).*\/projects\/([A-Z]+)/i);
-      if (!urlMatch) {
-        throw new Error('Invalid JIRA URL format. Please reconfigure your JIRA integration.');
+    if (jiraConfig && JIRA_API_TOKEN) {
+      // Parse Jira config - handle both old and new format
+      let email = '';
+
+      if (jiraConfig.domain && jiraConfig.project_key) {
+        domain = jiraConfig.domain;
+        projectKey = jiraConfig.project_key;
+        email = jiraConfig.email || '';
+      } else if (jiraConfig.url) {
+        const urlMatch = jiraConfig.url.match(/https?:\/\/([^\/]+).*\/projects\/([A-Z]+)/i);
+        if (!urlMatch) {
+          throw new Error('Invalid JIRA URL format. Please reconfigure your JIRA integration.');
+        }
+        domain = urlMatch[1];
+        projectKey = urlMatch[2];
+        email = jiraConfig.email || '';
+      } else {
+        throw new Error('JIRA configuration is incomplete. Please reconfigure your JIRA integration.');
       }
-      domain = urlMatch[1];
-      projectKey = urlMatch[2];
-      email = jiraConfig.email || '';
-    } else {
-      throw new Error('JIRA configuration is incomplete. Please reconfigure your JIRA integration.');
-    }
 
     console.log('JIRA Config:', { domain, projectKey, hasEmail: !!email });
     
