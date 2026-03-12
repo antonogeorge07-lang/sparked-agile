@@ -133,31 +133,30 @@ serve(async (req) => {
         throw new Error('JIRA configuration is incomplete. Please reconfigure your JIRA integration.');
       }
 
-    console.log('JIRA Config:', { domain, projectKey, hasEmail: !!email });
-    
-    // Fetch JIRA backlog
-    const authString = email 
-      ? `${email}:${JIRA_API_TOKEN}`
-      : JIRA_API_TOKEN; // Use token directly if no email
-    
-    const jiraResponse = await fetch(
-      `https://${domain}/rest/api/3/search?jql=project=${projectKey} AND status!=Done ORDER BY created DESC&maxResults=100`,
-      {
-        headers: {
-          'Authorization': `Basic ${btoa(authString)}`,
-          'Content-Type': 'application/json',
-        },
+      console.log('JIRA Config:', { domain, projectKey, hasEmail: !!email });
+      
+      const authString = email 
+        ? `${email}:${JIRA_API_TOKEN}`
+        : JIRA_API_TOKEN;
+      
+      const jiraResponse = await fetch(
+        `https://${domain}/rest/api/3/search?jql=project=${projectKey} AND status!=Done ORDER BY created DESC&maxResults=100`,
+        {
+          headers: {
+            'Authorization': `Basic ${btoa(authString)}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (jiraResponse.ok) {
+        const jiraData = await jiraResponse.json();
+        issues = jiraData.issues || [];
+        console.log(`Fetched ${issues.length} JIRA issues`);
+      } else {
+        console.warn(`JIRA API error: ${jiraResponse.status}`);
       }
-    );
-
-    if (!jiraResponse.ok) {
-      throw new Error(`JIRA API error: ${jiraResponse.status}`);
     }
-
-    const jiraData = await jiraResponse.json();
-    const issues = jiraData.issues || [];
-
-    console.log(`Fetched ${issues.length} JIRA issues`);
 
     // Fetch recent GitHub activity for velocity estimation
     const { data: githubIntegration } = await supabase
