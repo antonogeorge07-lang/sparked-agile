@@ -727,6 +727,30 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_rate_limits: {
+        Row: {
+          client_identifier: string
+          created_at: string
+          id: string
+          request_count: number
+          window_start: string
+        }
+        Insert: {
+          client_identifier: string
+          created_at?: string
+          id?: string
+          request_count?: number
+          window_start?: string
+        }
+        Update: {
+          client_identifier?: string
+          created_at?: string
+          id?: string
+          request_count?: number
+          window_start?: string
+        }
+        Relationships: []
+      }
       data_breach_access_audit: {
         Row: {
           access_granted: boolean
@@ -5639,6 +5663,18 @@ export type Database = {
         Args: { p_project_id: string }
         Returns: boolean
       }
+      check_chat_rate_limit: {
+        Args: {
+          p_client_id: string
+          p_max_requests: number
+          p_window_seconds?: number
+        }
+        Returns: {
+          allowed: boolean
+          remaining: number
+          reset_at: string
+        }[]
+      }
       check_integration_status: {
         Args: { integration_id: string }
         Returns: {
@@ -5664,6 +5700,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      cleanup_chat_rate_limits: { Args: never; Returns: number }
       cleanup_expired_cache: { Args: never; Returns: number }
       cleanup_old_access_logs:
         | { Args: never; Returns: undefined }
