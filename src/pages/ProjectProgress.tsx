@@ -74,6 +74,8 @@ export default function ProjectProgress() {
   };
 
   const selectedProjectData = projects.find(p => p.id === selectedProject);
+  const showingSample = !projectStats || (projectStats.totalActionItems === 0 && projectStats.valueStreams?.length === 0);
+  const displayStats = showingSample ? sampleProjectStats : projectStats;
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
