@@ -82,22 +82,29 @@ serve(async (req) => {
     const GITHUB_TOKEN = Deno.env.get('GITHUB_TOKEN');
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
-    if (!JIRA_API_TOKEN || !GITHUB_TOKEN || !LOVABLE_API_KEY) {
-      throw new Error('Required API keys not configured');
+    if (!LOVABLE_API_KEY) {
+      throw new Error('AI service not configured. Please contact support.');
     }
 
     console.log('Fetching JIRA backlog for project:', projectId);
 
-    // Get project integration details
-    const { data: integration } = await supabase
+    // Get project integration details - check for JIRA first, then GitHub
+    const { data: jiraIntegration } = await supabase
       .from('integrations')
       .select('config')
       .eq('project_id', projectId)
       .eq('integration_type', 'jira')
-      .single();
+      .maybeSingle();
 
-    if (!integration?.config) {
-      throw new Error('JIRA integration not configured for this project');
+    const { data: githubIntegration } = await supabase
+      .from('integrations')
+      .select('config')
+      .eq('project_id', projectId)
+      .eq('integration_type', 'github')
+      .maybeSingle();
+
+    if (!jiraIntegration?.config && !githubIntegration?.config) {
+      throw new Error('No integrations configured. Connect JIRA or GitHub in Integrations settings to analyse your backlog.');
     }
 
     const jiraConfig = integration.config as any;
