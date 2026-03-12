@@ -116,21 +116,21 @@ export default function ScheduleAdvisor() {
     if (!selectedProject) return;
     setLoading(true);
     try {
-      const pmiQuery = supabase
-        .from('pmi_projects')
-        .select('id')
-        .eq('project_id', selectedProject)
-        .maybeSingle() as unknown as Promise<{ data: any; error: any }>;
-      const { data: pmiProject } = await pmiQuery;
+      // Try to load native backlog items for schedule analysis
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/pmi_projects?select=id&project_id=eq.${selectedProject}&limit=1`,
+        { headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}` } }
+      );
+      const pmiData = await res.json();
+      
+      if (pmiData && pmiData.length > 0) {
+        const itemsRes = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/native_backlog_items?select=id,title,status,priority,story_points,assignee_id,sprint_id,created_at&project_id=eq.${pmiData[0].id}&order=created_at.asc`,
+          { headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}` } }
+        );
+        const items = await itemsRes.json();
 
-      if (pmiProject) {
-        const itemsQuery = supabase
-          .from('native_backlog_items')
-          .select('id, title, status, priority, story_points, assignee_id, sprint_id, created_at')
-          .eq('project_id', pmiProject.id) as unknown as Promise<{ data: any[]; error: any }>;
-        const { data: items, error: itemsError } = await itemsQuery;
-
-        if (!itemsError && items && items.length >= 4) {
+        if (Array.isArray(items) && items.length >= 4) {
           setTasks(items);
           setUsingSample(false);
         } else {
