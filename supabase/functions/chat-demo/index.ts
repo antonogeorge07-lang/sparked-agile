@@ -1,45 +1,35 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Enhanced rate limiter with fingerprinting for demo
-interface RateLimitEntry {
-  count: number;
-  fingerprint: string;
-  lastRequest: number;
-}
-
-const demoLimitMap = new Map<string, RateLimitEntry>();
+// In-memory rate limiter as fast first layer
+const demoLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 // Generate client fingerprint from multiple headers
 function generateFingerprint(req: Request): string {
   const ip = req.headers.get("x-forwarded-for") || "unknown";
   const userAgent = req.headers.get("user-agent") || "";
   const acceptLang = req.headers.get("accept-language") || "";
-  const accept = req.headers.get("accept") || "";
-  
-  // Create composite fingerprint
-  return `${ip}:${userAgent.substring(0, 50)}:${acceptLang}:${accept.substring(0, 30)}`;
+  return `demo:${ip}:${userAgent.substring(0, 50)}:${acceptLang}`;
 }
 
-function checkDemoLimit(req: Request): { allowed: boolean; remaining: number } {
-  const fingerprint = generateFingerprint(req);
+function checkInMemoryDemoLimit(fingerprint: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
   const MAX_REQUESTS = 3;
   const RESET_AFTER = 24 * 60 * 60 * 1000; // 24 hours
   
   let entry = demoLimitMap.get(fingerprint);
   
-  // Reset if 24 hours have passed
-  if (entry && (now - entry.lastRequest) > RESET_AFTER) {
+  if (entry && now > entry.resetTime) {
     entry = undefined;
   }
   
   if (!entry) {
-    entry = { count: 0, fingerprint, lastRequest: now };
+    entry = { count: 0, resetTime: now + RESET_AFTER };
   }
   
   if (entry.count >= MAX_REQUESTS) {
@@ -47,10 +37,39 @@ function checkDemoLimit(req: Request): { allowed: boolean; remaining: number } {
   }
   
   entry.count++;
-  entry.lastRequest = now;
   demoLimitMap.set(fingerprint, entry);
   
   return { allowed: true, remaining: MAX_REQUESTS - entry.count };
+}
+
+// Persistent rate limiting via database (survives function restarts)
+async function checkPersistentDemoLimit(fingerprint: string): Promise<{ allowed: boolean; remaining: number }> {
+  try {
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    const { data, error } = await supabaseAdmin.rpc('check_chat_rate_limit', {
+      p_client_id: fingerprint,
+      p_max_requests: 3,
+      p_window_seconds: 86400, // 24 hours
+    });
+
+    if (error) {
+      console.error('Persistent demo rate limit failed:', error.message);
+      return { allowed: true, remaining: 3 };
+    }
+
+    const result = data?.[0];
+    return {
+      allowed: result?.allowed ?? true,
+      remaining: result?.remaining ?? 3,
+    };
+  } catch (err) {
+    console.error('Persistent demo rate limit error:', err);
+    return { allowed: true, remaining: 3 };
+  }
 }
 
 // Allowed message roles - blocks system role injection
@@ -117,11 +136,12 @@ serve(async (req) => {
   }
 
   try {
-    // Check demo limit with enhanced fingerprinting
-    const limitCheck = checkDemoLimit(req);
-    
-    if (!limitCheck.allowed) {
-      console.warn(`Demo limit exceeded for fingerprint`);
+    const fingerprint = generateFingerprint(req);
+
+    // Layer 1: In-memory rate limit (fast, catches bursts)
+    const inMemoryCheck = checkInMemoryDemoLimit(fingerprint);
+    if (!inMemoryCheck.allowed) {
+      console.warn(`In-memory demo limit exceeded`);
       return new Response(
         JSON.stringify({ 
           error: "Demo limit reached. Sign up for unlimited access!",
@@ -130,6 +150,21 @@ serve(async (req) => {
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    // Layer 2: Persistent rate limit (survives restarts)
+    const persistentCheck = await checkPersistentDemoLimit(fingerprint);
+    if (!persistentCheck.allowed) {
+      console.warn(`Persistent demo limit exceeded`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Demo limit reached. Sign up for unlimited access!",
+          remaining: 0
+        }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const limitCheck = { remaining: Math.min(inMemoryCheck.remaining, persistentCheck.remaining) };
 
     // Parse and validate input
     let requestData;

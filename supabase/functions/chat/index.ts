@@ -6,10 +6,10 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Simple in-memory rate limiter
+// In-memory rate limiter as first line of defense (fast, no DB hit)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
-function checkRateLimit(identifier: string, maxRequests: number, windowMs: number): boolean {
+function checkInMemoryRateLimit(identifier: string, maxRequests: number, windowMs: number): boolean {
   const now = Date.now();
   const limit = rateLimitMap.get(identifier);
 
@@ -24,6 +24,40 @@ function checkRateLimit(identifier: string, maxRequests: number, windowMs: numbe
 
   limit.count++;
   return true;
+}
+
+// Persistent rate limiting via database (survives function restarts)
+async function checkPersistentRateLimit(
+  clientId: string,
+  maxRequests: number,
+  windowSeconds: number = 60
+): Promise<{ allowed: boolean; remaining: number }> {
+  try {
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    const { data, error } = await supabaseAdmin.rpc('check_chat_rate_limit', {
+      p_client_id: clientId,
+      p_max_requests: maxRequests,
+      p_window_seconds: windowSeconds,
+    });
+
+    if (error) {
+      console.error('Persistent rate limit check failed, falling back to in-memory:', error.message);
+      return { allowed: true, remaining: maxRequests }; // Fail open to in-memory
+    }
+
+    const result = data?.[0];
+    return {
+      allowed: result?.allowed ?? true,
+      remaining: result?.remaining ?? maxRequests,
+    };
+  } catch (err) {
+    console.error('Persistent rate limit error:', err);
+    return { allowed: true, remaining: maxRequests }; // Fail open
+  }
 }
 
 // Get client identifier from request (IP or user ID)
@@ -196,8 +230,23 @@ serve(async (req) => {
 
     // Rate limits: Guest: 3/min, Free: 5/min, Premium: 20/min
     const rateLimit = isPremium ? 20 : (user ? 5 : 3);
-    if (!checkRateLimit(clientId, rateLimit, 60000)) {
-      console.warn(`Rate limit exceeded for: ${clientId}`);
+    
+    // Layer 1: In-memory rate limit (fast, catches bursts)
+    if (!checkInMemoryRateLimit(clientId, rateLimit, 60000)) {
+      console.warn(`In-memory rate limit exceeded for: ${clientId}`);
+      const tierLabel = isPremium ? 'Premium' : (user ? 'Free' : 'Guest');
+      return new Response(
+        JSON.stringify({ 
+          error: `Rate limit exceeded. ${tierLabel} tier allows ${rateLimit} requests per minute.${!user ? ' Sign in for higher limits!' : (!isPremium ? ' Upgrade to Premium for higher limits!' : '')}` 
+        }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Layer 2: Persistent rate limit (survives restarts, cross-instance)
+    const persistentCheck = await checkPersistentRateLimit(clientId, rateLimit, 60);
+    if (!persistentCheck.allowed) {
+      console.warn(`Persistent rate limit exceeded for: ${clientId}`);
       const tierLabel = isPremium ? 'Premium' : (user ? 'Free' : 'Guest');
       return new Response(
         JSON.stringify({ 
