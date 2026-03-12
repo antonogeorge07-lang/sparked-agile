@@ -5,13 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Activity, Users, Zap, DollarSign } from "lucide-react";
+import { Activity, Users, Zap, DollarSign, Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate } from "react-router-dom";
 import { LoadingState } from "@/components/LoadingState";
+import { sampleAIUsageStats, sampleActivityStats } from "@/data/sampleAnalyticsData";
 
 // Use semantic colors from design system
 const CHART_COLORS = [
@@ -81,11 +82,17 @@ export default function UsageAnalytics() {
     }
   }, [role, roleLoading, navigate]);
 
-  // Calculate metrics (tokens_used and cost_estimate excluded from sanitized view for privacy)
-  const totalAICalls = aiUsageStats?.length || 0;
-  const successfulCalls = aiUsageStats?.filter(log => log.status === 'success').length || 0;
+  // Use sample data as fallback when no real data exists
+  const showingSampleAI = !aiUsageStats || aiUsageStats.length === 0;
+  const showingSampleActivity = !activityStats || activityStats.length === 0;
+  const displayAIStats = showingSampleAI ? sampleAIUsageStats : aiUsageStats;
+  const displayActivityStats = showingSampleActivity ? sampleActivityStats : activityStats;
+
+  // Calculate metrics
+  const totalAICalls = displayAIStats?.length || 0;
+  const successfulCalls = displayAIStats?.filter((log: any) => log.status === 'success').length || 0;
   const successRate = totalAICalls > 0 ? Math.round((successfulCalls / totalAICalls) * 100) : 0;
-  const uniqueUsers = new Set(activityStats?.map(log => log.user_id)).size;
+  const uniqueUsers = new Set(displayActivityStats?.map((log: any) => log.user_id)).size;
 
   // Conditional returns after all hooks
   if (roleLoading) {
@@ -104,7 +111,7 @@ export default function UsageAnalytics() {
   }
 
   // Prepare chart data
-  const aiCallsByDay = aiUsageStats?.reduce((acc: any, log) => {
+  const aiCallsByDay = displayAIStats?.reduce((acc: any, log: any) => {
     const date = new Date(log.created_at).toLocaleDateString();
     acc[date] = (acc[date] || 0) + 1;
     return acc;
@@ -115,7 +122,7 @@ export default function UsageAnalytics() {
     calls,
   }));
 
-  const modelUsage = aiUsageStats?.reduce((acc: any, log) => {
+  const modelUsage = displayAIStats?.reduce((acc: any, log: any) => {
     acc[log.model] = (acc[log.model] || 0) + 1;
     return acc;
   }, {});
@@ -125,7 +132,7 @@ export default function UsageAnalytics() {
     value,
   }));
 
-  const actionsByType = activityStats?.reduce((acc: any, log) => {
+  const actionsByType = displayActivityStats?.reduce((acc: any, log: any) => {
     acc[log.action] = (acc[log.action] || 0) + 1;
     return acc;
   }, {});
@@ -172,6 +179,14 @@ export default function UsageAnalytics() {
             </Select>
           </div>
         </div>
+
+        {/* Sample data banner */}
+        {(showingSampleAI || showingSampleActivity) && (
+          <div className="p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
+            <Info className="h-4 w-4 shrink-0" />
+            Showing sample data. Real analytics will populate as users interact with the platform.
+          </div>
+        )}
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

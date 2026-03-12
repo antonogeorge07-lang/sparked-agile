@@ -82,86 +82,85 @@ serve(async (req) => {
     const GITHUB_TOKEN = Deno.env.get('GITHUB_TOKEN');
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
-    if (!JIRA_API_TOKEN || !GITHUB_TOKEN || !LOVABLE_API_KEY) {
-      throw new Error('Required API keys not configured');
+    if (!LOVABLE_API_KEY) {
+      throw new Error('AI service not configured. Please contact support.');
     }
 
     console.log('Fetching JIRA backlog for project:', projectId);
 
-    // Get project integration details
-    const { data: integration } = await supabase
+    // Get project integration details - check for JIRA first, then GitHub
+    const { data: jiraIntegration } = await supabase
       .from('integrations')
       .select('config')
       .eq('project_id', projectId)
       .eq('integration_type', 'jira')
-      .single();
+      .maybeSingle();
 
-    if (!integration?.config) {
-      throw new Error('JIRA integration not configured for this project');
-    }
-
-    const jiraConfig = integration.config as any;
-    
-    // Parse Jira config - handle both old and new format
-    let domain: string;
-    let projectKey: string;
-    let email: string;
-
-    if (jiraConfig.domain && jiraConfig.project_key) {
-      // New format
-      domain = jiraConfig.domain;
-      projectKey = jiraConfig.project_key;
-      email = jiraConfig.email || '';
-    } else if (jiraConfig.url) {
-      // Old format - extract from URL
-      const urlMatch = jiraConfig.url.match(/https?:\/\/([^\/]+).*\/projects\/([A-Z]+)/i);
-      if (!urlMatch) {
-        throw new Error('Invalid JIRA URL format. Please reconfigure your JIRA integration.');
-      }
-      domain = urlMatch[1];
-      projectKey = urlMatch[2];
-      email = jiraConfig.email || '';
-    } else {
-      throw new Error('JIRA configuration is incomplete. Please reconfigure your JIRA integration.');
-    }
-
-    console.log('JIRA Config:', { domain, projectKey, hasEmail: !!email });
-    
-    // Fetch JIRA backlog
-    const authString = email 
-      ? `${email}:${JIRA_API_TOKEN}`
-      : JIRA_API_TOKEN; // Use token directly if no email
-    
-    const jiraResponse = await fetch(
-      `https://${domain}/rest/api/3/search?jql=project=${projectKey} AND status!=Done ORDER BY created DESC&maxResults=100`,
-      {
-        headers: {
-          'Authorization': `Basic ${btoa(authString)}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    if (!jiraResponse.ok) {
-      throw new Error(`JIRA API error: ${jiraResponse.status}`);
-    }
-
-    const jiraData = await jiraResponse.json();
-    const issues = jiraData.issues || [];
-
-    console.log(`Fetched ${issues.length} JIRA issues`);
-
-    // Fetch recent GitHub activity for velocity estimation
     const { data: githubIntegration } = await supabase
       .from('integrations')
       .select('config')
       .eq('project_id', projectId)
       .eq('integration_type', 'github')
-      .single();
+      .maybeSingle();
 
+    if (!jiraIntegration?.config && !githubIntegration?.config) {
+      throw new Error('No integrations configured. Connect JIRA or GitHub in Integrations settings to analyse your backlog.');
+    }
+
+    const jiraConfig = jiraIntegration?.config as any;
+    
+    let issues: any[] = [];
+    let domain = '';
+    let projectKey = '';
+
+    if (jiraConfig && JIRA_API_TOKEN) {
+      // Parse Jira config - handle both old and new format
+      let email = '';
+
+      if (jiraConfig.domain && jiraConfig.project_key) {
+        domain = jiraConfig.domain;
+        projectKey = jiraConfig.project_key;
+        email = jiraConfig.email || '';
+      } else if (jiraConfig.url) {
+        const urlMatch = jiraConfig.url.match(/https?:\/\/([^\/]+).*\/projects\/([A-Z]+)/i);
+        if (!urlMatch) {
+          throw new Error('Invalid JIRA URL format. Please reconfigure your JIRA integration.');
+        }
+        domain = urlMatch[1];
+        projectKey = urlMatch[2];
+        email = jiraConfig.email || '';
+      } else {
+        throw new Error('JIRA configuration is incomplete. Please reconfigure your JIRA integration.');
+      }
+
+      console.log('JIRA Config:', { domain, projectKey, hasEmail: !!email });
+      
+      const authString = email 
+        ? `${email}:${JIRA_API_TOKEN}`
+        : JIRA_API_TOKEN;
+      
+      const jiraResponse = await fetch(
+        `https://${domain}/rest/api/3/search?jql=project=${projectKey} AND status!=Done ORDER BY created DESC&maxResults=100`,
+        {
+          headers: {
+            'Authorization': `Basic ${btoa(authString)}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (jiraResponse.ok) {
+        const jiraData = await jiraResponse.json();
+        issues = jiraData.issues || [];
+        console.log(`Fetched ${issues.length} JIRA issues`);
+      } else {
+        console.warn(`JIRA API error: ${jiraResponse.status}`);
+      }
+    }
+
+    // Use GitHub integration already fetched above
     let githubActivity = null;
-    if (githubIntegration?.config) {
-      const githubConfig = githubIntegration.config as any;
+    if (githubConfig && GITHUB_TOKEN) {
       const githubResponse = await fetch(
         `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/commits?per_page=50`,
         {

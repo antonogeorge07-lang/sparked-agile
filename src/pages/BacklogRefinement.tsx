@@ -8,10 +8,12 @@ import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertCircle, GitBranch, TrendingUp, CheckCircle2, Clock, AlertTriangle, FlaskConical } from "lucide-react";
+import { AlertCircle, GitBranch, TrendingUp, CheckCircle2, Clock, AlertTriangle, FlaskConical, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { TestScenarioGenerator } from "@/components/TestScenarioGenerator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { JiraSetupWizard } from "@/components/integrations/JiraSetupWizard";
+import { sampleBacklogAnalysis } from "@/data/sampleAnalyticsData";
 import {
   Select,
   SelectContent,
@@ -48,6 +50,8 @@ const BacklogRefinement = () => {
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<BacklogAnalysis | null>(null);
+  const [showJiraWizard, setShowJiraWizard] = useState(false);
+  const [useSampleData, setUseSampleData] = useState(false);
 
   const { data: integrations } = useProjectIntegrations(selectedProject);
 
@@ -187,14 +191,48 @@ const BacklogRefinement = () => {
               <Button onClick={handleAnalyzeBacklog} disabled={isAnalyzing || !selectedProject}>
                 {isAnalyzing ? "Analyzing..." : "Analyze Backlog"}
               </Button>
-              {analysis && (
+              {!analysis && !isAnalyzing && (
+                <Button 
+                  variant="outline" 
+                  onClick={() => { setAnalysis(sampleBacklogAnalysis as any); setUseSampleData(true); }}
+                >
+                  Preview Sample Data
+                </Button>
+              )}
+              {analysis && !useSampleData && (
                 <Button onClick={handleSendDigest} variant="outline">
                   Send Outlook Digest
                 </Button>
               )}
             </div>
+
+            {/* JIRA Setup Wizard toggle */}
+            {selectedProject && integrations && !integrations.hasJira && (
+              <div className="p-3 rounded-lg bg-muted/50 border border-border flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Info className="h-4 w-4 shrink-0" />
+                  <span>Connect JIRA for live backlog sync and AI-powered analysis</span>
+                </div>
+                <Button size="sm" variant="outline" onClick={() => setShowJiraWizard(!showJiraWizard)}>
+                  {showJiraWizard ? "Hide Setup" : "Connect JIRA"}
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
+
+        {/* JIRA Setup Wizard */}
+        {showJiraWizard && selectedProject && (
+          <JiraSetupWizard projectId={selectedProject} onComplete={() => setShowJiraWizard(false)} />
+        )}
+
+        {/* Sample data banner */}
+        {useSampleData && analysis && (
+          <div className="p-3 rounded-lg bg-accent/50 border border-accent text-sm text-accent-foreground flex items-center gap-2">
+            <Info className="h-4 w-4 shrink-0" />
+            Showing sample data. Connect JIRA or GitHub to see your real backlog analysis.
+          </div>
+        )}
 
         {isAnalyzing && (
           <Card>
@@ -225,7 +263,7 @@ const BacklogRefinement = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-orange-500">{analysis.stale_items}</div>
+                  <div className="text-2xl font-bold text-warning">{analysis.stale_items}</div>
                 </CardContent>
               </Card>
               <Card>
@@ -236,7 +274,7 @@ const BacklogRefinement = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-red-500">{analysis.unclear_items}</div>
+                  <div className="text-2xl font-bold text-destructive">{analysis.unclear_items}</div>
                 </CardContent>
               </Card>
               <Card>
@@ -273,7 +311,7 @@ const BacklogRefinement = () => {
                   <ul className="space-y-2">
                     {analysis.recommendations.map((rec, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                         <span>{rec}</span>
                       </li>
                     ))}

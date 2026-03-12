@@ -3,12 +3,13 @@ import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TrendingUp, GitBranch, CheckCircle, Clock, Activity } from "lucide-react";
+import { TrendingUp, GitBranch, CheckCircle, Clock, Activity, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
+import { sampleProjectStats } from "@/data/sampleAnalyticsData";
 
 export default function ProjectProgress() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -73,6 +74,8 @@ export default function ProjectProgress() {
   };
 
   const selectedProjectData = projects.find(p => p.id === selectedProject);
+  const showingSample = !projectStats || (projectStats.totalActionItems === 0 && projectStats.valueStreams?.length === 0);
+  const displayStats = showingSample ? sampleProjectStats : projectStats;
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -109,6 +112,12 @@ export default function ProjectProgress() {
 
           {selectedProjectData && (
             <>
+              {showingSample && (
+                <div className="mb-4 p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
+                  <Info className="h-4 w-4 shrink-0" />
+                  Showing sample data. Real metrics will appear as you track work in this project.
+                </div>
+              )}
               {/* Project Overview */}
               <Card className="shadow-card mb-6">
                 <CardHeader>
@@ -122,8 +131,8 @@ export default function ProjectProgress() {
                         <Activity className="w-4 h-4 text-primary" />
                         <span className="text-sm font-medium">Action Items</span>
                       </div>
-                      <p className="text-2xl font-bold">{projectStats?.totalActionItems || 0}</p>
-                      <p className="text-xs text-muted-foreground">{projectStats?.openActionItems || 0} open</p>
+                      <p className="text-2xl font-bold">{displayStats?.totalActionItems || 0}</p>
+                      <p className="text-xs text-muted-foreground">{displayStats?.openActionItems || 0} open</p>
                     </div>
 
                     <div className="p-4 rounded-lg bg-muted/50">
@@ -132,7 +141,7 @@ export default function ProjectProgress() {
                         <span className="text-sm font-medium">Cycle Time</span>
                       </div>
                       <p className="text-2xl font-bold">
-                        {projectStats?.latestMetrics?.cycle_time_avg ? Number(projectStats.latestMetrics.cycle_time_avg).toFixed(1) : '0'}d
+                        {displayStats?.latestMetrics?.cycle_time_avg ? Number(displayStats.latestMetrics.cycle_time_avg).toFixed(1) : '0'}d
                       </p>
                       <p className="text-xs text-muted-foreground">average</p>
                     </div>
@@ -142,7 +151,7 @@ export default function ProjectProgress() {
                         <GitBranch className="w-4 h-4 text-primary" />
                         <span className="text-sm font-medium">Value Streams</span>
                       </div>
-                      <p className="text-2xl font-bold">{projectStats?.valueStreams?.length || 0}</p>
+                      <p className="text-2xl font-bold">{displayStats?.valueStreams?.length || 0}</p>
                       <p className="text-xs text-muted-foreground">configured</p>
                     </div>
 
@@ -183,7 +192,7 @@ export default function ProjectProgress() {
                       {hasJiraIntegration && (
                         <div className="flex gap-4">
                           <div className="flex flex-col items-center">
-                            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-primary"></div>
                             <div className="w-0.5 h-full bg-border"></div>
                           </div>
                           <div className="flex-1 pb-4">
@@ -196,7 +205,7 @@ export default function ProjectProgress() {
                       {hasGithubIntegration && (
                         <div className="flex gap-4">
                           <div className="flex flex-col items-center">
-                            <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-accent-foreground"></div>
                             {projectStats && <div className="w-0.5 h-full bg-border"></div>}
                           </div>
                           <div className="flex-1 pb-4">
