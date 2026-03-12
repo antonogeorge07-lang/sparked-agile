@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Sparkles, Bot, Send, Zap, Brain, Shield, Users } from "lucide-react";
+import { ArrowRight, Sparkles, Bot, Send, Zap, Brain, Shield, Users, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import { DemoModeButton } from "@/components/DemoModeButton";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
@@ -298,7 +297,16 @@ export function HeroSectionSimple() {
                   <ArrowRight className="h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <DemoModeButton />
+              <Link to="/visual-demo" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="gap-2.5 px-8 h-14 text-base font-medium w-full sm:w-auto border-2 hover:bg-muted/50 hover:border-primary/30 transition-all duration-300"
+                >
+                  <Eye className="h-4 w-4" />
+                  Explore Platform
+                </Button>
+              </Link>
             </motion.div>
 
             {/* Capability chips */}
