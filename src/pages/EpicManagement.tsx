@@ -157,10 +157,10 @@ export default function EpicManagement() {
 
   const getHealthColor = (health: string) => {
     switch (health) {
-      case 'on_track': return 'text-green-500';
-      case 'at_risk': return 'text-yellow-500';
-      case 'critical': return 'text-red-500';
-      default: return 'text-gray-500';
+      case 'on_track': return 'text-success';
+      case 'at_risk': return 'text-warning';
+      case 'critical': return 'text-destructive';
+      default: return 'text-muted-foreground';
     }
   };
 
