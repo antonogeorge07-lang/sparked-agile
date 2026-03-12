@@ -116,10 +116,10 @@ export default function ScheduleAdvisor() {
     if (!selectedProject) return;
     setLoading(true);
     try {
-      const { data: pmiProject } = await supabase
+      const { data: pmiProject } = await (supabase
         .from('pmi_projects')
         .select('id')
-        .eq('project_id', selectedProject)
+        .eq('project_id', selectedProject) as any)
         .maybeSingle();
 
       if (pmiProject) {
