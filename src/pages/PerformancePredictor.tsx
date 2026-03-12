@@ -554,7 +554,7 @@ export default function PerformancePredictor() {
                             <ul className="space-y-2">
                               {deliveryForecast.riskFactors.map((r, i) => (
                                 <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                  <AlertTriangle className="h-3.5 w-3.5 text-yellow-500 mt-0.5 flex-shrink-0" />
+                                  <AlertTriangle className="h-3.5 w-3.5 text-warning mt-0.5 flex-shrink-0" />
                                   {r}
                                 </li>
                               ))}
