@@ -153,6 +153,7 @@ const App = () => {
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
                   <Route path="/visual-demo" element={<VisualDemo />} />
+                  <Route path="/performance-predictor" element={<PerformancePredictor />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
