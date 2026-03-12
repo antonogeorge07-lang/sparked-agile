@@ -245,7 +245,7 @@ export default function ScheduleAdvisor() {
             <div className="space-y-8">
               {/* KPI Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -253,14 +253,14 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{totalDuration}</p>
                         <p className="text-xs text-muted-foreground mt-1">working days</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Timer className="h-6 w-6 text-primary" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -268,14 +268,14 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{criticalTasks.length}</p>
                         <p className="text-xs text-muted-foreground mt-1">of {criticalPath.length} total tasks</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-destructive/10 flex items-center justify-center">
                         <AlertTriangle className="h-6 w-6 text-destructive" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -283,14 +283,14 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{criticalProgress}%</p>
                         <Progress value={criticalProgress} className="mt-2 h-2" />
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                        <TrendingUp className="h-6 w-6 text-green-500" />
+                      <div className="h-12 w-12 rounded-xl bg-success/10 flex items-center justify-center">
+                        <TrendingUp className="h-6 w-6 text-success" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -298,8 +298,8 @@ export default function ScheduleAdvisor() {
                         <p className="text-3xl font-bold">{suggestions.filter(s => s.impact === 'high').length}</p>
                         <p className="text-xs text-muted-foreground mt-1">high-impact findings</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                        <Shield className="h-6 w-6 text-yellow-500" />
+                      <div className="h-12 w-12 rounded-xl bg-warning/10 flex items-center justify-center">
+                        <Shield className="h-6 w-6 text-warning" />
                       </div>
                     </div>
                   </CardContent>
