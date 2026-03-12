@@ -112,6 +112,12 @@ export default function ProjectProgress() {
 
           {selectedProjectData && (
             <>
+              {showingSample && (
+                <div className="mb-4 p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
+                  <Info className="h-4 w-4 shrink-0" />
+                  Showing sample data. Real metrics will appear as you track work in this project.
+                </div>
+              )}
               {/* Project Overview */}
               <Card className="shadow-card mb-6">
                 <CardHeader>
