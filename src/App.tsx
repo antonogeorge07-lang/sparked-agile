@@ -119,7 +119,7 @@ const App = () => {
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/platform-owner" element={<PlatformOwner />} />
                   <Route path="/security-incidents" element={<SecurityIncidents />} />
-                  <Route path="/admin/incidents" element={<SecurityIncidents />} />
+                  
                   <Route path="/my-projects" element={<MyProjects />} />
                   <Route path="/workspace/settings" element={<WorkspaceSettings />} />
                   <Route path="/workflows" element={<Workflows />} />
