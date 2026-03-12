@@ -191,14 +191,48 @@ const BacklogRefinement = () => {
               <Button onClick={handleAnalyzeBacklog} disabled={isAnalyzing || !selectedProject}>
                 {isAnalyzing ? "Analyzing..." : "Analyze Backlog"}
               </Button>
-              {analysis && (
+              {!analysis && !isAnalyzing && (
+                <Button 
+                  variant="outline" 
+                  onClick={() => { setAnalysis(sampleBacklogAnalysis as any); setUseSampleData(true); }}
+                >
+                  Preview Sample Data
+                </Button>
+              )}
+              {analysis && !useSampleData && (
                 <Button onClick={handleSendDigest} variant="outline">
                   Send Outlook Digest
                 </Button>
               )}
             </div>
+
+            {/* JIRA Setup Wizard toggle */}
+            {selectedProject && integrations && !integrations.hasJira && (
+              <div className="p-3 rounded-lg bg-muted/50 border border-border flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Info className="h-4 w-4 shrink-0" />
+                  <span>Connect JIRA for live backlog sync and AI-powered analysis</span>
+                </div>
+                <Button size="sm" variant="outline" onClick={() => setShowJiraWizard(!showJiraWizard)}>
+                  {showJiraWizard ? "Hide Setup" : "Connect JIRA"}
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
+
+        {/* JIRA Setup Wizard */}
+        {showJiraWizard && selectedProject && (
+          <JiraSetupWizard projectId={selectedProject} onComplete={() => setShowJiraWizard(false)} />
+        )}
+
+        {/* Sample data banner */}
+        {useSampleData && analysis && (
+          <div className="p-3 rounded-lg bg-accent/50 border border-accent text-sm text-accent-foreground flex items-center gap-2">
+            <Info className="h-4 w-4 shrink-0" />
+            Showing sample data. Connect JIRA or GitHub to see your real backlog analysis.
+          </div>
+        )}
 
         {isAnalyzing && (
           <Card>
