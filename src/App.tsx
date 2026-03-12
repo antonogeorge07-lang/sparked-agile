@@ -52,7 +52,7 @@ const QuickStart = lazy(() => import("./pages/QuickStart"));
 const MyProjects = lazy(() => import("./pages/MyProjects"));
 const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
 
-const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
+
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
 const VisualDemo = lazy(() => import("./pages/VisualDemo"));
