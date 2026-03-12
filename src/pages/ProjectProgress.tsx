@@ -151,7 +151,7 @@ export default function ProjectProgress() {
                         <GitBranch className="w-4 h-4 text-primary" />
                         <span className="text-sm font-medium">Value Streams</span>
                       </div>
-                      <p className="text-2xl font-bold">{projectStats?.valueStreams?.length || 0}</p>
+                      <p className="text-2xl font-bold">{displayStats?.valueStreams?.length || 0}</p>
                       <p className="text-xs text-muted-foreground">configured</p>
                     </div>
 
