@@ -427,7 +427,7 @@ export default function PerformancePredictor() {
                         </div>
 
                         <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                          <CheckCircle2 className="h-4 w-4 text-green-500" />
+                          <CheckCircle2 className="h-4 w-4 text-success" />
                           <div>
                             <p className="text-sm font-medium">Best Sprint</p>
                             <p className="text-xs text-muted-foreground">
