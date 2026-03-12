@@ -147,11 +147,11 @@ export default function EpicManagement() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-500/10 text-green-500';
-      case 'in_progress': return 'bg-blue-500/10 text-blue-500';
-      case 'planning': return 'bg-yellow-500/10 text-yellow-500';
-      case 'backlog': return 'bg-gray-500/10 text-gray-500';
-      default: return 'bg-gray-500/10 text-gray-500';
+      case 'completed': return 'bg-success/10 text-success';
+      case 'in_progress': return 'bg-primary/10 text-primary';
+      case 'planning': return 'bg-warning/10 text-warning';
+      case 'backlog': return 'bg-muted text-muted-foreground';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
