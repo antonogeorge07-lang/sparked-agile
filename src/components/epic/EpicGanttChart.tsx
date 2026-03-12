@@ -30,24 +30,33 @@ export function EpicGanttChart({ projectId }: EpicGanttChartProps) {
 
   const loadEpics = async () => {
     setLoading(true);
-    const { data: epicsData } = await supabase
-      .from('epics')
-      .select(`
-        id, title, start_date, end_date, status, priority, health_score, color_hex,
-        value_streams!inner(project_id),
-        epic_dependencies(depends_on_epic_id)
-      `)
-      .eq('value_streams.project_id', projectId)
-      .neq('status', 'archived')
-      .order('start_date', { ascending: true, nullsFirst: false });
+    try {
+      const { data: epicsData, error } = await supabase
+        .from('epics')
+        .select(`
+          id, title, start_date, end_date, status, priority, health_score, color_hex,
+          value_streams!inner(project_id),
+          epic_dependencies(depends_on_epic_id)
+        `)
+        .eq('value_streams.project_id', projectId)
+        .neq('status', 'archived')
+        .order('start_date', { ascending: true, nullsFirst: false });
 
-    if (epicsData) {
-      setEpics(epicsData.map((e: any) => ({
-        ...e,
-        dependencies: e.epic_dependencies?.map((d: any) => d.depends_on_epic_id) || [],
-      })));
+      if (error) {
+        console.error('Gantt chart query error:', error);
+      }
+
+      if (epicsData) {
+        setEpics(epicsData.map((e: any) => ({
+          ...e,
+          dependencies: e.epic_dependencies?.map((d: any) => d.depends_on_epic_id) || [],
+        })));
+      }
+    } catch (err) {
+      console.error('Gantt chart load error:', err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const { timelineStart, timelineEnd, totalDays } = useMemo(() => {
