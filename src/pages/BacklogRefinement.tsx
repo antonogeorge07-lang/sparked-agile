@@ -263,7 +263,7 @@ const BacklogRefinement = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-orange-500">{analysis.stale_items}</div>
+                  <div className="text-2xl font-bold text-warning">{analysis.stale_items}</div>
                 </CardContent>
               </Card>
               <Card>
