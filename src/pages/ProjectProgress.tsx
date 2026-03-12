@@ -141,7 +141,7 @@ export default function ProjectProgress() {
                         <span className="text-sm font-medium">Cycle Time</span>
                       </div>
                       <p className="text-2xl font-bold">
-                        {projectStats?.latestMetrics?.cycle_time_avg ? Number(projectStats.latestMetrics.cycle_time_avg).toFixed(1) : '0'}d
+                        {displayStats?.latestMetrics?.cycle_time_avg ? Number(displayStats.latestMetrics.cycle_time_avg).toFixed(1) : '0'}d
                       </p>
                       <p className="text-xs text-muted-foreground">average</p>
                     </div>
