@@ -192,7 +192,7 @@ export default function ProjectProgress() {
                       {hasJiraIntegration && (
                         <div className="flex gap-4">
                           <div className="flex flex-col items-center">
-                            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-primary"></div>
                             <div className="w-0.5 h-full bg-border"></div>
                           </div>
                           <div className="flex-1 pb-4">
