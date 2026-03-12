@@ -39,7 +39,6 @@ interface GithubIssue {
 
 const TaskManagement = () => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>("");
   const [editingTask, setEditingTask] = useState<any>(null);
   const [editForm, setEditForm] = useState({ title: "", description: "", status: "" });
   const { toast } = useToast();
@@ -62,40 +61,23 @@ const TaskManagement = () => {
     },
   });
 
-  // Fetch workspaces for selected project
-  const { data: workspaces } = useQuery({
-    queryKey: ["workspaces", selectedProjectId],
-    queryFn: async () => {
-      if (!selectedProjectId) return [];
-      
-      const { data, error } = await supabase
-        .from("project_workspaces")
-        .select("*")
-        .eq("project_id", selectedProjectId);
-
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!selectedProjectId,
-  });
-
   // Check integrations
   const { data: integrations } = useProjectIntegrations(selectedProjectId);
 
-  // Fetch JIRA issues
+  // Fetch JIRA issues using projectId directly
   const { data: jiraData, isLoading: jiraLoading } = useQuery({
-    queryKey: ["jira-issues", selectedWorkspaceId],
+    queryKey: ["jira-issues", selectedProjectId],
     queryFn: async () => {
-      if (!selectedWorkspaceId || !integrations?.hasJira) return { backlogItems: [] };
+      if (!selectedProjectId || !integrations?.hasJira) return { backlogItems: [] };
 
       const { data, error } = await supabase.functions.invoke("fetch-jira-backlog", {
-        body: { workspaceId: selectedWorkspaceId },
+        body: { projectId: selectedProjectId },
       });
 
       if (error) throw error;
       return data;
     },
-    enabled: !!selectedWorkspaceId && !!integrations?.hasJira,
+    enabled: !!selectedProjectId && !!integrations?.hasJira,
   });
 
   // Fetch GitHub issues
