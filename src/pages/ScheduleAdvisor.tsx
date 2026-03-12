@@ -123,13 +123,13 @@ export default function ScheduleAdvisor() {
         .maybeSingle();
 
       if (pmiProject) {
-        const { data: items } = await supabase
+        const { data: items, error: itemsError } = await supabase
           .from('native_backlog_items')
           .select('id, title, status, priority, story_points, assignee_id, sprint_id, created_at')
           .eq('project_id', pmiProject.id)
-          .order('priority', { ascending: true });
+          .order('created_at', { ascending: true });
 
-        if (items && items.length >= 4) {
+        if (!itemsError && items && items.length >= 4) {
           setTasks(items);
           setUsingSample(false);
         } else {
