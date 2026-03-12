@@ -245,7 +245,7 @@ export default function PerformancePredictor() {
   };
 
   const getTrendIcon = () => {
-    if (trend === 'improving') return <ArrowUpRight className="h-4 w-4 text-green-500" />;
+    if (trend === 'improving') return <ArrowUpRight className="h-4 w-4 text-success" />;
     if (trend === 'declining') return <ArrowDownRight className="h-4 w-4 text-destructive" />;
     return <Minus className="h-4 w-4 text-muted-foreground" />;
   };
