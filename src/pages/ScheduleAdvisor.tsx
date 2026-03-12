@@ -123,10 +123,10 @@ export default function ScheduleAdvisor() {
         .maybeSingle();
 
       if (pmiProject) {
-        const { data: items, error: itemsError } = await supabase
+        const { data: items, error: itemsError } = await (supabase
           .from('native_backlog_items')
           .select('id, title, status, priority, story_points, assignee_id, sprint_id, created_at')
-          .eq('project_id', pmiProject.id)
+          .eq('project_id', pmiProject.id) as any)
           .order('created_at', { ascending: true });
 
         if (!itemsError && items && items.length >= 4) {
