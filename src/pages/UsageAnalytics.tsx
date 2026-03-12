@@ -82,11 +82,17 @@ export default function UsageAnalytics() {
     }
   }, [role, roleLoading, navigate]);
 
-  // Calculate metrics (tokens_used and cost_estimate excluded from sanitized view for privacy)
-  const totalAICalls = aiUsageStats?.length || 0;
-  const successfulCalls = aiUsageStats?.filter(log => log.status === 'success').length || 0;
+  // Use sample data as fallback when no real data exists
+  const showingSampleAI = !aiUsageStats || aiUsageStats.length === 0;
+  const showingSampleActivity = !activityStats || activityStats.length === 0;
+  const displayAIStats = showingSampleAI ? sampleAIUsageStats : aiUsageStats;
+  const displayActivityStats = showingSampleActivity ? sampleActivityStats : activityStats;
+
+  // Calculate metrics
+  const totalAICalls = displayAIStats?.length || 0;
+  const successfulCalls = displayAIStats?.filter((log: any) => log.status === 'success').length || 0;
   const successRate = totalAICalls > 0 ? Math.round((successfulCalls / totalAICalls) * 100) : 0;
-  const uniqueUsers = new Set(activityStats?.map(log => log.user_id)).size;
+  const uniqueUsers = new Set(displayActivityStats?.map((log: any) => log.user_id)).size;
 
   // Conditional returns after all hooks
   if (roleLoading) {
