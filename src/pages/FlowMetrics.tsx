@@ -102,7 +102,7 @@ export default function FlowMetrics() {
               <Activity className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Flow Metrics Dashboard</h1>
+              <h1 className="text-3xl font-bold page-header-gradient">Flow Metrics Dashboard</h1>
               <p className="text-muted-foreground">Monitor and optimize your value delivery flow</p>
             </div>
           </div>

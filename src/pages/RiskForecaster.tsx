@@ -101,8 +101,8 @@ const SAMPLE_WARNINGS: EarlyWarning[] = [
 
 function getRiskColor(score: number) {
   if (score >= 60) return "hsl(var(--destructive))";
-  if (score >= 35) return "hsl(var(--chart-4))";
-  return "hsl(var(--chart-2))";
+  if (score >= 35) return "hsl(var(--warning))";
+  return "hsl(var(--success))";
 }
 
 function getSeverityVariant(severity: string): "destructive" | "secondary" | "outline" {

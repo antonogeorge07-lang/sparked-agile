@@ -256,7 +256,7 @@ export default function Standup() {
                 <MessageSquare className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">Daily Standup Facilitator</h1>
+                <h1 className="text-3xl font-bold page-header-gradient">Daily Standup Facilitator</h1>
                 <p className="text-muted-foreground">Submit updates and manage team standups with AI</p>
               </div>
             </div>
