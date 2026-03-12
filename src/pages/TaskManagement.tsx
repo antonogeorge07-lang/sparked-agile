@@ -119,7 +119,7 @@ const TaskManagement = () => {
   const updateGithubMutation = useMutation({
     mutationFn: async ({ issueNumber, updates }: { issueNumber: number; updates: any }) => {
       const { data, error } = await supabase.functions.invoke("update-github-issue", {
-        body: { workspaceId: selectedWorkspaceId, issueNumber, updates },
+        body: { projectId: selectedProjectId, issueNumber, updates },
       });
       if (error) throw error;
       return data;
