@@ -82,6 +82,7 @@ export default {
       boxShadow: {
         'card': 'var(--shadow-card)',
         'elevated': 'var(--shadow-elevated)',
+        'glass': 'var(--shadow-glass)',
       },
       keyframes: {
         "accordion-down": {
