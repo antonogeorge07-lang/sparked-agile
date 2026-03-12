@@ -28,8 +28,15 @@ export default function EpicManagement() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAuth();
-    loadProjects();
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+      loadProjects();
+    };
+    init();
   }, []);
 
   useEffect(() => {
