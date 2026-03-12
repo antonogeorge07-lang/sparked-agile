@@ -180,6 +180,14 @@ export default function UsageAnalytics() {
           </div>
         </div>
 
+        {/* Sample data banner */}
+        {(showingSampleAI || showingSampleActivity) && (
+          <div className="p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
+            <Info className="h-4 w-4 shrink-0" />
+            Showing sample data. Real analytics will populate as users interact with the platform.
+          </div>
+        )}
+
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>

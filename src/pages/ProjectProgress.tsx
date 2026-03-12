@@ -3,12 +3,13 @@ import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TrendingUp, GitBranch, CheckCircle, Clock, Activity } from "lucide-react";
+import { TrendingUp, GitBranch, CheckCircle, Clock, Activity, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
+import { sampleProjectStats } from "@/data/sampleAnalyticsData";
 
 export default function ProjectProgress() {
   const [projects, setProjects] = useState<any[]>([]);
