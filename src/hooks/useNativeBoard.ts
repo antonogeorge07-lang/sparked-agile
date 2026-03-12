@@ -75,14 +75,27 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
       }
 
       // Load items
-      const { data: itemsData, error: itemsError } = await supabase
-        .from('native_backlog_items')
-        .select('*')
-        .eq('project_id', projectId)
-        .order('position', { ascending: true });
+      // Fetch all items with pagination to avoid 1000-row default limit
+      let allItemsData: any[] = [];
+      let from = 0;
+      const pageSize = 1000;
+      let hasMore = true;
 
-      if (itemsError) throw itemsError;
-      setAllItems(itemsData as NativeBacklogItem[]);
+      while (hasMore) {
+        const { data: pageData, error: pageError } = await supabase
+          .from('native_backlog_items')
+          .select('*')
+          .eq('project_id', projectId)
+          .order('position', { ascending: true })
+          .range(from, from + pageSize - 1);
+
+        if (pageError) throw pageError;
+        if (!pageData || pageData.length < pageSize) hasMore = false;
+        if (pageData) allItemsData = [...allItemsData, ...pageData];
+        from += pageSize;
+      }
+
+      setAllItems(allItemsData as NativeBacklogItem[]);
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to load board data';
