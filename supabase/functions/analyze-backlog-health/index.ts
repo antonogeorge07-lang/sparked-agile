@@ -107,7 +107,7 @@ serve(async (req) => {
       throw new Error('No integrations configured. Connect JIRA or GitHub in Integrations settings to analyse your backlog.');
     }
 
-    const jiraConfig = integration.config as any;
+    const jiraConfig = jiraIntegration?.config as any;
     
     // Parse Jira config - handle both old and new format
     let domain: string;
