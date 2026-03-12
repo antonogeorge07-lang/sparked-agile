@@ -174,7 +174,7 @@ export default function FlowMetrics() {
               <CardContent>
                 <div className="text-3xl font-bold">{totalThroughput}</div>
                 <p className="text-sm text-muted-foreground mt-1">items delivered</p>
-                <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
+                <div className="flex items-center gap-1 mt-2 text-sm text-primary">
                   <Zap className="w-4 h-4" />
                   <span>Last 30 days</span>
                 </div>
