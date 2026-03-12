@@ -436,7 +436,7 @@ export default function ScheduleAdvisor() {
                             {criticalTasks.map((t, i) => (
                               <div key={t.id} className="flex items-center gap-2">
                                 <div className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                                  t.status === 'completed' ? 'bg-green-500/10 text-green-600' :
+                                  t.status === 'completed' ? 'bg-success/10 text-success' :
                                   t.status === 'in_progress' ? 'bg-primary/10 text-primary' :
                                   'bg-muted text-muted-foreground'
                                 }`}>
