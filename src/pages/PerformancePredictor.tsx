@@ -251,7 +251,7 @@ export default function PerformancePredictor() {
   };
 
   const getTrendBadge = () => {
-    if (trend === 'improving') return <Badge className="bg-green-500/10 text-green-600 border-green-500/30">Improving</Badge>;
+    if (trend === 'improving') return <Badge className="bg-success/10 text-success border-success/30">Improving</Badge>;
     if (trend === 'declining') return <Badge variant="destructive">Declining</Badge>;
     return <Badge variant="secondary">Stable</Badge>;
   };
