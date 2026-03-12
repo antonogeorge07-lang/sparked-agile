@@ -67,7 +67,7 @@ const pages: PageDemo[] = [
 
   // Info
   { id: "features", title: "Features", description: "Comprehensive overview of all platform capabilities", icon: Sparkles, category: "info", path: "/features", tag: "Public" },
-  { id: "feature-demo", title: "Feature Demos", description: "Interactive walkthroughs of key platform features", icon: Play, category: "info", path: "/feature-demo", tag: "Public" },
+  
   { id: "about", title: "About", description: "Our mission, team, and the story behind SAAI", icon: BookOpen, category: "info", path: "/about", tag: "Public" },
   { id: "faq", title: "FAQ", description: "Frequently asked questions and troubleshooting", icon: ClipboardList, category: "info", path: "/faq", tag: "Public" },
   { id: "contact", title: "Contact", description: "Get in touch with the SAAI team", icon: MessageSquare, category: "info", path: "/contact", tag: "Public" },

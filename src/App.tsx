@@ -149,7 +149,7 @@ const App = () => {
                   <Route path="/epic-management" element={<EpicManagement />} />
                   <Route path="/epic/:id" element={<EpicDetail />} />
                   <Route path="/epic-portfolio" element={<EpicPortfolio />} />
-                  <Route path="/onboarding-guide" element={<OnboardingGuide />} />
+                  
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
                   <Route path="/visual-demo" element={<VisualDemo />} />
