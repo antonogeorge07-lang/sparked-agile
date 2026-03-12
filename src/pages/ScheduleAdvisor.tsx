@@ -204,17 +204,16 @@ export default function ScheduleAdvisor() {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
-                <Route className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">
                 Schedule Advisor
               </h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground">
                 Intelligent scheduling with critical path analysis and optimisation suggestions
               </p>
             </div>
