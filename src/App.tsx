@@ -56,6 +56,7 @@ const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
 const VisualDemo = lazy(() => import("./pages/VisualDemo"));
+const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -152,6 +153,7 @@ const App = () => {
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
                   <Route path="/visual-demo" element={<VisualDemo />} />
+                  <Route path="/performance-predictor" element={<PerformancePredictor />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
