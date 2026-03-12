@@ -5792,6 +5792,10 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_integration_config: {
+        Args: { p_integration_type: string; p_project_id: string }
+        Returns: Json
+      }
       get_my_ai_usage_summary: {
         Args: never
         Returns: {
@@ -5876,6 +5880,10 @@ export type Database = {
           id: string
           role: string
         }[]
+      }
+      get_project_id_from_workspace: {
+        Args: { p_workspace_id: string }
+        Returns: string
       }
       get_project_limit_info: {
         Args: { user_id_param: string }
