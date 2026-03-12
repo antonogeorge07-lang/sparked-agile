@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Activity, TrendingUp, Clock, Zap, Network } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -70,14 +71,24 @@ export default function FlowMetrics() {
     }
   };
 
-  const latestMetrics = metrics[0];
-  const avgCycleTime = metrics.length > 0 
-    ? (metrics.reduce((sum, m) => sum + (Number(m.cycle_time_avg) || 0), 0) / metrics.length).toFixed(1)
+  // Sample data for when no real metrics exist
+  const sampleMetrics = [
+    { id: 'sample-1', metric_date: new Date(Date.now() - 1 * 86400000).toISOString(), work_in_progress: 8, cycle_time_avg: 3.2, lead_time_avg: 5.1, throughput: 12 },
+    { id: 'sample-2', metric_date: new Date(Date.now() - 2 * 86400000).toISOString(), work_in_progress: 7, cycle_time_avg: 3.5, lead_time_avg: 5.4, throughput: 10 },
+    { id: 'sample-3', metric_date: new Date(Date.now() - 3 * 86400000).toISOString(), work_in_progress: 9, cycle_time_avg: 4.0, lead_time_avg: 6.2, throughput: 8 },
+  ];
+
+  const displayMetrics = metrics.length > 0 ? metrics : sampleMetrics;
+  const showingSample = metrics.length === 0;
+
+  const latestMetrics = displayMetrics[0];
+  const avgCycleTime = displayMetrics.length > 0 
+    ? (displayMetrics.reduce((sum: number, m: any) => sum + (Number(m.cycle_time_avg) || 0), 0) / displayMetrics.length).toFixed(1)
     : '0';
-  const avgLeadTime = metrics.length > 0
-    ? (metrics.reduce((sum, m) => sum + (Number(m.lead_time_avg) || 0), 0) / metrics.length).toFixed(1)
+  const avgLeadTime = displayMetrics.length > 0
+    ? (displayMetrics.reduce((sum: number, m: any) => sum + (Number(m.lead_time_avg) || 0), 0) / displayMetrics.length).toFixed(1)
     : '0';
-  const totalThroughput = metrics.reduce((sum, m) => sum + (m.throughput || 0), 0);
+  const totalThroughput = displayMetrics.reduce((sum: number, m: any) => sum + (m.throughput || 0), 0);
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -95,7 +106,13 @@ export default function FlowMetrics() {
               <p className="text-muted-foreground">Monitor and optimize your value delivery flow</p>
             </div>
           </div>
-
+          {showingSample && (
+            <div className="mb-4 p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
+              <Activity className="w-4 h-4 shrink-0" />
+              Showing sample data. Real metrics will appear as your team delivers work.
+            </div>
+          )}
+          
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Select Project</label>
             <select
@@ -157,7 +174,7 @@ export default function FlowMetrics() {
               <CardContent>
                 <div className="text-3xl font-bold">{totalThroughput}</div>
                 <p className="text-sm text-muted-foreground mt-1">items delivered</p>
-                <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
+                <div className="flex items-center gap-1 mt-2 text-sm text-primary">
                   <Zap className="w-4 h-4" />
                   <span>Last 30 days</span>
                 </div>
@@ -171,13 +188,8 @@ export default function FlowMetrics() {
               <CardDescription>Track your delivery efficiency over time</CardDescription>
             </CardHeader>
             <CardContent>
-              {metrics.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">
-                  No metrics data available yet. Flow metrics will be captured as you deliver work.
-                </p>
-              ) : (
                 <div className="space-y-4">
-                  {metrics.slice(0, 10).map((metric, index) => (
+                  {displayMetrics.slice(0, 10).map((metric: any, index: number) => (
                     <div key={metric.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
@@ -187,6 +199,9 @@ export default function FlowMetrics() {
                           <span className="text-xs text-muted-foreground">
                             WIP: {metric.work_in_progress}
                           </span>
+                          {showingSample && (
+                            <Badge variant="outline" className="text-xs">Sample</Badge>
+                          )}
                         </div>
                         <div className="flex gap-4 mt-1 text-xs text-muted-foreground">
                           <span>Cycle: {Number(metric.cycle_time_avg).toFixed(1)}d</span>
@@ -195,7 +210,7 @@ export default function FlowMetrics() {
                         </div>
                       </div>
                       {index === 0 && (
-                        <div className="flex items-center gap-1 text-xs text-green-600">
+                        <div className="flex items-center gap-1 text-xs text-primary">
                           <TrendingUp className="w-3 h-3" />
                           <span>Latest</span>
                         </div>
@@ -203,7 +218,6 @@ export default function FlowMetrics() {
                     </div>
                   ))}
                 </div>
-              )}
             </CardContent>
           </Card>
 

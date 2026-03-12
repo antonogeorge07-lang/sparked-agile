@@ -118,13 +118,10 @@ export default function Dashboard() {
   const loadProjects = async () => {
     setIsLoading(true);
     try {
-      // Only load projects that have integrations
+      // Load all projects (not just those with integrations)
       const { data, error } = await supabase
         .from('projects')
-        .select(`
-          *,
-          integrations!inner(id)
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;

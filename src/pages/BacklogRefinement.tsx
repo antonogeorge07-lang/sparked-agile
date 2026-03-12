@@ -88,9 +88,13 @@ const BacklogRefinement = () => {
       });
     } catch (error: any) {
       console.error("Error analyzing backlog:", error);
+      const errorMsg = error.message || "Failed to analyze backlog";
+      const isIntegrationMissing = errorMsg.toLowerCase().includes("not configured") || errorMsg.toLowerCase().includes("integration");
       toast({
-        title: "Analysis Failed",
-        description: error.message || "Failed to analyze backlog",
+        title: isIntegrationMissing ? "Integration Required" : "Analysis Failed",
+        description: isIntegrationMissing 
+          ? "Connect JIRA or GitHub integration in Integrations settings to analyse your backlog." 
+          : errorMsg,
         variant: "destructive",
       });
     } finally {
