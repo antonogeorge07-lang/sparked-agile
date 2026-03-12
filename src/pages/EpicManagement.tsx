@@ -174,7 +174,7 @@ export default function EpicManagement() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h1 className="text-4xl font-bold mb-2">Epic Management</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">Epic Management</h1>
                 <p className="text-muted-foreground">
                   Create, track, and manage Epics across your value streams
                 </p>
