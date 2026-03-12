@@ -634,7 +634,7 @@ export default function ScheduleAdvisor() {
                               <div className="flex justify-between text-sm">
                                 <span className="font-medium flex items-center gap-2">
                                   {r.name}
-                                  {isOverloaded && <AlertTriangle className="h-3 w-3 text-yellow-500" />}
+                                  {isOverloaded && <AlertTriangle className="h-3 w-3 text-warning" />}
                                 </span>
                                 <span className="text-muted-foreground">{r.total} days</span>
                               </div>
