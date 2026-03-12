@@ -187,13 +187,8 @@ export default function FlowMetrics() {
               <CardDescription>Track your delivery efficiency over time</CardDescription>
             </CardHeader>
             <CardContent>
-              {metrics.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">
-                  No metrics data available yet. Flow metrics will be captured as you deliver work.
-                </p>
-              ) : (
                 <div className="space-y-4">
-                  {metrics.slice(0, 10).map((metric, index) => (
+                  {displayMetrics.slice(0, 10).map((metric: any, index: number) => (
                     <div key={metric.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
@@ -203,6 +198,9 @@ export default function FlowMetrics() {
                           <span className="text-xs text-muted-foreground">
                             WIP: {metric.work_in_progress}
                           </span>
+                          {showingSample && (
+                            <Badge variant="outline" className="text-xs">Sample</Badge>
+                          )}
                         </div>
                         <div className="flex gap-4 mt-1 text-xs text-muted-foreground">
                           <span>Cycle: {Number(metric.cycle_time_avg).toFixed(1)}d</span>
@@ -219,7 +217,6 @@ export default function FlowMetrics() {
                     </div>
                   ))}
                 </div>
-              )}
             </CardContent>
           </Card>
 
