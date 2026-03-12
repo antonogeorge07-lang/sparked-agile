@@ -75,6 +75,7 @@ const menuSections: MenuSection[] = [
       { titleKey: "sidebar.flowMetrics", url: "/flow-metrics", icon: TrendingUp },
       { titleKey: "sidebar.performancePredictor", url: "/performance-predictor", icon: Activity },
       { titleKey: "sidebar.scheduleAdvisor", url: "/schedule-advisor", icon: Calendar },
+      { titleKey: "sidebar.riskForecaster", url: "/risk-forecaster", icon: Shield },
       { titleKey: "sidebar.workflows", url: "/workflows", icon: Workflow },
       { titleKey: "sidebar.integrations", url: "/integrations", icon: Network, tour: "integrations" },
       { titleKey: "sidebar.ceremonySetup", url: "/ceremony-setup", icon: Calendar },
