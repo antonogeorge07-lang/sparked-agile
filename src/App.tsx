@@ -56,6 +56,7 @@ const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
 const VisualDemo = lazy(() => import("./pages/VisualDemo"));
+const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 
 // Loading fallback component
 const PageLoader = () => (
