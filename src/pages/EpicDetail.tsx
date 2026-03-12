@@ -67,9 +67,13 @@ export default function EpicDetail() {
           value_streams(id, name, project_id)
         `)
         .eq('id', id)
-        .single();
+        .maybeSingle();
 
       if (epicError) throw epicError;
+      if (!epicData) {
+        setLoading(false);
+        return;
+      }
       setEpic(epicData);
 
       // Load features
