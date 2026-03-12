@@ -499,7 +499,7 @@ export default function ScheduleAdvisor() {
                             <div className="flex items-start gap-4">
                               <div className={`h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
                                 s.type === 'critical' ? 'bg-destructive/10' :
-                                s.type === 'warning' ? 'bg-yellow-500/10' : 'bg-primary/10'
+                                s.type === 'warning' ? 'bg-warning/10' : 'bg-primary/10'
                               }`}>
                                 {getSuggestionIcon(s.type)}
                               </div>
