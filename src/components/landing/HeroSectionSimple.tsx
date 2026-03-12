@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Sparkles, Bot, Send, Zap, Brain, Shield, Users } from "lucide-react";
+import { ArrowRight, Sparkles, Bot, Send, Zap, Brain, Shield, Users, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import { DemoModeButton } from "@/components/DemoModeButton";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
