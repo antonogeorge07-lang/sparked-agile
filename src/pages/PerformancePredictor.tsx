@@ -300,7 +300,7 @@ export default function PerformancePredictor() {
             <div className="space-y-8">
               {/* KPI Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -308,14 +308,14 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{avgVelocity}</p>
                         <p className="text-xs text-muted-foreground mt-1">pts / sprint</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Zap className="h-6 w-6 text-primary" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -323,14 +323,14 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{avgAccuracy}%</p>
                         <div className="mt-1">{getTrendBadge()}</div>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                        <Target className="h-6 w-6 text-green-500" />
+                      <div className="h-12 w-12 rounded-xl bg-success/10 flex items-center justify-center">
+                        <Target className="h-6 w-6 text-success" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -338,14 +338,14 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{deliveryForecast.sprintsRemaining}</p>
                         <p className="text-xs text-muted-foreground mt-1">{deliveryForecast.predictedDate}</p>
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-accent/10 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center">
                         <Calendar className="h-6 w-6 text-accent" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="kpi-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -353,8 +353,8 @@ export default function PerformancePredictor() {
                         <p className="text-3xl font-bold">{deliveryForecast.confidence}%</p>
                         <Progress value={deliveryForecast.confidence} className="mt-2 h-2" />
                       </div>
-                      <div className="h-12 w-12 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                        <Gauge className="h-6 w-6 text-yellow-500" />
+                      <div className="h-12 w-12 rounded-xl bg-warning/10 flex items-center justify-center">
+                        <Gauge className="h-6 w-6 text-warning" />
                       </div>
                     </div>
                   </CardContent>
