@@ -51,7 +51,7 @@ const EpicPortfolio = lazy(() => import("./pages/EpicPortfolio"));
 const QuickStart = lazy(() => import("./pages/QuickStart"));
 const MyProjects = lazy(() => import("./pages/MyProjects"));
 const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
-const GettingStarted = lazy(() => import("./pages/GettingStarted"));
+
 const OnboardingGuide = lazy(() => import("./pages/OnboardingGuide"));
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
