@@ -173,12 +173,6 @@ const TaskManagement = () => {
     }
   }, [projects]);
 
-  useEffect(() => {
-    if (workspaces && workspaces.length > 0 && !selectedWorkspaceId) {
-      setSelectedWorkspaceId(workspaces[0].id);
-    }
-  }, [workspaces]);
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -192,7 +186,7 @@ const TaskManagement = () => {
           </p>
         </div>
 
-        <div className="grid gap-4 mb-6 md:grid-cols-2">
+        <div className="grid gap-4 mb-6">
           <div>
             <label className="text-sm font-medium mb-2 block">Select Project</label>
             <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
@@ -203,22 +197,6 @@ const TaskManagement = () => {
                 {projects?.map((project) => (
                   <SelectItem key={project.id} value={project.id}>
                     {project.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">Select Workspace</label>
-            <Select value={selectedWorkspaceId} onValueChange={setSelectedWorkspaceId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose a workspace" />
-              </SelectTrigger>
-              <SelectContent>
-                {workspaces?.map((workspace) => (
-                  <SelectItem key={workspace.id} value={workspace.id}>
-                    {workspace.name}
                   </SelectItem>
                 ))}
               </SelectContent>
