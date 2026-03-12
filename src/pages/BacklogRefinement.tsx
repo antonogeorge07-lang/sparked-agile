@@ -50,6 +50,8 @@ const BacklogRefinement = () => {
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<BacklogAnalysis | null>(null);
+  const [showJiraWizard, setShowJiraWizard] = useState(false);
+  const [useSampleData, setUseSampleData] = useState(false);
 
   const { data: integrations } = useProjectIntegrations(selectedProject);
 
