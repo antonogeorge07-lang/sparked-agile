@@ -184,7 +184,7 @@ export default function ScheduleAdvisor() {
 
   const getSuggestionIcon = (type: string) => {
     if (type === 'critical') return <AlertTriangle className="h-4 w-4 text-destructive" />;
-    if (type === 'warning') return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+    if (type === 'warning') return <AlertTriangle className="h-4 w-4 text-warning" />;
     return <Lightbulb className="h-4 w-4 text-primary" />;
   };
 
