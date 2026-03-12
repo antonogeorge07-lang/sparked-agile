@@ -98,3 +98,6 @@ verify_jwt = false
 
 [functions.generate-smart-nudges]
 verify_jwt = false
+
+[functions.scheduled-cleanup]
+verify_jwt = false
