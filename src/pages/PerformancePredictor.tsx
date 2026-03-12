@@ -678,9 +678,9 @@ export default function PerformancePredictor() {
                           <div key={m.metric} className="space-y-1.5">
                             <div className="flex justify-between text-sm">
                               <span className="text-muted-foreground">{m.metric}</span>
-                              <span className={`font-medium ${
-                                m.value >= 80 ? 'text-green-500' : m.value >= 60 ? 'text-yellow-500' : 'text-destructive'
-                              }`}>{m.value}/100</span>
+                               <span className={`font-medium ${
+                                 m.value >= 80 ? 'text-success' : m.value >= 60 ? 'text-warning' : 'text-destructive'
+                               }`}>{m.value}/100</span>
                             </div>
                             <Progress value={m.value} className="h-2" />
                           </div>
