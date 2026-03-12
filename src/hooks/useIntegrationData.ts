@@ -43,7 +43,6 @@ export const useIntegrationData = (projectId: string | null) => {
 
   // Check memory cache first, then database cache
   const getCachedData = useCallback(async (cacheKey: string, integrationType: string) => {
-    // Check memory cache
     const memKey = `${projectId}:${integrationType}:${cacheKey}`;
     const memEntry = memoryCache.get(memKey);
     if (memEntry && memEntry.expiresAt > Date.now()) {
@@ -51,7 +50,6 @@ export const useIntegrationData = (projectId: string | null) => {
       return memEntry.data;
     }
 
-    // Check database cache
     if (projectId) {
       const { data: cacheEntry } = await supabase
         .from('integration_cache')
@@ -64,7 +62,6 @@ export const useIntegrationData = (projectId: string | null) => {
 
       if (cacheEntry) {
         console.log(`Database cache hit for ${integrationType}`);
-        // Store in memory cache
         memoryCache.set(memKey, {
           data: cacheEntry.data,
           expiresAt: new Date(cacheEntry.expires_at).getTime(),
@@ -83,13 +80,11 @@ export const useIntegrationData = (projectId: string | null) => {
     const expiresAt = new Date(Date.now() + CACHE_TTL_MS);
     const memKey = `${projectId}:${integrationType}:${cacheKey}`;
 
-    // Store in memory cache
     memoryCache.set(memKey, {
       data,
       expiresAt: expiresAt.getTime(),
     });
 
-    // Store in database cache (upsert)
     await supabase
       .from('integration_cache')
       .upsert({
@@ -108,14 +103,12 @@ export const useIntegrationData = (projectId: string | null) => {
   const invalidateCache = useCallback(async (integrationType: string) => {
     if (!projectId) return;
 
-    // Clear memory cache
     for (const key of memoryCache.keys()) {
       if (key.startsWith(`${projectId}:${integrationType}:`)) {
         memoryCache.delete(key);
       }
     }
 
-    // Clear database cache
     await supabase
       .from('integration_cache')
       .delete()
@@ -133,10 +126,10 @@ export const useIntegrationData = (projectId: string | null) => {
     }
     
     try {
-      // Fetch integrations
+      // Fetch integrations from unified integrations table (single source of truth)
       const { data: integrationsData, error: integrationsError } = await supabase
         .from('integrations')
-        .select('id, name, integration_type, is_active, project_id, created_at, updated_at')
+        .select('id, name, integration_type, is_active, project_id, config, created_at, updated_at')
         .eq('project_id', projectId)
         .eq('is_active', true);
 
@@ -147,19 +140,16 @@ export const useIntegrationData = (projectId: string | null) => {
 
       setIntegrations(integrationsData || []);
 
-      // Fetch workspace details
-      const { data: workspace } = await supabase
-        .from('project_workspaces')
-        .select('id, jira_board_id, jira_board_url, github_repo_url, github_repo_name')
-        .eq('project_id', projectId)
-        .maybeSingle();
-
       const jiraIntegration = integrationsData?.find(i => i.integration_type === 'jira');
       const githubIntegration = integrationsData?.find(i => i.integration_type === 'github');
 
+      // Extract config from integrations table directly
+      const jiraConfig = jiraIntegration?.config as Record<string, any> | null;
+      const githubConfig = githubIntegration?.config as Record<string, any> | null;
+
       // Fetch Jira data with caching and retry
-      if (jiraIntegration && workspace?.jira_board_id) {
-        const cacheKey = `backlog:${workspace.id}`;
+      if (jiraIntegration && jiraConfig?.board_id) {
+        const cacheKey = `backlog:${projectId}`;
         
         if (!forceRefresh) {
           const cached = await getCachedData(cacheKey, 'jira');
@@ -173,7 +163,7 @@ export const useIntegrationData = (projectId: string | null) => {
           try {
             const jiraResponse = await fetchWithRetry(async () => {
               const { data, error } = await supabase.functions.invoke('fetch-jira-backlog', {
-                body: { workspaceId: workspace.id }
+                body: { projectId }
               });
               if (error) throw error;
               return data;
@@ -199,7 +189,7 @@ export const useIntegrationData = (projectId: string | null) => {
       }
 
       // Fetch GitHub data with caching and retry
-      if (githubIntegration && workspace?.github_repo_url) {
+      if (githubIntegration && githubConfig?.repo_url) {
         const cacheKey = `activity:${projectId}`;
         
         if (!forceRefresh) {
@@ -216,7 +206,7 @@ export const useIntegrationData = (projectId: string | null) => {
               const { data, error } = await supabase.functions.invoke('fetch-github-activity', {
                 body: { 
                   projectId,
-                  repoUrl: workspace.github_repo_url 
+                  repoUrl: githubConfig.repo_url 
                 }
               });
               if (error) throw error;
@@ -253,7 +243,6 @@ export const useIntegrationData = (projectId: string | null) => {
   useEffect(() => {
     if (!projectId) return;
 
-    // Subscribe to new integration events
     const channel = supabase
       .channel(`integration-events-${projectId}`)
       .on(
@@ -268,12 +257,10 @@ export const useIntegrationData = (projectId: string | null) => {
           console.log('Received integration event:', payload);
           const event = payload.new as any;
           
-          // Invalidate cache and refresh data
           await invalidateCache(event.integration_type);
           
           toast.info(`${event.integration_type === 'github' ? 'GitHub' : 'Jira'} updated: ${event.event_type}`);
           
-          // Refresh the affected integration data
           loadIntegrations(true);
         }
       )
