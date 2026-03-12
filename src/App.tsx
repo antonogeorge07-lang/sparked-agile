@@ -113,11 +113,9 @@ const App = () => {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Landing />} />
-                  <Route path="/landing" element={<Landing />} />
                   <Route path="/home" element={<Index />} />
                   <Route path="/quick-start" element={<QuickStart />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/getting-started" element={<GettingStarted />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/platform-owner" element={<PlatformOwner />} />
                   <Route path="/security-incidents" element={<SecurityIncidents />} />
