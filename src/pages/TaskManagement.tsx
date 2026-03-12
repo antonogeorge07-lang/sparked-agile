@@ -100,7 +100,7 @@ const TaskManagement = () => {
   const updateJiraMutation = useMutation({
     mutationFn: async ({ issueKey, updates }: { issueKey: string; updates: any }) => {
       const { data, error } = await supabase.functions.invoke("update-jira-issue", {
-        body: { workspaceId: selectedWorkspaceId, issueKey, updates },
+        body: { projectId: selectedProjectId, issueKey, updates },
       });
       if (error) throw error;
       return data;
