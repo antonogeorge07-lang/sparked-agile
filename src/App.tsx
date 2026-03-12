@@ -144,7 +144,7 @@ const App = () => {
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/user-guide" element={<UserGuide />} />
                   <Route path="/project-command-centre" element={<ProjectCommandCentre />} />
-                  <Route path="/feature-demo" element={<FeatureDemo />} />
+                  
                   <Route path="/about" element={<About />} />
                   <Route path="/epic-management" element={<EpicManagement />} />
                   <Route path="/epic/:id" element={<EpicDetail />} />
