@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { upsertIntegrationConfig, resolveProjectId } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,7 +28,7 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { githubRepoUrl, workspaceId, githubToken } = await req.json();
+    const { githubRepoUrl, workspaceId, projectId: inputProjectId, githubToken } = await req.json();
     
     console.log('Connecting to GitHub repo:', githubRepoUrl);
 
@@ -35,7 +36,6 @@ serve(async (req) => {
     let tokenToUse = githubToken;
     
     if (!tokenToUse) {
-      // Check if user has a stored token
       const { data: userToken } = await supabaseClient
         .from('user_github_tokens')
         .select('github_token')
@@ -45,7 +45,6 @@ serve(async (req) => {
       if (userToken?.github_token) {
         tokenToUse = userToken.github_token;
       } else {
-        // Fall back to system token
         tokenToUse = Deno.env.get('GITHUB_TOKEN');
       }
     }
@@ -91,7 +90,6 @@ serve(async (req) => {
 
     // Store user's GitHub token for future use if provided
     if (githubToken) {
-      // Get GitHub username from API
       const userResponse = await fetch('https://api.github.com/user', {
         headers: {
           'Authorization': `Bearer ${githubToken}`,
@@ -112,19 +110,29 @@ serve(async (req) => {
         }, { onConflict: 'user_id' });
     }
 
-    // Update workspace with GitHub connection details
-    const { error: updateError } = await supabaseClient
-      .from('project_workspaces')
-      .update({
-        github_repo_url: githubRepoUrl,
-        github_repo_name: repoName,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', workspaceId);
+    // Resolve project ID
+    const projectId = inputProjectId || (workspaceId ? await resolveProjectId(supabaseClient, workspaceId) : null);
+    
+    if (!projectId) {
+      throw new Error('Could not determine project ID');
+    }
 
-    if (updateError) {
-      console.error('Workspace update error:', updateError);
-      // Don't throw - connection was successful, workspace update is secondary
+    // Save to unified integrations table
+    await upsertIntegrationConfig(supabaseClient, projectId, 'github', {
+      repo_url: githubRepoUrl,
+      repo_name: repoName,
+    }, 'GitHub');
+
+    // Also update legacy project_workspaces for backward compatibility
+    if (workspaceId) {
+      await supabaseClient
+        .from('project_workspaces')
+        .update({
+          github_repo_url: githubRepoUrl,
+          github_repo_name: repoName,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', workspaceId);
     }
 
     return new Response(

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { resolveIntegrationConfig } from "../_shared/integration-resolver.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,7 +28,7 @@ serve(async (req) => {
       throw new Error('User not authenticated');
     }
 
-    const { workspaceId, issueKey, updates } = await req.json();
+    const { workspaceId, projectId, issueKey, updates } = await req.json();
     
     console.log('Updating JIRA issue:', issueKey, 'Updates:', updates);
 
@@ -36,19 +37,16 @@ serve(async (req) => {
       throw new Error('JIRA API token not configured');
     }
 
-    // Get workspace details
-    const { data: workspace, error: workspaceError } = await supabaseClient
-      .from('project_workspaces')
-      .select('jira_board_url')
-      .eq('id', workspaceId)
-      .single();
+    // Resolve integration config from unified integrations table
+    const jiraConfig = await resolveIntegrationConfig(supabaseClient, 'jira', { projectId, workspaceId });
 
-    if (workspaceError || !workspace?.jira_board_url) {
-      throw new Error('Workspace not found or JIRA not configured');
+    const boardUrl = jiraConfig?.config?.board_url;
+    if (!boardUrl) {
+      throw new Error('JIRA not configured for this project');
     }
 
     // Extract JIRA site URL
-    const urlMatch = workspace.jira_board_url.match(/(https?:\/\/[^\/]+)/);
+    const urlMatch = boardUrl.match(/(https?:\/\/[^\/]+)/);
     const jiraSiteUrl = urlMatch ? urlMatch[1] : null;
 
     if (!jiraSiteUrl) {
