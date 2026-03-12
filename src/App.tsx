@@ -151,6 +151,7 @@ const App = () => {
                   <Route path="/onboarding-guide" element={<OnboardingGuide />} />
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
+                  <Route path="/visual-demo" element={<VisualDemo />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
