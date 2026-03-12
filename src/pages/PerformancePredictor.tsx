@@ -693,7 +693,7 @@ export default function PerformancePredictor() {
                               {Math.round(sampleHealthRadar.reduce((a, b) => a + b.value, 0) / sampleHealthRadar.length)}
                             </p>
                             <div>
-                              <Badge className="bg-green-500/10 text-green-600 border-green-500/30">Good</Badge>
+                              <Badge className="bg-success/10 text-success border-success/30">Good</Badge>
                               <p className="text-xs text-muted-foreground mt-1">Above team average</p>
                             </div>
                           </div>
