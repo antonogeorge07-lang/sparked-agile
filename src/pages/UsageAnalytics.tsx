@@ -111,7 +111,7 @@ export default function UsageAnalytics() {
   }
 
   // Prepare chart data
-  const aiCallsByDay = aiUsageStats?.reduce((acc: any, log) => {
+  const aiCallsByDay = displayAIStats?.reduce((acc: any, log: any) => {
     const date = new Date(log.created_at).toLocaleDateString();
     acc[date] = (acc[date] || 0) + 1;
     return acc;
@@ -122,7 +122,7 @@ export default function UsageAnalytics() {
     calls,
   }));
 
-  const modelUsage = aiUsageStats?.reduce((acc: any, log) => {
+  const modelUsage = displayAIStats?.reduce((acc: any, log: any) => {
     acc[log.model] = (acc[log.model] || 0) + 1;
     return acc;
   }, {});
@@ -132,7 +132,7 @@ export default function UsageAnalytics() {
     value,
   }));
 
-  const actionsByType = activityStats?.reduce((acc: any, log) => {
+  const actionsByType = displayActivityStats?.reduce((acc: any, log: any) => {
     acc[log.action] = (acc[log.action] || 0) + 1;
     return acc;
   }, {});
