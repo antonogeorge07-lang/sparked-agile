@@ -95,11 +95,7 @@ export function useNativeBoard(projectId: string | null): UseNativeBoardReturn {
         from += pageSize;
       }
 
-      const itemsData = allItemsData;
-      const itemsError = null;
-
-      if (itemsError) throw itemsError;
-      setAllItems(itemsData as NativeBacklogItem[]);
+      setAllItems(allItemsData as NativeBacklogItem[]);
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to load board data';
