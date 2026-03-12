@@ -70,14 +70,24 @@ export default function FlowMetrics() {
     }
   };
 
-  const latestMetrics = metrics[0];
-  const avgCycleTime = metrics.length > 0 
-    ? (metrics.reduce((sum, m) => sum + (Number(m.cycle_time_avg) || 0), 0) / metrics.length).toFixed(1)
+  // Sample data for when no real metrics exist
+  const sampleMetrics = [
+    { id: 'sample-1', metric_date: new Date(Date.now() - 1 * 86400000).toISOString(), work_in_progress: 8, cycle_time_avg: 3.2, lead_time_avg: 5.1, throughput: 12 },
+    { id: 'sample-2', metric_date: new Date(Date.now() - 2 * 86400000).toISOString(), work_in_progress: 7, cycle_time_avg: 3.5, lead_time_avg: 5.4, throughput: 10 },
+    { id: 'sample-3', metric_date: new Date(Date.now() - 3 * 86400000).toISOString(), work_in_progress: 9, cycle_time_avg: 4.0, lead_time_avg: 6.2, throughput: 8 },
+  ];
+
+  const displayMetrics = metrics.length > 0 ? metrics : sampleMetrics;
+  const showingSample = metrics.length === 0;
+
+  const latestMetrics = displayMetrics[0];
+  const avgCycleTime = displayMetrics.length > 0 
+    ? (displayMetrics.reduce((sum: number, m: any) => sum + (Number(m.cycle_time_avg) || 0), 0) / displayMetrics.length).toFixed(1)
     : '0';
-  const avgLeadTime = metrics.length > 0
-    ? (metrics.reduce((sum, m) => sum + (Number(m.lead_time_avg) || 0), 0) / metrics.length).toFixed(1)
+  const avgLeadTime = displayMetrics.length > 0
+    ? (displayMetrics.reduce((sum: number, m: any) => sum + (Number(m.lead_time_avg) || 0), 0) / displayMetrics.length).toFixed(1)
     : '0';
-  const totalThroughput = metrics.reduce((sum, m) => sum + (m.throughput || 0), 0);
+  const totalThroughput = displayMetrics.reduce((sum: number, m: any) => sum + (m.throughput || 0), 0);
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
