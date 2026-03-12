@@ -160,9 +160,7 @@ serve(async (req) => {
 
     // Use GitHub integration already fetched above
     let githubActivity = null;
-    const githubConfig = githubIntegration?.config as any;
-    if (githubIntegration?.config) {
-      const githubConfig = githubIntegration.config as any;
+    if (githubConfig && GITHUB_TOKEN) {
       const githubResponse = await fetch(
         `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/commits?per_page=50`,
         {
