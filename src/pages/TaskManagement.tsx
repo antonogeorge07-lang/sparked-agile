@@ -80,20 +80,20 @@ const TaskManagement = () => {
     enabled: !!selectedProjectId && !!integrations?.hasJira,
   });
 
-  // Fetch GitHub issues
+  // Fetch GitHub issues using projectId directly
   const { data: githubData, isLoading: githubLoading } = useQuery({
-    queryKey: ["github-issues", selectedWorkspaceId],
+    queryKey: ["github-issues", selectedProjectId],
     queryFn: async () => {
-      if (!selectedWorkspaceId || !integrations?.hasGithub) return { issues: [] };
+      if (!selectedProjectId || !integrations?.hasGithub) return { issues: [] };
 
       const { data, error } = await supabase.functions.invoke("fetch-github-issues", {
-        body: { workspaceId: selectedWorkspaceId },
+        body: { projectId: selectedProjectId },
       });
 
       if (error) throw error;
       return data;
     },
-    enabled: !!selectedWorkspaceId && !!integrations?.hasGithub,
+    enabled: !!selectedProjectId && !!integrations?.hasGithub,
   });
 
   // Update JIRA issue mutation
