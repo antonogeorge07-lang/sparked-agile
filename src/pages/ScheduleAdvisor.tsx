@@ -491,9 +491,9 @@ export default function ScheduleAdvisor() {
                       </div>
 
                       {suggestions.map(s => (
-                        <Card key={s.id} className={`transition-all hover:shadow-md ${
+                        <Card key={s.id} className={`transition-all hover:shadow-elevated ${
                           s.type === 'critical' ? 'border-destructive/30' :
-                          s.type === 'warning' ? 'border-yellow-500/30' : ''
+                          s.type === 'warning' ? 'border-warning/30' : ''
                         }`}>
                           <CardContent className="pt-5">
                             <div className="flex items-start gap-4">
