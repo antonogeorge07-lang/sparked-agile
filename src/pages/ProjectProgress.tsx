@@ -131,8 +131,8 @@ export default function ProjectProgress() {
                         <Activity className="w-4 h-4 text-primary" />
                         <span className="text-sm font-medium">Action Items</span>
                       </div>
-                      <p className="text-2xl font-bold">{projectStats?.totalActionItems || 0}</p>
-                      <p className="text-xs text-muted-foreground">{projectStats?.openActionItems || 0} open</p>
+                      <p className="text-2xl font-bold">{displayStats?.totalActionItems || 0}</p>
+                      <p className="text-xs text-muted-foreground">{displayStats?.openActionItems || 0} open</p>
                     </div>
 
                     <div className="p-4 rounded-lg bg-muted/50">
