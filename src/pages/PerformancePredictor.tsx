@@ -259,17 +259,16 @@ export default function PerformancePredictor() {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
-                <Brain className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">
                 Performance Predictor
               </h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground">
                 Predictive analytics for velocity, utilisation, and delivery forecasting
               </p>
             </div>
@@ -287,12 +286,10 @@ export default function PerformancePredictor() {
           </div>
 
           {usingSample && (
-            <Alert className="mb-6 border-primary/20 bg-primary/5">
-              <BarChart3 className="h-4 w-4" />
-              <AlertDescription>
-                Showing sample data — complete at least 3 sprints with velocity tracking enabled to see real predictions.
-              </AlertDescription>
-            </Alert>
+            <div className="mb-6 p-3 rounded-lg border border-border bg-muted/50 flex items-center gap-2 text-sm text-muted-foreground">
+              <BarChart3 className="h-4 w-4 shrink-0" />
+              Showing sample data — complete at least 3 sprints with velocity tracking enabled to see real predictions.
+            </div>
           )}
 
           {loading ? (
