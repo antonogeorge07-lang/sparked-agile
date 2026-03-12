@@ -105,7 +105,13 @@ export default function FlowMetrics() {
               <p className="text-muted-foreground">Monitor and optimize your value delivery flow</p>
             </div>
           </div>
-
+          {showingSample && (
+            <div className="mb-4 p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
+              <Activity className="w-4 h-4 shrink-0" />
+              Showing sample data. Real metrics will appear as your team delivers work.
+            </div>
+          )}
+          
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Select Project</label>
             <select
