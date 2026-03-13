@@ -101,3 +101,15 @@ verify_jwt = false
 
 [functions.scheduled-cleanup]
 verify_jwt = false
+
+[functions.create-jira-issue]
+verify_jwt = true
+
+[functions.add-jira-comment]
+verify_jwt = true
+
+[functions.create-github-issue]
+verify_jwt = true
+
+[functions.fetch-github-prs]
+verify_jwt = true
