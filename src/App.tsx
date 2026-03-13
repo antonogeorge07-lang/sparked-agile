@@ -59,6 +59,7 @@ const VisualDemo = lazy(() => import("./pages/VisualDemo"));
 const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
+const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -156,6 +157,7 @@ const App = () => {
                   <Route path="/performance-predictor" element={<PerformancePredictor />} />
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />
+                  <Route path="/external-tasks" element={<ExternalTasksHub />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

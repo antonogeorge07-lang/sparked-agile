@@ -82,7 +82,8 @@
     "admin": "Admin",
     "platformOwner": "Platform Owner",
     "adminPanel": "Admin Panel",
-    "security": "Security"
+    "security": "Security",
+    "externalTasks": "External Tasks"
   },
   "navigation": {
     "home": "Home",
