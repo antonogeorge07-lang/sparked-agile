@@ -59,6 +59,7 @@ const VisualDemo = lazy(() => import("./pages/VisualDemo"));
 const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
+const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
 
 // Loading fallback component
 const PageLoader = () => (
