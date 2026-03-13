@@ -2,7 +2,7 @@ import {
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
   ListFilter, Activity, Calendar, Users, Workflow, 
   BookOpen, Shield, Settings, Network, Star, TrendingUp, FolderKanban, Crown,
-  ChevronDown, ChevronRight, LucideIcon
+  ChevronDown, ChevronRight, LucideIcon, ExternalLink
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
