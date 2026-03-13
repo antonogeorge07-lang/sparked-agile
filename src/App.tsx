@@ -157,6 +157,7 @@ const App = () => {
                   <Route path="/performance-predictor" element={<PerformancePredictor />} />
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />
+                  <Route path="/external-tasks" element={<ExternalTasksHub />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

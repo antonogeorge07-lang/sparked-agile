@@ -56,6 +56,7 @@ const menuSections: MenuSection[] = [
       { titleKey: "sidebar.commandCentre", url: "/project-command-centre", icon: Briefcase, tour: "command-centre" },
       { titleKey: "sidebar.epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
       { titleKey: "sidebar.sprintPlanning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
+      { titleKey: "sidebar.externalTasks", url: "/external-tasks", icon: ExternalLink },
     ]
   },
   {
