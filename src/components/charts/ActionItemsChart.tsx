@@ -13,8 +13,8 @@ interface ActionItemsChartProps {
 const defaultData: Array<{ priority: string; completed: number; pending: number }> = [];
 
 const COLORS = {
-  completed: "#22C55E",
-  pending: "#F97316",
+  completed: "hsl(var(--chart-2))",
+  pending: "hsl(var(--chart-4))",
 };
 
 export const ActionItemsChart = ({ data = defaultData }: ActionItemsChartProps) => {
