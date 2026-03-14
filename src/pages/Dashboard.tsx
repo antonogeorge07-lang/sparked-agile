@@ -554,14 +554,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* GitHub Activity Section */}
-          <div className="mt-8">
-            <div className="flex items-center gap-3 mb-4">
-              <GitBranch className="w-6 h-6 text-primary" />
-              <h2 className="text-2xl font-bold">GitHub Activity</h2>
-            </div>
-            <GitHubActivityCard projectId={selectedProject} />
-          </div>
 
           {/* Reminder Management Section */}
           <div className="mt-8">
