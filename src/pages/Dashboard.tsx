@@ -446,6 +446,31 @@ export default function Dashboard() {
             </Card>
           </div>
 
+          {/* Integration Data - Jira & GitHub */}
+          {selectedProject && (hasJiraIntegration || hasGithubIntegration) && (
+            <div className="mt-8 mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <GitBranch className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">Live Integration Data</h2>
+              </div>
+              <div className="grid gap-6 lg:grid-cols-2">
+                {hasJiraIntegration && jiraData && (
+                  <IntegrationDataCard type="jira" data={jiraData} isLoading={isLoading} />
+                )}
+                {hasGithubIntegration && githubData && (
+                  <IntegrationDataCard type="github" data={githubData} isLoading={isLoading} />
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* GitHub Activity Card */}
+          {selectedProject && (
+            <div className="mb-6">
+              <GitHubActivityCard projectId={selectedProject} />
+            </div>
+          )}
+
           {/* Analytics & Insights Section */}
           <div className="mt-8 mb-6">
             <h2 className="text-2xl font-bold mb-6">Analytics & Insights</h2>
@@ -529,14 +554,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* GitHub Activity Section */}
-          <div className="mt-8">
-            <div className="flex items-center gap-3 mb-4">
-              <GitBranch className="w-6 h-6 text-primary" />
-              <h2 className="text-2xl font-bold">GitHub Activity</h2>
-            </div>
-            <GitHubActivityCard projectId={selectedProject} />
-          </div>
 
           {/* Reminder Management Section */}
           <div className="mt-8">
