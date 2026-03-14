@@ -477,8 +477,8 @@ export default function Dashboard() {
           <div className="mt-8 mb-6">
             <h2 className="text-2xl font-bold mb-6">Analytics & Insights</h2>
             <div className="grid gap-6 lg:grid-cols-2">
-              <WorkflowExecutionChart />
-              <ActionItemsChart />
+              <WorkflowExecutionChart data={showSampleData ? sampleWorkflowData : undefined} />
+              <ActionItemsChart data={showSampleData ? sampleActionItemsData : undefined} />
             </div>
           </div>
 
