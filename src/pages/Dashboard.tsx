@@ -42,7 +42,9 @@ import {
   sampleCurrentVelocity,
   sampleSprintProgress,
   sampleDaysRemaining,
-  sampleInsights
+  sampleInsights,
+  sampleWorkflowData,
+  sampleActionItemsData
 } from "@/data/sampleDashboardData";
 
 export default function Dashboard() {
