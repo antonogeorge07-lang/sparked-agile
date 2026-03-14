@@ -57,18 +57,18 @@ export const WorkflowExecutionChart = ({ data = defaultData }: WorkflowExecution
               <Line 
                 type="monotone" 
                 dataKey="sprint" 
-                stroke="#F97316" 
+                stroke="hsl(var(--chart-4))" 
                 strokeWidth={2}
                 name="Sprint Planning"
-                dot={{ fill: "#F97316" }}
+                dot={{ fill: "hsl(var(--chart-4))" }}
               />
               <Line 
                 type="monotone" 
                 dataKey="retro" 
-                stroke="#22C55E" 
+                stroke="hsl(var(--chart-2))" 
                 strokeWidth={2}
                 name="Retrospective"
-                dot={{ fill: "#22C55E" }}
+                dot={{ fill: "hsl(var(--chart-2))" }}
               />
             </LineChart>
           </ResponsiveContainer>

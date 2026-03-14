@@ -22,7 +22,10 @@ export default function ExternalTasksHub() {
   useEffect(() => {
     const loadProjects = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        setIsLoadingProjects(false);
+        return;
+      }
       
       const { data } = await supabase
         .from('project_members')

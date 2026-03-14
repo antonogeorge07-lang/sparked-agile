@@ -45,3 +45,22 @@ export const sampleRecentActivity = [
   { title: "Action Items Created", description: "3 new action items from retrospective", timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString() },
   { title: "Integration Connected", description: "GitHub successfully connected to project", timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString() },
 ];
+
+// Sample workflow execution data for charts
+export const sampleWorkflowData = [
+  { date: "Mon", standup: 3, sprint: 1, retro: 0 },
+  { date: "Tue", standup: 4, sprint: 0, retro: 1 },
+  { date: "Wed", standup: 3, sprint: 2, retro: 0 },
+  { date: "Thu", standup: 5, sprint: 1, retro: 0 },
+  { date: "Fri", standup: 4, sprint: 0, retro: 2 },
+  { date: "Sat", standup: 1, sprint: 0, retro: 0 },
+  { date: "Sun", standup: 0, sprint: 0, retro: 0 },
+];
+
+// Sample action items data for charts
+export const sampleActionItemsData = [
+  { priority: "Critical", completed: 8, pending: 2 },
+  { priority: "High", completed: 15, pending: 5 },
+  { priority: "Medium", completed: 22, pending: 8 },
+  { priority: "Low", completed: 12, pending: 3 },
+];
