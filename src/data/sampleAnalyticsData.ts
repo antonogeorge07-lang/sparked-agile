@@ -32,7 +32,7 @@ export const sampleBacklogItems = [
     has_description: false,
     has_acceptance_criteria: false,
     needs_po_attention: true,
-    recommendation: "Stale item — consider grooming or removing",
+    recommendation: "Stale item - consider grooming or removing",
   },
   {
     key: "PROJ-104",
