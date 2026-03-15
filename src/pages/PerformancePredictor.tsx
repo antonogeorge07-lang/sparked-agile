@@ -288,7 +288,7 @@ export default function PerformancePredictor() {
           {usingSample && (
             <div className="mb-6 p-3 rounded-lg border border-border bg-muted/50 flex items-center gap-2 text-sm text-muted-foreground">
               <BarChart3 className="h-4 w-4 shrink-0" />
-              Showing sample data — complete at least 3 sprints with velocity tracking enabled to see real predictions.
+              Showing sample data. Complete at least 3 sprints with velocity tracking enabled to see real predictions.
             </div>
           )}
 
