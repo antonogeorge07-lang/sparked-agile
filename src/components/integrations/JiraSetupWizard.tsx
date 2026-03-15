@@ -123,7 +123,7 @@ export function JiraSetupWizard({ projectId, onComplete }: JiraSetupWizardProps)
               <li>Go to your Atlassian account security settings</li>
               <li>Click <strong>"Create API token"</strong></li>
               <li>Give it a descriptive label (e.g., "Spark-Agile")</li>
-              <li>Copy the generated token — you'll need it in the next step</li>
+              <li>Copy the generated token - you'll need it in the next step</li>
             </ol>
             <a
               href="https://id.atlassian.com/manage-profile/security/api-tokens"

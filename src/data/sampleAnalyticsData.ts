@@ -32,7 +32,7 @@ export const sampleBacklogItems = [
     has_description: false,
     has_acceptance_criteria: false,
     needs_po_attention: true,
-    recommendation: "Stale item — consider grooming or removing",
+    recommendation: "Stale item - consider grooming or removing",
   },
   {
     key: "PROJ-104",
@@ -66,8 +66,8 @@ export const sampleBacklogAnalysis = {
   items_with_dependencies: 4,
   velocity_trend: "Team velocity has increased by 15% over the last 3 sprints, averaging 38 story points per sprint.",
   recommendations: [
-    "3 items are older than 30 days — consider grooming or archiving stale backlog items",
-    "5 items lack acceptance criteria — prioritise refinement before next sprint planning",
+    "3 items are older than 30 days - consider grooming or archiving stale backlog items",
+    "5 items lack acceptance criteria - prioritise refinement before next sprint planning",
     "Strong velocity trend suggests the team can take on 2-3 additional story points next sprint",
     "Consider breaking down PROJ-105 (database migration) into smaller, independently deliverable tasks",
   ],

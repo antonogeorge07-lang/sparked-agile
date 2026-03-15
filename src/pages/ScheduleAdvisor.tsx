@@ -233,7 +233,7 @@ export default function ScheduleAdvisor() {
           {usingSample && (
             <div className="mb-6 p-3 rounded-lg border border-border bg-muted/50 flex items-center gap-2 text-sm text-muted-foreground">
               <BarChart3 className="h-4 w-4 shrink-0" />
-              Showing sample data — add tasks with dependencies in your Command Centre to see real schedule analysis.
+              Showing sample data. Add tasks with dependencies in your Command Centre to see real schedule analysis.
             </div>
           )}
 

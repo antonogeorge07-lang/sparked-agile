@@ -123,7 +123,7 @@ export default function VisualDemo() {
             SAAI Platform Pages
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore every page in the platform — click any card to preview it live, or navigate directly
+            Explore every page in the platform. Click any card to preview it live, or navigate directly
           </p>
         </motion.div>
 
