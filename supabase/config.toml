@@ -113,3 +113,12 @@ verify_jwt = true
 
 [functions.fetch-github-prs]
 verify_jwt = true
+
+[functions.fetch-github-issues]
+verify_jwt = true
+
+[functions.update-jira-issue]
+verify_jwt = true
+
+[functions.update-github-issue]
+verify_jwt = true
