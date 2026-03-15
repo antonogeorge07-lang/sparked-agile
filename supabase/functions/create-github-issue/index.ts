@@ -25,15 +25,36 @@ serve(async (req) => {
     const { projectId, title, body, labels, assignees } = await req.json();
     if (!projectId || !title) throw new Error('projectId and title are required');
 
-    // Get user's GitHub token first
-    const { data: userToken } = await supabaseClient
-      .from('user_github_tokens')
-      .select('github_token')
+    // Get user's GitHub token via safe view + decrypt
+    const { data: userTokenInfo } = await supabaseClient
+      .from('user_github_tokens_safe')
+      .select('has_token')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
-    const tokenToUse = userToken?.github_token || Deno.env.get('GITHUB_TOKEN');
-    if (!tokenToUse) {
+    let githubToken: string | null = null;
+
+    if (userTokenInfo?.has_token) {
+      const decryptResponse = await fetch(
+        `${Deno.env.get('SUPABASE_URL')}/functions/v1/decrypt-token`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': req.headers.get('Authorization')!,
+            'Content-Type': 'application/json',
+            'X-Caller-Function': 'create-github-issue',
+          },
+          body: JSON.stringify({ integrationType: 'github' }),
+        }
+      );
+      if (decryptResponse.ok) {
+        const decryptedData = await decryptResponse.json();
+        githubToken = decryptedData.token;
+      }
+    }
+
+    if (!githubToken) githubToken = Deno.env.get('GITHUB_TOKEN') ?? null;
+    if (!githubToken) {
       return new Response(JSON.stringify({ error: 'GitHub not connected', needsToken: true }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
       });
@@ -63,7 +84,7 @@ serve(async (req) => {
     const ghResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${tokenToUse}`,
+        'Authorization': `Bearer ${githubToken}`,
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json',
         'User-Agent': 'Spark-Agile',

@@ -429,8 +429,8 @@ export default function Dashboard() {
                       <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
                         <div className={`w-2 h-2 rounded-full mt-2 ${
                           item.severity === 'high' ? 'bg-destructive' : 
-                          item.severity === 'medium' ? 'bg-orange-500' :
-                          'bg-blue-500'
+                          item.severity === 'medium' ? 'bg-warning' :
+                          'bg-accent'
                         }`}></div>
                         <div className="flex-1">
                           <p className="font-medium">{item.title}</p>
