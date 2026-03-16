@@ -39,19 +39,18 @@ export default function EpicDetail() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAuth();
-    if (id) {
-      loadEpicDetails();
-    }
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+      if (id) {
+        await loadEpicDetails();
+      }
+    };
+    init();
   }, [id]);
-
-  const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      navigate("/auth");
-      return;
-    }
-  };
 
   const loadEpicDetails = async () => {
     if (!id) return;
