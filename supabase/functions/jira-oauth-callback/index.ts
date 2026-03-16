@@ -86,6 +86,9 @@ serve(async (req) => {
     
     // Exchange code for access token
     console.log('Exchanging Jira authorization code for access token...');
+    console.log('Using client_id:', clientId?.substring(0, 8) + '...');
+    console.log('Using redirect_uri:', callbackUrl);
+    console.log('Code length:', code?.length);
     const tokenResponse = await fetch('https://auth.atlassian.com/oauth/token', {
       method: 'POST',
       headers: {
