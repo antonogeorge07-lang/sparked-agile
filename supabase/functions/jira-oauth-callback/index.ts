@@ -106,7 +106,9 @@ serve(async (req) => {
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
       console.error('Jira token exchange failed:', errorText);
-      throw new Error(`Jira token exchange failed: ${tokenResponse.status}`);
+      console.error('Response status:', tokenResponse.status);
+      console.error('Response headers:', JSON.stringify(Object.fromEntries(tokenResponse.headers.entries())));
+      throw new Error(`Jira token exchange failed: ${tokenResponse.status} - ${errorText}`);
     }
     
     const tokenData = await tokenResponse.json();
