@@ -86,6 +86,9 @@ serve(async (req) => {
     
     // Exchange code for access token
     console.log('Exchanging Jira authorization code for access token...');
+    console.log('Using client_id:', clientId?.substring(0, 8) + '...');
+    console.log('Using redirect_uri:', callbackUrl);
+    console.log('Code length:', code?.length);
     const tokenResponse = await fetch('https://auth.atlassian.com/oauth/token', {
       method: 'POST',
       headers: {
@@ -103,7 +106,9 @@ serve(async (req) => {
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
       console.error('Jira token exchange failed:', errorText);
-      throw new Error(`Jira token exchange failed: ${tokenResponse.status}`);
+      console.error('Response status:', tokenResponse.status);
+      console.error('Response headers:', JSON.stringify(Object.fromEntries(tokenResponse.headers.entries())));
+      throw new Error(`Jira token exchange failed: ${tokenResponse.status} - ${errorText}`);
     }
     
     const tokenData = await tokenResponse.json();
