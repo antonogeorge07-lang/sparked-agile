@@ -30,7 +30,7 @@ export function useGlobalSearch() {
         // Search projects
         supabase
           .from('projects')
-          .select('id, name, description, status')
+          .select('id, name, description')
           .or(`name.ilike.${searchPattern},description.ilike.${searchPattern}`)
           .limit(5),
 
