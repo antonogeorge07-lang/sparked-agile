@@ -155,6 +155,17 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
                   </SelectContent>
                 </Select>
               </div>
+              <div>
+                <Label>Jira Epic Key</Label>
+                <Input 
+                  value={jiraEpicKey} 
+                  onChange={(e) => setJiraEpicKey(e.target.value)} 
+                  placeholder="e.g. PROJ-123"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Link this epic to a Jira epic to enable feature sync
+                </p>
+              </div>
             </div>
           )}
 
