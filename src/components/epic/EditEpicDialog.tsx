@@ -98,6 +98,7 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
           effort_estimate: effortEstimate ? parseInt(effortEstimate) : null,
           roi_score: roiScore ? parseFloat(roiScore) : null,
           status,
+          jira_epic_key: jiraEpicKey.trim() || null,
         })
         .eq('id', epic.id);
 
