@@ -435,6 +435,8 @@ export default function EpicDetail() {
                 epicId={id!} 
                 features={features}
                 onFeaturesChange={loadEpicDetails}
+                jiraEpicKey={epic.jira_epic_key}
+                projectId={epic.value_streams?.project_id}
               />
             </TabsContent>
 

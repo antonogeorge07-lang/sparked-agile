@@ -1648,6 +1648,7 @@ export type Database = {
           end_date: string | null
           health_score: string | null
           id: string
+          jira_epic_key: string | null
           last_health_check: string | null
           priority: string | null
           responsible_teams: string[] | null
@@ -1676,6 +1677,7 @@ export type Database = {
           end_date?: string | null
           health_score?: string | null
           id?: string
+          jira_epic_key?: string | null
           last_health_check?: string | null
           priority?: string | null
           responsible_teams?: string[] | null
@@ -1704,6 +1706,7 @@ export type Database = {
           end_date?: string | null
           health_score?: string | null
           id?: string
+          jira_epic_key?: string | null
           last_health_check?: string | null
           priority?: string | null
           responsible_teams?: string[] | null
@@ -1734,6 +1737,8 @@ export type Database = {
           effort_estimate: number | null
           epic_id: string | null
           id: string
+          jira_issue_key: string | null
+          jira_url: string | null
           pi_id: string | null
           priority: string | null
           status: string | null
@@ -1749,6 +1754,8 @@ export type Database = {
           effort_estimate?: number | null
           epic_id?: string | null
           id?: string
+          jira_issue_key?: string | null
+          jira_url?: string | null
           pi_id?: string | null
           priority?: string | null
           status?: string | null
@@ -1764,6 +1771,8 @@ export type Database = {
           effort_estimate?: number | null
           epic_id?: string | null
           id?: string
+          jira_issue_key?: string | null
+          jira_url?: string | null
           pi_id?: string | null
           priority?: string | null
           status?: string | null

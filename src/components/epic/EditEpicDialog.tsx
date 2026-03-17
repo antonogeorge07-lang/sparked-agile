@@ -26,6 +26,7 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [jiraEpicKey, setJiraEpicKey] = useState("");
   const [valueStreamId, setValueStreamId] = useState("");
   const [businessJustification, setBusinessJustification] = useState("");
   const [strategicGoals, setStrategicGoals] = useState<string[]>([""]);
@@ -44,6 +45,7 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
     if (open && epic) {
       setTitle(epic.title || "");
       setDescription(epic.description || "");
+      setJiraEpicKey(epic.jira_epic_key || "");
       setValueStreamId(epic.value_stream_id || "");
       setBusinessJustification(epic.business_justification || "");
       setStrategicGoals(epic.strategic_goals?.length ? epic.strategic_goals : [""]);
@@ -96,6 +98,7 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
           effort_estimate: effortEstimate ? parseInt(effortEstimate) : null,
           roi_score: roiScore ? parseFloat(roiScore) : null,
           status,
+          jira_epic_key: jiraEpicKey.trim() || null,
         })
         .eq('id', epic.id);
 
@@ -151,6 +154,17 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
                     <SelectItem value="archived">Archived</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+              <div>
+                <Label>Jira Epic Key</Label>
+                <Input 
+                  value={jiraEpicKey} 
+                  onChange={(e) => setJiraEpicKey(e.target.value)} 
+                  placeholder="e.g. PROJ-123"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Link this epic to a Jira epic to enable feature sync
+                </p>
               </div>
             </div>
           )}

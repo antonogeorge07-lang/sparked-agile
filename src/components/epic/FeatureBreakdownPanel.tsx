@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Plus, GripVertical, Trash2, Edit2, Save, X } from "lucide-react";
+import { Plus, GripVertical, Trash2, Edit2, Save, X, RefreshCw, Loader2, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -39,6 +39,8 @@ interface FeatureBreakdownPanelProps {
   epicId: string;
   features: Feature[];
   onFeaturesChange: () => void;
+  jiraEpicKey?: string | null;
+  projectId?: string | null;
 }
 
 function SortableFeatureItem({ feature, onEdit, onDelete }: { 
@@ -141,10 +143,11 @@ function SortableFeatureItem({ feature, onEdit, onDelete }: {
   );
 }
 
-export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFeaturesChange }: FeatureBreakdownPanelProps) {
+export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFeaturesChange, jiraEpicKey, projectId }: FeatureBreakdownPanelProps) {
   const [features, setFeatures] = useState<Feature[]>(initialFeatures);
   const [isAdding, setIsAdding] = useState(false);
   const [editingFeature, setEditingFeature] = useState<Feature | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -152,6 +155,51 @@ export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFea
     effort_estimate: '',
   });
   const { toast } = useToast();
+
+  const handleJiraSync = async () => {
+    if (!jiraEpicKey) {
+      toast({
+        title: "Jira Epic Key not set",
+        description: "Edit the epic and set the Jira Epic Key first (e.g. PROJ-123)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSyncing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-jira-features', {
+        body: { epicId, projectId },
+      });
+
+      if (error) throw error;
+
+      if (!data.success) {
+        toast({
+          title: "Sync issue",
+          description: data.error || "Could not sync features from Jira",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Jira Sync Complete",
+        description: `${data.created} created, ${data.updated} updated from ${data.total} Jira issues`,
+      });
+
+      onFeaturesChange();
+    } catch (error: any) {
+      console.error('Jira sync error:', error);
+      toast({
+        title: "Sync Failed",
+        description: error.message || "Failed to sync features from Jira",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -333,24 +381,42 @@ export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFea
     setFormData({ title: '', description: '', priority: 'medium', effort_estimate: '' });
   };
 
-  return (
+   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Feature Breakdown</CardTitle>
             <CardDescription>
-              Create and organize features/stories for this epic
+              Create and organise features/stories for this epic
             </CardDescription>
           </div>
-          <Button
-            onClick={() => setIsAdding(true)}
-            disabled={isAdding || editingFeature !== null}
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Add Feature
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={handleJiraSync}
+              disabled={isSyncing || isAdding || editingFeature !== null}
+            >
+              {isSyncing ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Syncing...</>
+              ) : (
+                <><RefreshCw className="mr-2 h-4 w-4" />Sync from Jira</>
+              )}
+            </Button>
+            <Button
+              onClick={() => setIsAdding(true)}
+              disabled={isAdding || editingFeature !== null}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Add Feature
+            </Button>
+          </div>
         </div>
+        {jiraEpicKey && (
+          <p className="text-xs text-muted-foreground mt-1">
+            Linked to Jira: <span className="font-mono font-medium">{jiraEpicKey}</span>
+          </p>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         {(isAdding || editingFeature) && (
