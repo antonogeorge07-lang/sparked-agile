@@ -39,6 +39,8 @@ interface FeatureBreakdownPanelProps {
   epicId: string;
   features: Feature[];
   onFeaturesChange: () => void;
+  jiraEpicKey?: string | null;
+  projectId?: string | null;
 }
 
 function SortableFeatureItem({ feature, onEdit, onDelete }: { 
