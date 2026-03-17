@@ -381,24 +381,42 @@ export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFea
     setFormData({ title: '', description: '', priority: 'medium', effort_estimate: '' });
   };
 
-  return (
+   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Feature Breakdown</CardTitle>
             <CardDescription>
-              Create and organize features/stories for this epic
+              Create and organise features/stories for this epic
             </CardDescription>
           </div>
-          <Button
-            onClick={() => setIsAdding(true)}
-            disabled={isAdding || editingFeature !== null}
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Add Feature
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={handleJiraSync}
+              disabled={isSyncing || isAdding || editingFeature !== null}
+            >
+              {isSyncing ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Syncing...</>
+              ) : (
+                <><RefreshCw className="mr-2 h-4 w-4" />Sync from Jira</>
+              )}
+            </Button>
+            <Button
+              onClick={() => setIsAdding(true)}
+              disabled={isAdding || editingFeature !== null}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Add Feature
+            </Button>
+          </div>
         </div>
+        {jiraEpicKey && (
+          <p className="text-xs text-muted-foreground mt-1">
+            Linked to Jira: <span className="font-mono font-medium">{jiraEpicKey}</span>
+          </p>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         {(isAdding || editingFeature) && (
