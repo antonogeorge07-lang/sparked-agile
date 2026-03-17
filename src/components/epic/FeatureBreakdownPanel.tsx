@@ -143,10 +143,11 @@ function SortableFeatureItem({ feature, onEdit, onDelete }: {
   );
 }
 
-export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFeaturesChange }: FeatureBreakdownPanelProps) {
+export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFeaturesChange, jiraEpicKey, projectId }: FeatureBreakdownPanelProps) {
   const [features, setFeatures] = useState<Feature[]>(initialFeatures);
   const [isAdding, setIsAdding] = useState(false);
   const [editingFeature, setEditingFeature] = useState<Feature | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -154,6 +155,51 @@ export function FeatureBreakdownPanel({ epicId, features: initialFeatures, onFea
     effort_estimate: '',
   });
   const { toast } = useToast();
+
+  const handleJiraSync = async () => {
+    if (!jiraEpicKey) {
+      toast({
+        title: "Jira Epic Key not set",
+        description: "Edit the epic and set the Jira Epic Key first (e.g. PROJ-123)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSyncing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-jira-features', {
+        body: { epicId, projectId },
+      });
+
+      if (error) throw error;
+
+      if (!data.success) {
+        toast({
+          title: "Sync issue",
+          description: data.error || "Could not sync features from Jira",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Jira Sync Complete",
+        description: `${data.created} created, ${data.updated} updated from ${data.total} Jira issues`,
+      });
+
+      onFeaturesChange();
+    } catch (error: any) {
+      console.error('Jira sync error:', error);
+      toast({
+        title: "Sync Failed",
+        description: error.message || "Failed to sync features from Jira",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor),
