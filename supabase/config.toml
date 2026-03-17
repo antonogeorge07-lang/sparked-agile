@@ -122,3 +122,6 @@ verify_jwt = true
 
 [functions.update-github-issue]
 verify_jwt = true
+
+[functions.sync-jira-features]
+verify_jwt = false

@@ -26,6 +26,7 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [jiraEpicKey, setJiraEpicKey] = useState("");
   const [valueStreamId, setValueStreamId] = useState("");
   const [businessJustification, setBusinessJustification] = useState("");
   const [strategicGoals, setStrategicGoals] = useState<string[]>([""]);
