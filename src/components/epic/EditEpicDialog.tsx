@@ -45,6 +45,7 @@ export function EditEpicDialog({ open, onOpenChange, epic, valueStreams, onSucce
     if (open && epic) {
       setTitle(epic.title || "");
       setDescription(epic.description || "");
+      setJiraEpicKey(epic.jira_epic_key || "");
       setValueStreamId(epic.value_stream_id || "");
       setBusinessJustification(epic.business_justification || "");
       setStrategicGoals(epic.strategic_goals?.length ? epic.strategic_goals : [""]);
