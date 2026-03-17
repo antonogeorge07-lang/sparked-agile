@@ -6,15 +6,9 @@ import { HeroSectionSimple } from "@/components/landing/HeroSectionSimple";
 import { ProofSection } from "@/components/landing/ProofSection";
 import { CapabilityShowcase } from "@/components/landing/CapabilityShowcase";
 import { SimpleCTA } from "@/components/landing/SimpleCTA";
-// import { PricingSection } from "@/components/landing/PricingSection"; // Hidden until monetisation is active
-import { OurPhilosophySection } from "@/components/landing/OurPhilosophySection";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import { InteractiveOnboarding } from "@/components/InteractiveOnboarding";
 import { FAQSchema } from "@/components/landing/FAQSchema";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { LivePlatformStats } from "@/components/landing/LivePlatformStats";
-import { CreatorStorySection } from "@/components/landing/CreatorStorySection";
-import { TrustSignals } from "@/components/landing/TrustSignals";
 
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,18 +21,10 @@ import { useTranslation } from "react-i18next";
 import { User } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
 
-// Lazy load heavier sections
-const FeedbackSection = lazy(() => import("@/components/landing/FeedbackSection").then(module => ({ default: module.FeedbackSection })));
-
-// Lazy load heavier sections
-const FooterSection = lazy(() => import("@/components/landing/FooterSection").then(module => ({ default: module.FooterSection })));
-
-const SectionSkeleton = () => (
-  <div className="py-16 px-4 min-h-[200px]">
-    <div className="container mx-auto max-w-5xl">
-      <div className="h-32 animate-pulse bg-muted rounded" />
-    </div>
-  </div>
+const FooterSection = lazy(() =>
+  import("@/components/landing/FooterSection").then((module) => ({
+    default: module.FooterSection,
+  }))
 );
 
 export default function Landing() {
@@ -47,50 +33,43 @@ export default function Landing() {
   const { toast } = useToast();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
-  const [emailContext, setEmailContext] = useState<"early_access" | "newsletter" | "beta" | "exit_intent">("newsletter");
+  const [emailContext, setEmailContext] = useState<
+    "early_access" | "newsletter" | "beta" | "exit_intent"
+  >("newsletter");
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  // Check authentication state
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
     });
-
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
-
     return () => subscription.unsubscribe();
   }, []);
+
   useEffect(() => {
     let exitIntentShown = false;
-    
-    // Mark that user has authenticated before (persists across sessions)
     if (user) {
-      localStorage.setItem('has_authenticated', 'true');
+      localStorage.setItem("has_authenticated", "true");
     }
-    
     const handleMouseLeave = (e: MouseEvent) => {
-      // Don't show email capture for authenticated users or users who have ever logged in
-      const hasAuthenticated = localStorage.getItem('has_authenticated') === 'true';
+      const hasAuthenticated =
+        localStorage.getItem("has_authenticated") === "true";
       if (e.clientY <= 0 && !exitIntentShown && !user && !hasAuthenticated) {
         exitIntentShown = true;
         setEmailContext("exit_intent");
         setShowEmailCapture(true);
       }
     };
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => document.removeEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, [user]);
 
-  // No automatic redirect for authenticated users - they can navigate manually
-
   const handleWatchDemo = () => setIsDemoOpen(true);
-  const handleEarlyAccess = () => {
-    setEmailContext("early_access");
-    setShowEmailCapture(true);
-  };
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -111,16 +90,19 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       <FAQSchema />
-      
+
       {/* Navigation */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50 safe-top">
         <nav className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <Link
+              to="/"
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            >
               <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
-                <OptimizedImage 
-                  src={saaiLogo} 
-                  alt="SAAI" 
+                <OptimizedImage
+                  src={saaiLogo}
+                  alt="SAAI"
                   className="h-7 w-7 object-contain"
                   priority={true}
                 />
@@ -131,7 +113,9 @@ export default function Landing() {
             </Link>
             <div className="flex items-center gap-3">
               <Button asChild variant="ghost" size="sm">
-                <a href="/features">{t("landing.features.title", "Features")}</a>
+                <a href="/features">
+                  {t("landing.features.title", "Features")}
+                </a>
               </Button>
               <LanguageSwitcher />
               {user ? (
@@ -147,7 +131,12 @@ export default function Landing() {
                       Dashboard
                     </a>
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-1.5">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleSignOut}
+                    className="gap-1.5"
+                  >
                     <LogOut className="h-3.5 w-3.5" />
                     <span className="hidden sm:inline">Sign Out</span>
                   </Button>
@@ -181,63 +170,39 @@ export default function Landing() {
         </nav>
       </header>
 
-      {/* Main Content - Streamlined */}
+      {/* Main Content — 5 sections: Hero → Capabilities → Proof → CTA → Footer */}
       <main>
         <HeroSectionSimple />
-        
-        {/* Live Platform Stats - Real data */}
-        <ScrollReveal fullWidth>
-          <div className="container mx-auto px-4 max-w-5xl">
-            <LivePlatformStats />
-          </div>
-        </ScrollReveal>
-        
+
         <ScrollReveal fullWidth>
           <CapabilityShowcase />
         </ScrollReveal>
 
-        {/* Interactive AI Preview moved into hero section */}
-        
         <ScrollReveal fullWidth delay={0.1}>
           <ProofSection onWatchDemo={handleWatchDemo} />
         </ScrollReveal>
 
-        {/* Trust Signals - Security & Open Development */}
-        <ScrollReveal fullWidth delay={0.1}>
-          <TrustSignals />
-        </ScrollReveal>
-
-        {/* Creator Story - Authentic narrative */}
-        <ScrollReveal fullWidth delay={0.1}>
-          <CreatorStorySection />
-        </ScrollReveal>
-        
-        <ScrollReveal fullWidth delay={0.1}>
-          <Suspense fallback={<SectionSkeleton />}>
-            <FeedbackSection />
-          </Suspense>
-        </ScrollReveal>
-
-        {/* Pricing section hidden - revisit when monetisation is active */}
-        
         <ScrollReveal fullWidth delay={0.1}>
           <SimpleCTA />
         </ScrollReveal>
       </main>
 
-      <Suspense fallback={<div className="border-t border-border py-8 h-40 animate-pulse bg-muted" />}>
+      <Suspense
+        fallback={
+          <div className="border-t border-border py-8 h-40 animate-pulse bg-muted" />
+        }
+      >
         <FooterSection />
       </Suspense>
 
       {/* Modals */}
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
-      <EmailCaptureForm 
-        isOpen={showEmailCapture} 
-        onClose={() => setShowEmailCapture(false)} 
-        context={emailContext} 
+      <EmailCaptureForm
+        isOpen={showEmailCapture}
+        onClose={() => setShowEmailCapture(false)}
+        context={emailContext}
       />
-      
-      <InteractiveOnboarding />
+
       <PrivacyBanner />
     </div>
   );
