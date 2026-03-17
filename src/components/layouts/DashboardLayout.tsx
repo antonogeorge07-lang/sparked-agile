@@ -6,9 +6,11 @@ import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
 import { SidebarTour } from "@/components/SidebarTour";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { GlobalSearchDialog } from "@/components/GlobalSearchDialog";
 import saaiLogo from "@/assets/saai-logo.png";
 import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface DashboardLayoutProps {
   children: ReactNode;
