@@ -65,7 +65,7 @@ export function useGlobalSearch() {
           type: 'project',
           title: p.name,
           description: p.description,
-          status: p.status,
+          status: null,
           route: `/project/${p.id}`,
           relevance: p.name.toLowerCase().includes(query.toLowerCase()) ? 1 : 0.7,
         });
