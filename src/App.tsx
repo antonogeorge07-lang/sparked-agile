@@ -118,7 +118,7 @@ const App = () => {
                   <Route path="/home" element={<Index />} />
                   <Route path="/quick-start" element={<QuickStart />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin" element={<PlatformOwner />} />
                   <Route path="/platform-owner" element={<PlatformOwner />} />
                   <Route path="/security-incidents" element={<SecurityIncidents />} />
                   
