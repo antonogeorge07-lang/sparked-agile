@@ -7,15 +7,18 @@ import { useExternalTasks } from "@/hooks/useExternalTasks";
 import { JiraTasksPanel } from "@/components/external-tasks/JiraTasksPanel";
 import { GitHubIssuesPanel } from "@/components/external-tasks/GitHubIssuesPanel";
 import { GitHubPRsPanel } from "@/components/external-tasks/GitHubPRsPanel";
+import { SlackChannelPanel } from "@/components/external-tasks/SlackChannelPanel";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, GitBranch, Bug, GitPullRequest } from "lucide-react";
+import { RefreshCw, GitBranch, Bug, GitPullRequest, MessageCircle, Activity } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { LoadingState } from "@/components/LoadingState";
+import { useNavigate } from "react-router-dom";
 
 export default function ExternalTasksHub() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
+  const navigate = useNavigate();
 
   const tasks = useExternalTasks(selectedProject);
 
@@ -52,11 +55,20 @@ export default function ExternalTasksHub() {
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold">External Tasks Hub</h1>
                 <p className="text-muted-foreground text-sm mt-1">
-                  Manage Jira and GitHub tasks without leaving Spark-Agile
+                  Manage Jira, GitHub, and Slack tasks without leaving Spark-Agile
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate('/activity-feed')}
+                className="gap-2"
+              >
+                <Activity className="h-4 w-4" />
+                <span className="hidden sm:inline">Unified Feed</span>
+              </Button>
               {projects.length > 1 && (
                 <select
                   value={selectedProject || ''}
@@ -82,7 +94,7 @@ export default function ExternalTasksHub() {
           </div>
 
           <Tabs defaultValue="jira" className="space-y-4">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="jira" className="gap-2">
                 <Bug className="h-4 w-4" />
                 <span className="hidden sm:inline">Jira Issues</span>
@@ -106,6 +118,11 @@ export default function ExternalTasksHub() {
                 {tasks.githubPRs.length > 0 && (
                   <Badge variant="secondary" className="ml-1 text-xs">{tasks.githubPRs.length}</Badge>
                 )}
+              </TabsTrigger>
+              <TabsTrigger value="slack" className="gap-2">
+                <MessageCircle className="h-4 w-4" />
+                <span className="hidden sm:inline">Slack</span>
+                <span className="sm:hidden">Slack</span>
               </TabsTrigger>
             </TabsList>
 
@@ -141,6 +158,10 @@ export default function ExternalTasksHub() {
                 hasIntegration={tasks.hasGithub}
                 onRefresh={tasks.fetchGithubPRs}
               />
+            </TabsContent>
+
+            <TabsContent value="slack">
+              <SlackChannelPanel />
             </TabsContent>
           </Tabs>
         </div>

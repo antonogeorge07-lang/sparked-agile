@@ -57,6 +57,7 @@ const menuSections: MenuSection[] = [
       { titleKey: "sidebar.epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
       { titleKey: "sidebar.sprintPlanning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
       { titleKey: "sidebar.externalTasks", url: "/external-tasks", icon: ExternalLink },
+      { titleKey: "sidebar.activityFeed", url: "/activity-feed", icon: Activity },
     ]
   },
   {
