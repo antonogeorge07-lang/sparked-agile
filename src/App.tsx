@@ -154,7 +154,7 @@ const App = () => {
                   
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
-                  <Route path="/visual-demo" element={<VisualDemo />} />
+                  
                   <Route path="/performance-predictor" element={<PerformancePredictor />} />
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />

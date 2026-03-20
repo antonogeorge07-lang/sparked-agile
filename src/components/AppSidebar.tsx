@@ -160,7 +160,7 @@ export function AppSidebar() {
             return userEmail?.toLowerCase() === PLATFORM_OWNER_EMAIL;
           }
           // Admin-only features
-          if (item.url === '/admin' || item.url === '/security-incidents') {
+          if (item.url === '/security-incidents') {
             return role === 'admin';
           }
           // Public items available to all users
