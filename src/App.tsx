@@ -18,7 +18,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 // Lazy load non-critical pages for better performance
-const Admin = lazy(() => import("./pages/Admin"));
+
 const PlatformOwner = lazy(() => import("./pages/PlatformOwner"));
 const SecurityIncidents = lazy(() => import("./pages/SecurityIncidents"));
 const Workflows = lazy(() => import("./pages/Workflows"));
