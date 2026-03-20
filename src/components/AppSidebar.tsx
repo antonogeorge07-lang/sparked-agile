@@ -96,7 +96,6 @@ const menuSections: MenuSection[] = [
     defaultOpen: false,
     items: [
       { titleKey: "sidebar.platformOwner", url: "/platform-owner", icon: Crown, ownerOnly: true },
-      { titleKey: "sidebar.adminPanel", url: "/admin", icon: Settings },
       { titleKey: "sidebar.security", url: "/security-incidents", icon: Shield },
     ]
   }
