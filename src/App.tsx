@@ -55,7 +55,7 @@ const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
 
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
-const VisualDemo = lazy(() => import("./pages/VisualDemo"));
+
 const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
