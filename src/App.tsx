@@ -60,6 +60,7 @@ const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
 const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
+const UnifiedActivityFeed = lazy(() => import("./pages/UnifiedActivityFeed"));
 
 // Loading fallback component
 const PageLoader = () => (
