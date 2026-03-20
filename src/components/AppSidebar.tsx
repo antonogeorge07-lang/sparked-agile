@@ -96,7 +96,6 @@ const menuSections: MenuSection[] = [
     defaultOpen: false,
     items: [
       { titleKey: "sidebar.platformOwner", url: "/platform-owner", icon: Crown, ownerOnly: true },
-      { titleKey: "sidebar.adminPanel", url: "/admin", icon: Settings },
       { titleKey: "sidebar.security", url: "/security-incidents", icon: Shield },
     ]
   }
@@ -161,7 +160,7 @@ export function AppSidebar() {
             return userEmail?.toLowerCase() === PLATFORM_OWNER_EMAIL;
           }
           // Admin-only features
-          if (item.url === '/admin' || item.url === '/security-incidents') {
+          if (item.url === '/security-incidents') {
             return role === 'admin';
           }
           // Public items available to all users

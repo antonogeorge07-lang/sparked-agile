@@ -18,7 +18,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 // Lazy load non-critical pages for better performance
-const Admin = lazy(() => import("./pages/Admin"));
+
 const PlatformOwner = lazy(() => import("./pages/PlatformOwner"));
 const SecurityIncidents = lazy(() => import("./pages/SecurityIncidents"));
 const Workflows = lazy(() => import("./pages/Workflows"));
@@ -55,7 +55,7 @@ const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
 
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
-const VisualDemo = lazy(() => import("./pages/VisualDemo"));
+
 const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
 const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
@@ -118,7 +118,7 @@ const App = () => {
                   <Route path="/home" element={<Index />} />
                   <Route path="/quick-start" element={<QuickStart />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin" element={<PlatformOwner />} />
                   <Route path="/platform-owner" element={<PlatformOwner />} />
                   <Route path="/security-incidents" element={<SecurityIncidents />} />
                   
@@ -154,7 +154,7 @@ const App = () => {
                   
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
-                  <Route path="/visual-demo" element={<VisualDemo />} />
+                  
                   <Route path="/performance-predictor" element={<PerformancePredictor />} />
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />

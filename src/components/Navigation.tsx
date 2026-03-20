@@ -232,9 +232,9 @@ export const Navigation = () => {
                       <div className="text-xs font-medium text-muted-foreground px-3 mt-3 mb-1">
                         ADMIN
                       </div>
-                      <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                      <Link to="/platform-owner" onClick={() => setMobileMenuOpen(false)}>
                         <Button 
-                          variant={location.pathname === "/admin" ? "default" : "ghost"}
+                          variant={location.pathname === "/platform-owner" ? "default" : "ghost"}
                           className="w-full justify-start gap-3 h-10"
                         >
                           <Shield className="h-4 w-4" />
