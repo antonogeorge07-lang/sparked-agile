@@ -83,7 +83,8 @@
     "platformOwner": "Platform Owner",
     "adminPanel": "Admin Panel",
     "security": "Security",
-    "externalTasks": "External Tasks"
+    "externalTasks": "External Tasks",
+    "activityFeed": "Activity Feed"
   },
   "navigation": {
     "home": "Home",
