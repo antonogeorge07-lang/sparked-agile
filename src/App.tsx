@@ -32,7 +32,7 @@ const ValueStreams = lazy(() => import("./pages/ValueStreams"));
 const ProgramIncrement = lazy(() => import("./pages/ProgramIncrement"));
 const FlowMetrics = lazy(() => import("./pages/FlowMetrics"));
 const Integrations = lazy(() => import("./pages/Integrations"));
-const ProjectProgress = lazy(() => import("./pages/ProjectProgress"));
+
 const CeremonySetup = lazy(() => import("./pages/CeremonySetup"));
 const TaskManagement = lazy(() => import("./pages/TaskManagement"));
 const ProjectWorkspace = lazy(() => import("./pages/ProjectWorkspace"));
