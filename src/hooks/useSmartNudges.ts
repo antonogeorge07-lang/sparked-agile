@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -10,6 +10,8 @@ export interface SmartNudge {
   title: string;
   message: string;
   severity: 'info' | 'warning' | 'urgent';
+  category: string;
+  suggested_action: string | null;
   related_item_id: string | null;
   related_item_type: string | null;
   is_read: boolean;
@@ -21,6 +23,7 @@ interface UseSmartNudgesReturn {
   nudges: SmartNudge[];
   unreadCount: number;
   isGenerating: boolean;
+  aiPowered: boolean;
   generateNudges: (projectId: string) => Promise<number>;
   markAsRead: (nudgeId: string) => Promise<void>;
   dismissNudge: (nudgeId: string) => Promise<void>;
@@ -30,6 +33,7 @@ interface UseSmartNudgesReturn {
 export function useSmartNudges(): UseSmartNudgesReturn {
   const [nudges, setNudges] = useState<SmartNudge[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [aiPowered, setAiPowered] = useState(false);
 
   const unreadCount = nudges.filter(n => !n.is_read && !n.is_dismissed).length;
 
@@ -44,13 +48,16 @@ export function useSmartNudges(): UseSmartNudgesReturn {
         toast.error(data.error);
         return 0;
       }
+      setAiPowered(!!data.aiPowered);
       if (data.generated > 0) {
-        toast.info(`${data.generated} new nudge${data.generated !== 1 ? 's' : ''} generated`);
+        toast.info(`${data.generated} new insight${data.generated !== 1 ? 's' : ''} from your AI colleague`);
         await loadNudges(projectId);
+      } else {
+        toast.success("All looks good — no new observations right now");
       }
       return data.generated;
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to generate nudges');
+      toast.error(err instanceof Error ? err.message : 'Failed to generate insights');
       return 0;
     } finally {
       setIsGenerating(false);
@@ -97,5 +104,5 @@ export function useSmartNudges(): UseSmartNudgesReturn {
     }
   }, []);
 
-  return { nudges, unreadCount, isGenerating, generateNudges, markAsRead, dismissNudge, loadNudges };
+  return { nudges, unreadCount, isGenerating, aiPowered, generateNudges, markAsRead, dismissNudge, loadNudges };
 }
