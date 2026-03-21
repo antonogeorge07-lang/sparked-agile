@@ -43,7 +43,7 @@ export const ActiveUsers = ({ users, currentPage, variant = 'compact' }: ActiveU
       '/planning': 'Planning',
       '/value-streams': 'Value Streams',
       '/program-increment': 'Program Increment',
-      '/project-progress': 'Project Progress',
+      
       '/flow-metrics': 'Flow Metrics',
       '/admin': 'Admin',
     };

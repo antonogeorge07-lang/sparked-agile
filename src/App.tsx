@@ -32,7 +32,7 @@ const ValueStreams = lazy(() => import("./pages/ValueStreams"));
 const ProgramIncrement = lazy(() => import("./pages/ProgramIncrement"));
 const FlowMetrics = lazy(() => import("./pages/FlowMetrics"));
 const Integrations = lazy(() => import("./pages/Integrations"));
-const ProjectProgress = lazy(() => import("./pages/ProjectProgress"));
+
 const CeremonySetup = lazy(() => import("./pages/CeremonySetup"));
 const TaskManagement = lazy(() => import("./pages/TaskManagement"));
 const ProjectWorkspace = lazy(() => import("./pages/ProjectWorkspace"));
@@ -56,7 +56,7 @@ const WorkspaceSettings = lazy(() => import("./pages/WorkspaceSettings"));
 const StakeholderPortal = lazy(() => import("./pages/StakeholderPortal"));
 const Features = lazy(() => import("./pages/Features"));
 
-const PerformancePredictor = lazy(() => import("./pages/PerformancePredictor"));
+
 const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
 const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
@@ -134,7 +134,7 @@ const App = () => {
                   <Route path="/program-increment" element={<ProgramIncrement />} />
                   <Route path="/flow-metrics" element={<FlowMetrics />} />
                   <Route path="/integrations" element={<Integrations />} />
-                  <Route path="/project-progress" element={<ProjectProgress />} />
+                  <Route path="/project-progress" element={<Dashboard />} />
                   <Route path="/ceremony-setup" element={<CeremonySetup />} />
                   <Route path="/task-management" element={<TaskManagement />} />
                   <Route path="/project-workspace" element={<ProjectWorkspace />} />
@@ -155,7 +155,7 @@ const App = () => {
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
                   
-                  <Route path="/performance-predictor" element={<PerformancePredictor />} />
+                  <Route path="/performance-predictor" element={<FlowMetrics />} />
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />
                   <Route path="/external-tasks" element={<ExternalTasksHub />} />
