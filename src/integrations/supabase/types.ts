@@ -3690,6 +3690,7 @@ export type Database = {
       }
       smart_nudges: {
         Row: {
+          category: string | null
           created_at: string
           dismissed_at: string | null
           expires_at: string | null
@@ -3702,10 +3703,12 @@ export type Database = {
           related_item_id: string | null
           related_item_type: string | null
           severity: string
+          suggested_action: string | null
           title: string
           user_id: string
         }
         Insert: {
+          category?: string | null
           created_at?: string
           dismissed_at?: string | null
           expires_at?: string | null
@@ -3718,10 +3721,12 @@ export type Database = {
           related_item_id?: string | null
           related_item_type?: string | null
           severity?: string
+          suggested_action?: string | null
           title: string
           user_id: string
         }
         Update: {
+          category?: string | null
           created_at?: string
           dismissed_at?: string | null
           expires_at?: string | null
@@ -3734,6 +3739,7 @@ export type Database = {
           related_item_id?: string | null
           related_item_type?: string | null
           severity?: string
+          suggested_action?: string | null
           title?: string
           user_id?: string
         }
