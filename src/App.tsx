@@ -155,7 +155,7 @@ const App = () => {
                   <Route path="/stakeholder-portal" element={<StakeholderPortal />} />
                   <Route path="/features" element={<Features />} />
                   
-                  <Route path="/performance-predictor" element={<PerformancePredictor />} />
+                  <Route path="/performance-predictor" element={<FlowMetrics />} />
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />
                   <Route path="/external-tasks" element={<ExternalTasksHub />} />

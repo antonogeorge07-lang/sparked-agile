@@ -75,7 +75,7 @@ const menuSections: MenuSection[] = [
     defaultOpen: false,
     items: [
       { titleKey: "sidebar.flowMetrics", url: "/flow-metrics", icon: TrendingUp },
-      { titleKey: "sidebar.performancePredictor", url: "/performance-predictor", icon: Activity },
+      
       { titleKey: "sidebar.scheduleAdvisor", url: "/schedule-advisor", icon: Calendar },
       { titleKey: "sidebar.riskForecaster", url: "/risk-forecaster", icon: Shield },
       { titleKey: "sidebar.workflows", url: "/workflows", icon: Workflow },

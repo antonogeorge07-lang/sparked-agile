@@ -36,7 +36,7 @@ const routeConfig: Record<string, { label: string; parent?: string }> = {
   "/user-guide": { label: "User Guide", parent: "/" },
   "/admin": { label: "Admin", parent: "/" },
   "/security-incidents": { label: "Security Incidents", parent: "/" },
-  "/project-progress": { label: "Project Progress", parent: "/project-command-centre" },
+  
   "/about": { label: "About", parent: "/" },
   "/contact": { label: "Contact", parent: "/" },
   "/faq": { label: "FAQ", parent: "/" },
