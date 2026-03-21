@@ -134,7 +134,7 @@ const App = () => {
                   <Route path="/program-increment" element={<ProgramIncrement />} />
                   <Route path="/flow-metrics" element={<FlowMetrics />} />
                   <Route path="/integrations" element={<Integrations />} />
-                  <Route path="/project-progress" element={<ProjectProgress />} />
+                  <Route path="/project-progress" element={<Dashboard />} />
                   <Route path="/ceremony-setup" element={<CeremonySetup />} />
                   <Route path="/task-management" element={<TaskManagement />} />
                   <Route path="/project-workspace" element={<ProjectWorkspace />} />
