@@ -61,6 +61,7 @@ const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
 const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
 const UnifiedActivityFeed = lazy(() => import("./pages/UnifiedActivityFeed"));
+const TeamHub = lazy(() => import("./pages/TeamHub"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -159,6 +160,7 @@ const App = () => {
                   <Route path="/schedule-advisor" element={<ScheduleAdvisor />} />
                   <Route path="/risk-forecaster" element={<RiskForecaster />} />
                   <Route path="/external-tasks" element={<ExternalTasksHub />} />
+                  <Route path="/team-hub" element={<TeamHub />} />
                   <Route path="/activity-feed" element={<UnifiedActivityFeed />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />

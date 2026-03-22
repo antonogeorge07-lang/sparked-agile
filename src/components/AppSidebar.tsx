@@ -1,6 +1,6 @@
 import { 
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
-  ListFilter, Activity, Calendar, Users, Workflow, 
+  ListFilter, Activity, Calendar, Users, Workflow, MessageCircle,
   BookOpen, Shield, Settings, Network, Star, TrendingUp, FolderKanban, Crown,
   ChevronDown, ChevronRight, LucideIcon, ExternalLink
 } from "lucide-react";
@@ -57,6 +57,7 @@ const menuSections: MenuSection[] = [
       { titleKey: "sidebar.epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
       { titleKey: "sidebar.sprintPlanning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
       { titleKey: "sidebar.externalTasks", url: "/external-tasks", icon: ExternalLink },
+      { titleKey: "sidebar.teamHub", url: "/team-hub", icon: MessageCircle },
       { titleKey: "sidebar.activityFeed", url: "/activity-feed", icon: Activity },
     ]
   },
