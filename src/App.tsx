@@ -61,6 +61,7 @@ const ScheduleAdvisor = lazy(() => import("./pages/ScheduleAdvisor"));
 const RiskForecaster = lazy(() => import("./pages/RiskForecaster"));
 const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
 const UnifiedActivityFeed = lazy(() => import("./pages/UnifiedActivityFeed"));
+const TeamHub = lazy(() => import("./pages/TeamHub"));
 
 // Loading fallback component
 const PageLoader = () => (
