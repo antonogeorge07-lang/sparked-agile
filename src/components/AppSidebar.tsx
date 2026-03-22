@@ -1,6 +1,6 @@
 import { 
   Home, BarChart3, GitBranch, Target, Briefcase, Sparkles, Presentation, 
-  ListFilter, Activity, Calendar, Users, Workflow, 
+  ListFilter, Activity, Calendar, Users, Workflow, MessageCircle,
   BookOpen, Shield, Settings, Network, Star, TrendingUp, FolderKanban, Crown,
   ChevronDown, ChevronRight, LucideIcon, ExternalLink
 } from "lucide-react";
