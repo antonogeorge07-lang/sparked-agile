@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { WorkspaceChat } from "@/components/team-hub/WorkspaceChat";
 import { TaskComments } from "@/components/team-hub/TaskComments";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
