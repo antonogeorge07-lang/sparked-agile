@@ -37,7 +37,7 @@ interface MenuSection {
   items: MenuItem[];
 }
 
-// Simplified menu structure with 4 main groups
+// Streamlined menu: Core daily-use → Ceremonies → Advanced (collapsed)
 const menuSections: MenuSection[] = [
   {
     labelKey: "sidebar.getStarted",
@@ -54,9 +54,7 @@ const menuSections: MenuSection[] = [
     items: [
       { titleKey: "sidebar.dashboard", url: "/dashboard", icon: BarChart3, tour: "dashboard" },
       { titleKey: "sidebar.commandCentre", url: "/project-command-centre", icon: Briefcase, tour: "command-centre" },
-      { titleKey: "sidebar.epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
       { titleKey: "sidebar.sprintPlanning", url: "/sprint-planning-assistant", icon: Sparkles, tour: "sprint-planning" },
-      { titleKey: "sidebar.externalTasks", url: "/external-tasks", icon: ExternalLink },
       { titleKey: "sidebar.teamHub", url: "/team-hub", icon: MessageCircle },
       { titleKey: "sidebar.activityFeed", url: "/activity-feed", icon: Activity },
     ]
@@ -72,16 +70,14 @@ const menuSections: MenuSection[] = [
     ]
   },
   {
-    labelKey: "sidebar.insightsAndTools",
+    labelKey: "sidebar.advanced",
     defaultOpen: false,
     items: [
+      { titleKey: "sidebar.epics", url: "/epic-management", icon: GitBranch, tour: "epics" },
+      { titleKey: "sidebar.externalTasks", url: "/external-tasks", icon: ExternalLink },
       { titleKey: "sidebar.flowMetrics", url: "/flow-metrics", icon: TrendingUp },
-      
-      { titleKey: "sidebar.scheduleAdvisor", url: "/schedule-advisor", icon: Calendar },
-      { titleKey: "sidebar.riskForecaster", url: "/risk-forecaster", icon: Shield },
       { titleKey: "sidebar.workflows", url: "/workflows", icon: Workflow },
       { titleKey: "sidebar.integrations", url: "/integrations", icon: Network, tour: "integrations" },
-      { titleKey: "sidebar.ceremonySetup", url: "/ceremony-setup", icon: Calendar },
     ]
   },
   {
