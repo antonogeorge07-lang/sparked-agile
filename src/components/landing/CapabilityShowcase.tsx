@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { TierBadge } from "@/components/ui/tier-badge";
-import { GitBranch, Target, ArrowRight, Sparkles, Kanban, Brain, Presentation, FlaskConical } from "lucide-react";
+import { Mail, Brain, Kanban, MessageCircle, ArrowRight, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,9 +13,18 @@ export function CapabilityShowcase() {
 
   const capabilities = [
     {
+      icon: Mail,
+      title: "AI Daily Digest",
+      desc: "One morning email with commits, task updates, blockers & AI recommendations — no logins needed.",
+      tier: "free" as const,
+      accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
+      iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
+      iconColor: "text-emerald-400",
+    },
+    {
       icon: Kanban,
-      titleKey: "landing.capabilities.nativeBoard",
-      descKey: "landing.capabilities.nativeBoardDesc",
+      title: "Native PM Board",
+      desc: "Built-in Kanban, sprints & backlog — ditch the spreadsheets without learning Jira.",
       tier: "free" as const,
       accent: "from-indigo-500/20 to-indigo-500/5 border-indigo-500/30",
       iconBg: "bg-indigo-500/10 group-hover:bg-indigo-500/20",
@@ -23,68 +32,32 @@ export function CapabilityShowcase() {
     },
     {
       icon: Brain,
-      titleKey: "landing.capabilities.aiCopilot",
-      descKey: "landing.capabilities.aiCopilotDesc",
+      title: "AI Co-Pilot",
+      desc: "Sprint planning, test scenario generation, blocker detection & capacity forecasting — all AI-driven.",
       tier: "free" as const,
       accent: "from-violet-500/20 to-violet-500/5 border-violet-500/30",
       iconBg: "bg-violet-500/10 group-hover:bg-violet-500/20",
       iconColor: "text-violet-400",
     },
     {
-      icon: Target,
-      titleKey: "landing.capabilities.epicManagement",
-      descKey: "landing.capabilities.epicManagementDesc",
-      tier: "free" as const,
-      accent: "from-rose-500/20 to-rose-500/5 border-rose-500/30",
-      iconBg: "bg-rose-500/10 group-hover:bg-rose-500/20",
-      iconColor: "text-rose-400",
-    },
-    {
-      icon: Presentation,
-      titleKey: "landing.capabilities.stakeholderPortal",
-      descKey: "landing.capabilities.stakeholderPortalDesc",
-      tier: "free" as const,
-      accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
-      iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
-      iconColor: "text-emerald-400",
-    },
-    {
-      icon: GitBranch,
-      titleKey: "landing.capabilities.crossToolIntel",
-      descKey: "landing.capabilities.crossToolIntelDesc",
+      icon: MessageCircle,
+      title: "Team Hub",
+      desc: "Real-time workspace chat and task-level discussions — no more context-switching to Slack.",
       tier: "free" as const,
       accent: "from-cyan-500/20 to-cyan-500/5 border-cyan-500/30",
       iconBg: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
       iconColor: "text-cyan-400",
     },
-    {
-      icon: FlaskConical,
-      titleKey: "landing.capabilities.testScenarios",
-      descKey: "landing.capabilities.testScenariosDesc",
-      tier: "free" as const,
-      accent: "from-orange-500/20 to-orange-500/5 border-orange-500/30",
-      iconBg: "bg-orange-500/10 group-hover:bg-orange-500/20",
-      iconColor: "text-orange-400",
-    },
   ];
 
   return (
     <section id="features" className="relative py-24 px-4 overflow-hidden" aria-labelledby="capabilities-heading">
-      {/* Dramatic background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--primary)/0.08),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--accent)/0.06),transparent_50%)]" />
-      
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
-                          linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-        backgroundSize: '50px 50px'
-      }} />
 
-      <div className="container relative mx-auto max-w-6xl">
+      <div className="container relative mx-auto max-w-5xl">
         {/* Header */}
-        <motion.header 
+        <motion.header
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -99,25 +72,24 @@ export function CapabilityShowcase() {
             transition={{ delay: 0.2 }}
           >
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Powerful Features</span>
+            <span className="text-sm font-medium text-primary">What you get</span>
           </motion.div>
 
-          <h2 
-            id="capabilities-heading" 
+          <h2
+            id="capabilities-heading"
             className="text-4xl md:text-5xl font-bold mb-5 bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent"
           >
-            {t('landing.capabilities.title')}
+            Replace 5 tools with one platform
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {t('landing.capabilities.subtitle')}
+            Everything a small team needs — without the overhead of enterprise software.
           </p>
         </motion.header>
 
-        {/* Capability Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {capabilities.map((cap, index) => {
             const isHovered = hoveredCard === index;
-            
             return (
               <motion.div
                 key={index}
@@ -129,36 +101,17 @@ export function CapabilityShowcase() {
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Glow effect on hover */}
-                <div className={`
-                  absolute -inset-1 bg-gradient-to-r ${cap.accent} rounded-2xl blur-xl 
-                  transition-opacity duration-500 ${isHovered ? 'opacity-70' : 'opacity-0'}
-                `} />
-                
-                {/* Card */}
-                <div className={`
-                  relative h-full p-6 rounded-2xl border backdrop-blur-sm
-                  bg-card/80 transition-all duration-300
-                  ${isHovered 
-                    ? 'border-border shadow-2xl scale-[1.02]' 
-                    : 'border-border/50 hover:border-border'
-                  }
-                `}>
-                  {/* Top accent line */}
-                  <div className={`
-                    absolute top-0 left-6 right-6 h-px transition-opacity duration-300
-                    bg-gradient-to-r from-transparent via-primary/40 to-transparent
-                    ${isHovered ? 'opacity-100' : 'opacity-0'}
-                  `} />
-                  
+                <div
+                  className={`absolute -inset-1 bg-gradient-to-r ${cap.accent} rounded-2xl blur-xl transition-opacity duration-500 ${isHovered ? "opacity-70" : "opacity-0"}`}
+                />
+                <div
+                  className={`relative h-full p-6 rounded-2xl border backdrop-blur-sm bg-card/80 transition-all duration-300 ${isHovered ? "border-border shadow-2xl scale-[1.02]" : "border-border/50 hover:border-border"}`}
+                >
+                  <div className={`absolute top-0 left-6 right-6 h-px transition-opacity duration-300 bg-gradient-to-r from-transparent via-primary/40 to-transparent ${isHovered ? "opacity-100" : "opacity-0"}`} />
                   <div className="relative z-10">
-                    {/* Header Row */}
                     <div className="flex items-start justify-between mb-5">
-                      <motion.div 
-                        className={`
-                          w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300
-                          ${cap.iconBg}
-                        `}
+                      <motion.div
+                        className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 ${cap.iconBg}`}
                         animate={isHovered ? { rotate: -5, scale: 1.1 } : { rotate: 0, scale: 1 }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
@@ -166,13 +119,11 @@ export function CapabilityShowcase() {
                       </motion.div>
                       <TierBadge tier={cap.tier} className="text-xs" />
                     </div>
-                    
-                    {/* Content */}
                     <h3 className="font-semibold text-lg mb-2 group-hover:text-foreground transition-colors">
-                      {t(cap.titleKey)}
+                      {cap.title}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {t(cap.descKey)}
+                      {cap.desc}
                     </p>
                   </div>
                 </div>
@@ -182,16 +133,16 @@ export function CapabilityShowcase() {
         </div>
 
         {/* CTA */}
-        <motion.div 
+        <motion.div
           className="text-center mt-14"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.5 }}
         >
-          <Button 
-            asChild 
-            variant="outline" 
+          <Button
+            asChild
+            variant="outline"
             size="lg"
             className="gap-2 group px-8 h-12 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
           >
