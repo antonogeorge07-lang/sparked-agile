@@ -180,7 +180,7 @@ export function HeroSectionSimple() {
                   <div>
                     <span className="font-semibold text-sm">Your AI Chief of Staff</span>
                     <p className="text-[11px] text-muted-foreground">
-                      Replaces 5 tabs with 1 briefing
+                      All your tools, one morning view
                     </p>
                   </div>
                 </div>
