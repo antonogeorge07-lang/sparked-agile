@@ -15,7 +15,7 @@ export function CapabilityShowcase() {
     {
       icon: Mail,
       title: "AI Daily Digest",
-      desc: "One morning email with commits, task updates, blockers & AI recommendations — no logins needed.",
+      desc: "One morning email with commits, task updates, blockers & AI recommendations. No logins needed.",
       tier: "free" as const,
       accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
       iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
