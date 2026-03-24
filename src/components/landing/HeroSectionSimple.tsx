@@ -78,7 +78,7 @@ export function HeroSectionSimple() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
                 <span className="text-xs font-medium tracking-wide">
-                  For teams stuck in spreadsheets
+                  For teams drowning in tabs
                 </span>
               </Badge>
             </motion.div>
