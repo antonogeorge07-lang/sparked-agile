@@ -138,23 +138,6 @@ export function ProofSection({ onWatchDemo }: ProofSectionProps) {
               ))}
             </div>
 
-            <motion.div 
-              className="pt-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-            >
-              <Link to="/auth">
-                <Button 
-                  size="lg" 
-                  className="gap-2 h-13 px-8 text-base font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-xl shadow-primary/25 transition-all duration-300"
-                >
-                  {t('landing.proof.getStarted')}
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </motion.div>
           </motion.div>
 
           {/* Right: Animated email preview */}

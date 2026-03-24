@@ -72,7 +72,7 @@ export function SimpleCTA() {
               className="gap-1.5 px-3 py-1.5 text-xs border-border/50 text-muted-foreground"
             >
               <Shield className="h-3 w-3" />
-              Row-Level Security
+              Enterprise-grade Security
             </Badge>
           </div>
         </div>

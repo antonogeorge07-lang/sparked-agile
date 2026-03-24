@@ -78,7 +78,7 @@ export function HeroSectionSimple() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
                 <span className="text-xs font-medium tracking-wide">
-                  For teams stuck in spreadsheets
+                  For teams drowning in tabs
                 </span>
               </Badge>
             </motion.div>
@@ -180,7 +180,7 @@ export function HeroSectionSimple() {
                   <div>
                     <span className="font-semibold text-sm">Your AI Chief of Staff</span>
                     <p className="text-[11px] text-muted-foreground">
-                      Replaces 5 tabs with 1 briefing
+                      All your tools, one morning view
                     </p>
                   </div>
                 </div>
@@ -223,8 +223,8 @@ export function HeroSectionSimple() {
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  "Sprint velocity up 15%. Consider prioritising the API rate
-                  limiting before Friday's demo."
+                   "Auth module is on track. The API rate-limiting task has no
+                   assignee yet — worth flagging before Friday's demo."
                 </p>
               </motion.div>
             </div>

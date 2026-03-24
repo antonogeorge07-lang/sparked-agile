@@ -65,8 +65,8 @@ export default function Features() {
       icon: Bot,
       features: [
         { titleKey: "features.painPoints.aiBoltOn.features.aiCopilot.title", descriptionKey: "features.painPoints.aiBoltOn.features.aiCopilot.description", icon: Brain },
-        { titleKey: "features.painPoints.aiBoltOn.features.multiAgent.title", descriptionKey: "features.painPoints.aiBoltOn.features.multiAgent.description", icon: Sparkles },
-        { titleKey: "features.painPoints.aiBoltOn.features.backlogHealth.title", descriptionKey: "features.painPoints.aiBoltOn.features.backlogHealth.description", icon: Zap }
+        { titleKey: "features.painPoints.aiBoltOn.features.backlogHealth.title", descriptionKey: "features.painPoints.aiBoltOn.features.backlogHealth.description", icon: Zap },
+        { titleKey: "features.painPoints.stakeholderComms.features.teamCollab.title", descriptionKey: "features.painPoints.stakeholderComms.features.teamCollab.description", icon: Users }
       ]
     },
     {
@@ -76,17 +76,7 @@ export default function Features() {
       features: [
         { titleKey: "features.painPoints.stakeholderComms.features.portal.title", descriptionKey: "features.painPoints.stakeholderComms.features.portal.description", icon: Presentation },
         { titleKey: "features.painPoints.stakeholderComms.features.approvals.title", descriptionKey: "features.painPoints.stakeholderComms.features.approvals.description", icon: CheckCircle2 },
-        { titleKey: "features.painPoints.stakeholderComms.features.teamCollab.title", descriptionKey: "features.painPoints.stakeholderComms.features.teamCollab.description", icon: Users }
-      ]
-    },
-    {
-      painPointKey: "features.painPoints.scalingAgile.title",
-      descriptionKey: "features.painPoints.scalingAgile.description",
-      icon: Workflow,
-      features: [
-        { titleKey: "features.painPoints.scalingAgile.features.safe.title", descriptionKey: "features.painPoints.scalingAgile.features.safe.description", icon: Workflow },
-        { titleKey: "features.painPoints.scalingAgile.features.i18n.title", descriptionKey: "features.painPoints.scalingAgile.features.i18n.description", icon: Globe },
-        { titleKey: "features.painPoints.scalingAgile.features.security.title", descriptionKey: "features.painPoints.scalingAgile.features.security.description", icon: Shield }
+        { titleKey: "features.painPoints.scalingAgile.features.i18n.title", descriptionKey: "features.painPoints.scalingAgile.features.i18n.description", icon: Globe }
       ]
     }
   ];

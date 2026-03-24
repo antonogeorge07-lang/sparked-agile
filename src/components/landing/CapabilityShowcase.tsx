@@ -33,7 +33,7 @@ export function CapabilityShowcase() {
     {
       icon: Brain,
       title: "AI Co-Pilot",
-      desc: "Sprint planning, test scenario generation, blocker detection & capacity forecasting, all AI-driven.",
+      desc: "Sprint planning, test scenario generation, and blocker detection, all AI-driven.",
       tier: "free" as const,
       accent: "from-violet-500/20 to-violet-500/5 border-violet-500/30",
       iconBg: "bg-violet-500/10 group-hover:bg-violet-500/20",
@@ -42,7 +42,7 @@ export function CapabilityShowcase() {
     {
       icon: MessageCircle,
       title: "Team Hub",
-      desc: "Real-time workspace chat and task-level discussions. No more context-switching to Slack.",
+      desc: "Real-time workspace chat and task-level discussions. Keep conversations where the work happens.",
       tier: "free" as const,
       accent: "from-cyan-500/20 to-cyan-500/5 border-cyan-500/30",
       iconBg: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
@@ -79,7 +79,7 @@ export function CapabilityShowcase() {
             id="capabilities-heading"
             className="text-4xl md:text-5xl font-bold mb-5 bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent"
           >
-            Replace 5 tools with one platform
+            See all your tools in one place
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Everything a small team needs, without the overhead of enterprise software.
