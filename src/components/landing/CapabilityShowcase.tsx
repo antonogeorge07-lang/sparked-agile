@@ -79,7 +79,7 @@ export function CapabilityShowcase() {
             id="capabilities-heading"
             className="text-4xl md:text-5xl font-bold mb-5 bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent"
           >
-            Replace 5 tools with one platform
+            See all your tools in one place
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Everything a small team needs, without the overhead of enterprise software.
