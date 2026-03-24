@@ -53,7 +53,7 @@ export function useSmartNudges(): UseSmartNudgesReturn {
         toast.info(`${data.generated} new insight${data.generated !== 1 ? 's' : ''} from your AI colleague`);
         await loadNudges(projectId);
       } else {
-        toast.success("All looks good — no new observations right now");
+        toast.success("All looks good, no new observations right now");
       }
       return data.generated;
     } catch (err) {

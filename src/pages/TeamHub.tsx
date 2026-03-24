@@ -54,7 +54,7 @@ export default function TeamHub() {
             Team Hub
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Communicate with your team and discuss tasks — all in one place.
+            Communicate with your team and discuss tasks, all in one place.
           </p>
         </div>
 

@@ -103,7 +103,7 @@ export function TaskComments({ itemId, itemTitle }: TaskCommentsProps) {
         <CardTitle className="flex items-center gap-2 text-base">
           <MessageSquare className="h-4 w-4 text-primary" />
           Comments
-          {itemTitle && <span className="text-muted-foreground font-normal text-sm">— {itemTitle}</span>}
+          {itemTitle && <span className="text-muted-foreground font-normal text-sm">{itemTitle && <span className="text-muted-foreground font-normal text-sm">- {itemTitle}</span>}</span>}
           <Badge variant="secondary" className="ml-auto text-xs">{comments.length}</Badge>
         </CardTitle>
       </CardHeader>
