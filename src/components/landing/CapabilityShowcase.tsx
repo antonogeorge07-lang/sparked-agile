@@ -24,7 +24,7 @@ export function CapabilityShowcase() {
     {
       icon: Kanban,
       title: "Native PM Board",
-      desc: "Built-in Kanban, sprints & backlog — ditch the spreadsheets without learning Jira.",
+      desc: "Built-in Kanban, sprints & backlog. Ditch the spreadsheets without learning Jira.",
       tier: "free" as const,
       accent: "from-indigo-500/20 to-indigo-500/5 border-indigo-500/30",
       iconBg: "bg-indigo-500/10 group-hover:bg-indigo-500/20",
