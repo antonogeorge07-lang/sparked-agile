@@ -82,7 +82,7 @@ export function CapabilityShowcase() {
             Replace 5 tools with one platform
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Everything a small team needs — without the overhead of enterprise software.
+            Everything a small team needs, without the overhead of enterprise software.
           </p>
         </motion.header>
 

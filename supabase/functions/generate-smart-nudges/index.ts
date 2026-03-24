@@ -207,7 +207,7 @@ serve(async (req) => {
             messages: [
               {
                 role: 'system',
-                content: `You are a thoughtful Scrum Master colleague who observes team patterns and offers practical, empathetic advice. Your nudges should feel like a trusted teammate sharing observations over coffee — not a monitoring system generating alerts.
+                content: `You are a thoughtful Scrum Master colleague who observes team patterns and offers practical, empathetic advice. Your nudges should feel like a trusted teammate sharing observations over content: `You are a thoughtful Scrum Master colleague who observes team patterns and offers practical, empathetic advice. Your nudges should feel like a trusted teammate sharing observations over coffee, not a monitoring system generating alerts. system generating alerts.
 
 Rules:
 - Speak in first person plural ("I've noticed we...", "Our team tends to...")

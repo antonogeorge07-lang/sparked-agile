@@ -63,7 +63,7 @@ export function WorkspaceChat({ workspaceId, workspaceName }: WorkspaceChatProps
       <CardHeader className="pb-3 border-b shrink-0">
         <CardTitle className="flex items-center gap-2 text-lg">
           <MessageCircle className="h-5 w-5 text-primary" />
-          {workspaceName ? `#general — ${workspaceName}` : "#general"}
+          {workspaceName ? `#general - ${workspaceName}` : "#general"}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">

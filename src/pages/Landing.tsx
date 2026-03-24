@@ -170,7 +170,7 @@ export default function Landing() {
         </nav>
       </header>
 
-      {/* Main Content — 5 sections: Hero → Capabilities → Proof → CTA → Footer */}
+      {/* Main Content - 5 sections: Hero, Capabilities, Proof, CTA, Footer */}
       <main>
         <HeroSectionSimple />
 

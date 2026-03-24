@@ -104,7 +104,7 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              SAAI pulls updates from GitHub, Jira & Slack into a single AI briefing —{" "}
+              SAAI pulls updates from GitHub, Jira & Slack into a single AI briefing.{" "}
               <span className="text-foreground font-normal">
                 so your team starts every day aligned, not overwhelmed.
               </span>
