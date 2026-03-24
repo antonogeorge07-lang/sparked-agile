@@ -33,7 +33,7 @@ export function CapabilityShowcase() {
     {
       icon: Brain,
       title: "AI Co-Pilot",
-      desc: "Sprint planning, test scenario generation, blocker detection & capacity forecasting, all AI-driven.",
+      desc: "Sprint planning, test scenario generation, and blocker detection, all AI-driven.",
       tier: "free" as const,
       accent: "from-violet-500/20 to-violet-500/5 border-violet-500/30",
       iconBg: "bg-violet-500/10 group-hover:bg-violet-500/20",
