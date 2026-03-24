@@ -223,8 +223,8 @@ export function HeroSectionSimple() {
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  "Sprint velocity up 15%. Consider prioritising the API rate
-                  limiting before Friday's demo."
+                   "Auth module is on track. The API rate-limiting task has no
+                   assignee yet — worth flagging before Friday's demo."
                 </p>
               </motion.div>
             </div>
