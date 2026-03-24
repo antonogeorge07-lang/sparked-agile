@@ -42,7 +42,7 @@ export function CapabilityShowcase() {
     {
       icon: MessageCircle,
       title: "Team Hub",
-      desc: "Real-time workspace chat and task-level discussions — no more context-switching to Slack.",
+      desc: "Real-time workspace chat and task-level discussions. No more context-switching to Slack.",
       tier: "free" as const,
       accent: "from-cyan-500/20 to-cyan-500/5 border-cyan-500/30",
       iconBg: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
