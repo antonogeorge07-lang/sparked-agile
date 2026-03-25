@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 // Decrypt token using AES-256-GCM
@@ -264,9 +264,9 @@ serve(async (req) => {
           default:
             blocks = [{
               type: 'section',
-              text: { type: 'mrkdwn', text: payload.message || 'Notification from SAAI' }
+              text: { type: 'mrkdwn', text: payload.message || 'Notification from Spark-Agile' }
             }];
-            text = payload.message || 'Notification from SAAI';
+            text = payload.message || 'Notification from Spark-Agile';
         }
 
         const success = await sendSlackMessage(accessToken, {

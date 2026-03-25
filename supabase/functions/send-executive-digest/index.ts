@@ -4,7 +4,7 @@ import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 serve(async (req) => {
@@ -182,7 +182,7 @@ serve(async (req) => {
           </div>
           
           <div class="footer">
-            <p>Sent by SAAI - Your AI Chief of Staff</p>
+            <p>Sent by Spark-Agile - Your AI Chief of Staff</p>
             <p><a href="${supabaseUrl.replace('.supabase.co', '.lovable.app')}/stakeholder-portal">View Full Dashboard</a></p>
           </div>
         </div>
@@ -198,7 +198,7 @@ serve(async (req) => {
 
     const resend = new Resend(RESEND_API_KEY);
     const emailResult = await resend.emails.send({
-      from: "SAAI Digest <onboarding@resend.dev>",
+      from: "Spark-Agile Digest <onboarding@resend.dev>",
       to: [email],
       subject: `${isTest ? '[TEST] ' : ''}📊 Weekly Executive Digest - ${project?.name || 'Project'}`,
       html: emailHtml,

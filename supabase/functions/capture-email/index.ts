@@ -6,7 +6,7 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 // Escape HTML to prevent XSS
@@ -49,27 +49,27 @@ function checkRateLimit(ip: string): boolean {
 
 const contextConfig = {
   early_access: {
-    subject: "Welcome to SAAI Early Access! 🚀",
+    subject: "Welcome to Spark-Agile Early Access! 🚀",
     heading: "You're on the Early Access List!",
-    message: "Thank you for joining our early access program. You'll be among the first to try new features and get 3 months free Pro plan when we launch.",
+    message: "Thank you for joining our early access programme. You'll be among the first to try new features and get 3 months free Pro plan when we launch.",
     cta: "We'll notify you as soon as new features are available."
   },
   newsletter: {
-    subject: "Welcome to the SAAI Newsletter! 📧",
+    subject: "Welcome to the Spark-Agile Newsletter! 📧",
     heading: "You're Subscribed!",
     message: "Thank you for subscribing to our newsletter. You'll receive weekly productivity tips, agile best practices, and platform updates.",
     cta: "Look out for our next edition in your inbox!"
   },
   beta: {
-    subject: "Welcome to the SAAI Beta Program! 🎯",
+    subject: "Welcome to the Spark-Agile Beta Programme! 🎯",
     heading: "You're a Beta Tester!",
-    message: "Thank you for joining our beta program. As a beta tester, you'll get free lifetime Pro access and help shape the future of SAAI.",
+    message: "Thank you for joining our beta programme. As a beta tester, you'll get free lifetime Pro access and help shape the future of Spark-Agile.",
     cta: "We'll reach out soon with exclusive access details."
   },
   exit_intent: {
-    subject: "Let's Get You Started with SAAI! 🎉",
+    subject: "Let's Get You Started with Spark-Agile! 🎉",
     heading: "Thanks for Your Interest!",
-    message: "We'd love to show you how SAAI can transform your team's workflow. Our team will reach out to schedule a personalized demo.",
+    message: "We'd love to show you how Spark-Agile can transform your team's workflow. Our team will reach out to schedule a personalised demo.",
     cta: "Expect to hear from us within 24 hours!"
   }
 };
@@ -132,7 +132,7 @@ const handler = async (req: Request): Promise<Response> => {
       const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(supabaseUrl, supabaseKey);
 
-      await supabase.from("email_captures").insert({
+      await supabase.from("landing_feedback").insert({
         email: email.toLowerCase().trim(),
         name: displayName,
         context,
@@ -146,7 +146,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email
     const emailResponse = await resend.emails.send({
-      from: "SAAI <onboarding@resend.dev>",
+      from: "Spark-Agile <onboarding@resend.dev>",
       to: [email],
       subject: config.subject,
       html: `
@@ -182,17 +182,17 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 
                 <div class="cta-box">
-                  <p style="margin: 0 0 15px 0; font-size: 14px; color: #6b7280;">In the meantime, check out what SAAI can do:</p>
-                  <a href="https://saai.lovable.app" class="button">Explore SAAI</a>
+                  <p style="margin: 0 0 15px 0; font-size: 14px; color: #6b7280;">In the meantime, check out what Spark-Agile can do:</p>
+                  <a href="https://sparked-agile.lovable.app" class="button">Explore Spark-Agile</a>
                 </div>
                 
                 <p style="font-size: 14px; color: #6b7280;">Questions? Just reply to this email - we're here to help!</p>
               </div>
               
               <div class="footer">
-                <p style="margin: 0;">© 2025 SAAI. Stay informed, effortlessly.</p>
+                <p style="margin: 0;">© 2026 Spark-Agile. Stay informed, effortlessly.</p>
                 <p style="margin: 10px 0 0 0; font-size: 12px;">
-                  <a href="https://saai.lovable.app" style="color: #10b981; text-decoration: none;">saai.lovable.app</a>
+                  <a href="https://sparked-agile.lovable.app" style="color: #10b981; text-decoration: none;">sparked-agile.lovable.app</a>
                 </p>
               </div>
             </div>

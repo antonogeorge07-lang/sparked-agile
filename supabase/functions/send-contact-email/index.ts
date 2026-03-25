@@ -1,12 +1,12 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@3.5.0";
+import { Resend } from "https://esm.sh/resend@4.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 // Input validation schema
@@ -87,7 +87,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to user
     const userEmailResponse = await resend.emails.send({
-      from: "SAAI <onboarding@resend.dev>",
+      from: "Spark-Agile <onboarding@resend.dev>",
       to: [email],
       subject: "We received your message!",
       html: `
@@ -102,7 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           <p style="color: #666;">
             Best regards,<br>
-            <strong>The SAAI Team</strong>
+            <strong>The Spark-Agile Team</strong>
           </p>
         </div>
       `,
@@ -112,7 +112,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "SAAI <onboarding@resend.dev>",
+      from: "Spark-Agile <onboarding@resend.dev>",
       to: ["Antono.George1@outlook.com"],
       subject: `New Contact Form: ${safeSubject}`,
       html: `

@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const CEREMONY_TEMPLATES = [
@@ -69,9 +69,41 @@ serve(async (req) => {
       projectId,
       workspaceName,
       teamDistributionList,
-      accessToken,
       startDate,
     } = await req.json();
+
+    // Retrieve Microsoft token from database instead of accepting from client
+    let accessToken: string | null = null;
+    try {
+      const { data: tokenRecord } = await supabaseClient
+        .from('user_microsoft_tokens')
+        .select('access_token')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (tokenRecord?.access_token) {
+        // Decrypt token via edge function
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const decryptRes = await fetch(`${supabaseUrl}/functions/v1/decrypt-token`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${serviceKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            encryptedToken: tokenRecord.access_token,
+            tokenType: 'microsoft',
+          }),
+        });
+        if (decryptRes.ok) {
+          const { token } = await decryptRes.json();
+          accessToken = token;
+        }
+      }
+    } catch (tokenError) {
+      console.warn('Could not retrieve Microsoft token:', tokenError);
+    }
 
     console.log('Initializing workspace:', workspaceName);
 

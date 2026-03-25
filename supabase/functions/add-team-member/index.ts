@@ -5,7 +5,7 @@ import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 // HTML escape function to prevent XSS in email templates
@@ -91,16 +91,20 @@ serve(async (req) => {
 
     console.log('Adding team member:', { name, email, projectId });
 
-    // Verify user has permission to add team members to this project
+    // Verify user has permission to add team members (must be owner or admin)
     const { data: projectMember, error: memberCheckError } = await supabaseClient
       .from('project_members')
-      .select('*')
+      .select('role')
       .eq('project_id', projectId)
       .eq('user_id', user.id)
       .single();
 
     if (memberCheckError || !projectMember) {
       throw new Error('Unauthorized: You are not a member of this project');
+    }
+
+    if (!['owner', 'admin'].includes(projectMember.role)) {
+      throw new Error('Unauthorized: Only project owners or admins can add team members');
     }
 
     // Add team member to database

@@ -5,7 +5,7 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 // Escape HTML to prevent XSS attacks in email content
@@ -86,9 +86,9 @@ const handler = async (req: Request): Promise<Response> => {
     const displayName = escapeHtml(firstName || "there");
 
     const emailResponse = await resend.emails.send({
-      from: "SAAI Platform <onboarding@resend.dev>",
+      from: "Spark-Agile <onboarding@resend.dev>",
       to: [email],
-      subject: "Welcome to SAAI - Your Account is Pending Approval",
+      subject: "Welcome to Spark-Agile - Your Account is Pending Approval",
       html: `
         <!DOCTYPE html>
         <html>
@@ -111,13 +111,13 @@ const handler = async (req: Request): Promise<Response> => {
           <body>
             <div class="container">
               <div class="header">
-                <h1 style="margin: 0; font-size: 28px;">Welcome to SAAI Platform! 🎉</h1>
+                <h1 style="margin: 0; font-size: 28px;">Welcome to Spark-Agile! 🎉</h1>
               </div>
               
               <div class="content">
                 <p>Hi ${displayName},</p>
                 
-                <p>Thank you for registering with SAAI Platform! We're excited to have you join our community of agile practitioners and project managers.</p>
+                <p>Thank you for registering with Spark-Agile! We're excited to have you join our community of agile practitioners and project managers.</p>
                 
                 <div class="info-box">
                   <strong>📋 Account Status:</strong> Your account is currently pending admin approval. You'll receive another email once your account has been approved and you can access all features.
@@ -166,20 +166,20 @@ const handler = async (req: Request): Promise<Response> => {
                 
                 <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
                   <p style="margin-bottom: 5px;">Best regards,</p>
-                  <p style="margin: 5px 0; font-weight: bold; font-size: 16px; color: #667eea;">The SAAI Platform Team</p>
+                  <p style="margin: 5px 0; font-weight: bold; font-size: 16px; color: #667eea;">The Spark-Agile Team</p>
                   <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">Agile Delivery Excellence</p>
                 <p style="margin: 10px 0; font-size: 14px;">
                     <a href="mailto:Antono.George1@outlook.com" style="color: #667eea; text-decoration: none;">Antono.George1@outlook.com</a>
                   </p>
                   <p style="margin: 5px 0; font-size: 13px; color: #9ca3af;">
-                    📧 Questions? Visit our <a href="https://saai.lovable.app/faq" style="color: #667eea; text-decoration: none;">Help Center</a> or reply to this email
+                    📧 Questions? Visit our <a href="https://sparked-agile.lovable.app/faq" style="color: #667eea; text-decoration: none;">Help Center</a> or reply to this email
                   </p>
                 </div>
               </div>
               
               <div class="footer">
                 <p>This is an automated message. Please do not reply to this email.</p>
-                <p>&copy; 2025 SAAI Platform. All rights reserved.</p>
+                <p>&copy; 2025 Spark-Agile. All rights reserved.</p>
               </div>
             </div>
           </body>
