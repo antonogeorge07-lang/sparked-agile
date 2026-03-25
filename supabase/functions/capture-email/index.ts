@@ -49,27 +49,27 @@ function checkRateLimit(ip: string): boolean {
 
 const contextConfig = {
   early_access: {
-    subject: "Welcome to SAAI Early Access! 🚀",
+    subject: "Welcome to Spark-Agile Early Access! 🚀",
     heading: "You're on the Early Access List!",
-    message: "Thank you for joining our early access program. You'll be among the first to try new features and get 3 months free Pro plan when we launch.",
+    message: "Thank you for joining our early access programme. You'll be among the first to try new features and get 3 months free Pro plan when we launch.",
     cta: "We'll notify you as soon as new features are available."
   },
   newsletter: {
-    subject: "Welcome to the SAAI Newsletter! 📧",
+    subject: "Welcome to the Spark-Agile Newsletter! 📧",
     heading: "You're Subscribed!",
     message: "Thank you for subscribing to our newsletter. You'll receive weekly productivity tips, agile best practices, and platform updates.",
     cta: "Look out for our next edition in your inbox!"
   },
   beta: {
-    subject: "Welcome to the SAAI Beta Program! 🎯",
+    subject: "Welcome to the Spark-Agile Beta Programme! 🎯",
     heading: "You're a Beta Tester!",
-    message: "Thank you for joining our beta program. As a beta tester, you'll get free lifetime Pro access and help shape the future of SAAI.",
+    message: "Thank you for joining our beta programme. As a beta tester, you'll get free lifetime Pro access and help shape the future of Spark-Agile.",
     cta: "We'll reach out soon with exclusive access details."
   },
   exit_intent: {
-    subject: "Let's Get You Started with SAAI! 🎉",
+    subject: "Let's Get You Started with Spark-Agile! 🎉",
     heading: "Thanks for Your Interest!",
-    message: "We'd love to show you how SAAI can transform your team's workflow. Our team will reach out to schedule a personalized demo.",
+    message: "We'd love to show you how Spark-Agile can transform your team's workflow. Our team will reach out to schedule a personalised demo.",
     cta: "Expect to hear from us within 24 hours!"
   }
 };
