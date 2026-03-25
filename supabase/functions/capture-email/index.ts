@@ -132,7 +132,7 @@ const handler = async (req: Request): Promise<Response> => {
       const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(supabaseUrl, supabaseKey);
 
-      await supabase.from("email_captures").insert({
+      await supabase.from("landing_feedback").insert({
         email: email.toLowerCase().trim(),
         name: displayName,
         context,
