@@ -146,7 +146,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email
     const emailResponse = await resend.emails.send({
-      from: "SAAI <onboarding@resend.dev>",
+      from: "Spark-Agile <onboarding@resend.dev>",
       to: [email],
       subject: config.subject,
       html: `
