@@ -264,9 +264,9 @@ serve(async (req) => {
           default:
             blocks = [{
               type: 'section',
-              text: { type: 'mrkdwn', text: payload.message || 'Notification from SAAI' }
+              text: { type: 'mrkdwn', text: payload.message || 'Notification from Spark-Agile' }
             }];
-            text = payload.message || 'Notification from SAAI';
+            text = payload.message || 'Notification from Spark-Agile';
         }
 
         const success = await sendSlackMessage(accessToken, {

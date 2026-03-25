@@ -121,7 +121,7 @@ serve(async (req) => {
           </div>
           
           <div class="footer">
-            <p>Sent by SAAI - Approval Workflow</p>
+            <p>Sent by Spark-Agile - Approval Workflow</p>
           </div>
         </div>
       </body>
@@ -129,7 +129,7 @@ serve(async (req) => {
     `;
 
     const emailResult = await resend.emails.send({
-      from: "SAAI <onboarding@resend.dev>",
+      from: "Spark-Agile <onboarding@resend.dev>",
       to: [requesterProfile.email],
       subject: `${statusIcon} Your request "${request.title}" was ${statusText.toLowerCase()}`,
       html: emailHtml,
