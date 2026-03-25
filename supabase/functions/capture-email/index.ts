@@ -190,9 +190,9 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
               
               <div class="footer">
-                <p style="margin: 0;">© 2025 SAAI. Stay informed, effortlessly.</p>
+                <p style="margin: 0;">© 2026 Spark-Agile. Stay informed, effortlessly.</p>
                 <p style="margin: 10px 0 0 0; font-size: 12px;">
-                  <a href="https://saai.lovable.app" style="color: #10b981; text-decoration: none;">saai.lovable.app</a>
+                  <a href="https://sparked-agile.lovable.app" style="color: #10b981; text-decoration: none;">sparked-agile.lovable.app</a>
                 </p>
               </div>
             </div>
