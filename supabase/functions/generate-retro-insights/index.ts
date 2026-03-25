@@ -33,18 +33,16 @@ serve(async (req) => {
       throw new Error('Unauthorized: Invalid token');
     }
 
-    // Rate limiting: 10 requests per minute for AI functions
-    const rateLimiter = new Map<string, { count: number; resetAt: number }>();
-    const now = Date.now();
-    const userLimit = rateLimiter.get(user.id);
-    
-    if (!userLimit || now > userLimit.resetAt) {
-      rateLimiter.set(user.id, { count: 1, resetAt: now + 60000 });
-    } else if (userLimit.count >= 10) {
-      const waitSeconds = Math.ceil((userLimit.resetAt - now) / 1000);
-      throw new Error(`Rate limit exceeded. Try again in ${waitSeconds} seconds`);
-    } else {
-      userLimit.count++;
+    // Rate limiting: check database for recent requests
+    const { count: recentCount } = await supabase
+      .from('ai_usage_logs')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('endpoint', 'generate-retro-insights')
+      .gte('created_at', new Date(Date.now() - 60000).toISOString());
+
+    if ((recentCount ?? 0) >= 10) {
+      throw new Error('Rate limit exceeded. Try again in a minute');
     }
 
     // Input validation

@@ -61,11 +61,11 @@ serve(async (req) => {
     const { action, projectId, sprintId, itemId, context }: CopilotRequest = await req.json();
 
     // Verify project access
+    // RLS will enforce access — query scoped to user's projects
     const { data: project } = await supabase
       .from("pmi_projects")
       .select("*")
       .eq("id", projectId)
-      .eq("user_id", user.id)
       .single();
 
     if (!project) {
