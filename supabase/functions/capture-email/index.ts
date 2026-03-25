@@ -182,8 +182,8 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 
                 <div class="cta-box">
-                  <p style="margin: 0 0 15px 0; font-size: 14px; color: #6b7280;">In the meantime, check out what SAAI can do:</p>
-                  <a href="https://saai.lovable.app" class="button">Explore SAAI</a>
+                  <p style="margin: 0 0 15px 0; font-size: 14px; color: #6b7280;">In the meantime, check out what Spark-Agile can do:</p>
+                  <a href="https://sparked-agile.lovable.app" class="button">Explore Spark-Agile</a>
                 </div>
                 
                 <p style="font-size: 14px; color: #6b7280;">Questions? Just reply to this email - we're here to help!</p>
