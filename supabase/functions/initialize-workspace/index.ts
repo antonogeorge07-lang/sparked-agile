@@ -69,9 +69,41 @@ serve(async (req) => {
       projectId,
       workspaceName,
       teamDistributionList,
-      accessToken,
       startDate,
     } = await req.json();
+
+    // Retrieve Microsoft token from database instead of accepting from client
+    let accessToken: string | null = null;
+    try {
+      const { data: tokenRecord } = await supabaseClient
+        .from('user_microsoft_tokens')
+        .select('access_token')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (tokenRecord?.access_token) {
+        // Decrypt token via edge function
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const decryptRes = await fetch(`${supabaseUrl}/functions/v1/decrypt-token`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${serviceKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            encryptedToken: tokenRecord.access_token,
+            tokenType: 'microsoft',
+          }),
+        });
+        if (decryptRes.ok) {
+          const { token } = await decryptRes.json();
+          accessToken = token;
+        }
+      }
+    } catch (tokenError) {
+      console.warn('Could not retrieve Microsoft token:', tokenError);
+    }
 
     console.log('Initializing workspace:', workspaceName);
 

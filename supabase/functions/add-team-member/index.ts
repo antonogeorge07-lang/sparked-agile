@@ -91,16 +91,20 @@ serve(async (req) => {
 
     console.log('Adding team member:', { name, email, projectId });
 
-    // Verify user has permission to add team members to this project
+    // Verify user has permission to add team members (must be owner or admin)
     const { data: projectMember, error: memberCheckError } = await supabaseClient
       .from('project_members')
-      .select('*')
+      .select('role')
       .eq('project_id', projectId)
       .eq('user_id', user.id)
       .single();
 
     if (memberCheckError || !projectMember) {
       throw new Error('Unauthorized: You are not a member of this project');
+    }
+
+    if (!['owner', 'admin'].includes(projectMember.role)) {
+      throw new Error('Unauthorized: Only project owners or admins can add team members');
     }
 
     // Add team member to database
