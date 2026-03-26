@@ -8,26 +8,22 @@ import { motion } from "framer-motion";
 
 const spring = { type: "spring", stiffness: 200, damping: 24 } as const;
 
-const painPoints = [
-  {
-    icon: TableProperties,
-    pain: "Juggling 5 tabs of spreadsheets",
-    relief: "One daily AI briefing",
-  },
-  {
-    icon: Clock,
-    pain: "30 min chasing status updates",
-    relief: "5-minute team pulse",
-  },
-  {
-    icon: Mail,
-    pain: "Updates lost in Slack noise",
-    relief: "Curated digest in your inbox",
-  },
-];
+const painPointIcons = [TableProperties, Clock, Mail];
 
 export function HeroSectionSimple() {
   const { t } = useTranslation();
+
+  const painPoints = [
+    { icon: painPointIcons[0], pain: t("landing.hero.pain1"), relief: t("landing.hero.relief1") },
+    { icon: painPointIcons[1], pain: t("landing.hero.pain2"), relief: t("landing.hero.relief2") },
+    { icon: painPointIcons[2], pain: t("landing.hero.pain3"), relief: t("landing.hero.relief3") },
+  ];
+
+  const trustChips = [
+    t("landing.hero.setup"),
+    t("landing.hero.noCreditCard"),
+    t("landing.hero.freeForever"),
+  ];
 
   return (
     <section
@@ -78,7 +74,7 @@ export function HeroSectionSimple() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
                 <span className="text-xs font-medium tracking-wide">
-                  For teams drowning in tabs
+                  {t("landing.hero.badge")}
                 </span>
               </Badge>
             </motion.div>
@@ -91,9 +87,9 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
-              <span className="block text-foreground">Stop juggling tools.</span>
+              <span className="block text-foreground">{t("landing.hero.title1")}</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent bg-[length:200%_auto]">
-                Get one daily pulse.
+                {t("landing.hero.title2")}
               </span>
             </motion.h1>
 
@@ -104,9 +100,9 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              SAAI pulls updates from GitHub, Jira & Slack into a single AI briefing.{" "}
+              {t("landing.hero.description")}{" "}
               <span className="text-foreground font-normal">
-                so your team starts every day aligned, not overwhelmed.
+                {t("landing.hero.descriptionHighlight")}
               </span>
             </motion.p>
 
@@ -142,17 +138,15 @@ export function HeroSectionSimple() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              {["2-minute setup", "No credit card", "Free tier forever"].map(
-                (label) => (
-                  <span
-                    key={label}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/60 border border-border/40 backdrop-blur-sm"
-                  >
-                    <Zap className="h-3 w-3 text-primary" />
-                    {label}
-                  </span>
-                )
-              )}
+              {trustChips.map((label) => (
+                <span
+                  key={label}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/60 border border-border/40 backdrop-blur-sm"
+                >
+                  <Zap className="h-3 w-3 text-primary" />
+                  {label}
+                </span>
+              ))}
             </motion.div>
           </div>
 
@@ -178,9 +172,9 @@ export function HeroSectionSimple() {
                     <Bot className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <span className="font-semibold text-sm">Your AI Chief of Staff</span>
+                    <span className="font-semibold text-sm">{t("landing.hero.chiefOfStaff")}</span>
                     <p className="text-[11px] text-muted-foreground">
-                      All your tools, one morning view
+                      {t("landing.hero.chiefOfStaffDesc")}
                     </p>
                   </div>
                 </div>
@@ -219,12 +213,11 @@ export function HeroSectionSimple() {
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="h-4 w-4 text-primary" />
                   <span className="text-xs font-semibold text-primary">
-                    AI Insight
+                    {t("landing.hero.aiInsight")}
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                   "Auth module is on track. The API rate-limiting task has no
-                   assignee yet — worth flagging before Friday's demo."
+                  "{t("landing.hero.aiInsightText")}"
                 </p>
               </motion.div>
             </div>

@@ -14,8 +14,8 @@ export function CapabilityShowcase() {
   const capabilities = [
     {
       icon: Mail,
-      title: "AI Daily Digest",
-      desc: "One morning email with commits, task updates, blockers & AI recommendations. No logins needed.",
+      titleKey: "landing.capabilities.card1Title",
+      descKey: "landing.capabilities.card1Desc",
       tier: "free" as const,
       accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
       iconBg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
@@ -23,8 +23,8 @@ export function CapabilityShowcase() {
     },
     {
       icon: Kanban,
-      title: "Native PM Board",
-      desc: "Built-in Kanban, sprints & backlog. Ditch the spreadsheets without learning Jira.",
+      titleKey: "landing.capabilities.card2Title",
+      descKey: "landing.capabilities.card2Desc",
       tier: "free" as const,
       accent: "from-indigo-500/20 to-indigo-500/5 border-indigo-500/30",
       iconBg: "bg-indigo-500/10 group-hover:bg-indigo-500/20",
@@ -32,8 +32,8 @@ export function CapabilityShowcase() {
     },
     {
       icon: Brain,
-      title: "AI Co-Pilot",
-      desc: "Sprint planning, test scenario generation, and blocker detection, all AI-driven.",
+      titleKey: "landing.capabilities.card3Title",
+      descKey: "landing.capabilities.card3Desc",
       tier: "free" as const,
       accent: "from-violet-500/20 to-violet-500/5 border-violet-500/30",
       iconBg: "bg-violet-500/10 group-hover:bg-violet-500/20",
@@ -41,8 +41,8 @@ export function CapabilityShowcase() {
     },
     {
       icon: MessageCircle,
-      title: "Team Hub",
-      desc: "Real-time workspace chat and task-level discussions. Keep conversations where the work happens.",
+      titleKey: "landing.capabilities.card4Title",
+      descKey: "landing.capabilities.card4Desc",
       tier: "free" as const,
       accent: "from-cyan-500/20 to-cyan-500/5 border-cyan-500/30",
       iconBg: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
@@ -72,17 +72,17 @@ export function CapabilityShowcase() {
             transition={{ delay: 0.2 }}
           >
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">What you get</span>
+            <span className="text-sm font-medium text-primary">{t("landing.capabilities.badge")}</span>
           </motion.div>
 
           <h2
             id="capabilities-heading"
             className="text-4xl md:text-5xl font-bold mb-5 bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent"
           >
-            See all your tools in one place
+            {t("landing.capabilities.title")}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Everything a small team needs, without the overhead of enterprise software.
+            {t("landing.capabilities.subtitle")}
           </p>
         </motion.header>
 
@@ -120,10 +120,10 @@ export function CapabilityShowcase() {
                       <TierBadge tier={cap.tier} className="text-xs" />
                     </div>
                     <h3 className="font-semibold text-lg mb-2 group-hover:text-foreground transition-colors">
-                      {cap.title}
+                      {t(cap.titleKey)}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {cap.desc}
+                      {t(cap.descKey)}
                     </p>
                   </div>
                 </div>

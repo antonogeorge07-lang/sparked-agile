@@ -23,7 +23,70 @@
     "pro": "プロ",
     "beta": "ライブ",
     "new": "新着",
-    "mostPopular": "最も人気"
+    "mostPopular": "最も人気",
+    "send": "Send",
+    "schedule": "Schedule",
+    "reset": "Reset",
+    "submit": "Submit",
+    "generating": "Generating...",
+    "analyze": "Analyze",
+    "refresh": "Refresh",
+    "export": "Export",
+    "import": "Import",
+    "view": "View",
+    "add": "Add",
+    "remove": "Remove",
+    "update": "Update",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "of": "of",
+    "to": "to",
+    "from": "from",
+    "signInRequired": "Please sign in to access features.",
+    "signInLink": "Sign In",
+    "startOver": "Start Over",
+    "continue": "Continue",
+    "skip": "Skip",
+    "backToOptions": "Back to Options",
+    "continueToDashboard": "Continue to Dashboard"
+  },
+  "sidebar": {
+    "getStarted": "Get Started",
+    "home": "Home",
+    "quickStart": "Quick Start",
+    "myWorkspace": "My Workspace",
+    "planAndTrack": "Plan & Track",
+    "dashboard": "Dashboard",
+    "commandCentre": "Command Centre",
+    "epics": "Epics",
+    "sprintPlanning": "Sprint Planning",
+    "ceremonies": "Ceremonies",
+    "dailyStandup": "Daily Standup",
+    "sprintReview": "Sprint Review",
+    "retrospective": "Retrospective",
+    "backlogRefinement": "Backlog Refinement",
+    "insightsAndTools": "Insights & Tools",
+    "advanced": "Advanced",
+    "flowMetrics": "Flow Metrics",
+    "performancePredictor": "Performance Predictor",
+    "scheduleAdvisor": "Schedule Advisor",
+    "riskForecaster": "Risk Forecaster",
+    "workflows": "Workflows",
+    "integrations": "Integrations",
+    "ceremonySetup": "Ceremony Setup",
+    "help": "Help",
+    "userGuide": "User Guide",
+    "admin": "Admin",
+    "platformOwner": "Platform Owner",
+    "adminPanel": "Admin Panel",
+    "security": "Security",
+    "externalTasks": "External Tasks",
+    "teamHub": "Team Hub",
+    "activityFeed": "Activity Feed"
   },
   "navigation": {
     "home": "ホーム",
@@ -37,16 +100,217 @@
     "about": "概要",
     "contact": "お問い合わせ"
   },
+  "dashboard": {
+    "welcome": "ようこそ",
+    "overview": "概要",
+    "recentActivity": "最近のアクティビティ",
+    "quickActions": "クイックアクション",
+    "statistics": "統計",
+    "title": "Sprint Health Dashboard",
+    "subtitle": "Monitor performance with integrations",
+    "currentVelocity": "Current Velocity",
+    "sprintProgress": "Sprint Progress",
+    "daysRemaining": "Days Remaining",
+    "velocityTrend": "Velocity Trend",
+    "last3Sprints": "Last 3 sprints performance",
+    "activeImpediments": "Active Impediments",
+    "issuesRequiringAttention": "Issues requiring attention",
+    "points": "points",
+    "onTrack": "On track for sprint goal",
+    "untilSprintEnd": "Until sprint end",
+    "fromLastSprint": "+12% from last sprint",
+    "noVelocityData": "No velocity data available",
+    "connectToTrack": "Connect integrations to track sprint velocity",
+    "connectToSee": "Connect integrations to see data",
+    "searchImpediments": "Search impediments...",
+    "severity": "Severity",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "loadingDashboard": "Loading dashboard..."
+  },
+  "integrations": {
+    "setupRequired": "Integration Setup Required",
+    "unlockFunctionality": "To unlock full functionality, please configure:",
+    "setupNow": "Setup Now",
+    "connected": "Connected",
+    "notConnected": "Not Connected",
+    "connecting": "Connecting...",
+    "disconnect": "Disconnect",
+    "configure": "Configure",
+    "jiraIssues": "JIRA Issues",
+    "recentTicketUpdates": "Recent ticket updates from JIRA",
+    "noJiraIssues": "No JIRA issues found",
+    "githubActivity": "GitHub Activity",
+    "recentCommits": "Recent commits and pull requests",
+    "noGithubActivity": "No GitHub activity found",
+    "microsoftConnected": "Connected to Microsoft",
+    "microsoftFailed": "Microsoft connection failed"
+  },
+  "gettingStarted": {
+    "welcome": "Welcome",
+    "welcomeMessage": "I'm Omair, your AI assistant. How can I help you get started today?",
+    "createProject": "Create my first project",
+    "createProjectDesc": "Set up a new project to start tracking work",
+    "takeTour": "Take a tour",
+    "takeTourDesc": "Let Omair show you around the platform",
+    "setupTeam": "Set up my team",
+    "setupTeamDesc": "Add team members and configure your workspace",
+    "exploreFeatures": "Explore features",
+    "exploreFeaturesDesc": "Discover what you can do with the platform",
+    "askAnything": "Or ask me anything",
+    "askPlaceholder": "What would you like to do? I can help with projects, teams, workflows, and more...",
+    "skipToDashboard": "Skip and go to Dashboard",
+    "chatWithOmair": "Chat with Omair",
+    "aiAssistant": "AI Assistant",
+    "errorOmair": "Failed to get response from Omair. Please try again."
+  },
+  "standup": {
+    "title": "Daily Standup",
+    "subtitle": "Share updates and sync with your team",
+    "authRequired": "Authentication required",
+    "authRequiredDesc": "Please sign in to use this feature.",
+    "myUpdate": "My Update",
+    "facilitator": "Facilitator",
+    "teamUpdates": "Team Updates",
+    "yourName": "Your Name",
+    "yesterday": "What did you do yesterday?",
+    "yesterdayPlaceholder": "Completed sprint planning, fixed 3 bugs...",
+    "today": "What will you do today?",
+    "todayPlaceholder": "Work on user authentication, attend design review...",
+    "blockers": "Any blockers?",
+    "blockersPlaceholder": "Waiting for API documentation, need design approval...",
+    "submitUpdate": "Submit Update",
+    "generateSummary": "Generate AI Summary",
+    "generatingSummary": "Generating summary...",
+    "noUpdates": "No team updates for today yet",
+    "updatesLoading": "Loading team updates...",
+    "updateSubmitted": "Update Submitted",
+    "updateSubmittedDesc": "Your standup update has been recorded.",
+    "summaryGenerated": "Summary Generated",
+    "summaryGeneratedDesc": "AI has summarized the team updates.",
+    "error": "Error",
+    "errorLoadingUpdates": "Failed to load team updates.",
+    "errorSubmitting": "Failed to submit update. Please try again.",
+    "errorGenerating": "Failed to generate summary. Please try again."
+  },
+  "retrospective": {
+    "title": "Sprint Retrospective",
+    "subtitle": "Reflect and improve as a team",
+    "yourFeedback": "Your Feedback",
+    "shareFeedback": "Share your thoughts anonymously about the sprint",
+    "wentWell": "What went well?",
+    "wentWellPlaceholder": "Team collaboration was excellent, completed all planned items...",
+    "improve": "What could be improved?",
+    "improvePlaceholder": "Daily standups could be more focused, need better documentation...",
+    "actionItems": "Suggested action items",
+    "actionItemsPlaceholder": "Implement a standup timer, create a documentation template...",
+    "submitFeedback": "Submit Feedback",
+    "collectedFeedback": "Collected Feedback",
+    "anonymousFeedback": "Anonymous feedback from team members",
+    "feedbackItem": "Feedback",
+    "generateInsights": "Generate AI Insights",
+    "aiInsights": "AI-Generated Insights",
+    "poweredByAI": "Powered by Lovable AI",
+    "addFeedbackToGenerate": "Add feedback to generate AI-powered insights",
+    "whatYouGet": "What You'll Get",
+    "topPositiveThemes": "Top positive themes from feedback",
+    "keyAreasImprovement": "Key areas for improvement",
+    "specificRecommendations": "Specific, actionable recommendations",
+    "teamHealthAssessment": "Overall team health assessment",
+    "feedbackAdded": "Feedback Added",
+    "feedbackAddedDesc": "Your feedback has been recorded. Add more or generate insights.",
+    "noFeedback": "No Feedback",
+    "noFeedbackDesc": "Please add at least one feedback item first.",
+    "insightsGenerated": "Insights Generated",
+    "insightsGeneratedDesc": "AI has analyzed the retrospective feedback.",
+    "errorGenerating": "Failed to generate insights. Please try again."
+  },
+  "backlog": {
+    "title": "Backlog Refinement Assistant",
+    "subtitle": "Continuous backlog grooming with AI-powered insights from JIRA and GitHub",
+    "selectProject": "Select Project",
+    "analyzeBacklog": "Analyze Backlog",
+    "analyzing": "Analyzing...",
+    "sendDigest": "Send Digest",
+    "noProjectSelected": "No Project Selected",
+    "noProjectSelectedDesc": "Please select a project first",
+    "analysisComplete": "Analysis Complete",
+    "analyzedItems": "Analyzed {{count}} backlog items",
+    "analysisFailed": "Analysis Failed",
+    "sendingDigest": "Sending Digest",
+    "preparingDigest": "Preparing backlog health digest...",
+    "digestSent": "Digest Sent",
+    "digestSentDesc": "Backlog health digest has been sent via Outlook",
+    "failedToSend": "Failed to Send",
+    "totalItems": "Total Items",
+    "staleItems": "Stale Items",
+    "unclearItems": "Unclear Items",
+    "dependencies": "Dependencies",
+    "velocityTrend": "Velocity Trend",
+    "recommendations": "Recommendations",
+    "backlogItems": "Backlog Items",
+    "priority": "Priority",
+    "age": "Age",
+    "days": "days",
+    "needsPOAttention": "Needs PO Attention"
+  },
+  "sprintPlanning": {
+    "title": "Sprint Planning Assistant",
+    "subtitle": "AI-powered sprint planning with backlog analysis",
+    "connectedToMicrosoft": "Connected to Microsoft Outlook",
+    "microsoftAuthFailed": "Microsoft auth failed",
+    "noProjectSelected": "No project selected",
+    "selectProjectFirst": "Please select a project first"
+  },
+  "projectMembers": {
+    "title": "Project Members",
+    "addMember": "Add Member",
+    "removeMember": "Remove Member",
+    "memberAdded": "Member added to project",
+    "memberRemoved": "Member removed from project",
+    "errorAddingMember": "Failed to add member to project",
+    "errorRemovingMember": "Failed to remove member from project"
+  },
+  "commandCentre": {
+    "title": "Project Command Centre",
+    "stages": {
+      "initiation": "Initiation",
+      "planning": "Planning",
+      "execution": "Execution",
+      "monitoring": "Monitoring & Control",
+      "closure": "Closure"
+    }
+  },
+  "stakeholder": {
+    "widgetTypes": {
+      "velocityTrend": "Velocity Trend",
+      "velocityTrendDesc": "Sprint velocity over time",
+      "epicRoi": "Epic ROI",
+      "epicRoiDesc": "Return on investment by epic",
+      "milestoneTracker": "Milestone Tracker",
+      "milestoneTrackerDesc": "Upcoming milestones status",
+      "riskHeatmap": "Risk Heatmap",
+      "riskHeatmapDesc": "Project risk visualization",
+      "sprintProgress": "Sprint Progress",
+      "sprintProgressDesc": "Current sprint completion",
+      "teamVelocity": "Team Velocity",
+      "teamVelocityDesc": "Team performance metrics",
+      "blockersSummary": "Blockers Summary",
+      "blockersSummaryDesc": "Active blockers across projects",
+      "completionRate": "Completion Rate",
+      "completionRateDesc": "Story completion percentage"
+    }
+  },
   "landing": {
     "signIn": "ログイン",
     "getDigest": "始める",
     "hero": {
-      "badge": "経験主導。AI支援。",
-      "title1": "アクティブインテリジェンス",
-      "title2": "人工的ではなく、本物",
-      "title3": "AI駆動のチーム管理",
-      "description": "チームとの実際の経験から構築。アジャイルを自動化するだけでなく、理解する知的なパートナー。",
-      "subDescription": "スプリント計画をより速く、より効果的に。",
+      "badge": "タブに溺れるチームのために",
+      "title1": "ツールの使い分けはもうやめよう。",
+      "title2": "毎日のパルスを手に入れよう。",
+      "description": "Spark-Agile は GitHub、Jira、Slack の更新を一つの AI ブリーフィングにまとめます。",
+      "descriptionHighlight": "チームが毎日一致して始められるように、圧倒されないように。",
       "setup": "2分で準備完了",
       "noCreditCard": "無料で開始",
       "freeForever": "コミットメントなし",
@@ -54,76 +318,110 @@
       "cta": "無料で試す",
       "tryDemo": "デモモード",
       "watchDemo": "デモを見る",
+      "chiefOfStaff": "あなたの AI 参謀",
+      "chiefOfStaffDesc": "すべてのツール、一つの朝のビュー",
+      "pain1": "5つのスプレッドシートタブを行き来",
+      "relief1": "1つの毎日の AI ブリーフィング",
+      "pain2": "30分かけてステータス更新を追跡",
+      "relief2": "5分のチームパルス",
+      "pain3": "Slack のノイズに更新が埋もれる",
+      "relief3": "受信箱にキュレートされたダイジェスト",
+      "aiInsight": "AI インサイト",
+      "aiInsightText": "認証モジュールは順調です。APIレート制限タスクにはまだ担当者がいません。金曜日のデモ前に指摘する価値があります。",
       "proTeaser": "プレミアム機能への早期アクセス",
       "upgradeToPro": "Proにアップグレード",
-      "proDescription": "スプリントセレモニー、エピック管理、チームコラボレーションを利用できます。"
+      "proDescription": "スプリントセレモニー、エピック管理、チームコラボレーションを利用できます。",
+      "title3": "AI駆動のチーム管理",
+      "subDescription": "スプリント計画をより速く、より効果的に。"
     },
     "capabilities": {
-      "title": "必要なものすべて、余分なものなし",
-      "subtitle": "デイリーダイジェストから無料で始めましょう。完全なアジャイルオーケストレーションが必要になったらアップグレード。",
+      "badge": "得られるもの",
+      "title": "すべてのツールを一か所で確認",
+      "subtitle": "小さなチームに必要なすべて、エンタープライズソフトウェアの負担なし。",
       "seeAllFeatures": "すべての機能を見る",
+      "card1Title": "AI デイリーダイジェスト",
+      "card1Desc": "コミット、タスク更新、ブロッカー、AI推奨を含む朝のメール。ログイン不要。",
+      "card2Title": "ネイティブ PM ボード",
+      "card2Desc": "組み込みのカンバン、スプリント、バックログ。Jiraを学ばずにスプレッドシートを卒業。",
+      "card3Title": "AI コパイロット",
+      "card3Desc": "スプリント計画、テストシナリオ生成、ブロッカー検出、すべてAI駆動。",
+      "card4Title": "チームハブ",
+      "card4Desc": "リアルタイムワークスペースチャットとタスクレベルのディスカッション。会話を仕事が行われる場所に。",
       "freeIncluded": "すべての人に含まれます",
       "freeTitle": "あなたのデイリーダイジェスト",
       "freeDescription": "チームの進捗状況を把握するために必要なすべての情報を毎日メールで受け取ります。",
       "proTitle": "完全なアジャイルプラットフォーム",
       "proDescription": "AI駆動のスプリントセレモニー、エピックトラッキング、チームコラボレーションの準備ができたらアップグレード。",
       "betaFree": "すべて無料",
+      "nativeBoard": "Native PM Board",
+      "nativeBoardDesc": "Built-in Kanban, Sprints, and Backlog - no external tools needed",
+      "aiCopilot": "AI Co-Pilot",
+      "aiCopilotDesc": "User story generation, point estimation, blocker detection, and sprint forecasting",
+      "epicManagement": "エピック管理",
+      "epicManagementDesc": "ROIトラッキングとマイルストーン監視",
+      "googleCalendar": "Google Calendar Sync",
+      "googleCalendarDesc": "Automatically sync sprint ceremonies to your Google Calendar",
+      "stakeholderPortal": "Stakeholder Portal",
+      "stakeholderPortalDesc": "Executive digests, approval workflows, and customisable dashboards",
+      "crossToolIntel": "Cross-Tool Intelligence",
+      "crossToolIntelDesc": "AI context across Jira, GitHub, Slack, and Outlook simultaneously",
+      "sprintHighlights": "スプリントインサイト",
+      "sprintHighlightsDesc": "ベロシティトレンドと進捗の可視化",
+      "multiLanguage": "9-Language Support",
+      "multiLanguageDesc": "Full localisation in English, French, German, Spanish, and more",
+      "teamCollaboration": "チームコラボレーション",
+      "teamCollaborationDesc": "リアルタイムプレゼンスとアクティビティフィード",
+      "testScenarios": "AI Test Scenarios",
+      "testScenariosDesc": "Auto-generate QA test cases from user stories and acceptance criteria",
+      "meetingNotes": "Meeting Transcription",
+      "meetingNotesDesc": "Extract summaries, decisions, and action items from meeting notes",
+      "resourceForecast": "Resource Forecasting",
+      "resourceForecastDesc": "AI-predicted capacity, velocity trends, and staffing recommendations",
+      "smartNudges": "Smart Nudges",
+      "smartNudgesDesc": "Proactive alerts for stale items, blocked tasks, and overdue actions",
       "dailyDigest": "デイリーダイジェスト",
       "dailyDigestDesc": "AIがキュレートしたチームアップデートが毎朝受信箱に届きます",
       "githubActivity": "GitHub同期",
       "githubActivityDesc": "自動コミットサマリーとPRトラッキング",
-      "sprintHighlights": "スプリントインサイト",
-      "sprintHighlightsDesc": "ベロシティトレンドと進捗の可視化",
       "basicAI": "基本AIインサイト",
       "basicAIDesc": "スマートなサマリーと推奨事項",
       "sprintCeremonies": "セレモニー",
       "sprintCeremoniesDesc": "スタンドアップ、計画、レビュー、レトロの自動化",
-      "epicManagement": "エピック管理",
-      "epicManagementDesc": "ROIトラッキングとマイルストーン監視",
-      "teamCollaboration": "チームコラボレーション",
-      "teamCollaborationDesc": "リアルタイムプレゼンスとアクティビティフィード",
       "aiSprintPlanning": "AIスプリントプランニング",
       "aiSprintPlanningDesc": "バックログ分析とスプリント推奨"
-    },
-    "proof": {
-      "setupTime": "2分でセットアップ",
-      "title": "ゼロからインサイトへ",
-      "subtitle": "複雑な設定不要。毎日のログイン不要。",
-      "stepConnect": "接続",
-      "stepConnectDesc": "GitHubまたはJIRAをワンクリックでリンク",
-      "stepConfigure": "設定",
-      "stepConfigureDesc": "ダイジェストの頻度と設定を選択",
-      "stepReceive": "受信",
-      "stepReceiveDesc": "毎日AIサマリーを受信箱で受け取る",
-      "getStarted": "無料で始める",
-      "watchDemo": "デモを見る",
-      "emailTitle": "あなたのデイリーダイジェスト",
-      "emailFrom": "SAAIより • 本日午前9:00",
-      "commitsMerged": "12コミットがマージされました",
-      "commitsDesc": "認証リファクタリング、API最適化、バグ修正...",
-      "tasksCompleted": "8タスク完了",
-      "tasksDesc": "スプリントベロシティが先週より15%向上",
-      "aiSummaryLabel": "AIサマリー",
-      "aiSummaryText": "認証モジュールで素晴らしい進捗。金曜日のデモの前にAPIレート制限を優先することを検討してください。"
-    },
-    "philosophy": {
-      "title": "私たちの哲学",
-      "subtitle": "最高のツールは、本当の課題を理解することから生まれると信じています。SAAIは、チームと一緒に働き、うまくいかないセレモニーの混乱を経験し、人々が最高の仕事をするために何が本当に役立つかを見てきた人によって構築されました。",
-      "humanFirst": "人間第一",
-      "humanFirstDesc": "抽象的な理論ではなく、チームとの実際の経験から構築。すべての機能は、私たちが実際に直面した問題を解決します。",
-      "activeIntelligence": "アクティブインテリジェンス",
-      "activeIntelligenceDesc": "人工的ではなく、能動的にインテリジェント。私たちのAIはアジャイルパターンから学習し、一般的な回答ではなく、本当に役立つガイダンスを提供します。",
-      "teamsOverTools": "ツールよりチーム",
-      "teamsOverToolsDesc": "ツールは人に仕えるべきで、その逆ではありません。私たちは摩擦を減らすことに焦点を当て、あなたが素晴らしいものを作ることに集中できるようにします。",
-      "honestLimits": "限界について正直",
-      "honestLimitsDesc": "私たちはこの分野では若いですが、多くを学びました。何がうまくいき、何をまだ改善しているかについて、常に透明であり続けます。",
-      "quote": "すべての機能は、実際の問題を解決したから存在します。印象づけるためだけに追加されたものはありません。"
     },
     "cta": {
       "title": "よりスマートに働く準備はできましたか？",
       "description": "必要なものから始めましょう。準備ができたら成長しましょう。プレッシャーなし、トリックなし。",
       "getFree": "無料で試す",
-      "explorePro": "Pro機能を見る"
+      "explorePro": "Pro機能を見る",
+      "encrypted": "暗号化済み",
+      "gdprReady": "GDPR 対応",
+      "enterpriseSecurity": "エンタープライズ級セキュリティ"
+    },
+    "features": {
+      "title": "Everything You Need for Agile Teams",
+      "subtitle": "Streamline your agile workflow from planning to delivery",
+      "aiPlanning": "AI-Powered Planning",
+      "sprintAssistant": "Sprint Planning Assistant",
+      "sprintAssistantDesc": "AI-powered sprint planning with velocity analysis and recommendations",
+      "backlogAnalysis": "Smart Backlog Analysis",
+      "backlogAnalysisDesc": "AI spots stale items and suggests priorities",
+      "epicProject": "Epic & Project Management",
+      "epicTracking": "Epic Tracking",
+      "epicTrackingDesc": "Manage epics with dependency mapping and progress visualization",
+      "commandCentre": "Project Command Centre",
+      "commandCentreDesc": "Centralized view of all projects and team collaboration",
+      "ceremonies": "Agile Ceremonies",
+      "retroManagement": "Retrospective Management",
+      "retroManagementDesc": "AI-generated insights from team feedback and retrospective data",
+      "dailyStandups": "Daily Standups",
+      "dailyStandupsDesc": "Streamlined standups with automated summaries",
+      "integrationWorkflows": "Integration & Workflows",
+      "seamlessIntegrations": "Seamless Integrations",
+      "seamlessIntegrationsDesc": "Connect JIRA, GitHub, and Microsoft 365 in minutes",
+      "teamAnalytics": "Team Analytics",
+      "teamAnalyticsDesc": "Track performance and identify bottlenecks"
     },
     "pricing": {
       "badge": "料金",
@@ -225,6 +523,45 @@
       "readOnly": "読み取り専用アクセス",
       "disconnectAnytime": "いつでも切断可能"
     },
+    "proof": {
+      "setupTime": "2分でセットアップ",
+      "title": "ゼロからインサイトへ",
+      "subtitle": "複雑な設定不要。毎日のログイン不要。",
+      "stepConnect": "接続",
+      "stepConnectDesc": "GitHubまたはJIRAをワンクリックでリンク",
+      "stepConfigure": "設定",
+      "stepConfigureDesc": "ダイジェストの頻度と設定を選択",
+      "stepReceive": "受信",
+      "stepReceiveDesc": "毎日AIサマリーを受信箱で受け取る",
+      "getStarted": "無料で始める",
+      "watchDemo": "デモを見る",
+      "emailTitle": "あなたのデイリーダイジェスト",
+      "emailFrom": "SAAIより • 本日午前9:00",
+      "commitsMerged": "12コミットがマージされました",
+      "commitsDesc": "認証リファクタリング、API最適化、バグ修正...",
+      "tasksCompleted": "8タスク完了",
+      "tasksDesc": "スプリントベロシティが先週より15%向上",
+      "aiSummaryLabel": "AIサマリー",
+      "aiSummaryText": "認証モジュールで素晴らしい進捗。金曜日のデモの前にAPIレート制限を優先することを検討してください。",
+      "badge": "How It Works",
+      "step1": "Connect your GitHub repository or JIRA board",
+      "step2": "Choose your digest frequency and preferences",
+      "step3": "Receive daily emails with your team's progress",
+      "thatsIt": "That's it. No daily logins needed."
+    },
+    "philosophy": {
+      "title": "私たちの哲学",
+      "subtitle": "最高のツールは、本当の課題を理解することから生まれると信じています。SAAIは、チームと一緒に働き、うまくいかないセレモニーの混乱を経験し、人々が最高の仕事をするために何が本当に役立つかを見てきた人によって構築されました。",
+      "humanFirst": "人間第一",
+      "humanFirstDesc": "抽象的な理論ではなく、チームとの実際の経験から構築。すべての機能は、私たちが実際に直面した問題を解決します。",
+      "activeIntelligence": "アクティブインテリジェンス",
+      "activeIntelligenceDesc": "人工的ではなく、能動的にインテリジェント。私たちのAIはアジャイルパターンから学習し、一般的な回答ではなく、本当に役立つガイダンスを提供します。",
+      "teamsOverTools": "ツールよりチーム",
+      "teamsOverToolsDesc": "ツールは人に仕えるべきで、その逆ではありません。私たちは摩擦を減らすことに焦点を当て、あなたが素晴らしいものを作ることに集中できるようにします。",
+      "honestLimits": "限界について正直",
+      "honestLimitsDesc": "私たちはこの分野では若いですが、多くを学びました。何がうまくいき、何をまだ改善しているかについて、常に透明であり続けます。",
+      "quote": "すべての機能は、実際の問題を解決したから存在します。印象づけるためだけに追加されたものはありません。"
+    },
     "commandCentre": {
       "badge": "新機能",
       "title": "プロジェクトコマンドセンター",
@@ -237,6 +574,72 @@
       "teamDesc": "チームメンバーと複数のプロジェクトを管理し、セレモニー間でシームレスにコラボレート",
       "accessCta": "コマンドセンターにアクセス",
       "kanbanDesc": "カンバンボード • タスク管理 • 進捗追跡"
+    },
+    "aiAssistant": {
+      "badge": "AI-Powered Assistant",
+      "title": "Meet Omair - Your AI Project Guide",
+      "subtitle": "Get instant expert guidance on agile methodologies, sprint planning, and team collaboration.",
+      "freeQuestions": "Try it now with 3 free questions!",
+      "agileExpertise": "Agile Expertise",
+      "agileExpertiseDesc": "Deep knowledge of Scrum, Kanban, SAFe, and best practices",
+      "instantAnswers": "Instant Answers",
+      "instantAnswersDesc": "Get immediate help with sprint planning, ceremonies, and workflows",
+      "quickResponses": "Quick Responses",
+      "quickResponsesDesc": "Get fast answers to your agile questions during the demo",
+      "smartSecure": "Smart & Secure",
+      "smartSecureDesc": "Powered by advanced AI with enterprise-grade security",
+      "tryNow": "Try Omair Now",
+      "noSignup": "No signup required • 3 free questions",
+      "quickStart": "Quick Start Questions:",
+      "startDemo": "Start Free Demo",
+      "question1": "How do I estimate story points effectively?",
+      "question2": "What's the difference between Scrum and Kanban?",
+      "question3": "Help me plan my next sprint retrospective",
+      "question4": "How do I improve team velocity?",
+      "helpWith": "What Omair Can Help You With:",
+      "sprintGuidance": "Sprint Planning Guidance",
+      "sprintGuidanceDesc": "Learn about story point estimation, velocity concepts, and capacity planning strategies",
+      "agileAdvice": "Agile Methodology Advice",
+      "agileAdviceDesc": "Get tips on standups, retrospectives, reviews, and refinement sessions",
+      "teamPractices": "Team Best Practices",
+      "teamPracticesDesc": "Advice on collaboration, conflict resolution, and productivity improvement",
+      "platformNav": "Platform Navigation",
+      "platformNavDesc": "Help understanding SAAI features and how to use integrations",
+      "unlockUnlimited": "Unlock Unlimited Access",
+      "unlockDesc": "Connect with Omair anytime and get answers without limits.",
+      "getStartedFree": "Get Started Free",
+      "freeUnlimited": "Get Started Free. Go Unlimited Anytime."
+    },
+    "feedback": {
+      "title": "Real Feedback from Real Users",
+      "subtitle": "We believe in transparency and continuous improvement. Share your experience, positive or negative, and help us build a better product together. All approved feedback is displayed publicly.",
+      "communityTitle": "What Our Community Says",
+      "communitySubtitle": "Every voice matters. We learn from every piece of feedback. Share your experience above, and see what others are saying below."
+    },
+    "socialProof": {
+      "valueStatement": "Streamline Your Agile Ceremonies",
+      "valueDescription": "AI-assisted sprint planning, daily digests, and ceremony automation - so you can focus on building great products.",
+      "gdprReady": "GDPR Ready",
+      "dataEncrypted": "Data Encrypted",
+      "openFeedback": "Open Feedback",
+      "freeBeta": "Free to Use"
+    },
+    "quickValue": {
+      "title": "Why Teams Choose SAAI",
+      "subtitle": "Everything you need to run agile at scale, powered by AI",
+      "benefit1": "Set up your first project in minutes",
+      "benefit2": "AI assists with sprint planning from your backlog",
+      "benefit3": "Integrate with JIRA, GitHub & Microsoft 365",
+      "benefit4": "Get actionable insights from your retrospectives",
+      "benefit5": "Streamline ceremony preparation and admin work",
+      "benefit6": "Collaborate effectively with your entire team",
+      "cta": "Start Free - No Credit Card",
+      "quickSetup": "Quick Setup",
+      "quickSetupDesc": "Get started in minutes with AI-powered sprint planning",
+      "aiPowered": "AI-Powered",
+      "aiPoweredDesc": "Intelligent insights for better team performance",
+      "timeSaver": "Time Saver",
+      "timeSaverDesc": "Streamline ceremony prep and admin work"
     },
     "liveStats": {
       "title": "リアルタイムプラットフォーム活動",
@@ -257,6 +660,14 @@
         "standupSummaries": "スタンドアップ要約",
         "blockerDetection": "ブロッカー検出",
         "velocityInsights": "ベロシティインサイト"
+      },
+      "conversations": {
+        "q1": "What blockers does my team have this week?",
+        "a1": "Based on your standup data: 3 blockers identified. Sarah is waiting on API docs, Mike needs design approval, and the deployment pipeline has a failing test. Want me to prioritize these?",
+        "q2": "Help me plan next sprint",
+        "a2": "Looking at your velocity (24 pts/sprint avg) and backlog: I recommend pulling 8 stories totaling 26 points. This includes 2 high-priority bug fixes and 6 feature items. Should I draft the sprint goal?",
+        "q3": "Summarize yesterday's standup",
+        "a3": "5 team members reported. Key updates: Frontend auth flow complete, backend API 80% done. 1 new blocker (database migration). Overall team velocity on track for sprint commitment."
       }
     },
     "trustSignals": {
@@ -337,13 +748,6 @@
     "welcomeBack": "おかえりなさい",
     "createAccount": "アカウント作成"
   },
-  "dashboard": {
-    "welcome": "ようこそ",
-    "overview": "概要",
-    "recentActivity": "最近のアクティビティ",
-    "quickActions": "クイックアクション",
-    "statistics": "統計"
-  },
   "projects": {
     "title": "プロジェクト",
     "createProject": "プロジェクト作成",
@@ -374,54 +778,108 @@
         "title": "分散したツール、ゼロの可視性",
         "description": "Jira、Trello、スプレッドシート、Slackの間を行き来するのは時間の無駄でコンテキストを失います。SAAIはネイティブなエコシステムを提供します。",
         "features": {
-          "nativeBoard": { "title": "ネイティブカンバン＆スプリントボード", "description": "ドラッグ＆ドロップ、WIP制限、スイムレーンを備えた組み込みカンバン、スプリント、バックログボード - 外部ツール不要。" },
-          "epicLifecycle": { "title": "エピックライフサイクル管理", "description": "ガントチャート、マイルストーン、バーンダウン分析、ROIダッシュボード、クロージャーワークフローを備えた完全なエピック追跡。" },
-          "commandCentre": { "title": "プロジェクトコマンドセンター", "description": "リアルタイムタスクステージ、リスクレジスター、教訓、AI駆動のプロジェクトインサイトを備えた統合ダッシュボード。" }
+          "nativeBoard": {
+            "title": "ネイティブカンバン＆スプリントボード",
+            "description": "ドラッグ＆ドロップ、WIP制限、スイムレーンを備えた組み込みカンバン、スプリント、バックログボード - 外部ツール不要。"
+          },
+          "epicLifecycle": {
+            "title": "エピックライフサイクル管理",
+            "description": "ガントチャート、マイルストーン、バーンダウン分析、ROIダッシュボード、クロージャーワークフローを備えた完全なエピック追跡。"
+          },
+          "commandCentre": {
+            "title": "プロジェクトコマンドセンター",
+            "description": "リアルタイムタスクステージ、リスクレジスター、教訓、AI駆動のプロジェクトインサイトを備えた統合ダッシュボード。"
+          }
         }
       },
       "meetingChaos": {
         "title": "ミーティングの混乱と無駄なセレモニー",
         "description": "長引くスタンドアップ、成果のないレトロ、準備のないスプリントレビュー。SAAIが雑務を自動化します。",
         "features": {
-          "aiStandup": { "title": "AIスタンドアップサマリー", "description": "非同期アップデートからブロッカー、進捗、アクションアイテムを自動的にキャプチャするGemini搭載のサマリー。" },
-          "ceremonies": { "title": "スプリントセレモニースイート", "description": "スプリントプランニング、レビューコーディネーション、レトロスペクティブインサイトの専用ツール - すべてAI支援。" },
-          "googleCalendar": { "title": "Googleカレンダー同期", "description": "参加者管理とスマートリマインダーでセレモニースケジュールを自動的にGoogleカレンダーにプッシュ。" }
+          "aiStandup": {
+            "title": "AIスタンドアップサマリー",
+            "description": "非同期アップデートからブロッカー、進捗、アクションアイテムを自動的にキャプチャするGemini搭載のサマリー。"
+          },
+          "ceremonies": {
+            "title": "スプリントセレモニースイート",
+            "description": "スプリントプランニング、レビューコーディネーション、レトロスペクティブインサイトの専用ツール - すべてAI支援。"
+          },
+          "googleCalendar": {
+            "title": "Googleカレンダー同期",
+            "description": "参加者管理とスマートリマインダーでセレモニースケジュールを自動的にGoogleカレンダーにプッシュ。"
+          }
         }
       },
       "manualReporting": {
         "title": "手動レポートとステータス更新",
         "description": "送信時には古くなっているレポートの作成に何時間も費やす。SAAIは数秒で生成します。",
         "features": {
-          "executiveDigest": { "title": "エグゼクティブダイジェスト", "description": "スプリントの健康状態、リスク、成果、推奨事項をまとめたAI生成の日次・週次ダイジェスト - 自動配信。" },
-          "advancedAnalytics": { "title": "高度な分析", "description": "ベロシティトレンド、コミットメント達成チャート、ワークフロー実行メトリクス、フロー分析 - すべて自動計算。" },
-          "retroInsights": { "title": "レトロスペクティブインサイト", "description": "AIがレトロフィードバックを分析してパターンを発見し、アクションアイテムを生成し、改善を追跡します。" }
+          "executiveDigest": {
+            "title": "エグゼクティブダイジェスト",
+            "description": "スプリントの健康状態、リスク、成果、推奨事項をまとめたAI生成の日次・週次ダイジェスト - 自動配信。"
+          },
+          "advancedAnalytics": {
+            "title": "高度な分析",
+            "description": "ベロシティトレンド、コミットメント達成チャート、ワークフロー実行メトリクス、フロー分析 - すべて自動計算。"
+          },
+          "retroInsights": {
+            "title": "レトロスペクティブインサイト",
+            "description": "AIがレトロフィードバックを分析してパターンを発見し、アクションアイテムを生成し、改善を追跡します。"
+          }
         }
       },
       "aiBoltOn": {
         "title": "AIは後付け、組み込みではない",
         "description": "ほとんどのPMツールはAIを後付けとして扱います。SAAIのAIコパイロットはすべてのワークフローに組み込まれています。",
         "features": {
-          "aiCopilot": { "title": "AIコパイロット（Gemini搭載）", "description": "ユーザーストーリー生成、ポイント推定、ブロッカー検出、スプリント予測 - ボード内で直接。" },
-          "multiAgent": { "title": "マルチエージェントAI討論", "description": "複数のAIエージェントがスプリントスコープ、技術的決定、リスク軽減のトレードオフを議論し、コンセンサスに達します。" },
-          "backlogHealth": { "title": "バックログ健康分析", "description": "AIがバックログをスキャンし、古いアイテム、不足している受け入れ基準、優先順位のずれを検出します。" }
+          "aiCopilot": {
+            "title": "AIコパイロット（Gemini搭載）",
+            "description": "ユーザーストーリー生成、ポイント推定、ブロッカー検出、スプリント予測 - ボード内で直接。"
+          },
+          "multiAgent": {
+            "title": "マルチエージェントAI討論",
+            "description": "複数のAIエージェントがスプリントスコープ、技術的決定、リスク軽減のトレードオフを議論し、コンセンサスに達します。"
+          },
+          "backlogHealth": {
+            "title": "バックログ健康分析",
+            "description": "AIがバックログをスキャンし、古いアイテム、不足している受け入れ基準、優先順位のずれを検出します。"
+          }
         }
       },
       "stakeholderComms": {
         "title": "ステークホルダーは蚊帳の外",
         "description": "経営陣が「進捗は？」と聞き、チームがプレゼン資料を慌てて作る。SAAIが全員に自動で情報を提供します。",
         "features": {
-          "portal": { "title": "ステークホルダーポータル", "description": "進捗ダッシュボード、承認ワークフロー、ダイジェスト購読を備えたステークホルダー専用ビュー。" },
-          "approvals": { "title": "承認ワークフロー", "description": "優先度レベル、期限、メール通知を備えた構造化された承認リクエスト。" },
-          "teamCollab": { "title": "チームコラボレーション", "description": "リアルタイムプレゼンスインジケーター、チームメンバー管理、全プロジェクトワークスペースでのロールベースアクセス。" }
+          "portal": {
+            "title": "ステークホルダーポータル",
+            "description": "進捗ダッシュボード、承認ワークフロー、ダイジェスト購読を備えたステークホルダー専用ビュー。"
+          },
+          "approvals": {
+            "title": "承認ワークフロー",
+            "description": "優先度レベル、期限、メール通知を備えた構造化された承認リクエスト。"
+          },
+          "teamCollab": {
+            "title": "チームコラボレーション",
+            "description": "リアルタイムプレゼンスインジケーター、チームメンバー管理、全プロジェクトワークスペースでのロールベースアクセス。"
+          }
         }
       },
       "scalingAgile": {
         "title": "アジャイルのスケーリングは困難",
         "description": "1チームからエンタープライズプログラムへのスケーリングには付箋以上のものが必要です。SAAIはSAFeをネイティブでサポートします。",
         "features": {
-          "safe": { "title": "SAFeワークフロー", "description": "バリューストリーム、アジャイルリリーストレイン、プログラムインクリメントプランニング - エンタープライズスケールのアジリティのために構築。" },
-          "i18n": { "title": "9言語サポート", "description": "英語、フランス語、ドイツ語、スペイン語、ポルトガル語、アラビア語、日本語、韓国語、中国語の完全なローカリゼーション。" },
-          "security": { "title": "エンタープライズグレードセキュリティ", "description": "196+のRLSポリシー、AES-256トークン暗号化、GDPR準拠、包括的な監査ログ。" }
+          "safe": {
+            "title": "SAFeワークフロー",
+            "description": "バリューストリーム、アジャイルリリーストレイン、プログラムインクリメントプランニング - エンタープライズスケールのアジリティのために構築。"
+          },
+          "i18n": {
+            "title": "9言語サポート",
+            "description": "英語、フランス語、ドイツ語、スペイン語、ポルトガル語、アラビア語、日本語、韓国語、中国語の完全なローカリゼーション。"
+          },
+          "security": {
+            "title": "エンタープライズグレードセキュリティ",
+            "description": "196+のRLSポリシー、AES-256トークン暗号化、GDPR準拠、包括的な監査ログ。"
+          }
         }
       }
     },
