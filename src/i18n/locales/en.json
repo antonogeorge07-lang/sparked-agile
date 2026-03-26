@@ -392,7 +392,10 @@
       "title": "Ready to Work Smarter?",
       "description": "Start with what you need. Grow when you're ready. No pressure, no tricks.",
       "getFree": "Try It Free",
-      "explorePro": "See Pro Features"
+      "explorePro": "See Pro Features",
+      "encrypted": "Encrypted",
+      "gdprReady": "GDPR Ready",
+      "enterpriseSecurity": "Enterprise-grade Security"
     },
     "features": {
       "title": "Everything You Need for Agile Teams",
