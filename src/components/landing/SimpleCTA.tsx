@@ -58,21 +58,21 @@ export function SimpleCTA() {
               className="gap-1.5 px-3 py-1.5 text-xs border-border/50 text-muted-foreground"
             >
               <Lock className="h-3 w-3" />
-              Encrypted
+              {t("landing.cta.encrypted")}
             </Badge>
             <Badge
               variant="outline"
               className="gap-1.5 px-3 py-1.5 text-xs border-border/50 text-muted-foreground"
             >
               <Eye className="h-3 w-3" />
-              GDPR Ready
+              {t("landing.cta.gdprReady")}
             </Badge>
             <Badge
               variant="outline"
               className="gap-1.5 px-3 py-1.5 text-xs border-border/50 text-muted-foreground"
             >
               <Shield className="h-3 w-3" />
-              Enterprise-grade Security
+              {t("landing.cta.enterpriseSecurity")}
             </Badge>
           </div>
         </div>
