@@ -574,7 +574,7 @@ export default function Auth() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="signin-password">Password</Label>
+                      <Label htmlFor="signin-password">{t('pages.auth.password')}</Label>
                       <button
                         type="button"
                         onClick={() => setShowForgotPassword(true)}
