@@ -473,7 +473,7 @@ export default function Auth() {
                 setActiveTab("signin");
               }}
             >
-              Sign In
+              {t('pages.auth.signIn')}
             </AlertDialogAction>
             <AlertDialogAction
               onClick={() => {
