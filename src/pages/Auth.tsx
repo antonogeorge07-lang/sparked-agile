@@ -402,7 +402,7 @@ export default function Auth() {
           <CardContent>
             <form onSubmit={handleUpdatePassword} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
+                <Label htmlFor="new-password">{t('pages.auth.newPassword')}</Label>
                 <Input
                   id="new-password"
                   type="password"
