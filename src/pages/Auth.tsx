@@ -482,7 +482,7 @@ export default function Auth() {
                 setShowForgotPassword(true);
               }}
             >
-              Recover Password
+              {t('pages.auth.recoverPassword')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
