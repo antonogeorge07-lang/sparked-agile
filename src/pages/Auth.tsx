@@ -463,7 +463,7 @@ export default function Auth() {
             <AlertDialogDescription>
               {t('pages.auth.accountExistsDesc')}
             </AlertDialogDescription>
-            </AlertDialogDescription>
+          </AlertDialogHeader>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
