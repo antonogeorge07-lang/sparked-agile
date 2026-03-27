@@ -752,7 +752,7 @@ export default function Auth() {
               onClick={handleGuestMode}
             >
               <Eye className="w-4 h-4" />
-              Continue as Guest (Try Before Signing Up)
+              {t('pages.auth.guestTryBefore')}
             </Button>
           </div>
 
