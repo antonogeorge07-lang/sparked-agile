@@ -509,7 +509,7 @@ export default function Auth() {
               {showForgotPassword ? (
                 <form onSubmit={handleForgotPassword} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="reset-email">Email</Label>
+                    <Label htmlFor="reset-email">{t('pages.auth.email')}</Label>
                     <Input
                       id="reset-email"
                       type="email"
