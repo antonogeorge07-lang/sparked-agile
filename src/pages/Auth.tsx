@@ -555,7 +555,7 @@ export default function Auth() {
                 <form onSubmit={handleSignIn} className="space-y-4">
 
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
+                    <Label htmlFor="signin-email">{t('pages.auth.email')}</Label>
                     <Input
                       id="signin-email"
                       type="email"
