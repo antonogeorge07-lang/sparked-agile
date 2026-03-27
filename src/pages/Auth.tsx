@@ -420,7 +420,7 @@ export default function Auth() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm Password</Label>
+                <Label htmlFor="confirm-password">{t('pages.auth.confirmPassword')}</Label>
                 <Input
                   id="confirm-password"
                   type="password"
