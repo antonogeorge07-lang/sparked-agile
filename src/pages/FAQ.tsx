@@ -10,10 +10,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HelpCircle, Mail, Sparkles, Shield, Brain, Globe } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export default function FAQ() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-background">
@@ -26,9 +28,9 @@ export default function FAQ() {
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <HelpCircle className="h-8 w-8 text-primary" />
             </div>
-            <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+            <h1 className="text-4xl font-bold mb-4">{t("pages.faq.title")}</h1>
             <p className="text-xl text-muted-foreground">
-              Find answers to common questions about SAAI
+              {t("pages.faq.subtitle")}
             </p>
           </div>
 
@@ -39,7 +41,7 @@ export default function FAQ() {
                 <Sparkles className="h-5 w-5 text-primary" />
                 General Questions
               </CardTitle>
-              <CardDescription>Learn about SAAI basics</CardDescription>
+              <CardDescription>{t("pages.faq.learnBasics")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
@@ -87,7 +89,7 @@ export default function FAQ() {
             </CardContent>
           </Card>
 
-          {/* Platform Features */}
+          {/* {t("pages.faq.platformFeatures")} */}
           <Card className="mb-6 border-primary/10 shadow-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -95,7 +97,7 @@ export default function FAQ() {
                 Platform Features
                 <Badge className="bg-tier-free text-white ml-2">Live</Badge>
               </CardTitle>
-              <CardDescription>Current capabilities and architecture</CardDescription>
+              <CardDescription>{t("pages.faq.currentCapabilities")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
@@ -181,7 +183,7 @@ export default function FAQ() {
                 <Shield className="h-5 w-5 text-primary" />
                 Security & Access
               </CardTitle>
-              <CardDescription>Enterprise-grade protection for your data</CardDescription>
+              <CardDescription>{t("pages.faq.enterpriseProtection")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
@@ -236,7 +238,7 @@ export default function FAQ() {
                 <Globe className="h-5 w-5 text-primary" />
                 Pricing & Limits
               </CardTitle>
-              <CardDescription>Understanding current capabilities</CardDescription>
+              <CardDescription>{t("pages.faq.understandingCapabilities")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
@@ -277,7 +279,7 @@ export default function FAQ() {
           {/* Contact Support */}
           <Card className="border-primary/10 shadow-card">
             <CardHeader>
-              <CardTitle>Still have questions?</CardTitle>
+              <CardTitle>{t("pages.faq.stillHaveQuestions")}</CardTitle>
               <CardDescription>
                 Can't find what you're looking for? Get in touch with our support team.
               </CardDescription>
