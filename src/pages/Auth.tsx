@@ -689,7 +689,7 @@ export default function Auth() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">{t('pages.auth.password')}</Label>
                   <Input
                     id="signup-password"
                     type="password"
