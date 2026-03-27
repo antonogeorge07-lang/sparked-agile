@@ -580,7 +580,7 @@ export default function Auth() {
                         onClick={() => setShowForgotPassword(true)}
                         className="text-xs text-primary hover:underline"
                       >
-                        Forgot password?
+                        {t('pages.auth.forgotPassword')}
                       </button>
                     </div>
                     <Input
