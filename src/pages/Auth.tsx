@@ -759,8 +759,7 @@ export default function Auth() {
           <Alert className="mt-4 border-primary/20 bg-primary/5">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs">
-              <strong>Quick Start:</strong> New accounts can immediately access all features. 
-              While waiting, you can explore demo features, review guides, and learn the platform.
+              <strong>{t('pages.auth.quickStart')}:</strong> {t('pages.auth.quickStartDesc')}
             </AlertDescription>
           </Alert>
         </CardContent>
