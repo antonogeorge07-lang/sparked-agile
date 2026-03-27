@@ -643,7 +643,7 @@ export default function Auth() {
                     disabled={isLoading}
                   >
                     <Eye className="w-4 h-4" />
-                    Continue as Guest
+                    {t('pages.auth.continueAsGuest')}
                   </Button>
                 </form>
               )}
