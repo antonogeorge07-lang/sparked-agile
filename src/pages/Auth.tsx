@@ -603,10 +603,10 @@ export default function Auth() {
                     {isLoading ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Signing in...
+                        {t('pages.auth.signingIn')}
                       </>
                     ) : (
-                      "Sign In"
+                      t('pages.auth.signIn')
                     )}
                   </Button>
 
