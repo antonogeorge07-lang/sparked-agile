@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
             <Shield className="w-6 h-6 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold">Privacy Policy</h1>
+            <h1 className="text-4xl font-bold">{t("pages.privacy.title")}</h1>
             <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
           </div>
         </div>

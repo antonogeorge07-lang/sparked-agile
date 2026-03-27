@@ -182,7 +182,7 @@ const TaskManagement = () => {
         <BackButton />
         
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Task Management</h1>
+          <h1 className="text-4xl font-bold mb-2">{t("pages.taskManagement.title")}</h1>
           <p className="text-muted-foreground">
             Manage your JIRA and GitHub tasks from one place
           </p>

@@ -122,7 +122,7 @@ export default function WorkspaceSettings() {
               <Building2 className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Workspace Settings</h1>
+              <h1 className="text-3xl font-bold">{t("pages.workspaceSettings.title")}</h1>
               <p className="text-muted-foreground">
                 Manage your workspace configuration
               </p>

@@ -336,7 +336,7 @@ export default function SecurityIncidents() {
         </div>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Security Incidents</h1>
+            <h1 className="text-4xl font-bold mb-2">{t("pages.securityIncidents.title")}</h1>
             <p className="text-muted-foreground">Monitor and manage security incidents with real-time updates</p>
           </div>
           <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>

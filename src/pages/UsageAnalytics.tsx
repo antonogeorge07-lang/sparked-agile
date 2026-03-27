@@ -150,7 +150,7 @@ export default function UsageAnalytics() {
       <div className="container mx-auto p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Usage Analytics</h1>
+            <h1 className="text-3xl font-bold mb-2">{t("pages.usageAnalytics.title")}</h1>
             <p className="text-muted-foreground">
               Track active users, projects, and AI API usage
             </p>
