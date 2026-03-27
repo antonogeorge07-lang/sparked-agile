@@ -671,7 +671,7 @@ export default function Auth() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t('pages.auth.email')}</Label>
                   <Input
                     id="signup-email"
                     type="email"
