@@ -13,10 +13,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BackButton } from "@/components/BackButton";
+import { useTranslation } from "react-i18next";
 
 const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
 
 export default function SprintReviewCoordinator() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);

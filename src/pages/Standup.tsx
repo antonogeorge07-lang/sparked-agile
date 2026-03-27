@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface StandupUpdate {
   id?: string;
@@ -48,6 +49,7 @@ export default function Standup() {
   const [currentTab, setCurrentTab] = useState("my-update");
   const [userProfile, setUserProfile] = useState<any>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const { data: integrations } = useProjectIntegrations(selectedProject);
 

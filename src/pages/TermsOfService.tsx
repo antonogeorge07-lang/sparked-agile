@@ -2,8 +2,10 @@ import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function TermsOfService() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
@@ -15,7 +17,7 @@ export default function TermsOfService() {
             <FileText className="w-6 h-6 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold">Terms of Service</h1>
+            <h1 className="text-4xl font-bold">{t("pages.terms.title")}</h1>
             <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
           </div>
         </div>

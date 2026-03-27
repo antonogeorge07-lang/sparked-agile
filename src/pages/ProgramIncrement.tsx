@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
+import { useTranslation } from "react-i18next";
 
 export default function ProgramIncrement() {
   const [arts, setArts] = useState<any[]>([]);
@@ -24,6 +25,7 @@ export default function ProgramIncrement() {
   const [endDate, setEndDate] = useState("");
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(currentProjectId);
 

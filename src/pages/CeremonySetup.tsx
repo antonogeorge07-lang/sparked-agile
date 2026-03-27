@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Calendar, Clock, Users, CheckCircle, Link as LinkIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "@/components/BackButton";
+import { useTranslation } from "react-i18next";
 
 interface CeremonyTemplate {
   id: string;
@@ -67,6 +68,7 @@ const ceremonyTemplates: CeremonyTemplate[] = [
 
 export default function CeremonySetup() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isConnected, setIsConnected] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);

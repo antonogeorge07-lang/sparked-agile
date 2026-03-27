@@ -1,6 +1,7 @@
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
   GitBranch, Target, Briefcase, Sparkles, Presentation, ListFilter,
@@ -59,6 +60,7 @@ const gettingStarted = [
 
 export default function QuickStart() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <DashboardLayout>
@@ -66,18 +68,18 @@ export default function QuickStart() {
         {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Welcome to SAAI
+            {t("pages.quickStart.title")}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Your AI-powered platform for Scaled Agile delivery. Let's get you started.
+            {t("pages.quickStart.subtitle")}
           </p>
         </div>
 
         {/* Getting Started Steps */}
         <Card className="mb-12">
           <CardHeader>
-            <CardTitle className="text-2xl">🚀 Getting Started</CardTitle>
-            <CardDescription>Follow these steps to set up your workspace</CardDescription>
+            <CardTitle className="text-2xl">{t("pages.quickStart.gettingStarted")}</CardTitle>
+            <CardDescription>{t("pages.quickStart.followSteps")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -99,7 +101,7 @@ export default function QuickStart() {
 
         {/* Feature Categories */}
         <div className="space-y-8">
-          <h2 className="text-3xl font-bold">Platform Features</h2>
+          <h2 className="text-3xl font-bold">{t("pages.quickStart.platformFeatures")}</h2>
           
           {features.map((category) => (
             <Card key={category.category}>
@@ -142,8 +144,8 @@ export default function QuickStart() {
         {/* Quick Actions */}
         <Card className="mt-12 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Jump right into the most common tasks</CardDescription>
+            <CardTitle>{t("pages.quickStart.quickActions")}</CardTitle>
+            <CardDescription>{t("pages.quickStart.jumpRight")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-3">

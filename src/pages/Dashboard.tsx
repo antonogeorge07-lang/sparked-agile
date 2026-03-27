@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -62,6 +63,7 @@ export default function Dashboard() {
   const { activeUsers } = useRealtimePresence('/dashboard');
   const { data: integrations } = useProjectIntegrations(selectedProject || undefined);
   const { isGuestMode } = useGuestMode();
+  const { t } = useTranslation();
 
   // Use sample data if no integrations or in guest mode
   const showSampleData = isGuestMode || (!hasJiraIntegration && !hasGithubIntegration);
@@ -200,7 +202,7 @@ export default function Dashboard() {
       
       {isLoadingProjects ? (
         <div className="container mx-auto px-4 py-8">
-          <LoadingState message="Loading dashboard..." size="lg" />
+          <LoadingState message="{t("pages.dashboard.loadingDashboard")}" size="lg" />
         </div>
       ) : (
         <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
@@ -226,8 +228,8 @@ export default function Dashboard() {
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
               </div>
               <div className="min-w-0 flex-1">
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold truncate">Sprint Health Dashboard</h1>
-                <p className="text-xs sm:text-sm md:text-base text-muted-foreground truncate">Monitor performance with integrations</p>
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold truncate">{t("pages.dashboard.title")}</h1>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground truncate">{t("pages.dashboard.subtitle")}</p>
               </div>
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
@@ -276,7 +278,7 @@ export default function Dashboard() {
             <Card className="shadow-card">
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Current Velocity</CardTitle>
+                  <CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.dashboard.currentVelocity")}</CardTitle>
                   <HelpTooltip content="Story points completed in the current sprint, showing team productivity." />
                 </div>
               </CardHeader>
@@ -284,12 +286,12 @@ export default function Dashboard() {
                 {showSampleData ? (
                   <>
                     <div className="text-3xl font-bold text-primary">{sampleCurrentVelocity}</div>
-                    <p className="text-sm text-success mt-1">+12% from last sprint</p>
+                    <p className="text-sm text-success mt-1">{t("pages.dashboard.fromLastSprint")}</p>
                   </>
                 ) : (
                   <>
                     <div className="text-3xl font-bold text-muted-foreground">--</div>
-                    <p className="text-sm text-muted-foreground mt-1">Connect integrations to see data</p>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.dashboard.connectToSee")}</p>
                   </>
                 )}
               </CardContent>
@@ -297,13 +299,13 @@ export default function Dashboard() {
 
             <Card className="shadow-card">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Sprint Progress</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.dashboard.sprintProgress")}</CardTitle>
               </CardHeader>
               <CardContent>
                 {showSampleData ? (
                   <>
                     <div className="text-3xl font-bold text-primary">{sampleSprintProgress}%</div>
-                    <p className="text-sm text-muted-foreground mt-1">On track for sprint goal</p>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.dashboard.onTrack")}</p>
                   </>
                 ) : (
                   <>
@@ -316,13 +318,13 @@ export default function Dashboard() {
 
             <Card className="shadow-card">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Days Remaining</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.dashboard.daysRemaining")}</CardTitle>
               </CardHeader>
               <CardContent>
                 {showSampleData ? (
                   <>
                     <div className="text-3xl font-bold text-primary">{sampleDaysRemaining}</div>
-                    <p className="text-sm text-muted-foreground mt-1">Until sprint end</p>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.dashboard.untilSprintEnd")}</p>
                   </>
                 ) : (
                   <>
@@ -338,10 +340,10 @@ export default function Dashboard() {
             <Card className="shadow-card">
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <CardTitle>Velocity Trend</CardTitle>
+                  <CardTitle>{t("pages.dashboard.velocityTrend")}</CardTitle>
                   <HelpTooltip content="Track team velocity over the last 3 sprints to identify patterns and improve planning." />
                 </div>
-                <CardDescription>Last 3 sprints performance</CardDescription>
+                <CardDescription>{t("pages.dashboard.last3Sprints")}</CardDescription>
               </CardHeader>
               <CardContent>
                 {velocityData.length > 0 ? (
@@ -364,8 +366,8 @@ export default function Dashboard() {
                 ) : (
                   <div className="text-center py-12 text-muted-foreground">
                     <TrendingUp className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                    <p>No velocity data available</p>
-                    <p className="text-sm mt-1">Connect integrations to track sprint velocity</p>
+                    <p>{t("pages.dashboard.noVelocityData")}</p>
+                    <p className="text-sm mt-1">{t("pages.dashboard.connectToTrack")}</p>
                   </div>
                 )}
               </CardContent>
@@ -382,7 +384,7 @@ export default function Dashboard() {
                       </CardTitle>
                       <HelpTooltip content="Track and manage blocking issues to keep sprints on track." />
                     </div>
-                    <CardDescription>Issues requiring attention</CardDescription>
+                    <CardDescription>{t("pages.dashboard.issuesRequiring")}</CardDescription>
                   </div>
                   <Button
                     variant="outline"
@@ -453,7 +455,7 @@ export default function Dashboard() {
             <div className="mt-8 mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <GitBranch className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-bold">Live Integration Data</h2>
+                <h2 className="text-2xl font-bold">{t("pages.dashboard.liveIntegrationData")}</h2>
               </div>
               <div className="grid gap-6 lg:grid-cols-2">
                 {hasJiraIntegration && jiraData && (
@@ -475,7 +477,7 @@ export default function Dashboard() {
 
           {/* Analytics & Insights Section */}
           <div className="mt-8 mb-6">
-            <h2 className="text-2xl font-bold mb-6">Analytics & Insights</h2>
+            <h2 className="text-2xl font-bold mb-6">{t("pages.dashboard.analyticsInsights")}</h2>
             <div className="grid gap-6 lg:grid-cols-2">
               <WorkflowExecutionChart data={showSampleData ? sampleWorkflowData : undefined} />
               <ActionItemsChart data={showSampleData ? sampleActionItemsData : undefined} />
@@ -499,7 +501,7 @@ export default function Dashboard() {
             <div className="mt-8 mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <Lightbulb className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-bold">Quick Insights</h2>
+                <h2 className="text-2xl font-bold">{t("pages.dashboard.quickInsights")}</h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {sampleInsights.map((insight, index) => (
@@ -521,8 +523,8 @@ export default function Dashboard() {
             <div className="mt-8 mb-6">
               <Card className="shadow-card">
                 <CardHeader>
-                  <CardTitle>Real-time Collaboration</CardTitle>
-                  <CardDescription>See who's currently active in the workspace</CardDescription>
+                  <CardTitle>{t("pages.dashboard.realtimeCollaboration")}</CardTitle>
+                  <CardDescription>{t("pages.dashboard.seeWhoActive")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ActiveUsers users={activeUsers} currentPage="/dashboard" variant="full" />
@@ -543,7 +545,7 @@ export default function Dashboard() {
                     <Network className="w-5 h-5" />
                     Integration Status
                   </CardTitle>
-                  <CardDescription>Connected integrations for this project</CardDescription>
+                  <CardDescription>{t("pages.dashboard.connectedIntegrations")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <IntegrationStatus
@@ -561,7 +563,7 @@ export default function Dashboard() {
           <div className="mt-8">
             <div className="flex items-center gap-3 mb-6">
               <Bell className="w-6 h-6 text-primary" />
-              <h2 className="text-2xl font-bold">Ceremony Reminders</h2>
+              <h2 className="text-2xl font-bold">{t("pages.dashboard.ceremonyReminders")}</h2>
             </div>
             <ReminderManagement projectId={selectedProject || undefined} />
           </div>

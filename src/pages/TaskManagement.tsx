@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ExternalLink, Edit, CheckCircle2, Circle } from "lucide-react";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
+import { useTranslation } from "react-i18next";
 
 interface JiraIssue {
   key: string;
@@ -42,6 +43,7 @@ const TaskManagement = () => {
   const [editingTask, setEditingTask] = useState<any>(null);
   const [editForm, setEditForm] = useState({ title: "", description: "", status: "" });
   const { toast } = useToast();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   // Fetch projects
@@ -180,7 +182,7 @@ const TaskManagement = () => {
         <BackButton />
         
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Task Management</h1>
+          <h1 className="text-4xl font-bold mb-2">{t("pages.taskManagement.title")}</h1>
           <p className="text-muted-foreground">
             Manage your JIRA and GitHub tasks from one place
           </p>

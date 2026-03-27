@@ -20,10 +20,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function MyProjects() {
   const navigate = useNavigate();
   const { workspace, loading: workspaceLoading } = useWorkspace();
+  const { t } = useTranslation();
   const { projects, loading: projectsLoading, deleteProject } = useWorkspaceProjects(workspace?.id);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<{ id: string; name: string } | null>(null);

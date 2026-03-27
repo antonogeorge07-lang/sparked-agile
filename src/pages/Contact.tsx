@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
@@ -38,6 +39,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,9 +109,9 @@ export default function Contact() {
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <Mail className="h-8 w-8 text-primary" />
             </div>
-            <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+            <h1 className="text-4xl font-bold mb-4">{t("pages.contact.title")}</h1>
             <p className="text-xl text-muted-foreground">
-              Have questions? We'd love to hear from you.
+              {t("pages.contact.subtitle")}
             </p>
           </div>
 
@@ -233,21 +235,21 @@ export default function Contact() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <h3 className="font-semibold mb-1 text-sm">General Inquiries</h3>
+                    <h3 className="font-semibold mb-1 text-sm">{t("pages.contact.generalInquiries")}</h3>
                     <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline text-sm">
                       Antono.George1@outlook.com
                     </a>
                   </div>
                   
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <h3 className="font-semibold mb-1 text-sm">Sales</h3>
+                    <h3 className="font-semibold mb-1 text-sm">{t("pages.contact.sales")}</h3>
                     <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline text-sm">
                       Antono.George1@outlook.com
                     </a>
                   </div>
                   
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <h3 className="font-semibold mb-1 text-sm">Support</h3>
+                    <h3 className="font-semibold mb-1 text-sm">{t("pages.contact.support")}</h3>
                     <a href="mailto:Antono.George1@outlook.com" className="text-primary hover:underline text-sm">
                       Antono.George1@outlook.com
                     </a>

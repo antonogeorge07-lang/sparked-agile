@@ -13,6 +13,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate } from "react-router-dom";
 import { LoadingState } from "@/components/LoadingState";
 import { sampleAIUsageStats, sampleActivityStats } from "@/data/sampleAnalyticsData";
+import { useTranslation } from "react-i18next";
 
 // Use semantic colors from design system
 const CHART_COLORS = [
@@ -26,6 +27,7 @@ const CHART_COLORS = [
 export default function UsageAnalytics() {
   const navigate = useNavigate();
   const { role, loading: roleLoading } = useUserRole();
+  const { t } = useTranslation();
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedProject, setSelectedProject] = useState<string>("all");
 
@@ -148,7 +150,7 @@ export default function UsageAnalytics() {
       <div className="container mx-auto p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Usage Analytics</h1>
+            <h1 className="text-3xl font-bold mb-2">{t("pages.usageAnalytics.title")}</h1>
             <p className="text-muted-foreground">
               Track active users, projects, and AI API usage
             </p>

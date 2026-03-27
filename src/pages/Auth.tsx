@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -78,6 +79,7 @@ export default function Auth() {
   const [activeTab, setActiveTab] = useState<string>("signin");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Check for password recovery hash
@@ -394,13 +396,13 @@ export default function Auth() {
                 <Target className="w-8 h-8 text-primary-foreground" />
               </div>
             </div>
-            <CardTitle className="text-2xl">Update Your Password</CardTitle>
-            <CardDescription>Enter your new password below</CardDescription>
+            <CardTitle className="text-2xl">{t('pages.auth.updatePassword')}</CardTitle>
+            <CardDescription>{t('pages.auth.enterNewPassword')}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleUpdatePassword} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
+                <Label htmlFor="new-password">{t('pages.auth.newPassword')}</Label>
                 <Input
                   id="new-password"
                   type="password"
@@ -418,7 +420,7 @@ export default function Auth() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm Password</Label>
+                <Label htmlFor="confirm-password">{t('pages.auth.confirmPassword')}</Label>
                 <Input
                   id="confirm-password"
                   type="password"
@@ -435,15 +437,15 @@ export default function Auth() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Updating password...
-                  </>
-                ) : (
-                  "Update Password"
-                )}
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      {t('pages.auth.updatingPassword')}
+                    </>
+                  ) : (
+                    t('pages.auth.updatePassword')
+                  )}
               </Button>
             </form>
           </CardContent>
@@ -457,21 +459,20 @@ export default function Auth() {
       <AlertDialog open={showExistingUserDialog} onOpenChange={setShowExistingUserDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Account Already Exists</AlertDialogTitle>
+            <AlertDialogTitle>{t('pages.auth.accountExists')}</AlertDialogTitle>
             <AlertDialogDescription>
-              An account with the email <strong>{email}</strong> already exists. 
-              Would you like to sign in or recover your password?
+              {t('pages.auth.accountExistsDesc')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
                 setShowExistingUserDialog(false);
                 setActiveTab("signin");
               }}
             >
-              Sign In
+              {t('pages.auth.signIn')}
             </AlertDialogAction>
             <AlertDialogAction
               onClick={() => {
@@ -480,7 +481,7 @@ export default function Auth() {
                 setShowForgotPassword(true);
               }}
             >
-              Recover Password
+              {t('pages.auth.recoverPassword')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -493,21 +494,21 @@ export default function Auth() {
               <Target className="w-8 h-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl">SAAI</CardTitle>
-          <CardDescription>Sign in to your account or create a new one</CardDescription>
+          <CardTitle className="text-2xl">{t('pages.auth.title')}</CardTitle>
+          <CardDescription>{t('pages.auth.subtitle')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsTrigger value="signin">{t('pages.auth.signIn')}</TabsTrigger>
+              <TabsTrigger value="signup">{t('pages.auth.signUp')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="signin">
               {showForgotPassword ? (
                 <form onSubmit={handleForgotPassword} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="reset-email">Email</Label>
+                    <Label htmlFor="reset-email">{t('pages.auth.email')}</Label>
                     <Input
                       id="reset-email"
                       type="email"
@@ -535,16 +536,16 @@ export default function Auth() {
                       }}
                       disabled={isLoading}
                     >
-                      Back
+                      {t('common.back')}
                     </Button>
                     <Button type="submit" className="flex-1" disabled={isLoading}>
                       {isLoading ? (
                         <>
                           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Sending...
+                          {t('pages.auth.sending')}
                         </>
                       ) : (
-                        "Send Reset Link"
+                        t('pages.auth.sendResetLink')
                       )}
                     </Button>
                   </div>
@@ -553,7 +554,7 @@ export default function Auth() {
                 <form onSubmit={handleSignIn} className="space-y-4">
 
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
+                    <Label htmlFor="signin-email">{t('pages.auth.email')}</Label>
                     <Input
                       id="signin-email"
                       type="email"
@@ -572,13 +573,13 @@ export default function Auth() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="signin-password">Password</Label>
+                      <Label htmlFor="signin-password">{t('pages.auth.password')}</Label>
                       <button
                         type="button"
                         onClick={() => setShowForgotPassword(true)}
                         className="text-xs text-primary hover:underline"
                       >
-                        Forgot password?
+                        {t('pages.auth.forgotPassword')}
                       </button>
                     </div>
                     <Input
@@ -601,10 +602,10 @@ export default function Auth() {
                     {isLoading ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Signing in...
+                        {t('pages.auth.signingIn')}
                       </>
                     ) : (
-                      "Sign In"
+                      t('pages.auth.signIn')
                     )}
                   </Button>
 
@@ -613,7 +614,7 @@ export default function Auth() {
                       <span className="w-full border-t" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                      <span className="bg-card px-2 text-muted-foreground">{t('pages.auth.orContinueWith')}</span>
                     </div>
                   </div>
 
@@ -630,7 +631,7 @@ export default function Auth() {
                       <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                       <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                     </svg>
-                    Sign in with Google
+                    {t('pages.auth.signInWithGoogle')}
                   </Button>
 
                   <Button
@@ -641,7 +642,7 @@ export default function Auth() {
                     disabled={isLoading}
                   >
                     <Eye className="w-4 h-4" />
-                    Continue as Guest
+                    {t('pages.auth.continueAsGuest')}
                   </Button>
                 </form>
               )}
@@ -651,7 +652,7 @@ export default function Auth() {
               <form onSubmit={handleSignUp} className="space-y-4">
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name">Full Name</Label>
+                  <Label htmlFor="signup-name">{t('pages.auth.fullName')}</Label>
                   <Input
                     id="signup-name"
                     type="text"
@@ -669,7 +670,7 @@ export default function Auth() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t('pages.auth.email')}</Label>
                   <Input
                     id="signup-email"
                     type="email"
@@ -687,7 +688,7 @@ export default function Auth() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">{t('pages.auth.password')}</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -708,10 +709,10 @@ export default function Auth() {
                   {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Creating account...
+                      {t('pages.auth.creatingAccount')}
                     </>
                   ) : (
-                    "Sign Up"
+                    t('pages.auth.signUp')
                   )}
                 </Button>
 
@@ -720,7 +721,7 @@ export default function Auth() {
                     <span className="w-full border-t" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-card px-2 text-muted-foreground">Or sign up with</span>
+                    <span className="bg-card px-2 text-muted-foreground">{t('pages.auth.orSignUpWith')}</span>
                   </div>
                 </div>
 
@@ -737,7 +738,7 @@ export default function Auth() {
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                   </svg>
-                  Sign up with Google
+                  {t('pages.auth.signUpWithGoogle')}
                 </Button>
               </form>
             </TabsContent>
@@ -750,15 +751,14 @@ export default function Auth() {
               onClick={handleGuestMode}
             >
               <Eye className="w-4 h-4" />
-              Continue as Guest (Try Before Signing Up)
+              {t('pages.auth.guestTryBefore')}
             </Button>
           </div>
 
           <Alert className="mt-4 border-primary/20 bg-primary/5">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs">
-              <strong>Quick Start:</strong> New accounts can immediately access all features. 
-              While waiting, you can explore demo features, review guides, and learn the platform.
+              <strong>{t('pages.auth.quickStart')}:</strong> {t('pages.auth.quickStartDesc')}
             </AlertDescription>
           </Alert>
         </CardContent>

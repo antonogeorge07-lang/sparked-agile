@@ -86,6 +86,7 @@ export default function ScheduleAdvisor() {
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [generatingAI, setGeneratingAI] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -128,6 +129,7 @@ export default function ScheduleAdvisor() {
           `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/native_backlog_items?select=id,title,status,priority,story_points,assignee_id,sprint_id,created_at&project_id=eq.${pmiData[0].id}&order=created_at.asc`,
           { headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}` } }
         );
+import { useTranslation } from "react-i18next";
         const items = await itemsRes.json();
 
         if (Array.isArray(items) && items.length >= 4) {

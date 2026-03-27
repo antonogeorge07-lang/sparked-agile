@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslation } from "react-i18next";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
@@ -90,6 +91,7 @@ const Integrations = () => {
   
   // Enable auto token refresh for integrations
   useAutoTokenRefresh();
+  const { t } = useTranslation();
   const [newIntegration, setNewIntegration] = useState({
     type: "jira" as "jira" | "github",
     name: "",
@@ -410,7 +412,7 @@ const Integrations = () => {
           <BackButton className="mb-4" />
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent">
-              Integrations
+              {t("pages.integrations.title")}
             </h1>
             <p className="text-muted-foreground">
               Connect your projects to external services for seamless workflow automation
@@ -481,7 +483,7 @@ const Integrations = () => {
                 <Card>
               <CardContent className="py-12 text-center">
                 <Network className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Project Access</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.integrations.noProjectAccess")}</h3>
                 <p className="text-muted-foreground mb-4">
                   You need to be assigned to a project to manage integrations. Contact your admin to request project access.
                 </p>
@@ -532,7 +534,7 @@ const Integrations = () => {
           {isAddingNew && !useWizard && (
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>Add New Integration (Advanced)</CardTitle>
+                <CardTitle>{t("pages.integrations.addNewAdvanced")}</CardTitle>
                 <CardDescription>
                   Configure a new Jira or GitHub integration manually
                 </CardDescription>
@@ -640,7 +642,7 @@ const Integrations = () => {
                 )}
 
                 <div className="flex gap-2">
-                  <Button onClick={handleAddIntegration}>Add Integration</Button>
+                  <Button onClick={handleAddIntegration}>{t("pages.integrations.addIntegration")}</Button>
                   <Button variant="outline" onClick={() => setIsAddingNew(false)}>
                     Cancel
                   </Button>

@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
 import { EpicTimeline } from "@/components/epic/EpicTimeline";
 import { EpicGanttChart } from "@/components/epic/EpicGanttChart";
+import { useTranslation } from "react-i18next";
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -26,6 +27,7 @@ export default function EpicManagement() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const init = async () => {
@@ -174,7 +176,7 @@ export default function EpicManagement() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">Epic Management</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">{t("pages.epicManagement.title")}</h1>
                 <p className="text-muted-foreground">
                   Create, track, and manage Epics across your value streams
                 </p>

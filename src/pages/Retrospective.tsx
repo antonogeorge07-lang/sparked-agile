@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { IntegrationStatus } from "@/components/IntegrationStatus";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
+import { useTranslation } from "react-i18next";
 
 interface FeedbackItem {
   wentWell: string;
@@ -27,6 +28,7 @@ export default function Retrospective() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string>("");
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const { data: integrations } = useProjectIntegrations(selectedProject);
 
@@ -110,7 +112,7 @@ export default function Retrospective() {
               <Target className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold page-header-gradient">Sprint Retrospective</h1>
+              <h1 className="text-3xl font-bold page-header-gradient">{t("pages.retrospective.title")}</h1>
               <p className="text-muted-foreground">Reflect and improve as a team</p>
             </div>
           </div>

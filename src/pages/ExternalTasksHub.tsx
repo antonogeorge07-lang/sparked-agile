@@ -13,8 +13,10 @@ import { RefreshCw, GitBranch, Bug, GitPullRequest, MessageCircle, Activity } fr
 import { Badge } from "@/components/ui/badge";
 import { LoadingState } from "@/components/LoadingState";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function ExternalTasksHub() {
+  const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);

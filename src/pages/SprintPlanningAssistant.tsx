@@ -14,8 +14,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BackButton } from "@/components/BackButton";
 import { ResourceForecastPanel } from "@/components/ResourceForecastPanel";
+import { useTranslation } from "react-i18next";
 
 export default function SprintPlanningAssistant() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);

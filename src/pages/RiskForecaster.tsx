@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
+import { useTranslation } from "react-i18next";
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
   AreaChart, Area, Cell
 } from "recharts";
@@ -118,6 +119,7 @@ function getTrendIcon(trend: string) {
 }
 
 export default function RiskForecaster() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<any[]>([]);

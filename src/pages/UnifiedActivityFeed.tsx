@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { LoadingState } from "@/components/LoadingState";
 import { RefreshCw, ExternalLink, Bug, GitBranch, GitPullRequest, GitMerge, MessageCircle, Filter, Activity } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface ActivityItem {
   id: string;
@@ -38,6 +39,7 @@ const typeIcons: Record<string, any> = {
 };
 
 export default function UnifiedActivityFeed() {
+  const { t } = useTranslation();
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<string | null>(null);

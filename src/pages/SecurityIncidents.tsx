@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertTriangle, Shield, Bot, User, Plus, Filter } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface SecurityIncident {
   id: string;
@@ -64,6 +65,7 @@ export default function SecurityIncidents() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { role, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
@@ -334,7 +336,7 @@ export default function SecurityIncidents() {
         </div>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Security Incidents</h1>
+            <h1 className="text-4xl font-bold mb-2">{t("pages.securityIncidents.title")}</h1>
             <p className="text-muted-foreground">Monitor and manage security incidents with real-time updates</p>
           </div>
           <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>

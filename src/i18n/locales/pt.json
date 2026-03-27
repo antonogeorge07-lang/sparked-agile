@@ -888,5 +888,341 @@
       "subtitle": "Todas as funcionalidades incluidas. Sem cartao de credito. Sem chaves API. Faca login e comece.",
       "button": "Comece Gratis"
     }
+  },
+  "pages": {
+    "auth": {
+      "title": "Spark-Agile",
+      "subtitle": "Faça login ou crie uma nova conta",
+      "signIn": "Entrar",
+      "signUp": "Cadastrar",
+      "email": "E-mail",
+      "password": "Senha",
+      "fullName": "Nome completo",
+      "forgotPassword": "Esqueceu a senha?",
+      "signingIn": "Signing in...",
+      "creatingAccount": "Creating account...",
+      "sendResetLink": "Send Reset Link",
+      "sending": "Sending...",
+      "orContinueWith": "Or continue with",
+      "orSignUpWith": "Or sign up with",
+      "signInWithGoogle": "Sign in with Google",
+      "signUpWithGoogle": "Sign up with Google",
+      "continueAsGuest": "Continuar como convidado",
+      "guestTryBefore": "Continue as Guest (Try Before Signing Up)",
+      "updatePassword": "Update Your Password",
+      "enterNewPassword": "Enter your new password below",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "updatingPassword": "Updating password...",
+      "accountExists": "Account Already Exists",
+      "accountExistsDesc": "An account with this email already exists. Would you like to sign in or recover your password?",
+      "recoverPassword": "Recover Password",
+      "quickStart": "Quick Start",
+      "quickStartDesc": "New accounts can immediately access all features. While waiting, you can explore demo features, review guides, and learn the platform.",
+      "welcomeToast": "Welcome to Spark-Agile!",
+      "welcomeToastDesc": "Your account has been created successfully. Please check your email to verify your account.",
+      "welcomeBack": "Welcome back!",
+      "welcomeBackDesc": "Successfully signed in.",
+      "guestWelcome": "Welcome to Guest Mode!",
+      "guestWelcomeDesc": "Explore features with sample data. Sign up anytime to save your work.",
+      "passwordCheckUnavailable": "Password check unavailable",
+      "insecurePassword": "Insecure password detected",
+      "insecurePasswordDesc": "This password appears in known data breaches. Choose a different password.",
+      "invalidCredentials": "Invalid credentials",
+      "invalidCredentialsDesc": "The email or password you entered is incorrect.",
+      "signInFailed": "Sign in failed",
+      "signUpFailed": "Sign up failed",
+      "checkEmail": "Check your email!",
+      "checkEmailDesc": "We've sent you a password reset link.",
+      "passwordUpdated": "Password updated!",
+      "passwordUpdatedDesc": "Your password has been successfully updated."
+    },
+    "dashboard": {
+      "title": "Painel de saúde do sprint",
+      "subtitle": "Monitor performance with integrations",
+      "currentVelocity": "Velocidade atual",
+      "sprintProgress": "Sprint Progress",
+      "daysRemaining": "Days Remaining",
+      "velocityTrend": "Velocity Trend",
+      "last3Sprints": "Last 3 sprints performance",
+      "activeImpediments": "Active Impediments",
+      "issuesRequiring": "Issues requiring attention",
+      "onTrack": "On track for sprint goal",
+      "untilSprintEnd": "Until sprint end",
+      "fromLastSprint": "+12% from last sprint",
+      "connectToSee": "Connect integrations to see data",
+      "noVelocityData": "No velocity data available",
+      "connectToTrack": "Connect integrations to track sprint velocity",
+      "points": "points",
+      "openFor": "Open for {{days}} days",
+      "noImpediments": "No impediments found matching your filters",
+      "liveIntegrationData": "Live Integration Data",
+      "analyticsInsights": "Analytics & Insights",
+      "quickInsights": "Quick Insights",
+      "realtimeCollaboration": "Real-time Collaboration",
+      "seeWhoActive": "See who's currently active in the workspace",
+      "integrationStatus": "Integration Status",
+      "connectedIntegrations": "Connected integrations for this project",
+      "ceremonyReminders": "Ceremony Reminders",
+      "send": "Send",
+      "schedule": "Schedule",
+      "loadingDashboard": "Loading dashboard...",
+      "searchImpediments": "Search impediments...",
+      "severity": "Severity",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "filter": "Filter",
+      "generatingPpt": "Generating PowerPoint presentation...",
+      "pptSuccess": "PowerPoint presentation downloaded successfully!",
+      "pptFailed": "Failed to generate PowerPoint presentation"
+    },
+    "contact": {
+      "title": "Fale conosco",
+      "subtitle": "Have questions? We'd love to hear from you.",
+      "sendMessage": "Send us a Message",
+      "sendMessageDesc": "Fill out the form and we'll get back to you within 24 hours",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@company.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "How can we help?",
+      "message": "Message",
+      "messagePlaceholder": "Tell us more about your inquiry...",
+      "characters": "{{count}}/2000 characters",
+      "sendBtn": "Send Message",
+      "sending": "Sending...",
+      "directContact": "Direct Contact",
+      "generalInquiries": "General Inquiries",
+      "sales": "Sales",
+      "support": "Support",
+      "businessHours": "Business Hours",
+      "businessHoursText": "Monday to Friday: 9:00 AM to 6:00 PM EST",
+      "responseTime": "We typically respond within 24 hours during business days.",
+      "messageSent": "Message Sent",
+      "messageSentDesc": "Thank you for contacting us. We'll get back to you within 24 hours.",
+      "sendFailed": "Failed to send message. Please try again or email us directly."
+    },
+    "faq": {
+      "title": "Perguntas frequentes",
+      "subtitle": "Find answers to common questions about Spark-Agile",
+      "generalQuestions": "General Questions",
+      "learnBasics": "Learn about Spark-Agile basics",
+      "platformFeatures": "Platform Features",
+      "currentCapabilities": "Current capabilities and architecture",
+      "securityAccess": "Security & Access",
+      "enterpriseProtection": "Enterprise-grade protection for your data",
+      "pricingLimits": "Pricing & Limits",
+      "understandingCapabilities": "Understanding current capabilities",
+      "stillHaveQuestions": "Still have questions?",
+      "cantFind": "Can't find what you're looking for? Get in touch with our support team.",
+      "contactSupport": "Contact Support",
+      "live": "Live"
+    },
+    "notFound": {
+      "title": "404",
+      "subtitle": "Ops! Página não encontrada",
+      "returnHome": "Voltar ao início"
+    },
+    "privacy": {
+      "title": "Política de privacidade",
+      "lastUpdated": "Last updated: {{date}}",
+      "dataProtection": "Data Protection & Privacy"
+    },
+    "terms": {
+      "title": "Termos de serviço",
+      "lastUpdated": "Last updated: {{date}}",
+      "legalAgreement": "Legal Agreement"
+    },
+    "integrations": {
+      "title": "Integrações",
+      "subtitle": "Connect your projects to external services for seamless workflow automation",
+      "connectionStatus": "Connection Status",
+      "dashboard": "Dashboard",
+      "projectIntegrations": "Project Integrations",
+      "selectProject": "Select Project",
+      "selectProjectPlaceholder": "Select a project",
+      "addIntegrationWizard": "Add Integration (Wizard)",
+      "advancedSetup": "Advanced Setup",
+      "addNewAdvanced": "Add New Integration (Advanced)",
+      "configureManually": "Configure a new Jira or GitHub integration manually",
+      "integrationType": "Integration Type",
+      "name": "Name",
+      "jiraUrl": "Jira URL",
+      "apiToken": "API Token",
+      "organization": "Organization",
+      "repository": "Repository",
+      "accessToken": "Access Token",
+      "addIntegration": "Add Integration",
+      "noProjectAccess": "No Project Access",
+      "noProjectAccessDesc": "You need to be assigned to a project to manage integrations. Contact your admin to request project access.",
+      "goToDashboard": "Go to Dashboard",
+      "noIntegrations": "No integrations configured yet. Add your first integration to get started.",
+      "authRequired": "Authentication Required",
+      "authRequiredDesc": "Please log in to access integrations"
+    },
+    "quickStart": {
+      "title": "Bem-vindo ao Spark-Agile",
+      "subtitle": "Your AI-powered platform for Scaled Agile delivery. Let's get you started.",
+      "gettingStarted": "Getting Started",
+      "followSteps": "Follow these steps to set up your workspace",
+      "step1Title": "Connect your tools",
+      "step1Desc": "Start by connecting JIRA, GitHub, or Outlook in Integrations",
+      "step2Title": "Create a project",
+      "step2Desc": "Set up your first project in the Command Centre",
+      "step3Title": "Plan your sprint",
+      "step3Desc": "Use Sprint Planning Assistant to plan your first sprint",
+      "step4Title": "Track progress",
+      "step4Desc": "Monitor team velocity and progress in the Dashboard",
+      "platformFeatures": "Platform Features",
+      "quickActions": "Quick Actions",
+      "jumpRight": "Jump right into the most common tasks",
+      "setupIntegrations": "Setup Integrations",
+      "planSprint": "Plan Sprint",
+      "viewDashboard": "View Dashboard",
+      "fullUserGuide": "Full User Guide",
+      "needHelp": "Need help? Check out the User Guide or explore features using the sidebar on the left.",
+      "epicManagement": "Epic Management",
+      "epicManagementDesc": "Plan and track large initiatives across your organization",
+      "agileCeremonies": "Agile Ceremonies",
+      "agileCeremoniesDesc": "AI-powered agile ceremonies to streamline your processes",
+      "analyticsInsights": "Analytics & Insights",
+      "analyticsInsightsDesc": "Data-driven insights to improve team performance",
+      "setupIntegration": "Setup & Integration",
+      "setupIntegrationDesc": "Connect your tools and configure your workspace"
+    },
+    "teamHub": {
+      "title": "Hub da equipe",
+      "workspaceChat": "Workspace Chat",
+      "taskComments": "Task Comments",
+      "selectTask": "Select a task to view comments",
+      "recentTasks": "Recent Tasks",
+      "noTasks": "No tasks found",
+      "loadingTasks": "Loading tasks...",
+      "noWorkspace": "No workspace found. Please create a project first."
+    },
+    "epicManagement": {
+      "title": "Epic Management",
+      "subtitle": "Plan and track large initiatives",
+      "createEpic": "Create Epic",
+      "selectProject": "Select Project",
+      "filterStatus": "Filter by Status",
+      "filterPriority": "Filter by Priority",
+      "allStatuses": "All Statuses",
+      "allPriorities": "All Priorities",
+      "noEpics": "No epics found",
+      "timeline": "Timeline",
+      "gantt": "Gantt",
+      "list": "List"
+    },
+    "standup": {
+      "title": "Daily Standup",
+      "subtitle": "Share updates and sync with your team"
+    },
+    "retrospective": {
+      "title": "Sprint Retrospective",
+      "subtitle": "Reflect and improve as a team"
+    },
+    "backlog": {
+      "title": "Backlog Refinement Assistant",
+      "subtitle": "Continuous backlog grooming with AI-powered insights"
+    },
+    "sprintPlanning": {
+      "title": "Sprint Planning Assistant",
+      "subtitle": "AI-powered sprint planning with backlog analysis"
+    },
+    "sprintReview": {
+      "title": "Sprint Review Coordinator",
+      "subtitle": "Coordinate demos and review completed work"
+    },
+    "flowMetrics": {
+      "title": "Flow Metrics",
+      "subtitle": "Value stream and flow efficiency analysis"
+    },
+    "workflows": {
+      "title": "Workflows",
+      "subtitle": "Automate and manage your team's workflows"
+    },
+    "valueStreams": {
+      "title": "Value Streams",
+      "subtitle": "Manage value streams and Agile Release Trains"
+    },
+    "riskForecaster": {
+      "title": "Risk Forecaster",
+      "subtitle": "AI-powered risk prediction and mitigation"
+    },
+    "scheduleAdvisor": {
+      "title": "Schedule Advisor",
+      "subtitle": "Optimise your team's schedule and capacity"
+    },
+    "ceremonySetup": {
+      "title": "Ceremony Setup",
+      "subtitle": "Configure and schedule your agile ceremonies"
+    },
+    "programIncrement": {
+      "title": "Program Increment Planning",
+      "subtitle": "Plan and coordinate across teams and value streams"
+    },
+    "stakeholderPortal": {
+      "title": "Stakeholder Portal",
+      "subtitle": "Executive dashboards and approval workflows"
+    },
+    "usageAnalytics": {
+      "title": "Usage Analytics",
+      "subtitle": "Platform usage and AI consumption metrics"
+    },
+    "myProjects": {
+      "title": "My Projects",
+      "subtitle": "View and manage your projects"
+    },
+    "projectCommandCentre": {
+      "title": "Project Command Centre",
+      "subtitle": "Central hub for project tasks and progress tracking"
+    },
+    "taskManagement": {
+      "title": "Task Management",
+      "subtitle": "Manage your JIRA and GitHub tasks from one place",
+      "selectProject": "Select Project",
+      "title_label": "Title",
+      "description": "Description",
+      "status": "Status"
+    },
+    "externalTasks": {
+      "title": "External Tasks Hub",
+      "subtitle": "View and manage tasks from connected services"
+    },
+    "activityFeed": {
+      "title": "Unified Activity Feed",
+      "subtitle": "See all activity across your projects"
+    },
+    "epicPortfolio": {
+      "title": "Epic Portfolio",
+      "subtitle": "Portfolio-level epic health, ROI, and progress"
+    },
+    "epicDetail": {
+      "title": "Epic Detail",
+      "subtitle": "View and manage epic details"
+    },
+    "securityIncidents": {
+      "title": "Security Incidents",
+      "subtitle": "Monitor and manage security events"
+    },
+    "platformOwner": {
+      "title": "Platform Administration",
+      "subtitle": "Manage platform settings and users"
+    },
+    "workspaceSettings": {
+      "title": "Workspace Settings",
+      "subtitle": "Configure your workspace preferences"
+    },
+    "userGuide": {
+      "title": "User Guide",
+      "subtitle": "Learn how to use the platform effectively"
+    },
+    "projectWorkspace": {
+      "title": "Initialise Project Workspace",
+      "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
+    }
   }
 }
