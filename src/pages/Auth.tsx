@@ -396,8 +396,8 @@ export default function Auth() {
                 <Target className="w-8 h-8 text-primary-foreground" />
               </div>
             </div>
-            <CardTitle className="text-2xl">Update Your Password</CardTitle>
-            <CardDescription>Enter your new password below</CardDescription>
+            <CardTitle className="text-2xl">{t('pages.auth.updatePassword')}</CardTitle>
+            <CardDescription>{t('pages.auth.enterNewPassword')}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleUpdatePassword} className="space-y-4">
