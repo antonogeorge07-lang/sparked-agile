@@ -537,7 +537,7 @@ export default function Auth() {
                       }}
                       disabled={isLoading}
                     >
-                      Back
+                      {t('common.back')}
                     </Button>
                     <Button type="submit" className="flex-1" disabled={isLoading}>
                       {isLoading ? (
