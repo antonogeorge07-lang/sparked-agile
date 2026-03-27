@@ -495,8 +495,8 @@ export default function Auth() {
               <Target className="w-8 h-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl">SAAI</CardTitle>
-          <CardDescription>Sign in to your account or create a new one</CardDescription>
+          <CardTitle className="text-2xl">{t('pages.auth.title')}</CardTitle>
+          <CardDescription>{t('pages.auth.subtitle')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
