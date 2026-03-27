@@ -19,6 +19,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
 import { useProjectLimits } from "@/hooks/useProjectLimits";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useTranslation } from "react-i18next";
 
 interface ActionItem {
   title: string;
@@ -42,6 +43,7 @@ export default function Workflows() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { activeUsers } = useRealtimePresence('/workflows');
   const { currentCount, limitCount, canCreate, tierName, refresh: refreshLimits } = useProjectLimits();

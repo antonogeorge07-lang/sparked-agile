@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MessageCircle, MessageSquare, Users } from "lucide-react";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 interface BacklogItem {
   id: string;
@@ -20,6 +21,7 @@ interface BacklogItem {
 
 export default function TeamHub() {
   const { workspace, loading: wsLoading } = useWorkspace();
+  const { t } = useTranslation();
   const [backlogItems, setBacklogItems] = useState<BacklogItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<BacklogItem | null>(null);
   const [loadingItems, setLoadingItems] = useState(false);

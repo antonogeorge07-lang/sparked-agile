@@ -34,6 +34,7 @@ import { ApprovalRequestsList } from "@/components/stakeholder/ApprovalRequestsL
 import { DigestSubscriptionManager } from "@/components/stakeholder/DigestSubscriptionManager";
 import { AlertsConfigPanel } from "@/components/stakeholder/AlertsConfigPanel";
 import { StakeholderInviteForm } from "@/components/stakeholder/StakeholderInviteForm";
+import { useTranslation } from "react-i18next";
 
 interface WidgetConfig {
   id: string;
@@ -144,6 +145,7 @@ function SortableWidget({ widget, onToggleVisibility, projectId }: {
 }
 
 export default function StakeholderPortal() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);

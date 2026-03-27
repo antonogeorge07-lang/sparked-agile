@@ -12,8 +12,10 @@ import { TeamManagement } from "@/components/TeamManagement";
 import { BackButton } from "@/components/BackButton";
 import { CelebrationModal } from "@/components/CelebrationModal";
 import { ProgressTracker } from "@/components/ProgressTracker";
+import { useTranslation } from "react-i18next";
 
 export default function ProjectWorkspace() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);

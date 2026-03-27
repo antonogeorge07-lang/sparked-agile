@@ -24,6 +24,7 @@ import { TestScenarioGenerator } from "@/components/TestScenarioGenerator";
 import { MeetingNotesProcessor } from "@/components/MeetingNotesProcessor";
 import { ResourceForecastPanel } from "@/components/ResourceForecastPanel";
 import { SmartNudgesPanel } from "@/components/SmartNudgesPanel";
+import { useTranslation } from "react-i18next";
 
 const PMI_STAGES = [
   { id: "initiation", title: "Initiation", color: "from-blue-500 to-cyan-500" },
@@ -57,6 +58,7 @@ interface Project {
 }
 
 export default function ProjectCommandCentre() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);

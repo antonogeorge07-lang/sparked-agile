@@ -26,6 +26,7 @@ import { EpicLessonsLearned } from "@/components/epic/EpicLessonsLearned";
 import { EpicImplementationValidator } from "@/components/epic/EpicImplementationValidator";
 import { EditEpicDialog } from "@/components/epic/EditEpicDialog";
 import { EpicActions } from "@/components/epic/EpicActions";
+import { useTranslation } from "react-i18next";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
@@ -36,6 +37,7 @@ export default function EpicDetail() {
   const [loading, setLoading] = useState(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {

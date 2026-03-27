@@ -14,10 +14,12 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 export default function WorkspaceSettings() {
   const navigate = useNavigate();
   const { workspace, loading, updateWorkspace } = useWorkspace();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [workspaceName, setWorkspaceName] = useState("");
   const [saving, setSaving] = useState(false);

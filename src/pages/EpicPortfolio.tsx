@@ -23,6 +23,7 @@ import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
+import { useTranslation } from "react-i18next";
   TableBody,
   TableCell,
   TableHead,
@@ -67,6 +68,7 @@ interface HealthDistribution {
 export default function EpicPortfolio() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [epics, setEpics] = useState<Epic[]>([]);
   const [roiData, setRoiData] = useState<ROIData[]>([]);

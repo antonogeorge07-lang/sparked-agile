@@ -15,6 +15,7 @@ import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { WelcomePopup } from "@/components/WelcomePopup";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Index = () => {
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
   const { isGuestMode, enableGuestMode } = useGuestMode();
+  const { t } = useTranslation();
   const [showWizard, setShowWizard] = useState(false);
 
   useEffect(() => {

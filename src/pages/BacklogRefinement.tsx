@@ -16,6 +16,7 @@ import { JiraSetupWizard } from "@/components/integrations/JiraSetupWizard";
 import { sampleBacklogAnalysis } from "@/data/sampleAnalyticsData";
 import {
   Select,
+import { useTranslation } from "react-i18next";
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -47,6 +48,7 @@ interface BacklogAnalysis {
 
 const BacklogRefinement = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<BacklogAnalysis | null>(null);

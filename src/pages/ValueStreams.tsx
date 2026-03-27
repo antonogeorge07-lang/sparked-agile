@@ -11,6 +11,7 @@ import { GitBranch, Plus, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function ValueStreams() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -20,6 +21,7 @@ export default function ValueStreams() {
   const [newStreamName, setNewStreamName] = useState("");
   const [newStreamDesc, setNewStreamDesc] = useState("");
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {

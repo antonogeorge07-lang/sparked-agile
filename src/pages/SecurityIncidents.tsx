@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertTriangle, Shield, Bot, User, Plus, Filter } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface SecurityIncident {
   id: string;
@@ -64,6 +65,7 @@ export default function SecurityIncidents() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { role, loading: roleLoading } = useUserRole();
 
   useEffect(() => {

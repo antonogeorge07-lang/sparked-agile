@@ -14,6 +14,7 @@ import {
   BarChart3, PieChart, LineChart as LineChartIcon
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { useTranslation } from "react-i18next";
 
 const CHART_COLORS = [
   "hsl(var(--primary))",
@@ -54,6 +55,7 @@ interface SurveyResponse {
 export default function PlatformOwner() {
   const navigate = useNavigate();
   const { role, loading: roleLoading } = useUserRole();
+  const { t } = useTranslation();
   const [stats, setStats] = useState<PlatformStats | null>(null);
   const [feedback, setFeedback] = useState<UserFeedback[]>([]);
   const [surveys, setSurveys] = useState<SurveyResponse[]>([]);

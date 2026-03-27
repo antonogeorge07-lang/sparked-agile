@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
 import { EpicTimeline } from "@/components/epic/EpicTimeline";
 import { EpicGanttChart } from "@/components/epic/EpicGanttChart";
+import { useTranslation } from "react-i18next";
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -26,6 +27,7 @@ export default function EpicManagement() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const init = async () => {

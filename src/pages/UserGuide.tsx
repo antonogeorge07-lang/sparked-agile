@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { 
   BookOpen, 
+import { useTranslation } from "react-i18next";
   Users, 
   Target, 
   Calendar, 
@@ -29,6 +30,7 @@ import {
 } from "lucide-react";
 
 export default function UserGuide() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

@@ -13,6 +13,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate } from "react-router-dom";
 import { LoadingState } from "@/components/LoadingState";
 import { sampleAIUsageStats, sampleActivityStats } from "@/data/sampleAnalyticsData";
+import { useTranslation } from "react-i18next";
 
 // Use semantic colors from design system
 const CHART_COLORS = [
@@ -26,6 +27,7 @@ const CHART_COLORS = [
 export default function UsageAnalytics() {
   const navigate = useNavigate();
   const { role, loading: roleLoading } = useUserRole();
+  const { t } = useTranslation();
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedProject, setSelectedProject] = useState<string>("all");
 

@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
 import { format, addDays } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 // Sample flow data
 const sampleFlowMetrics = [
@@ -86,6 +87,7 @@ export default function FlowMetrics() {
   const [generatingInsight, setGeneratingInsight] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { jiraData, githubData, isLoading, hasJiraIntegration, hasGithubIntegration } = useIntegrationData(selectedProject);
 
