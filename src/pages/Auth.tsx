@@ -653,7 +653,7 @@ export default function Auth() {
               <form onSubmit={handleSignUp} className="space-y-4">
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name">Full Name</Label>
+                  <Label htmlFor="signup-name">{t('pages.auth.fullName')}</Label>
                   <Input
                     id="signup-name"
                     type="text"
