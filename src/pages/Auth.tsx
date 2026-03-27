@@ -79,6 +79,7 @@ export default function Auth() {
   const [activeTab, setActiveTab] = useState<string>("signin");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Check for password recovery hash
