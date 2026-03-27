@@ -459,10 +459,10 @@ export default function Auth() {
       <AlertDialog open={showExistingUserDialog} onOpenChange={setShowExistingUserDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Account Already Exists</AlertDialogTitle>
+            <AlertDialogTitle>{t('pages.auth.accountExists')}</AlertDialogTitle>
             <AlertDialogDescription>
-              An account with the email <strong>{email}</strong> already exists. 
-              Would you like to sign in or recover your password?
+              {t('pages.auth.accountExistsDesc')}
+            </AlertDialogDescription>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
