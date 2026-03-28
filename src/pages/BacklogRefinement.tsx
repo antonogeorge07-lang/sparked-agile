@@ -14,9 +14,9 @@ import { TestScenarioGenerator } from "@/components/TestScenarioGenerator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { JiraSetupWizard } from "@/components/integrations/JiraSetupWizard";
 import { sampleBacklogAnalysis } from "@/data/sampleAnalyticsData";
+import { useTranslation } from "react-i18next";
 import {
   Select,
-import { useTranslation } from "react-i18next";
   SelectContent,
   SelectItem,
   SelectTrigger,

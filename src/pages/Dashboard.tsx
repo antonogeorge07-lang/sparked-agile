@@ -202,7 +202,7 @@ export default function Dashboard() {
       
       {isLoadingProjects ? (
         <div className="container mx-auto px-4 py-8">
-          <LoadingState message="{t("pages.dashboard.loadingDashboard")}" size="lg" />
+          <LoadingState message={t("pages.dashboard.loadingDashboard")} size="lg" />
         </div>
       ) : (
         <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
