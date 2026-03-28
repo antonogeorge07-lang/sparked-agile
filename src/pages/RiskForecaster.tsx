@@ -14,9 +14,9 @@ import {
   ShieldAlert, AlertTriangle, TrendingUp, Brain, RefreshCw,
   ChevronRight, Clock, Target, Zap, BarChart3, Eye
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-import { useTranslation } from "react-i18next";
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
   AreaChart, Area, Cell
 } from "recharts";
