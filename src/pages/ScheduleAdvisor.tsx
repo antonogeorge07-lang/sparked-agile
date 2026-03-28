@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useState, useEffect, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
