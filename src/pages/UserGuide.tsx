@@ -8,9 +8,9 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 import { 
   BookOpen, 
-import { useTranslation } from "react-i18next";
   Users, 
   Target, 
   Calendar, 
