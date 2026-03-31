@@ -38,7 +38,7 @@ export default function DataImport() {
     }
   }, []);
 
-  useState(() => { loadProjects(); });
+  useEffect(() => { loadProjects(); }, [loadProjects]);
 
   const handleFileDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
