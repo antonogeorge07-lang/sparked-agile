@@ -163,6 +163,7 @@ const App = () => {
                   <Route path="/external-tasks" element={<ExternalTasksHub />} />
                   <Route path="/team-hub" element={<TeamHub />} />
                   <Route path="/activity-feed" element={<UnifiedActivityFeed />} />
+                  <Route path="/import" element={<DataImport />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
