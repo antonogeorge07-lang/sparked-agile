@@ -311,7 +311,7 @@ export default function DataImport() {
                       </SelectContent>
                     </Select>
                     {getMappedSource(target.field) !== '__none__' && (
-                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <CheckCircle className="h-4 w-4 text-primary" />
                     )}
                   </div>
                 ))}
