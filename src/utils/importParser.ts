@@ -98,11 +98,11 @@ export function parseJSON(text: string): { headers: string[]; rows: ParsedRow[] 
 
   if (arr.length === 0) return { headers: [], rows: [] };
 
-  const headers = [...new Set(arr.flatMap((item: Record<string, unknown>) => Object.keys(item)))];
+  const headers: string[] = [...new Set(arr.flatMap((item: Record<string, unknown>) => Object.keys(item)) as string[])];
   const rows: ParsedRow[] = arr.map((item: Record<string, unknown>) => {
     const row: ParsedRow = {};
-    headers.forEach(h => {
-      const val = item[h];
+    headers.forEach((h: string) => {
+      const val = item[h as keyof typeof item];
       row[h] = val == null ? '' : typeof val === 'object' ? JSON.stringify(val) : String(val);
     });
     return row;
