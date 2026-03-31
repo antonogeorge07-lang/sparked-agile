@@ -46,6 +46,7 @@ const menuSections: MenuSection[] = [
       { titleKey: "sidebar.home", url: "/home", icon: Home },
       { titleKey: "sidebar.quickStart", url: "/quick-start", icon: Star, tour: "quick-start" },
       { titleKey: "sidebar.myWorkspace", url: "/my-projects", icon: FolderKanban },
+      { titleKey: "sidebar.importData", url: "/import", icon: Upload },
     ]
   },
   {
