@@ -132,18 +132,18 @@ export function autoMapColumns(sourceHeaders: string[], importType: ImportType):
   return mappings;
 }
 
-export function applyMappings(rows: ParsedRow[], mappings: ColumnMapping[]): Record<string, unknown>[] {
+export function applyMappings(rows: ParsedRow[], mappings: ColumnMapping[]): Record<string, string | number | string[] | null>[] {
   return rows.map(row => {
-    const mapped: Record<string, unknown> = {};
+    const mapped: Record<string, string | number | string[] | null> = {};
     for (const m of mappings) {
-      let value: unknown = row[m.sourceColumn] ?? '';
+      let value: string | number | string[] | null = row[m.sourceColumn] ?? '';
       // Type coercion
       if (['story_points', 'business_value', 'effort_estimate', 'progress'].includes(m.targetField)) {
         const num = Number(value);
         value = isNaN(num) ? null : num;
       }
       if (m.targetField === 'labels' && typeof value === 'string' && value) {
-        value = value.split(',').map(s => s.trim()).filter(Boolean);
+        value = value.split(',').map((s: string) => s.trim()).filter(Boolean);
       }
       mapped[m.targetField] = value || null;
     }

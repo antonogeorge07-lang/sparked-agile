@@ -374,14 +374,14 @@ export default function DataImport() {
           <Card>
             <CardContent className="py-12 text-center space-y-4">
               {importResult.failed === 0 ? (
-                <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
+                <CheckCircle className="h-16 w-16 text-primary mx-auto" />
               ) : (
-                <AlertCircle className="h-16 w-16 text-yellow-500 mx-auto" />
+                <AlertCircle className="h-16 w-16 text-accent mx-auto" />
               )}
               <h2 className="text-2xl font-bold">Import Complete</h2>
               <div className="flex justify-center gap-6">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-green-600">{importResult.success}</p>
+                  <p className="text-3xl font-bold text-primary">{importResult.success}</p>
                   <p className="text-sm text-muted-foreground">Imported</p>
                 </div>
                 {importResult.failed > 0 && (
