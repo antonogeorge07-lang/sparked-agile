@@ -13,12 +13,9 @@ export default function ConnectTools() {
           <div className="mx-auto w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
             <Zap className="h-7 w-7 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold mb-2">Connect Your Tools</h1>
-          <p className="text-muted-foreground">
-            Paste a URL, click connect — your data flows in automatically.
-          </p>
+          <h1 className="text-3xl font-bold mb-2">{t("connectTools.pageTitle")}</h1>
+          <p className="text-muted-foreground">{t("connectTools.pageSubtitle")}</p>
         </div>
-
         <OneClickConnect />
       </main>
     </DashboardLayout>

@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "Conectar ferramentas"
   },
   "navigation": {
     "home": "Início",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "Conecte suas ferramentas",
+    "pageSubtitle": "Cole uma URL, clique em conectar — seus dados fluem automaticamente.",
+    "connectToProject": "Conectar ao projeto",
+    "selectProject": "Selecionar um projeto",
+    "loadingProjects": "Carregando projetos...",
+    "createProjectFirst": "Crie um projeto primeiro para conectar integrações",
+    "createProject": "Criar projeto",
+    "connect": "Conectar",
+    "connectGithub": "Conectar GitHub",
+    "connectJira": "Conectar Jira",
+    "githubDesc": "Conecte seu repositório para rastrear commits, PRs e issues",
+    "jiraDesc": "Conecte seu quadro para sincronizar sprints, tickets e backlogs",
+    "githubInstructions": "Cole a URL do repo, adicione um token, conecte",
+    "jiraInstructions": "Cole a URL do site e do quadro, conecte",
+    "repoUrl": "URL do repositório",
+    "pat": "Token de acesso pessoal",
+    "patOptional": "opcional se token do sistema configurado",
+    "generateToken": "Gerar um token com escopo repo",
+    "jiraSiteUrl": "URL do site Jira",
+    "boardUrl": "URL do quadro",
+    "boardUrlHint": "Abra seu quadro Jira e copie a URL do navegador",
+    "connecting": "Conectando...",
+    "connectedTo": "Conectado a",
+    "connectionFailed": "Falha na conexão",
+    "githubUrlRequired": "Insira uma URL de repo GitHub e selecione um projeto",
+    "jiraFieldsRequired": "Preencha todos os campos do Jira e selecione um projeto",
+    "connectAnother": "Conectar outro",
+    "goToDashboard": "Ir ao painel",
+    "back": "Voltar",
+    "oneClickTitle": "Conecte com um clique",
+    "oneClickDesc": "Cole uma URL, escolha seu projeto, pronto — seus dados fluem automaticamente"
   }
 }

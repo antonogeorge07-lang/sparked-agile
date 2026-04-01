@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "Tools verbinden"
   },
   "navigation": {
     "home": "Startseite",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "Verbinden Sie Ihre Tools",
+    "pageSubtitle": "URL einfügen, verbinden klicken — Ihre Daten fließen automatisch.",
+    "connectToProject": "Mit Projekt verbinden",
+    "selectProject": "Projekt auswählen",
+    "loadingProjects": "Projekte werden geladen...",
+    "createProjectFirst": "Erstellen Sie zuerst ein Projekt, um Integrationen zu verbinden",
+    "createProject": "Projekt erstellen",
+    "connect": "Verbinden",
+    "connectGithub": "GitHub verbinden",
+    "connectJira": "Jira verbinden",
+    "githubDesc": "Verbinden Sie Ihr Repository, um Commits, PRs und Issues zu verfolgen",
+    "jiraDesc": "Verbinden Sie Ihr Board, um Sprints, Tickets und Backlogs zu synchronisieren",
+    "githubInstructions": "Repo-URL einfügen, Token hinzufügen, verbinden",
+    "jiraInstructions": "Site- und Board-URL einfügen, verbinden",
+    "repoUrl": "Repository-URL",
+    "pat": "Persönliches Zugriffstoken",
+    "patOptional": "optional wenn System-Token konfiguriert",
+    "generateToken": "Token mit repo-Berechtigung generieren",
+    "jiraSiteUrl": "Jira-Site-URL",
+    "boardUrl": "Board-URL",
+    "boardUrlHint": "Öffnen Sie Ihr Jira-Board und kopieren Sie die URL aus dem Browser",
+    "connecting": "Verbinden...",
+    "connectedTo": "Verbunden mit",
+    "connectionFailed": "Verbindung fehlgeschlagen",
+    "githubUrlRequired": "Bitte geben Sie eine GitHub-Repo-URL ein und wählen Sie ein Projekt",
+    "jiraFieldsRequired": "Bitte füllen Sie alle Jira-Felder aus und wählen Sie ein Projekt",
+    "connectAnother": "Weiteres verbinden",
+    "goToDashboard": "Zum Dashboard",
+    "back": "Zurück",
+    "oneClickTitle": "Mit einem Klick verbinden",
+    "oneClickDesc": "URL einfügen, Projekt wählen, fertig — Ihre Daten fließen automatisch"
   }
 }

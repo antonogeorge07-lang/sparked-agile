@@ -108,8 +108,8 @@ export default function QuickStart() {
                 <Zap className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <CardTitle className="text-2xl">Connect in One Click</CardTitle>
-                <CardDescription>Paste a URL, pick your project, done — your data flows in automatically</CardDescription>
+                <CardTitle className="text-2xl">{t("connectTools.oneClickTitle")}</CardTitle>
+                <CardDescription>{t("connectTools.oneClickDesc")}</CardDescription>
               </div>
             </div>
           </CardHeader>
