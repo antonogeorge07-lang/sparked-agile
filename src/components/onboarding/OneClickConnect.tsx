@@ -210,7 +210,7 @@ export const OneClickConnect = () => {
                 description="Connect your board to sync sprints, tickets, and backlogs"
                 icon={<Network className="h-8 w-8" />}
                 onClick={() => setSelectedType("jira")}
-                accentClass="from-blue-500 to-blue-400"
+                accentClass="from-[hsl(var(--primary))] to-[hsl(var(--primary)/0.7)]"
               />
             </motion.div>
           ) : selectedType === "github" ? (
