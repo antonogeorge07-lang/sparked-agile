@@ -310,8 +310,8 @@ export const OneClickConnect = () => {
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-blue-500/10">
-                        <Network className="h-6 w-6 text-blue-500" />
+                      <div className="p-2 rounded-lg bg-accent">
+                        <Network className="h-6 w-6 text-primary" />
                       </div>
                       <div>
                         <CardTitle className="text-lg">Connect Jira</CardTitle>
