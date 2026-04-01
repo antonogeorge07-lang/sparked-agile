@@ -3,9 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { OneClickConnect } from "@/components/onboarding/OneClickConnect";
 import {
   GitBranch, Target, Briefcase, Sparkles, Presentation, ListFilter,
-  Calendar, Users, Activity, Network, ArrowRight, CheckCircle
+  Calendar, Users, Activity, Network, ArrowRight, CheckCircle, Zap
 } from "lucide-react";
 
 const features = [
