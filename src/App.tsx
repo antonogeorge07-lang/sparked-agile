@@ -165,6 +165,7 @@ const App = () => {
                   <Route path="/team-hub" element={<TeamHub />} />
                   <Route path="/activity-feed" element={<UnifiedActivityFeed />} />
                   <Route path="/import" element={<DataImport />} />
+                  <Route path="/connect" element={<ConnectTools />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
