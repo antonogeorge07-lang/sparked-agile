@@ -63,6 +63,7 @@ const ExternalTasksHub = lazy(() => import("./pages/ExternalTasksHub"));
 const UnifiedActivityFeed = lazy(() => import("./pages/UnifiedActivityFeed"));
 const TeamHub = lazy(() => import("./pages/TeamHub"));
 const DataImport = lazy(() => import("./pages/DataImport"));
+const ConnectTools = lazy(() => import("./pages/ConnectTools"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -164,6 +165,7 @@ const App = () => {
                   <Route path="/team-hub" element={<TeamHub />} />
                   <Route path="/activity-feed" element={<UnifiedActivityFeed />} />
                   <Route path="/import" element={<DataImport />} />
+                  <Route path="/connect" element={<ConnectTools />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

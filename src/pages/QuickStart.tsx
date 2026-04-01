@@ -3,9 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { OneClickConnect } from "@/components/onboarding/OneClickConnect";
 import {
   GitBranch, Target, Briefcase, Sparkles, Presentation, ListFilter,
-  Calendar, Users, Activity, Network, ArrowRight, CheckCircle
+  Calendar, Users, Activity, Network, ArrowRight, CheckCircle, Zap
 } from "lucide-react";
 
 const features = [
@@ -96,6 +97,24 @@ export default function QuickStart() {
                 </div>
               ))}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* One-Click Connect */}
+        <Card className="mb-12">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Zap className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl">Connect in One Click</CardTitle>
+                <CardDescription>Paste a URL, pick your project, done — your data flows in automatically</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <OneClickConnect />
           </CardContent>
         </Card>
 
