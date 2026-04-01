@@ -1224,5 +1224,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "Connect Your Tools",
+    "pageSubtitle": "Paste a URL, click connect — your data flows in automatically.",
+    "connectToProject": "Connect to project",
+    "selectProject": "Select a project",
+    "loadingProjects": "Loading projects...",
+    "createProjectFirst": "Create a project first to connect integrations",
+    "createProject": "Create Project",
+    "connect": "Connect",
+    "connectGithub": "Connect GitHub",
+    "connectJira": "Connect Jira",
+    "githubDesc": "Connect your repository to track commits, PRs, and issues",
+    "jiraDesc": "Connect your board to sync sprints, tickets, and backlogs",
+    "githubInstructions": "Paste your repo URL, add a token, connect",
+    "jiraInstructions": "Paste your site & board URL, connect",
+    "repoUrl": "Repository URL",
+    "pat": "Personal Access Token",
+    "patOptional": "optional if system token configured",
+    "generateToken": "Generate a token with repo scope",
+    "jiraSiteUrl": "Jira Site URL",
+    "boardUrl": "Board URL",
+    "boardUrlHint": "Open your Jira board and copy the URL from your browser",
+    "connecting": "Connecting...",
+    "connectedTo": "Connected to",
+    "connectionFailed": "Connection failed",
+    "githubUrlRequired": "Please enter a GitHub repo URL and select a project",
+    "jiraFieldsRequired": "Please fill in all Jira fields and select a project",
+    "connectAnother": "Connect another",
+    "goToDashboard": "Go to Dashboard",
+    "back": "Back",
+    "oneClickTitle": "Connect in One Click",
+    "oneClickDesc": "Paste a URL, pick your project, done — your data flows in automatically"
   }
 }
