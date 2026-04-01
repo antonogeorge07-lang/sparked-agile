@@ -428,7 +428,7 @@ const StatusMessage = ({ state }: { state: ConnectionState }) => {
       animate={{ opacity: 1, height: "auto" }}
       className={cn(
         "rounded-lg p-3 text-sm flex items-center gap-2",
-        state.status === "success" && "bg-green-500/10 text-green-700 dark:text-green-400",
+        state.status === "success" && "bg-primary/10 text-primary",
         state.status === "error" && "bg-destructive/10 text-destructive"
       )}
     >
