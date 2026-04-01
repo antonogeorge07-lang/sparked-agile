@@ -100,6 +100,24 @@ export default function QuickStart() {
           </CardContent>
         </Card>
 
+        {/* One-Click Connect */}
+        <Card className="mb-12">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Zap className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl">Connect in One Click</CardTitle>
+                <CardDescription>Paste a URL, pick your project, done — your data flows in automatically</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <OneClickConnect />
+          </CardContent>
+        </Card>
+
         {/* Feature Categories */}
         <div className="space-y-8">
           <h2 className="text-3xl font-bold">{t("pages.quickStart.platformFeatures")}</h2>
