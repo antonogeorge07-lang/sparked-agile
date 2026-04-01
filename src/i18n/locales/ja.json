@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "ツールを接続"
   },
   "navigation": {
     "home": "ホーム",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "ツールを接続",
+    "pageSubtitle": "URLを貼り付けて接続をクリック — データが自動的に流れます。",
+    "connectToProject": "プロジェクトに接続",
+    "selectProject": "プロジェクトを選択",
+    "loadingProjects": "プロジェクトを読み込み中...",
+    "createProjectFirst": "統合を接続するには、まずプロジェクトを作成してください",
+    "createProject": "プロジェクトを作成",
+    "connect": "接続",
+    "connectGithub": "GitHub を接続",
+    "connectJira": "Jira を接続",
+    "githubDesc": "リポジトリを接続してコミット、PR、イシューを追跡",
+    "jiraDesc": "ボードを接続してスプリント、チケット、バックログを同期",
+    "githubInstructions": "リポジトリURLを貼り付け、トークンを追加、接続",
+    "jiraInstructions": "サイトとボードのURLを貼り付けて接続",
+    "repoUrl": "リポジトリURL",
+    "pat": "個人アクセストークン",
+    "patOptional": "システムトークンが設定されている場合はオプション",
+    "generateToken": "repoスコープのトークンを生成",
+    "jiraSiteUrl": "JiraサイトURL",
+    "boardUrl": "ボードURL",
+    "boardUrlHint": "Jiraボードを開いてブラウザからURLをコピー",
+    "connecting": "接続中...",
+    "connectedTo": "接続済み",
+    "connectionFailed": "接続に失敗しました",
+    "githubUrlRequired": "GitHubリポジトリURLを入力してプロジェクトを選択してください",
+    "jiraFieldsRequired": "すべてのJiraフィールドを入力してプロジェクトを選択してください",
+    "connectAnother": "別のを接続",
+    "goToDashboard": "ダッシュボードへ",
+    "back": "戻る",
+    "oneClickTitle": "ワンクリックで接続",
+    "oneClickDesc": "URLを貼り付け、プロジェクトを選択、完了 — データが自動的に流れます"
   }
 }

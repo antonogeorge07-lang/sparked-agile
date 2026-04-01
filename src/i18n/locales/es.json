@@ -86,7 +86,8 @@
     "security": "Seguridad",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "Conectar herramientas"
   },
   "navigation": {
     "home": "Inicio",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "Conecta tus herramientas",
+    "pageSubtitle": "Pega una URL, haz clic en conectar — tus datos fluyen automáticamente.",
+    "connectToProject": "Conectar al proyecto",
+    "selectProject": "Seleccionar un proyecto",
+    "loadingProjects": "Cargando proyectos...",
+    "createProjectFirst": "Crea un proyecto primero para conectar integraciones",
+    "createProject": "Crear proyecto",
+    "connect": "Conectar",
+    "connectGithub": "Conectar GitHub",
+    "connectJira": "Conectar Jira",
+    "githubDesc": "Conecta tu repositorio para rastrear commits, PRs y problemas",
+    "jiraDesc": "Conecta tu tablero para sincronizar sprints, tickets y backlogs",
+    "githubInstructions": "Pega la URL del repo, agrega un token, conecta",
+    "jiraInstructions": "Pega la URL del sitio y del tablero, conecta",
+    "repoUrl": "URL del repositorio",
+    "pat": "Token de acceso personal",
+    "patOptional": "opcional si hay token del sistema configurado",
+    "generateToken": "Genera un token con alcance repo",
+    "jiraSiteUrl": "URL del sitio Jira",
+    "boardUrl": "URL del tablero",
+    "boardUrlHint": "Abre tu tablero Jira y copia la URL del navegador",
+    "connecting": "Conectando...",
+    "connectedTo": "Conectado a",
+    "connectionFailed": "Conexión fallida",
+    "githubUrlRequired": "Ingresa una URL de repo GitHub y selecciona un proyecto",
+    "jiraFieldsRequired": "Completa todos los campos de Jira y selecciona un proyecto",
+    "connectAnother": "Conectar otro",
+    "goToDashboard": "Ir al panel",
+    "back": "Atrás",
+    "oneClickTitle": "Conecta en un clic",
+    "oneClickDesc": "Pega una URL, elige tu proyecto, listo — tus datos fluyen automáticamente"
   }
 }

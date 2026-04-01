@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "连接工具"
   },
   "navigation": {
     "home": "首页",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "连接您的工具",
+    "pageSubtitle": "粘贴URL，点击连接——您的数据自动流入。",
+    "connectToProject": "连接到项目",
+    "selectProject": "选择项目",
+    "loadingProjects": "正在加载项目...",
+    "createProjectFirst": "请先创建项目以连接集成",
+    "createProject": "创建项目",
+    "connect": "连接",
+    "connectGithub": "连接 GitHub",
+    "connectJira": "连接 Jira",
+    "githubDesc": "连接您的仓库以跟踪提交、PR和问题",
+    "jiraDesc": "连接您的看板以同步冲刺、工单和待办",
+    "githubInstructions": "粘贴仓库URL，添加令牌，连接",
+    "jiraInstructions": "粘贴站点和看板URL，连接",
+    "repoUrl": "仓库URL",
+    "pat": "个人访问令牌",
+    "patOptional": "如已配置系统令牌则可选",
+    "generateToken": "生成具有repo权限的令牌",
+    "jiraSiteUrl": "Jira站点URL",
+    "boardUrl": "看板URL",
+    "boardUrlHint": "打开您的Jira看板并从浏览器复制URL",
+    "connecting": "连接中...",
+    "connectedTo": "已连接到",
+    "connectionFailed": "连接失败",
+    "githubUrlRequired": "请输入GitHub仓库URL并选择项目",
+    "jiraFieldsRequired": "请填写所有Jira字段并选择项目",
+    "connectAnother": "连接其他",
+    "goToDashboard": "前往仪表板",
+    "back": "返回",
+    "oneClickTitle": "一键连接",
+    "oneClickDesc": "粘贴URL，选择项目，完成——数据自动流入"
   }
 }

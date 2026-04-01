@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "도구 연결"
   },
   "navigation": {
     "home": "홈",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "도구 연결하기",
+    "pageSubtitle": "URL을 붙여넣고 연결을 클릭하세요 — 데이터가 자동으로 흐릅니다.",
+    "connectToProject": "프로젝트에 연결",
+    "selectProject": "프로젝트 선택",
+    "loadingProjects": "프로젝트 로딩 중...",
+    "createProjectFirst": "통합을 연결하려면 먼저 프로젝트를 만드세요",
+    "createProject": "프로젝트 만들기",
+    "connect": "연결",
+    "connectGithub": "GitHub 연결",
+    "connectJira": "Jira 연결",
+    "githubDesc": "저장소를 연결하여 커밋, PR, 이슈를 추적하세요",
+    "jiraDesc": "보드를 연결하여 스프린트, 티켓, 백로그를 동기화하세요",
+    "githubInstructions": "저장소 URL을 붙여넣고 토큰을 추가하고 연결하세요",
+    "jiraInstructions": "사이트와 보드 URL을 붙여넣고 연결하세요",
+    "repoUrl": "저장소 URL",
+    "pat": "개인 액세스 토큰",
+    "patOptional": "시스템 토큰이 구성된 경우 선택 사항",
+    "generateToken": "repo 범위의 토큰 생성",
+    "jiraSiteUrl": "Jira 사이트 URL",
+    "boardUrl": "보드 URL",
+    "boardUrlHint": "Jira 보드를 열고 브라우저에서 URL을 복사하세요",
+    "connecting": "연결 중...",
+    "connectedTo": "연결됨",
+    "connectionFailed": "연결 실패",
+    "githubUrlRequired": "GitHub 저장소 URL을 입력하고 프로젝트를 선택하세요",
+    "jiraFieldsRequired": "모든 Jira 필드를 작성하고 프로젝트를 선택하세요",
+    "connectAnother": "다른 것 연결",
+    "goToDashboard": "대시보드로 이동",
+    "back": "뒤로",
+    "oneClickTitle": "원클릭 연결",
+    "oneClickDesc": "URL을 붙여넣고 프로젝트를 선택하면 완료 — 데이터가 자동으로 흐릅니다"
   }
 }

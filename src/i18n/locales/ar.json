@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "ربط الأدوات"
   },
   "navigation": {
     "home": "الرئيسية",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "اربط أدواتك",
+    "pageSubtitle": "الصق رابطاً، انقر على ربط — بياناتك تتدفق تلقائياً.",
+    "connectToProject": "ربط بالمشروع",
+    "selectProject": "اختر مشروعاً",
+    "loadingProjects": "جاري تحميل المشاريع...",
+    "createProjectFirst": "أنشئ مشروعاً أولاً لربط التكاملات",
+    "createProject": "إنشاء مشروع",
+    "connect": "ربط",
+    "connectGithub": "ربط GitHub",
+    "connectJira": "ربط Jira",
+    "githubDesc": "اربط مستودعك لتتبع الإيداعات وطلبات السحب والمشكلات",
+    "jiraDesc": "اربط لوحتك لمزامنة السبرنتات والتذاكر والمتراكمات",
+    "githubInstructions": "الصق رابط المستودع، أضف رمزاً، اربط",
+    "jiraInstructions": "الصق رابط الموقع واللوحة، اربط",
+    "repoUrl": "رابط المستودع",
+    "pat": "رمز الوصول الشخصي",
+    "patOptional": "اختياري إذا تم تكوين رمز النظام",
+    "generateToken": "إنشاء رمز بصلاحية repo",
+    "jiraSiteUrl": "رابط موقع Jira",
+    "boardUrl": "رابط اللوحة",
+    "boardUrlHint": "افتح لوحة Jira وانسخ الرابط من المتصفح",
+    "connecting": "جاري الربط...",
+    "connectedTo": "متصل بـ",
+    "connectionFailed": "فشل الاتصال",
+    "githubUrlRequired": "أدخل رابط مستودع GitHub واختر مشروعاً",
+    "jiraFieldsRequired": "املأ جميع حقول Jira واختر مشروعاً",
+    "connectAnother": "ربط آخر",
+    "goToDashboard": "الذهاب للوحة التحكم",
+    "back": "رجوع",
+    "oneClickTitle": "اربط بنقرة واحدة",
+    "oneClickDesc": "الصق رابطاً، اختر مشروعك، انتهى — بياناتك تتدفق تلقائياً"
   }
 }

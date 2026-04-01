@@ -86,7 +86,8 @@
     "security": "Security",
     "externalTasks": "External Tasks",
     "teamHub": "Team Hub",
-    "activityFeed": "Activity Feed"
+    "activityFeed": "Activity Feed",
+    "connectTools": "Connecter les outils"
   },
   "navigation": {
     "home": "Accueil",
@@ -1224,5 +1225,38 @@
       "title": "Initialise Project Workspace",
       "subtitle": "Set up your complete Agile project environment with integrated tools and ceremonies"
     }
+  },
+  "connectTools": {
+    "pageTitle": "Connectez vos outils",
+    "pageSubtitle": "Collez une URL, cliquez sur connecter — vos données affluent automatiquement.",
+    "connectToProject": "Connecter au projet",
+    "selectProject": "Sélectionner un projet",
+    "loadingProjects": "Chargement des projets...",
+    "createProjectFirst": "Créez d'abord un projet pour connecter des intégrations",
+    "createProject": "Créer un projet",
+    "connect": "Connecter",
+    "connectGithub": "Connecter GitHub",
+    "connectJira": "Connecter Jira",
+    "githubDesc": "Connectez votre dépôt pour suivre les commits, PRs et problèmes",
+    "jiraDesc": "Connectez votre tableau pour synchroniser sprints, tickets et backlogs",
+    "githubInstructions": "Collez l'URL du dépôt, ajoutez un token, connectez",
+    "jiraInstructions": "Collez l'URL du site et du tableau, connectez",
+    "repoUrl": "URL du dépôt",
+    "pat": "Token d'accès personnel",
+    "patOptional": "optionnel si un token système est configuré",
+    "generateToken": "Générer un token avec la portée repo",
+    "jiraSiteUrl": "URL du site Jira",
+    "boardUrl": "URL du tableau",
+    "boardUrlHint": "Ouvrez votre tableau Jira et copiez l'URL du navigateur",
+    "connecting": "Connexion...",
+    "connectedTo": "Connecté à",
+    "connectionFailed": "Échec de la connexion",
+    "githubUrlRequired": "Entrez une URL de dépôt GitHub et sélectionnez un projet",
+    "jiraFieldsRequired": "Remplissez tous les champs Jira et sélectionnez un projet",
+    "connectAnother": "Connecter un autre",
+    "goToDashboard": "Aller au tableau de bord",
+    "back": "Retour",
+    "oneClickTitle": "Connectez en un clic",
+    "oneClickDesc": "Collez une URL, choisissez votre projet, terminé — vos données affluent automatiquement"
   }
 }
