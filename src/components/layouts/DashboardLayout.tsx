@@ -1,10 +1,9 @@
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
-import { SidebarTour } from "@/components/SidebarTour";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { GlobalSearchDialog } from "@/components/GlobalSearchDialog";
 import saaiLogo from "@/assets/saai-logo.png";
@@ -17,29 +16,10 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const [showTour, setShowTour] = useState(false);
-
-  useEffect(() => {
-    // Check if user has seen the sidebar tour
-    const tourCompleted = localStorage.getItem("sidebar_tour_completed");
-    if (!tourCompleted) {
-      // Delay to ensure sidebar is fully rendered
-      const timer = setTimeout(() => setShowTour(true), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  const handleTourComplete = () => {
-    localStorage.setItem("sidebar_tour_completed", "true");
-    setShowTour(false);
-  };
-
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        
-        <SidebarTour isActive={showTour} onComplete={handleTourComplete} />
         
         <div className="flex-1 flex flex-col w-full">
           {/* Fixed Header */}
