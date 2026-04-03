@@ -282,13 +282,13 @@ export default function EpicManagement() {
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Epics Found</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.epicManagement.noEpics")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Create your first Epic to start organizing your work
+                  {t("pages.epicManagement.noEpicsDesc")}
                 </p>
                 <Button onClick={() => setIsCreateDialogOpen(true)} disabled={valueStreams.length === 0}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Epic
+                  {t("pages.epicManagement.createEpic")}
                 </Button>
               </CardContent>
             </Card>
