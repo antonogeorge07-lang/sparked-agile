@@ -332,7 +332,7 @@ export default function EpicPortfolio() {
                 {averageVelocity.toFixed(1)}
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Story points per day
+                {t("pages.epicPortfolio.storyPointsPerDay")}
               </p>
             </CardContent>
           </Card>
