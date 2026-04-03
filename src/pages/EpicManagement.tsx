@@ -340,7 +340,7 @@ export default function EpicManagement() {
                           {epic.features && (
                             <div className="flex items-center text-sm text-muted-foreground">
                               <Users className="h-4 w-4 mr-2" />
-                              {epic.features[0]?.count || 0} Features
+                              {epic.features[0]?.count || 0} {t("pages.epicManagement.features")}
                             </div>
                           )}
 
