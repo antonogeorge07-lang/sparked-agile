@@ -178,7 +178,7 @@ export default function EpicManagement() {
               <div>
                 <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">{t("pages.epicManagement.title")}</h1>
                 <p className="text-muted-foreground">
-                  Create, track, and manage Epics across your value streams
+                  {t("pages.epicManagement.createTrackManage")}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -188,7 +188,7 @@ export default function EpicManagement() {
                   size="lg"
                 >
                   <Target className="mr-2 h-5 w-5" />
-                  Manage Value Streams
+                  {t("pages.epicManagement.manageValueStreams")}
                 </Button>
                 <Button 
                   onClick={() => setIsCreateDialogOpen(true)} 
@@ -196,7 +196,7 @@ export default function EpicManagement() {
                   disabled={valueStreams.length === 0}
                 >
                   <Plus className="mr-2 h-5 w-5" />
-                  Create Epic
+                  {t("pages.epicManagement.createEpic")}
                 </Button>
               </div>
             </div>
