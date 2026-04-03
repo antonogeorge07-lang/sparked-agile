@@ -246,14 +246,14 @@ export default function EpicManagement() {
 
               <Select value={selectedPriority} onValueChange={setSelectedPriority}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Priorities" />
+                  <SelectValue placeholder={t("pages.epicManagement.allPriorities")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Priorities</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="all">{t("pages.epicManagement.allPriorities")}</SelectItem>
+                  <SelectItem value="critical">{t("pages.epicManagement.critical")}</SelectItem>
+                  <SelectItem value="high">{t("pages.epicManagement.high")}</SelectItem>
+                  <SelectItem value="medium">{t("pages.epicManagement.medium")}</SelectItem>
+                  <SelectItem value="low">{t("pages.epicManagement.low")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
