@@ -17,179 +17,140 @@ export default function PrivacyPolicy() {
           </div>
           <div>
             <h1 className="text-4xl font-bold">{t("pages.privacy.title")}</h1>
-            <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+            <p className="text-muted-foreground">{t("pages.privacy.lastUpdated", { date: new Date().toLocaleDateString() })}</p>
           </div>
         </div>
         <Card className="shadow-card border-primary/10">
           <CardHeader>
-            <CardTitle className="text-2xl">Data Protection & Privacy</CardTitle>
+            <CardTitle className="text-2xl">{t("pages.privacy.dataProtection")}</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-slate dark:prose-invert max-w-none">
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
-              <p className="text-muted-foreground mb-4">
-                Welcome to SAAI (Spark-Agile Active Intelligence). We at Antono George 
-                are committed to protecting your privacy. This Privacy Policy explains how we collect, use, 
-                and safeguard your information when you use SAAI.
-              </p>
-              <p className="text-muted-foreground mb-4">
-                As a micro-studio, we take data protection seriously and comply with GDPR and 
-                other applicable data protection laws.
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">1. {t("pages.privacy.introduction")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.introText1")}</p>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.introText2")}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">2. Information We Collect</h2>
-              <h3 className="text-xl font-medium mb-2">2.1 Personal Information</h3>
-              <p className="text-muted-foreground mb-4">
-                We collect information that you provide directly to us, including:
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">2. {t("pages.privacy.infoWeCollect")}</h2>
+              <h3 className="text-xl font-medium mb-2">2.1 {t("pages.privacy.personalInfo")}</h3>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.personalInfoDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Name and email address</li>
-                <li>Account credentials</li>
-                <li>Profile information and preferences</li>
-                <li>Payment information (processed securely through Stripe)</li>
+                <li>{t("pages.privacy.nameEmail")}</li>
+                <li>{t("pages.privacy.accountCredentials")}</li>
+                <li>{t("pages.privacy.profileInfo")}</li>
+                <li>{t("pages.privacy.paymentInfo")}</li>
               </ul>
 
-              <h3 className="text-xl font-medium mb-2">2.2 Usage Data</h3>
-              <p className="text-muted-foreground mb-4">
-                We automatically collect certain information about your device and how you interact with our service:
-              </p>
+              <h3 className="text-xl font-medium mb-2">2.2 {t("pages.privacy.usageData")}</h3>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.usageDataDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Log data and usage patterns</li>
-                <li>Device information and browser type</li>
-                <li>IP address and location data</li>
-                <li>Cookies and similar tracking technologies</li>
+                <li>{t("pages.privacy.logData")}</li>
+                <li>{t("pages.privacy.deviceInfo")}</li>
+                <li>{t("pages.privacy.ipAddress")}</li>
+                <li>{t("pages.privacy.cookies")}</li>
               </ul>
 
-              <h3 className="text-xl font-medium mb-2">2.3 Project Data</h3>
-              <p className="text-muted-foreground mb-4">
-                When you use our platform, we collect and process:
-              </p>
+              <h3 className="text-xl font-medium mb-2">2.3 {t("pages.privacy.projectData")}</h3>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.projectDataDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Sprint planning data and backlog information</li>
-                <li>Retrospective feedback and insights</li>
-                <li>Integration data from JIRA, GitHub, and Microsoft services</li>
-                <li>AI-generated recommendations and summaries</li>
+                <li>{t("pages.privacy.sprintData")}</li>
+                <li>{t("pages.privacy.retroFeedback")}</li>
+                <li>{t("pages.privacy.integrationData")}</li>
+                <li>{t("pages.privacy.aiRecommendations")}</li>
               </ul>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">3. How We Use Your Information</h2>
-              <p className="text-muted-foreground mb-4">We use the information we collect to:</p>
+              <h2 className="text-2xl font-semibold mb-4">3. {t("pages.privacy.howWeUse")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.howWeUseDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Provide, maintain, and improve our services</li>
-                <li>Process transactions and send related information</li>
-                <li>Generate AI-powered insights and recommendations</li>
-                <li>Send administrative and marketing communications</li>
-                <li>Monitor and analyze usage patterns and trends</li>
-                <li>Detect, prevent, and address technical issues and fraud</li>
-                <li>Comply with legal obligations</li>
+                <li>{t("pages.privacy.provideMaintain")}</li>
+                <li>{t("pages.privacy.processTransactions")}</li>
+                <li>{t("pages.privacy.generateInsights")}</li>
+                <li>{t("pages.privacy.sendCommunications")}</li>
+                <li>{t("pages.privacy.monitorAnalyze")}</li>
+                <li>{t("pages.privacy.detectPrevent")}</li>
+                <li>{t("pages.privacy.complyLegal")}</li>
               </ul>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">4. Data Sharing and Disclosure</h2>
-              <p className="text-muted-foreground mb-4">
-                We may share your information in the following circumstances:
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">4. {t("pages.privacy.dataSharing")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.dataSharingDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li><strong>With your team members:</strong> Project data is shared with authorized team members within your workspace</li>
-                <li><strong>Service providers:</strong> We use trusted third-party services including cloud hosting, payment processing, and analytics</li>
-                <li><strong>Business transfers:</strong> In connection with any merger, sale, or acquisition</li>
-                <li><strong>Legal requirements:</strong> When required by law or to protect our rights</li>
+                <li><strong>{t("pages.privacy.teamMembers")}</strong></li>
+                <li><strong>{t("pages.privacy.serviceProviders")}</strong></li>
+                <li><strong>{t("pages.privacy.businessTransfers")}</strong></li>
+                <li><strong>{t("pages.privacy.legalRequirements")}</strong></li>
               </ul>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">5. Data Security</h2>
-              <p className="text-muted-foreground mb-4">
-                We implement industry-standard security measures to protect your information:
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">5. {t("pages.privacy.dataSecurity")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.dataSecurityDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Encryption of data in transit and at rest</li>
-                <li>Row-level security and role-based access control</li>
-                <li>Regular security audits and updates</li>
-                <li>Secure third-party integrations</li>
+                <li>{t("pages.privacy.encryptionTransitRest")}</li>
+                <li>{t("pages.privacy.rlsSecurity")}</li>
+                <li>{t("pages.privacy.regularAudits")}</li>
+                <li>{t("pages.privacy.secureIntegrations")}</li>
               </ul>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">6. Your Rights and Choices</h2>
-              <p className="text-muted-foreground mb-4">You have the right to:</p>
+              <h2 className="text-2xl font-semibold mb-4">6. {t("pages.privacy.yourRights")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.yourRightsDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Access, update, or delete your personal information</li>
-                <li>Export your data in a portable format</li>
-                <li>Opt out of marketing communications</li>
-                <li>Disable cookies through your browser settings</li>
-                <li>Request deletion of your account and associated data</li>
+                <li>{t("pages.privacy.accessUpdateDelete")}</li>
+                <li>{t("pages.privacy.exportData")}</li>
+                <li>{t("pages.privacy.optOut")}</li>
+                <li>{t("pages.privacy.disableCookies")}</li>
+                <li>{t("pages.privacy.requestDeletion")}</li>
               </ul>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">7. Data Retention</h2>
-              <p className="text-muted-foreground mb-4">
-                We retain your information for as long as necessary to provide our services and comply with legal obligations. 
-                When you delete your account, we will delete or anonymize your data within 30 days, except where we are required 
-                to retain it by law.
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">7. {t("pages.privacy.dataRetention")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.dataRetentionDesc")}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">8. International Data Transfers</h2>
-              <p className="text-muted-foreground mb-4">
-                Your information may be transferred to and processed in countries other than your country of residence. 
-                We ensure appropriate safeguards are in place to protect your data in accordance with this Privacy Policy.
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">8. {t("pages.privacy.internationalTransfers")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.internationalTransfersDesc")}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">9. Children's Privacy</h2>
-              <p className="text-muted-foreground mb-4">
-                Our services are not intended for individuals under the age of 18. We do not knowingly collect personal 
-                information from children. If you become aware that a child has provided us with personal information, 
-                please contact us.
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">9. {t("pages.privacy.childrensPrivacy")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.childrensPrivacyDesc")}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">10. Changes to This Policy</h2>
-              <p className="text-muted-foreground mb-4">
-                We may update this Privacy Policy from time to time. We will notify you of any material changes by 
-                posting the new policy on this page and updating the "Last updated" date. Your continued use of our 
-                services after such changes constitutes your acceptance of the updated policy.
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">10. {t("pages.privacy.changesToPolicy")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.changesToPolicyDesc")}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">11. GDPR Compliance</h2>
-              <p className="text-muted-foreground mb-4">
-                If you are in the European Economic Area (EEA), you have additional rights under GDPR:
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">11. {t("pages.privacy.gdprCompliance")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.gdprComplianceDesc")}</p>
               <ul className="list-disc pl-6 mb-4 text-muted-foreground">
-                <li>Right to access your personal data</li>
-                <li>Right to rectification of inaccurate data</li>
-                <li>Right to erasure ("right to be forgotten")</li>
-                <li>Right to restrict processing</li>
-                <li>Right to data portability</li>
-                <li>Right to object to processing</li>
-                <li>Right to withdraw consent at any time</li>
+                <li>{t("pages.privacy.rightAccess")}</li>
+                <li>{t("pages.privacy.rightRectification")}</li>
+                <li>{t("pages.privacy.rightErasure")}</li>
+                <li>{t("pages.privacy.rightRestrict")}</li>
+                <li>{t("pages.privacy.rightPortability")}</li>
+                <li>{t("pages.privacy.rightObject")}</li>
+                <li>{t("pages.privacy.rightWithdraw")}</li>
               </ul>
-              <p className="text-muted-foreground mb-4">
-                To exercise these rights, please contact us using the information below.
-              </p>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.exerciseRights")}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">12. Contact Information</h2>
-              <p className="text-muted-foreground mb-4">
-                If you have questions or concerns about this Privacy Policy or want to exercise your rights, 
-                please contact us at:
-              </p>
+              <h2 className="text-2xl font-semibold mb-4">12. {t("pages.privacy.contactInfo")}</h2>
+              <p className="text-muted-foreground mb-4">{t("pages.privacy.contactInfoDesc")}</p>
               <p className="text-muted-foreground">
-                <strong>Data Controller:</strong> Antono George<br />
-                <strong>Email:</strong> Antono.George1@outlook.com<br />
-                <strong>Support:</strong> Antono.George1@outlook.com
+                <strong>{t("pages.privacy.dataController")}:</strong> Antono George<br />
+                <strong>{t("pages.privacy.email")}:</strong> Antono.George1@outlook.com<br />
+                <strong>{t("pages.privacy.support")}:</strong> Antono.George1@outlook.com
               </p>
             </section>
           </CardContent>
