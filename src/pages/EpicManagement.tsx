@@ -355,7 +355,7 @@ export default function EpicManagement() {
 
                           {epic.health_score && (
                             <div className="flex items-center justify-between pt-2 border-t">
-                              <span className="text-sm text-muted-foreground">Health</span>
+                              <span className="text-sm text-muted-foreground">{t("pages.epicManagement.health")}</span>
                               <span className={`text-sm font-semibold ${getHealthColor(epic.health_score)}`}>
                                 {epic.health_score.replace('_', ' ').toUpperCase()}
                               </span>
