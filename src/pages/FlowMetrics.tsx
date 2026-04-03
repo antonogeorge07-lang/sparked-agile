@@ -312,11 +312,11 @@ export default function FlowMetrics() {
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Avg Cycle Time</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.avgCycleTime")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{avgCycleTime}</div>
-                    <p className="text-sm text-muted-foreground mt-1">days</p>
-                    <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground"><Clock className="w-4 h-4" /><span>Start to finish</span></div>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.days")}</p>
+                    <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground"><Clock className="w-4 h-4" /><span>{t("pages.flowMetrics.startToFinish")}</span></div>
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
