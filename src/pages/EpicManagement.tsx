@@ -295,9 +295,9 @@ export default function EpicManagement() {
           ) : selectedProject ? (
             <Tabs defaultValue="board" className="space-y-6">
               <TabsList>
-                <TabsTrigger value="board">Board View</TabsTrigger>
-                <TabsTrigger value="timeline">Timeline View</TabsTrigger>
-                <TabsTrigger value="gantt">Gantt Chart</TabsTrigger>
+                <TabsTrigger value="board">{t("pages.epicManagement.boardView")}</TabsTrigger>
+                <TabsTrigger value="timeline">{t("pages.epicManagement.timelineView")}</TabsTrigger>
+                <TabsTrigger value="gantt">{t("pages.epicManagement.ganttChart")}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="board">
