@@ -305,10 +305,10 @@ export default function FlowMetrics() {
             <TabsContent value="flow">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Work in Progress</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.workInProgress")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{latestMetrics?.work_in_progress || 0}</div>
-                    <p className="text-sm text-muted-foreground mt-1">active items</p>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.activeItems")}</p>
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
