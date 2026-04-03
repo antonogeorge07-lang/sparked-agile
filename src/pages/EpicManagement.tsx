@@ -333,7 +333,7 @@ export default function EpicManagement() {
                           {epic.business_value && (
                             <div className="flex items-center text-sm">
                               <TrendingUp className="h-4 w-4 mr-2 text-primary" />
-                              <span>Business Value: {epic.business_value}/100</span>
+                              <span>{t("pages.epicManagement.businessValue")}: {epic.business_value}/100</span>
                             </div>
                           )}
 
