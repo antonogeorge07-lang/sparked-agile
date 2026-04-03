@@ -232,15 +232,15 @@ export default function EpicManagement() {
 
                <Select value={selectedStatus} onValueChange={setSelectedStatus}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Statuses" />
+                  <SelectValue placeholder={t("pages.epicManagement.allStatuses")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="backlog">Backlog</SelectItem>
-                  <SelectItem value="planning">Planning</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="archived">Archived</SelectItem>
+                  <SelectItem value="all">{t("pages.epicManagement.allStatuses")}</SelectItem>
+                  <SelectItem value="backlog">{t("pages.epicManagement.backlog")}</SelectItem>
+                  <SelectItem value="planning">{t("pages.epicManagement.planning")}</SelectItem>
+                  <SelectItem value="in_progress">{t("pages.epicManagement.inProgress")}</SelectItem>
+                  <SelectItem value="completed">{t("pages.epicManagement.completed")}</SelectItem>
+                  <SelectItem value="archived">{t("pages.epicManagement.archived")}</SelectItem>
                 </SelectContent>
               </Select>
 
