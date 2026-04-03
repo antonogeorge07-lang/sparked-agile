@@ -269,8 +269,8 @@ export default function FlowMetrics() {
                 <Activity className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold page-header-gradient">Flow Metrics & Predictions</h1>
-                <p className="text-muted-foreground">Monitor delivery flow, velocity trends, and AI-powered forecasting</p>
+                <h1 className="text-3xl font-bold page-header-gradient">{t("pages.flowMetrics.pageTitle")}</h1>
+                <p className="text-muted-foreground">{t("pages.flowMetrics.pageSubtitle")}</p>
               </div>
             </div>
             <Select value={selectedProject || ''} onValueChange={setSelectedProject}>
