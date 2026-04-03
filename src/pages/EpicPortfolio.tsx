@@ -347,7 +347,7 @@ export default function EpicPortfolio() {
                 {atRiskEpics.length}
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Require attention
+                {t("pages.epicPortfolio.requireAttention")}
               </p>
             </CardContent>
           </Card>
