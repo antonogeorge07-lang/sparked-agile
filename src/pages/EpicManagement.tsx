@@ -380,9 +380,9 @@ export default function EpicManagement() {
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Select a Project</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.epicManagement.selectProjectPrompt")}</h3>
                 <p className="text-muted-foreground">
-                  Choose a project from the dropdown to view its epics
+                  {t("pages.epicManagement.selectProjectDesc")}
                 </p>
               </CardContent>
             </Card>
