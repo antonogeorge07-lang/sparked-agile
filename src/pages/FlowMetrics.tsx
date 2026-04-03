@@ -294,11 +294,11 @@ export default function FlowMetrics() {
 
           <Tabs defaultValue="flow" className="space-y-6">
             <TabsList className="grid grid-cols-5 w-full max-w-2xl">
-              <TabsTrigger value="flow">Flow</TabsTrigger>
-              <TabsTrigger value="velocity">Velocity</TabsTrigger>
-              <TabsTrigger value="forecast">Forecast</TabsTrigger>
-              <TabsTrigger value="utilisation">Utilisation</TabsTrigger>
-              <TabsTrigger value="health">Health</TabsTrigger>
+              <TabsTrigger value="flow">{t("pages.flowMetrics.flow")}</TabsTrigger>
+              <TabsTrigger value="velocity">{t("pages.flowMetrics.velocity")}</TabsTrigger>
+              <TabsTrigger value="forecast">{t("pages.flowMetrics.forecast")}</TabsTrigger>
+              <TabsTrigger value="utilisation">{t("pages.flowMetrics.utilisation")}</TabsTrigger>
+              <TabsTrigger value="health">{t("pages.flowMetrics.health")}</TabsTrigger>
             </TabsList>
 
             {/* Flow Metrics Tab */}
