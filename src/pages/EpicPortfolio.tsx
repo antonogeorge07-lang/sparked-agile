@@ -285,9 +285,9 @@ export default function EpicPortfolio() {
         <div className="flex items-center gap-4 mb-6">
           <BackButton />
           <div>
-            <h1 className="text-4xl font-bold">Epic Portfolio Dashboard</h1>
+            <h1 className="text-4xl font-bold">{t("pages.epicPortfolio.dashboardTitle")}</h1>
             <p className="text-muted-foreground mt-2">
-              Cross-epic analytics and insights across all projects
+              {t("pages.epicPortfolio.crossEpicAnalytics")}
             </p>
           </div>
         </div>
