@@ -269,8 +269,8 @@ export default function FlowMetrics() {
                 <Activity className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold page-header-gradient">Flow Metrics & Predictions</h1>
-                <p className="text-muted-foreground">Monitor delivery flow, velocity trends, and AI-powered forecasting</p>
+                <h1 className="text-3xl font-bold page-header-gradient">{t("pages.flowMetrics.pageTitle")}</h1>
+                <p className="text-muted-foreground">{t("pages.flowMetrics.pageSubtitle")}</p>
               </div>
             </div>
             <Select value={selectedProject || ''} onValueChange={setSelectedProject}>
@@ -288,59 +288,59 @@ export default function FlowMetrics() {
           {showingSample && (
             <div className="mb-4 p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
               <BarChart3 className="w-4 h-4 shrink-0" />
-              Showing sample data. Real metrics will appear as your team delivers work.
+              {t("pages.flowMetrics.sampleDataNotice")}
             </div>
           )}
 
           <Tabs defaultValue="flow" className="space-y-6">
             <TabsList className="grid grid-cols-5 w-full max-w-2xl">
-              <TabsTrigger value="flow">Flow</TabsTrigger>
-              <TabsTrigger value="velocity">Velocity</TabsTrigger>
-              <TabsTrigger value="forecast">Forecast</TabsTrigger>
-              <TabsTrigger value="utilisation">Utilisation</TabsTrigger>
-              <TabsTrigger value="health">Health</TabsTrigger>
+              <TabsTrigger value="flow">{t("pages.flowMetrics.flow")}</TabsTrigger>
+              <TabsTrigger value="velocity">{t("pages.flowMetrics.velocity")}</TabsTrigger>
+              <TabsTrigger value="forecast">{t("pages.flowMetrics.forecast")}</TabsTrigger>
+              <TabsTrigger value="utilisation">{t("pages.flowMetrics.utilisation")}</TabsTrigger>
+              <TabsTrigger value="health">{t("pages.flowMetrics.health")}</TabsTrigger>
             </TabsList>
 
             {/* Flow Metrics Tab */}
             <TabsContent value="flow">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Work in Progress</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.workInProgress")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{latestMetrics?.work_in_progress || 0}</div>
-                    <p className="text-sm text-muted-foreground mt-1">active items</p>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.activeItems")}</p>
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Avg Cycle Time</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.avgCycleTime")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{avgCycleTime}</div>
-                    <p className="text-sm text-muted-foreground mt-1">days</p>
-                    <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground"><Clock className="w-4 h-4" /><span>Start to finish</span></div>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.days")}</p>
+                    <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground"><Clock className="w-4 h-4" /><span>{t("pages.flowMetrics.startToFinish")}</span></div>
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Avg Lead Time</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.avgLeadTime")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{avgLeadTime}</div>
-                    <p className="text-sm text-muted-foreground mt-1">days</p>
-                    <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground"><Clock className="w-4 h-4" /><span>Request to delivery</span></div>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.days")}</p>
+                    <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground"><Clock className="w-4 h-4" /><span>{t("pages.flowMetrics.requestToDelivery")}</span></div>
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Throughput</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.throughput")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{totalThroughput}</div>
-                    <p className="text-sm text-muted-foreground mt-1">items delivered</p>
-                    <div className="flex items-center gap-1 mt-2 text-sm text-primary"><Zap className="w-4 h-4" /><span>Last 30 days</span></div>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.itemsDelivered")}</p>
+                    <div className="flex items-center gap-1 mt-2 text-sm text-primary"><Zap className="w-4 h-4" /><span>{t("pages.flowMetrics.last30Days")}</span></div>
                   </CardContent>
                 </Card>
               </div>
 
               <Card className="shadow-card mb-6">
                 <CardHeader>
-                  <CardTitle>Flow Trend Analysis</CardTitle>
-                  <CardDescription>Track your delivery efficiency over time</CardDescription>
+                  <CardTitle>{t("pages.flowMetrics.flowTrendAnalysis")}</CardTitle>
+                  <CardDescription>{t("pages.flowMetrics.trackDeliveryEfficiency")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">

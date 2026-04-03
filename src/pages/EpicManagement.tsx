@@ -178,7 +178,7 @@ export default function EpicManagement() {
               <div>
                 <h1 className="text-3xl sm:text-4xl font-bold page-header-gradient mb-2">{t("pages.epicManagement.title")}</h1>
                 <p className="text-muted-foreground">
-                  Create, track, and manage Epics across your value streams
+                  {t("pages.epicManagement.createTrackManage")}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -188,7 +188,7 @@ export default function EpicManagement() {
                   size="lg"
                 >
                   <Target className="mr-2 h-5 w-5" />
-                  Manage Value Streams
+                  {t("pages.epicManagement.manageValueStreams")}
                 </Button>
                 <Button 
                   onClick={() => setIsCreateDialogOpen(true)} 
@@ -196,7 +196,7 @@ export default function EpicManagement() {
                   disabled={valueStreams.length === 0}
                 >
                   <Plus className="mr-2 h-5 w-5" />
-                  Create Epic
+                  {t("pages.epicManagement.createEpic")}
                 </Button>
               </div>
             </div>
@@ -205,7 +205,7 @@ export default function EpicManagement() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               <Select value={selectedProject || ""} onValueChange={setSelectedProject}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Project" />
+                  <SelectValue placeholder={t("pages.epicManagement.selectProject")} />
                 </SelectTrigger>
                 <SelectContent>
                   {projects.map(project => (
@@ -218,10 +218,10 @@ export default function EpicManagement() {
 
               <Select value={selectedValueStream} onValueChange={setSelectedValueStream}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Value Streams" />
+                  <SelectValue placeholder={t("pages.epicManagement.allValueStreams")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Value Streams</SelectItem>
+                  <SelectItem value="all">{t("pages.epicManagement.allValueStreams")}</SelectItem>
                   {valueStreams.map(vs => (
                     <SelectItem key={vs.id} value={vs.id}>
                       {vs.name}
@@ -232,28 +232,28 @@ export default function EpicManagement() {
 
                <Select value={selectedStatus} onValueChange={setSelectedStatus}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Statuses" />
+                  <SelectValue placeholder={t("pages.epicManagement.allStatuses")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="backlog">Backlog</SelectItem>
-                  <SelectItem value="planning">Planning</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="archived">Archived</SelectItem>
+                  <SelectItem value="all">{t("pages.epicManagement.allStatuses")}</SelectItem>
+                  <SelectItem value="backlog">{t("pages.epicManagement.backlog")}</SelectItem>
+                  <SelectItem value="planning">{t("pages.epicManagement.planning")}</SelectItem>
+                  <SelectItem value="in_progress">{t("pages.epicManagement.inProgress")}</SelectItem>
+                  <SelectItem value="completed">{t("pages.epicManagement.completed")}</SelectItem>
+                  <SelectItem value="archived">{t("pages.epicManagement.archived")}</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select value={selectedPriority} onValueChange={setSelectedPriority}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Priorities" />
+                  <SelectValue placeholder={t("pages.epicManagement.allPriorities")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Priorities</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="all">{t("pages.epicManagement.allPriorities")}</SelectItem>
+                  <SelectItem value="critical">{t("pages.epicManagement.critical")}</SelectItem>
+                  <SelectItem value="high">{t("pages.epicManagement.high")}</SelectItem>
+                  <SelectItem value="medium">{t("pages.epicManagement.medium")}</SelectItem>
+                  <SelectItem value="low">{t("pages.epicManagement.low")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -262,19 +262,19 @@ export default function EpicManagement() {
           {/* Epic Views with Tabs */}
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">Loading epics...</p>
+              <p className="text-muted-foreground">{t("pages.epicManagement.loadingEpics")}</p>
             </div>
           ) : valueStreams.length === 0 && selectedProject ? (
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Value Streams Found</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.epicManagement.noValueStreams")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  You need to create a Value Stream before you can create Epics. Value Streams organize your work around business outcomes.
+                  {t("pages.epicManagement.noValueStreamsDesc")}
                 </p>
                 <Button onClick={() => navigate("/value-streams")}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Value Stream
+                  {t("pages.epicManagement.createValueStream")}
                 </Button>
               </CardContent>
             </Card>
@@ -282,22 +282,22 @@ export default function EpicManagement() {
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Epics Found</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.epicManagement.noEpics")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Create your first Epic to start organizing your work
+                  {t("pages.epicManagement.noEpicsDesc")}
                 </p>
                 <Button onClick={() => setIsCreateDialogOpen(true)} disabled={valueStreams.length === 0}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Epic
+                  {t("pages.epicManagement.createEpic")}
                 </Button>
               </CardContent>
             </Card>
           ) : selectedProject ? (
             <Tabs defaultValue="board" className="space-y-6">
               <TabsList>
-                <TabsTrigger value="board">Board View</TabsTrigger>
-                <TabsTrigger value="timeline">Timeline View</TabsTrigger>
-                <TabsTrigger value="gantt">Gantt Chart</TabsTrigger>
+                <TabsTrigger value="board">{t("pages.epicManagement.boardView")}</TabsTrigger>
+                <TabsTrigger value="timeline">{t("pages.epicManagement.timelineView")}</TabsTrigger>
+                <TabsTrigger value="gantt">{t("pages.epicManagement.ganttChart")}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="board">
@@ -333,14 +333,14 @@ export default function EpicManagement() {
                           {epic.business_value && (
                             <div className="flex items-center text-sm">
                               <TrendingUp className="h-4 w-4 mr-2 text-primary" />
-                              <span>Business Value: {epic.business_value}/100</span>
+                              <span>{t("pages.epicManagement.businessValue")}: {epic.business_value}/100</span>
                             </div>
                           )}
 
                           {epic.features && (
                             <div className="flex items-center text-sm text-muted-foreground">
                               <Users className="h-4 w-4 mr-2" />
-                              {epic.features[0]?.count || 0} Features
+                              {epic.features[0]?.count || 0} {t("pages.epicManagement.features")}
                             </div>
                           )}
 
@@ -355,7 +355,7 @@ export default function EpicManagement() {
 
                           {epic.health_score && (
                             <div className="flex items-center justify-between pt-2 border-t">
-                              <span className="text-sm text-muted-foreground">Health</span>
+                              <span className="text-sm text-muted-foreground">{t("pages.epicManagement.health")}</span>
                               <span className={`text-sm font-semibold ${getHealthColor(epic.health_score)}`}>
                                 {epic.health_score.replace('_', ' ').toUpperCase()}
                               </span>
@@ -380,9 +380,9 @@ export default function EpicManagement() {
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Select a Project</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.epicManagement.selectProjectPrompt")}</h3>
                 <p className="text-muted-foreground">
-                  Choose a project from the dropdown to view its epics
+                  {t("pages.epicManagement.selectProjectDesc")}
                 </p>
               </CardContent>
             </Card>

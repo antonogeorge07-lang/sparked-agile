@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ type Step = 'upload' | 'map' | 'preview' | 'importing' | 'done';
 
 export default function DataImport() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [step, setStep] = useState<Step>('upload');
   const [importType, setImportType] = useState<ImportType>('tasks');
   const [fileName, setFileName] = useState('');
@@ -186,8 +188,8 @@ export default function DataImport() {
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Import Data</h1>
-          <p className="text-muted-foreground">Upload CSV or JSON files to bulk-import tasks, epics, or project charters.</p>
+          <h1 className="text-3xl font-bold mb-2">{t("pages.dataImport.title")}</h1>
+          <p className="text-muted-foreground">{t("pages.dataImport.subtitle")}</p>
         </div>
 
         {/* Step indicators */}

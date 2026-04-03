@@ -285,9 +285,9 @@ export default function EpicPortfolio() {
         <div className="flex items-center gap-4 mb-6">
           <BackButton />
           <div>
-            <h1 className="text-4xl font-bold">Epic Portfolio Dashboard</h1>
+            <h1 className="text-4xl font-bold">{t("pages.epicPortfolio.dashboardTitle")}</h1>
             <p className="text-muted-foreground mt-2">
-              Cross-epic analytics and insights across all projects
+              {t("pages.epicPortfolio.crossEpicAnalytics")}
             </p>
           </div>
         </div>
@@ -296,20 +296,20 @@ export default function EpicPortfolio() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Epics</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("pages.epicPortfolio.totalEpics")}</CardTitle>
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{epics.length}</div>
               <p className="text-xs text-muted-foreground mt-1">
-                {epics.filter(e => e.status === 'active').length} active
+                {epics.filter(e => e.status === 'active').length} {t("pages.epicPortfolio.active")}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Average ROI</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("pages.epicPortfolio.averageROI")}</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -324,7 +324,7 @@ export default function EpicPortfolio() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Avg Velocity</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("pages.epicPortfolio.avgVelocity")}</CardTitle>
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -332,14 +332,14 @@ export default function EpicPortfolio() {
                 {averageVelocity.toFixed(1)}
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Story points per day
+                {t("pages.epicPortfolio.storyPointsPerDay")}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">At Risk</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("pages.epicPortfolio.atRisk")}</CardTitle>
               <AlertTriangle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -347,7 +347,7 @@ export default function EpicPortfolio() {
                 {atRiskEpics.length}
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Require attention
+                {t("pages.epicPortfolio.requireAttention")}
               </p>
             </CardContent>
           </Card>
@@ -355,11 +355,11 @@ export default function EpicPortfolio() {
 
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="health">Health Analysis</TabsTrigger>
-            <TabsTrigger value="roi">ROI Tracking</TabsTrigger>
-            <TabsTrigger value="velocity">Velocity Trends</TabsTrigger>
-            <TabsTrigger value="at-risk">At-Risk Epics</TabsTrigger>
+             <TabsTrigger value="overview">{t("pages.epicPortfolio.overview")}</TabsTrigger>
+            <TabsTrigger value="health">{t("pages.epicPortfolio.healthAnalysis")}</TabsTrigger>
+            <TabsTrigger value="roi">{t("pages.epicPortfolio.roiTracking")}</TabsTrigger>
+            <TabsTrigger value="velocity">{t("pages.epicPortfolio.velocityTrends")}</TabsTrigger>
+            <TabsTrigger value="at-risk">{t("pages.epicPortfolio.atRiskEpics")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
