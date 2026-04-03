@@ -18,6 +18,7 @@ type Step = 'upload' | 'map' | 'preview' | 'importing' | 'done';
 
 export default function DataImport() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [step, setStep] = useState<Step>('upload');
   const [importType, setImportType] = useState<ImportType>('tasks');
   const [fileName, setFileName] = useState('');
