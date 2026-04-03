@@ -302,7 +302,7 @@ export default function EpicPortfolio() {
             <CardContent>
               <div className="text-2xl font-bold">{epics.length}</div>
               <p className="text-xs text-muted-foreground mt-1">
-                {epics.filter(e => e.status === 'active').length} active
+                {epics.filter(e => e.status === 'active').length} {t("pages.epicPortfolio.active")}
               </p>
             </CardContent>
           </Card>
