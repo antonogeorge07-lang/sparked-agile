@@ -328,11 +328,11 @@ export default function FlowMetrics() {
                   </CardContent>
                 </Card>
                 <Card className="shadow-card">
-                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">Throughput</CardTitle></CardHeader>
+                  <CardHeader className="pb-3"><CardTitle className="text-sm font-medium text-muted-foreground">{t("pages.flowMetrics.throughput")}</CardTitle></CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{totalThroughput}</div>
-                    <p className="text-sm text-muted-foreground mt-1">items delivered</p>
-                    <div className="flex items-center gap-1 mt-2 text-sm text-primary"><Zap className="w-4 h-4" /><span>Last 30 days</span></div>
+                    <p className="text-sm text-muted-foreground mt-1">{t("pages.flowMetrics.itemsDelivered")}</p>
+                    <div className="flex items-center gap-1 mt-2 text-sm text-primary"><Zap className="w-4 h-4" /><span>{t("pages.flowMetrics.last30Days")}</span></div>
                   </CardContent>
                 </Card>
               </div>
