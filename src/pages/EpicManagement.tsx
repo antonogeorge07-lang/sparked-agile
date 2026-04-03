@@ -262,7 +262,7 @@ export default function EpicManagement() {
           {/* Epic Views with Tabs */}
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">Loading epics...</p>
+              <p className="text-muted-foreground">{t("pages.epicManagement.loadingEpics")}</p>
             </div>
           ) : valueStreams.length === 0 && selectedProject ? (
             <Card>
