@@ -205,7 +205,7 @@ export default function EpicManagement() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               <Select value={selectedProject || ""} onValueChange={setSelectedProject}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Project" />
+                  <SelectValue placeholder={t("pages.epicManagement.selectProject")} />
                 </SelectTrigger>
                 <SelectContent>
                   {projects.map(project => (
