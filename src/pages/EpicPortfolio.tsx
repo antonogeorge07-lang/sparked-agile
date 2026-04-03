@@ -355,11 +355,11 @@ export default function EpicPortfolio() {
 
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="health">Health Analysis</TabsTrigger>
-            <TabsTrigger value="roi">ROI Tracking</TabsTrigger>
-            <TabsTrigger value="velocity">Velocity Trends</TabsTrigger>
-            <TabsTrigger value="at-risk">At-Risk Epics</TabsTrigger>
+             <TabsTrigger value="overview">{t("pages.epicPortfolio.overview")}</TabsTrigger>
+            <TabsTrigger value="health">{t("pages.epicPortfolio.healthAnalysis")}</TabsTrigger>
+            <TabsTrigger value="roi">{t("pages.epicPortfolio.roiTracking")}</TabsTrigger>
+            <TabsTrigger value="velocity">{t("pages.epicPortfolio.velocityTrends")}</TabsTrigger>
+            <TabsTrigger value="at-risk">{t("pages.epicPortfolio.atRiskEpics")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">

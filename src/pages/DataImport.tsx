@@ -186,8 +186,8 @@ export default function DataImport() {
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Import Data</h1>
-          <p className="text-muted-foreground">Upload CSV or JSON files to bulk-import tasks, epics, or project charters.</p>
+          <h1 className="text-3xl font-bold mb-2">{t("pages.dataImport.title")}</h1>
+          <p className="text-muted-foreground">{t("pages.dataImport.subtitle")}</p>
         </div>
 
         {/* Step indicators */}

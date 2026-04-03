@@ -339,8 +339,8 @@ export default function FlowMetrics() {
 
               <Card className="shadow-card mb-6">
                 <CardHeader>
-                  <CardTitle>Flow Trend Analysis</CardTitle>
-                  <CardDescription>Track your delivery efficiency over time</CardDescription>
+                  <CardTitle>{t("pages.flowMetrics.flowTrendAnalysis")}</CardTitle>
+                  <CardDescription>{t("pages.flowMetrics.trackDeliveryEfficiency")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
