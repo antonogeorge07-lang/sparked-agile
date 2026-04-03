@@ -218,10 +218,10 @@ export default function EpicManagement() {
 
               <Select value={selectedValueStream} onValueChange={setSelectedValueStream}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Value Streams" />
+                  <SelectValue placeholder={t("pages.epicManagement.allValueStreams")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Value Streams</SelectItem>
+                  <SelectItem value="all">{t("pages.epicManagement.allValueStreams")}</SelectItem>
                   {valueStreams.map(vs => (
                     <SelectItem key={vs.id} value={vs.id}>
                       {vs.name}
