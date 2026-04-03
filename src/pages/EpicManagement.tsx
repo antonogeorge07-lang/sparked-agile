@@ -268,13 +268,13 @@ export default function EpicManagement() {
             <Card>
               <CardContent className="py-12 text-center">
                 <Target className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Value Streams Found</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("pages.epicManagement.noValueStreams")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  You need to create a Value Stream before you can create Epics. Value Streams organize your work around business outcomes.
+                  {t("pages.epicManagement.noValueStreamsDesc")}
                 </p>
                 <Button onClick={() => navigate("/value-streams")}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Value Stream
+                  {t("pages.epicManagement.createValueStream")}
                 </Button>
               </CardContent>
             </Card>
