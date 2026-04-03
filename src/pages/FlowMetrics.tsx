@@ -288,7 +288,7 @@ export default function FlowMetrics() {
           {showingSample && (
             <div className="mb-4 p-3 rounded-lg bg-muted/60 border border-border text-sm text-muted-foreground flex items-center gap-2">
               <BarChart3 className="w-4 h-4 shrink-0" />
-              Showing sample data. Real metrics will appear as your team delivers work.
+              {t("pages.flowMetrics.sampleDataNotice")}
             </div>
           )}
 
