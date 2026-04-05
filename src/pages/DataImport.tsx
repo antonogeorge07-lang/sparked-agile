@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -10,7 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Upload, FileSpreadsheet, FileJson, ArrowRight, CheckCircle, AlertCircle, Loader2, Download } from "lucide-react";
 import {
-import { Helmet } from "react-helmet-async";
   parseCSV, parseJSON, autoMapColumns, applyMappings,
   TARGET_FIELDS, type ImportType, type ParsedRow, type ColumnMapping
 } from "@/utils/importParser";

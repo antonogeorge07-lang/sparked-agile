@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,7 +17,6 @@ import { JiraSetupWizard } from "@/components/integrations/JiraSetupWizard";
 import { sampleBacklogAnalysis } from "@/data/sampleAnalyticsData";
 import { useTranslation } from "react-i18next";
 import {
-import { Helmet } from "react-helmet-async";
   Select,
   SelectContent,
   SelectItem,

@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import {
@@ -10,7 +11,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { 
-import { Helmet } from "react-helmet-async";
   BookOpen, 
   Users, 
   Target, 

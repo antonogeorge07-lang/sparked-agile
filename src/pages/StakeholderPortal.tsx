@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
@@ -35,7 +36,6 @@ import { DigestSubscriptionManager } from "@/components/stakeholder/DigestSubscr
 import { AlertsConfigPanel } from "@/components/stakeholder/AlertsConfigPanel";
 import { StakeholderInviteForm } from "@/components/stakeholder/StakeholderInviteForm";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
 
 interface WidgetConfig {
   id: string;

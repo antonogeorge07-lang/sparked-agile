@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { OneClickConnect } from "@/components/onboarding/OneClickConnect";
 import {
-import { Helmet } from "react-helmet-async";
   GitBranch, Target, Briefcase, Sparkles, Presentation, ListFilter,
   Calendar, Users, Activity, Network, ArrowRight, CheckCircle, Zap
 } from "lucide-react";
