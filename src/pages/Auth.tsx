@@ -376,6 +376,89 @@ export default function Auth() {
     navigate("/");
   };
 
+  const handleResendVerification = async () => {
+    if (resendCooldown > 0) return;
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: signUpEmail,
+        options: { emailRedirectTo: `${window.location.origin}/` }
+      });
+      if (error) throw error;
+      toast({
+        title: t('pages.auth.emailResent'),
+        description: t('pages.auth.emailResentDesc'),
+      });
+      setResendCooldown(60);
+      const interval = setInterval(() => {
+        setResendCooldown(prev => {
+          if (prev <= 1) { clearInterval(interval); return 0; }
+          return prev - 1;
+        });
+      }, 1000);
+    } catch (error: any) {
+      toast({
+        title: t('pages.auth.resendFailed'),
+        description: error.message || "Could not resend verification email",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Show check inbox screen after signup
+  if (showCheckInbox) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
+        <Helmet>
+          <title>Check Your Email - SAAI</title>
+          <meta name="description" content="Verify your email to complete registration." />
+        </Helmet>
+        <Card className="w-full max-w-md shadow-elevated">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                <Mail className="w-8 h-8 text-primary" />
+              </div>
+            </div>
+            <CardTitle className="text-2xl">{t('pages.auth.checkInboxTitle')}</CardTitle>
+            <CardDescription>{t('pages.auth.checkInboxDesc')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              {t('pages.auth.sentTo')} <span className="font-medium text-foreground">{signUpEmail}</span>
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {t('pages.auth.checkSpam')}
+            </p>
+            <div className="flex flex-col gap-2 pt-2">
+              <Button
+                variant="outline"
+                onClick={handleResendVerification}
+                disabled={isLoading || resendCooldown > 0}
+              >
+                {resendCooldown > 0
+                  ? `${t('pages.auth.resendIn')} ${resendCooldown}s`
+                  : t('pages.auth.resendEmail')}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setShowCheckInbox(false);
+                  setActiveTab("signin");
+                }}
+              >
+                {t('pages.auth.backToSignIn')}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   // Show password update form if user clicked reset link
   if (showUpdatePassword) {
     return (
