@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, ExternalLink, Edit, CheckCircle2, Circle } from "lucide-react";
 import { useProjectIntegrations } from "@/hooks/useProjectIntegrations";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface JiraIssue {
   key: string;
@@ -177,6 +178,10 @@ const TaskManagement = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Task Management - SAAI</title>
+        <meta name="description" content="Manage tasks with Kanban boards, priorities, and team assignments." />
+      </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-8">
         <BackButton />

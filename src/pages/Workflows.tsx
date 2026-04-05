@@ -20,6 +20,7 @@ import { FilterControls } from "@/components/FilterControls";
 import { useProjectLimits } from "@/hooks/useProjectLimits";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface ActionItem {
   title: string;
@@ -268,6 +269,10 @@ export default function Workflows() {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>Workflows - SAAI</title>
+        <meta name="description" content="Automate agile ceremonies and project workflows with AI-powered orchestration." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

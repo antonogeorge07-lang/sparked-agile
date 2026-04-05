@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { BackButton } from "@/components/BackButton";
 import { ResourceForecastPanel } from "@/components/ResourceForecastPanel";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function SprintPlanningAssistant() {
   const { t } = useTranslation();
@@ -331,6 +332,10 @@ export default function SprintPlanningAssistant() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
+      <Helmet>
+        <title>Sprint Planning - SAAI</title>
+        <meta name="description" content="AI-assisted sprint planning with capacity analysis, story point estimation, and goal setting." />
+      </Helmet>
       <div className="max-w-6xl mx-auto">
         <BackButton />
         <div className="mb-8">

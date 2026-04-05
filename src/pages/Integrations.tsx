@@ -26,6 +26,7 @@ import { IntegrationStatusDashboard } from "@/components/integrations/Integratio
 import { Skeleton } from "@/components/ui/skeleton";
 import { IntegrationCard } from "@/components/IntegrationCard";
 import { useAutoTokenRefresh } from "@/hooks/useAutoTokenRefresh";
+import { Helmet } from "react-helmet-async";
 
 // Helper to normalise URLs - auto-prepend https:// if missing
 const normaliseUrl = (url: string): string => {
@@ -405,6 +406,10 @@ const Integrations = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>Integrations - SAAI</title>
+        <meta name="description" content="Connect SAAI with Jira, GitHub, Slack, Microsoft Teams, and Outlook for unified project management." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

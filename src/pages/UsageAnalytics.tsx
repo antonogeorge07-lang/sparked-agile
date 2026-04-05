@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingState } from "@/components/LoadingState";
 import { sampleAIUsageStats, sampleActivityStats } from "@/data/sampleAnalyticsData";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 // Use semantic colors from design system
 const CHART_COLORS = [
@@ -100,6 +101,10 @@ export default function UsageAnalytics() {
   if (roleLoading) {
     return (
       <div className="min-h-screen bg-background">
+        <Helmet>
+          <title>Usage Analytics - SAAI</title>
+          <meta name="description" content="Track platform usage, AI consumption, and team engagement analytics." />
+        </Helmet>
         <Navigation />
         <div className="container mx-auto p-6">
           <LoadingState message="Loading analytics..." />

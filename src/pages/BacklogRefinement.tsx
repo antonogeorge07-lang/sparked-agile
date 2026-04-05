@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -149,6 +150,10 @@ const BacklogRefinement = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Backlog Refinement - SAAI</title>
+        <meta name="description" content="Refine your product backlog with AI-assisted prioritisation and story point estimation." />
+      </Helmet>
       <Navigation />
       <div className="container mx-auto p-6 space-y-6">
         <BackButton className="mb-4" />

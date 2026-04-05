@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function ValueStreams() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -116,6 +117,10 @@ export default function ValueStreams() {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>Value Streams - SAAI</title>
+        <meta name="description" content="Map and optimise value streams with flow metrics and bottleneck identification." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

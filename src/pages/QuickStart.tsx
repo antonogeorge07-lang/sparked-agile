@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,10 @@ export default function QuickStart() {
   return (
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-7xl">
+        <Helmet>
+          <title>Quick Start - SAAI</title>
+          <meta name="description" content="Get started with SAAI in minutes. Set up your workspace and connect your tools." />
+        </Helmet>
         {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">

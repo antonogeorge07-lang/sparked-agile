@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function ProgramIncrement() {
   const [arts, setArts] = useState<any[]>([]);
@@ -129,6 +130,10 @@ export default function ProgramIncrement() {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>Program Increment - SAAI</title>
+        <meta name="description" content="Plan and track program increments with cross-team alignment and dependency management." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

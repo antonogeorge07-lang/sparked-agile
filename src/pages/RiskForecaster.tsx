@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -205,6 +206,10 @@ export default function RiskForecaster() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <Helmet>
+        <title>Risk Forecaster - SAAI</title>
+        <meta name="description" content="Predict and mitigate project risks with AI-powered risk analysis and forecasting." />
+      </Helmet>
       <Navigation />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}

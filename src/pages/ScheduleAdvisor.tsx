@@ -23,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { format, differenceInDays, addDays } from "date-fns";
+import { Helmet } from "react-helmet-async";
 
 // Types
 interface CriticalPathTask {
@@ -207,6 +208,10 @@ export default function ScheduleAdvisor() {
     <>
       <Navigation />
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+        <Helmet>
+          <title>Schedule Advisor - SAAI</title>
+          <meta name="description" content="Get AI-powered schedule recommendations and optimise your team's ceremony calendar." />
+        </Helmet>
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 

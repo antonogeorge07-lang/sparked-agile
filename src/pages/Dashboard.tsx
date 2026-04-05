@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -197,6 +198,10 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
+      <Helmet>
+        <title>Dashboard - SAAI</title>
+        <meta name="description" content="View your project dashboard with real-time metrics, velocity trends, and team performance insights." />
+      </Helmet>
       {isGuestMode && <GuestModeBar />}
       <SmartFeedbackTrigger />
       

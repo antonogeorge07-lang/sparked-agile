@@ -25,6 +25,7 @@ import { MeetingNotesProcessor } from "@/components/MeetingNotesProcessor";
 import { ResourceForecastPanel } from "@/components/ResourceForecastPanel";
 import { SmartNudgesPanel } from "@/components/SmartNudgesPanel";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const PMI_STAGES = [
   { id: "initiation", title: "Initiation", color: "from-blue-500 to-cyan-500" },
@@ -199,6 +200,10 @@ export default function ProjectCommandCentre() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <Helmet>
+        <title>Command Centre - SAAI</title>
+        <meta name="description" content="Your centralised project command centre with tasks, insights, and team collaboration." />
+      </Helmet>
       <Navigation />
       
       <div className="container mx-auto px-4 py-8">

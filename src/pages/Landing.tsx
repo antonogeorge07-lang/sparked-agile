@@ -20,6 +20,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { User } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
+import { Helmet } from "react-helmet-async";
 
 const FooterSection = lazy(() =>
   import("@/components/landing/FooterSection").then((module) => ({
@@ -89,6 +90,10 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>SAAI - AI Chief of Staff for Agile Teams</title>
+        <meta name="description" content="SAAI brings intelligence, rhythm, and precision to digital transformation. Your AI-powered command centre for remote teams." />
+      </Helmet>
       <FAQSchema />
 
       {/* Navigation */}

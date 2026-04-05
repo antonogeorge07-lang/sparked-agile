@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -187,6 +188,10 @@ export default function DataImport() {
   return (
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-5xl">
+        <Helmet>
+          <title>Import Data - SAAI</title>
+          <meta name="description" content="Import your existing project data from CSV, Jira, or other tools into SAAI." />
+        </Helmet>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t("pages.dataImport.title")}</h1>
           <p className="text-muted-foreground">{t("pages.dataImport.subtitle")}</p>

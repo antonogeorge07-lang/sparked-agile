@@ -3,11 +3,16 @@ import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function PrivacyPolicy() {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Privacy Policy - SAAI</title>
+        <meta name="description" content="SAAI privacy policy covering data collection, usage, and your rights under GDPR." />
+      </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-12 mt-16 max-w-4xl">
         <BackButton fallbackPath="/" className="mb-6" />

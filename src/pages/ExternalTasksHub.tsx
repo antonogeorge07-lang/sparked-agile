@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingState } from "@/components/LoadingState";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function ExternalTasksHub() {
   const { t } = useTranslation();
@@ -50,6 +51,10 @@ export default function ExternalTasksHub() {
   return (
     <DashboardLayout>
       <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
+        <Helmet>
+          <title>External Tasks - SAAI</title>
+          <meta name="description" content="View and manage tasks from Jira, GitHub, and other connected tools in one place." />
+        </Helmet>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const CHART_COLORS = [
   "hsl(var(--primary))",
@@ -244,6 +245,10 @@ export default function PlatformOwner() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        <Helmet>
+          <title>Platform Admin - SAAI</title>
+          <meta name="description" content="Platform administration dashboard for managing users, security, and system configuration." />
+        </Helmet>
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center">

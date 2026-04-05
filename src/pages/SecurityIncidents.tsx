@@ -35,6 +35,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertTriangle, Shield, Bot, User, Plus, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface SecurityIncident {
   id: string;
@@ -315,6 +316,10 @@ export default function SecurityIncidents() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
+        <Helmet>
+          <title>Security Incidents - SAAI</title>
+          <meta name="description" content="Track and manage security incidents with severity classification and response workflows." />
+        </Helmet>
         <Navigation />
         <div className="flex items-center justify-center h-screen">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />

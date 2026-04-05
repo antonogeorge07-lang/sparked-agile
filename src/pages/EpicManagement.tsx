@@ -14,6 +14,7 @@ import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
 import { EpicTimeline } from "@/components/epic/EpicTimeline";
 import { EpicGanttChart } from "@/components/epic/EpicGanttChart";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -170,6 +171,10 @@ export default function EpicManagement() {
     <>
       <Navigation />
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+        <Helmet>
+          <title>Epic Management - SAAI</title>
+          <meta name="description" content="Manage epics with dependency mapping, progress visualisation, and AI-powered insights." />
+        </Helmet>
         <div className="container mx-auto px-4 py-8">
           <BackButton />
 

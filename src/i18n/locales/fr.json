@@ -937,7 +937,17 @@
       "checkEmail": "Vérifiez votre e-mail !",
       "checkEmailDesc": "Nous vous avons envoyé un lien de réinitialisation de mot de passe.",
       "passwordUpdated": "Mot de passe mis à jour !",
-      "passwordUpdatedDesc": "Votre mot de passe a été mis à jour avec succès."
+      "passwordUpdatedDesc": "Votre mot de passe a été mis à jour avec succès.",
+      "checkInboxTitle": "Vérifiez votre boîte de réception",
+      "checkInboxDesc": "Nous vous avons envoyé un lien de vérification pour confirmer votre adresse e-mail.",
+      "sentTo": "Nous avons envoyé un e-mail à",
+      "checkSpam": "Si vous ne le voyez pas, vérifiez votre dossier spam ou indésirables.",
+      "resendEmail": "Renvoyer l'e-mail de vérification",
+      "resendIn": "Renvoyer dans",
+      "backToSignIn": "Retour à la connexion",
+      "emailResent": "E-mail renvoyé",
+      "emailResentDesc": "Nous avons envoyé un autre e-mail de vérification. Veuillez vérifier votre boîte de réception.",
+      "resendFailed": "Échec du renvoi"
     },
     "dashboard": {
       "title": "Tableau de bord de santé du sprint",
