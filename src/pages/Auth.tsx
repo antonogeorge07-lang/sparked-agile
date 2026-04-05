@@ -187,25 +187,12 @@ export default function Auth() {
           throw error;
         }
       } else {
-        toast({
-          title: "Welcome to SAAI!",
-          description: "Your account has been created successfully. Please check your email to verify your account.",
-        });
-        // Clear form
+        // Show check inbox screen
+        setSignUpEmail(email);
+        setShowCheckInbox(true);
         setEmail("");
         setPassword("");
         setFullName("");
-        
-        // Auto-sign in the user
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        
-        if (!signInError) {
-          // Navigate to dashboard after signup
-          navigate("/home");
-        }
       }
     } catch (error: any) {
       toast({
