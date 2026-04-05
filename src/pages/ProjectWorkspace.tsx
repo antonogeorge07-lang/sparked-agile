@@ -13,6 +13,7 @@ import { BackButton } from "@/components/BackButton";
 import { CelebrationModal } from "@/components/CelebrationModal";
 import { ProgressTracker } from "@/components/ProgressTracker";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function ProjectWorkspace() {
   const { t } = useTranslation();
@@ -377,6 +378,10 @@ export default function ProjectWorkspace() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
+      <Helmet>
+        <title>Project Workspace - SAAI</title>
+        <meta name="description" content="Manage your project workspace with Kanban boards, sprint planning, and team collaboration." />
+      </Helmet>
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <BackButton className="mb-4" />

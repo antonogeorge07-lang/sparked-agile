@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function WorkspaceSettings() {
   const navigate = useNavigate();
@@ -101,6 +102,10 @@ export default function WorkspaceSettings() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-subtle">
+        <Helmet>
+          <title>Workspace Settings - SAAI</title>
+          <meta name="description" content="Configure workspace settings, team management, and integration preferences." />
+        </Helmet>
         <Navigation />
         <div className="container mx-auto px-4 py-8">
           <LoadingState message="Loading workspace settings..." />

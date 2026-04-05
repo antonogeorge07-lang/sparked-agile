@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function MyProjects() {
   const navigate = useNavigate();
@@ -64,6 +65,10 @@ export default function MyProjects() {
     return (
       <DashboardLayout>
         <div className="container mx-auto px-4 py-8">
+          <Helmet>
+            <title>My Projects - SAAI</title>
+            <meta name="description" content="View and manage all your projects in one workspace." />
+          </Helmet>
           <LoadingState message="Loading your projects..." />
         </div>
       </DashboardLayout>

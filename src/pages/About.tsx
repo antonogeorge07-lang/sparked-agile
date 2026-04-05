@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function About() {
   const { t } = useTranslation();
@@ -97,6 +98,10 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>About SAAI - AI-Powered Agile Platform</title>
+        <meta name="description" content="Learn about SAAI, the AI Chief of Staff for remote teams. Built by Antono George to unify project management with active intelligence." />
+      </Helmet>
       <Navigation />
 
       <main className="container mx-auto px-4 py-12 mt-16 max-w-4xl">

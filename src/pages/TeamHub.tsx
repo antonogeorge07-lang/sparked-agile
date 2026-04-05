@@ -11,6 +11,7 @@ import { MessageCircle, MessageSquare, Users } from "lucide-react";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface BacklogItem {
   id: string;
@@ -50,6 +51,10 @@ export default function TeamHub() {
   return (
     <DashboardLayout>
       <div className="p-6 space-y-6">
+        <Helmet>
+          <title>Team Hub - SAAI</title>
+          <meta name="description" content="Collaborate with your team through workspace chat, task comments, and shared dashboards." />
+        </Helmet>
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
             <Users className="h-6 w-6 text-primary" />

@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BackButton } from "@/components/BackButton";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const MICROSOFT_CLIENT_ID = "YOUR_MICROSOFT_CLIENT_ID"; // Replace with your actual client ID
 
@@ -272,6 +273,10 @@ export default function SprintReviewCoordinator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
+      <Helmet>
+        <title>Sprint Review - SAAI</title>
+        <meta name="description" content="Coordinate sprint reviews with demo checklists, stakeholder feedback, and completed work summaries." />
+      </Helmet>
       <div className="max-w-6xl mx-auto">
         <BackButton className="mb-4" />
         <div className="mb-8">

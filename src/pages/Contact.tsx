@@ -10,6 +10,7 @@ import { Mail, MessageSquare, Send, AlertCircle, Clock, Globe } from "lucide-rea
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import { Helmet } from "react-helmet-async";
 
 const contactSchema = z.object({
   name: z.string()
@@ -100,6 +101,10 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Contact Us - SAAI</title>
+        <meta name="description" content="Get in touch with the SAAI team. We'd love to hear from you." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-12 mt-16">

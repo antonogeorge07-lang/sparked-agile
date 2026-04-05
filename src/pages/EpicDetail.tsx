@@ -27,6 +27,7 @@ import { EpicImplementationValidator } from "@/components/epic/EpicImplementatio
 import { EditEpicDialog } from "@/components/epic/EditEpicDialog";
 import { EpicActions } from "@/components/epic/EpicActions";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function EpicDetail() {
   const { id } = useParams<{ id: string }>();
@@ -158,6 +159,10 @@ export default function EpicDetail() {
       <>
         <Navigation />
         <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+          <Helmet>
+            <title>Epic Detail - SAAI</title>
+            <meta name="description" content="Track epic progress, dependencies, milestones, and ROI in your agile portfolio." />
+          </Helmet>
           <div className="container mx-auto px-4 py-8">
             <BackButton />
             <div className="flex items-center justify-center py-12">

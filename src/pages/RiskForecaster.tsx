@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
+import { Helmet } from "react-helmet-async";
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
   AreaChart, Area, Cell
@@ -205,6 +206,10 @@ export default function RiskForecaster() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <Helmet>
+        <title>Risk Forecaster - SAAI</title>
+        <meta name="description" content="Predict and mitigate project risks with AI-powered risk analysis and forecasting." />
+      </Helmet>
       <Navigation />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}

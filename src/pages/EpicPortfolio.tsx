@@ -23,6 +23,7 @@ import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "react-i18next";
 import {
+import { Helmet } from "react-helmet-async";
   Table,
   TableBody,
   TableCell,
@@ -280,6 +281,10 @@ export default function EpicPortfolio() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Epic Portfolio - SAAI</title>
+        <meta name="description" content="View your entire epic portfolio with health scores, timelines, and strategic alignment." />
+      </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center gap-4 mb-6">

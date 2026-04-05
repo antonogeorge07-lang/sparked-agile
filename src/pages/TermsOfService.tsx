@@ -3,11 +3,16 @@ import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function TermsOfService() {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>Terms of Service - SAAI</title>
+        <meta name="description" content="SAAI terms of service covering usage, data, intellectual property, and liability." />
+      </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-12 max-w-4xl">
         <BackButton fallbackPath="/" className="mb-6" />

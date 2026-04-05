@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import {
+import { Helmet } from "react-helmet-async";
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -389,6 +390,10 @@ export default function Auth() {
   if (showUpdatePassword) {
     return (
       <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
+        <Helmet>
+          <title>Sign In - SAAI</title>
+          <meta name="description" content="Sign in or create an account to access your AI-powered agile workspace." />
+        </Helmet>
         <Card className="w-full max-w-md shadow-elevated">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { OneClickConnect } from "@/components/onboarding/OneClickConnect";
 import {
+import { Helmet } from "react-helmet-async";
   GitBranch, Target, Briefcase, Sparkles, Presentation, ListFilter,
   Calendar, Users, Activity, Network, ArrowRight, CheckCircle, Zap
 } from "lucide-react";
@@ -66,6 +67,10 @@ export default function QuickStart() {
   return (
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-7xl">
+        <Helmet>
+          <title>Quick Start - SAAI</title>
+          <meta name="description" content="Get started with SAAI in minutes. Set up your workspace and connect your tools." />
+        </Helmet>
         {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">

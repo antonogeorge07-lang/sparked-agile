@@ -25,6 +25,7 @@ import { IntegrationDataCard } from "@/components/IntegrationDataCard";
 import { useIntegrationData } from "@/hooks/useIntegrationData";
 import { format, addDays } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 // Sample flow data
 const sampleFlowMetrics = [
@@ -259,6 +260,10 @@ export default function FlowMetrics() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <Helmet>
+        <title>Flow Metrics - SAAI</title>
+        <meta name="description" content="Track velocity, cycle time, throughput, and commitment accuracy with advanced flow analytics." />
+      </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-8">
         <BackButton className="mb-4" />

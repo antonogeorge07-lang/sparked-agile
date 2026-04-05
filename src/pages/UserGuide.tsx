@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { 
+import { Helmet } from "react-helmet-async";
   BookOpen, 
   Users, 
   Target, 
@@ -33,6 +34,10 @@ export default function UserGuide() {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>User Guide - SAAI</title>
+        <meta name="description" content="Complete guide to using SAAI for agile project management and team collaboration." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-12 mt-16">

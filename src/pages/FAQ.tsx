@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { HelpCircle, Mail, Sparkles, Shield, Brain, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 export default function FAQ() {
   const navigate = useNavigate();
@@ -19,6 +20,10 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>FAQ - SAAI</title>
+        <meta name="description" content="Frequently asked questions about SAAI, pricing, integrations, and features." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-12 mt-16">

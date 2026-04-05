@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface StandupUpdate {
   id?: string;
@@ -247,6 +248,10 @@ export default function Standup() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <Helmet>
+        <title>Daily Standup - SAAI</title>
+        <meta name="description" content="Streamline daily standups with AI summaries, blocker tracking, and automated status updates." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

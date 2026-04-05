@@ -16,6 +16,7 @@ import { JiraSetupWizard } from "@/components/integrations/JiraSetupWizard";
 import { sampleBacklogAnalysis } from "@/data/sampleAnalyticsData";
 import { useTranslation } from "react-i18next";
 import {
+import { Helmet } from "react-helmet-async";
   Select,
   SelectContent,
   SelectItem,
@@ -149,6 +150,10 @@ const BacklogRefinement = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Backlog Refinement - SAAI</title>
+        <meta name="description" content="Refine your product backlog with AI-assisted prioritisation and story point estimation." />
+      </Helmet>
       <Navigation />
       <div className="container mx-auto p-6 space-y-6">
         <BackButton className="mb-4" />

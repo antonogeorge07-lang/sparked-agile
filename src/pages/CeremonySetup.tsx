@@ -12,6 +12,7 @@ import { Calendar, Clock, Users, CheckCircle, Link as LinkIcon } from "lucide-re
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "@/components/BackButton";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface CeremonyTemplate {
   id: string;
@@ -240,6 +241,10 @@ export default function CeremonySetup() {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>Ceremony Setup - SAAI</title>
+        <meta name="description" content="Configure and schedule your agile ceremonies including standups, retrospectives, and sprint reviews." />
+      </Helmet>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

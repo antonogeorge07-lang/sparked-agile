@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Upload, FileSpreadsheet, FileJson, ArrowRight, CheckCircle, AlertCircle, Loader2, Download } from "lucide-react";
 import {
+import { Helmet } from "react-helmet-async";
   parseCSV, parseJSON, autoMapColumns, applyMappings,
   TARGET_FIELDS, type ImportType, type ParsedRow, type ColumnMapping
 } from "@/utils/importParser";
@@ -187,6 +188,10 @@ export default function DataImport() {
   return (
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-5xl">
+        <Helmet>
+          <title>Import Data - SAAI</title>
+          <meta name="description" content="Import your existing project data from CSV, Jira, or other tools into SAAI." />
+        </Helmet>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t("pages.dataImport.title")}</h1>
           <p className="text-muted-foreground">{t("pages.dataImport.subtitle")}</p>

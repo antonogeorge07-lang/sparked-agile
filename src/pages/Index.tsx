@@ -16,6 +16,7 @@ import { useGuestMode } from "@/hooks/useGuestMode";
 import { WelcomePopup } from "@/components/WelcomePopup";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -113,6 +114,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
+      <Helmet>
+        <title>SAAI - Your AI-Powered Scrum Master</title>
+        <meta name="description" content="Streamline your agile workflow with intelligent automation for standups, sprint planning, and retrospectives." />
+      </Helmet>
       <WelcomePopup />
       <Navigation />
       

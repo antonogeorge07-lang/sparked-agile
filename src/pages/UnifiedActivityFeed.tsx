@@ -10,6 +10,7 @@ import { LoadingState } from "@/components/LoadingState";
 import { RefreshCw, ExternalLink, Bug, GitBranch, GitPullRequest, GitMerge, MessageCircle, Filter, Activity } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 interface ActivityItem {
   id: string;
@@ -97,6 +98,10 @@ export default function UnifiedActivityFeed() {
   return (
     <DashboardLayout>
       <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
+        <Helmet>
+          <title>Activity Feed - SAAI</title>
+          <meta name="description" content="View all project activity across tools in one unified feed." />
+        </Helmet>
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">

@@ -13,6 +13,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import saaiLogo from "@/assets/saai-logo.png";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 interface PainPointSection {
   painPointKey: string;
@@ -83,6 +84,10 @@ export default function Features() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Features - SAAI</title>
+        <meta name="description" content="Explore SAAI features: AI sprint planning, epic management, flow metrics, and real-time collaboration." />
+      </Helmet>
       {/* Navigation */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <nav className="container mx-auto px-4">
