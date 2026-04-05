@@ -935,7 +935,17 @@
       "checkEmail": "Check your email!",
       "checkEmailDesc": "We've sent you a password reset link.",
       "passwordUpdated": "Password updated!",
-      "passwordUpdatedDesc": "Your password has been successfully updated."
+      "passwordUpdatedDesc": "Your password has been successfully updated.",
+      "checkInboxTitle": "Check Your Inbox",
+      "checkInboxDesc": "We've sent you a verification link to confirm your email address.",
+      "sentTo": "We sent an email to",
+      "checkSpam": "If you don't see it, check your spam or junk folder.",
+      "resendEmail": "Resend Verification Email",
+      "resendIn": "Resend in",
+      "backToSignIn": "Back to Sign In",
+      "emailResent": "Email Resent",
+      "emailResentDesc": "We've sent another verification email. Please check your inbox.",
+      "resendFailed": "Failed to resend"
     },
     "dashboard": {
       "title": "Sprint Health Dashboard",
