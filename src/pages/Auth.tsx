@@ -77,6 +77,9 @@ export default function Auth() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showExistingUserDialog, setShowExistingUserDialog] = useState(false);
+  const [showCheckInbox, setShowCheckInbox] = useState(false);
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [resendCooldown, setResendCooldown] = useState(0);
   const [activeTab, setActiveTab] = useState<string>("signin");
   const navigate = useNavigate();
   const { toast } = useToast();
