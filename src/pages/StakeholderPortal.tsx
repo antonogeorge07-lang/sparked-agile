@@ -83,10 +83,6 @@ function SortableWidget({ widget, onToggleVisibility, projectId }: {
 
   return (
     <div 
-      <Helmet>
-        <title>Stakeholder Portal - SAAI</title>
-        <meta name="description" content="Executive dashboards, digest subscriptions, and approval workflows for stakeholders." />
-      </Helmet>
       ref={setNodeRef} 
       style={style} 
       className={`group transition-all duration-300 ${isDragging ? 'scale-105 z-50' : ''} ${!widget.is_visible ? 'opacity-60' : ''}`}
