@@ -325,6 +325,10 @@ export default function StakeholderPortal() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
+      <Helmet>
+        <title>Stakeholder Portal - SAAI</title>
+        <meta name="description" content="Executive dashboards, digest subscriptions, and approval workflows for stakeholders." />
+      </Helmet>
       <Navigation />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header with elegant styling */}
