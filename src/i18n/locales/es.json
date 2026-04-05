@@ -937,7 +937,17 @@
       "checkEmail": "¡Revise su correo electrónico!",
       "checkEmailDesc": "Le hemos enviado un enlace para restablecer su contraseña.",
       "passwordUpdated": "¡Contraseña actualizada!",
-      "passwordUpdatedDesc": "Su contraseña ha sido actualizada exitosamente."
+      "passwordUpdatedDesc": "Su contraseña ha sido actualizada exitosamente.",
+      "checkInboxTitle": "Revisa tu bandeja de entrada",
+      "checkInboxDesc": "Te hemos enviado un enlace de verificación para confirmar tu correo electrónico.",
+      "sentTo": "Enviamos un correo a",
+      "checkSpam": "Si no lo ves, revisa tu carpeta de spam o correo no deseado.",
+      "resendEmail": "Reenviar correo de verificación",
+      "resendIn": "Reenviar en",
+      "backToSignIn": "Volver a iniciar sesión",
+      "emailResent": "Correo reenviado",
+      "emailResentDesc": "Hemos enviado otro correo de verificación. Por favor, revisa tu bandeja de entrada.",
+      "resendFailed": "Error al reenviar"
     },
     "dashboard": {
       "title": "Panel de salud del sprint",

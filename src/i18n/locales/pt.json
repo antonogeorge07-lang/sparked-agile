@@ -937,7 +937,17 @@
       "checkEmail": "Verifique o seu e-mail!",
       "checkEmailDesc": "Enviámos-lhe um link para redefinir a palavra-passe.",
       "passwordUpdated": "Palavra-passe atualizada!",
-      "passwordUpdatedDesc": "A sua palavra-passe foi atualizada com sucesso."
+      "passwordUpdatedDesc": "A sua palavra-passe foi atualizada com sucesso.",
+      "checkInboxTitle": "Verifique a sua caixa de entrada",
+      "checkInboxDesc": "Enviámos-lhe um link de verificação para confirmar o seu endereço de e-mail.",
+      "sentTo": "Enviámos um e-mail para",
+      "checkSpam": "Se não o encontrar, verifique a sua pasta de spam ou lixo eletrónico.",
+      "resendEmail": "Reenviar e-mail de verificação",
+      "resendIn": "Reenviar em",
+      "backToSignIn": "Voltar ao início de sessão",
+      "emailResent": "E-mail reenviado",
+      "emailResentDesc": "Enviámos outro e-mail de verificação. Por favor, verifique a sua caixa de entrada.",
+      "resendFailed": "Falha ao reenviar"
     },
     "dashboard": {
       "title": "Painel de saúde do sprint",

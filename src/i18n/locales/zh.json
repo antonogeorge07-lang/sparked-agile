@@ -937,7 +937,17 @@
       "checkEmail": "检查您的电子邮件！",
       "checkEmailDesc": "我们已向您发送了一封密码重置链接。",
       "passwordUpdated": "密码已更新！",
-      "passwordUpdatedDesc": "您的密码已成功更新。"
+      "passwordUpdatedDesc": "您的密码已成功更新。",
+      "checkInboxTitle": "检查您的收件箱",
+      "checkInboxDesc": "我们已向您发送了一封验证链接以确认您的电子邮件地址。",
+      "sentTo": "我们已向以下地址发送邮件",
+      "checkSpam": "如果您没有看到，请检查您的垃圾邮件文件夹。",
+      "resendEmail": "重新发送验证邮件",
+      "resendIn": "重新发送倒计时",
+      "backToSignIn": "返回登录",
+      "emailResent": "邮件已重新发送",
+      "emailResentDesc": "我们已再次发送验证邮件。请检查您的收件箱。",
+      "resendFailed": "重新发送失败"
     },
     "dashboard": {
       "title": "冲刺健康仪表板",

@@ -937,7 +937,17 @@
       "checkEmail": "E-Mail überprüfen!",
       "checkEmailDesc": "Wir haben Ihnen einen Link zum Zurücksetzen des Passworts gesendet.",
       "passwordUpdated": "Passwort aktualisiert!",
-      "passwordUpdatedDesc": "Ihr Passwort wurde erfolgreich aktualisiert."
+      "passwordUpdatedDesc": "Ihr Passwort wurde erfolgreich aktualisiert.",
+      "checkInboxTitle": "Überprüfen Sie Ihren Posteingang",
+      "checkInboxDesc": "Wir haben Ihnen einen Bestätigungslink zur Verifizierung Ihrer E-Mail-Adresse gesendet.",
+      "sentTo": "Wir haben eine E-Mail gesendet an",
+      "checkSpam": "Falls Sie die E-Mail nicht finden, überprüfen Sie Ihren Spam-Ordner.",
+      "resendEmail": "Bestätigungs-E-Mail erneut senden",
+      "resendIn": "Erneut senden in",
+      "backToSignIn": "Zurück zur Anmeldung",
+      "emailResent": "E-Mail erneut gesendet",
+      "emailResentDesc": "Wir haben eine weitere Bestätigungs-E-Mail gesendet. Bitte überprüfen Sie Ihren Posteingang.",
+      "resendFailed": "Erneutes Senden fehlgeschlagen"
     },
     "dashboard": {
       "title": "Sprint-Gesundheitsdashboard",
