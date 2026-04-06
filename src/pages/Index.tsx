@@ -180,9 +180,9 @@ const Index = () => {
                     return (
                       <Card 
                         key={index}
-                        className={`p-6 transition-all duration-500 ${
+                      className={`p-4 sm:p-6 transition-all duration-500 ${
                           activeFeature === index 
-                            ? 'scale-105 shadow-elevated border-primary bg-primary/5' 
+                            ? 'sm:scale-105 shadow-elevated border-primary bg-primary/5' 
                             : 'hover:scale-102'
                         }`}
                       >
