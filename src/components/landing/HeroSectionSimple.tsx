@@ -27,7 +27,7 @@ export function HeroSectionSimple() {
 
   return (
     <section
-      className="relative min-h-[90vh] flex items-center py-20 md:py-28 px-4 overflow-hidden"
+      className="relative min-h-[70vh] md:min-h-[90vh] flex items-center py-12 md:py-28 px-4 overflow-hidden"
       aria-labelledby="hero-heading"
     >
       {/* Background */}
