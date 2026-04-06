@@ -174,15 +174,15 @@ const Index = () => {
                   </p>
                 </div>
                 
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
                   {animatedFeatures.map((feature, index) => {
                     const Icon = feature.icon;
                     return (
                       <Card 
                         key={index}
-                        className={`p-6 transition-all duration-500 ${
+                      className={`p-4 sm:p-6 transition-all duration-500 ${
                           activeFeature === index 
-                            ? 'scale-105 shadow-elevated border-primary bg-primary/5' 
+                            ? 'sm:scale-105 shadow-elevated border-primary bg-primary/5' 
                             : 'hover:scale-102'
                         }`}
                       >
@@ -229,7 +229,7 @@ const Index = () => {
                   </p>
                 </div>
                 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {coreFeatures.map((feature, index) => (
                     <FeatureCard
                       key={index}
@@ -246,7 +246,7 @@ const Index = () => {
             {/* CTA Section */}
             <section className="py-8 mb-8">
               <div className="max-w-4xl mx-auto">
-                <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-center shadow-elevated">
+                <div className="bg-gradient-primary rounded-2xl p-6 sm:p-8 md:p-12 text-center shadow-elevated">
                   <h2 className="text-3xl font-bold text-primary-foreground mb-4">
                     Ready to Transform Your Agile Process?
                   </h2>

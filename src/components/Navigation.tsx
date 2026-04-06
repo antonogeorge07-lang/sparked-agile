@@ -191,9 +191,9 @@ export const Navigation = () => {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="flex lg:hidden items-center gap-1.5">
-            <LanguageSwitcher />
-            <ThemeToggle />
+          <div className="flex lg:hidden items-center gap-1">
+            <span className="hidden sm:inline-flex"><LanguageSwitcher /></span>
+            <span className="hidden sm:inline-flex"><ThemeToggle /></span>
             {user && <NotificationBell />}
             
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>

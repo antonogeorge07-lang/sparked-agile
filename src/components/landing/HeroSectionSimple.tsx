@@ -27,7 +27,7 @@ export function HeroSectionSimple() {
 
   return (
     <section
-      className="relative min-h-[90vh] flex items-center py-20 md:py-28 px-4 overflow-hidden"
+      className="relative min-h-[70vh] md:min-h-[90vh] flex items-center py-12 md:py-28 px-4 overflow-hidden"
       aria-labelledby="hero-heading"
     >
       {/* Background */}
@@ -82,7 +82,7 @@ export function HeroSectionSimple() {
             {/* Headline */}
             <motion.h1
               id="hero-heading"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-[-0.03em]"
+              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-[-0.03em]"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
@@ -116,7 +116,7 @@ export function HeroSectionSimple() {
               <Link to="/auth" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="group relative gap-2.5 px-8 h-14 text-base font-medium w-full sm:w-auto overflow-hidden shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-500"
+                  className="group relative gap-2.5 px-6 sm:px-8 h-12 sm:h-14 text-sm sm:text-base font-medium w-full sm:w-auto overflow-hidden shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-500"
                 >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"

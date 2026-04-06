@@ -47,11 +47,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
 
               {/* Right: Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="hidden sm:flex items-center gap-2 text-muted-foreground h-8 px-3"
+                  className="hidden md:flex items-center gap-2 text-muted-foreground h-8 px-3"
                   onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
                 >
                   <Search className="h-3.5 w-3.5" />
@@ -60,9 +60,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     ⌘K
                   </kbd>
                 </Button>
-                <LanguageSwitcher />
+                <span className="hidden sm:inline-flex"><LanguageSwitcher /></span>
                 <NotificationBell />
-                <ThemeToggle />
+                <span className="hidden sm:inline-flex"><ThemeToggle /></span>
                 <ProfileMenu />
               </div>
             </div>

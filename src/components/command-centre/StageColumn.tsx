@@ -36,8 +36,8 @@ export function StageColumn({ stage, tasks, onTaskUpdate }: StageColumnProps) {
   });
 
   return (
-    <div className="flex-shrink-0 w-80">
-      <Card className={`p-4 min-h-[600px] transition-all ${isOver ? "ring-2 ring-primary shadow-elevated" : ""}`}>
+    <div className="flex-shrink-0 w-72 sm:w-80">
+      <Card className={`p-3 sm:p-4 min-h-[400px] sm:min-h-[600px] transition-all ${isOver ? "ring-2 ring-primary shadow-elevated" : ""}`}>
         <div className="mb-4">
           <div className={`h-1 w-full rounded-full bg-gradient-to-r ${stage.color} mb-3`} />
           <div className="flex items-center justify-between">
