@@ -246,7 +246,7 @@ const Index = () => {
             {/* CTA Section */}
             <section className="py-8 mb-8">
               <div className="max-w-4xl mx-auto">
-                <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-center shadow-elevated">
+                <div className="bg-gradient-primary rounded-2xl p-6 sm:p-8 md:p-12 text-center shadow-elevated">
                   <h2 className="text-3xl font-bold text-primary-foreground mb-4">
                     Ready to Transform Your Agile Process?
                   </h2>

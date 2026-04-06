@@ -60,9 +60,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     ⌘K
                   </kbd>
                 </Button>
-                <LanguageSwitcher />
+                <span className="hidden sm:inline-flex"><LanguageSwitcher /></span>
                 <NotificationBell />
-                <ThemeToggle />
+                <span className="hidden sm:inline-flex"><ThemeToggle /></span>
                 <ProfileMenu />
               </div>
             </div>

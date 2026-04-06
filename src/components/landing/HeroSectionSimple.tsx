@@ -116,7 +116,7 @@ export function HeroSectionSimple() {
               <Link to="/auth" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="group relative gap-2.5 px-8 h-14 text-base font-medium w-full sm:w-auto overflow-hidden shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-500"
+                  className="group relative gap-2.5 px-6 sm:px-8 h-12 sm:h-14 text-sm sm:text-base font-medium w-full sm:w-auto overflow-hidden shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-500"
                 >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
