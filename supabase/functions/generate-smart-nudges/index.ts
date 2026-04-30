@@ -196,7 +196,7 @@ serve(async (req) => {
 
     if (LOVABLE_API_KEY) {
       try {
-        const aiResponse = await fetch('https://ai.lovable.dev/v1/chat/completions', {
+        const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${LOVABLE_API_KEY}`,
