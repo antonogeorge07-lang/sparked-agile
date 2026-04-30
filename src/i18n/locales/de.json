@@ -832,7 +832,7 @@
       },
       "aiBoltOn": {
         "title": "KI ist ein Zusatz, Nicht Integriert",
-        "description": "Die meisten PM-Tools behandeln KI als Nachgedanken. SAAIs KI-Co-Pilot ist in jeden Workflow eingewoben.",
+        "description": "Die meisten PM-Tools behandeln KI als Nachgedanken. Spark-Agiles KI-Co-Pilot ist in jeden Workflow eingewoben.",
         "features": {
           "aiCopilot": {
             "title": "KI-Co-Pilot (Gemini)",
