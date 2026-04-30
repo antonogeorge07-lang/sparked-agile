@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,12 +9,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Target, Calendar, Users, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
 import { EpicTimeline } from "@/components/epic/EpicTimeline";
 import { EpicGanttChart } from "@/components/epic/EpicGanttChart";
+import { LoadingState } from "@/components/LoadingState";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
+
+// Portfolio view (formerly /epic-portfolio) is now a tab here.
+const EpicPortfolio = lazy(() => import("./EpicPortfolio"));
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
