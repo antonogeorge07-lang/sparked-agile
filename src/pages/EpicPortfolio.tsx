@@ -284,19 +284,28 @@ export default function EpicPortfolio({ embedded = false }: EpicPortfolioProps =
     return <LoadingState message="Loading epic portfolio..." />;
   }
 
+  const Wrapper: any = embedded ? "div" : "main";
+  const wrapperClass = embedded ? "space-y-6" : "container mx-auto px-4 py-8";
+
   return (
-    <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Epic Portfolio - SAAI</title>
-        <meta name="description" content="View your entire epic portfolio with health scores, timelines, and strategic alignment." />
-      </Helmet>
-      <Navigation />
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-6">
-          <BackButton />
+    <div className={embedded ? "" : "min-h-screen bg-background"}>
+      {!embedded && (
+        <>
+          <Helmet>
+            <title>Epic Portfolio - Spark-Agile</title>
+            <meta name="description" content="View your entire epic portfolio with health scores, timelines, and strategic alignment." />
+          </Helmet>
+          <Navigation />
+        </>
+      )}
+      <Wrapper className={wrapperClass}>
+        <div className={embedded ? "mb-4" : "flex items-center gap-4 mb-6"}>
+          {!embedded && <BackButton />}
           <div>
-            <h1 className="text-4xl font-bold">{t("pages.epicPortfolio.dashboardTitle")}</h1>
-            <p className="text-muted-foreground mt-2">
+            <h1 className={embedded ? "text-2xl font-bold" : "text-4xl font-bold"}>
+              {t("pages.epicPortfolio.dashboardTitle")}
+            </h1>
+            <p className="text-muted-foreground mt-2 text-sm">
               {t("pages.epicPortfolio.crossEpicAnalytics")}
             </p>
           </div>
