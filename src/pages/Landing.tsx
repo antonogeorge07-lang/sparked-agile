@@ -5,6 +5,7 @@ import { EmailCaptureForm } from "@/components/EmailCaptureForm";
 import { HeroSectionSimple } from "@/components/landing/HeroSectionSimple";
 import { ProofSection } from "@/components/landing/ProofSection";
 import { CapabilityShowcase } from "@/components/landing/CapabilityShowcase";
+import { MethodSection } from "@/components/landing/MethodSection";
 import { SimpleCTA } from "@/components/landing/SimpleCTA";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { FAQSchema } from "@/components/landing/FAQSchema";
@@ -181,6 +182,10 @@ export default function Landing() {
 
         <ScrollReveal fullWidth>
           <CapabilityShowcase />
+        </ScrollReveal>
+
+        <ScrollReveal fullWidth delay={0.1}>
+          <MethodSection />
         </ScrollReveal>
 
         <ScrollReveal fullWidth delay={0.1}>
