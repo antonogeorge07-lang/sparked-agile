@@ -32,6 +32,8 @@ export default function EpicManagement() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = searchParams.get("tab") === "portfolio" ? "portfolio" : "board";
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -302,11 +304,16 @@ export default function EpicManagement() {
               </CardContent>
             </Card>
           ) : selectedProject ? (
-            <Tabs defaultValue="board" className="space-y-6">
+            <Tabs
+              defaultValue={initialTab}
+              className="space-y-6"
+              onValueChange={(v) => setSearchParams(v === "board" ? {} : { tab: v }, { replace: true })}
+            >
               <TabsList>
                 <TabsTrigger value="board">{t("pages.epicManagement.boardView")}</TabsTrigger>
                 <TabsTrigger value="timeline">{t("pages.epicManagement.timelineView")}</TabsTrigger>
                 <TabsTrigger value="gantt">{t("pages.epicManagement.ganttChart")}</TabsTrigger>
+                <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
               </TabsList>
 
               <TabsContent value="board">
