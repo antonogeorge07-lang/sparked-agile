@@ -27,10 +27,11 @@ export const LivePlatformStats = () => {
         const { data, error } = await supabase.rpc('get_public_user_stats');
         
         if (!error && data && data.length > 0) {
+          // Honesty: only show real numbers from the DB. No fabricated multipliers.
           setStats({
             totalUsers: data[0].total_users || 0,
-            totalWorkspaces: Math.floor((data[0].total_users || 0) * 0.8),
-            totalProjects: Math.floor((data[0].total_users || 0) * 2.5),
+            totalWorkspaces: data[0].total_workspaces || 0,
+            totalProjects: data[0].total_projects || 0,
             recentSignups: data[0].recent_signups || 0,
           });
         }
