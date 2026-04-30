@@ -66,7 +66,12 @@ interface HealthDistribution {
   color: string;
 }
 
-export default function EpicPortfolio() {
+interface EpicPortfolioProps {
+  embedded?: boolean;
+  projectId?: string;
+}
+
+export default function EpicPortfolio({ embedded = false }: EpicPortfolioProps = {}) {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
