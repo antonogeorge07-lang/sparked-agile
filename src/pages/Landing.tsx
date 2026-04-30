@@ -91,8 +91,8 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>SAAI - AI Chief of Staff for Agile Teams</title>
-        <meta name="description" content="SAAI brings intelligence, rhythm, and precision to digital transformation. Your AI-powered command centre for remote teams." />
+        <title>Spark-Agile - AI Chief of Staff for Agile Teams</title>
+        <meta name="description" content="Spark-Agile brings intelligence, rhythm, and precision to digital transformation. Your AI-powered command centre for remote teams." />
       </Helmet>
       <FAQSchema />
 
@@ -107,13 +107,13 @@ export default function Landing() {
               <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
                 <OptimizedImage
                   src={saaiLogo}
-                  alt="SAAI"
+                  alt="Spark-Agile"
                   className="h-7 w-7 object-contain"
                   priority={true}
                 />
               </div>
               <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                SAAI
+                Spark-Agile
               </span>
             </Link>
             <div className="flex items-center gap-3">
