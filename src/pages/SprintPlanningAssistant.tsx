@@ -104,23 +104,20 @@ export default function SprintPlanningAssistant() {
 
     const { data: projects } = await supabase
       .from("projects")
-      .select("id");
+      .select("id, name");
 
     if (!projects || projects.length === 0) return;
 
-    // Use integrations table to find projects with active integrations, 
-    // but still load workspaces for ceremony config compatibility
-    const { data: workspaceData } = await supabase
-      .from("project_workspaces")
-      .select("*")
-      .in("project_id", projects.map(p => p.id))
-      .eq("configuration_status", "ready");
-
-    if (workspaceData) {
-      setWorkspaces(workspaceData);
-      if (workspaceData.length > 0) {
-        setSelectedWorkspace(workspaceData[0].id);
-      }
+    // Projects are the workspace identifier (legacy project_workspaces table removed)
+    const synthesized = projects.map((p: any) => ({
+      id: p.id,
+      project_id: p.id,
+      name: p.name,
+      configuration_status: "ready",
+    }));
+    setWorkspaces(synthesized);
+    if (synthesized.length > 0) {
+      setSelectedWorkspace(synthesized[0].id);
     }
   };
 
