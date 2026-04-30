@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { BackButton } from "@/components/BackButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,12 +9,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Target, Calendar, Users, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateEpicDialog } from "@/components/epic/CreateEpicDialog";
 import { EpicTimeline } from "@/components/epic/EpicTimeline";
 import { EpicGanttChart } from "@/components/epic/EpicGanttChart";
+import { LoadingState } from "@/components/LoadingState";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
+
+// Portfolio view (formerly /epic-portfolio) is now a tab here.
+const EpicPortfolio = lazy(() => import("./EpicPortfolio"));
 
 export default function EpicManagement() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -28,6 +32,8 @@ export default function EpicManagement() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = searchParams.get("tab") === "portfolio" ? "portfolio" : "board";
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -298,11 +304,16 @@ export default function EpicManagement() {
               </CardContent>
             </Card>
           ) : selectedProject ? (
-            <Tabs defaultValue="board" className="space-y-6">
+            <Tabs
+              defaultValue={initialTab}
+              className="space-y-6"
+              onValueChange={(v) => setSearchParams(v === "board" ? {} : { tab: v }, { replace: true })}
+            >
               <TabsList>
                 <TabsTrigger value="board">{t("pages.epicManagement.boardView")}</TabsTrigger>
                 <TabsTrigger value="timeline">{t("pages.epicManagement.timelineView")}</TabsTrigger>
                 <TabsTrigger value="gantt">{t("pages.epicManagement.ganttChart")}</TabsTrigger>
+                <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
               </TabsList>
 
               <TabsContent value="board">
@@ -379,6 +390,12 @@ export default function EpicManagement() {
 
               <TabsContent value="gantt">
                 <EpicGanttChart projectId={selectedProject!} />
+              </TabsContent>
+
+              <TabsContent value="portfolio">
+                <Suspense fallback={<LoadingState />}>
+                  <EpicPortfolio embedded projectId={selectedProject!} />
+                </Suspense>
               </TabsContent>
             </Tabs>
           ) : (

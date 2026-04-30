@@ -20,6 +20,7 @@ export interface IntegrationConfig {
 export const useProjectIntegrations = (projectId: string | undefined) => {
   return useQuery({
     queryKey: ["project-integrations", projectId],
+    staleTime: 60_000,
     queryFn: async () => {
       if (!projectId) return null;
 
