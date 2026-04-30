@@ -33,6 +33,7 @@ import { GitHubActivityCard } from "@/components/GitHubActivityCard";
 import { EpicDashboardWidget } from "@/components/epic/EpicDashboardWidget";
 import { IntegrationSettings } from "@/components/IntegrationSettings";
 import { SmartNudgesPanel } from "@/components/SmartNudgesPanel";
+import { AgentDebateShowcase } from "@/components/AgentDebateShowcase";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
@@ -493,6 +494,13 @@ export default function Dashboard() {
           {!isGuestMode && selectedProject && (
             <div className="mt-8 mb-6">
               <SmartNudgesPanel projectId={selectedProject} />
+            </div>
+          )}
+
+          {/* Signature differentiator: Multi-Agent Debate */}
+          {!isGuestMode && (
+            <div className="mt-8 mb-6">
+              <AgentDebateShowcase projectId={selectedProject} />
             </div>
           )}
 
