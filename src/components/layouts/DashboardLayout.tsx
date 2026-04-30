@@ -37,12 +37,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-1.5 rounded-lg border border-primary/10 group-hover:border-primary/30 transition-all">
                       <img 
                         src={saaiLogo} 
-                        alt="SAAI Logo" 
+                        alt="Spark-Agile logo" 
                         className="h-6 w-6 object-contain relative z-10"
                       />
                     </div>
                   </div>
-                  <span className="font-bold text-lg hidden sm:inline-block bg-gradient-primary bg-clip-text text-transparent">SAAI</span>
+                  <span className="font-bold text-lg hidden sm:inline-block bg-gradient-primary bg-clip-text text-transparent">Spark-Agile</span>
                 </Link>
               </div>
 

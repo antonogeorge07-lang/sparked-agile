@@ -85,8 +85,8 @@ export default function Features() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Features - SAAI</title>
-        <meta name="description" content="Explore SAAI features: AI sprint planning, epic management, flow metrics, and real-time collaboration." />
+        <title>Features - Spark-Agile</title>
+        <meta name="description" content="Explore Spark-Agile features: AI sprint planning, epic management, flow metrics, and real-time collaboration." />
       </Helmet>
       {/* Navigation */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -98,13 +98,13 @@ export default function Features() {
                 <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
                   <OptimizedImage 
                     src={saaiLogo} 
-                    alt="SAAI" 
+                    alt="Spark-Agile" 
                     className="h-7 w-7 object-contain"
                     priority={true}
                   />
                 </div>
                 <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                  SAAI
+                  Spark-Agile
                 </span>
               </Link>
             </div>

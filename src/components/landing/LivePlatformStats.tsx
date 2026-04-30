@@ -27,10 +27,13 @@ export const LivePlatformStats = () => {
         const { data, error } = await supabase.rpc('get_public_user_stats');
         
         if (!error && data && data.length > 0) {
+          // Honesty: only show real numbers from the DB. Workspaces/Projects
+          // counts are not exposed via the public RPC, so we keep them at 0
+          // and hide those tiles below rather than fabricate multipliers.
           setStats({
             totalUsers: data[0].total_users || 0,
-            totalWorkspaces: Math.floor((data[0].total_users || 0) * 0.8),
-            totalProjects: Math.floor((data[0].total_users || 0) * 2.5),
+            totalWorkspaces: 0,
+            totalProjects: 0,
             recentSignups: data[0].recent_signups || 0,
           });
         }
@@ -44,7 +47,7 @@ export const LivePlatformStats = () => {
     fetchStats();
   }, []);
 
-  const statItems = [
+  const allStatItems = [
     {
       icon: Users,
       value: stats.totalUsers,
@@ -86,6 +89,15 @@ export const LivePlatformStats = () => {
       borderHover: "group-hover:border-rose-500/40",
     },
   ];
+
+  // Honesty: only render tiles where we have a real, non-zero number from the DB.
+  // Avoids the "Ferrari in the garage" optics of showing 0s, and never fabricates.
+  const statItems = allStatItems.filter((s) => s.value > 0);
+
+  // If we have no real numbers yet, render nothing rather than fake activity.
+  if (!isLoading && statItems.length === 0) {
+    return null;
+  }
 
   if (isLoading) {
     return (
