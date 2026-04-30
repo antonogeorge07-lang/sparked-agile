@@ -391,6 +391,12 @@ export default function EpicManagement() {
               <TabsContent value="gantt">
                 <EpicGanttChart projectId={selectedProject!} />
               </TabsContent>
+
+              <TabsContent value="portfolio">
+                <Suspense fallback={<LoadingState />}>
+                  <EpicPortfolio embedded projectId={selectedProject!} />
+                </Suspense>
+              </TabsContent>
             </Tabs>
           ) : (
             <Card>
