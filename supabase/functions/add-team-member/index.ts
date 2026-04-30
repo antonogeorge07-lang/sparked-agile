@@ -131,67 +131,10 @@ serve(async (req) => {
 
     console.log('Team member added successfully:', teamMember.id);
 
-    // Add to Outlook calendar invites if access token provided
+    // Outlook ceremony auto-invite removed (project_workspaces / ceremony_configs dropped).
+    // Modern flow: ceremonies are managed via /ceremony-setup using direct project_id.
     if (accessToken) {
-      console.log('Adding team member to Outlook calendar ceremonies...');
-      
-      // Fetch ceremony configs for this project
-      const { data: workspaces } = await supabaseClient
-        .from('project_workspaces')
-        .select('id')
-        .eq('project_id', projectId);
-
-      if (workspaces && workspaces.length > 0) {
-        const workspaceId = workspaces[0].id;
-        
-        const { data: ceremonies } = await supabaseClient
-          .from('ceremony_configs')
-          .select('*')
-          .eq('workspace_id', workspaceId)
-          .eq('is_active', true);
-
-        if (ceremonies && ceremonies.length > 0) {
-          // Add attendee to each ceremony event
-          for (const ceremony of ceremonies) {
-            if (ceremony.outlook_event_id) {
-              try {
-                // Update the Outlook event to add the new attendee
-                const updateResponse = await fetch(
-                  `https://graph.microsoft.com/v1.0/me/events/${ceremony.outlook_event_id}`,
-                  {
-                    method: 'PATCH',
-                    headers: {
-                      'Authorization': `Bearer ${accessToken}`,
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      attendees: [
-                        ...(ceremony.attendees || []).map((att: string) => ({
-                          emailAddress: { address: att },
-                          type: 'required'
-                        })),
-                        {
-                          emailAddress: { address: email },
-                          type: 'required'
-                        }
-                      ]
-                    }),
-                  }
-                );
-
-                if (updateResponse.ok) {
-                  console.log(`Added ${email} to ${ceremony.ceremony_type} ceremony`);
-                } else {
-                  const errorText = await updateResponse.text();
-                  console.error(`Failed to add attendee to ${ceremony.ceremony_type}:`, errorText);
-                }
-              } catch (error) {
-                console.error(`Error updating ceremony ${ceremony.ceremony_type}:`, error);
-              }
-            }
-          }
-        }
-      }
+      console.log('Skipping legacy Outlook ceremony invite (deprecated path).');
     }
 
     // Escape user-provided content for HTML email

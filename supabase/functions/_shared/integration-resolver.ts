@@ -1,7 +1,7 @@
 /**
  * Unified Integration Resolver
- * Resolves integration config from the `integrations` table.
- * Accepts either projectId or workspaceId (backward compat).
+ * Reads from the canonical `integrations` table only. The legacy
+ * `project_workspaces` table has been removed; callers must pass projectId.
  */
 
 interface IntegrationConfig {
@@ -11,30 +11,15 @@ interface IntegrationConfig {
   project_id: string;
 }
 
-/**
- * Resolves integration config from the integrations table.
- * Falls back to project_workspaces lookup when only workspaceId is provided.
- */
 export async function resolveIntegrationConfig(
   supabaseClient: any,
   integrationType: string,
   opts: { projectId?: string; workspaceId?: string }
 ): Promise<IntegrationConfig | null> {
-  let projectId = opts.projectId;
-
-  // If only workspaceId provided, resolve project_id from project_workspaces
-  if (!projectId && opts.workspaceId) {
-    const { data } = await supabaseClient
-      .from('project_workspaces')
-      .select('project_id')
-      .eq('id', opts.workspaceId)
-      .maybeSingle();
-    projectId = data?.project_id;
-  }
-
+  // workspaceId is now treated as projectId (1:1 mapping post-migration)
+  const projectId = opts.projectId || opts.workspaceId;
   if (!projectId) return null;
 
-  // Query integrations table (single source of truth)
   const { data: integration } = await supabaseClient
     .from('integrations')
     .select('id, is_active, config, project_id')
@@ -53,10 +38,6 @@ export async function resolveIntegrationConfig(
   };
 }
 
-/**
- * Updates integration config in the integrations table.
- * Creates the record if it doesn't exist.
- */
 export async function upsertIntegrationConfig(
   supabaseClient: any,
   projectId: string,
@@ -64,7 +45,6 @@ export async function upsertIntegrationConfig(
   configUpdate: Record<string, any>,
   name?: string
 ): Promise<void> {
-  // Check if integration exists
   const { data: existing } = await supabaseClient
     .from('integrations')
     .select('id, config')
@@ -73,14 +53,12 @@ export async function upsertIntegrationConfig(
     .maybeSingle();
 
   if (existing) {
-    // Merge config
     const mergedConfig = { ...(existing.config || {}), ...configUpdate };
     await supabaseClient
       .from('integrations')
       .update({ config: mergedConfig, is_active: true, updated_at: new Date().toISOString() })
       .eq('id', existing.id);
   } else {
-    // Create new integration record
     await supabaseClient
       .from('integrations')
       .insert({
@@ -94,16 +72,11 @@ export async function upsertIntegrationConfig(
 }
 
 /**
- * Resolves project_id from workspace_id
+ * Backward-compat alias. workspaceId is now identical to projectId.
  */
 export async function resolveProjectId(
-  supabaseClient: any,
+  _supabaseClient: any,
   workspaceId: string
 ): Promise<string | null> {
-  const { data } = await supabaseClient
-    .from('project_workspaces')
-    .select('project_id')
-    .eq('id', workspaceId)
-    .maybeSingle();
-  return data?.project_id || null;
+  return workspaceId || null;
 }

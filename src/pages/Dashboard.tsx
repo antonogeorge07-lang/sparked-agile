@@ -34,6 +34,7 @@ import { EpicDashboardWidget } from "@/components/epic/EpicDashboardWidget";
 import { IntegrationSettings } from "@/components/IntegrationSettings";
 import { SmartNudgesPanel } from "@/components/SmartNudgesPanel";
 import { AgentDebateShowcase } from "@/components/AgentDebateShowcase";
+import { DormantCapabilitiesTiles } from "@/components/DormantCapabilitiesTiles";
 import { GuestModeBar } from "@/components/GuestModeBar";
 import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
@@ -501,6 +502,17 @@ export default function Dashboard() {
           {!isGuestMode && (
             <div className="mt-8 mb-6">
               <AgentDebateShowcase projectId={selectedProject} />
+            </div>
+          )}
+
+          {/* Dormant capabilities surfaced */}
+          {!isGuestMode && (
+            <div className="mt-8 mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Lightbulb className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">More AI tools</h2>
+              </div>
+              <DormantCapabilitiesTiles projectId={selectedProject} />
             </div>
           )}
 

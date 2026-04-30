@@ -71,17 +71,6 @@ serve(async (req) => {
       }, 'Microsoft');
     }
 
-    // Also update legacy project_workspaces for backward compatibility
-    if (workspaceId) {
-      await supabaseClient
-        .from('project_workspaces')
-        .update({
-          teams_channel_id: channelResult.id,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', workspaceId);
-    }
-
     return new Response(
       JSON.stringify({
         success: true,

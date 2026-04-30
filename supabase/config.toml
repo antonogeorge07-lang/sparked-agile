@@ -125,3 +125,6 @@ verify_jwt = true
 
 [functions.sync-jira-features]
 verify_jwt = false
+
+[functions.daily-digest-cron]
+verify_jwt = false

@@ -47,25 +47,21 @@ export const CeremonyHealthCheck = () => {
         return;
       }
 
-      // Check ceremony configs
-      const { data: ceremonyConfigs } = await supabase
-        .from('ceremony_configs')
-        .select('ceremony_type, is_active')
-        .eq('is_active', true);
+      // Ceremony health is now derived from project membership only
+      // (ceremony_configs table removed in Phase D consolidation).
+      // Treat all standard ceremonies as available once a user has any project.
+      const { data: hasProject } = await supabase
+        .from('project_members')
+        .select('project_id')
+        .eq('user_id', session.user.id)
+        .limit(1);
 
       const activeCeremonies: CeremonyStatus = {
-        standup: false,
-        retrospective: false,
-        sprintPlanning: false,
-        backlogRefinement: false,
+        standup: !!hasProject?.length,
+        retrospective: !!hasProject?.length,
+        sprintPlanning: !!hasProject?.length,
+        backlogRefinement: !!hasProject?.length,
       };
-
-      ceremonyConfigs?.forEach(config => {
-        if (config.ceremony_type === 'standup') activeCeremonies.standup = true;
-        if (config.ceremony_type === 'retrospective') activeCeremonies.retrospective = true;
-        if (config.ceremony_type === 'sprint_planning') activeCeremonies.sprintPlanning = true;
-        if (config.ceremony_type === 'backlog_refinement') activeCeremonies.backlogRefinement = true;
-      });
 
       setCeremonies(activeCeremonies);
 

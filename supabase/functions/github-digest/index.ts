@@ -77,19 +77,8 @@ serve(async (req) => {
       if (match) {
         repoName = `${match[1]}/${match[2].replace('.git', '')}`;
       }
-    } else if (workspaceId) {
-      const { data: workspace } = await supabase
-        .from('project_workspaces')
-        .select('github_repo_url')
-        .eq('id', workspaceId)
-        .single();
-      if (workspace?.github_repo_url) {
-        const match = workspace.github_repo_url.match(/github\.com\/([^\/]+)\/([^\/\?#]+)/);
-        if (match) {
-          repoName = `${match[1]}/${match[2].replace('.git', '')}`;
-        }
-      }
     } else if (projectId) {
+      // (legacy workspaceId branch removed — project_workspaces table dropped)
       const { data: integration } = await supabase
         .from('integrations')
         .select('config')

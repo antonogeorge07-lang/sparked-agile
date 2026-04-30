@@ -80,18 +80,6 @@ serve(async (req) => {
       board_id: boardId,
     }, 'Jira');
 
-    // Also update legacy project_workspaces for backward compatibility
-    if (workspaceId) {
-      await supabaseClient
-        .from('project_workspaces')
-        .update({
-          jira_board_url: jiraBoardUrl,
-          jira_board_id: boardId,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', workspaceId);
-    }
-
     return new Response(
       JSON.stringify({
         success: true,
