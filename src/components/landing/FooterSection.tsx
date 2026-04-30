@@ -20,13 +20,13 @@ export function FooterSection() {
                 <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
                   <OptimizedImage 
                     src={saaiLogo} 
-                    alt="SAAI - AI-powered Scrum Master assistant logo" 
+                    alt="Spark-Agile logo" 
                     className="h-8 w-8 object-contain relative z-10" 
                   />
                 </div>
               </div>
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                SAAI
+                Spark-Agile
               </span>
             </div>
             <p className="text-sm text-muted-foreground">

@@ -114,7 +114,7 @@ export default function About() {
               <div className="relative">
                 <OptimizedImage 
                   src={saaiLogo} 
-                  alt="SAAI - Spark-Agile Active Intelligence logo" 
+                  alt="Spark-Agile logo" 
                   className="h-28 w-auto object-contain drop-shadow-lg" 
                 />
                 <div className="absolute -inset-4 bg-primary/10 rounded-full blur-2xl -z-10" />

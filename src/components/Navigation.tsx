@@ -131,7 +131,7 @@ export const Navigation = () => {
                   <source srcSet={saaiLogoOptimized} type="image/webp" />
                   <img 
                     src={saaiLogo} 
-                    alt="SAAI - Agile Active Intelligence logo"
+                    alt="Spark-Agile logo"
                     width="40"
                     height="40"
                     className="h-8 w-8 sm:h-9 sm:w-9 object-contain relative z-10"
@@ -143,7 +143,7 @@ export const Navigation = () => {
             {/* Brand name with professional styling */}
             <div className="flex flex-col items-start -space-y-1">
               <span className="text-xl sm:text-2xl font-bold tracking-tight bg-gradient-primary bg-clip-text text-transparent group-hover:tracking-wide transition-all">
-                SAAI
+                Spark-Agile
               </span>
               <span className="hidden sm:block text-[10px] font-medium text-muted-foreground tracking-wider uppercase">
                 Agile Intelligence
