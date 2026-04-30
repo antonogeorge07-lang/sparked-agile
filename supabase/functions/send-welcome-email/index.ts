@@ -201,12 +201,10 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
   } catch (error: any) {
+    // Log full error server-side only; never return internals to caller
     console.error("Error sending welcome email:", error);
     return new Response(
-      JSON.stringify({ 
-        error: error.message || "Failed to send welcome email",
-        details: error.toString()
-      }),
+      JSON.stringify({ error: "Failed to send welcome email" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
