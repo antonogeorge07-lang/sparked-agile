@@ -32,11 +32,15 @@
     { name: "Retrospective Insights", icon: Sparkles },
   ];
  
-   const comingSoonFeatures = [
-     { name: "White-label Branding", status: "Planned", icon: Star },
-     { name: "Enterprise SSO (SAML)", status: "Planned", icon: Shield },
-     { name: "Priority Support Tiers", status: "Planned", icon: Users },
-   ];
+  const comingSoonFeatures = [
+    { name: "White-label Branding", status: "Planned", icon: Star },
+    { name: "Enterprise SSO (SAML)", status: "Planned", icon: Shield },
+    { name: "Priority Support Tiers", status: "Planned", icon: Users },
+  ];
+
+  // Honest waitlist: Pro tier is not yet wired to a payment processor, so we
+  // do not advertise a price/CTA that cannot be honoured today.
+  const proWaitlist = true;
  
    const containerVariants = {
      hidden: { opacity: 0 },
@@ -103,12 +107,12 @@
                  style={{ opacity: hoveredTier === 'free' ? 1 : 0 }}
                />
                
-               {/* Popular badge */}
-               <div className="absolute -top-px -right-px">
-                 <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground text-xs font-semibold px-4 py-1.5 rounded-bl-xl rounded-tr-lg">
-                   Most Popular
-                 </div>
-               </div>
+              {/* Honesty badge: this tier is the only one we can deliver today. */}
+              <div className="absolute -top-px -right-px">
+                <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground text-xs font-semibold px-4 py-1.5 rounded-bl-xl rounded-tr-lg">
+                  Available today
+                </div>
+              </div>
  
                <CardHeader className="pb-4 pt-8 relative z-10">
                  <div className="flex items-center gap-3 mb-4">
@@ -186,27 +190,27 @@
                  </div>
                </div>
  
-               <CardHeader className="pb-4 pt-8">
-                 <div className="flex items-center gap-3 mb-4">
-                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-muted to-muted/70 border border-border">
-                     <Clock className="h-6 w-6 text-muted-foreground" />
-                   </div>
-                   <div>
-                     <h3 className="text-2xl font-bold">Coming Soon</h3>
-                     <p className="text-sm text-muted-foreground">Enterprise features</p>
-                   </div>
-                 </div>
-                 
-                 <div className="flex items-baseline gap-2 mb-2">
-                   <span className="text-2xl font-bold text-muted-foreground">
-                     Launching in 30 days
-                   </span>
-                 </div>
-                 
-                 <p className="text-muted-foreground">
-                   Advanced features being developed by Antono George
-                 </p>
-               </CardHeader>
+              <CardHeader className="pb-4 pt-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-muted to-muted/70 border border-border">
+                    <Clock className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Pro - Coming Soon</h3>
+                    <p className="text-sm text-muted-foreground">Premium tier on the roadmap</p>
+                  </div>
+                </div>
+
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-2xl font-bold text-muted-foreground">
+                    Join the waitlist
+                  </span>
+                </div>
+
+                <p className="text-muted-foreground">
+                  We are still building checkout. Drop your email and we will let you know the moment Pro opens up - no surprise charges, no auto-trial.
+                </p>
+              </CardHeader>
  
                <CardContent className="pt-0">
                  <Button 
@@ -247,20 +251,20 @@
                    </div>
                  </div>
  
-                 {/* Decorative timeline */}
-                 <div className="mt-8 pt-6 border-t border-border/50">
-                   <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                     <div className="flex -space-x-2">
-                       <div className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center">
-                         <span className="text-xs font-bold text-primary">Q1</span>
-                       </div>
-                       <div className="w-8 h-8 rounded-full bg-muted border-2 border-background flex items-center justify-center">
-                         <span className="text-xs font-bold">Q2</span>
-                       </div>
-                     </div>
-                     <span>Rolling out throughout 2026</span>
-                   </div>
-                 </div>
+                {/* Decorative timeline */}
+                <div className="mt-8 pt-6 border-t border-border/50">
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center">
+                        <span className="text-xs font-bold text-primary">Now</span>
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-muted border-2 border-background flex items-center justify-center">
+                        <span className="text-xs font-bold">Next</span>
+                      </div>
+                    </div>
+                    <span>Free tier is fully live today</span>
+                  </div>
+                </div>
                </CardContent>
              </Card>
            </motion.div>
