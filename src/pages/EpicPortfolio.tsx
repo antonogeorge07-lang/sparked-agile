@@ -745,7 +745,7 @@ export default function EpicPortfolio({ embedded = false }: EpicPortfolioProps =
             </Card>
           </TabsContent>
         </Tabs>
-      </main>
+      </Wrapper>
     </div>
   );
 }
