@@ -435,7 +435,7 @@
       "freeCta": "Kostenlos starten",
       "proTitle": "Pro",
       "proPrice": "29€",
-      "proDescription": "Vollständige SAAI-Plattform mit Zeremonien, Epics und Kollaborations-Tools.",
+      "proDescription": "Vollständige Spark-Agile-Plattform mit Zeremonien, Epics und Kollaborations-Tools.",
       "proCta": "Kostenlose Testversion starten",
       "perMonth": "/Monat",
       "betaAccess": "Kostenloser Zugang",
@@ -460,7 +460,7 @@
     },
     "value": {
       "title": "Entwickelt für moderne agile Teams",
-      "subtitle": "Ob Sie Sprints durchführen, Stakeholder verwalten oder Projekterfolge vorantreiben, SAAI passt sich Ihrem Workflow an und verstärkt Ihre Wirkung",
+      "subtitle": "Ob Sie Sprints durchführen, Stakeholder verwalten oder Projekterfolge vorantreiben, Spark-Agile passt sich Ihrem Workflow an und verstärkt Ihre Wirkung",
       "scrumMasters": "Für Scrum Master",
       "scrumMastersDesc": "Orchestrieren Sie Zeremonien mit Zuversicht",
       "scrumFeature1": "Generieren Sie Standup-Zusammenfassungen und verfolgen Sie Blocker",
@@ -517,7 +517,7 @@
     "marketplace": {
       "badge": "Integrationen",
       "title": "Funktioniert mit Ihren Tools",
-      "subtitle": "Verbinden Sie SAAI mit Ihrem bestehenden Workflow",
+      "subtitle": "Verbinden Sie Spark-Agile mit Ihrem bestehenden Workflow",
       "connectRepos": "Verbinden Sie Ihre Repos",
       "syncSprints": "Synchronisieren Sie Sprints und Backlog",
       "calendarIntegration": "Kalenderintegration",
@@ -538,7 +538,7 @@
       "getStarted": "Kostenlos starten",
       "watchDemo": "Demo ansehen",
       "emailTitle": "Ihre tägliche Zusammenfassung",
-      "emailFrom": "von SAAI • Heute um 9:00 Uhr",
+      "emailFrom": "von Spark-Agile • Heute um 9:00 Uhr",
       "commitsMerged": "12 Commits zusammengeführt",
       "commitsDesc": "Auth-Refactoring, API-Optimierung, Bugfixes...",
       "tasksCompleted": "8 Aufgaben abgeschlossen",
@@ -553,7 +553,7 @@
     },
     "philosophy": {
       "title": "Unsere Philosophie",
-      "subtitle": "Wir glauben, dass die besten Tools aus dem Verständnis echter Herausforderungen entstehen. SAAI wurde von jemandem entwickelt, der mit Teams zusammengearbeitet hat, das Chaos schlecht geführter Zeremonien erlebt hat und gesehen hat, was Menschen wirklich hilft, ihre beste Arbeit zu leisten.",
+      "subtitle": "Wir glauben, dass die besten Tools aus dem Verständnis echter Herausforderungen entstehen. Spark-Agile wurde von jemandem entwickelt, der mit Teams zusammengearbeitet hat, das Chaos schlecht geführter Zeremonien erlebt hat und gesehen hat, was Menschen wirklich hilft, ihre beste Arbeit zu leisten.",
       "humanFirst": "Menschen zuerst",
       "humanFirstDesc": "Entwickelt aus echter Erfahrung in der Zusammenarbeit mit Teams, nicht aus abstrakten Theorien. Jede Funktion löst ein Problem, das wir tatsächlich erlebt haben.",
       "activeIntelligence": "Aktive Intelligenz",
@@ -606,7 +606,7 @@
       "teamPractices": "Team-Best Practices",
       "teamPracticesDesc": "Ratschläge zur Zusammenarbeit, Konfliktlösung und Produktivitätssteigerung",
       "platformNav": "Plattform-Navigation",
-      "platformNavDesc": "Hilfe zum Verständnis von SAAI-Funktionen und zur Nutzung von Integrationen",
+      "platformNavDesc": "Hilfe zum Verständnis von Spark-Agile-Funktionen und zur Nutzung von Integrationen",
       "unlockUnlimited": "Uneingeschränkten Zugang freischalten",
       "unlockDesc": "Verbinden Sie sich jederzeit mit Omair und erhalten Sie unbegrenzt Antworten.",
       "getStartedFree": "Kostenlos starten",
@@ -627,7 +627,7 @@
       "freeBeta": "Kostenlos nutzbar"
     },
     "quickValue": {
-      "title": "Warum Teams SAAI wählen",
+      "title": "Warum Teams Spark-Agile wählen",
       "subtitle": "Alles, was Sie brauchen, um Agilität im großen Stil zu betreiben, unterstützt durch KI",
       "benefit1": "Richten Sie Ihr erstes Projekt in Minuten ein",
       "benefit2": "KI unterstützt die Sprintplanung aus Ihrem Backlog",
@@ -645,7 +645,7 @@
     },
     "liveStats": {
       "title": "Echtzeit-Plattformaktivität",
-      "teamsUsing": "Teams nutzen SAAI",
+      "teamsUsing": "Teams nutzen Spark-Agile",
       "projectsManaged": "Verwaltete Projekte",
       "activeWorkspaces": "Aktive Arbeitsbereiche",
       "newThisMonth": "Neu diesen Monat"
@@ -694,17 +694,17 @@
       "newFeatures": "Neue Funktionen wöchentlich"
     },
     "creatorStory": {
-      "badge": "Die Geschichte hinter SAAI",
+      "badge": "Die Geschichte hinter Spark-Agile",
       "title": "Von einem Praktiker gebaut, nicht einer Fabrik",
       "problemTitle": "Das Problem, das ich erlebt habe",
       "problemDesc": "Nach Jahren der Führung agiler Teams sah ich dasselbe Muster: brillante Tools, die mehr Arbeit schufen, nicht weniger. Standups wurden zu Status-Theater. Retros erzeugten Aktionspunkte, die verschwanden.",
       "solutionTitle": "Die Lösung, die ich gebaut habe",
-      "solutionDesc": "SAAI ist kein weiteres Projektmanagement-Tool, das vorgibt, intelligent zu sein. Es ist eine kognitive Schicht, die agilen Kontext versteht, verbindet Jira, GitHub und Slack, um das Wichtige zu zeigen, bevor Sie fragen.",
+      "solutionDesc": "Spark-Agile ist kein weiteres Projektmanagement-Tool, das vorgibt, intelligent zu sein. Es ist eine kognitive Schicht, die agilen Kontext versteht, verbindet Jira, GitHub und Slack, um das Wichtige zu zeigen, bevor Sie fragen.",
       "philosophyTitle": "Philosophie",
       "philosophyQuote": "Aktive Intelligenz, Nicht Künstlich Sondern Echt",
       "philosophyDesc": "KI sollte Ihre Expertise verstärken, nicht Ihr Urteil ersetzen. Jede Funktion gibt Ihnen Zeit zurück, nicht ein weiteres Dashboard zum Prüfen.",
       "honestTitle": "Ehrlich über Grenzen",
-      "honestDesc": "SAAI wächst. Einige Integrationen sind \"Demnächst verfügbar\". Ich werde nichts anderes behaupten. Was existiert, funktioniert, weil es aus echten Bedürfnissen gebaut wurde.",
+      "honestDesc": "Spark-Agile wächst. Einige Integrationen sind \"Demnächst verfügbar\". Ich werde nichts anderes behaupten. Was existiert, funktioniert, weil es aus echten Bedürfnissen gebaut wurde.",
       "createdBy": "Erstellt von",
       "studio": "Antono George"
     },
@@ -721,7 +721,7 @@
       "faq": "FAQ",
       "privacy": "Datenschutz",
       "terms": "Nutzungsbedingungen",
-      "copyright": "© {{year}} SAAI. Alle Rechte vorbehalten.",
+      "copyright": "© {{year}} Spark-Agile. Alle Rechte vorbehalten.",
       "builtBy": "Entwickelt mit ❤️ von"
     }
   },
@@ -773,12 +773,12 @@
   "features": {
     "hero": {
       "title": "Jede Funktion Loest ein Echtes Problem",
-      "subtitle": "SAAI ist um die Schmerzpunkte gebaut, die Teams ausbremsen. So adressiert jede Faehigkeit ein Problem, dem Sie heute gegenueberstehen."
+      "subtitle": "Spark-Agile ist um die Schmerzpunkte gebaut, die Teams ausbremsen. So adressiert jede Faehigkeit ein Problem, dem Sie heute gegenueberstehen."
     },
     "painPoints": {
       "scatteredTools": {
         "title": "Verstreute Tools, Null Sichtbarkeit",
-        "description": "Das Jonglieren mit Jira, Trello, Tabellen und Slack verschwendet Zeit und toetet den Kontext. SAAI bietet ein natives Oekosystem.",
+        "description": "Das Jonglieren mit Jira, Trello, Tabellen und Slack verschwendet Zeit und toetet den Kontext. Spark-Agile bietet ein natives Oekosystem.",
         "features": {
           "nativeBoard": {
             "title": "Natives Kanban & Sprint Board",
@@ -796,7 +796,7 @@
       },
       "meetingChaos": {
         "title": "Meeting-Chaos & Verschwendete Zeremonien",
-        "description": "Standups die sich ziehen, Retros die nirgendwohin fuehren und Sprint Reviews ohne Vorbereitung. SAAI automatisiert die Routinearbeit.",
+        "description": "Standups die sich ziehen, Retros die nirgendwohin fuehren und Sprint Reviews ohne Vorbereitung. Spark-Agile automatisiert die Routinearbeit.",
         "features": {
           "aiStandup": {
             "title": "KI-Standup-Zusammenfassungen",
@@ -814,7 +814,7 @@
       },
       "manualReporting": {
         "title": "Manuelle Berichte & Status-Updates",
-        "description": "Stunden fuer Berichte die veraltet sind wenn sie gesendet werden. SAAI generiert sie in Sekunden.",
+        "description": "Stunden fuer Berichte die veraltet sind wenn sie gesendet werden. Spark-Agile generiert sie in Sekunden.",
         "features": {
           "executiveDigest": {
             "title": "Executive Digest",
@@ -850,7 +850,7 @@
       },
       "stakeholderComms": {
         "title": "Stakeholder im Dunkeln",
-        "description": "Fuehrungskraefte fragen 'wo stehen wir?' und Teams improvisieren Praesentationen. SAAI informiert alle automatisch.",
+        "description": "Fuehrungskraefte fragen 'wo stehen wir?' und Teams improvisieren Praesentationen. Spark-Agile informiert alle automatisch.",
         "features": {
           "portal": {
             "title": "Stakeholder-Portal",
@@ -868,7 +868,7 @@
       },
       "scalingAgile": {
         "title": "Agile Skalierung ist Schmerzhaft",
-        "description": "Von einem Team zu einem Enterprise-Programm zu skalieren braucht mehr als Haftnotizen. SAAI unterstuetzt SAFe nativ.",
+        "description": "Von einem Team zu einem Enterprise-Programm zu skalieren braucht mehr als Haftnotizen. Spark-Agile unterstuetzt SAFe nativ.",
         "features": {
           "safe": {
             "title": "SAFe-Workflows",
@@ -1031,27 +1031,27 @@
       "cantFind": "Sie finden nicht, wonach Sie suchen? Kontaktieren Sie unser Support-Team.",
       "contactSupport": "Support kontaktieren",
       "live": "Live",
-      "q1": "Was ist SAAI?",
-      "a1": "SAAI (Spark-Agile Active Intelligence) ist Ihr KI-Stabschef – ein Kommandozentrum für Remote Teams. Es ist die „fehlende kognitive Schicht“, die den Kontext all Ihrer Tools (GitHub, Jira, Slack, Outlook) vereint und innerhalb von 5 Minuten umsetzbare Erkenntnisse liefert. Keine Tool-Chaos mehr, keine verpassten Updates mehr.",
+      "q1": "Was ist Spark-Agile?",
+      "a1": "Spark-Agile ist Ihr KI-Stabschef – ein Kommandozentrum für Remote Teams. Es ist die „fehlende kognitive Schicht“, die den Kontext all Ihrer Tools (GitHub, Jira, Slack, Outlook) vereint und innerhalb von 5 Minuten umsetzbare Erkenntnisse liefert. Keine Tool-Chaos mehr, keine verpassten Updates mehr.",
       "q2": "Wie funktioniert die KI-Unterstützung?",
-      "a2intro": "SAAI verwendet ein Multi-Agenten-KI-System, das von Gemini unterstützt wird:",
+      "a2intro": "Spark-Agile verwendet ein Multi-Agenten-KI-System, das von Gemini unterstützt wird:",
       "a2omair": "Omair: Ihr Support-Assistent für Onboarding und Plattformhilfe",
       "a2copilot": "KI-Co-Pilot: Erstellt User Stories, schätzt Story Points, erkennt Blocker und prognostiziert Sprints",
       "a2debate": "Multi-Agenten-Debatte: Spezialisierte Agenten debattieren Entscheidungen aus verschiedenen Perspektiven, um einen Konsens zu erzielen",
       "a2specialist": "Spezialisten-Agenten: Dedizierte Agenten für retrospektive Einblicke, Sprintplanung, Standup-Zusammenfassungen und GitHub-Abstimmungen",
       "a2outro": "Alle Agenten teilen den Projektkontext und speichern Empfehlungen für kontinuierliches Lernen.",
       "q3": "Muss ich etwas installieren?",
-      "a3": "Keine Installation erforderlich! SAAI ist eine cloudbasierte Webanwendung. Erstellen Sie einfach ein Konto und greifen Sie über Ihren Browser darauf zu. Wir kümmern uns automatisch um die gesamte Infrastruktur und alle Updates. Es funktioniert auf Mobilgeräten, Tablets und Desktops mit voller iOS-Kompatibilität.",
+      "a3": "Keine Installation erforderlich! Spark-Agile ist eine cloudbasierte Webanwendung. Erstellen Sie einfach ein Konto und greifen Sie über Ihren Browser darauf zu. Wir kümmern uns automatisch um die gesamte Infrastruktur und alle Updates. Es funktioniert auf Mobilgeräten, Tablets und Desktops mit voller iOS-Kompatibilität.",
       "q4": "Welche Sprachen werden unterstützt?",
-      "a4": "SAAI unterstützt 9 Sprachen mit einer vollständig lokalisierten Benutzeroberfläche: Englisch, Spanisch, Französisch, Deutsch, Portugiesisch, Chinesisch, Japanisch, Arabisch (mit RTL-Unterstützung) und Koreanisch. Sie können die Sprache jederzeit über die Sprachauswahl in der Navigation ändern.",
+      "a4": "Spark-Agile unterstützt 9 Sprachen mit einer vollständig lokalisierten Benutzeroberfläche: Englisch, Spanisch, Französisch, Deutsch, Portugiesisch, Chinesisch, Japanisch, Arabisch (mit RTL-Unterstützung) und Koreanisch. Sie können die Sprache jederzeit über die Sprachauswahl in der Navigation ändern.",
       "q5": "Was ist im nativen PM-Ökosystem enthalten?",
-      "a5intro": "SAAI umfasst ein komplettes Projektmanagementsystem:",
+      "a5intro": "Spark-Agile umfasst ein komplettes Projektmanagementsystem:",
       "a5kanban": "Kanban-Boards: Visuelles Aufgabenmanagement mit anpassbaren Spalten und WIP-Limits",
       "a5sprint": "Sprint-Management: Planen, verfolgen und überprüfen Sie Sprints mit Geschwindigkeitsverfolgung",
       "a5backlog": "Backlog-Verfolgung: Priorisieren und verwalten Sie Ihr Produkt-Backlog mit KI-Gesundheitsanalyse",
       "a5task": "Aufgabenmanagement: Erstellen, zuweisen und verfolgen Sie Aufgaben mit vollständiger Aktivitätshistorie",
       "a5epic": "Epic-Lebenszyklus: End-to-End-Epic-Management mit ROI-Tracking, Meilensteinen und Abschluss-Workflows",
-      "a5outro": "Das bedeutet, dass SAAI als eigenständiges Tool funktioniert. Externe Integrationen wie Jira sind optional.",
+      "a5outro": "Das bedeutet, dass Spark-Agile als eigenständiges Tool funktioniert. Externe Integrationen wie Jira sind optional.",
       "q6": "Was kann der KI-Co-Pilot tun?",
       "a6intro": "Der KI-Co-Pilot (powered by Gemini) bietet vier Hauptaktionen:",
       "a6stories": "User Stories generieren: Erstellen Sie gut strukturierte User Stories aus Anforderungen",
@@ -1060,7 +1060,7 @@
       "a6forecast": "Sprints prognostizieren: Sprint-Ergebnisse basierend auf Geschwindigkeit und Kapazität vorhersagen",
       "a6outro": "Zusätzlich liefern Spezialisten-Agenten retrospektive Erkenntnisse, Standup-Zusammenfassungen, Sprint-Planungsunterstützung und Executive Digests.",
       "q7": "Welche Integrationen werden unterstützt?",
-      "a7intro": "SAAI integriert sich in die Tools, die Ihr Team bereits verwendet:",
+      "a7intro": "Spark-Agile integriert sich in die Tools, die Ihr Team bereits verwendet:",
       "a7jira": "Jira: Backlog-Elemente, Sprints und Tickets synchronisieren",
       "a7github": "GitHub: Commits, PRs und Repository-Aktivitäten mit automatisierten Digests verfolgen",
       "a7outlook": "Microsoft Outlook: Kalenderereignisse für Zeremonien erstellen",
@@ -1068,7 +1068,7 @@
       "a7slack": "Slack: Team-Benachrichtigungen und Kanal-Updates",
       "a7outro": "Benutzer verwalten ihre eigenen Personal Access Tokens für eine sichere, benutzerbezogene Integration.",
       "qCeremonies": "Welche Sprint-Zeremonien stehen zur Verfügung?",
-      "aCeremoniesIntro": "SAAI unterstützt eine vollständige Suite von Agile-Zeremonien:",
+      "aCeremoniesIntro": "Spark-Agile unterstützt eine vollständige Suite von Agile-Zeremonien:",
       "aCeremoniesStandup": "Tägliche Standups: Strukturierte Updates mit KI-generierten Zusammenfassungen",
       "aCeremoniesPlanning": "Sprint-Planung: KI-gestützte Kapazitätsplanung und Story-Zuweisung",
       "aCeremoniesReview": "Sprint Reviews: Abgeschlossene Arbeiten mit automatisierten Abschlussberichten verfolgen",
@@ -1082,7 +1082,7 @@
       "aStakeholderApproval": "Genehmigungs-Workflows: Überprüfung und Genehmigung von Scope-Änderungen und Epic-Abschlüssen",
       "aStakeholderAlert": "Alarmkonfiguration: Benachrichtigungen für Budget-, Zeitplan- und Qualitätsschwellenwerte einrichten",
       "qSecurity": "Wie sind meine Daten geschützt?",
-      "aSecurityIntro": "SAAI verwendet Sicherheit auf Unternehmensniveau:",
+      "aSecurityIntro": "Spark-Agile verwendet Sicherheit auf Unternehmensniveau:",
       "aSecurityRLS": "196+ RLS-Richtlinien: Row-Level Security gewährleistet vollständige Datenisolation",
       "aSecurityEncryption": "AES-256-GCM-Verschlüsselung: Alle sensiblen Daten und Integrations-Tokens ruhend verschlüsselt",
       "aSecurityGDPR": "DSGVO-Konformität: Vollständige Datenschutzkontrollen, Einwilligungsverwaltung und Datenexport",
@@ -1129,7 +1129,7 @@
       "lastUpdated": "Zuletzt aktualisiert: {{date}}",
       "dataProtection": "Datenschutz & Privatsphäre",
       "introduction": "Einführung",
-      "introText1": "Willkommen bei SAAI (Spark-Agile Active Intelligence). Wir bei Antono George verpflichten uns, Ihre Privatsphäre zu schützen. Diese Datenschutzrichtlinie erklärt, wie wir Ihre Informationen sammeln, verwenden und schützen, wenn Sie SAAI nutzen.",
+      "introText1": "Willkommen bei Spark-Agile. Wir bei Antono George verpflichten uns, Ihre Privatsphäre zu schützen. Diese Datenschutzrichtlinie erklärt, wie wir Ihre Informationen sammeln, verwenden und schützen, wenn Sie Spark-Agile nutzen.",
       "introText2": "Als Mikro-Studio nehmen wir den Datenschutz ernst und halten uns an die DSGVO und andere geltende Datenschutzgesetze.",
       "infoWeCollect": "Informationen, die wir sammeln",
       "personalInfo": "Persönliche Informationen",
@@ -1207,10 +1207,10 @@
       "lastUpdated": "Zuletzt aktualisiert: {{date}}",
       "legalAgreement": "Rechtliche Vereinbarung",
       "acceptanceOfTerms": "Annahme der Bedingungen",
-      "acceptanceDesc": "Willkommen bei SAAI (Spark-Agile Active Intelligence). Durch den Zugriff und die Nutzung dieses Dienstes akzeptieren und stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie diesen Bedingungen nicht zustimmen, nutzen Sie den Dienst bitte nicht.",
-      "operatedBy": "SAAI wird von Antono George betrieben, der sich der Bereitstellung hochwertiger KI-gestützter Agile-Tools verschrieben hat.",
+      "acceptanceDesc": "Willkommen bei Spark-Agile. Durch den Zugriff und die Nutzung dieses Dienstes akzeptieren und stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie diesen Bedingungen nicht zustimmen, nutzen Sie den Dienst bitte nicht.",
+      "operatedBy": "Spark-Agile wird von Antono George betrieben, der sich der Bereitstellung hochwertiger KI-gestützter Agile-Tools verschrieben hat.",
       "descriptionOfService": "Beschreibung des Dienstes",
-      "descriptionDesc": "SAAI bietet eine KI-gestützte Scrum Master-Assistentenplattform, die Teams bei Folgendem unterstützt:",
+      "descriptionDesc": "Spark-Agile bietet eine KI-gestützte Scrum Master-Assistentenplattform, die Teams bei Folgendem unterstützt:",
       "sprintPlanning": "Sprintplanung und Backlog-Verfeinerung",
       "standupManagement": "Tägliches Standup-Management",
       "retroReviews": "Sprint-Retrospektiven und -Überprüfungen",
@@ -1233,7 +1233,7 @@
       "cancellation": "Kündigung",
       "cancellationDesc": "Sie können Ihr Abonnement jederzeit kündigen. Nach der Kündigung behalten Sie den Zugang zum Dienst bis zum Ende Ihres aktuellen Abrechnungszeitraums.",
       "userResponsibilities": "Benutzerpflichten",
-      "userResponsibilitiesDesc": "Als Benutzer von SAAI sind Sie verantwortlich für:",
+      "userResponsibilitiesDesc": "Als Benutzer von Spark-Agile sind Sie verantwortlich für:",
       "maintainSecurity": "Pflege der Sicherheit Ihrer Kontoanmeldeinformationen",
       "ensureAccuracy": "Sicherstellung, dass alle von Ihnen bereitgestellten Informationen korrekt und aktuell sind",
       "complyLaws": "Nutzung des Dienstes in Übereinstimmung mit anwendbaren Gesetzen und Vorschriften",
@@ -1243,7 +1243,7 @@
       "noIllegalUse": "Keine Nutzung des Dienstes für illegale oder schädliche Zwecke",
       "intellectualProperty": "Geistiges Eigentum",
       "ourRights": "Unsere Rechte",
-      "ourRightsDesc": "Der Dienst, einschließlich seiner ursprünglichen Inhalte, Funktionen und Funktionalitäten, ist Eigentum von SAAI und durch internationale Urheber-, Marken- und andere Gesetze zum Schutz des geistigen Eigentums geschützt.",
+      "ourRightsDesc": "Der Dienst, einschließlich seiner ursprünglichen Inhalte, Funktionen und Funktionalitäten, ist Eigentum von Spark-Agile und durch internationale Urheber-, Marken- und andere Gesetze zum Schutz des geistigen Eigentums geschützt.",
       "yourContent": "Ihr Inhalt",
       "yourContentDesc": "Sie behalten alle Rechte an den Daten und Inhalten, die Sie dem Dienst übermitteln. Durch die Übermittlung von Inhalten gewähren Sie uns eine nicht-exklusive, weltweite, gebührenfreie Lizenz zur Nutzung, Speicherung und Verarbeitung Ihrer Inhalte ausschließlich zur Bereitstellung und Verbesserung des Dienstes.",
       "aiGeneratedContent": "KI-generierte Inhalte",
@@ -1253,9 +1253,9 @@
       "disclaimerOfWarranties": "Haftungsausschluss",
       "disclaimerOfWarrantiesDesc": "DER DIENST WIRD \"WIE BESEHEN\" UND \"WIE VERFÜGBAR\" OHNE JEGLICHE GARANTIEN, WEDER AUSDRÜCKLICH NOCH STILLSCHWEIGEND, BEREITGESTELLT. WIR GARANTIEREN NICHT, DASS DER DIENST UNUNTERBROCHEN, FEHLERFREI ODER VOLLSTÄNDIG SICHER IST.",
       "limitationOfLiability": "Haftungsbeschränkung",
-      "limitationOfLiabilityDesc": "SOWEIT GESETZLICH ZULÄSSIG, HAFTET SAAI NICHT FÜR INDIREKTE, ZUFÄLLIGE, BESONDERE, FOLGE- ODER STRAFSCHÄDEN ODER FÜR VERLORENE GEWINNE ODER EINNAHMEN, OB DIREKT ODER INDIREKT ENTSTANDEN.",
+      "limitationOfLiabilityDesc": "SOWEIT GESETZLICH ZULÄSSIG, HAFTET Spark-Agile NICHT FÜR INDIREKTE, ZUFÄLLIGE, BESONDERE, FOLGE- ODER STRAFSCHÄDEN ODER FÜR VERLORENE GEWINNE ODER EINNAHMEN, OB DIREKT ODER INDIREKT ENTSTANDEN.",
       "indemnification": "Schadensersatz",
-      "indemnificationDesc": "Sie stimmen zu, SAAI von allen Ansprüchen, Verlusten, Schäden, Verbindlichkeiten und Ausgaben freizustellen und schadlos zu halten, die sich aus Ihrer Nutzung des Dienstes oder der Verletzung dieser Bedingungen ergeben.",
+      "indemnificationDesc": "Sie stimmen zu, Spark-Agile von allen Ansprüchen, Verlusten, Schäden, Verbindlichkeiten und Ausgaben freizustellen und schadlos zu halten, die sich aus Ihrer Nutzung des Dienstes oder der Verletzung dieser Bedingungen ergeben.",
       "changesToTerms": "Änderungen der Bedingungen",
       "changesToTermsDesc": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Wir werden Benutzer über wesentliche Änderungen per E-Mail oder über den Dienst informieren. Ihre fortgesetzte Nutzung des Dienstes nach solchen Änderungen stellt die Akzeptanz der aktualisierten Bedingungen dar.",
       "governingLaw": "Anwendbares Recht",
@@ -1655,7 +1655,7 @@
       "title": "Benutzerhandbuch",
       "subtitle": "Erfahren Sie, wie Sie die Plattform effektiv nutzen",
       "mainTitle": "Wie kann ich Ihnen helfen?",
-      "mainSubtitle": "Ihr vollständiger Leitfaden zur Beherrschung von SAAI",
+      "mainSubtitle": "Ihr vollständiger Leitfaden zur Beherrschung von Spark-Agile",
       "goodToKnow": "Gut zu wissen",
       "gettingStarted": "Erste Schritte",
       "gettingStartedDesc": "Wesentliche erste Schritte für neue Benutzer",
@@ -1666,7 +1666,7 @@
       "advancedFeatures": "Erweiterte Funktionen",
       "advancedFeaturesDesc": "Power-User-Funktionen",
       "tipsAndBestPractices": "Tipps & Best Practices",
-      "tipsDesc": "Holen Sie das Maximum aus SAAI heraus"
+      "tipsDesc": "Holen Sie das Maximum aus Spark-Agile heraus"
     },
     "projectWorkspace": {
       "title": "Projekt-Arbeitsbereich initialisieren",
