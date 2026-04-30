@@ -123,18 +123,6 @@ serve(async (req) => {
       repo_name: repoName,
     }, 'GitHub');
 
-    // Also update legacy project_workspaces for backward compatibility
-    if (workspaceId) {
-      await supabaseClient
-        .from('project_workspaces')
-        .update({
-          github_repo_url: githubRepoUrl,
-          github_repo_name: repoName,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', workspaceId);
-    }
-
     return new Response(
       JSON.stringify({
         success: true,
