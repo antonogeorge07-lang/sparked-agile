@@ -99,8 +99,8 @@ export default function About() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>About SAAI - AI-Powered Agile Platform</title>
-        <meta name="description" content="Learn about SAAI, the AI Chief of Staff for remote teams. Built by Antono George to unify project management with active intelligence." />
+        <title>About Spark-Agile - AI-Powered Agile Platform</title>
+        <meta name="description" content="Learn about Spark-Agile, the AI Chief of Staff for remote teams. We unify project management with active intelligence." />
       </Helmet>
       <Navigation />
 
@@ -121,7 +121,7 @@ export default function About() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              About <span className="bg-gradient-primary bg-clip-text text-transparent">SAAI</span>
+              About <span className="bg-gradient-primary bg-clip-text text-transparent">Spark-Agile</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-2">
               Spark-Agile Active Intelligence
@@ -147,11 +147,11 @@ export default function About() {
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
-                  SAAI was born from a simple frustration: too many tools, too little context. As a project manager 
+                  Spark-Agile was born from a simple frustration: too many tools, too little context. As a project manager 
                   juggling Jira, GitHub, Slack, and Outlook, I spent more time switching tabs than actually leading my team.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
-                  We built SAAI as the "missing cognitive layer" - an AI Chief of Staff that understands context across 
+                  We built Spark-Agile as the "missing cognitive layer" - an AI Chief of Staff that understands context across 
                   all your tools and delivers what matters in 5 minutes. No more tool chaos. No more missed updates.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -273,7 +273,7 @@ export default function About() {
                 </Badge>
                 <h2 className="text-2xl font-bold mb-4">Built with Care</h2>
                 <p className="text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed mb-6 text-base md:text-lg">
-                  SAAI is a research-driven micro-studio project by Antono George. Every feature is built 
+                  Spark-Agile is a research-driven product. Every feature is built 
                   with intention, every interaction crafted with care. We're here to create the most 
                   purposeful AI-powered tools for teams that value quality, clarity, and progress.
                 </p>
@@ -293,7 +293,7 @@ export default function About() {
               <div className="text-center">
                 <h2 className="text-2xl font-bold mb-3">Ready to Get Your Team Pulse?</h2>
                 <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-                  Join teams already using SAAI as their AI Chief of Staff. Free to start, no credit card required.
+                  Join teams already using Spark-Agile as their AI Chief of Staff. Free to start, no credit card required.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Button asChild size="lg" className="gap-2">
