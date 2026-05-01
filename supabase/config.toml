@@ -1,133 +1,94 @@
 project_id = "pbrrfxgcksptloiwshiy"
 
 [auth]
-enabled = true
+  enabled = true
 
-[functions.chat]
-verify_jwt = false
-
-[functions.chat-demo]
-verify_jwt = false
-
-[functions.market-research]
-verify_jwt = true
-
-[functions.send-welcome-email]
-verify_jwt = false
-
-[functions.api-projects]
-verify_jwt = true
-
-[functions.api-tasks]
-verify_jwt = true
-
-[functions.api-epics]
-verify_jwt = true
-
-[functions.api-integrations]
-verify_jwt = true
-
-[functions.api-webhooks]
-verify_jwt = true
-
-[functions.deliver-webhooks]
-verify_jwt = false
-
-[functions.integration-webhook]
-verify_jwt = false
-
-[functions.github-oauth-init]
-verify_jwt = true
-
-[functions.github-oauth-callback]
-verify_jwt = false
-
-[functions.jira-oauth-init]
-verify_jwt = true
-
-[functions.jira-oauth-callback]
-verify_jwt = false
-
-[functions.refresh-integration-token]
-verify_jwt = true
-
-[functions.decrypt-token]
-verify_jwt = true
-
-[functions.github-digest]
-verify_jwt = true
-
-[functions.send-digest-email]
-verify_jwt = false
-
-[functions.capture-email]
-verify_jwt = false
-
-[functions.generate-project-insights]
-verify_jwt = true
-
-[functions.send-executive-digest]
-verify_jwt = true
-
-[functions.send-approval-notification]
-verify_jwt = true
-
-[functions.google-oauth-init]
-verify_jwt = true
-
-[functions.google-oauth-callback]
-verify_jwt = false
-
-[functions.validate-epic-implementation]
-verify_jwt = false
-
-[functions.agent-debate]
-verify_jwt = false
-
-[functions.create-google-calendar-event]
-verify_jwt = true
-
-[functions.generate-test-scenarios]
-verify_jwt = false
-
-[functions.process-meeting-notes]
-verify_jwt = false
-
-[functions.predict-resources]
-verify_jwt = false
-
-[functions.generate-smart-nudges]
-verify_jwt = false
-
-[functions.scheduled-cleanup]
-verify_jwt = false
-
-[functions.create-jira-issue]
-verify_jwt = true
-
-[functions.add-jira-comment]
-verify_jwt = true
-
-[functions.create-github-issue]
-verify_jwt = true
-
-[functions.fetch-github-prs]
-verify_jwt = true
-
-[functions.fetch-github-issues]
-verify_jwt = true
-
-[functions.update-jira-issue]
-verify_jwt = true
-
-[functions.update-github-issue]
-verify_jwt = true
-
-[functions.sync-jira-features]
-verify_jwt = false
-
-[functions.daily-digest-cron]
-verify_jwt = false
-
-[functions.process-email-queue]
-verify_jwt = true
+[functions]
+  [functions.add-jira-comment]
+    verify_jwt = true
+  [functions.agent-debate]
+    verify_jwt = false
+  [functions.api-epics]
+    verify_jwt = true
+  [functions.api-integrations]
+    verify_jwt = true
+  [functions.api-projects]
+    verify_jwt = true
+  [functions.api-tasks]
+    verify_jwt = true
+  [functions.api-webhooks]
+    verify_jwt = true
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.capture-email]
+    verify_jwt = false
+  [functions.chat]
+    verify_jwt = false
+  [functions.chat-demo]
+    verify_jwt = false
+  [functions.create-github-issue]
+    verify_jwt = true
+  [functions.create-google-calendar-event]
+    verify_jwt = true
+  [functions.create-jira-issue]
+    verify_jwt = true
+  [functions.daily-digest-cron]
+    verify_jwt = false
+  [functions.decrypt-token]
+    verify_jwt = true
+  [functions.deliver-webhooks]
+    verify_jwt = false
+  [functions.fetch-github-issues]
+    verify_jwt = true
+  [functions.fetch-github-prs]
+    verify_jwt = true
+  [functions.generate-project-insights]
+    verify_jwt = true
+  [functions.generate-smart-nudges]
+    verify_jwt = false
+  [functions.generate-test-scenarios]
+    verify_jwt = false
+  [functions.github-digest]
+    verify_jwt = true
+  [functions.github-oauth-callback]
+    verify_jwt = false
+  [functions.github-oauth-init]
+    verify_jwt = true
+  [functions.google-oauth-callback]
+    verify_jwt = false
+  [functions.google-oauth-init]
+    verify_jwt = true
+  [functions.integration-webhook]
+    verify_jwt = false
+  [functions.jira-oauth-callback]
+    verify_jwt = false
+  [functions.jira-oauth-init]
+    verify_jwt = true
+  [functions.market-research]
+    verify_jwt = true
+  [functions.predict-resources]
+    verify_jwt = false
+  [functions.process-email-queue]
+    verify_jwt = true
+  [functions.process-meeting-notes]
+    verify_jwt = false
+  [functions.refresh-integration-token]
+    verify_jwt = true
+  [functions.scheduled-cleanup]
+    verify_jwt = false
+  [functions.send-approval-notification]
+    verify_jwt = true
+  [functions.send-digest-email]
+    verify_jwt = false
+  [functions.send-executive-digest]
+    verify_jwt = true
+  [functions.send-welcome-email]
+    verify_jwt = false
+  [functions.sync-jira-features]
+    verify_jwt = false
+  [functions.update-github-issue]
+    verify_jwt = true
+  [functions.update-jira-issue]
+    verify_jwt = true
+  [functions.validate-epic-implementation]
+    verify_jwt = false
