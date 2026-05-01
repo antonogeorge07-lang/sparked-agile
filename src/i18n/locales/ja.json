@@ -706,7 +706,7 @@
       "honestTitle": "限界について正直",
       "honestDesc": "Spark-Agileは成長しています。いくつかの統合は「近日公開」です。そうでないふりはしません。存在するものは、実際のニーズから構築されたため機能します。",
       "createdBy": "作成者",
-      "studio": "Antono George"
+      "studio": "Spark-Agile"
     },
     "footer": {
       "description": "AI駆動のアジャイルセレモニーとチーム管理",
@@ -1129,7 +1129,7 @@
       "lastUpdated": "最終更新日: {{date}}",
       "dataProtection": "データ保護とプライバシー",
       "introduction": "はじめに",
-      "introText1": "Spark-Agile へようこそ。私達Antono Georgeは、お客様のプライバシー保護に尽力しています。このプライバシーポリシーでは、お客様がSpark-Agileをご利用になる際に、当社がお客様の情報をどのように収集、使用、保護するかを説明します。",
+      "introText1": "Spark-Agile へようこそ。私達Spark-Agileは、お客様のプライバシー保護に尽力しています。このプライバシーポリシーでは、お客様がSpark-Agileをご利用になる際に、当社がお客様の情報をどのように収集、使用、保護するかを説明します。",
       "introText2": "マイクロスタジオとして、当社はデータ保護を真剣に受け止め、GDPRおよびその他の適用されるデータ保護法を遵守しています。",
       "infoWeCollect": "当社が収集する情報",
       "personalInfo": "個人情報",
@@ -1208,7 +1208,7 @@
       "legalAgreement": "法的合意",
       "acceptanceOfTerms": "利用規約への同意",
       "acceptanceDesc": "Spark-Agile へようこそ。本サービスにアクセスし利用することにより、お客様は本利用規約に同意し、これに拘束されることに同意します。本規約に同意しない場合は、本サービスを利用しないでください。",
-      "operatedBy": "Spark-AgileはAntono Georgeによって運営されており、高品質なAI搭載アジャイルツールの提供に尽力しています。",
+      "operatedBy": "Spark-AgileはSpark-Agileによって運営されており、高品質なAI搭載アジャイルツールの提供に尽力しています。",
       "descriptionOfService": "サービスの説明",
       "descriptionDesc": "Spark-Agileは、AI搭載のスクラムマスターアシスタントプラットフォームを提供し、チームを以下に役立てます。",
       "sprintPlanning": "スプリント計画とバックログリファインメント",
