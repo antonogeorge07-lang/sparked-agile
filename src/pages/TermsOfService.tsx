@@ -10,8 +10,8 @@ export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>Terms of Service - SAAI</title>
-        <meta name="description" content="SAAI terms of service covering usage, data, intellectual property, and liability." />
+        <title>Terms of Service - Spark-Agile</title>
+        <meta name="description" content="Spark-Agile terms of service covering usage, data, intellectual property, and liability." />
       </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-12 max-w-4xl">
@@ -132,9 +132,9 @@ export default function TermsOfService() {
               <h2 className="text-2xl font-semibold mb-4">14. {t("pages.terms.contactInfo")}</h2>
               <p className="text-muted-foreground mb-4">{t("pages.terms.contactInfoDesc")}</p>
               <p className="text-muted-foreground">
-                <strong>{t("pages.terms.company")}:</strong> Antono George<br />
-                <strong>{t("pages.terms.email")}:</strong> Antono.George1@outlook.com<br />
-                <strong>{t("pages.terms.support")}:</strong> Antono.George1@outlook.com
+                <strong>{t("pages.terms.company")}:</strong> Spark-Agile<br />
+                <strong>{t("pages.terms.email")}:</strong> support@spark-agile.com<br />
+                <strong>{t("pages.terms.support")}:</strong> support@spark-agile.com
               </p>
             </section>
           </CardContent>

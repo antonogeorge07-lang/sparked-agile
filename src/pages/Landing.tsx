@@ -14,7 +14,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import saaiLogo from "@/assets/saai-logo.png";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { PrivacyBanner } from "@/components/PrivacyBanner";
 import { Mail, LayoutDashboard, LogOut } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -107,7 +107,7 @@ export default function Landing() {
             >
               <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
                 <OptimizedImage
-                  src={saaiLogo}
+                  src={sparkAgileLogo}
                   alt="Spark-Agile"
                   className="h-7 w-7 object-contain"
                   priority={true}
