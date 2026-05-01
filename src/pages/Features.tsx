@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import saaiLogo from "@/assets/saai-logo.png";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -97,7 +97,7 @@ export default function Features() {
               <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                 <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
                   <OptimizedImage 
-                    src={saaiLogo} 
+                    src={sparkAgileLogo} 
                     alt="Spark-Agile" 
                     className="h-7 w-7 object-contain"
                     priority={true}
