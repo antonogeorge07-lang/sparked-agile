@@ -10,8 +10,8 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Privacy Policy - SAAI</title>
-        <meta name="description" content="SAAI privacy policy covering data collection, usage, and your rights under GDPR." />
+        <title>Privacy Policy - Spark-Agile</title>
+        <meta name="description" content="Spark-Agile privacy policy covering data collection, usage, and your rights under GDPR." />
       </Helmet>
       <Navigation />
       <main className="container mx-auto px-4 py-12 mt-16 max-w-4xl">
@@ -153,9 +153,9 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-semibold mb-4">12. {t("pages.privacy.contactInfo")}</h2>
               <p className="text-muted-foreground mb-4">{t("pages.privacy.contactInfoDesc")}</p>
               <p className="text-muted-foreground">
-                <strong>{t("pages.privacy.dataController")}:</strong> Antono George<br />
-                <strong>{t("pages.privacy.email")}:</strong> Antono.George1@outlook.com<br />
-                <strong>{t("pages.privacy.support")}:</strong> Antono.George1@outlook.com
+                <strong>{t("pages.privacy.dataController")}:</strong> Spark-Agile<br />
+                <strong>{t("pages.privacy.email")}:</strong> support@spark-agile.com<br />
+                <strong>{t("pages.privacy.support")}:</strong> support@spark-agile.com
               </p>
             </section>
           </CardContent>

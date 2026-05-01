@@ -142,7 +142,7 @@ export default function About() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Our Story</h2>
-                  <p className="text-sm text-muted-foreground">Created by <span className="font-medium text-foreground">Antono George</span></p>
+                  <p className="text-sm text-muted-foreground">From the Spark-Agile team</p>
                 </div>
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
