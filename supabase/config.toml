@@ -128,3 +128,6 @@ verify_jwt = false
 
 [functions.daily-digest-cron]
 verify_jwt = false
+
+[functions.process-email-queue]
+verify_jwt = true
