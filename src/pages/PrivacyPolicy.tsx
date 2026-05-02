@@ -153,7 +153,7 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-semibold mb-4">12. {t("pages.privacy.contactInfo")}</h2>
               <p className="text-muted-foreground mb-4">{t("pages.privacy.contactInfoDesc")}</p>
               <p className="text-muted-foreground">
-                <strong>{t("pages.privacy.dataController")}:</strong> Make, Founder of Spark-Agile<br />
+                <strong>{t("pages.privacy.dataController")}:</strong> Antono George, Founder of Spark-Agile<br />
                 <strong>{t("pages.privacy.email")}:</strong> support@spark-agile.com<br />
                 <strong>{t("pages.privacy.support")}:</strong> support@spark-agile.com
               </p>
