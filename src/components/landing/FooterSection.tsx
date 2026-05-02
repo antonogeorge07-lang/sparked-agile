@@ -103,9 +103,9 @@ export function FooterSection() {
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
               <span className="font-medium">
-                {t('landing.footer.builtBy')}{" "}
+                Built by{" "}
                 <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                  Spark-Agile
+                  Make, Founder of Spark-Agile
                 </span>
               </span>
             </div>
