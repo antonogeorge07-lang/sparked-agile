@@ -132,7 +132,7 @@ export default function TermsOfService() {
               <h2 className="text-2xl font-semibold mb-4">14. {t("pages.terms.contactInfo")}</h2>
               <p className="text-muted-foreground mb-4">{t("pages.terms.contactInfoDesc")}</p>
               <p className="text-muted-foreground">
-                <strong>{t("pages.terms.company")}:</strong> Spark-Agile<br />
+                <strong>{t("pages.terms.company")}:</strong> Spark-Agile (operated by Make, Founder)<br />
                 <strong>{t("pages.terms.email")}:</strong> support@spark-agile.com<br />
                 <strong>{t("pages.terms.support")}:</strong> support@spark-agile.com
               </p>
