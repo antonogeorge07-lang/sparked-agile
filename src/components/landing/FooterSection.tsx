@@ -105,7 +105,7 @@ export function FooterSection() {
               <span className="font-medium">
                 Built by{" "}
                 <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                  Make, Founder of Spark-Agile
+                  Antono George, Founder of Spark-Agile
                 </span>
               </span>
             </div>
