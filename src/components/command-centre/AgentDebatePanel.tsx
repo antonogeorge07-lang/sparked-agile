@@ -121,19 +121,35 @@ export function AgentDebatePanel({ projectId }: AgentDebatePanelProps) {
             />
           </div>
 
-          <Button onClick={handleStartDebate} disabled={isDebating || !topic.trim()} className="w-full">
-            {isDebating ? (
-              <>
-                <Brain className="h-4 w-4 mr-2 animate-pulse" />
-                Agents Debating... ({liveResponses.length} responses)
-              </>
-            ) : (
-              <>
-                <Users className="h-4 w-4 mr-2" />
-                Start 3-Agent Debate
-              </>
-            )}
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button onClick={handleStartDebate} disabled={isDebating || !topic.trim()} className="flex-1">
+              {isDebating ? (
+                <>
+                  <Brain className="h-4 w-4 mr-2 animate-pulse" />
+                  Agents Debating... ({liveResponses.length} responses)
+                </>
+              ) : (
+                <>
+                  <Users className="h-4 w-4 mr-2" />
+                  Start 3-Agent Debate
+                </>
+              )}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleTrySample}
+              disabled={isDebating}
+              className="sm:w-auto"
+            >
+              Try a sample
+            </Button>
+          </div>
+          {!topic.trim() && !isDebating && (
+            <p className="text-xs text-muted-foreground">
+              No topic in mind? Tap <span className="font-medium">Try a sample</span> to see the agents debate a realistic scenario.
+            </p>
+          )}
         </CardContent>
       </Card>
 
