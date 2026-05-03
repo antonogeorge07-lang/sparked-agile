@@ -53,6 +53,20 @@ export function AgentDebatePanel({ projectId }: AgentDebatePanelProps) {
     await startDebate(topic, topicType);
   };
 
+  const SAMPLE_TOPICS: Record<DebateTopicType, string> = {
+    sprint_plan: "Should we commit to 45 story points this sprint given our team of 5 with one member on holiday and 2 high-risk tickets in the backlog?",
+    backlog_priority: "Should we prioritise rebuilding the legacy auth module over shipping the new analytics dashboard requested by 3 enterprise customers?",
+    risk_assessment: "What are the top delivery, technical and stakeholder risks for launching our payments integration in the next 6 weeks?",
+    epic_validation: "Validate this epic: 'Migrate the entire reporting stack to a new warehouse in one quarter with the existing 4-person team.'",
+    retrospective: "Last sprint we missed 30% of committed points and had 4 blockers. What patterns should we act on and what concrete changes should we make?",
+  };
+
+  const handleTrySample = async () => {
+    const sample = SAMPLE_TOPICS[topicType];
+    setTopic(sample);
+    await startDebate(sample, topicType);
+  };
+
   const handleViewSession = async (sessionId: string) => {
     setSelectedSession(sessionId);
     const responses = await loadSessionResponses(sessionId);
