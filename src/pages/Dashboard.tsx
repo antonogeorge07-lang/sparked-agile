@@ -22,6 +22,7 @@ import { ActiveUsers } from "@/components/ActiveUsers";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterControls } from "@/components/FilterControls";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
+import { TeamManagement } from "@/components/TeamManagement";
 import { HelpTooltip } from "@/components/HelpTooltip";
 import { SmartFeedbackTrigger } from "@/components/SmartFeedbackTrigger";
 import { CeremonyHealthCheck } from "@/components/CeremonyHealthCheck";
@@ -273,7 +274,11 @@ export default function Dashboard() {
           )}
 
           {selectedProject && projects.length > 0 && (
-            <div className="mb-6">
+            <div className="mb-6 grid gap-4 lg:grid-cols-2">
+              <TeamManagement
+                projectId={selectedProject}
+                projectName={projects.find(p => p.id === selectedProject)?.name || "Project"}
+              />
               <ProjectMemberManager
                 projectId={selectedProject}
                 projectName={projects.find(p => p.id === selectedProject)?.name || "Project"}

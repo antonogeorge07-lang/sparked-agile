@@ -19,6 +19,7 @@ import { CreateTaskDialog } from "@/components/command-centre/CreateTaskDialog";
 import { DndContext, DragEndEvent, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { TaskCard } from "@/components/command-centre/TaskCard";
 import { ProjectMemberManager } from "@/components/ProjectMemberManager";
+import { TeamManagement } from "@/components/TeamManagement";
 import { Card, CardContent } from "@/components/ui/card";
 import { TestScenarioGenerator } from "@/components/TestScenarioGenerator";
 import { MeetingNotesProcessor } from "@/components/MeetingNotesProcessor";
@@ -294,7 +295,11 @@ export default function ProjectCommandCentre() {
                       <CardContent className="p-6">
                         <h3 className="font-semibold mb-2">{currentProject.name}</h3>
                         <p className="text-sm text-muted-foreground">{currentProject.description}</p>
-                        <div className="mt-4">
+                        <div className="mt-4 space-y-4">
+                          <TeamManagement
+                            projectId={selectedProject}
+                            projectName={currentProject.name}
+                          />
                           <ProjectMemberManager
                             projectId={selectedProject}
                             projectName={currentProject.name}
