@@ -497,19 +497,49 @@ export default function UserGuide() {
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-17">
-                  <AccordionTrigger>Project Members</AccordionTrigger>
+                  <AccordionTrigger>
+                    <div className="flex items-center gap-2">
+                      <UserPlus className="h-4 w-4" />
+                      Inviting Team Members (Multi-Source)
+                    </div>
+                  </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-3 text-sm">
-                      <p><strong>Admin Functions:</strong></p>
+                      <p><strong>Where:</strong> Open <strong>Dashboard</strong> or <strong>Project Command Centre</strong> and locate the <strong>Team Management</strong> panel.</p>
+                      <p><strong>Four ways to add members:</strong></p>
                       <ul className="list-disc pl-5 space-y-1">
-                        <li>Approve new user registrations</li>
-                        <li>Assign users to projects</li>
-                        <li>Manage team member permissions</li>
-                        <li>Remove users from projects</li>
+                        <li><strong>Manual:</strong> Enter name, email and role (member, admin, owner). An invitation email is sent automatically.</li>
+                        <li><strong>Bulk paste:</strong> Paste a CSV-style list of emails to invite many people at once.</li>
+                        <li><strong>From GitHub:</strong> Pull collaborators from a connected repository and invite them in one click.</li>
+                        <li><strong>From Jira / Slack:</strong> Import workspace users directly from connected integrations.</li>
+                      </ul>
+                      <p><strong>Roles & permissions:</strong></p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li><strong>Owner / Admin:</strong> Can invite, remove members and change roles.</li>
+                        <li><strong>Member:</strong> Can collaborate on projects but cannot manage the team.</li>
                       </ul>
                       <p className="text-muted-foreground italic">
-                        🔒 Only allocated members can see project data
+                        Note: only owners and admins see the invite controls. New invitees receive a verification email and join automatically once they sign up.
                       </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-17b">
+                  <AccordionTrigger>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      Stakeholder Invitations
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-3 text-sm">
+                      <p>Invite executives and external stakeholders without giving them a full seat:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Open the <strong>Stakeholder Portal</strong> and use <strong>Invite Stakeholder</strong>.</li>
+                        <li>They receive a secure email link to view dashboards and AI digests.</li>
+                        <li>Configure digest frequency, alerts and approval requests per stakeholder.</li>
+                      </ul>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
