@@ -292,7 +292,7 @@ export default function UserGuide() {
                         <li><strong>Real-time Collaboration:</strong> See who's working on what, live</li>
                       </ul>
 
-                      <p className="text-primary font-semibold pt-2">✨ This is the fastest way to create and manage projects on SAAI!</p>
+                      <p className="text-primary font-semibold pt-2">This is the fastest way to create and manage projects on Spark-Agile.</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
