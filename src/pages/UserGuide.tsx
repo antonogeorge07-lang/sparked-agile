@@ -38,8 +38,8 @@ export default function UserGuide() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>User Guide - SAAI</title>
-        <meta name="description" content="Complete guide to using SAAI for agile project management and team collaboration." />
+        <title>User Guide - Spark-Agile</title>
+        <meta name="description" content="Complete guide to using Spark-Agile for AI-driven agile orchestration, team collaboration, and integrations." />
       </Helmet>
       <Navigation />
       
@@ -50,12 +50,15 @@ export default function UserGuide() {
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-4">
               <BookOpen className="h-12 w-12 text-primary" />
-              <h1 className="text-4xl font-bold">May I Help You</h1>
+              <h1 className="text-4xl font-bold">Spark-Agile User Guide</h1>
             </div>
             <p className="text-xl text-muted-foreground">
-              Your complete guide to mastering SAAI
+              Bringing intelligence, rhythm, and precision to your delivery
             </p>
-            <Badge variant="outline" className="mt-4">Good to Know</Badge>
+            <div className="flex items-center justify-center gap-2 mt-4">
+              <Badge variant="outline">Updated for v2026.05</Badge>
+              <Badge variant="secondary" className="gap-1"><Sparkles className="h-3 w-3" /> AI Orchestration</Badge>
+            </div>
           </div>
 
           {/* Getting Started */}
