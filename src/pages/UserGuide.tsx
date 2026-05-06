@@ -73,27 +73,20 @@ export default function UserGuide() {
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>Account Setup & Approval</AccordionTrigger>
+                  <AccordionTrigger>Account Setup & Instant Access</AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-3 text-sm">
-                      <p><strong>Step 1:</strong> Sign up with your email and create a secure password</p>
-                      <p><strong>Step 2:</strong> You'll be automatically signed in and can explore the platform immediately</p>
-                      <p><strong>Step 3:</strong> While waiting for admin approval, you can:</p>
+                      <p><strong>Step 1:</strong> Sign up with your email and create a secure password (or use Google sign-in)</p>
+                      <p><strong>Step 2:</strong> Verify your email address through the link we send you</p>
+                      <p><strong>Step 3:</strong> You're automatically granted member access — no admin approval required. You can immediately:</p>
                       <ul className="list-disc pl-6 space-y-1">
-                        <li>Explore demo features and sample data</li>
-                        <li>Review comprehensive documentation</li>
-                        <li>Learn about all platform features</li>
-                        <li>Take the interactive onboarding tour</li>
-                      </ul>
-                      <p><strong>Step 4:</strong> Once approved by admin (you'll receive an email), you can:</p>
-                      <ul className="list-disc pl-6 space-y-1">
-                        <li>Access real project data</li>
-                        <li>Request project allocation from your admin</li>
-                        <li>Collaborate with your team</li>
-                        <li>Use all platform features</li>
+                        <li>Create your own workspace and projects</li>
+                        <li>Invite teammates via email, GitHub, Jira or Slack</li>
+                        <li>Connect your tools (Jira, GitHub, Slack, Google Workspace)</li>
+                        <li>Run AI-assisted ceremonies and Agent Debates</li>
                       </ul>
                       <p className="text-muted-foreground italic">
-                        💡 This approval process protects your organization's data while letting you get started right away
+                        Tip: take the interactive tour from Quick Start to learn the platform in under 5 minutes.
                       </p>
                     </div>
                   </AccordionContent>
