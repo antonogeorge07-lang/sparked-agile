@@ -27,7 +27,10 @@ import {
   CheckCircle2,
   AlertTriangle,
   Bot,
-  Activity
+  Activity,
+  UserPlus,
+  Mail,
+  Sparkles
 } from "lucide-react";
 
 export default function UserGuide() {
