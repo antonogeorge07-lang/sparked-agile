@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { UserPlus, Sparkles, Copy, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export function InviteNudgeCard() {
   const [memberCount, setMemberCount] = useState<number | null>(null);
