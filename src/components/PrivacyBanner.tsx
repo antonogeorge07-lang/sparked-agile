@@ -3,8 +3,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Info, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const PrivacyBanner = () => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export const PrivacyBanner = () => {
           </div>
           <div className="flex-1 space-y-2">
             <div className="flex items-start justify-between gap-2">
-              <h4 className="font-semibold text-sm">Privacy Notice</h4>
+              <h4 className="font-semibold text-sm">{t('privacy.banner.title')}</h4>
               <Button
                 variant="ghost"
                 size="sm"
@@ -47,15 +49,14 @@ export const PrivacyBanner = () => {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
-              We use device fingerprinting to improve your experience and remember your preferences across visits. 
-              Your privacy matters - data is hashed and secure. {" "}
+              {t('privacy.banner.description')} {" "}
               <Link to="/privacy" className="text-primary hover:underline">
-                Learn more
+                {t('privacy.banner.learnMore')}
               </Link>
             </p>
             <div className="flex gap-2 pt-2">
               <Button onClick={handleAccept} size="sm" className="text-xs">
-                Accept
+                {t('privacy.banner.accept')}
               </Button>
               <Button
                 onClick={handleClose}
@@ -63,7 +64,7 @@ export const PrivacyBanner = () => {
                 size="sm"
                 className="text-xs"
               >
-                Maybe Later
+                {t('privacy.banner.maybeLater')}
               </Button>
             </div>
           </div>

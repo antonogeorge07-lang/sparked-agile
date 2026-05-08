@@ -15,34 +15,41 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
   const features = [
     {
       icon: <Zap className="w-5 h-5 text-yellow-500" />,
-      title: "AI-Powered Sprint Planning",
-      description: "Generate sprint plans based on team velocity, backlog, and historical data"
+      titleKey: "demo.feature1Title",
+      descKey: "demo.feature1Desc"
     },
     {
       icon: <Users className="w-5 h-5 text-blue-500" />,
-      title: "Team Collaboration",
-      description: "See who's working on what with live presence indicators and updates"
+      titleKey: "demo.feature2Title",
+      descKey: "demo.feature2Desc"
     },
     {
       icon: <Calendar className="w-5 h-5 text-green-500" />,
-      title: "Streamlined Ceremonies",
-      description: "Smart standup summaries, retrospectives, and review coordination with Microsoft Outlook"
+      titleKey: "demo.feature3Title",
+      descKey: "demo.feature3Desc"
     },
     {
       icon: <BarChart3 className="w-5 h-5 text-purple-500" />,
-      title: "Flow Metrics & Analytics",
-      description: "Track cycle time, lead time, and throughput with actionable insights"
+      titleKey: "demo.feature4Title",
+      descKey: "demo.feature4Desc"
     },
     {
       icon: <CheckCircle className="w-5 h-5 text-emerald-500" />,
-      title: "Smart Action Items",
-      description: "AI assists with extracting and tracking action items from ceremonies"
+      titleKey: "demo.feature5Title",
+      descKey: "demo.feature5Desc"
     },
     {
       icon: <Shield className="w-5 h-5 text-red-500" />,
-      title: "SAFe 6.0 Support",
-      description: "Full program increment planning, value streams, and ARTs management"
+      titleKey: "demo.feature6Title",
+      descKey: "demo.feature6Desc"
     }
+  ];
+
+  const integrations = [
+    { key: "demo.integrationJira", letter: "J" },
+    { key: "demo.integrationGitHub", letter: "G" },
+    { key: "demo.integrationMicrosoft365", letter: "M" },
+    { key: "demo.integrationTeams", letter: "T" },
   ];
 
   return (
@@ -50,10 +57,10 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       <DialogContent className="max-w-4xl w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="sticky top-0 bg-background z-10 pb-4">
           <DialogTitle className="text-2xl sm:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Experience Spark-Agile
+            {t('demo.title')}
           </DialogTitle>
           <DialogDescription className="text-sm sm:text-base">
-            See how AI helps with your agile ceremonies and workflow management
+            {t('demo.description')}
           </DialogDescription>
         </DialogHeader>
         
@@ -63,12 +70,11 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             <div className="relative z-10 text-center space-y-3 sm:space-y-4">
               <Badge className="mb-2" variant="outline">
                 <Play className="w-3 h-3 mr-1" />
-                Interactive Demo
+                {t('demo.interactiveBadge')}
               </Badge>
-              <h3 className="text-xl sm:text-2xl font-bold">Try it yourself!</h3>
+              <h3 className="text-xl sm:text-2xl font-bold">{t('demo.tryYourself')}</h3>
               <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-                Sign up now to access a full demo workspace with sample data. Experience AI-powered 
-                sprint planning, streamlined standups, and intelligent retrospectives.
+                {t('demo.signUpPrompt')}
               </p>
               <Button size="lg" className="mt-3 sm:mt-4" onClick={onClose}>
                 {t('demo.startFree')}
@@ -78,7 +84,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
           {/* Features Grid */}
           <div>
-            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Key Features</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('demo.keyFeatures')}</h3>
             <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
               {features.map((feature, index) => (
                 <div 
@@ -89,8 +95,8 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                     {feature.icon}
                   </div>
                   <div className="min-w-0">
-                    <h4 className="font-semibold mb-1 text-sm sm:text-base">{feature.title}</h4>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{feature.description}</p>
+                    <h4 className="font-semibold mb-1 text-sm sm:text-base">{t(feature.titleKey)}</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{t(feature.descKey)}</p>
                   </div>
                 </div>
               ))}
@@ -99,46 +105,30 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
           {/* Integration Highlights */}
           <div className="p-4 sm:p-6 rounded-lg border bg-muted/30">
-            <h3 className="text-base sm:text-lg font-semibold mb-3">Available Integrations</h3>
+            <h3 className="text-base sm:text-lg font-semibold mb-3">{t('demo.availableIntegrations')}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
-                  J
+              {integrations.map((integration) => (
+                <div key={integration.key} className="space-y-2">
+                  <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
+                    {integration.letter}
+                  </div>
+                  <p className="text-sm font-medium">{t(integration.key)}</p>
                 </div>
-                <p className="text-sm font-medium">Jira</p>
-              </div>
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
-                  G
-                </div>
-                <p className="text-sm font-medium">GitHub</p>
-              </div>
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
-                  M
-                </div>
-                <p className="text-sm font-medium">Microsoft 365</p>
-              </div>
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
-                  T
-                </div>
-                <p className="text-sm font-medium">Teams</p>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* CTA Footer */}
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 pt-4 border-t">
             <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
-              Ready to improve your agile workflow?
+              {t('demo.readyToImprove')}
             </p>
             <div className="flex gap-2 w-full sm:w-auto">
               <Button variant="outline" onClick={onClose} className="flex-1 sm:flex-initial">
-                Maybe Later
+                {t('demo.maybeLater')}
               </Button>
               <Button onClick={onClose} className="flex-1 sm:flex-initial">
-                Get Started Free
+                {t('demo.getStartedFree')}
               </Button>
             </div>
           </div>

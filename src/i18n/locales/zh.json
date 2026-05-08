@@ -1750,7 +1750,33 @@
     "oneClickDesc": "粘贴URL，选择项目，完成——数据自动流入"
   },
   "demo": {
-    "startFree": "免费开始 →"
+    "startFree": "免费开始 →",
+    "title": "体验 Spark-Agile",
+    "description": "看看 AI 如何帮助您的敏捷仪式和工作流管理",
+    "interactiveBadge": "互动演示",
+    "tryYourself": "亲自试一试！",
+    "signUpPrompt": "立即注册以访问带有示例数据的完整演示工作区。体验 AI 驱动的冲刺计划、精简的站会和智能回顾。",
+    "keyFeatures": "主要功能",
+    "feature1Title": "AI 驱动的冲刺计划",
+    "feature1Desc": "基于团队速度、待办事项和历史数据生成冲刺计划",
+    "feature2Title": "团队协作",
+    "feature2Desc": "通过实时在线指示器和更新查看谁在做什么",
+    "feature3Title": "精简的仪式",
+    "feature3Desc": "智能站会摘要、回顾和通过 Microsoft Outlook 进行的评审协调",
+    "feature4Title": "流指标与分析",
+    "feature4Desc": "通过可操作的洞察跟踪周期时间、交付时间和吞吐量",
+    "feature5Title": "智能行动项",
+    "feature5Desc": "AI 协助从仪式中提取和跟踪行动项",
+    "feature6Title": "SAFe 6.0 支持",
+    "feature6Desc": "完整的项目增量计划、价值流和 ART 管理",
+    "availableIntegrations": "可用集成",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "准备好改善您的敏捷工作流了吗？",
+    "maybeLater": "稍后",
+    "getStartedFree": "免费开始"
   },
   "welcome": {
     "badge": "AI 驱动的敏捷平台",
@@ -1781,5 +1807,52 @@
     "copyBtn": "复制推荐链接",
     "copied": "已复制",
     "copiedToast": "推荐链接已复制"
+  },
+  "emailCapture": {
+    "maybeLater": "稍后",
+    "name": "姓名",
+    "namePlaceholder": "张三",
+    "workEmail": "工作邮箱",
+    "emailPlaceholder": "you@company.com",
+    "submitting": "提交中...",
+    "getAccess": "获取访问权限",
+    "privacyNotice": "我们尊重您的隐私。随时可取消订阅。",
+    "earlyAccess": {
+      "title": "获取抢先体验",
+      "description": "率先体验新功能并获取独家更新",
+      "benefit": "发布时免费获得 3 个月 Pro 计划"
+    },
+    "newsletter": {
+      "title": "保持更新",
+      "description": "获取敏捷团队的生产力技巧和更新",
+      "benefit": "每周敏捷最佳实践和平台更新"
+    },
+    "beta": {
+      "title": "加入我们的社区",
+      "description": "帮助塑造 Spark-Agile 的未来",
+      "benefit": "免费访问所有核心功能"
+    },
+    "exitIntent": {
+      "title": "欢迎！让我们开始吧",
+      "description": "获取个性化演示，看看我们如何改变您的工作流",
+      "benefit": "免费个性化入门和专属支持"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "隐私声明",
+      "description": "我们使用设备指纹技术来改善您的体验，并在访问之间记住您的偏好。您的隐私很重要——数据经过哈希处理且安全。",
+      "learnMore": "了解更多",
+      "accept": "接受",
+      "maybeLater": "稍后"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "免费开始",
+      "contactUs": "联系我们",
+      "readyToGet": "准备好获取团队脉搏了吗？",
+      "joinTeams": "加入已使用 Spark-Agile 作为其 AI 幕僚长的团队。免费开始，无需信用卡。"
+    }
   }
 }

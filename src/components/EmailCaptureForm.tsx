@@ -7,6 +7,7 @@ import { Mail, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 interface EmailCaptureFormProps {
   isOpen: boolean;
@@ -18,35 +19,34 @@ const emailSchema = z.string().trim().email("Please enter a valid email address"
 const nameSchema = z.string().trim().min(2, "Name must be at least 2 characters").max(100);
 
 export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: EmailCaptureFormProps) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const contextConfig = {
+  const config = {
     early_access: {
-      title: "Get Early Access",
-      description: "Be the first to try new features and get exclusive updates",
-      benefit: "🎁 Get 3 months free Pro plan when we launch"
+      title: t('emailCapture.earlyAccess.title'),
+      description: t('emailCapture.earlyAccess.description'),
+      benefit: "🎁 " + t('emailCapture.earlyAccess.benefit')
     },
     newsletter: {
-      title: "Stay Updated",
-      description: "Get productivity tips and updates for agile teams",
-      benefit: "📧 Weekly agile best practices and platform updates"
+      title: t('emailCapture.newsletter.title'),
+      description: t('emailCapture.newsletter.description'),
+      benefit: "📧 " + t('emailCapture.newsletter.benefit')
     },
     beta: {
-      title: "Join Our Community",
-      description: "Help shape the future of Spark-Agile",
-      benefit: "🚀 Free access to all core features"
+      title: t('emailCapture.beta.title'),
+      description: t('emailCapture.beta.description'),
+      benefit: "🚀 " + t('emailCapture.beta.benefit')
     },
     exit_intent: {
-      title: "Welcome! Let's Get Started",
-      description: "Get a personalized demo and see how we can transform your workflow",
-      benefit: "🎯 Free personalized onboarding and dedicated support"
+      title: t('emailCapture.exitIntent.title'),
+      description: t('emailCapture.exitIntent.description'),
+      benefit: "🎯 " + t('emailCapture.exitIntent.benefit')
     }
-  };
-
-  const config = contextConfig[context];
+  }[context];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,10 +133,10 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t('emailCapture.name')}</Label>
             <Input
               id="name"
-              placeholder="John Doe"
+              placeholder={t('emailCapture.namePlaceholder')}
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={isLoading}
@@ -145,11 +145,11 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Work Email</Label>
+            <Label htmlFor="email">{t('emailCapture.workEmail')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="you@company.com"
+              placeholder={t('emailCapture.emailPlaceholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
@@ -163,18 +163,18 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
 
           <div className="flex gap-3 pt-2">
             <Button type="button" variant="outline" onClick={onClose} disabled={isLoading} className="flex-1">
-              Maybe Later
+              {t('emailCapture.maybeLater')}
             </Button>
             <Button type="submit" disabled={isLoading} className="flex-1 gap-2 bg-tier-free hover:bg-tier-free/90">
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Submitting...
+                  {t('emailCapture.submitting')}
                 </>
               ) : (
                 <>
                   <Mail className="h-4 w-4" />
-                  Get Access
+                  {t('emailCapture.getAccess')}
                 </>
               )}
             </Button>
@@ -182,7 +182,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
         </form>
 
         <p className="text-xs text-center text-muted-foreground">
-          We respect your privacy. Unsubscribe anytime.
+          {t('emailCapture.privacyNotice')}
         </p>
       </DialogContent>
     </Dialog>
