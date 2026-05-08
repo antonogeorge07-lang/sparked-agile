@@ -43,7 +43,7 @@ export function InviteNudgeCard() {
     if (!refUrl) return;
     await navigator.clipboard.writeText(refUrl);
     setCopied(true);
-    toast.success("Referral link copied");
+    toast.success(t('invite.copiedToast'));
     setTimeout(() => setCopied(false), 2000);
   };
 
