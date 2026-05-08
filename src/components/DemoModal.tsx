@@ -69,7 +69,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                 sprint planning, streamlined standups, and intelligent retrospectives.
               </p>
               <Button size="lg" className="mt-3 sm:mt-4" onClick={onClose}>
-                Start Your Free Trial →
+                Start Free →
               </Button>
             </div>
           </div>
