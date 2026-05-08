@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle, Briefcase, BookOpen, GitBranch, FolderKanban } from "lucide-react";
 import sparkAgileLogo from "@/assets/spark-agile-logo.png";
-import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
