@@ -32,6 +32,9 @@ export function FooterSection() {
             <p className="text-sm text-muted-foreground">
               {t('landing.footer.description')}
             </p>
+            <p className="mt-3 text-xs text-foreground font-medium">
+              Free for teams up to 10. No credit card. No trial timer.
+            </p>
           </div>
           <nav aria-label="Product navigation">
             <h3 className="font-semibold mb-4">{t('landing.footer.product')}</h3>
