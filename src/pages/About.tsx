@@ -291,20 +291,20 @@ export default function About() {
           <Card className="shadow-card border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5">
             <CardContent className="pt-8 pb-8">
               <div className="text-center">
-                <h2 className="text-2xl font-bold mb-3">Ready to Get Your Team Pulse?</h2>
+                <h2 className="text-2xl font-bold mb-3">{t('about.cta.readyToGet')}</h2>
                 <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-                  Join teams already using Spark-Agile as their AI Chief of Staff. Free to start, no credit card required.
+                  {t('about.cta.joinTeams')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Button asChild size="lg" className="gap-2">
                     <Link to="/auth">
-                      Get Started Free
+                      {t('about.cta.getStartedFree')}
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg">
                     <Link to="/contact">
-                      Contact Us
+                      {t('about.cta.contactUs')}
                     </Link>
                   </Button>
                 </div>
