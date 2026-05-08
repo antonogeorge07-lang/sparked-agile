@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 
 export function InviteNudgeCard() {
+  const { t } = useTranslation();
   const [memberCount, setMemberCount] = useState<number | null>(null);
   const [refUrl, setRefUrl] = useState<string>("");
   const [copied, setCopied] = useState(false);
