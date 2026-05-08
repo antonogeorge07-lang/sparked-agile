@@ -428,7 +428,7 @@
     "pricing": {
       "badge": "Precios",
       "title": "Free for Startups",
-      "subtitle": "Free forever for teams of 10 or fewer. No credit card. No trial timer.",
+      "subtitle": "Gratis para siempre para equipos de 10 personas o menos. Sin tarjeta de crédito. Sin temporizador.",
       "freeTitle": "Free for Startups",
       "freePrice": "Free",
       "freeDescription": "Everything you need to run agile sprints, AI digests, integrations and team chat. Up to 10 teammates.",
@@ -722,7 +722,9 @@
       "privacy": "Política de Privacidad",
       "terms": "Términos de Servicio",
       "copyright": "© {{year}} Spark-Agile. Todos los derechos reservados.",
-      "builtBy": "Construido con ❤️ por"
+      "builtBy": "Construido con ❤️ por",
+      "startupTagline": "Gratis para equipos de hasta 10. Sin tarjeta. Sin temporizador.",
+      "builtByFounder": "Creado por Antono George, Fundador de Spark-Agile"
     }
   },
   "settings": {
@@ -1746,5 +1748,38 @@
     "back": "Atrás",
     "oneClickTitle": "Conecta en un clic",
     "oneClickDesc": "Pega una URL, elige tu proyecto, listo — tus datos fluyen automáticamente"
+  },
+  "demo": {
+    "startFree": "Empezar gratis →"
+  },
+  "welcome": {
+    "badge": "Plataforma Ágil con IA",
+    "title": "Trabaja más inteligentemente con Ágil potenciado por IA",
+    "description": "Optimiza las ceremonias de sprint, obtén ideas accionables y enfócate en lo que importa.",
+    "stat1": "IA",
+    "stat1Sub": "Ideas impulsadas",
+    "stat2": "Rápido",
+    "stat2Sub": "Configuración y despliegue",
+    "stat3": "2 min",
+    "stat3Sub": "Tiempo de instalación",
+    "feat1Title": "Planificación de sprint asistida por IA",
+    "feat1Desc": "Sesiones más eficientes y basadas en datos",
+    "feat2Title": "Retrospectivas con ideas accionables",
+    "feat2Desc": "La IA analiza patrones y sugiere mejoras",
+    "feat3Title": "Colaboración eficaz del equipo",
+    "feat3Desc": "Mantén a todos alineados con visibilidad clara",
+    "startFree": "Empezar gratis hoy",
+    "exploreDemo": "Explorar demo primero",
+    "footnote": "Gratis para siempre • Sin tarjeta • Configuración en 2 minutos"
+  },
+  "invite": {
+    "doneTitle": "Tu equipo está listo. Ayuda a otros a descubrir Spark-Agile.",
+    "pendingOne": "Invita a {{count}} compañero más para desbloquear el paquete Agent Debate.",
+    "pendingMany": "Invita a {{count}} compañeros más para desbloquear el paquete Agent Debate.",
+    "subtitle": "Gratis para siempre para equipos de hasta 10. Comparte tu enlace de referido.",
+    "inviteBtn": "Invitar",
+    "copyBtn": "Copiar enlace de referido",
+    "copied": "Copiado",
+    "copiedToast": "Enlace de referido copiado"
   }
 }

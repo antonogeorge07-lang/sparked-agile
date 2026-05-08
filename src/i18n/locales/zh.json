@@ -428,7 +428,7 @@
     "pricing": {
       "badge": "定价",
       "title": "Free for Startups",
-      "subtitle": "Free forever for teams of 10 or fewer. No credit card. No trial timer.",
+      "subtitle": "10人或以下团队永久免费。无需信用卡。无试用倒计时。",
       "freeTitle": "Free for Startups",
       "freePrice": "Free",
       "freeDescription": "Everything you need to run agile sprints, AI digests, integrations and team chat. Up to 10 teammates.",
@@ -722,7 +722,9 @@
       "privacy": "隐私政策",
       "terms": "服务条款",
       "copyright": "© {{year}} Spark-Agile。保留所有权利。",
-      "builtBy": "用❤️构建 由"
+      "builtBy": "用❤️构建 由",
+      "startupTagline": "不超过10人的团队永久免费。无需信用卡。无计时器。",
+      "builtByFounder": "由 Spark-Agile 创始人 Antono George 打造"
     }
   },
   "settings": {
@@ -1746,5 +1748,38 @@
     "back": "返回",
     "oneClickTitle": "一键连接",
     "oneClickDesc": "粘贴URL，选择项目，完成——数据自动流入"
+  },
+  "demo": {
+    "startFree": "免费开始 →"
+  },
+  "welcome": {
+    "badge": "AI 驱动的敏捷平台",
+    "title": "用 AI 驱动的敏捷更聪明地工作",
+    "description": "简化冲刺仪式,获取可操作的洞见,专注于重要事务。",
+    "stat1": "AI",
+    "stat1Sub": "智能洞见",
+    "stat2": "快速",
+    "stat2Sub": "设置与部署",
+    "stat3": "2 分钟",
+    "stat3Sub": "设置时间",
+    "feat1Title": "AI 辅助的冲刺规划",
+    "feat1Desc": "使会议更高效、数据驱动",
+    "feat2Title": "可操作的回顾洞见",
+    "feat2Desc": "AI 分析模式并提出改进建议",
+    "feat3Title": "高效的团队协作",
+    "feat3Desc": "以清晰的可见性保持一致",
+    "startFree": "今天免费开始",
+    "exploreDemo": "先查看演示",
+    "footnote": "永久免费 • 无需信用卡 • 2 分钟完成设置"
+  },
+  "invite": {
+    "doneTitle": "您的团队已就绪。帮助他人发现 Spark-Agile。",
+    "pendingOne": "再邀请 {{count}} 位队友以解锁 Agent Debate 示例包。",
+    "pendingMany": "再邀请 {{count}} 位队友以解锁 Agent Debate 示例包。",
+    "subtitle": "不超过10人的团队永久免费。分享推荐链接。",
+    "inviteBtn": "邀请",
+    "copyBtn": "复制推荐链接",
+    "copied": "已复制",
+    "copiedToast": "推荐链接已复制"
   }
 }

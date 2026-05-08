@@ -428,7 +428,7 @@
     "pricing": {
       "badge": "가격",
       "title": "Free for Startups",
-      "subtitle": "Free forever for teams of 10 or fewer. No credit card. No trial timer.",
+      "subtitle": "10명 이하 팀은 영원히 무료. 신용카드 불필요. 체험 타이머 없음.",
       "freeTitle": "Free for Startups",
       "freePrice": "Free",
       "freeDescription": "Everything you need to run agile sprints, AI digests, integrations and team chat. Up to 10 teammates.",
@@ -722,7 +722,9 @@
       "privacy": "개인정보 보호정책",
       "terms": "서비스 약관",
       "copyright": "© {{year}} Spark-Agile. All rights reserved.",
-      "builtBy": "❤️로 구축 by"
+      "builtBy": "❤️로 구축 by",
+      "startupTagline": "10명 이하 팀은 영원히 무료. 카드 불필요. 타이머 없음.",
+      "builtByFounder": "Spark-Agile 창립자 Antono George 제작"
     }
   },
   "settings": {
@@ -1746,5 +1748,38 @@
     "back": "뒤로",
     "oneClickTitle": "원클릭 연결",
     "oneClickDesc": "URL을 붙여넣고 프로젝트를 선택하면 완료 — 데이터가 자동으로 흐릅니다"
+  },
+  "demo": {
+    "startFree": "무료로 시작 →"
+  },
+  "welcome": {
+    "badge": "AI 기반 애자일 플랫폼",
+    "title": "AI 기반 애자일로 더 똑똑하게 일하기",
+    "description": "스프린트 세리머니를 간소화하고, 실행 가능한 통찰을 얻고, 중요한 일에 집중하세요.",
+    "stat1": "AI",
+    "stat1Sub": "인사이트 제공",
+    "stat2": "빠름",
+    "stat2Sub": "설정 및 배포",
+    "stat3": "2분",
+    "stat3Sub": "설정 시간",
+    "feat1Title": "AI 지원 스프린트 계획",
+    "feat1Desc": "더 효율적이고 데이터 중심적인 세션",
+    "feat2Title": "실행 가능한 회고 인사이트",
+    "feat2Desc": "AI가 패턴을 분석하고 개선 사항을 제안",
+    "feat3Title": "효과적인 팀 협업",
+    "feat3Desc": "명확한 가시성으로 모두를 정렬",
+    "startFree": "오늘 무료로 시작",
+    "exploreDemo": "먼저 데모 살펴보기",
+    "footnote": "영원히 무료 • 카드 불필요 • 2분 설정"
+  },
+  "invite": {
+    "doneTitle": "팀 준비가 완료되었습니다. 다른 사람들도 Spark-Agile을 발견하도록 도와주세요.",
+    "pendingOne": "{{count}}명을 더 초대하여 Agent Debate 샘플 팩을 잠금 해제하세요.",
+    "pendingMany": "{{count}}명을 더 초대하여 Agent Debate 샘플 팩을 잠금 해제하세요.",
+    "subtitle": "10명 이하 팀은 영원히 무료. 추천 링크를 공유하세요.",
+    "inviteBtn": "초대",
+    "copyBtn": "추천 링크 복사",
+    "copied": "복사됨",
+    "copiedToast": "추천 링크가 복사되었습니다"
   }
 }
