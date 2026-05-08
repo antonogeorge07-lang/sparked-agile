@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import saaiLogo from "@/assets/saai-logo-optimized.webp";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { 
   Sparkles, 
   Target, 
@@ -113,7 +113,7 @@ export default function About() {
             <div className="flex justify-center mb-6">
               <div className="relative">
                 <OptimizedImage 
-                  src={saaiLogo} 
+                  src={sparkAgileLogo} 
                   alt="Spark-Agile logo" 
                   className="h-28 w-auto object-contain drop-shadow-lg" 
                 />

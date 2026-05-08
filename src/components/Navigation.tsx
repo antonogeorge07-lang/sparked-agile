@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Target, BarChart3, Home, Shield, Menu, X, Sparkles, Presentation, ListFilter, Activity, Star, HelpCircle, Briefcase, BookOpen, GitBranch, FolderKanban } from "lucide-react";
-import saaiLogo from "@/assets/saai-logo.png";
-import saaiLogoOptimized from "@/assets/saai-logo-optimized.webp";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -128,9 +128,9 @@ export const Navigation = () => {
               {/* Logo container with subtle background */}
               <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10 group-hover:border-primary/30 transition-all shadow-sm group-hover:shadow-md">
                 <picture>
-                  <source srcSet={saaiLogoOptimized} type="image/webp" />
+                  <source srcSet={sparkAgileLogo} type="image/webp" />
                   <img 
-                    src={saaiLogo} 
+                    src={sparkAgileLogo} 
                     alt="Spark-Agile logo"
                     width="40"
                     height="40"
