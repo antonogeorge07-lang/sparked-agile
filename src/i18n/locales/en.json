@@ -720,7 +720,9 @@
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",
       "copyright": "© {{year}} Spark-Agile. All rights reserved.",
-      "builtBy": "Built with ❤️ by"
+      "builtBy": "Built with ❤️ by",
+      "startupTagline": "Free for teams up to 10. No credit card. No trial timer.",
+      "builtByFounder": "Built by Antono George, Founder of Spark-Agile"
     }
   },
   "settings": {
@@ -1744,5 +1746,38 @@
     "back": "Back",
     "oneClickTitle": "Connect in One Click",
     "oneClickDesc": "Paste a URL, pick your project, done — your data flows in automatically"
+  },
+  "demo": {
+    "startFree": "Start Free →"
+  },
+  "welcome": {
+    "badge": "AI-Powered Agile Platform",
+    "title": "Work Smarter with AI-Powered Agile",
+    "description": "Streamline sprint ceremonies, get actionable insights, and focus on what matters - building great products.",
+    "stat1": "AI",
+    "stat1Sub": "Powered insights",
+    "stat2": "Fast",
+    "stat2Sub": "Setup & deployment",
+    "stat3": "2 min",
+    "stat3Sub": "Setup time",
+    "feat1Title": "AI-Assisted Sprint Planning",
+    "feat1Desc": "Make planning sessions more efficient and data-driven",
+    "feat2Title": "Actionable Retrospective Insights",
+    "feat2Desc": "AI analyses patterns and suggests improvements",
+    "feat3Title": "Effective Team Collaboration",
+    "feat3Desc": "Keep everyone aligned with clear visibility",
+    "startFree": "Start Free Today",
+    "exploreDemo": "Explore Demo First",
+    "footnote": "Free forever • No credit card • Setup in 2 minutes"
+  },
+  "invite": {
+    "doneTitle": "Your team is set up. Help others discover Spark-Agile.",
+    "pendingOne": "Invite {{count}} more teammate to unlock the Agent Debate sample pack.",
+    "pendingMany": "Invite {{count}} more teammates to unlock the Agent Debate sample pack.",
+    "subtitle": "Free forever for teams up to 10. Share your referral link to grow the community.",
+    "inviteBtn": "Invite",
+    "copyBtn": "Copy referral link",
+    "copied": "Copied",
+    "copiedToast": "Referral link copied"
   }
 }

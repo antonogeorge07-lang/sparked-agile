@@ -428,7 +428,7 @@
     "pricing": {
       "badge": "料金",
       "title": "Free for Startups",
-      "subtitle": "Free forever for teams of 10 or fewer. No credit card. No trial timer.",
+      "subtitle": "10人以下のチームは永久無料。クレジットカード不要。試用期間タイマーなし。",
       "freeTitle": "Free for Startups",
       "freePrice": "Free",
       "freeDescription": "Everything you need to run agile sprints, AI digests, integrations and team chat. Up to 10 teammates.",
@@ -722,7 +722,9 @@
       "privacy": "プライバシーポリシー",
       "terms": "利用規約",
       "copyright": "© {{year}} Spark-Agile. 無断複写・転載を禁じます。",
-      "builtBy": "❤️で構築 by"
+      "builtBy": "❤️で構築 by",
+      "startupTagline": "10人までのチームは永久無料。カード不要。タイマーなし。",
+      "builtByFounder": "Spark-Agile 創設者 Antono George 製作"
     }
   },
   "settings": {
@@ -1746,5 +1748,38 @@
     "back": "戻る",
     "oneClickTitle": "ワンクリックで接続",
     "oneClickDesc": "URLを貼り付け、プロジェクトを選択、完了 — データが自動的に流れます"
+  },
+  "demo": {
+    "startFree": "無料で始める →"
+  },
+  "welcome": {
+    "badge": "AI 駆動のアジャイルプラットフォーム",
+    "title": "AI でスマートにアジャイルを進める",
+    "description": "スプリントセレモニーを効率化し、実務的な洞察を得て、大切なことに集中しましょう。",
+    "stat1": "AI",
+    "stat1Sub": "インサイト提供",
+    "stat2": "高速",
+    "stat2Sub": "セットアップと展開",
+    "stat3": "2分",
+    "stat3Sub": "セットアップ時間",
+    "feat1Title": "AI 支援のスプリント計画",
+    "feat1Desc": "より効率的でデータ駆動型に",
+    "feat2Title": "実務的な振り返りの洞察",
+    "feat2Desc": "AI がパターンを分析し改善策を提案",
+    "feat3Title": "効果的なチームコラボレーション",
+    "feat3Desc": "明確な可視性で全員を一致させる",
+    "startFree": "今すぐ無料で始める",
+    "exploreDemo": "まずデモを見る",
+    "footnote": "永久無料 • カード不要 • 2分でセットアップ"
+  },
+  "invite": {
+    "doneTitle": "チームの準備が整いました。他の人にも Spark-Agile を紹介しましょう。",
+    "pendingOne": "あと {{count}} 人招待して Agent Debate サンプルパックをアンロック。",
+    "pendingMany": "あと {{count}} 人招待して Agent Debate サンプルパックをアンロック。",
+    "subtitle": "10人までのチームは永久無料。紹介リンクを共有しましょう。",
+    "inviteBtn": "招待",
+    "copyBtn": "紹介リンクをコピー",
+    "copied": "コピー済み",
+    "copiedToast": "紹介リンクをコピーしました"
   }
 }

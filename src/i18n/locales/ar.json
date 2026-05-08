@@ -428,7 +428,7 @@
     "pricing": {
       "badge": "الأسعار",
       "title": "Free for Startups",
-      "subtitle": "Free forever for teams of 10 or fewer. No credit card. No trial timer.",
+      "subtitle": "مجاني إلى الأبد للفرق المكونة من 10 أشخاص أو أقل. بدون بطاقة ائتمان. بدون مؤقت تجريبي.",
       "freeTitle": "Free for Startups",
       "freePrice": "Free",
       "freeDescription": "Everything you need to run agile sprints, AI digests, integrations and team chat. Up to 10 teammates.",
@@ -722,7 +722,9 @@
       "privacy": "سياسة الخصوصية",
       "terms": "شروط الخدمة",
       "copyright": "© {{year}} Spark-Agile. جميع الحقوق محفوظة.",
-      "builtBy": "بُني بـ ❤️ بواسطة"
+      "builtBy": "بُني بـ ❤️ بواسطة",
+      "startupTagline": "مجاني للفرق حتى 10 أشخاص. بدون بطاقة. بدون مؤقت.",
+      "builtByFounder": "من إنشاء Antono George، مؤسس Spark-Agile"
     }
   },
   "settings": {
@@ -1746,5 +1748,38 @@
     "back": "رجوع",
     "oneClickTitle": "اربط بنقرة واحدة",
     "oneClickDesc": "الصق رابطاً، اختر مشروعك، انتهى — بياناتك تتدفق تلقائياً"
+  },
+  "demo": {
+    "startFree": "ابدأ مجاناً ←"
+  },
+  "welcome": {
+    "badge": "منصة Agile مدعومة بالذكاء الاصطناعي",
+    "title": "اعمل بذكاء أكبر مع Agile المدعوم بالذكاء الاصطناعي",
+    "description": "بسّط مراسم السبرنت، واحصل على رؤى قابلة للتنفيذ، وركّز على ما يهم.",
+    "stat1": "ذكاء",
+    "stat1Sub": "رؤى مدعومة",
+    "stat2": "سريع",
+    "stat2Sub": "الإعداد والنشر",
+    "stat3": "دقيقتان",
+    "stat3Sub": "وقت الإعداد",
+    "feat1Title": "تخطيط السبرنت بمساعدة الذكاء الاصطناعي",
+    "feat1Desc": "جلسات أكثر كفاءة ومدفوعة بالبيانات",
+    "feat2Title": "رؤى استرجاعية قابلة للتنفيذ",
+    "feat2Desc": "يحلل الذكاء الاصطناعي الأنماط ويقترح التحسينات",
+    "feat3Title": "تعاون فعّال للفريق",
+    "feat3Desc": "حافظ على توافق الجميع برؤية واضحة",
+    "startFree": "ابدأ مجاناً اليوم",
+    "exploreDemo": "استكشف العرض التجريبي أولاً",
+    "footnote": "مجاني إلى الأبد • بدون بطاقة • الإعداد في دقيقتين"
+  },
+  "invite": {
+    "doneTitle": "فريقك جاهز. ساعد الآخرين على اكتشاف Spark-Agile.",
+    "pendingOne": "ادعُ {{count}} زميلاً آخر لفتح حزمة Agent Debate التجريبية.",
+    "pendingMany": "ادعُ {{count}} زملاء آخرين لفتح حزمة Agent Debate التجريبية.",
+    "subtitle": "مجاني إلى الأبد للفرق حتى 10. شارك رابط الإحالة الخاص بك.",
+    "inviteBtn": "دعوة",
+    "copyBtn": "نسخ رابط الإحالة",
+    "copied": "تم النسخ",
+    "copiedToast": "تم نسخ رابط الإحالة"
   }
 }

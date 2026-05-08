@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button";
 import { Play, CheckCircle, Zap, Users, Calendar, BarChart3, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface DemoModalProps {
 }
 
 export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
+  const { t } = useTranslation();
   const features = [
     {
       icon: <Zap className="w-5 h-5 text-yellow-500" />,
@@ -69,7 +71,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                 sprint planning, streamlined standups, and intelligent retrospectives.
               </p>
               <Button size="lg" className="mt-3 sm:mt-4" onClick={onClose}>
-                Start Free →
+                {t('demo.startFree')}
               </Button>
             </div>
           </div>

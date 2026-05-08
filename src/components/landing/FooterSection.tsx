@@ -33,7 +33,7 @@ export function FooterSection() {
               {t('landing.footer.description')}
             </p>
             <p className="mt-3 text-xs text-foreground font-medium">
-              Free for teams up to 10. No credit card. No trial timer.
+              {t('landing.footer.startupTagline')}
             </p>
           </div>
           <nav aria-label="Product navigation">
@@ -105,11 +105,8 @@ export function FooterSection() {
             </p>
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary animate-pulse" aria-hidden="true" />
-              <span className="font-medium">
-                Built by{" "}
-                <span className="bg-gradient-primary bg-clip-text text-transparent font-semibold">
-                  Antono George, Founder of Spark-Agile
-                </span>
+              <span className="font-medium bg-gradient-primary bg-clip-text text-transparent font-semibold">
+                {t('landing.footer.builtByFounder')}
               </span>
             </div>
           </div>

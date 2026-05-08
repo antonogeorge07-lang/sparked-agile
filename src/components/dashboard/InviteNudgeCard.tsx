@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { UserPlus, Sparkles, Copy, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export function InviteNudgeCard() {
+  const { t } = useTranslation();
   const [memberCount, setMemberCount] = useState<number | null>(null);
   const [refUrl, setRefUrl] = useState<string>("");
   const [copied, setCopied] = useState(false);
@@ -41,7 +43,7 @@ export function InviteNudgeCard() {
     if (!refUrl) return;
     await navigator.clipboard.writeText(refUrl);
     setCopied(true);
-    toast.success("Referral link copied");
+    toast.success(t('invite.copiedToast'));
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -58,22 +60,24 @@ export function InviteNudgeCard() {
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm">
             {unlocked
-              ? "Your team is set up. Help others discover Spark-Agile."
-              : `Invite ${remaining} more teammate${remaining === 1 ? "" : "s"} to unlock the Agent Debate sample pack.`}
+              ? t('invite.doneTitle')
+              : (remaining === 1
+                  ? t('invite.pendingOne', { count: remaining })
+                  : t('invite.pendingMany', { count: remaining }))}
           </p>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Free forever for teams up to 10. Share your referral link to grow the community.
+            {t('invite.subtitle')}
           </p>
         </div>
         <div className="flex flex-wrap gap-2 sm:flex-nowrap">
           <Link to="/team-hub">
             <Button size="sm" variant="default" className="gap-2">
-              <UserPlus className="h-3.5 w-3.5" /> Invite
+              <UserPlus className="h-3.5 w-3.5" /> {t('invite.inviteBtn')}
             </Button>
           </Link>
           <Button size="sm" variant="outline" className="gap-2" onClick={handleCopy} disabled={!refUrl}>
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-            {copied ? "Copied" : "Copy referral link"}
+            {copied ? t('invite.copied') : t('invite.copyBtn')}
           </Button>
         </div>
       </CardContent>
