@@ -36,12 +36,12 @@ export function IntegrationSchema() {
       ],
       "softwareHelp": {
         "@type": "WebPage",
-        "url": "https://saai.app/user-guide"
+        "url": "https://sparked-agile.lovable.app/user-guide"
       },
       "author": {
         "@type": "Organization",
         "name": "Spark-Agile",
-        "url": "https://saai.app"
+        "url": "https://sparked-agile.lovable.app"
       },
       "datePublished": "2024-01-01",
       "dateModified": new Date().toISOString().split('T')[0],
@@ -53,16 +53,16 @@ export function IntegrationSchema() {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Spark-Agile",
-      "url": "https://saai.app",
+      "url": "https://sparked-agile.lovable.app",
       "sameAs": [
-        "https://github.com/saai-app",
-        "https://twitter.com/saai_app",
-        "https://linkedin.com/company/saai-app"
+        "https://github.com/spark-agile",
+        "https://twitter.com/sparkagile",
+        "https://linkedin.com/company/spark-agile"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer support",
-        "url": "https://saai.app/contact"
+        "url": "https://sparked-agile.lovable.app/contact"
       }
     };
 
