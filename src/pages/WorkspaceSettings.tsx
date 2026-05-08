@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Building2, Users, Save, Home, Check } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Building2, Users, Save, Home, Check, Star } from "lucide-react";
 import { GoogleConnectionCard } from "@/components/integrations/GoogleConnectionCard";
 import { LoadingState } from "@/components/LoadingState";
 import { useWorkspace } from "@/hooks/useWorkspace";
