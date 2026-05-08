@@ -1750,7 +1750,33 @@
     "oneClickDesc": "Cole uma URL, escolha seu projeto, pronto — seus dados fluem automaticamente"
   },
   "demo": {
-    "startFree": "Começar grátis →"
+    "startFree": "Começar grátis →",
+    "title": "Experimente o Spark-Agile",
+    "description": "Veja como a IA ajuda nas suas cerimônias ágeis e gestão de fluxo de trabalho",
+    "interactiveBadge": "Demo interativa",
+    "tryYourself": "Experimente você mesmo!",
+    "signUpPrompt": "Cadastre-se agora para acessar um workspace de demonstração completo com dados de exemplo. Experimente o planejamento de sprints com IA, standups simplificados e retrospectivas inteligentes.",
+    "keyFeatures": "Principais recursos",
+    "feature1Title": "Planejamento de sprints com IA",
+    "feature1Desc": "Gere planos de sprint com base na velocidade da equipe, backlog e dados históricos",
+    "feature2Title": "Colaboração em equipe",
+    "feature2Desc": "Veja quem está trabalhando no quê com indicadores de presença ao vivo e atualizações",
+    "feature3Title": "Cerimônias simplificadas",
+    "feature3Desc": "Resumos inteligentes de standups, retrospectivas e coordenação de revisões com Microsoft Outlook",
+    "feature4Title": "Métricas de fluxo e análises",
+    "feature4Desc": "Acompanhe o tempo de ciclo, lead time e throughput com insights acionáveis",
+    "feature5Title": "Itens de ação inteligentes",
+    "feature5Desc": "A IA ajuda a extrair e rastrear itens de ação das cerimônias",
+    "feature6Title": "Suporte a SAFe 6.0",
+    "feature6Desc": "Planejamento completo de incrementos de programa, fluxos de valor e gestão de ARTs",
+    "availableIntegrations": "Integrações disponíveis",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "Pronto para melhorar seu fluxo de trabalho ágil?",
+    "maybeLater": "Talvez depois",
+    "getStartedFree": "Começar grátis"
   },
   "welcome": {
     "badge": "Plataforma Ágil com IA",
@@ -1781,5 +1807,52 @@
     "copyBtn": "Copiar link de referência",
     "copied": "Copiado",
     "copiedToast": "Link de referência copiado"
+  },
+  "emailCapture": {
+    "maybeLater": "Talvez depois",
+    "name": "Nome",
+    "namePlaceholder": "João Silva",
+    "workEmail": "E-mail de trabalho",
+    "emailPlaceholder": "voce@empresa.com",
+    "submitting": "Enviando...",
+    "getAccess": "Obter acesso",
+    "privacyNotice": "Respeitamos sua privacidade. Cancele a inscrição a qualquer momento.",
+    "earlyAccess": {
+      "title": "Obtenha acesso antecipado",
+      "description": "Seja o primeiro a testar novos recursos e receba atualizações exclusivas",
+      "benefit": "Ganhe 3 meses gratuitos do plano Pro no lançamento"
+    },
+    "newsletter": {
+      "title": "Fique por dentro",
+      "description": "Receba dicas de produtividade e atualizações para equipes ágeis",
+      "benefit": "Boas práticas ágeis semanais e atualizações da plataforma"
+    },
+    "beta": {
+      "title": "Junte-se à nossa comunidade",
+      "description": "Ajude a moldar o futuro do Spark-Agile",
+      "benefit": "Acesso gratuito a todos os recursos principais"
+    },
+    "exitIntent": {
+      "title": "Bem-vindo! Vamos começar",
+      "description": "Obtenha uma demonstração personalizada e veja como podemos transformar seu fluxo de trabalho",
+      "benefit": "Onboarding personalizado gratuito e suporte dedicado"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "Aviso de privacidade",
+      "description": "Usamos fingerprinting de dispositivo para melhorar sua experiência e lembrar suas preferências entre visitas. Sua privacidade importa - os dados são hasheados e seguros.",
+      "learnMore": "Saiba mais",
+      "accept": "Aceitar",
+      "maybeLater": "Talvez depois"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "Começar grátis",
+      "contactUs": "Fale conosco",
+      "readyToGet": "Pronto para obter o pulso da sua equipe?",
+      "joinTeams": "Junte-se às equipes que já usam o Spark-Agile como seu Chefe de Gabinete de IA. Grátis para começar, não é necessário cartão de crédito."
+    }
   }
 }

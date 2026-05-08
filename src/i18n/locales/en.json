@@ -1748,7 +1748,33 @@
     "oneClickDesc": "Paste a URL, pick your project, done — your data flows in automatically"
   },
   "demo": {
-    "startFree": "Start Free →"
+    "startFree": "Start Free →",
+    "title": "Experience Spark-Agile",
+    "description": "See how AI helps with your agile ceremonies and workflow management",
+    "interactiveBadge": "Interactive Demo",
+    "tryYourself": "Try it yourself!",
+    "signUpPrompt": "Sign up now to access a full demo workspace with sample data. Experience AI-powered sprint planning, streamlined standups, and intelligent retrospectives.",
+    "keyFeatures": "Key Features",
+    "feature1Title": "AI-Powered Sprint Planning",
+    "feature1Desc": "Generate sprint plans based on team velocity, backlog, and historical data",
+    "feature2Title": "Team Collaboration",
+    "feature2Desc": "See who's working on what with live presence indicators and updates",
+    "feature3Title": "Streamlined Ceremonies",
+    "feature3Desc": "Smart standup summaries, retrospectives, and review coordination with Microsoft Outlook",
+    "feature4Title": "Flow Metrics & Analytics",
+    "feature4Desc": "Track cycle time, lead time, and throughput with actionable insights",
+    "feature5Title": "Smart Action Items",
+    "feature5Desc": "AI assists with extracting and tracking action items from ceremonies",
+    "feature6Title": "SAFe 6.0 Support",
+    "feature6Desc": "Full program increment planning, value streams, and ARTs management",
+    "availableIntegrations": "Available Integrations",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "Ready to improve your agile workflow?",
+    "maybeLater": "Maybe Later",
+    "getStartedFree": "Get Started Free"
   },
   "welcome": {
     "badge": "AI-Powered Agile Platform",
@@ -1779,5 +1805,52 @@
     "copyBtn": "Copy referral link",
     "copied": "Copied",
     "copiedToast": "Referral link copied"
+  },
+  "emailCapture": {
+    "maybeLater": "Maybe Later",
+    "name": "Name",
+    "namePlaceholder": "John Doe",
+    "workEmail": "Work Email",
+    "emailPlaceholder": "you@company.com",
+    "submitting": "Submitting...",
+    "getAccess": "Get Access",
+    "privacyNotice": "We respect your privacy. Unsubscribe anytime.",
+    "earlyAccess": {
+      "title": "Get Early Access",
+      "description": "Be the first to try new features and get exclusive updates",
+      "benefit": "Get 3 months free Pro plan when we launch"
+    },
+    "newsletter": {
+      "title": "Stay Updated",
+      "description": "Get productivity tips and updates for agile teams",
+      "benefit": "Weekly agile best practices and platform updates"
+    },
+    "beta": {
+      "title": "Join Our Community",
+      "description": "Help shape the future of Spark-Agile",
+      "benefit": "Free access to all core features"
+    },
+    "exitIntent": {
+      "title": "Welcome! Let's Get Started",
+      "description": "Get a personalized demo and see how we can transform your workflow",
+      "benefit": "Free personalized onboarding and dedicated support"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "Privacy Notice",
+      "description": "We use device fingerprinting to improve your experience and remember your preferences across visits. Your privacy matters - data is hashed and secure.",
+      "learnMore": "Learn more",
+      "accept": "Accept",
+      "maybeLater": "Maybe Later"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "Get Started Free",
+      "contactUs": "Contact Us",
+      "readyToGet": "Ready to Get Your Team Pulse?",
+      "joinTeams": "Join teams already using Spark-Agile as their AI Chief of Staff. Free to start, no credit card required."
+    }
   }
 }

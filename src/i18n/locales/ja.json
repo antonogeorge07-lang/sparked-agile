@@ -1750,7 +1750,33 @@
     "oneClickDesc": "URLを貼り付け、プロジェクトを選択、完了 — データが自動的に流れます"
   },
   "demo": {
-    "startFree": "無料で始める →"
+    "startFree": "無料で始める →",
+    "title": "Spark-Agileを体験",
+    "description": "AIがアジャイルのセレモニーやワークフロー管理をどう助けるかをご覧ください",
+    "interactiveBadge": "インタラクティブデモ",
+    "tryYourself": "ぜひお試しください！",
+    "signUpPrompt": "今すぐサインアップして、サンプルデータを含む完全なデモワークスペースにアクセスしてください。AI搭載のスプリント計画、効率化されたスタンドアップ、インテリジェントなレトロスペクティブを体験できます。",
+    "keyFeatures": "主な機能",
+    "feature1Title": "AI搭載スプリント計画",
+    "feature1Desc": "チームのベロシティ、バックログ、履歴データに基づいてスプリント計画を生成します",
+    "feature2Title": "チームコラボレーション",
+    "feature2Desc": "ライブプレゼンスインジケーターと更新で、誰が何に取り組んでいるかを確認できます",
+    "feature3Title": "効率化されたセレモニー",
+    "feature3Desc": "Microsoft Outlookとのスマートスタンドアップサマリー、レトロスペクティブ、レビュー連携",
+    "feature4Title": "フローメトリクスと分析",
+    "feature4Desc": "サイクルタイム、リードタイム、スループットを実用的なインサイトで追跡します",
+    "feature5Title": "スマートアクションアイテム",
+    "feature5Desc": "AIがセレモニーからアクションアイテムを抽出・追跡するのを支援します",
+    "feature6Title": "SAFe 6.0対応",
+    "feature6Desc": "プログラムインクリメント計画、バリューストリーム、ART管理のフルサポート",
+    "availableIntegrations": "利用可能な連携",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "アジャイルのワークフローを改善する準備はできましたか？",
+    "maybeLater": "後で",
+    "getStartedFree": "無料で始める"
   },
   "welcome": {
     "badge": "AI 駆動のアジャイルプラットフォーム",
@@ -1781,5 +1807,52 @@
     "copyBtn": "紹介リンクをコピー",
     "copied": "コピー済み",
     "copiedToast": "紹介リンクをコピーしました"
+  },
+  "emailCapture": {
+    "maybeLater": "後で",
+    "name": "名前",
+    "namePlaceholder": "山田太郎",
+    "workEmail": "勤務先メール",
+    "emailPlaceholder": "you@company.com",
+    "submitting": "送信中...",
+    "getAccess": "アクセスを取得",
+    "privacyNotice": "プライバシーを尊重します。いつでも購読解除できます。",
+    "earlyAccess": {
+      "title": "早期アクセスを取得",
+      "description": "新機能をいち早く試し、独占的なアップデートを受け取りましょう",
+      "benefit": "ローンチ時にProプランが3ヶ月無料"
+    },
+    "newsletter": {
+      "title": "最新情報を受け取る",
+      "description": "アジャイルチーム向けの生産性のヒントとアップデートを受け取りましょう",
+      "benefit": "毎週のアジャイルベストプラクティスとプラットフォームアップデート"
+    },
+    "beta": {
+      "title": "コミュニティに参加",
+      "description": "Spark-Agileの未来を形作るのにご協力ください",
+      "benefit": "すべての中核機能へ無料でアクセス"
+    },
+    "exitIntent": {
+      "title": "ようこそ！始めましょう",
+      "description": "パーソナライズされたデモを受けて、ワークフローをどう変革できるかをご覧ください",
+      "benefit": "無料のパーソナライズドオンボーディングと専任サポート"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "プライバシー通知",
+      "description": "デバイスフィンガープリントを使用して、体験を向上させ、訪問間で設定を記憶します。プライバシーは大切です - データはハッシュ化されて安全です。",
+      "learnMore": "詳細を見る",
+      "accept": "同意",
+      "maybeLater": "後で"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "無料で始める",
+      "contactUs": "お問い合わせ",
+      "readyToGet": "チームのパルスを取得する準備はできましたか？",
+      "joinTeams": "すでにSpark-AgileをAIチーフオブスタッフとして使用しているチームに参加しましょう。無料で始められ、クレジットカードは不要です。"
+    }
   }
 }

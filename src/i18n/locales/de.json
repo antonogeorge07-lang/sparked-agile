@@ -1750,7 +1750,33 @@
     "oneClickDesc": "URL einfügen, Projekt wählen, fertig — Ihre Daten fließen automatisch"
   },
   "demo": {
-    "startFree": "Kostenlos starten →"
+    "startFree": "Kostenlos starten →",
+    "title": "Spark-Agile erleben",
+    "description": "Sehen Sie, wie KI bei Ihren Agile-Zeremonien und Workflow-Management hilft",
+    "interactiveBadge": "Interaktive Demo",
+    "tryYourself": "Probieren Sie es selbst aus!",
+    "signUpPrompt": "Melden Sie sich jetzt an, um auf einen vollständigen Demo-Arbeitsbereich mit Beispieldaten zuzugreifen. Erleben Sie KI-gestützte Sprintplanung, optimierte Standups und intelligente Retrospektiven.",
+    "keyFeatures": "Hauptfunktionen",
+    "feature1Title": "KI-gestützte Sprintplanung",
+    "feature1Desc": "Generieren Sie Sprintpläne basierend auf Team Velocity, Backlog und historischen Daten",
+    "feature2Title": "Team-Zusammenarbeit",
+    "feature2Desc": "Sehen Sie, wer an was arbeitet, mit Live-Präsenzindikatoren und Updates",
+    "feature3Title": "Optimierte Zeremonien",
+    "feature3Desc": "Intelligente Standup-Zusammenfassungen, Retrospektiven und Review-Koordination mit Microsoft Outlook",
+    "feature4Title": "Flow-Metriken & Analysen",
+    "feature4Desc": "Verfolgen Sie Durchlaufzeit, Vorlaufzeit und Durchsatz mit umsetzbaren Erkenntnissen",
+    "feature5Title": "Intelligente Action Items",
+    "feature5Desc": "Die KI unterstützt beim Extrahieren und Nachverfolgen von Action Items aus Zeremonien",
+    "feature6Title": "SAFe 6.0 Unterstützung",
+    "feature6Desc": "Vollständige Program Increment Planung, Value Streams und ART-Verwaltung",
+    "availableIntegrations": "Verfügbare Integrationen",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "Bereit, Ihren Agile-Workflow zu verbessern?",
+    "maybeLater": "Später",
+    "getStartedFree": "Kostenlos starten"
   },
   "welcome": {
     "badge": "KI-gestützte Agile-Plattform",
@@ -1781,5 +1807,52 @@
     "copyBtn": "Empfehlungslink kopieren",
     "copied": "Kopiert",
     "copiedToast": "Empfehlungslink kopiert"
+  },
+  "emailCapture": {
+    "maybeLater": "Später",
+    "name": "Name",
+    "namePlaceholder": "Max Mustermann",
+    "workEmail": "Geschäftliche E-Mail",
+    "emailPlaceholder": "sie@firma.com",
+    "submitting": "Wird gesendet...",
+    "getAccess": "Zugang erhalten",
+    "privacyNotice": "Wir respektieren Ihre Privatsphäre. Jederzeit abbestellbar.",
+    "earlyAccess": {
+      "title": "Frühen Zugang erhalten",
+      "description": "Seien Sie der Erste, der neue Funktionen ausprobiert und exklusive Updates erhält",
+      "benefit": "Erhalten Sie 3 Monate kostenlosen Pro-Plan beim Launch"
+    },
+    "newsletter": {
+      "title": "Bleiben Sie auf dem Laufenden",
+      "description": "Erhalten Sie Produktivitätstipps und Updates für Agile-Teams",
+      "benefit": "Wöchentliche Agile-Best-Practices und Plattform-Updates"
+    },
+    "beta": {
+      "title": "Treten Sie unserer Community bei",
+      "description": "Helfen Sie mit, die Zukunft von Spark-Agile zu gestalten",
+      "benefit": "Kostenloser Zugang zu allen Kernfunktionen"
+    },
+    "exitIntent": {
+      "title": "Willkommen! Lassen Sie uns beginnen",
+      "description": "Erhalten Sie eine personalisierte Demo und sehen Sie, wie wir Ihren Workflow transformieren können",
+      "benefit": "Kostenloses personalisiertes Onboarding und dedizierter Support"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "Datenschutzhinweis",
+      "description": "Wir verwenden Geräte-Fingerprinting, um Ihr Erlebnis zu verbessern und Ihre Präferenzen über Besuche hinweg zu speichern. Ihre Privatsphäre ist uns wichtig - Daten werden gehasht und sind sicher.",
+      "learnMore": "Mehr erfahren",
+      "accept": "Akzeptieren",
+      "maybeLater": "Später"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "Kostenlos starten",
+      "contactUs": "Kontaktieren Sie uns",
+      "readyToGet": "Bereit, den Puls Ihres Teams zu bekommen?",
+      "joinTeams": "Schließen Sie sich Teams an, die Spark-Agile bereits als ihren KI-Chef des Stabes nutzen. Kostenlos starten, keine Kreditkarte erforderlich."
+    }
   }
 }

@@ -1750,7 +1750,33 @@
     "oneClickDesc": "Collez une URL, choisissez votre projet, terminé — vos données affluent automatiquement"
   },
   "demo": {
-    "startFree": "Commencer gratuitement →"
+    "startFree": "Commencer gratuitement →",
+    "title": "Découvrez Spark-Agile",
+    "description": "Découvrez comment l'IA facilite vos cérémonies agiles et la gestion de vos workflows",
+    "interactiveBadge": "Démo interactive",
+    "tryYourself": "Essayez par vous-même !",
+    "signUpPrompt": "Inscrivez-vous maintenant pour accéder à un espace de démo complet avec des données d'exemple. Découvrez la planification de sprints IA, des standups fluides et des rétrospectives intelligentes.",
+    "keyFeatures": "Fonctionnalités clés",
+    "feature1Title": "Planification de sprints IA",
+    "feature1Desc": "Générez des plans de sprint basés sur la vélocité de l'équipe, le backlog et les données historiques",
+    "feature2Title": "Collaboration d'équipe",
+    "feature2Desc": "Voyez qui travaille sur quoi grâce aux indicateurs de présence en direct et aux mises à jour",
+    "feature3Title": "Cérémonies simplifiées",
+    "feature3Desc": "Résumés de standups intelligents, rétrospectives et coordination de revues avec Microsoft Outlook",
+    "feature4Title": "Métriques de flux et analyses",
+    "feature4Desc": "Suivez le temps de cycle, le délai de livraison et le débit avec des insights actionnables",
+    "feature5Title": "Actions intelligentes",
+    "feature5Desc": "L'IA aide à extraire et suivre les actions issues des cérémonies",
+    "feature6Title": "Support SAFe 6.0",
+    "feature6Desc": "Planification complète d'incréments de programme, flux de valeur et gestion des ARTs",
+    "availableIntegrations": "Intégrations disponibles",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "Prêt à améliorer votre workflow agile ?",
+    "maybeLater": "Plus tard",
+    "getStartedFree": "Commencer gratuitement"
   },
   "welcome": {
     "badge": "Plateforme Agile alimentée par l'IA",
@@ -1781,5 +1807,52 @@
     "copyBtn": "Copier le lien de parrainage",
     "copied": "Copié",
     "copiedToast": "Lien de parrainage copié"
+  },
+  "emailCapture": {
+    "maybeLater": "Plus tard",
+    "name": "Nom",
+    "namePlaceholder": "Jean Dupont",
+    "workEmail": "Email professionnel",
+    "emailPlaceholder": "vous@entreprise.com",
+    "submitting": "Envoi en cours...",
+    "getAccess": "Obtenir l'accès",
+    "privacyNotice": "Nous respectons votre vie privée. Vous pouvez vous désinscrire à tout moment.",
+    "earlyAccess": {
+      "title": "Obtenez un accès anticipé",
+      "description": "Soyez le premier à tester les nouvelles fonctionnalités et recevez des mises à jour exclusives",
+      "benefit": "Obtenez 3 mois gratuits du plan Pro lors du lancement"
+    },
+    "newsletter": {
+      "title": "Restez informé",
+      "description": "Recevez des conseils de productivité et des mises à jour pour les équipes agiles",
+      "benefit": "Meilleures pratiques agiles hebdomadaires et mises à jour de la plateforme"
+    },
+    "beta": {
+      "title": "Rejoignez notre communauté",
+      "description": "Aidez à façonner l'avenir de Spark-Agile",
+      "benefit": "Accès gratuit à toutes les fonctionnalités principales"
+    },
+    "exitIntent": {
+      "title": "Bienvenue ! Commençons",
+      "description": "Obtenez une démo personnalisée et voyez comment nous pouvons transformer votre workflow",
+      "benefit": "Onboarding personnalisé gratuit et support dédié"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "Avis de confidentialité",
+      "description": "Nous utilisons l'empreinte digitale de l'appareil pour améliorer votre expérience et mémoriser vos préférences entre les visites. Votre confidentialité compte - les données sont hachées et sécurisées.",
+      "learnMore": "En savoir plus",
+      "accept": "Accepter",
+      "maybeLater": "Plus tard"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "Commencer gratuitement",
+      "contactUs": "Contactez-nous",
+      "readyToGet": "Prêt à obtenir le pouls de votre équipe ?",
+      "joinTeams": "Rejoignez les équipes qui utilisent déjà Spark-Agile comme leur Chef de Cabinet IA. Gratuit pour commencer, aucune carte de crédit requise."
+    }
   }
 }

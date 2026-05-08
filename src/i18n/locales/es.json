@@ -1750,7 +1750,33 @@
     "oneClickDesc": "Pega una URL, elige tu proyecto, listo — tus datos fluyen automáticamente"
   },
   "demo": {
-    "startFree": "Empezar gratis →"
+    "startFree": "Empezar gratis →",
+    "title": "Experimenta Spark-Agile",
+    "description": "Descubre cómo la IA ayuda con tus ceremonias ágiles y la gestión de flujo de trabajo",
+    "interactiveBadge": "Demo interactiva",
+    "tryYourself": "¡Pruébalo tú mismo!",
+    "signUpPrompt": "Regístrate ahora para acceder a un espacio de demostración completo con datos de ejemplo. Experimenta la planificación de sprints con IA, standups optimizados y retrospectivas inteligentes.",
+    "keyFeatures": "Características principales",
+    "feature1Title": "Planificación de sprints con IA",
+    "feature1Desc": "Genera planes de sprint basados en la velocidad del equipo, el backlog y datos históricos",
+    "feature2Title": "Colaboración en equipo",
+    "feature2Desc": "Ve quién trabaja en qué con indicadores de presencia en vivo y actualizaciones",
+    "feature3Title": "Ceremonias optimizadas",
+    "feature3Desc": "Resúmenes inteligentes de standups, retrospectivas y coordinación de revisiones con Microsoft Outlook",
+    "feature4Title": "Métricas de flujo y análisis",
+    "feature4Desc": "Rastrea el tiempo de ciclo, el tiempo de entrega y el rendimiento con información práctica",
+    "feature5Title": "Acciones inteligentes",
+    "feature5Desc": "La IA ayuda a extraer y rastrear acciones de las ceremonias",
+    "feature6Title": "Soporte SAFe 6.0",
+    "feature6Desc": "Planificación completa de incrementos de programa, flujos de valor y gestión de ARTs",
+    "availableIntegrations": "Integraciones disponibles",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "¿Listo para mejorar tu flujo de trabajo ágil?",
+    "maybeLater": "Quizás más tarde",
+    "getStartedFree": "Comenzar gratis"
   },
   "welcome": {
     "badge": "Plataforma Ágil con IA",
@@ -1781,5 +1807,52 @@
     "copyBtn": "Copiar enlace de referido",
     "copied": "Copiado",
     "copiedToast": "Enlace de referido copiado"
+  },
+  "emailCapture": {
+    "maybeLater": "Quizás más tarde",
+    "name": "Nombre",
+    "namePlaceholder": "Juan Pérez",
+    "workEmail": "Correo laboral",
+    "emailPlaceholder": "tu@empresa.com",
+    "submitting": "Enviando...",
+    "getAccess": "Obtener acceso",
+    "privacyNotice": "Respetamos tu privacidad. Puedes cancelar la suscripción en cualquier momento.",
+    "earlyAccess": {
+      "title": "Obtén acceso anticipado",
+      "description": "Sé el primero en probar nuevas funciones y recibir actualizaciones exclusivas",
+      "benefit": "Obtén 3 meses gratis del plan Pro cuando lancemos"
+    },
+    "newsletter": {
+      "title": "Mantente informado",
+      "description": "Recibe consejos de productividad y actualizaciones para equipos ágiles",
+      "benefit": "Mejores prácticas ágiles semanales y actualizaciones de la plataforma"
+    },
+    "beta": {
+      "title": "Únete a nuestra comunidad",
+      "description": "Ayuda a dar forma al futuro de Spark-Agile",
+      "benefit": "Acceso gratuito a todas las funciones principales"
+    },
+    "exitIntent": {
+      "title": "¡Bienvenido! Empecemos",
+      "description": "Obtén una demo personalizada y descubre cómo podemos transformar tu flujo de trabajo",
+      "benefit": "Onboarding personalizado gratuito y soporte dedicado"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "Aviso de privacidad",
+      "description": "Utilizamos huellas digitales de dispositivo para mejorar tu experiencia y recordar tus preferencias entre visitas. Tu privacidad importa: los datos están hasheados y seguros.",
+      "learnMore": "Más información",
+      "accept": "Aceptar",
+      "maybeLater": "Quizás más tarde"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "Comenzar gratis",
+      "contactUs": "Contáctanos",
+      "readyToGet": "¿Listo para obtener el pulso de tu equipo?",
+      "joinTeams": "Únete a los equipos que ya usan Spark-Agile como su Jefe de Estado Mayor de IA. Gratis para empezar, no se requiere tarjeta de crédito."
+    }
   }
 }

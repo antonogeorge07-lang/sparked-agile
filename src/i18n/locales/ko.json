@@ -1750,7 +1750,33 @@
     "oneClickDesc": "URL을 붙여넣고 프로젝트를 선택하면 완료 — 데이터가 자동으로 흐릅니다"
   },
   "demo": {
-    "startFree": "무료로 시작 →"
+    "startFree": "무료로 시작 →",
+    "title": "Spark-Agile 체험하기",
+    "description": "AI가 애자일 의식 및 워크플로우 관리를 어떻게 돕는지 확인하세요",
+    "interactiveBadge": "인터랙티브 데모",
+    "tryYourself": "직접 사용해보세요!",
+    "signUpPrompt": "샘플 데이터가 포함된 전체 데모 워크스페이스에 접근하려면 지금 가입하세요. AI 기반 스프린트 계획, 간소화된 스탠드업, 지능형 회고를 경험해보세요.",
+    "keyFeatures": "주요 기능",
+    "feature1Title": "AI 기반 스프린트 계획",
+    "feature1Desc": "팀 속도, 백로그, 과거 데이터를 기반으로 스프린트 계획을 생성합니다",
+    "feature2Title": "팀 협업",
+    "feature2Desc": "실시간 접속 표시와 업데이트로 누가 무엇을 하는지 확인하세요",
+    "feature3Title": "간소화된 의식",
+    "feature3Desc": "Microsoft Outlook과 함께하는 스마트 스탠드업 요약, 회고 및 검토 조정",
+    "feature4Title": "플로우 메트릭 및 분석",
+    "feature4Desc": "실행 가능한 인사이트로 사이클 타임, 리드 타임, 처리량을 추적하세요",
+    "feature5Title": "스마트 액션 아이템",
+    "feature5Desc": "AI가 의식에서 액션 아이템을 추출하고 추적하는 것을 지원합니다",
+    "feature6Title": "SAFe 6.0 지원",
+    "feature6Desc": "전체 프로그램 인크리먼트 계획, 밸류 스트림, ART 관리",
+    "availableIntegrations": "사용 가능한 통합",
+    "integrationJira": "Jira",
+    "integrationGitHub": "GitHub",
+    "integrationMicrosoft365": "Microsoft 365",
+    "integrationTeams": "Teams",
+    "readyToImprove": "애자일 워크플로우를 개선할 준비가 되셨나요?",
+    "maybeLater": "나중에",
+    "getStartedFree": "무료로 시작"
   },
   "welcome": {
     "badge": "AI 기반 애자일 플랫폼",
@@ -1781,5 +1807,52 @@
     "copyBtn": "추천 링크 복사",
     "copied": "복사됨",
     "copiedToast": "추천 링크가 복사되었습니다"
+  },
+  "emailCapture": {
+    "maybeLater": "나중에",
+    "name": "이름",
+    "namePlaceholder": "홍길동",
+    "workEmail": "회사 이메일",
+    "emailPlaceholder": "you@company.com",
+    "submitting": "제출 중...",
+    "getAccess": "접근 권한 받기",
+    "privacyNotice": "귀하의 개인정보를 존중합니다. 언제든 구독을 해지할 수 있습니다.",
+    "earlyAccess": {
+      "title": "얼리 액세스 받기",
+      "description": "새로운 기능을 가장 먼저 사용하고 독점 업데이트를 받으세요",
+      "benefit": "출시 시 Pro 플랜 3개월 무료"
+    },
+    "newsletter": {
+      "title": "최신 정보 받기",
+      "description": "애자일 팀을 위한 생산성 팁과 업데이트를 받으세요",
+      "benefit": "주간 애자일 모범 사례 및 플랫폼 업데이트"
+    },
+    "beta": {
+      "title": "커뮤니티 가입",
+      "description": "Spark-Agile의 미래를 함께 만들어주세요",
+      "benefit": "모든 핵심 기능에 무료 접근"
+    },
+    "exitIntent": {
+      "title": "환영합니다! 시작해 보세요",
+      "description": "맞춤형 데모를 받고 워크플로우를 어떻게 변화시킬 수 있는지 확인하세요",
+      "benefit": "무료 맞춤형 온보딩 및 전담 지원"
+    }
+  },
+  "privacy": {
+    "banner": {
+      "title": "개인정보 보호 알림",
+      "description": "방문 간 경험을 개선하고 선호도를 기억하기 위해 디바이스 핑거프린팅을 사용합니다. 귀하의 개인정보가 중요합니다 - 데이터는 해시 처리되어 안전합니다.",
+      "learnMore": "자세히 알아보기",
+      "accept": "동의",
+      "maybeLater": "나중에"
+    }
+  },
+  "about": {
+    "cta": {
+      "getStartedFree": "무료로 시작",
+      "contactUs": "문의하기",
+      "readyToGet": "팀의 펄스를 얻을 준비가 되셨나요?",
+      "joinTeams": "이미 Spark-Agile을 AI 비서실장으로 사용하는 팀에 참여하세요. 무료로 시작하며 신용카드가 필요 없습니다."
+    }
   }
 }
