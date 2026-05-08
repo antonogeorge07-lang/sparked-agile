@@ -52,7 +52,7 @@ export default function ExternalTasksHub() {
     <DashboardLayout>
       <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
         <Helmet>
-          <title>External Tasks - SAAI</title>
+          <title>External Tasks - Spark-Agile</title>
           <meta name="description" content="View and manage tasks from Jira, GitHub, and other connected tools in one place." />
         </Helmet>
         <div className="max-w-7xl mx-auto">

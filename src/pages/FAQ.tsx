@@ -21,8 +21,8 @@ export default function FAQ() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>FAQ - SAAI</title>
-        <meta name="description" content="Frequently asked questions about SAAI, pricing, integrations, and features." />
+        <title>FAQ - Spark-Agile</title>
+        <meta name="description" content="Frequently asked questions about Spark-Agile, pricing, integrations, and features." />
       </Helmet>
       <Navigation />
       

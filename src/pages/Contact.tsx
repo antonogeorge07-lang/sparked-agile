@@ -102,8 +102,8 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Contact Us - SAAI</title>
-        <meta name="description" content="Get in touch with the SAAI team. We'd love to hear from you." />
+        <title>Contact Us - Spark-Agile</title>
+        <meta name="description" content="Get in touch with the Spark-Agile team. We'd love to hear from you." />
       </Helmet>
       <Navigation />
       

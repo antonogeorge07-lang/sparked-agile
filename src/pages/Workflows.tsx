@@ -270,7 +270,7 @@ export default function Workflows() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>Workflows - SAAI</title>
+        <title>Workflows - Spark-Agile</title>
         <meta name="description" content="Automate agile ceremonies and project workflows with AI-powered orchestration." />
       </Helmet>
       <Navigation />

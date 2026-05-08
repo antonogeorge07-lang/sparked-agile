@@ -249,7 +249,7 @@ export default function Standup() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Helmet>
-        <title>Daily Standup - SAAI</title>
+        <title>Daily Standup - Spark-Agile</title>
         <meta name="description" content="Streamline daily standups with AI summaries, blocker tracking, and automated status updates." />
       </Helmet>
       <Navigation />

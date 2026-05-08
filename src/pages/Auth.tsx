@@ -413,7 +413,7 @@ export default function Auth() {
     return (
       <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
         <Helmet>
-          <title>Check Your Email - SAAI</title>
+          <title>Check Your Email - Spark-Agile</title>
           <meta name="description" content="Verify your email to complete registration." />
         </Helmet>
         <Card className="w-full max-w-md shadow-elevated">
@@ -464,7 +464,7 @@ export default function Auth() {
     return (
       <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
         <Helmet>
-          <title>Sign In - SAAI</title>
+          <title>Sign In - Spark-Agile</title>
           <meta name="description" content="Sign in or create an account to access your AI-powered agile workspace." />
         </Helmet>
         <Card className="w-full max-w-md shadow-elevated">

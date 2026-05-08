@@ -99,7 +99,7 @@ export default function UnifiedActivityFeed() {
     <DashboardLayout>
       <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
         <Helmet>
-          <title>Activity Feed - SAAI</title>
+          <title>Activity Feed - Spark-Agile</title>
           <meta name="description" content="View all project activity across tools in one unified feed." />
         </Helmet>
         <div className="max-w-4xl mx-auto">

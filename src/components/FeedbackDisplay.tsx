@@ -87,7 +87,7 @@ export const FeedbackDisplay = () => {
           <MessageSquare className="h-8 w-8 text-muted-foreground/50" />
         </div>
         <p className="text-muted-foreground">
-          Be the first to share your experience with SAAI!
+          Be the first to share your experience with Spark-Agile!
         </p>
       </div>
     );

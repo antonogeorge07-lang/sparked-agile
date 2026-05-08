@@ -326,7 +326,7 @@ export default function StakeholderPortal() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
       <Helmet>
-        <title>Stakeholder Portal - SAAI</title>
+        <title>Stakeholder Portal - Spark-Agile</title>
         <meta name="description" content="Executive dashboards, digest subscriptions, and approval workflows for stakeholders." />
       </Helmet>
       <Navigation />

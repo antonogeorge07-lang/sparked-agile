@@ -330,7 +330,7 @@ export default function SprintPlanningAssistant() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
       <Helmet>
-        <title>Sprint Planning - SAAI</title>
+        <title>Sprint Planning - Spark-Agile</title>
         <meta name="description" content="AI-assisted sprint planning with capacity analysis, story point estimation, and goal setting." />
       </Helmet>
       <div className="max-w-6xl mx-auto">

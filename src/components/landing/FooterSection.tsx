@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Sparkles, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import saaiLogo from "@/assets/saai-logo.png";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { useTranslation } from "react-i18next";
 
 export function FooterSection() {
@@ -19,7 +19,7 @@ export function FooterSection() {
                 <div className="absolute inset-0 bg-gradient-primary opacity-15 blur-lg rounded-full" />
                 <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-2 rounded-xl border border-primary/10">
                   <OptimizedImage 
-                    src={saaiLogo} 
+                    src={sparkAgileLogo} 
                     alt="Spark-Agile logo" 
                     className="h-8 w-8 object-contain relative z-10" 
                   />

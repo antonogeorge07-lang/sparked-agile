@@ -187,7 +187,7 @@ export const FeedbackSubmissionForm = () => {
               id="feedback"
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              placeholder="Tell us about your experience with SAAI..."
+              placeholder="Tell us about your experience with Spark-Agile..."
               rows={4}
               className="bg-background/50 border-border/50 focus:border-primary/50 transition-colors resize-none"
               required

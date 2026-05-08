@@ -317,7 +317,7 @@ export default function SecurityIncidents() {
     return (
       <div className="min-h-screen bg-background">
         <Helmet>
-          <title>Security Incidents - SAAI</title>
+          <title>Security Incidents - Spark-Agile</title>
           <meta name="description" content="Track and manage security incidents with severity classification and response workflows." />
         </Helmet>
         <Navigation />

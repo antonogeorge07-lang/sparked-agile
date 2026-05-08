@@ -103,7 +103,7 @@ export default function WorkspaceSettings() {
     return (
       <div className="min-h-screen bg-gradient-subtle">
         <Helmet>
-          <title>Workspace Settings - SAAI</title>
+          <title>Workspace Settings - Spark-Agile</title>
           <meta name="description" content="Configure workspace settings, team management, and integration preferences." />
         </Helmet>
         <Navigation />

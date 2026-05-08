@@ -104,7 +104,7 @@ export default function Retrospective() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Helmet>
-        <title>Retrospective - SAAI</title>
+        <title>Retrospective - Spark-Agile</title>
         <meta name="description" content="Run effective retrospectives with AI-generated insights and action item tracking." />
       </Helmet>
       <Navigation />

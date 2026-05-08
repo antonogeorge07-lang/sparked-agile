@@ -179,7 +179,7 @@ const TaskManagement = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Task Management - SAAI</title>
+        <title>Task Management - Spark-Agile</title>
         <meta name="description" content="Manage tasks with Kanban boards, priorities, and team assignments." />
       </Helmet>
       <Navigation />

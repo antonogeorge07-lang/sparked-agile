@@ -151,7 +151,7 @@ const BacklogRefinement = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Backlog Refinement - SAAI</title>
+        <title>Backlog Refinement - Spark-Agile</title>
         <meta name="description" content="Refine your product backlog with AI-assisted prioritisation and story point estimation." />
       </Helmet>
       <Navigation />

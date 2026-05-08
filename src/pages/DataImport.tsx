@@ -189,8 +189,8 @@ export default function DataImport() {
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         <Helmet>
-          <title>Import Data - SAAI</title>
-          <meta name="description" content="Import your existing project data from CSV, Jira, or other tools into SAAI." />
+          <title>Import Data - Spark-Agile</title>
+          <meta name="description" content="Import your existing project data from CSV, Jira, or other tools into Spark-Agile." />
         </Helmet>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t("pages.dataImport.title")}</h1>

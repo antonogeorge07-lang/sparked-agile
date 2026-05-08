@@ -6,7 +6,7 @@ import { ProfileMenu } from "@/components/ProfileMenu";
 import { NotificationBell } from "@/components/NotificationBell";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { GlobalSearchDialog } from "@/components/GlobalSearchDialog";
-import saaiLogo from "@/assets/saai-logo.png";
+import sparkAgileLogo from "@/assets/spark-agile-logo.png";
 import { Link } from "react-router-dom";
 import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     <div className="absolute inset-0 bg-gradient-primary opacity-15 blur-lg rounded-full group-hover:opacity-25 transition-opacity" />
                     <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 p-1.5 rounded-lg border border-primary/10 group-hover:border-primary/30 transition-all">
                       <img 
-                        src={saaiLogo} 
+                        src={sparkAgileLogo} 
                         alt="Spark-Agile logo" 
                         className="h-6 w-6 object-contain relative z-10"
                       />

@@ -36,7 +36,7 @@ export const EmailCaptureForm = ({ isOpen, onClose, context = "newsletter" }: Em
     },
     beta: {
       title: "Join Our Community",
-      description: "Help shape the future of SAAI",
+      description: "Help shape the future of Spark-Agile",
       benefit: "🚀 Free access to all core features"
     },
     exit_intent: {

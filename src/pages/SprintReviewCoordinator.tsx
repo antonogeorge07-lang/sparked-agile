@@ -271,7 +271,7 @@ export default function SprintReviewCoordinator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-6">
       <Helmet>
-        <title>Sprint Review - SAAI</title>
+        <title>Sprint Review - Spark-Agile</title>
         <meta name="description" content="Coordinate sprint reviews with demo checklists, stakeholder feedback, and completed work summaries." />
       </Helmet>
       <div className="max-w-6xl mx-auto">

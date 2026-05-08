@@ -178,7 +178,7 @@ export default function EpicManagement() {
       <Navigation />
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <Helmet>
-          <title>Epic Management - SAAI</title>
+          <title>Epic Management - Spark-Agile</title>
           <meta name="description" content="Manage epics with dependency mapping, progress visualisation, and AI-powered insights." />
         </Helmet>
         <div className="container mx-auto px-4 py-8">

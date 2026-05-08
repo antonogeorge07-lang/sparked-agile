@@ -242,7 +242,7 @@ export default function CeremonySetup() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>Ceremony Setup - SAAI</title>
+        <title>Ceremony Setup - Spark-Agile</title>
         <meta name="description" content="Configure and schedule your agile ceremonies including standups, retrospectives, and sprint reviews." />
       </Helmet>
       <Navigation />

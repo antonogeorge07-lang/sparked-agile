@@ -246,7 +246,7 @@ export default function PlatformOwner() {
     <DashboardLayout>
       <div className="space-y-6">
         <Helmet>
-          <title>Platform Admin - SAAI</title>
+          <title>Platform Admin - Spark-Agile</title>
           <meta name="description" content="Platform administration dashboard for managing users, security, and system configuration." />
         </Helmet>
         {/* Header */}

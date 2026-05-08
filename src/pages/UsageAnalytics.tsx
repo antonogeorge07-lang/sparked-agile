@@ -102,7 +102,7 @@ export default function UsageAnalytics() {
     return (
       <div className="min-h-screen bg-background">
         <Helmet>
-          <title>Usage Analytics - SAAI</title>
+          <title>Usage Analytics - Spark-Agile</title>
           <meta name="description" content="Track platform usage, AI consumption, and team engagement analytics." />
         </Helmet>
         <Navigation />

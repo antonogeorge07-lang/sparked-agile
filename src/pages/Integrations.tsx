@@ -407,8 +407,8 @@ const Integrations = () => {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>Integrations - SAAI</title>
-        <meta name="description" content="Connect SAAI with Jira, GitHub, Slack, Microsoft Teams, and Outlook for unified project management." />
+        <title>Integrations - Spark-Agile</title>
+        <meta name="description" content="Connect Spark-Agile with Jira, GitHub, Slack, Microsoft Teams, and Outlook for unified project management." />
       </Helmet>
       <Navigation />
       
