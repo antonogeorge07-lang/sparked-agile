@@ -84,6 +84,8 @@ project_id = "pbrrfxgcksptloiwshiy"
     verify_jwt = true
   [functions.send-welcome-email]
     verify_jwt = false
+  [functions.suggest-pmi-insights]
+    verify_jwt = true
   [functions.sync-jira-features]
     verify_jwt = false
   [functions.update-github-issue]
