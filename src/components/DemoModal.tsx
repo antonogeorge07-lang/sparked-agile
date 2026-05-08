@@ -48,7 +48,7 @@ export const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       <DialogContent className="max-w-4xl w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="sticky top-0 bg-background z-10 pb-4">
           <DialogTitle className="text-2xl sm:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Experience SAAI
+            Experience Spark-Agile
           </DialogTitle>
           <DialogDescription className="text-sm sm:text-base">
             See how AI helps with your agile ceremonies and workflow management

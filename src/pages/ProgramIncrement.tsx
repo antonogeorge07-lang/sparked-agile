@@ -131,7 +131,7 @@ export default function ProgramIncrement() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>Program Increment - SAAI</title>
+        <title>Program Increment - Spark-Agile</title>
         <meta name="description" content="Plan and track program increments with cross-team alignment and dependency management." />
       </Helmet>
       <Navigation />

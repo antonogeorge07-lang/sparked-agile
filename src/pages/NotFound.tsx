@@ -14,7 +14,7 @@ const NotFound = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <Helmet>
-        <title>Page Not Found - SAAI</title>
+        <title>Page Not Found - Spark-Agile</title>
         <meta name="description" content="The page you're looking for doesn't exist." />
       </Helmet>
       <div className="text-center">

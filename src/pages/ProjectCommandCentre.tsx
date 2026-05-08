@@ -202,7 +202,7 @@ export default function ProjectCommandCentre() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Helmet>
-        <title>Command Centre - SAAI</title>
+        <title>Command Centre - Spark-Agile</title>
         <meta name="description" content="Your centralised project command centre with tasks, insights, and team collaboration." />
       </Helmet>
       <Navigation />

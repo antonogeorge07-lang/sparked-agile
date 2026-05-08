@@ -68,8 +68,8 @@ export default function QuickStart() {
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         <Helmet>
-          <title>Quick Start - SAAI</title>
-          <meta name="description" content="Get started with SAAI in minutes. Set up your workspace and connect your tools." />
+          <title>Quick Start - Spark-Agile</title>
+          <meta name="description" content="Get started with Spark-Agile in minutes. Set up your workspace and connect your tools." />
         </Helmet>
         {/* Hero Section */}
         <div className="mb-12 text-center">

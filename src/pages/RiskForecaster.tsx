@@ -207,7 +207,7 @@ export default function RiskForecaster() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Helmet>
-        <title>Risk Forecaster - SAAI</title>
+        <title>Risk Forecaster - Spark-Agile</title>
         <meta name="description" content="Predict and mitigate project risks with AI-powered risk analysis and forecasting." />
       </Helmet>
       <Navigation />

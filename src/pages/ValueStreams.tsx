@@ -118,7 +118,7 @@ export default function ValueStreams() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Helmet>
-        <title>Value Streams - SAAI</title>
+        <title>Value Streams - Spark-Agile</title>
         <meta name="description" content="Map and optimise value streams with flow metrics and bottleneck identification." />
       </Helmet>
       <Navigation />

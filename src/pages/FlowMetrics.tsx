@@ -261,7 +261,7 @@ export default function FlowMetrics() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Helmet>
-        <title>Flow Metrics - SAAI</title>
+        <title>Flow Metrics - Spark-Agile</title>
         <meta name="description" content="Track velocity, cycle time, throughput, and commitment accuracy with advanced flow analytics." />
       </Helmet>
       <Navigation />

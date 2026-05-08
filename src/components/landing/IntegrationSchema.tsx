@@ -9,7 +9,7 @@ export function IntegrationSchema() {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "SAAI - SAFe Agile AI Assistant",
+      "name": "Spark-Agile - SAFe Agile AI Assistant",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web Browser",
       "offers": {
@@ -40,7 +40,7 @@ export function IntegrationSchema() {
       },
       "author": {
         "@type": "Organization",
-        "name": "SAAI",
+        "name": "Spark-Agile",
         "url": "https://saai.app"
       },
       "datePublished": "2024-01-01",
@@ -52,7 +52,7 @@ export function IntegrationSchema() {
     const organizationData = {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "SAAI",
+      "name": "Spark-Agile",
       "url": "https://saai.app",
       "sameAs": [
         "https://github.com/saai-app",

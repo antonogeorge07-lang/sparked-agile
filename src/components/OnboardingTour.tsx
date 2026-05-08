@@ -18,7 +18,7 @@ interface OnboardingTourProps {
 
 const onboardingSteps: OnboardingStep[] = [
   {
-    title: "Welcome to SAAI Platform",
+    title: "Welcome to Spark-Agile Platform",
     description: "Cut your sprint overhead by 50% with AI automation. This quick 3-step tour shows you the essentials.",
     tip: "Skip anytime and explore on your own."
   },

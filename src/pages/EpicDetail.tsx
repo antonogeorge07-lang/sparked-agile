@@ -160,7 +160,7 @@ export default function EpicDetail() {
         <Navigation />
         <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
           <Helmet>
-            <title>Epic Detail - SAAI</title>
+            <title>Epic Detail - Spark-Agile</title>
             <meta name="description" content="Track epic progress, dependencies, milestones, and ROI in your agile portfolio." />
           </Helmet>
           <div className="container mx-auto px-4 py-8">

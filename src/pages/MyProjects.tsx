@@ -66,7 +66,7 @@ export default function MyProjects() {
       <DashboardLayout>
         <div className="container mx-auto px-4 py-8">
           <Helmet>
-            <title>My Projects - SAAI</title>
+            <title>My Projects - Spark-Agile</title>
             <meta name="description" content="View and manage all your projects in one workspace." />
           </Helmet>
           <LoadingState message="Loading your projects..." />

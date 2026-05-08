@@ -43,7 +43,7 @@ export const DemoModeButton = () => {
         error: projectError
       } = await supabase.from("projects").insert({
         name: "Demo Project - E-commerce Platform",
-        description: "Sample project showcasing SAAI features with realistic data",
+        description: "Sample project showcasing Spark-Agile features with realistic data",
         user_id: user.id,
         workspace_id: workspace.id
       }).select().single();
@@ -198,7 +198,7 @@ export const DemoModeButton = () => {
               Try Demo Mode
             </DialogTitle>
             <DialogDescription className="text-base pt-2">
-              Experience SAAI instantly with a fully populated sample project
+              Experience Spark-Agile instantly with a fully populated sample project
             </DialogDescription>
           </DialogHeader>
 

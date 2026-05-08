@@ -52,7 +52,7 @@ export default function TeamHub() {
     <DashboardLayout>
       <div className="p-6 space-y-6">
         <Helmet>
-          <title>Team Hub - SAAI</title>
+          <title>Team Hub - Spark-Agile</title>
           <meta name="description" content="Collaborate with your team through workspace chat, task comments, and shared dashboards." />
         </Helmet>
         <div>

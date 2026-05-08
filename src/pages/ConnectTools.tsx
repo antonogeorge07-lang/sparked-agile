@@ -11,8 +11,8 @@ export default function ConnectTools() {
     <DashboardLayout>
       <main className="container mx-auto px-4 py-8 max-w-2xl">
         <Helmet>
-          <title>Connect Tools - SAAI</title>
-          <meta name="description" content="Integrate Jira, GitHub, Slack, and Microsoft tools with your SAAI workspace." />
+          <title>Connect Tools - Spark-Agile</title>
+          <meta name="description" content="Integrate Jira, GitHub, Slack, and Microsoft tools with your Spark-Agile workspace." />
         </Helmet>
         <div className="mb-8 text-center">
           <div className="mx-auto w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">

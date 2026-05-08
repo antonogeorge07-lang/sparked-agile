@@ -202,7 +202,7 @@ export default function Dashboard() {
   return (
     <DashboardLayout>
       <Helmet>
-        <title>Dashboard - SAAI</title>
+        <title>Dashboard - Spark-Agile</title>
         <meta name="description" content="View your project dashboard with real-time metrics, velocity trends, and team performance insights." />
       </Helmet>
       {isGuestMode && <GuestModeBar />}
