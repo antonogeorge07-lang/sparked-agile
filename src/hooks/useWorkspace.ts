@@ -8,6 +8,7 @@ export interface Workspace {
   created_at: string;
   updated_at: string;
   settings: any;
+  featured?: boolean;
 }
 
 export const useWorkspace = () => {

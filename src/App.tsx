@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider, MutationCache, QueryCache } from "@ta
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
+import { ReferralCapture } from "@/components/ReferralCapture";
 import { analytics } from "@/lib/analytics";
 // Lazy load global widgets to reduce initial bundle
 const FeedbackWidget = lazy(() => import("@/components/FeedbackWidget").then(m => ({ default: m.FeedbackWidget })));
@@ -111,6 +112,7 @@ const App = () => {
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <AnalyticsProvider>
               <ScrollRestoration />
+              <ReferralCapture />
               <Suspense fallback={null}>
                 <FeedbackWidget />
                 <AIAssistant />

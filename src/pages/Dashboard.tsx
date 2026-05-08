@@ -41,6 +41,7 @@ import { useGuestMode } from "@/hooks/useGuestMode";
 import { GuestNavigationCards, GuestWelcomeBanner } from "@/components/GuestNavigationCards";
 import { LoadingState } from "@/components/LoadingState";
 import { FirstProjectPrompt } from "@/components/FirstProjectPrompt";
+import { InviteNudgeCard } from "@/components/dashboard/InviteNudgeCard";
 import { 
   sampleVelocityData, 
   sampleImpediments, 
@@ -223,6 +224,8 @@ export default function Dashboard() {
           )}
           
           {!isGuestMode && <CeremonyHealthCheck />}
+
+          {!isGuestMode && <InviteNudgeCard />}
 
           {/* First project prompt for users with zero projects */}
           {!isGuestMode && !isLoadingProjects && projects.length === 0 && (

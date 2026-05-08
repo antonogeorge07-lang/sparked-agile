@@ -2690,6 +2690,7 @@ export type Database = {
           id: string
           last_activity_at: string | null
           preferences: Json | null
+          referrer_id: string | null
           role: Database["public"]["Enums"]["app_role"] | null
           updated_at: string | null
         }
@@ -2705,6 +2706,7 @@ export type Database = {
           id: string
           last_activity_at?: string | null
           preferences?: Json | null
+          referrer_id?: string | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
@@ -2720,10 +2722,40 @@ export type Database = {
           id?: string
           last_activity_at?: string | null
           preferences?: Json | null
+          referrer_id?: string | null
           role?: Database["public"]["Enums"]["app_role"] | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_teammate_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "project_teammates_safe"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       program_increments: {
         Row: {
@@ -4966,6 +4998,7 @@ export type Database = {
       workspaces: {
         Row: {
           created_at: string
+          featured: boolean
           id: string
           name: string
           owner_id: string
@@ -4974,6 +5007,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          featured?: boolean
           id?: string
           name: string
           owner_id: string
@@ -4982,6 +5016,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          featured?: boolean
           id?: string
           name?: string
           owner_id?: string
@@ -5641,6 +5676,12 @@ export type Database = {
           hours_until_expiry: number
           integration_type: string
           user_id: string
+        }[]
+      }
+      get_featured_workspaces: {
+        Args: never
+        Returns: {
+          name: string
         }[]
       }
       get_integration_config: {
