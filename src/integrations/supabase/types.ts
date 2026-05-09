@@ -3184,6 +3184,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          is_demo: boolean
           name: string
           updated_at: string
           user_id: string | null
@@ -3193,6 +3194,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          is_demo?: boolean
           name: string
           updated_at?: string
           user_id?: string | null
@@ -3202,6 +3204,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          is_demo?: boolean
           name?: string
           updated_at?: string
           user_id?: string | null
@@ -5000,6 +5003,7 @@ export type Database = {
           created_at: string
           featured: boolean
           id: string
+          is_demo: boolean
           name: string
           owner_id: string
           settings: Json | null
@@ -5009,6 +5013,7 @@ export type Database = {
           created_at?: string
           featured?: boolean
           id?: string
+          is_demo?: boolean
           name: string
           owner_id: string
           settings?: Json | null
@@ -5018,6 +5023,7 @@ export type Database = {
           created_at?: string
           featured?: boolean
           id?: string
+          is_demo?: boolean
           name?: string
           owner_id?: string
           settings?: Json | null
