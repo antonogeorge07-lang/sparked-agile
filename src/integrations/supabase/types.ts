@@ -420,6 +420,51 @@ export type Database = {
           },
         ]
       }
+      ai_training_corpus: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          kind: string | null
+          metadata: Json | null
+          search_vector: unknown
+          section: string | null
+          source_doc: string
+          source_type: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          kind?: string | null
+          metadata?: Json | null
+          search_vector?: unknown
+          section?: string | null
+          source_doc: string
+          source_type?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          kind?: string | null
+          metadata?: Json | null
+          search_vector?: unknown
+          section?: string | null
+          source_doc?: string
+          source_type?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       ai_usage_logs: {
         Row: {
           cost_estimate: number | null
