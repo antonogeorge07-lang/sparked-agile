@@ -23,6 +23,22 @@ export default function FAQ() {
       <Helmet>
         <title>FAQ - Spark-Agile</title>
         <meta name="description" content="Frequently asked questions about Spark-Agile, pricing, integrations, and features." />
+        <link rel="canonical" href="https://spark-agile.com/faq" />
+        <meta property="og:title" content="FAQ - Spark-Agile" />
+        <meta property="og:description" content="Answers about pricing, integrations, security, and onboarding for Spark-Agile." />
+        <meta property="og:url" content="https://spark-agile.com/faq" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "What is Spark-Agile?", "acceptedAnswer": { "@type": "Answer", "text": "Spark-Agile is an AI-powered agile project management platform that automates sprint planning, standups, retrospectives, and backlog refinement, with native Jira, GitHub, and Microsoft 365 integrations." } },
+            { "@type": "Question", "name": "How much does Spark-Agile cost?", "acceptedAnswer": { "@type": "Answer", "text": "Spark-Agile is free forever for teams up to 10 members, with no credit card required. Premium tiers add advanced capabilities for larger teams." } },
+            { "@type": "Question", "name": "Which tools does Spark-Agile integrate with?", "acceptedAnswer": { "@type": "Answer", "text": "Spark-Agile offers native integrations with Jira, GitHub, Slack, Outlook, and Google Workspace. Setup typically takes under 2 minutes per integration." } },
+            { "@type": "Question", "name": "Does Spark-Agile support SAFe?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Spark-Agile provides built-in support for SAFe including Value Streams, Agile Release Trains, and Program Increments." } },
+            { "@type": "Question", "name": "Is my data secure?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Spark-Agile uses Row-Level Security, AES-256 encryption for integration tokens, GDPR-compliant data handling, and regular security audits." } },
+            { "@type": "Question", "name": "How quickly can I get started?", "acceptedAnswer": { "@type": "Answer", "text": "You can create your first project in under 2 minutes. Connecting Jira or GitHub takes another 2-3 minutes." } }
+          ]
+        })}</script>
       </Helmet>
       <Navigation />
       

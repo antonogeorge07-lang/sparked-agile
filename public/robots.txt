@@ -1,29 +1,14 @@
-# Robots.txt for SAAI - AI-Powered Agile Project Management
-# Updated: 2025-11-09
+# Robots.txt for Spark-Agile - AI Chief of Staff for Agile Teams
 
-# Allow all search engines
 User-agent: *
 Allow: /
 
-# Specific bot configurations
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 0
 
-User-agent: Slurp
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-# Social media crawlers for rich previews
 User-agent: Twitterbot
 Allow: /
 
@@ -35,6 +20,8 @@ Allow: /
 
 # Disallow authenticated/private areas
 Disallow: /admin
+Disallow: /platform-owner
+Disallow: /security-incidents
 Disallow: /dashboard
 Disallow: /standup
 Disallow: /retrospective
@@ -47,28 +34,21 @@ Disallow: /ceremony-setup
 Disallow: /task-management
 Disallow: /project-workspace
 Disallow: /project-progress
-Disallow: /market-intelligence
+Disallow: /my-projects
+Disallow: /workspace/settings
+Disallow: /epic-management
+Disallow: /epic-portfolio
+Disallow: /epic/
+Disallow: /stakeholder-portal
+Disallow: /external-tasks
+Disallow: /team-hub
+Disallow: /activity-feed
+Disallow: /import
+Disallow: /connect
+Disallow: /home
+Disallow: /quick-start
+Disallow: /schedule-advisor
+Disallow: /risk-forecaster
+Disallow: /performance-predictor
 
-# Allow public marketing pages
-Allow: /auth
-Allow: /contact
-Allow: /faq
-Allow: /user-guide
-Allow: /privacy
-Allow: /terms
-Allow: /project-command-centre
-Allow: /sprint-planning-assistant
-Allow: /sprint-review-coordinator
-Allow: /backlog-refinement
-Allow: /integrations
-Allow: /polylinq
-
-# Sitemap location
-Sitemap: https://smactiveintelligence.com/sitemap.xml
-
-# Crawl delay (seconds) - be nice to small servers
-Crawl-delay: 1
-
-# Block specific file types if needed
-# Disallow: /*.json$
-# Disallow: /*.xml$
+Sitemap: https://spark-agile.com/sitemap.xml
