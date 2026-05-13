@@ -94,6 +94,10 @@ export default function Landing() {
       <Helmet>
         <title>Spark-Agile - AI Chief of Staff for Agile Teams</title>
         <meta name="description" content="Spark-Agile brings intelligence, rhythm, and precision to digital transformation. Your AI-powered command centre for remote teams." />
+        <link rel="canonical" href="https://spark-agile.com/" />
+        <meta property="og:title" content="Spark-Agile - AI Chief of Staff for Agile Teams" />
+        <meta property="og:description" content="AI-native agile platform: sprint planning, epic management, integrated GitHub + Jira workflows." />
+        <meta property="og:url" content="https://spark-agile.com/" />
       </Helmet>
       <FAQSchema />
 
