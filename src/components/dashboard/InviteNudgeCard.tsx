@@ -1,0 +1,86 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { UserPlus, Sparkles, Copy, Check } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+
+export function InviteNudgeCard() {
+  const { t } = useTranslation();
+  const [memberCount, setMemberCount] = useState<number | null>(null);
+  const [refUrl, setRefUrl] = useState<string>("");
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+      const origin = window.location.origin;
+      setRefUrl(`${origin}/auth?ref=${session.user.id}`);
+      const { data: ws } = await supabase
+        .from("workspaces")
+        .select("id")
+        .eq("owner_id", session.user.id)
+        .maybeSingle();
+      if (!ws) return;
+      const { count } = await supabase
+        .from("workspace_members")
+        .select("id", { count: "exact", head: true })
+        .eq("workspace_id", ws.id);
+      setMemberCount(count ?? 0);
+    })();
+  }, []);
+
+  if (memberCount === null) return null;
+
+  const goal = 2;
+  const remaining = Math.max(goal - memberCount, 0);
+  const unlocked = memberCount >= goal;
+
+  const handleCopy = async () => {
+    if (!refUrl) return;
+    await navigator.clipboard.writeText(refUrl);
+    setCopied(true);
+    toast.success(t('invite.copiedToast'));
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-accent/5 shadow-card">
+      <CardContent className="p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="p-3 rounded-xl bg-primary/10 shrink-0">
+          {unlocked ? (
+            <Sparkles className="h-5 w-5 text-primary" />
+          ) : (
+            <UserPlus className="h-5 w-5 text-primary" />
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-sm">
+            {unlocked
+              ? t('invite.doneTitle')
+              : (remaining === 1
+                  ? t('invite.pendingOne', { count: remaining })
+                  : t('invite.pendingMany', { count: remaining }))}
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {t('invite.subtitle')}
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2 sm:flex-nowrap">
+          <Link to="/team-hub">
+            <Button size="sm" variant="default" className="gap-2">
+              <UserPlus className="h-3.5 w-3.5" /> {t('invite.inviteBtn')}
+            </Button>
+          </Link>
+          <Button size="sm" variant="outline" className="gap-2" onClick={handleCopy} disabled={!refUrl}>
+            {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+            {copied ? t('invite.copied') : t('invite.copyBtn')}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

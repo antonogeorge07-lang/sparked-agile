@@ -1,0 +1,54 @@
+# Robots.txt for Spark-Agile - AI Chief of Staff for Agile Teams
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Disallow authenticated/private areas
+Disallow: /admin
+Disallow: /platform-owner
+Disallow: /security-incidents
+Disallow: /dashboard
+Disallow: /standup
+Disallow: /retrospective
+Disallow: /workflows
+Disallow: /usage-analytics
+Disallow: /value-streams
+Disallow: /program-increment
+Disallow: /flow-metrics
+Disallow: /ceremony-setup
+Disallow: /task-management
+Disallow: /project-workspace
+Disallow: /project-progress
+Disallow: /my-projects
+Disallow: /workspace/settings
+Disallow: /epic-management
+Disallow: /epic-portfolio
+Disallow: /epic/
+Disallow: /stakeholder-portal
+Disallow: /external-tasks
+Disallow: /team-hub
+Disallow: /activity-feed
+Disallow: /import
+Disallow: /connect
+Disallow: /home
+Disallow: /quick-start
+Disallow: /schedule-advisor
+Disallow: /risk-forecaster
+Disallow: /performance-predictor
+
+Sitemap: https://spark-agile.com/sitemap.xml

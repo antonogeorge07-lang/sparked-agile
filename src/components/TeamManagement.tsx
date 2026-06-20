@@ -1,0 +1,135 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { toast } from "sonner";
+import { Mail, UserCheck, Trash2 } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { AddMemberMultiSource } from "./team/AddMemberMultiSource";
+import { useUnifiedIntegrations } from "@/hooks/useUnifiedIntegrations";
+
+interface TeamMember {
+  id: string;
+  name: string;
+  email: string | null;
+  role: string | null;
+  project_id: string;
+  created_at: string;
+}
+
+interface TeamManagementProps {
+  projectId: string;
+  projectName: string;
+  accessToken?: string;
+}
+
+export const TeamManagement = ({ projectId, projectName, accessToken }: TeamManagementProps) => {
+  const queryClient = useQueryClient();
+  const { integrations } = useUnifiedIntegrations(projectId);
+
+  // Fetch team members using safe view for privacy protection
+  const { data: teamMembers = [], isLoading } = useQuery({
+    queryKey: ["team-members", projectId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("team_members_safe")
+        .select("*")
+        .eq("project_id", projectId)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      return data as TeamMember[];
+    },
+    enabled: !!projectId,
+  });
+
+  // Remove team member mutation
+  const removeMemberMutation = useMutation({
+    mutationFn: async (memberId: string) => {
+      const { error } = await supabase
+        .from("team_members")
+        .delete()
+        .eq("id", memberId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["team-members", projectId] });
+      toast.success("Team member removed successfully");
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to remove team member: ${error.message}`);
+    },
+  });
+
+  const handleMemberAdded = () => {
+    queryClient.invalidateQueries({ queryKey: ["team-members", projectId] });
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Team Members</CardTitle>
+            <CardDescription>
+              Add members manually or import from GitHub, Jira, or Slack
+            </CardDescription>
+          </div>
+          <AddMemberMultiSource
+            projectId={projectId}
+            projectName={projectName}
+            accessToken={accessToken}
+            onMemberAdded={handleMemberAdded}
+            hasGithub={integrations?.github?.active || false}
+            hasJira={integrations?.jira?.active || false}
+            hasSlack={integrations?.slack?.active || false}
+            githubRepoName={integrations?.github?.repo_name}
+          />
+        </div>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="text-center py-8 text-muted-foreground">Loading team members...</div>
+        ) : teamMembers.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            No team members yet. Add your first team member to get started!
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {teamMembers.map((member) => (
+              <div
+                key={member.id}
+                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+              >
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <UserCheck className="h-4 w-4 text-primary" />
+                    <span className="font-medium">{member.name}</span>
+                  </div>
+                  {member.email && (
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <Mail className="h-3 w-3" />
+                      {member.email}
+                    </div>
+                  )}
+                  {member.role && (
+                    <Badge variant="secondary" className="text-xs">{member.role}</Badge>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeMemberMutation.mutate(member.id)}
+                  disabled={removeMemberMutation.isPending}
+                  className="text-destructive hover:text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};

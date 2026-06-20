@@ -1,0 +1,334 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, Network, CheckCircle2, Loader2, ArrowRight, Zap, ExternalLink, Sparkles } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import confetti from "canvas-confetti";
+
+interface Project {
+  id: string;
+  name: string;
+}
+
+type ConnectionType = "github" | "jira" | null;
+
+interface ConnectionState {
+  status: "idle" | "connecting" | "success" | "error";
+  message?: string;
+}
+
+export const OneClickConnect = () => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<ConnectionType>(null);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+
+  const [githubUrl, setGithubUrl] = useState("");
+  const [githubToken, setGithubToken] = useState("");
+  const [githubState, setGithubState] = useState<ConnectionState>({ status: "idle" });
+
+  const [jiraSiteUrl, setJiraSiteUrl] = useState("");
+  const [jiraEmail, setJiraEmail] = useState("");
+  const [jiraApiToken, setJiraApiToken] = useState("");
+  const [jiraBoardUrl, setJiraBoardUrl] = useState("");
+  const [jiraState, setJiraState] = useState<ConnectionState>({ status: "idle" });
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase.from("projects").select("id, name").order("created_at", { ascending: false });
+      if (data && data.length > 0) {
+        setProjects(data);
+        setSelectedProjectId(data[0].id);
+      }
+    } catch (err) {
+      console.error("Error loading projects:", err);
+    } finally {
+      setLoadingProjects(false);
+    }
+  };
+
+  const connectGithub = async () => {
+    if (!githubUrl.trim() || !selectedProjectId) {
+      toast.error(t("connectTools.githubUrlRequired"));
+      return;
+    }
+    setGithubState({ status: "connecting" });
+    try {
+      const { data, error } = await supabase.functions.invoke("connect-github", {
+        body: { githubRepoUrl: githubUrl.trim(), projectId: selectedProjectId, githubToken: githubToken.trim() || undefined },
+      });
+      if (error) throw new Error(error.message);
+      if (data?.error) throw new Error(data.error);
+      setGithubState({ status: "success", message: `${t("connectTools.connectedTo")} ${data.repoName}` });
+      confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+      toast.success(`GitHub: ${data.repoName}`);
+    } catch (err: any) {
+      setGithubState({ status: "error", message: err.message || t("connectTools.connectionFailed") });
+      toast.error(err.message || t("connectTools.connectionFailed"));
+    }
+  };
+
+  const connectJira = async () => {
+    if (!jiraSiteUrl.trim() || !jiraEmail.trim() || !jiraApiToken.trim() || !selectedProjectId) {
+      toast.error(t("connectTools.jiraFieldsRequired"));
+      return;
+    }
+    setJiraState({ status: "connecting" });
+    try {
+      const siteUrl = jiraSiteUrl.trim().startsWith("https://") ? jiraSiteUrl.trim() : `https://${jiraSiteUrl.trim()}`;
+      const { data, error } = await supabase.functions.invoke("connect-jira", {
+        body: {
+          jiraBoardUrl: jiraBoardUrl.trim() || undefined,
+          jiraSiteUrl: siteUrl,
+          jiraEmail: jiraEmail.trim(),
+          jiraApiToken: jiraApiToken.trim(),
+          projectId: selectedProjectId,
+        },
+      });
+      if (error) throw new Error(error.message);
+      if (data?.error) throw new Error(data.error);
+      setJiraState({ status: "success", message: `${t("connectTools.connectedTo")} ${data.boardName || siteUrl}` });
+      confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+      toast.success(`Jira: ${data.boardName || "Connected"}`);
+    } catch (err: any) {
+      setJiraState({ status: "error", message: err.message || t("connectTools.connectionFailed") });
+      toast.error(err.message || t("connectTools.connectionFailed"));
+    }
+  };
+
+  const resetSelection = () => {
+    setSelectedType(null);
+    setGithubState({ status: "idle" });
+    setJiraState({ status: "idle" });
+    setGithubUrl("");
+    setGithubToken("");
+    setJiraSiteUrl("");
+    setJiraEmail("");
+    setJiraApiToken("");
+    setJiraBoardUrl("");
+  };
+
+  return (
+    <div className="space-y-6">
+      {projects.length > 0 && (
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">{t("connectTools.connectToProject")}</Label>
+          <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder={t("connectTools.selectProject")} />
+            </SelectTrigger>
+            <SelectContent>
+              {projects.map((p) => (
+                <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {loadingProjects ? (
+        <div className="text-center py-8 text-muted-foreground">{t("connectTools.loadingProjects")}</div>
+      ) : projects.length === 0 ? (
+        <Card className="border-dashed">
+          <CardContent className="pt-6 text-center">
+            <p className="text-muted-foreground mb-3">{t("connectTools.createProjectFirst")}</p>
+            <Button onClick={() => navigate("/project-command-centre")} variant="outline">
+              {t("connectTools.createProject")}
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <AnimatePresence mode="wait">
+          {!selectedType ? (
+            <motion.div key="selection" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid gap-4 md:grid-cols-2">
+              <ServiceCard
+                title="GitHub"
+                description={t("connectTools.githubDesc")}
+                icon={<Github className="h-8 w-8" />}
+                onClick={() => setSelectedType("github")}
+                accentClass="from-[hsl(var(--primary))] to-[hsl(var(--primary)/0.6)]"
+                connectLabel={t("connectTools.connect")}
+              />
+              <ServiceCard
+                title="Jira"
+                description={t("connectTools.jiraDesc")}
+                icon={<Network className="h-8 w-8" />}
+                onClick={() => setSelectedType("jira")}
+                accentClass="from-[hsl(var(--primary))] to-[hsl(var(--primary)/0.7)]"
+                connectLabel={t("connectTools.connect")}
+              />
+            </motion.div>
+          ) : selectedType === "github" ? (
+            <motion.div key="github" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+              <Card>
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-primary/10"><Github className="h-6 w-6 text-primary" /></div>
+                      <div>
+                        <CardTitle className="text-lg">{t("connectTools.connectGithub")}</CardTitle>
+                        <CardDescription>{t("connectTools.githubInstructions")}</CardDescription>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={resetSelection}>← {t("connectTools.back")}</Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="github-url">{t("connectTools.repoUrl")} *</Label>
+                    <Input id="github-url" name="github-url" autoComplete="url" placeholder="https://github.com/org/repo" value={githubUrl} onChange={(e) => setGithubUrl(e.target.value)} disabled={githubState.status === "success"} className="h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="github-token">
+                      {t("connectTools.pat")}
+                      <span className="text-muted-foreground text-xs ml-1">({t("connectTools.patOptional")})</span>
+                    </Label>
+                    <Input id="github-token" name="github-token" autoComplete="off" type="password" placeholder="ghp_..." value={githubToken} onChange={(e) => setGithubToken(e.target.value)} disabled={githubState.status === "success"} className="h-11" />
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <ExternalLink className="h-3 w-3" />
+                      <a href="https://github.com/settings/tokens/new?scopes=repo&description=Spark-Agile" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        {t("connectTools.generateToken")}
+                      </a>
+                    </p>
+                  </div>
+                  <StatusMessage state={githubState} />
+                  {githubState.status !== "success" ? (
+                    <Button onClick={connectGithub} disabled={!githubUrl.trim() || githubState.status === "connecting"} className="w-full h-11 gap-2">
+                      {githubState.status === "connecting" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                      {githubState.status === "connecting" ? t("connectTools.connecting") : t("connectTools.connectGithub")}
+                    </Button>
+                  ) : (
+                    <SuccessActions onAnother={resetSelection} />
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          ) : (
+            <motion.div key="jira" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+              <Card>
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-accent"><Network className="h-6 w-6 text-primary" /></div>
+                      <div>
+                        <CardTitle className="text-lg">{t("connectTools.connectJira")}</CardTitle>
+                        <CardDescription>{t("connectTools.jiraInstructions")}</CardDescription>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={resetSelection}>← {t("connectTools.back")}</Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="jira-site">Jira Site URL *</Label>
+                    <Input id="jira-site" name="jira-site" autoComplete="url" placeholder="yourcompany.atlassian.net" value={jiraSiteUrl} onChange={(e) => setJiraSiteUrl(e.target.value)} disabled={jiraState.status === "success"} className="h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="jira-email">Atlassian Email *</Label>
+                    <Input id="jira-email" name="jira-email" type="email" autoComplete="email" placeholder="you@company.com" value={jiraEmail} onChange={(e) => setJiraEmail(e.target.value)} disabled={jiraState.status === "success"} className="h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="jira-token">API Token *</Label>
+                    <Input id="jira-token" name="jira-token" type="password" autoComplete="off" placeholder="Paste your Atlassian API token" value={jiraApiToken} onChange={(e) => setJiraApiToken(e.target.value)} disabled={jiraState.status === "success"} className="h-11" />
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <ExternalLink className="h-3 w-3" />
+                      <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        Generate an API token
+                      </a>
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="jira-board">Board URL <span className="text-muted-foreground text-xs">(optional)</span></Label>
+                    <Input id="jira-board" name="jira-board" autoComplete="url" placeholder="https://yourcompany.atlassian.net/jira/software/projects/PROJ/boards/1" value={jiraBoardUrl} onChange={(e) => setJiraBoardUrl(e.target.value)} disabled={jiraState.status === "success"} className="h-11" />
+                    <p className="text-xs text-muted-foreground">Leave blank to connect the whole site.</p>
+                  </div>
+                  <StatusMessage state={jiraState} />
+                  {jiraState.status !== "success" ? (
+                    <Button onClick={connectJira} disabled={!jiraSiteUrl.trim() || !jiraEmail.trim() || !jiraApiToken.trim() || jiraState.status === "connecting"} className="w-full h-11 gap-2">
+                      {jiraState.status === "connecting" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                      {jiraState.status === "connecting" ? t("connectTools.connecting") : t("connectTools.connectJira")}
+                    </Button>
+                  ) : (
+                    <SuccessActions onAnother={resetSelection} />
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+    </div>
+  );
+};
+
+/* ─── Sub-components ─── */
+
+const ServiceCard = ({ title, description, icon, onClick, accentClass, connectLabel }: {
+  title: string; description: string; icon: React.ReactNode; onClick: () => void; accentClass: string; connectLabel: string;
+}) => (
+  <Card className="group cursor-pointer border-2 border-transparent hover:border-primary/30 transition-all duration-200" onClick={onClick}>
+    <CardContent className="pt-6 text-center space-y-3">
+      <div className={cn("mx-auto w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-br text-primary-foreground", accentClass)}>
+        {icon}
+      </div>
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <p className="text-sm text-muted-foreground">{description}</p>
+      <div className="flex items-center justify-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+        {connectLabel} <ArrowRight className="h-4 w-4" />
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const StatusMessage = ({ state }: { state: ConnectionState }) => {
+  if (state.status === "idle" || state.status === "connecting") return null;
+  return (
+    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
+      className={cn("rounded-lg p-3 text-sm flex items-center gap-2",
+        state.status === "success" && "bg-primary/10 text-primary",
+        state.status === "error" && "bg-destructive/10 text-destructive"
+      )}>
+      {state.status === "success" && <CheckCircle2 className="h-4 w-4 shrink-0" />}
+      {state.message}
+    </motion.div>
+  );
+};
+
+const SuccessActions = ({ onAnother }: { onAnother: () => void }) => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  return (
+    <div className="flex gap-3">
+      <Button variant="outline" onClick={onAnother} className="flex-1 gap-2">
+        <Sparkles className="h-4 w-4" />
+        {t("connectTools.connectAnother")}
+      </Button>
+      <Button
+        onClick={() => {
+          toast.success("Generating your first briefing...");
+          navigate("/briefing?from=connect");
+        }}
+        className="flex-1 gap-2"
+      >
+        See my briefing
+        <ArrowRight className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+};

@@ -1,0 +1,27 @@
+# Spark-Agile
+
+> Spark-Agile is an AI-driven orchestration platform for agile teams. It brings intelligence, rhythm, and precision to digital transformation through AI-powered sprint planning, epic management, retrospectives, backlog refinement, and integrated GitHub + Jira + Microsoft 365 workflows.
+
+## Pages
+
+- [Home](/): AI Chief of Staff for agile teams — overview and capabilities.
+- [Features](/features): Full capability list including SAFe, sprint planning, epic lifecycle, AI agents.
+- [Integrations](/integrations): Native integrations with Jira, GitHub, Slack, Outlook, and Google Workspace.
+- [About](/about): Mission, philosophy, and approach to AI-orchestrated agility.
+- [FAQ](/faq): Pricing, features, security, and onboarding answers.
+- [User Guide](/user-guide): Documentation on using Spark-Agile features and AI assistants.
+- [Contact](/contact): Reach the Spark-Agile team for support or partnerships.
+- [Sign In / Sign Up](/auth): Free-forever account with no credit card required.
+- [Privacy Policy](/privacy): GDPR-compliant data handling.
+- [Terms of Service](/terms): Service terms and conditions.
+
+## Key Capabilities
+
+- AI-powered sprint planning and backlog refinement
+- Epic lifecycle management with ROI dashboards and Gantt charts
+- Multi-agent AI debates for decision support
+- Native Jira, GitHub, Slack, Outlook, and Google Workspace integrations
+- SAFe framework support (Value Streams, ARTs, Program Increments)
+- Real-time collaboration with workspace chat
+- 9-language localisation
+- Free forever for teams up to 10 members
