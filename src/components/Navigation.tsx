@@ -65,13 +65,13 @@ export const Navigation = () => {
 
   const handleSignOut = async () => {
     try {
-      document.body.classList.add('animate-fade-out');
+      document.body?.classList.add('animate-fade-out');
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const { error } = await supabase.auth.signOut();
       
       if (error) {
-        document.body.classList.remove('animate-fade-out');
+        document.body?.classList.add('animate-fade-out');
         toast({
           title: "Error",
           description: "Failed to sign out",
@@ -84,11 +84,11 @@ export const Navigation = () => {
         });
         
         setTimeout(() => {
-          document.body.classList.remove('animate-fade-out');
+          document.body?.classList.remove('animate-fade-out');
         }, 100);
       }
     } catch (error) {
-      document.body.classList.remove('animate-fade-out');
+      document.body?.classList.remove('animate-fade-out');
       toast({
         title: "Error",
         description: "Failed to sign out",

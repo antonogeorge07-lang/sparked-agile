@@ -8,8 +8,9 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAgentDebate, DebateTopicType, DebateResponse } from '@/hooks/useAgentDebate';
-import { Brain, MessageSquare, CheckCircle2, XCircle, AlertTriangle, Users, Zap, Shield, Target } from 'lucide-react';
+import { Brain, MessageSquare, CheckCircle2, XCircle, AlertTriangle, Users, Zap, Shield, Target, FileDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { exportToPowerPoint } from '@/utils/exportToPowerPoint';
 
 interface AgentDebatePanelProps {
   projectId: string;
@@ -77,7 +78,6 @@ export function AgentDebatePanel({ projectId }: AgentDebatePanelProps) {
 
   return (
     <div className="space-y-6">
-      {/* Initiate Debate */}
       <Card className="border-primary/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -85,12 +85,12 @@ export function AgentDebatePanel({ projectId }: AgentDebatePanelProps) {
             Multi-Agent Debate System
           </CardTitle>
           <CardDescription>
-            Agents with different perspectives will debate, critique, and validate each other before reaching consensus.
+            Autonomous agents simulate cross-functional debate to stress-test your plans.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Debate Topic Type</label>
+            <label className="text-sm font-medium">Debate Focus</label>
             <Select value={topicType} onValueChange={(v) => setTopicType(v as DebateTopicType)}>
               <SelectTrigger>
                 <SelectValue />
@@ -106,221 +106,64 @@ export function AgentDebatePanel({ projectId }: AgentDebatePanelProps) {
                 ))}
               </SelectContent>
             </Select>
-            {selectedTopicConfig && (
-              <p className="text-xs text-muted-foreground">{selectedTopicConfig.description}</p>
-            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Topic / Question for Debate</label>
+            <label className="text-sm font-medium">Topic for Debate</label>
             <Textarea
-              placeholder="e.g. 'Should we commit to 45 story points this sprint given our team of 5 with one member on holiday?'"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
               rows={3}
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex gap-2">
             <Button onClick={handleStartDebate} disabled={isDebating || !topic.trim()} className="flex-1">
-              {isDebating ? (
-                <>
-                  <Brain className="h-4 w-4 mr-2 animate-pulse" />
-                  Agents Debating... ({liveResponses.length} responses)
-                </>
-              ) : (
-                <>
-                  <Users className="h-4 w-4 mr-2" />
-                  Start 3-Agent Debate
-                </>
-              )}
+              {isDebating ? "Agents Analyzing..." : "Start Debate"}
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleTrySample}
-              disabled={isDebating}
-              className="sm:w-auto"
-            >
-              Try a sample
-            </Button>
+            <Button variant="outline" onClick={handleTrySample} disabled={isDebating}>Try Sample</Button>
           </div>
-          {!topic.trim() && !isDebating && (
-            <p className="text-xs text-muted-foreground">
-              No topic in mind? Tap <span className="font-medium">Try a sample</span> to see the agents debate a realistic scenario.
-            </p>
-          )}
         </CardContent>
       </Card>
 
-      {/* Live Debate Feed */}
-      <AnimatePresence>
-        {isDebating && liveResponses.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 animate-pulse text-primary" />
-                  Live Debate Feed
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-[300px]">
-                  <div className="space-y-3">
-                    {liveResponses.map((resp, i) => (
-                      <motion.div
-                        key={resp.id || i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="p-3 rounded-lg bg-muted/50 border"
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">{resp.agent_name}</span>
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="text-xs">Round {resp.round_number}</Badge>
-                            <Badge variant="secondary" className="text-xs">{resp.response_type}</Badge>
-                          </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground line-clamp-3">{resp.content.substring(0, 200)}...</p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Current Result */}
       <AnimatePresence>
         {currentResult && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="border-primary/30 bg-primary/5">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
-                  Consensus Reached
+                <CardTitle className="flex justify-between items-center">
+                  <span>Executive Decision Verdict</span>
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => exportToPowerPoint({
+                      title: `Decision: ${topic.substring(0, 30)}...`,
+                      recommendation: currentResult.recommendation,
+                      confidence: currentResult.confidence,
+                      votes: currentResult.votes
+                    })}
+                  >
+                    <FileDown className="h-4 w-4 mr-2" />
+                    Export to PPT
+                  </Button>
                 </CardTitle>
-                <CardDescription>
-                  {currentResult.agentCount} agents debated over {currentResult.roundsCompleted} rounds
-                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Confidence</span>
-                    <span className="text-sm font-bold">{(currentResult.confidence * 100).toFixed(0)}%</span>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-sm">
+                    <span className="font-medium">Consensus Confidence</span>
+                    <span>{(currentResult.confidence * 100).toFixed(0)}%</span>
                   </div>
-                  <Progress value={currentResult.confidence * 100} className="h-2" />
+                  <Progress value={currentResult.confidence * 100} />
                 </div>
-
-                <Separator />
-
-                <div>
-                  <h4 className="font-medium mb-2">Agent Votes</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {currentResult.votes.map((vote, i) => (
-                      <div key={i} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-background">
-                        {voteIcon(vote.vote)}
-                        <span className="text-sm">{vote.agent}</span>
-                        <Badge variant={voteBadgeVariant(vote.vote)} className="text-xs">
-                          {vote.vote.replace('_', ' ')}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h4 className="font-medium mb-2">Final Recommendation</h4>
-                  <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
-                    {currentResult.recommendation}
-                  </div>
+                <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
+                  {currentResult.recommendation}
                 </div>
               </CardContent>
             </Card>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Past Debates */}
-      {sessions.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm">Previous Debates</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {sessions.map(session => (
-                <button
-                  key={session.id}
-                  onClick={() => handleViewSession(session.id)}
-                  className={`w-full text-left p-3 rounded-lg border hover:bg-muted/50 transition-colors ${
-                    selectedSession === session.id ? 'border-primary bg-muted/30' : ''
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium line-clamp-1">{session.topic}</span>
-                    <div className="flex items-center gap-2">
-                      {session.consensus_confidence != null && (
-                        <Badge variant="outline">{(session.consensus_confidence * 100).toFixed(0)}%</Badge>
-                      )}
-                      <Badge variant={session.status === 'consensus_reached' ? 'default' : 'secondary'}>
-                        {session.status.replace('_', ' ')}
-                      </Badge>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {new Date(session.created_at).toLocaleDateString()} · {session.topic_type.replace('_', ' ')}
-                  </p>
-                </button>
-              ))}
-            </div>
-
-            {/* Session Detail */}
-            {selectedSession && sessionResponses.length > 0 && (
-              <div className="mt-4 space-y-3">
-                <Separator />
-                <h4 className="text-sm font-medium">Debate Transcript</h4>
-                <ScrollArea className="h-[400px]">
-                  <div className="space-y-3">
-                    {sessionResponses.map(resp => (
-                      <div key={resp.id} className="p-3 rounded-lg border bg-muted/30">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-sm">{resp.agent_name}</span>
-                          <div className="flex gap-1">
-                            <Badge variant="outline" className="text-xs">R{resp.round_number}</Badge>
-                            <Badge variant="secondary" className="text-xs">{resp.response_type}</Badge>
-                            {resp.confidence_score && (
-                              <Badge variant="outline" className="text-xs">
-                                {(resp.confidence_score * 100).toFixed(0)}%
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                        <div className="text-sm text-muted-foreground whitespace-pre-wrap">
-                          {resp.content}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }

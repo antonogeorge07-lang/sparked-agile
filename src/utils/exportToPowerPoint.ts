@@ -25,6 +25,91 @@ interface DashboardData {
   }>;
 }
 
+export async function exportToPowerPoint(data: {
+  title: string;
+  recommendation: string;
+  confidence: number;
+  votes: Array<{ agent: string; vote: string }>;
+}) {
+  const pptx = new PptxGenJS();
+
+  pptx.author = "SAFe Agile Platform";
+  pptx.title = data.title;
+  pptx.subject = "Agent Debate Export";
+
+  const titleSlide = pptx.addSlide();
+  titleSlide.background = { color: "0F172A" };
+  titleSlide.addText(data.title, {
+    x: 0.5,
+    y: 1.5,
+    w: 9,
+    h: 1,
+    fontSize: 34,
+    bold: true,
+    color: "FFFFFF",
+    align: "center"
+  });
+
+  titleSlide.addText(`Confidence: ${(data.confidence * 100).toFixed(0)}%`, {
+    x: 0.5,
+    y: 2.8,
+    w: 9,
+    h: 0.6,
+    fontSize: 18,
+    color: "94A3B8",
+    align: "center"
+  });
+
+  const recommendationSlide = pptx.addSlide();
+  recommendationSlide.background = { color: "FFFFFF" };
+  recommendationSlide.addText("Recommendation", {
+    x: 0.5,
+    y: 0.5,
+    w: 9,
+    h: 0.6,
+    fontSize: 28,
+    bold: true,
+    color: "1E293B"
+  });
+  recommendationSlide.addText(data.recommendation, {
+    x: 0.5,
+    y: 1.3,
+    w: 9,
+    h: 4,
+    fontSize: 16,
+    color: "334155",
+    align: "left",
+    wrap: true
+  });
+
+  const votesSlide = pptx.addSlide();
+  votesSlide.background = { color: "FFFFFF" };
+  votesSlide.addText("Agent Votes", {
+    x: 0.5,
+    y: 0.5,
+    w: 9,
+    h: 0.6,
+    fontSize: 28,
+    bold: true,
+    color: "1E293B"
+  });
+
+  const voteLines = data.votes.map((vote) => `• ${vote.agent}: ${vote.vote}`);
+  votesSlide.addText(voteLines.join("\n"), {
+    x: 0.5,
+    y: 1.3,
+    w: 9,
+    h: 4.5,
+    fontSize: 14,
+    color: "334155",
+    align: "left",
+    wrap: true
+  });
+
+  const fileName = `${data.title.replace(/\s+/g, '_')}_Decision_${new Date().toISOString().split('T')[0]}.pptx`;
+  await pptx.writeFile({ fileName });
+}
+
 export const exportDashboardToPowerPoint = async (data: DashboardData) => {
   const pptx = new PptxGenJS();
   

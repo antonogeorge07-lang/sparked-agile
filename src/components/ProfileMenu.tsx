@@ -32,7 +32,7 @@ export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps
   const handleSignOut = async () => {
     try {
       // Add fade-out effect to body
-      document.body.classList.add('animate-fade-out');
+      document.body?.classList.add('animate-fade-out');
       
       // Wait for animation to complete
       await new Promise(resolve => setTimeout(resolve, 300));
@@ -49,10 +49,10 @@ export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps
       
       // Remove animation class after redirect
       setTimeout(() => {
-        document.body.classList.remove('animate-fade-out');
+        document.body?.classList.remove('animate-fade-out');
       }, 100);
     } catch (error) {
-      document.body.classList.remove('animate-fade-out');
+      document.body?.classList.remove('animate-fade-out');
       toast({
         title: "Error",
         description: "Failed to sign out. Please try again.",

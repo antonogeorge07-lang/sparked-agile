@@ -18,11 +18,17 @@ const AGENTS = [
 export function AgentDebateShowcase({ projectId }: AgentDebateShowcaseProps) {
   const navigate = useNavigate();
 
+  // Guard clause: If rendering in an unstable/SSR environment, avoid interacting with `window` or router
+  if (typeof window === 'undefined') return null;
+
   const handleLaunch = () => {
-    if (projectId) {
-      navigate(`/project-command-centre?project=${projectId}&tab=agents`);
-    } else {
-      navigate("/project-command-centre");
+    // Wrap navigation in a safe check
+    if (navigate) {
+      if (projectId) {
+        navigate(`/project-command-centre?project=${projectId}&tab=agents`);
+      } else {
+        navigate("/project-command-centre");
+      }
     }
   };
 
