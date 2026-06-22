@@ -1,0 +1,133 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red144\green1\blue18;\red14\green110\blue109;\red19\green118\blue70;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c63922\c8235\c8235;\cssrgb\c0\c50196\c50196;\cssrgb\c3529\c52549\c34510;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \{ useState, useRef, useCallback \} \cf2 \strokec2 from\cf0 \strokec4  \cf5 \strokec5 'react'\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ motion \} \cf2 \strokec2 from\cf0 \strokec4  \cf5 \strokec5 'framer-motion'\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf6 \strokec6 Play\cf0 \strokec4 , \cf6 \strokec6 Pause\cf0 \strokec4 , \cf6 \strokec6 Globe\cf0 \strokec4 , \cf6 \strokec6 Languages\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf5 \strokec5 'lucide-react'\cf0 \strokec4 ;\cb1 \
+\
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf6 \strokec6 VoiceNoteBubble\cf0 \strokec4 (\{ message, preferredLang \}) \{\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3   \cf2 \strokec2 const\cf0 \strokec4  [isPlaying, setIsPlaying] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  [showOriginal, setShowOriginal] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  audioRef = useRef(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  isMe = message.sender === \cf5 \strokec5 'me'\cf0 \strokec4 ;\cb1 \
+\
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  hasTranslation = message.translated_transcript && message.transcript !== message.translated_transcript;\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  displayTranscript = hasTranslation && !showOriginal\cb1 \
+\cb3     ? message.translated_transcript\cb1 \
+\cb3     : message.transcript;\cb1 \
+\
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  handlePlayPause = useCallback(() => \{\cb1 \
+\cb3     \cf2 \strokec2 if\cf0 \strokec4  (!audioRef.current || !message.audio_url) \cf2 \strokec2 return\cf0 \strokec4 ;\cb1 \
+\cb3     \cf2 \strokec2 if\cf0 \strokec4  (isPlaying) \{\cb1 \
+\cb3       audioRef.current.pause();\cb1 \
+\cb3       setIsPlaying(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3     \} \cf2 \strokec2 else\cf0 \strokec4  \{\cb1 \
+\cb3       audioRef.current.play();\cb1 \
+\cb3       setIsPlaying(\cf2 \strokec2 true\cf0 \strokec4 );\cb1 \
+\cb3       audioRef.current.onended = () => setIsPlaying(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3     \}\cb1 \
+\cb3   \}, [isPlaying, message.audio_url]);\cb1 \
+\
+\cb3   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \
+\cb3     <motion.div\cb1 \
+\cb3       initial=\{\{ opacity: \cf7 \strokec7 0\cf0 \strokec4 , y: \cf7 \strokec7 20\cf0 \strokec4  \}\}\cb1 \
+\cb3       animate=\{\{ opacity: \cf7 \strokec7 1\cf0 \strokec4 , y: \cf7 \strokec7 0\cf0 \strokec4  \}\}\cb1 \
+\cb3       className=\{\cf5 \strokec5 `flex \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'justify-end'\cf0 \strokec4  : \cf5 \strokec5 'justify-start'\cf0 \strokec4 \}\cf5 \strokec5  px-4`\cf0 \strokec4 \}\cb1 \
+\cb3     >\cb1 \
+\cb3       <div className=\{\cf5 \strokec5 `max-w-[78%] \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'items-end'\cf0 \strokec4  : \cf5 \strokec5 'items-start'\cf0 \strokec4 \}\cf5 \strokec5  flex flex-col`\cf0 \strokec4 \}>\cb1 \
+\cb3         <motion.div\cb1 \
+\cb3           whileHover=\{\{ scale: \cf7 \strokec7 1.01\cf0 \strokec4  \}\}\cb1 \
+\cb3           className=\{\cf5 \strokec5 `\cf0 \cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 \cb3 \strokec5             p-4 rounded-3xl backdrop-blur-3xl border border-white/70 shadow-xl\cf0 \cb1 \strokec4 \
+\cf5 \cb3 \strokec5             \cf0 \strokec4 $\{isMe\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3               ? \cf5 \strokec5 'bg-gradient-to-br from-cyan-400/90 to-violet-500/90 text-white rounded-br-lg'\cf0 \cb1 \strokec4 \
+\cb3               : \cf5 \strokec5 'bg-white/80 text-violet-950 rounded-bl-lg'\cf0 \cb1 \strokec4 \
+\cb3             \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf5 \cb3 \strokec5           `\cf0 \strokec4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3         >\cb1 \
+\cb3           <div className=\cf5 \strokec5 "flex items-center gap-3"\cf0 \strokec4 >\cb1 \
+\cb3             <motion.button\cb1 \
+\cb3               whileTap=\{\{ scale: \cf7 \strokec7 0.9\cf0 \strokec4  \}\}\cb1 \
+\cb3               onClick=\{handlePlayPause\}\cb1 \
+\cb3               disabled=\{!message.audio_url\}\cb1 \
+\cb3               className=\{\cf5 \strokec5 `\cf0 \cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 \cb3 \strokec5                 w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300\cf0 \cb1 \strokec4 \
+\cf5 \cb3 \strokec5                 \cf0 \strokec4 $\{isPlaying\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3                   ? isMe ? \cf5 \strokec5 'bg-white/20'\cf0 \strokec4  : \cf5 \strokec5 'bg-gradient-to-br from-fuchsia-500 to-cyan-500'\cf0 \cb1 \strokec4 \
+\cb3                   : isMe ? \cf5 \strokec5 'bg-white/10 hover:bg-white/20'\cf0 \strokec4  : \cf5 \strokec5 'bg-white/60 border border-white/70 hover:border-fuchsia-500/30'\cf0 \cb1 \strokec4 \
+\cb3                 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf5 \cb3 \strokec5               `\cf0 \strokec4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3             >\cb1 \
+\cb3               \{isPlaying ? (\cb1 \
+\cb3                 <\cf6 \strokec6 Pause\cf0 \strokec4  className=\{\cf5 \strokec5 `w-4 h-4 \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'text-white'\cf0 \strokec4  : \cf5 \strokec5 'text-white'\cf0 \strokec4 \}\cf5 \strokec5 `\cf0 \strokec4 \} />\cb1 \
+\cb3               ) : (\cb1 \
+\cb3                 <\cf6 \strokec6 Play\cf0 \strokec4  className=\{\cf5 \strokec5 `w-4 h-4 ml-0.5 \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'text-white'\cf0 \strokec4  : \cf5 \strokec5 'text-violet-700'\cf0 \strokec4 \}\cf5 \strokec5 `\cf0 \strokec4 \} />\cb1 \
+\cb3               )\}\cb1 \
+\cb3             </motion.button>\cb1 \
+\
+\cb3             <div className=\cf5 \strokec5 "flex-1 min-w-0"\cf0 \strokec4 >\cb1 \
+\cb3               <div className=\cf5 \strokec5 "flex items-center gap-px h-6 mb-1.5"\cf0 \strokec4 >\cb1 \
+\cb3                 \{[...\cf6 \strokec6 Array\cf0 \strokec4 (\cf7 \strokec7 16\cf0 \strokec4 )].map((_, i) => (\cb1 \
+\cb3                   <motion.div\cb1 \
+\cb3                     key=\{i\}\cb1 \
+\cb3                     animate=\{\{\cb1 \
+\cb3                       height: isPlaying\cb1 \
+\cb3                         ? [\cf7 \strokec7 4\cf0 \strokec4 , \cf7 \strokec7 14\cf0 \strokec4 , \cf7 \strokec7 8\cf0 \strokec4 , \cf7 \strokec7 18\cf0 \strokec4 , \cf7 \strokec7 6\cf0 \strokec4 , \cf7 \strokec7 12\cf0 \strokec4 , \cf7 \strokec7 10\cf0 \strokec4 , \cf7 \strokec7 16\cf0 \strokec4 , \cf7 \strokec7 4\cf0 \strokec4 , \cf7 \strokec7 14\cf0 \strokec4 , \cf7 \strokec7 8\cf0 \strokec4 , \cf7 \strokec7 18\cf0 \strokec4 , \cf7 \strokec7 6\cf0 \strokec4 , \cf7 \strokec7 12\cf0 \strokec4 , \cf7 \strokec7 10\cf0 \strokec4 , \cf7 \strokec7 16\cf0 \strokec4 ][i]\cb1 \
+\cb3                         : [\cf7 \strokec7 3\cf0 \strokec4 , \cf7 \strokec7 10\cf0 \strokec4 , \cf7 \strokec7 6\cf0 \strokec4 , \cf7 \strokec7 14\cf0 \strokec4 , \cf7 \strokec7 4\cf0 \strokec4 , \cf7 \strokec7 8\cf0 \strokec4 , \cf7 \strokec7 7\cf0 \strokec4 , \cf7 \strokec7 12\cf0 \strokec4 , \cf7 \strokec7 3\cf0 \strokec4 , \cf7 \strokec7 10\cf0 \strokec4 , \cf7 \strokec7 6\cf0 \strokec4 , \cf7 \strokec7 14\cf0 \strokec4 , \cf7 \strokec7 4\cf0 \strokec4 , \cf7 \strokec7 8\cf0 \strokec4 , \cf7 \strokec7 7\cf0 \strokec4 , \cf7 \strokec7 12\cf0 \strokec4 ][i]\cb1 \
+\cb3                     \}\}\cb1 \
+\cb3                     transition=\{\{ duration: \cf7 \strokec7 0.35\cf0 \strokec4 , repeat: isPlaying ? \cf6 \strokec6 Infinity\cf0 \strokec4  : \cf7 \strokec7 0\cf0 \strokec4 , delay: i * \cf7 \strokec7 0.03\cf0 \strokec4  \}\}\cb1 \
+\cb3                     className=\{\cf5 \strokec5 `w-[2px] rounded-full \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'bg-white/70'\cf0 \strokec4  : \cf5 \strokec5 'bg-fuchsia-500'\cf0 \strokec4 \}\cf5 \strokec5 `\cf0 \strokec4 \}\cb1 \
+\cb3                   />\cb1 \
+\cb3                 ))\}\cb1 \
+\cb3               </div>\cb1 \
+\
+\cb3               \{displayTranscript && (\cb1 \
+\cb3                 <p className=\{\cf5 \strokec5 `text-xs truncate \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'text-white/80'\cf0 \strokec4  : \cf5 \strokec5 'text-violet-900/70'\cf0 \strokec4 \}\cf5 \strokec5 `\cf0 \strokec4 \}>\cb1 \
+\cb3                   \{displayTranscript\}\cb1 \
+\cb3                 </p>\cb1 \
+\cb3               )\}\cb1 \
+\
+\cb3               <div className=\{\cf5 \strokec5 `flex items-center gap-1 mt-1 \cf0 \strokec4 $\{isMe ? \cf5 \strokec5 'opacity-50'\cf0 \strokec4  : \cf5 \strokec5 'opacity-50'\cf0 \strokec4 \}\cf5 \strokec5 `\cf0 \strokec4 \}>\cb1 \
+\cb3                 <\cf6 \strokec6 Globe\cf0 \strokec4  className=\cf5 \strokec5 "w-3 h-3"\cf0 \strokec4  />\cb1 \
+\cb3                 <span className=\cf5 \strokec5 "text-[10px] uppercase"\cf0 \strokec4 >\cb1 \
+\cb3                   \{showOriginal ? message.original_language : preferredLang || \cf5 \strokec5 'en'\cf0 \strokec4 \}\cb1 \
+\cb3                 </span>\cb1 \
+\cb3               </div>\cb1 \
+\cb3             </div>\cb1 \
+\cb3           </div>\cb1 \
+\cb3         </motion.div>\cb1 \
+\
+\cb3         \{hasTranslation && (\cb1 \
+\cb3           <motion.button\cb1 \
+\cb3             whileTap=\{\{ scale: \cf7 \strokec7 0.95\cf0 \strokec4  \}\}\cb1 \
+\cb3             onClick=\{() => setShowOriginal(!showOriginal)\}\cb1 \
+\cb3             className=\cf5 \strokec5 "mt-1.5 px-3 py-1 rounded-full bg-white/60 backdrop-blur-sm text-[10px] text-violet-600 hover:text-violet-800 hover:bg-white/80 transition-all flex items-center gap-1"\cf0 \cb1 \strokec4 \
+\cb3           >\cb1 \
+\cb3             <\cf6 \strokec6 Languages\cf0 \strokec4  className=\cf5 \strokec5 "w-3 h-3"\cf0 \strokec4  />\cb1 \
+\cb3             \{showOriginal ? \cf5 \strokec5 'Show translation'\cf0 \strokec4  : \cf5 \strokec5 'Show original'\cf0 \strokec4 \}\cb1 \
+\cb3           </motion.button>\cb1 \
+\cb3         )\}\cb1 \
+\cb3       </div>\cb1 \
+\
+\cb3       \{message.audio_url && <audio ref=\{audioRef\} src=\{message.audio_url\} preload=\cf5 \strokec5 "metadata"\cf0 \strokec4  />\}\cb1 \
+\cb3     </motion.div>\cb1 \
+\cb3   );\cb1 \
+\cb3 \}\cb1 \
+}
