@@ -10,7 +10,32 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.17"
+  }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -863,28 +888,25 @@ export type Database = {
       }
       data_export_requests: {
         Row: {
-          completed_date: string | null
-          export_data: Json | null
+          created_at: string
+          file_url: string | null
           id: string
-          request_date: string | null
-          status: string | null
-          user_id: string
+          status: string
+          user_id: string | null
         }
         Insert: {
-          completed_date?: string | null
-          export_data?: Json | null
+          created_at?: string
+          file_url?: string | null
           id?: string
-          request_date?: string | null
-          status?: string | null
-          user_id: string
+          status?: string
+          user_id?: string | null
         }
         Update: {
-          completed_date?: string | null
-          export_data?: Json | null
+          created_at?: string
+          file_url?: string | null
           id?: string
-          request_date?: string | null
-          status?: string | null
-          user_id?: string
+          status?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -4502,37 +4524,25 @@ export type Database = {
       }
       user_consents: {
         Row: {
-          analytics_consent: boolean | null
-          consent_date: string | null
-          functional_consent: boolean | null
+          consent_type: string
+          created_at: string
           id: string
           ip_address_hash: string | null
-          marketing_consent: boolean | null
-          updated_at: string | null
-          user_agent: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
-          analytics_consent?: boolean | null
-          consent_date?: string | null
-          functional_consent?: boolean | null
+          consent_type: string
+          created_at?: string
           id?: string
           ip_address_hash?: string | null
-          marketing_consent?: boolean | null
-          updated_at?: string | null
-          user_agent?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
-          analytics_consent?: boolean | null
-          consent_date?: string | null
-          functional_consent?: boolean | null
+          consent_type?: string
+          created_at?: string
           id?: string
           ip_address_hash?: string | null
-          marketing_consent?: boolean | null
-          updated_at?: string | null
-          user_agent?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -5220,27 +5230,6 @@ export type Database = {
           model?: string | null
           status?: string | null
           tokens_used?: number | null
-        }
-        Relationships: []
-      }
-      approved_landing_feedback: {
-        Row: {
-          created_at: string | null
-          feedback: string | null
-          id: string | null
-          rating: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          feedback?: string | null
-          id?: string | null
-          rating?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          feedback?: string | null
-          id?: string | null
-          rating?: number | null
         }
         Relationships: []
       }
@@ -6316,6 +6305,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       app_role: ["admin", "member", "pending", "platform_owner"],
