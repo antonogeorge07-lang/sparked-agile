@@ -124,34 +124,38 @@ serve(async (req) => {
     }
 
     const body = await req.json().catch(() => ({}));
-    const projectId = typeof body.projectId === "string" ? body.projectId : "";
-    if (!projectId) {
-      return new Response(JSON.stringify({ error: "A project must be selected" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    const projectId = typeof body.projectId === "string" && body.projectId.trim()
+      ? body.projectId.trim()
+      : null;
+
+    // When a project is supplied, RLS is the tenant boundary: an inaccessible
+    // project ID resolves to no row. Callers without a project retain the
+    // authorized workspace-wide briefing used by shared dashboard cards.
+    if (projectId) {
+      const { data: project } = await supabase
+        .from("projects")
+        .select("id")
+        .eq("id", projectId)
+        .maybeSingle();
+      if (!project) {
+        return new Response(JSON.stringify({ error: "Project not found or access denied" }), {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
-    // RLS is the tenant boundary: inaccessible project IDs resolve to no row.
-    const { data: project } = await supabase
-      .from("projects")
-      .select("id")
-      .eq("id", projectId)
-      .maybeSingle();
-    if (!project) {
-      return new Response(JSON.stringify({ error: "Project not found or access denied" }), {
-        status: 404,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    // Load only integrations attached to the selected project.
-    const { data: integrations, error: integrationsError } = await supabase
+    let integrationsQuery = supabase
       .from("integrations")
       .select("integration_type, config")
-      .eq("project_id", projectId)
       .eq("is_active", true)
       .in("integration_type", ["github", "jira"]);
+
+    if (projectId) {
+      integrationsQuery = integrationsQuery.eq("project_id", projectId);
+    }
+
+    const { data: integrations, error: integrationsError } = await integrationsQuery;
     if (integrationsError) throw integrationsError;
 
     const repos = Array.from(
