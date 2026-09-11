@@ -21,34 +21,67 @@ export interface BriefingData {
   generatedAt: string;
 }
 
-export function useBriefing() {
+export function useBriefing(projectId: string | null) {
   const [data, setData] = useState<BriefingData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
+    if (!projectId) {
+      setData(null);
+      setError(null);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
+
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
-        setError("Not signed in");
-        setLoading(false);
-        return;
+        throw new Error("Not signed in");
       }
-      const { data: payload, error: fnError } = await supabase.functions.invoke(
-        "generate-briefing",
-        { body: {} },
-      );
-      if (fnError) throw new Error(fnError.message);
-      if ((payload as any)?.error) throw new Error((payload as any).error);
+
+      const { data: payload, error: fnError } =
+        await supabase.functions.invoke("generate-briefing", {
+          body: { projectId },
+        });
+
+      if (fnError) {
+        let message = fnError.message;
+
+        try {
+          const context = (fnError as any)?.context;
+          if (context instanceof Response) {
+            const body = await context.clone().json().catch(() => null);
+            if (body?.error) {
+              message = body.error;
+            }
+          }
+        } catch {
+          // Fall back to the Supabase error message.
+        }
+
+        throw new Error(message);
+      }
+
+      if ((payload as any)?.error) {
+        throw new Error((payload as any).error);
+      }
+
       setData(payload as BriefingData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load briefing");
+      setError(
+        err instanceof Error ? err.message : "Failed to load briefing"
+      );
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [projectId]);
 
   useEffect(() => {
     refresh();

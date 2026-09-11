@@ -23,8 +23,12 @@ import { useNotificationContext } from "@/components/NotificationProvider";
  * "Here's your week" hero card. Uses generate-briefing to surface real GitHub
  * shipped / stuck / decide signals as soon as a repo is connected.
  */
-export function WeeklyDigestCard() {
-  const { data, loading, error, refresh } = useBriefing();
+interface WeeklyDigestCardProps {
+  projectId: string | null;
+}
+
+export function WeeklyDigestCard({ projectId }: WeeklyDigestCardProps) {
+  const { data, loading, error, refresh } = useBriefing(projectId);
   const { notifications } = useNotificationContext();
   const notificationsReady = notifications !== undefined;
   const didFallbackRef = useRef(false);

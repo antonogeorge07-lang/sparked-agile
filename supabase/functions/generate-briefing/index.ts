@@ -123,12 +123,48 @@ serve(async (req) => {
       });
     }
 
-    // Load active integrations the user can see (RLS-scoped).
-    const { data: integrations } = await supabase
+    const body = await req.json().catch(() => ({}));
+    const projectId =
+      typeof body?.projectId === "string"
+        ? body.projectId.trim()
+        : "";
+
+    if (!projectId) {
+      return new Response(JSON.stringify({ error: "projectId is required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Verify the requested project is visible to the authenticated user.
+    // RLS remains the final authorization boundary.
+    const { data: project, error: projectError } = await supabase
+      .from("projects")
+      .select("id")
+      .eq("id", projectId)
+      .maybeSingle();
+
+    if (projectError) throw projectError;
+
+    if (!project) {
+      return new Response(
+        JSON.stringify({ error: "Project not found or access denied" }),
+        {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
+    }
+
+    // Load only integrations belonging to the selected project.
+    const { data: integrations, error: integrationsError } = await supabase
       .from("integrations")
-      .select("integration_type, config")
+      .select("integration_type, config, project_id")
+      .eq("project_id", projectId)
       .eq("is_active", true)
       .in("integration_type", ["github", "jira"]);
+
+    if (integrationsError) throw integrationsError;
 
     const repos = Array.from(
       new Set(

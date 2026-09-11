@@ -137,10 +137,16 @@ export default function Dashboard() {
 
       if (error) throw error;
 
-      if (data && data.length > 0) {
-        setProjects(data);
-        setSelectedProject(data[0].id);
-      }
+      const rows = data ?? [];
+      setProjects(rows);
+
+      setSelectedProject((current) => {
+        if (current && rows.some((project) => project.id === current)) {
+          return current;
+        }
+
+        return rows[0]?.id ?? null;
+      });
     } catch (error: any) {
       console.error('Error loading projects:', error);
       toast.error("Failed to load projects", {
@@ -225,7 +231,9 @@ export default function Dashboard() {
             </>
           )}
           
-          {!isGuestMode && <WeeklyDigestCard />}
+          {!isGuestMode && selectedProject && (
+            <WeeklyDigestCard projectId={selectedProject} />
+          )}
 
           {!isGuestMode && <CeremonyHealthCheck />}
 
