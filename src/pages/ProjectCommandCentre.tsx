@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Filter, AlertCircle, LayoutDashboard, Kanban, Shield, Lightbulb, FileText, FlaskConical, MessageSquare, TrendingUp } from "lucide-react";
+import { Plus, Filter, AlertCircle, LayoutDashboard, Kanban, Shield, Lightbulb, FileText, FlaskConical, MessageSquare, TrendingUp, Brain } from "lucide-react";
 import { toast } from "sonner";
 import { LoadingState } from "@/components/LoadingState";
 import { StageColumn } from "@/components/command-centre/StageColumn";
 import { CommandPanel } from "@/components/command-centre/CommandPanel";
 import { AIInsights } from "@/components/command-centre/AIInsights";
+import { AgentDebatePanel } from "@/components/command-centre/AgentDebatePanel";
 import { ControlDeck } from "@/components/command-centre/ControlDeck";
 import { RiskRegister } from "@/components/command-centre/RiskRegister";
 import { LessonsLearned } from "@/components/command-centre/LessonsLearned";
@@ -62,6 +63,12 @@ interface Project {
 export default function ProjectCommandCentre() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedProjectId = searchParams.get("project");
+  const requestedTab = searchParams.get("tab") ?? "overview";
+  const activeTab = ["overview", "board", "risks", "lessons", "reports", "test-scenarios", "meeting-notes", "forecast", "agents"].includes(requestedTab)
+    ? requestedTab
+    : "overview";
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -114,7 +121,16 @@ export default function ProjectCommandCentre() {
       if (error) throw error;
       setProjects(data || []);
       if (data && data.length > 0 && !selectedProject) {
-        setSelectedProject(data[0].id);
+        const requested = data.find((project) => project.id === requestedProjectId);
+        const projectId = requested?.id ?? data[0].id;
+        setSelectedProject(projectId);
+        if (requestedProjectId !== projectId) {
+          setSearchParams((current) => {
+            const next = new URLSearchParams(current);
+            next.set("project", projectId);
+            return next;
+          }, { replace: true });
+        }
       }
     } catch (error: any) {
       console.error("Error loading projects:", error);
@@ -240,7 +256,16 @@ export default function ProjectCommandCentre() {
             </Button>
           </div>
         ) : (
-          <Tabs defaultValue="overview" className="space-y-6">
+          <Tabs
+            value={activeTab}
+            onValueChange={(tab) => setSearchParams((current) => {
+              const next = new URLSearchParams(current);
+              next.set("tab", tab);
+              if (selectedProject) next.set("project", selectedProject);
+              return next;
+            })}
+            className="space-y-6"
+          >
             <TabsList className="w-full lg:w-auto flex-wrap justify-center">
               <TabsTrigger value="overview" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
                 <LayoutDashboard className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -275,6 +300,11 @@ export default function ProjectCommandCentre() {
                 <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="hidden sm:inline">Forecast</span>
               </TabsTrigger>
+              <TabsTrigger value="agents" className="gap-1 sm:gap-2 flex-1 sm:flex-initial">
+                <Brain className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">AI Agents</span>
+                <span className="sm:hidden text-[10px]">Agents</span>
+              </TabsTrigger>
             </TabsList>
 
             {/* Project Overview Tab */}
@@ -284,7 +314,14 @@ export default function ProjectCommandCentre() {
                   <CommandPanel
                     projects={projects}
                     selectedProject={selectedProject}
-                    onProjectChange={setSelectedProject}
+                    onProjectChange={(projectId) => {
+                      setSelectedProject(projectId);
+                      setSearchParams((current) => {
+                        const next = new URLSearchParams(current);
+                        next.set("project", projectId);
+                        return next;
+                      });
+                    }}
                     tasks={tasks}
                     activeFilter={activeFilter}
                     onFilterChange={setActiveFilter}
@@ -441,6 +478,13 @@ export default function ProjectCommandCentre() {
                   <SmartNudgesPanel projectId={selectedProject} />
                 </div>
               </div>
+            </TabsContent>
+            <TabsContent value="agents">
+              {selectedProject ? (
+                <AgentDebatePanel projectId={selectedProject} />
+              ) : (
+                <Card><CardContent className="py-12 text-center text-muted-foreground">Select a project to launch AI agents.</CardContent></Card>
+              )}
             </TabsContent>
           </Tabs>
         )}
