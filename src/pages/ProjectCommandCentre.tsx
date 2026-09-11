@@ -333,11 +333,11 @@ export default function ProjectCommandCentre() {
                         <p className="text-sm text-muted-foreground">{currentProject.description}</p>
                         <div className="mt-4 space-y-4">
                           <TeamManagement
-                            projectId={selectedPmiProject}
+                            projectId={selectedProject}
                             projectName={currentProject.name}
                           />
                           <ProjectMemberManager
-                            projectId={selectedPmiProject}
+                            projectId={selectedProject}
                             projectName={currentProject.name}
                           />
                         </div>
