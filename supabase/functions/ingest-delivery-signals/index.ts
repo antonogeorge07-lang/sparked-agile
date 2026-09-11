@@ -72,23 +72,48 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // Resolve workspace (owner first, then membership)
-    const { data: ownedWs } = await supabase
-      .from("workspaces").select("id").eq("owner_id", user.id)
-      .order("created_at", { ascending: true }).limit(1);
-    let workspaceId = ownedWs?.[0]?.id ?? null;
-    if (!workspaceId) {
-      const { data: m } = await supabase
-        .from("workspace_members").select("workspace_id").eq("user_id", user.id).limit(1).maybeSingle();
-      workspaceId = m?.workspace_id ?? null;
+    const body = await req.json().catch(() => ({}));
+    const projectId = typeof body.projectId === "string" && body.projectId.trim()
+      ? body.projectId.trim()
+      : null;
+
+    let workspaceId: string | null = null;
+    if (projectId) {
+      const { data: project, error: projectError } = await supabase
+        .from("projects")
+        .select("id, workspace_id")
+        .eq("id", projectId)
+        .maybeSingle();
+
+      if (projectError || !project) {
+        return new Response(JSON.stringify({ error: "Project not found or access denied" }), {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      workspaceId = project.workspace_id;
+    } else {
+      const { data: ownedWs } = await supabase
+        .from("workspaces").select("id").eq("owner_id", user.id)
+        .order("created_at", { ascending: true }).limit(1);
+      workspaceId = ownedWs?.[0]?.id ?? null;
+      if (!workspaceId) {
+        const { data: member } = await supabase
+          .from("workspace_members").select("workspace_id").eq("user_id", user.id).limit(1).maybeSingle();
+        workspaceId = member?.workspace_id ?? null;
+      }
     }
+
     if (!workspaceId) {
       return new Response(JSON.stringify({ error: "No workspace" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const { data: integrations } = await supabase
+    let integrationsQuery = supabase
       .from("integrations").select("integration_type, config").eq("is_active", true)
       .in("integration_type", ["github", "jira"]);
+    if (projectId) integrationsQuery = integrationsQuery.eq("project_id", projectId);
+    const { data: integrations, error: integrationsError } = await integrationsQuery;
+    if (integrationsError) throw integrationsError;
 
     const repos = Array.from(new Set((integrations ?? [])
       .filter((i: any) => i.integration_type === "github").map((i: any) => parseRepo(i.config))
@@ -202,6 +227,7 @@ serve(async (req) => {
 
     const row = {
       workspace_id: workspaceId,
+      project_id: projectId,
       snapshot_date: new Date().toISOString().slice(0, 10),
       source: "combined" as const,
       prs_merged, prs_opened, issues_resolved, issues_opened,
@@ -219,7 +245,7 @@ serve(async (req) => {
     );
     const { error: upErr } = await adminClient
       .from("delivery_signals")
-      .upsert(row, { onConflict: "workspace_id,snapshot_date,source" });
+      .upsert(row, { onConflict: "workspace_id,project_id,snapshot_date,source" });
     if (upErr) throw upErr;
 
     return new Response(JSON.stringify({ status: "ok", snapshot: row, hasGithub: !!ghToken, hasJira: !!jiraAuth }), {
