@@ -31,14 +31,78 @@ interface Bucket {
   items: BriefItem[];
 }
 
+const BRIEFING_MODEL = "google/gemini-2.5-flash";
+
+interface IntelligenceMetadata {
+  used: boolean;
+  provider: "lovable-ai-gateway" | "none";
+  model: string | null;
+  status: "generated" | "skipped" | "fallback";
+  summary: string;
+}
+
+async function generateExecutiveSummary(input: {
+  shipped: number;
+  stuck: number;
+  decide: number;
+  repos: string[];
+  jiraSites: string[];
+}): Promise<IntelligenceMetadata> {
+  const fallback = `Delivery evidence shows ${input.shipped} shipped, ${input.stuck} blocked, and ${input.decide} work-in-progress items.`;
+  const apiKey = Deno.env.get("LOVABLE_API_KEY");
+  if (!apiKey) {
+    return { used: false, provider: "none", model: null, status: "skipped", summary: fallback };
+  }
+
+  try {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: BRIEFING_MODEL,
+        temperature: 0.2,
+        max_tokens: 140,
+        messages: [
+          {
+            role: "system",
+            content: "Write one concise executive delivery observation. Use only the supplied figures. Do not invent causes, dates, owners, or recommendations.",
+          },
+          { role: "user", content: JSON.stringify(input) },
+        ],
+      }),
+    });
+    if (!response.ok) throw new Error(`AI gateway returned ${response.status}`);
+    const payload = await response.json();
+    const summary = payload?.choices?.[0]?.message?.content?.trim();
+    if (!summary) throw new Error("AI gateway returned no summary");
+    return {
+      used: true,
+      provider: "lovable-ai-gateway",
+      model: BRIEFING_MODEL,
+      status: "generated",
+      summary,
+    };
+  } catch (error) {
+    console.warn("generate-briefing AI summary fallback:", error instanceof Error ? error.message : "unknown");
+    return { used: false, provider: "none", model: null, status: "fallback", summary: fallback };
+  }
+}
+
 function parseRepo(cfg: any): string | null {
   if (!cfg) return null;
-  if (cfg.owner && cfg.repository) return `${cfg.owner}/${cfg.repository}`;
-  if (cfg.repo_name && /\//.test(cfg.repo_name)) return cfg.repo_name;
+  const owner = cfg.owner || cfg.organization;
+  const repository = cfg.repository || cfg.repo;
+  if (owner && repository) {
+    return `${String(owner).trim()}/${String(repository).trim().replace(/\\.git$/, "")}`;
+  }
+  if (cfg.repo_name && /\//.test(cfg.repo_name)) return String(cfg.repo_name).trim().replace(/\\.git$/, "");
   const url = cfg.repo_url;
   if (typeof url === "string") {
     const m = url.match(/github\.com\/([^/]+)\/([^/?#]+)/);
-    if (m) return `${m[1]}/${m[2].replace(".git", "")}`;
+    if (m) return `${m[1]}/${m[2].replace(/\\.git$/, "")}`;
   }
   return null;
 }
@@ -124,46 +188,38 @@ serve(async (req) => {
     }
 
     const body = await req.json().catch(() => ({}));
-    const projectId =
-      typeof body?.projectId === "string"
-        ? body.projectId.trim()
-        : "";
+    const projectId = typeof body.projectId === "string" && body.projectId.trim()
+      ? body.projectId.trim()
+      : null;
 
-    if (!projectId) {
-      return new Response(JSON.stringify({ error: "projectId is required" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    // Verify the requested project is visible to the authenticated user.
-    // RLS remains the final authorization boundary.
-    const { data: project, error: projectError } = await supabase
-      .from("projects")
-      .select("id")
-      .eq("id", projectId)
-      .maybeSingle();
-
-    if (projectError) throw projectError;
-
-    if (!project) {
-      return new Response(
-        JSON.stringify({ error: "Project not found or access denied" }),
-        {
+    // When a project is supplied, RLS is the tenant boundary: an inaccessible
+    // project ID resolves to no row. Callers without a project retain the
+    // authorized workspace-wide briefing used by shared dashboard cards.
+    if (projectId) {
+      const { data: project } = await supabase
+        .from("projects")
+        .select("id")
+        .eq("id", projectId)
+        .maybeSingle();
+      if (!project) {
+        return new Response(JSON.stringify({ error: "Project not found or access denied" }), {
           status: 404,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
-      );
+        });
+      }
     }
 
-    // Load only integrations belonging to the selected project.
-    const { data: integrations, error: integrationsError } = await supabase
+    let integrationsQuery = supabase
       .from("integrations")
-      .select("integration_type, config, project_id")
-      .eq("project_id", projectId)
+      .select("integration_type, config")
       .eq("is_active", true)
       .in("integration_type", ["github", "jira"]);
 
+    if (projectId) {
+      integrationsQuery = integrationsQuery.eq("project_id", projectId);
+    }
+
+    const { data: integrations, error: integrationsError } = await integrationsQuery;
     if (integrationsError) throw integrationsError;
 
     const repos = Array.from(
@@ -181,8 +237,11 @@ serve(async (req) => {
           .filter((i: any) => i.integration_type === "jira")
           .map((i: any) => {
             const cfg = i.config || {};
-            const raw = cfg.site_url || cfg.board_url || "";
-            const m = String(raw).match(/(https?:\/\/[^/]+)/);
+            const raw = cfg.site_url || cfg.board_url || cfg.domain || cfg.base_url || "";
+            const normalized = /^https?:\/\//i.test(String(raw))
+              ? String(raw)
+              : raw ? `https://${String(raw)}` : "";
+            const m = normalized.match(/(https?:\/\/[^/]+)/);
             return m ? m[1] : null;
           })
           .filter((s): s is string => !!s),
@@ -223,6 +282,10 @@ serve(async (req) => {
           ghToken = j.token ?? null;
         }
       }
+
+      // Match the proven GitHub resolver: a project secret can service
+      // authorized integrations when the user's OAuth token is unavailable.
+      if (!ghToken) ghToken = Deno.env.get("GITHUB_TOKEN") ?? null;
 
       if (ghToken) {
         for (const repo of repos.slice(0, 5)) {
@@ -313,6 +376,14 @@ serve(async (req) => {
     const trim = (xs: BriefItem[]) =>
       xs.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1)).slice(0, 5);
 
+    const intelligence = await generateExecutiveSummary({
+      shipped: shipped.count,
+      stuck: stuck.count,
+      decide: decide.count,
+      repos,
+      jiraSites,
+    });
+
     return new Response(
       JSON.stringify({
         status,
@@ -321,6 +392,7 @@ serve(async (req) => {
         shipped: { count: shipped.count, items: trim(shipped.items) },
         stuck: { count: stuck.count, items: trim(stuck.items) },
         decide: { count: decide.count, items: trim(decide.items) },
+        intelligence,
         generatedAt: new Date().toISOString(),
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },

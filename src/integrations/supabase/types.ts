@@ -921,6 +921,7 @@ export type Database = {
           issues_opened: number
           issues_resolved: number
           lead_time_p50_hours: number | null
+          project_id: string | null
           prs_merged: number
           prs_opened: number
           raw_payload: Json | null
@@ -940,6 +941,7 @@ export type Database = {
           issues_opened?: number
           issues_resolved?: number
           lead_time_p50_hours?: number | null
+          project_id?: string | null
           prs_merged?: number
           prs_opened?: number
           raw_payload?: Json | null
@@ -959,6 +961,7 @@ export type Database = {
           issues_opened?: number
           issues_resolved?: number
           lead_time_p50_hours?: number | null
+          project_id?: string | null
           prs_merged?: number
           prs_opened?: number
           raw_payload?: Json | null
@@ -969,6 +972,13 @@ export type Database = {
           workspace_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "delivery_signals_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "delivery_signals_workspace_id_fkey"
             columns: ["workspace_id"]
