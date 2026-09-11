@@ -17,10 +17,24 @@ interface DailySignalSnapshot {
   issues_resolved: number;
   blocked_count: number;
   wip_count: number;
+  deploy_count: number;
+  cycle_time_p50_hours: number | null;
+  lead_time_p50_hours: number | null;
   raw_payload?: {
     repos?: string[];
     jiraSites?: string[];
   } | null;
+}
+
+export interface DailyBriefingMetrics {
+  snapshotDate: string;
+  pullRequestsMerged: number;
+  issuesResolved: number;
+  blocked: number;
+  workInProgress: number;
+  deployments: number;
+  cycleTimeHours: number | null;
+  leadTimeHours: number | null;
 }
 
 export interface BriefingData {
@@ -31,6 +45,7 @@ export interface BriefingData {
   stuck: { count: number; items: BriefItem[] };
   decide: { count: number; items: BriefItem[] };
   generatedAt: string;
+  metrics?: DailyBriefingMetrics;
 }
 
 export function useBriefing(projectId?: string) {
@@ -90,6 +105,16 @@ export function useBriefing(projectId?: string) {
             count: snapshot.wip_count ?? 0,
           },
           generatedAt: new Date().toISOString(),
+          metrics: {
+            snapshotDate: snapshot.snapshot_date,
+            pullRequestsMerged: snapshot.prs_merged ?? 0,
+            issuesResolved: snapshot.issues_resolved ?? 0,
+            blocked: snapshot.blocked_count ?? 0,
+            workInProgress: snapshot.wip_count ?? 0,
+            deployments: snapshot.deploy_count ?? 0,
+            cycleTimeHours: snapshot.cycle_time_p50_hours ?? null,
+            leadTimeHours: snapshot.lead_time_p50_hours ?? null,
+          },
         });
         return;
       }
