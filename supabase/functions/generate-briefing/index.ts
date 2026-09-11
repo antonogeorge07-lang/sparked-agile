@@ -31,6 +31,66 @@ interface Bucket {
   items: BriefItem[];
 }
 
+const BRIEFING_MODEL = "google/gemini-2.5-flash";
+
+interface IntelligenceMetadata {
+  used: boolean;
+  provider: "lovable-ai-gateway" | "none";
+  model: string | null;
+  status: "generated" | "skipped" | "fallback";
+  summary: string;
+}
+
+async function generateExecutiveSummary(input: {
+  shipped: number;
+  stuck: number;
+  decide: number;
+  repos: string[];
+  jiraSites: string[];
+}): Promise<IntelligenceMetadata> {
+  const fallback = `Delivery evidence shows ${input.shipped} shipped, ${input.stuck} blocked, and ${input.decide} work-in-progress items.`;
+  const apiKey = Deno.env.get("LOVABLE_API_KEY");
+  if (!apiKey) {
+    return { used: false, provider: "none", model: null, status: "skipped", summary: fallback };
+  }
+
+  try {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: BRIEFING_MODEL,
+        temperature: 0.2,
+        max_tokens: 140,
+        messages: [
+          {
+            role: "system",
+            content: "Write one concise executive delivery observation. Use only the supplied figures. Do not invent causes, dates, owners, or recommendations.",
+          },
+          { role: "user", content: JSON.stringify(input) },
+        ],
+      }),
+    });
+    if (!response.ok) throw new Error(`AI gateway returned ${response.status}`);
+    const payload = await response.json();
+    const summary = payload?.choices?.[0]?.message?.content?.trim();
+    if (!summary) throw new Error("AI gateway returned no summary");
+    return {
+      used: true,
+      provider: "lovable-ai-gateway",
+      model: BRIEFING_MODEL,
+      status: "generated",
+      summary,
+    };
+  } catch (error) {
+    console.warn("generate-briefing AI summary fallback:", error instanceof Error ? error.message : "unknown");
+    return { used: false, provider: "none", model: null, status: "fallback", summary: fallback };
+  }
+}
+
 function parseRepo(cfg: any): string | null {
   if (!cfg) return null;
   const owner = cfg.owner || cfg.organization;
@@ -316,6 +376,14 @@ serve(async (req) => {
     const trim = (xs: BriefItem[]) =>
       xs.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1)).slice(0, 5);
 
+    const intelligence = await generateExecutiveSummary({
+      shipped: shipped.count,
+      stuck: stuck.count,
+      decide: decide.count,
+      repos,
+      jiraSites,
+    });
+
     return new Response(
       JSON.stringify({
         status,
@@ -324,6 +392,7 @@ serve(async (req) => {
         shipped: { count: shipped.count, items: trim(shipped.items) },
         stuck: { count: stuck.count, items: trim(stuck.items) },
         decide: { count: decide.count, items: trim(decide.items) },
+        intelligence,
         generatedAt: new Date().toISOString(),
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
