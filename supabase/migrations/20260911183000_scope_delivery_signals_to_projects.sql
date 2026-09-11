@@ -5,6 +5,13 @@ alter table public.delivery_signals
   references public.projects(id) on delete cascade;
 
 alter table public.delivery_signals
+  drop constraint if exists delivery_signals_source_check;
+
+alter table public.delivery_signals
+  add constraint delivery_signals_source_check
+  check (source in ('github', 'jira', 'combined', 'system'));
+
+alter table public.delivery_signals
   drop constraint if exists delivery_signals_workspace_id_snapshot_date_source_key;
 
 alter table public.delivery_signals
