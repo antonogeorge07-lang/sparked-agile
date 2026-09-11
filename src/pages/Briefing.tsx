@@ -1,238 +1,194 @@
-import React, { useState, useEffect, useRef } from 'react';
-import MacAppLayout from '../components/MacAppLayout';
+import { useEffect, useMemo, useState } from "react";
+import { ExternalLink, GitPullRequest, RefreshCw, ShieldAlert, Sparkles } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import MacAppLayout from "../components/MacAppLayout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { LoadingState } from "@/components/LoadingState";
+import { supabase } from "@/integrations/supabase/client";
+import { useBriefing, type BriefItem } from "@/hooks/useBriefing";
+import { useWorkspace } from "@/hooks/useWorkspace";
+import { useWorkspaceProjects } from "@/hooks/useWorkspaceProjects";
+
+const bucketMeta = {
+  shipped: { title: "Shipped", description: "Merged or resolved in the last seven days", tone: "text-emerald-600" },
+  stuck: { title: "Stuck", description: "Open work without recent movement", tone: "text-amber-600" },
+  decide: { title: "Needs a decision", description: "Open work waiting for review", tone: "text-blue-600" },
+} as const;
+
+function SignalTable({ items }: { items: BriefItem[] }) {
+  if (items.length === 0) {
+    return <p className="py-6 text-sm text-muted-foreground">No matching activity for this project.</p>;
+  }
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
+            <th className="py-3 pr-4 font-medium">Item</th>
+            <th className="py-3 pr-4 font-medium">Source</th>
+            <th className="py-3 pr-4 font-medium">Owner</th>
+            <th className="py-3 font-medium">Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
+            <tr key={`${item.source}-${item.context}-${item.key}`} className="border-b last:border-0">
+              <td className="py-3 pr-4">
+                <a href={item.url} target="_blank" rel="noreferrer" className="font-medium hover:text-primary">
+                  <span className="mr-2 text-muted-foreground">{item.key}</span>{item.title}
+                  <ExternalLink className="ml-1 inline h-3 w-3" />
+                </a>
+                <p className="mt-1 text-xs text-muted-foreground">{item.context}</p>
+              </td>
+              <td className="py-3 pr-4"><Badge variant="outline">{item.source}</Badge></td>
+              <td className="py-3 pr-4 text-muted-foreground">{item.author}</td>
+              <td className="py-3 text-muted-foreground">{new Date(item.updatedAt).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export default function Briefing() {
-  const [velocity, setVelocity] = useState(42.8);
-  const [isSimulating, setIsSimulating] = useState(false);
-  const [delta, setDelta] = useState(0.14);
-  const [logs, setLogs] = useState<string[]>([
-    "🤖 [Agent_01]: Active system vector pipeline online",
-    "🤖 [Agent_02]: Evaluating delivery delta metrics...",
-    "⚙️ [RAG]: Indexing live environment logs"
-  ]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { workspace, loading: workspaceLoading } = useWorkspace();
+  const { projects, loading: projectsLoading } = useWorkspaceProjects(workspace?.id);
+  const [connectedIds, setConnectedIds] = useState<Set<string>>(new Set());
+  const [connectionsLoading, setConnectionsLoading] = useState(true);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Kinetic Waveform Canvas Loop
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let offset = 0;
-    let animationId: number;
-
-    const resize = () => {
-      canvas.width = canvas.parentElement?.clientWidth || 300;
-      canvas.height = canvas.parentElement?.clientHeight || 120;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cy = canvas.height / 2;
-      const width = canvas.width;
-
-      // Primary Flow Wave
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(44, 122, 242, 0.8)';
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      for (let x = 0; x < width; x++) {
-        const y = cy + Math.sin(x * 0.012 + offset) * 18 * Math.cos(x * 0.003);
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      // Secondary Risk Wave
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(242, 79, 44, 0.4)';
-      ctx.lineWidth = 1.5;
-      for (let x = 0; x < width; x++) {
-        const y = cy + Math.sin(x * 0.015 - offset * 1.5) * 12 * Math.sin(x * 0.002);
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      offset += 0.04;
-      animationId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  // Continuous Agentic Logs
-  useEffect(() => {
-    const mockLogs = [
-      "🤖 [Agent_01]: Commits parsed cleanly.",
-      "🤖 [Agent_02]: Target sprint metrics nominal.",
-      "⚡ [Sys]: Vector indexing pipeline idle.",
-      "🤖 [Agent_01]: Scanning backlog for risk parameters...",
-      "⚙️ [Database]: Sync complete on active schemas.",
-      "🤖 [Agent_03]: RAG validation loops match nominal status."
-    ];
-
-    const timer = setInterval(() => {
-      const randomLog = mockLogs[Math.floor(Math.random() * mockLogs.length)];
-      setLogs(prev => {
-        const next = [...prev, randomLog];
-        if (next.length > 4) next.shift(); 
-        return next;
+    if (!workspace?.id) return;
+    let cancelled = false;
+    setConnectionsLoading(true);
+    supabase
+      .from("integrations")
+      .select("project_id")
+      .eq("is_active", true)
+      .in("integration_type", ["github", "jira"])
+      .then(({ data, error }) => {
+        if (cancelled) return;
+        if (error) {
+          setConnectedIds(new Set());
+        } else {
+          setConnectedIds(new Set((data ?? []).map((row) => row.project_id).filter(Boolean)));
+        }
+        setConnectionsLoading(false);
       });
-    }, 2500);
+    return () => { cancelled = true; };
+  }, [workspace?.id]);
 
-    return () => clearInterval(timer);
-  }, []);
+  const connectedProjects = useMemo(
+    () => projects.filter((project) => connectedIds.has(project.id)),
+    [projects, connectedIds],
+  );
+  const requestedProject = searchParams.get("project");
+  const selectedProjectId = connectedProjects.some((project) => project.id === requestedProject)
+    ? requestedProject ?? undefined
+    : connectedProjects[0]?.id;
 
-  const triggerSimulation = () => {
-    setIsSimulating(true);
-    setTimeout(() => {
-      setVelocity(parseFloat((38 + Math.random() * 12).toFixed(1)));
-      setDelta(parseFloat((Math.random() * 0.35).toFixed(2)));
-      setIsSimulating(false);
-    }, 900);
-  };
+  useEffect(() => {
+    if (selectedProjectId && requestedProject !== selectedProjectId) {
+      setSearchParams({ project: selectedProjectId }, { replace: true });
+    }
+  }, [requestedProject, selectedProjectId, setSearchParams]);
 
-  const completionRate = Math.min(Math.floor((velocity / 60) * 100), 100);
-  const strokeOffset = 289 - (289 * completionRate) / 100;
+  const { data, loading, error, refresh } = useBriefing(selectedProjectId);
+  const pageLoading = workspaceLoading || projectsLoading || connectionsLoading;
+
+  if (pageLoading) return <MacAppLayout><LoadingState message="Loading connected projects..." /></MacAppLayout>;
 
   return (
     <MacAppLayout>
-      <div className="max-w-7xl mx-auto space-y-8">
-        
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-300 pb-6">
+      <div className="mx-auto max-w-7xl space-y-6">
+        <div className="flex flex-col gap-4 border-b border-border pb-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 font-sans">
-              Delivery Telemetry Matrix
-            </h1>
-            <p className="text-xs text-slate-500 mt-1.5 uppercase tracking-wider font-mono font-bold">Know your delivery truth, before you decide.</p>
+            <h1 className="text-3xl font-bold tracking-tight">Project Briefing</h1>
+            <p className="mt-1 text-muted-foreground">Live delivery evidence from the selected project's GitHub and Jira connections.</p>
           </div>
-          
-          <div className="flex flex-wrap gap-3">
-            <button className="sa-pill-btn sa-glow-frost text-xs uppercase font-mono tracking-wider active:scale-95">
-              <span className="sa-capsule-specular"></span>
-              Style Rules
-            </button>
-            <button 
-              onClick={triggerSimulation}
-              disabled={isSimulating}
-              className="sa-pill-btn sa-glow-coral text-white text-xs uppercase font-mono tracking-wider active:scale-95"
+          <div className="flex w-full gap-2 md:w-auto">
+            <Select
+              value={selectedProjectId}
+              onValueChange={(project) => setSearchParams({ project })}
+              disabled={connectedProjects.length === 0}
             >
-              <span className="sa-capsule-specular"></span>
-              {isSimulating ? 'CALCULATING...' : 'Run Predictive Simulation'}
-            </button>
+              <SelectTrigger className="w-full md:w-72" aria-label="Connected project">
+                <SelectValue placeholder="Select a connected project" />
+              </SelectTrigger>
+              <SelectContent>
+                {connectedProjects.map((project) => (
+                  <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button variant="outline" onClick={() => void refresh()} disabled={!selectedProjectId || loading}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Card 1: Circular Progress Glass Indicator */}
-          <div className="sa-glass-card p-6 flex flex-col justify-between h-72 lg:col-span-4 group">
-            <div className="sa-glare-overlay"></div>
-            <div className="flex justify-between items-center relative z-10">
-              <span className="text-[10px] tracking-widest text-blue-600 bg-white/90 px-3 py-1 rounded-full border border-white uppercase font-mono font-bold shadow-sm">
-                FLOW_VELOCITY
-              </span>
-              <span className="text-[10px] text-slate-500 font-mono font-bold">REF_NODE_01</span>
-            </div>
-            
-            <div className="my-3 relative z-10 flex items-center justify-between gap-4">
-              <div className="space-y-1">
-                <span className={`text-5xl font-black tracking-tight text-slate-900 transition-colors duration-300 ${isSimulating ? 'text-red-500' : ''}`}>
-                  {isSimulating ? 'CALC...' : velocity}
-                </span>
-                <p className="text-[11px] text-slate-500 font-bold uppercase font-mono mt-1">pts / sprint</p>
-              </div>
+        {connectedProjects.length === 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>No connected projects</CardTitle>
+              <CardDescription>Connect GitHub or Jira to a project to populate this briefing.</CardDescription>
+            </CardHeader>
+          </Card>
+        )}
 
-              {/* Animated SVG Ring */}
-              <div className="relative w-28 h-28 flex items-center justify-center">
-                <svg className="w-full h-full transform -rotate-90">
-                  <circle cx="56" cy="56" r="46" stroke="rgba(0,0,0,0.04)" strokeWidth="8" fill="transparent" />
-                  <circle 
-                    cx="56" cy="56" r="46" 
-                    stroke="url(#sa-blue-gradient)" 
-                    strokeWidth="8" 
-                    strokeDasharray="289" 
-                    strokeDashoffset={isSimulating ? 289 : strokeOffset} 
-                    strokeLinecap="round" 
-                    fill="transparent" 
-                    className="transition-all duration-1000 ease-out"
-                  />
-                  <defs>
-                    <linearGradient id="sa-blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#5296ff" />
-                      <stop offset="100%" stop-color="#2c7af2" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <div className="absolute text-[12px] font-mono font-black text-slate-800">
-                  {isSimulating ? '...' : `${completionRate}%`}
-                </div>
-              </div>
-            </div>
+        {error && (
+          <Card className="border-destructive/40">
+            <CardContent className="pt-6 text-sm text-destructive">{error}</CardContent>
+          </Card>
+        )}
 
-            <div className="flex justify-between items-center text-[11px] text-slate-500 font-mono relative z-10 border-t border-white/80 pt-3">
-              <span>METRIC_STATUS: NOMINAL</span>
-              <span className="text-emerald-600 font-bold">ACTIVE CADENCE</span>
-            </div>
-          </div>
+        {loading && <LoadingState message="Building the selected project briefing..." />}
 
-          {/* Card 2: Simulated Live Debates Terminal */}
-          <div className="sa-glass-card p-6 flex flex-col justify-between h-72 lg:col-span-4 group">
-            <div className="sa-glare-overlay"></div>
-            <div className="flex justify-between items-center relative z-10">
-              <span className="text-[10px] tracking-widest text-slate-700 bg-white/90 px-3 py-1 rounded-full border border-white uppercase font-mono font-bold shadow-sm">
-                AGENTIC_SIMULATION
-              </span>
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
-                <span className="text-[9px] font-mono text-slate-500 font-bold uppercase">LIVE</span>
-              </div>
-            </div>
-
-            <div className="my-3 flex-1 bg-white/50 border border-white p-4 rounded-2xl font-mono text-[10px] text-slate-700 space-y-2 overflow-hidden shadow-inner relative z-10">
-              {logs.map((log, i) => (
-                <div key={i} className="truncate last:font-bold last:text-blue-600 transition-all duration-300">
-                  {log}
-                </div>
+        {!loading && data && (
+          <>
+            <div className="grid gap-4 md:grid-cols-3">
+              {(Object.keys(bucketMeta) as Array<keyof typeof bucketMeta>).map((key) => (
+                <Card key={key}>
+                  <CardHeader className="pb-2">
+                    <CardDescription>{bucketMeta[key].title}</CardDescription>
+                    <CardTitle className={`text-4xl ${bucketMeta[key].tone}`}>{data[key].count}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm text-muted-foreground">{bucketMeta[key].description}</CardContent>
+                </Card>
               ))}
             </div>
 
-            <div className="flex justify-between items-center text-[11px] text-slate-500 font-mono border-t border-white/80 pt-3 relative z-10">
-              <span>AGENTS ENGAGED: 04</span>
-              <span className="text-blue-600 font-extrabold">{delta} DELTA</span>
-            </div>
-          </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><GitPullRequest className="h-5 w-5" />Delivery activity</CardTitle>
+                <CardDescription>
+                  {data.repos.length} GitHub repositor{data.repos.length === 1 ? "y" : "ies"} and {data.jiraSites.length} Jira site{data.jiraSites.length === 1 ? "" : "s"} linked to this project.
+                </CardDescription>
+              </CardHeader>
+            </Card>
 
-          {/* Card 3: Live Refractive Signal Wave Canvas */}
-          <div className="sa-glass-card p-6 flex flex-col justify-between h-72 lg:col-span-4 group">
-            <div className="sa-glare-overlay"></div>
-            <div className="flex justify-between items-center relative z-10">
-              <span className="text-[10px] tracking-widest text-slate-700 bg-white/90 px-3 py-1 rounded-full border border-white uppercase font-mono font-bold shadow-sm">
-                SIGNAL_INTEGRATION
-              </span>
-              <span className="text-[10px] text-slate-500 font-mono font-bold">DOCKER_VPC</span>
-            </div>
+            {(Object.keys(bucketMeta) as Array<keyof typeof bucketMeta>).map((key) => (
+              <Card key={key}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    {key === "stuck" ? <ShieldAlert className="h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
+                    {bucketMeta[key].title}
+                  </CardTitle>
+                  <CardDescription>{bucketMeta[key].description}</CardDescription>
+                </CardHeader>
+                <CardContent><SignalTable items={data[key].items} /></CardContent>
+              </Card>
+            ))}
 
-            <div className="h-28 flex items-center justify-center my-2 relative z-10">
-              <canvas ref={canvasRef} className="w-full h-full opacity-90"></canvas>
-            </div>
-
-            <div className="flex justify-between items-center text-[11px] text-slate-500 font-mono border-t border-white/80 pt-3 relative z-10">
-              <span>REFRACTION CORE</span>
-              <span className="text-slate-900 font-extrabold">45 ms SYNC</span>
-            </div>
-          </div>
-
-        </div>
+            <p className="text-xs text-muted-foreground">Generated {new Date(data.generatedAt).toLocaleString()}</p>
+          </>
+        )}
       </div>
     </MacAppLayout>
   );
