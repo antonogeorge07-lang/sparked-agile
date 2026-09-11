@@ -215,7 +215,7 @@ export const Navigation = () => {
                     );
                   })}
                   
-                  {role === 'admin' && (
+                  {(role === 'admin' || role === 'platform_owner') && (
                     <>
                       <div className="text-xs font-medium text-muted-foreground px-3 mt-3 mb-1">
                         ADMIN
