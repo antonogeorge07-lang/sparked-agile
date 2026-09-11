@@ -31,6 +31,7 @@ export default function UsageAnalytics() {
   const { t } = useTranslation();
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedProject, setSelectedProject] = useState<string>("all");
+  const canViewPlatformAnalytics = role === 'admin' || role === 'platform_owner';
 
   // All hooks must be called before any conditional returns
   const { data: projects } = useQuery({
@@ -39,7 +40,7 @@ export default function UsageAnalytics() {
       const { data } = await supabase.from("pmi_projects").select("id, name");
       return data || [];
     },
-    enabled: role === 'admin',
+    enabled: canViewPlatformAnalytics,
   });
 
   const { data: aiUsageStats } = useQuery({
@@ -58,7 +59,7 @@ export default function UsageAnalytics() {
 
       return data || [];
     },
-    enabled: role === 'admin',
+    enabled: canViewPlatformAnalytics,
   });
 
   const { data: activityStats } = useQuery({
@@ -76,14 +77,14 @@ export default function UsageAnalytics() {
       if (error) throw error;
       return data || [];
     },
-    enabled: role === 'admin',
+    enabled: canViewPlatformAnalytics,
   });
 
   useEffect(() => {
-    if (!roleLoading && role !== 'admin') {
+    if (!roleLoading && !canViewPlatformAnalytics) {
       navigate('/');
     }
-  }, [role, roleLoading, navigate]);
+  }, [canViewPlatformAnalytics, roleLoading, navigate]);
 
   // Use sample data as fallback when no real data exists
   const showingSampleAI = !aiUsageStats || aiUsageStats.length === 0;
@@ -113,7 +114,7 @@ export default function UsageAnalytics() {
     );
   }
 
-  if (role !== 'admin') {
+  if (!canViewPlatformAnalytics) {
     return null;
   }
 
