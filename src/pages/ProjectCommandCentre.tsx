@@ -15,7 +15,6 @@ import { ControlDeck } from "@/components/command-centre/ControlDeck";
 import { RiskRegister } from "@/components/command-centre/RiskRegister";
 import { LessonsLearned } from "@/components/command-centre/LessonsLearned";
 import { AIInsightPlaceholders } from "@/components/command-centre/AIInsightPlaceholders";
-import { CreateProjectDialog } from "@/components/command-centre/CreateProjectDialog";
 import { CreateTaskDialog } from "@/components/command-centre/CreateTaskDialog";
 import { DndContext, DragEndEvent, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { TaskCard } from "@/components/command-centre/TaskCard";
@@ -58,6 +57,7 @@ interface Project {
   description: string | null;
   created_at: string;
   updated_at: string;
+  pmiId: string;
 }
 
 export default function ProjectCommandCentre() {
@@ -75,19 +75,21 @@ export default function ProjectCommandCentre() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const [showCreateProject, setShowCreateProject] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const selectedPmiProject = projects.find((project) => project.id === selectedProject)?.pmiId ?? null;
 
   useEffect(() => {
     checkAuth();
   }, []);
 
   useEffect(() => {
-    if (selectedProject) {
+    if (selectedPmiProject) {
       loadTasks();
+    } else {
+      setTasks([]);
     }
-  }, [selectedProject]);
+  }, [selectedPmiProject]);
 
   const checkAuth = async () => {
     try {
@@ -111,18 +113,15 @@ export default function ProjectCommandCentre() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Load PMI projects for this user
-      const { data, error } = await supabase
-        .from("pmi_projects")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+      const { data, error } = await (supabase as any)
+        .rpc("get_connected_command_projects");
 
       if (error) throw error;
-      setProjects(data || []);
-      if (data && data.length > 0 && !selectedProject) {
-        const requested = data.find((project) => project.id === requestedProjectId);
-        const projectId = requested?.id ?? data[0].id;
+      const connectedProjects = (data || []) as Project[];
+      setProjects(connectedProjects);
+      if (connectedProjects.length > 0 && !selectedProject) {
+        const requested = connectedProjects.find((project) => project.id === requestedProjectId);
+        const projectId = requested?.id ?? connectedProjects[0].id;
         setSelectedProject(projectId);
         if (requestedProjectId !== projectId) {
           setSearchParams((current) => {
@@ -139,13 +138,13 @@ export default function ProjectCommandCentre() {
   };
 
   const loadTasks = async () => {
-    if (!selectedProject) return;
+    if (!selectedPmiProject) return;
 
     try {
       const { data, error } = await supabase
         .from("pmi_tasks")
         .select("*")
-        .eq("project_id", selectedProject)
+        .eq("project_id", selectedPmiProject)
         .order("position", { ascending: true });
 
       if (error) throw error;
@@ -234,11 +233,11 @@ export default function ProjectCommandCentre() {
           </div>
           
           <div className="flex gap-3">
-            <Button onClick={() => setShowCreateProject(true)} variant="outline" size="lg">
+            <Button onClick={() => navigate("/my-projects")} variant="outline" size="lg">
               <Plus className="mr-2 h-4 w-4" />
-              New Project
+              Manage Projects
             </Button>
-            <Button onClick={() => setShowCreateTask(true)} size="lg" disabled={!selectedProject}>
+            <Button onClick={() => setShowCreateTask(true)} size="lg" disabled={!selectedPmiProject}>
               <Plus className="mr-2 h-4 w-4" />
               New Task
             </Button>
@@ -249,10 +248,10 @@ export default function ProjectCommandCentre() {
           <div className="text-center py-12">
             <AlertCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No Projects Yet</h3>
-            <p className="text-muted-foreground mb-6">Create your first project to get started</p>
-            <Button onClick={() => setShowCreateProject(true)} size="lg">
+            <p className="text-muted-foreground mb-6">Connect a GitHub or Jira project to get started</p>
+            <Button onClick={() => navigate("/my-projects")} size="lg">
               <Plus className="mr-2 h-4 w-4" />
-              Create Project
+              Manage Projects
             </Button>
           </div>
         ) : (
@@ -348,10 +347,10 @@ export default function ProjectCommandCentre() {
                 </div>
 
                 <div className="space-y-4">
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
                   
                   <AIInsights
-                    projectId={selectedProject}
+                    projectId={selectedPmiProject}
                     projectName={currentProject?.name || ""}
                     taskCount={tasks.length}
                   />
@@ -390,7 +389,7 @@ export default function ProjectCommandCentre() {
                 </div>
 
                 <div className="w-80 space-y-4">
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
                   <AIInsightPlaceholders />
                 </div>
               </div>
@@ -400,10 +399,10 @@ export default function ProjectCommandCentre() {
             <TabsContent value="risks">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <RiskRegister projectId={selectedProject} />
+                  <RiskRegister projectId={selectedPmiProject} />
                 </div>
                 <div>
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
                 </div>
               </div>
             </TabsContent>
@@ -412,10 +411,10 @@ export default function ProjectCommandCentre() {
             <TabsContent value="lessons">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <LessonsLearned projectId={selectedProject} />
+                  <LessonsLearned projectId={selectedPmiProject} />
                 </div>
                 <div>
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
                 </div>
               </div>
             </TabsContent>
@@ -435,7 +434,7 @@ export default function ProjectCommandCentre() {
                   </Card>
                 </div>
                 <div className="space-y-4">
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
                   <AIInsightPlaceholders />
                 </div>
               </div>
@@ -445,11 +444,11 @@ export default function ProjectCommandCentre() {
             <TabsContent value="test-scenarios">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <TestScenarioGenerator projectId={selectedProject} />
+                  <TestScenarioGenerator projectId={selectedPmiProject} />
                 </div>
                 <div className="space-y-4">
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
-                  <SmartNudgesPanel projectId={selectedProject} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
+                  <SmartNudgesPanel projectId={selectedPmiProject} />
                 </div>
               </div>
             </TabsContent>
@@ -458,11 +457,11 @@ export default function ProjectCommandCentre() {
             <TabsContent value="meeting-notes">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <MeetingNotesProcessor projectId={selectedProject} />
+                  <MeetingNotesProcessor projectId={selectedPmiProject} />
                 </div>
                 <div className="space-y-4">
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
-                  <SmartNudgesPanel projectId={selectedProject} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
+                  <SmartNudgesPanel projectId={selectedPmiProject} />
                 </div>
               </div>
             </TabsContent>
@@ -471,17 +470,17 @@ export default function ProjectCommandCentre() {
             <TabsContent value="forecast">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <ResourceForecastPanel projectId={selectedProject} />
+                  <ResourceForecastPanel projectId={selectedPmiProject} />
                 </div>
                 <div className="space-y-4">
-                  <ControlDeck projectId={selectedProject} tasks={tasks} />
-                  <SmartNudgesPanel projectId={selectedProject} />
+                  <ControlDeck projectId={selectedPmiProject} tasks={tasks} />
+                  <SmartNudgesPanel projectId={selectedPmiProject} />
                 </div>
               </div>
             </TabsContent>
             <TabsContent value="agents">
-              {selectedProject ? (
-                <AgentDebatePanel projectId={selectedProject} />
+              {selectedPmiProject ? (
+                <AgentDebatePanel projectId={selectedPmiProject} />
               ) : (
                 <Card><CardContent className="py-12 text-center text-muted-foreground">Select a project to launch AI agents.</CardContent></Card>
               )}
@@ -490,19 +489,10 @@ export default function ProjectCommandCentre() {
         )}
       </div>
 
-      <CreateProjectDialog
-        open={showCreateProject}
-        onOpenChange={setShowCreateProject}
-        onSuccess={() => {
-          loadProjects();
-          setShowCreateProject(false);
-        }}
-      />
-
       <CreateTaskDialog
         open={showCreateTask}
         onOpenChange={setShowCreateTask}
-        projectId={selectedProject}
+        projectId={selectedPmiProject}
         onSuccess={() => {
           loadTasks();
           setShowCreateTask(false);
