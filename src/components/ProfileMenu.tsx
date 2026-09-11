@@ -106,7 +106,7 @@ export const ProfileMenu = ({ userEmail, userName, avatarUrl }: ProfileMenuProps
             )}
             <span>{mode === "simple" ? "Switch to Advanced mode" : "Switch to Simple mode"}</span>
           </DropdownMenuItem>
-          {role === 'admin' && (
+          {(role === 'admin' || role === 'platform_owner') && (
             <>
               <DropdownMenuItem onClick={() => navigate("/usage-analytics")}>
                 <CreditCard className="mr-2 h-4 w-4" />
