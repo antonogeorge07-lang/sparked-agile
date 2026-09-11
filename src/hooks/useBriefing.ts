@@ -45,8 +45,23 @@ export interface BriefingData {
   stuck: { count: number; items: BriefItem[] };
   decide: { count: number; items: BriefItem[] };
   generatedAt: string;
+  intelligence: {
+    used: boolean;
+    provider: "lovable-ai-gateway" | "none";
+    model: string | null;
+    status: "generated" | "skipped" | "fallback";
+    summary: string;
+  };
   metrics?: DailyBriefingMetrics;
 }
+
+const noIntelligence = {
+  used: false,
+  provider: "none" as const,
+  model: null,
+  status: "skipped" as const,
+  summary: "Metrics calculated directly from connected delivery data.",
+};
 
 export function useBriefing(projectId?: string) {
   const [data, setData] = useState<BriefingData | null>(null);
@@ -70,7 +85,19 @@ export function useBriefing(projectId?: string) {
         "ingest-delivery-signals",
         { body: { projectId } },
       );
-      const snapshot = (ingestPayload as { snapshot?: DailySignalSnapshot } | null)?.snapshot ?? null;
+      let snapshot = (ingestPayload as { snapshot?: DailySignalSnapshot } | null)?.snapshot ?? null;
+
+      if (!snapshot) {
+        const { data: persisted } = await supabase
+          .from("delivery_signals")
+          .select("snapshot_date, prs_merged, issues_resolved, blocked_count, wip_count, deploy_count, cycle_time_p50_hours, lead_time_p50_hours, raw_payload")
+          .eq("project_id", projectId)
+          .eq("source", "combined")
+          .order("snapshot_date", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        snapshot = persisted as DailySignalSnapshot | null;
+      }
 
       const { data: payload, error: fnError } = await supabase.functions.invoke(
         "generate-briefing",
@@ -87,6 +114,7 @@ export function useBriefing(projectId?: string) {
           shipped: emptyBucket,
           stuck: emptyBucket,
           decide: emptyBucket,
+          intelligence: noIntelligence,
           generatedAt: new Date().toISOString(),
         };
 
@@ -125,7 +153,7 @@ export function useBriefing(projectId?: string) {
       if (fnError) throw new Error(fnError.message);
       if (response?.error) throw new Error(response.error);
       if (!response) throw new Error("Briefing returned no data");
-      setData(response);
+      setData({ ...response, intelligence: response.intelligence ?? noIntelligence });
     } catch (err) {
       setData(null);
       setError(err instanceof Error ? err.message : "Failed to load briefing");

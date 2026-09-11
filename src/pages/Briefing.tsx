@@ -8,6 +8,7 @@ import {
   GitPullRequest,
   RefreshCw,
   Rocket,
+  Sparkles,
 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import MacAppLayout from "../components/MacAppLayout";
@@ -308,6 +309,33 @@ export default function Briefing() {
                 </CardContent>
               </Card>
             </section>
+
+            <Card>
+              <CardHeader>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      Executive intelligence
+                    </CardTitle>
+                    <CardDescription className="mt-1">
+                      AI interpretation is separated from verified GitHub and Jira figures.
+                    </CardDescription>
+                  </div>
+                  <Badge variant={data.intelligence.used ? "default" : "secondary"}>
+                    {data.intelligence.used ? "LLM in use" : "LLM not used"}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm leading-6">{data.intelligence.summary}</p>
+                <div className="grid gap-3 border-t pt-4 text-sm sm:grid-cols-3">
+                  <div><span className="text-muted-foreground">Provider</span><p className="font-medium">{data.intelligence.used ? "Lovable AI Gateway" : "Deterministic metrics"}</p></div>
+                  <div><span className="text-muted-foreground">Model</span><p className="font-medium">{data.intelligence.model ?? "None"}</p></div>
+                  <div><span className="text-muted-foreground">Execution</span><p className="font-medium capitalize">{data.intelligence.status}</p></div>
+                </div>
+              </CardContent>
+            </Card>
 
             {(Object.keys(queues) as Array<keyof typeof queues>).map((key) => {
               const Icon = queues[key].icon;
