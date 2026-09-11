@@ -33,12 +33,16 @@ interface Bucket {
 
 function parseRepo(cfg: any): string | null {
   if (!cfg) return null;
-  if (cfg.owner && cfg.repository) return `${cfg.owner}/${cfg.repository}`;
-  if (cfg.repo_name && /\//.test(cfg.repo_name)) return cfg.repo_name;
+  const owner = cfg.owner || cfg.organization;
+  const repository = cfg.repository || cfg.repo;
+  if (owner && repository) {
+    return `${String(owner).trim()}/${String(repository).trim().replace(/\\.git$/, "")}`;
+  }
+  if (cfg.repo_name && /\//.test(cfg.repo_name)) return String(cfg.repo_name).trim().replace(/\\.git$/, "");
   const url = cfg.repo_url;
   if (typeof url === "string") {
     const m = url.match(/github\.com\/([^/]+)\/([^/?#]+)/);
-    if (m) return `${m[1]}/${m[2].replace(".git", "")}`;
+    if (m) return `${m[1]}/${m[2].replace(/\\.git$/, "")}`;
   }
   return null;
 }
@@ -173,8 +177,11 @@ serve(async (req) => {
           .filter((i: any) => i.integration_type === "jira")
           .map((i: any) => {
             const cfg = i.config || {};
-            const raw = cfg.site_url || cfg.board_url || "";
-            const m = String(raw).match(/(https?:\/\/[^/]+)/);
+            const raw = cfg.site_url || cfg.board_url || cfg.domain || cfg.base_url || "";
+            const normalized = /^https?:\/\//i.test(String(raw))
+              ? String(raw)
+              : raw ? `https://${String(raw)}` : "";
+            const m = normalized.match(/(https?:\/\/[^/]+)/);
             return m ? m[1] : null;
           })
           .filter((s): s is string => !!s),
@@ -215,6 +222,10 @@ serve(async (req) => {
           ghToken = j.token ?? null;
         }
       }
+
+      // Match the proven GitHub resolver: a project secret can service
+      // authorized integrations when the user's OAuth token is unavailable.
+      if (!ghToken) ghToken = Deno.env.get("GITHUB_TOKEN") ?? null;
 
       if (ghToken) {
         for (const repo of repos.slice(0, 5)) {
