@@ -11,6 +11,18 @@ export interface BriefItem {
   updatedAt: string;
 }
 
+interface DailySignalSnapshot {
+  snapshot_date: string;
+  prs_merged: number;
+  issues_resolved: number;
+  blocked_count: number;
+  wip_count: number;
+  raw_payload?: {
+    repos?: string[];
+    jiraSites?: string[];
+  } | null;
+}
+
 export interface BriefingData {
   status: "ok" | "no_integration" | "no_token";
   repos: string[];
@@ -39,14 +51,55 @@ export function useBriefing(projectId?: string) {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error("Not signed in");
 
+      const { data: ingestPayload, error: ingestError } = await supabase.functions.invoke(
+        "ingest-delivery-signals",
+        { body: { projectId } },
+      );
+      const snapshot = (ingestPayload as { snapshot?: DailySignalSnapshot } | null)?.snapshot ?? null;
+
       const { data: payload, error: fnError } = await supabase.functions.invoke(
         "generate-briefing",
         { body: { projectId } },
       );
-      if (fnError) throw new Error(fnError.message);
+      const response = payload as (BriefingData & { error?: string }) | null;
 
-      const response = payload as BriefingData & { error?: string };
+      if (snapshot) {
+        const emptyBucket = { count: 0, items: [] as BriefItem[] };
+        const live = response && !response.error ? response : {
+          status: "ok" as const,
+          repos: snapshot.raw_payload?.repos ?? [],
+          jiraSites: snapshot.raw_payload?.jiraSites ?? [],
+          shipped: emptyBucket,
+          stuck: emptyBucket,
+          decide: emptyBucket,
+          generatedAt: new Date().toISOString(),
+        };
+
+        setData({
+          ...live,
+          shipped: {
+            ...live.shipped,
+            count: (snapshot.prs_merged ?? 0) + (snapshot.issues_resolved ?? 0),
+          },
+          stuck: {
+            ...live.stuck,
+            count: snapshot.blocked_count ?? 0,
+          },
+          decide: {
+            ...live.decide,
+            count: snapshot.wip_count ?? 0,
+          },
+          generatedAt: new Date().toISOString(),
+        });
+        return;
+      }
+
+      if (ingestError && fnError) {
+        throw new Error(`Daily ingest failed: ${ingestError.message}. Briefing failed: ${fnError.message}`);
+      }
+      if (fnError) throw new Error(fnError.message);
       if (response?.error) throw new Error(response.error);
+      if (!response) throw new Error("Briefing returned no data");
       setData(response);
     } catch (err) {
       setData(null);
