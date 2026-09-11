@@ -144,7 +144,7 @@ export function AppSidebar() {
     return activeSections
       .filter(section => {
         if (section.adminOnly) {
-          return role === 'admin';
+          return role === 'admin' || role === 'platform_owner';
         }
         return true;
       })
@@ -157,14 +157,14 @@ export function AppSidebar() {
           }
           // Admin-only features
           if (item.url === '/security-incidents') {
-            return role === 'admin';
+            return role === 'admin' || role === 'platform_owner';
           }
           // Public items available to all users
           if (publicItems.includes(item.url)) {
             return true;
           }
           // Features available to approved users
-          return role === 'admin' || role === 'member';
+          return role === 'admin' || role === 'platform_owner' || role === 'member';
         })
       }))
       .filter(section => section.items.length > 0);
