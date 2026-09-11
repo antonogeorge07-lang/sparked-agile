@@ -33,12 +33,16 @@ interface Bucket {
 
 function parseRepo(cfg: any): string | null {
   if (!cfg) return null;
-  if (cfg.owner && cfg.repository) return `${cfg.owner}/${cfg.repository}`;
-  if (cfg.repo_name && /\//.test(cfg.repo_name)) return cfg.repo_name;
+  const owner = cfg.owner || cfg.organization;
+  const repository = cfg.repository || cfg.repo;
+  if (owner && repository) {
+    return `${String(owner).trim()}/${String(repository).trim().replace(/\\.git$/, "")}`;
+  }
+  if (cfg.repo_name && /\//.test(cfg.repo_name)) return String(cfg.repo_name).trim().replace(/\\.git$/, "");
   const url = cfg.repo_url;
   if (typeof url === "string") {
     const m = url.match(/github\.com\/([^/]+)\/([^/?#]+)/);
-    if (m) return `${m[1]}/${m[2].replace(".git", "")}`;
+    if (m) return `${m[1]}/${m[2].replace(/\\.git$/, "")}`;
   }
   return null;
 }
@@ -124,34 +128,38 @@ serve(async (req) => {
     }
 
     const body = await req.json().catch(() => ({}));
-    const projectId = typeof body.projectId === "string" ? body.projectId : "";
-    if (!projectId) {
-      return new Response(JSON.stringify({ error: "A project must be selected" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    const projectId = typeof body.projectId === "string" && body.projectId.trim()
+      ? body.projectId.trim()
+      : null;
+
+    // When a project is supplied, RLS is the tenant boundary: an inaccessible
+    // project ID resolves to no row. Callers without a project retain the
+    // authorized workspace-wide briefing used by shared dashboard cards.
+    if (projectId) {
+      const { data: project } = await supabase
+        .from("projects")
+        .select("id")
+        .eq("id", projectId)
+        .maybeSingle();
+      if (!project) {
+        return new Response(JSON.stringify({ error: "Project not found or access denied" }), {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
-    // RLS is the tenant boundary: inaccessible project IDs resolve to no row.
-    const { data: project } = await supabase
-      .from("projects")
-      .select("id")
-      .eq("id", projectId)
-      .maybeSingle();
-    if (!project) {
-      return new Response(JSON.stringify({ error: "Project not found or access denied" }), {
-        status: 404,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    // Load only integrations attached to the selected project.
-    const { data: integrations, error: integrationsError } = await supabase
+    let integrationsQuery = supabase
       .from("integrations")
       .select("integration_type, config")
-      .eq("project_id", projectId)
       .eq("is_active", true)
       .in("integration_type", ["github", "jira"]);
+
+    if (projectId) {
+      integrationsQuery = integrationsQuery.eq("project_id", projectId);
+    }
+
+    const { data: integrations, error: integrationsError } = await integrationsQuery;
     if (integrationsError) throw integrationsError;
 
     const repos = Array.from(
@@ -169,8 +177,11 @@ serve(async (req) => {
           .filter((i: any) => i.integration_type === "jira")
           .map((i: any) => {
             const cfg = i.config || {};
-            const raw = cfg.site_url || cfg.board_url || "";
-            const m = String(raw).match(/(https?:\/\/[^/]+)/);
+            const raw = cfg.site_url || cfg.board_url || cfg.domain || cfg.base_url || "";
+            const normalized = /^https?:\/\//i.test(String(raw))
+              ? String(raw)
+              : raw ? `https://${String(raw)}` : "";
+            const m = normalized.match(/(https?:\/\/[^/]+)/);
             return m ? m[1] : null;
           })
           .filter((s): s is string => !!s),
@@ -211,6 +222,10 @@ serve(async (req) => {
           ghToken = j.token ?? null;
         }
       }
+
+      // Match the proven GitHub resolver: a project secret can service
+      // authorized integrations when the user's OAuth token is unavailable.
+      if (!ghToken) ghToken = Deno.env.get("GITHUB_TOKEN") ?? null;
 
       if (ghToken) {
         for (const repo of repos.slice(0, 5)) {
