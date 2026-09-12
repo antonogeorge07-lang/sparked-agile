@@ -20,6 +20,7 @@ const corsHeaders = {
 
 const BodySchema = z.object({
   workspaceId: z.string().uuid(),
+  projectId: z.string().uuid(),
   teamDelta: z.number().int().min(-20).max(20).default(0),
   scopeDeltaPct: z.number().min(-100).max(200).default(0),
   deferEpicId: z.string().uuid().optional().nullable(),
@@ -38,7 +39,7 @@ serve(async (req) => {
     if (!parsed.success) {
       return new Response(JSON.stringify({ error: parsed.error.flatten() }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
-    const { workspaceId, teamDelta, scopeDeltaPct, deferEpicId } = parsed.data;
+    const { workspaceId, projectId, teamDelta, scopeDeltaPct, deferEpicId } = parsed.data;
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
@@ -58,12 +59,31 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
+    // The simulator must operate on the same project selected by Velocity Truth.
+    const { data: project, error: projectError } = await supabase
+      .from("projects")
+      .select("id, workspace_id")
+      .eq("id", projectId)
+      .eq("workspace_id", workspaceId)
+      .maybeSingle();
+
+    if (projectError || !project) {
+      return new Response(
+        JSON.stringify({ error: "Project not found or access denied" }),
+        {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
+    }
+
     // Last 12 weeks of signals
     const twelveWeeks = new Date(Date.now() - 84 * 86400_000).toISOString().slice(0, 10);
     const { data: signals, error: sErr } = await supabase
       .from("delivery_signals")
       .select("snapshot_date, prs_merged, issues_resolved, cycle_time_p50_hours, lead_time_p50_hours, wip_count, deploy_count, blocked_count")
       .eq("workspace_id", workspaceId)
+      .eq("project_id", projectId)
       .gte("snapshot_date", twelveWeeks)
       .order("snapshot_date", { ascending: false })
       .limit(84);

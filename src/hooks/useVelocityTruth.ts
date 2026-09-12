@@ -19,7 +19,12 @@ export interface ValueTag {
   entity_type: "epic" | "feature";
   entity_id: string;
   value_band: "high" | "medium" | "low";
-  value_type: "revenue" | "cost_saving" | "risk_reduction" | "customer" | "compliance";
+  value_type:
+    | "revenue"
+    | "cost_saving"
+    | "risk_reduction"
+    | "customer"
+    | "compliance";
   estimated_amount: number | null;
   currency: string | null;
   confidence: "low" | "medium" | "high";
@@ -29,15 +34,33 @@ export interface ValueTag {
 export interface Simulation {
   status: "ok";
   confidence: "low" | "medium" | "high";
-  baseline: { teamSize: number; weeklyThroughput: number; leadTimeDays: number; dataPoints: number };
-  projection: { teamSize: number; weeklyThroughput: number; leadTimeDays: number; throughputChangePct: number; leadChangePct: number };
-  value: { totalScore: number; totalMonetary: number; deferredScore: number; deferredMonetary: number; valueRetainedPct: number };
+  baseline: {
+    teamSize: number;
+    weeklyThroughput: number;
+    leadTimeDays: number;
+    dataPoints: number;
+  };
+  projection: {
+    teamSize: number;
+    weeklyThroughput: number;
+    leadTimeDays: number;
+    throughputChangePct: number;
+    leadChangePct: number;
+  };
+  value: {
+    totalScore: number;
+    totalMonetary: number;
+    deferredScore: number;
+    deferredMonetary: number;
+    valueRetainedPct: number;
+  };
   insight: string;
   generatedAt: string;
 }
 
-export function useVelocityTruth() {
+export function useVelocityTruth(projectId: string | null) {
   const { workspace, loading: wsLoading } = useWorkspace();
+
   const [signals, setSignals] = useState<DeliverySignal[]>([]);
   const [tags, setTags] = useState<ValueTag[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,73 +68,168 @@ export function useVelocityTruth() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    if (!workspace?.id) return;
+    if (!workspace?.id || !projectId) {
+      setSignals([]);
+      setTags([]);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
+
     try {
-      const since = new Date(Date.now() - 84 * 86400_000).toISOString().slice(0, 10);
-      const [{ data: sig, error: sErr }, { data: tg, error: tErr }] = await Promise.all([
-        supabase.from("delivery_signals")
-          .select("snapshot_date, prs_merged, issues_resolved, cycle_time_p50_hours, cycle_time_p90_hours, lead_time_p50_hours, wip_count, blocked_count, deploy_count")
+      const since = new Date(
+        Date.now() - 84 * 86400_000,
+      )
+        .toISOString()
+        .slice(0, 10);
+
+      const [
+        { data: sig, error: sErr },
+        { data: tg, error: tErr },
+      ] = await Promise.all([
+        supabase
+          .from("delivery_signals")
+          .select(
+            "snapshot_date, prs_merged, issues_resolved, cycle_time_p50_hours, cycle_time_p90_hours, lead_time_p50_hours, wip_count, blocked_count, deploy_count",
+          )
           .eq("workspace_id", workspace.id)
+          .eq("project_id", projectId)
           .gte("snapshot_date", since)
           .order("snapshot_date", { ascending: true }),
-        supabase.from("business_value_tags")
-          .select("id, entity_type, entity_id, value_band, value_type, estimated_amount, currency, confidence, notes")
+
+        // business_value_tags is currently workspace-scoped.
+        // Do not invent project isolation until entity ownership is resolved.
+        supabase
+          .from("business_value_tags")
+          .select(
+            "id, entity_type, entity_id, value_band, value_type, estimated_amount, currency, confidence, notes",
+          )
           .eq("workspace_id", workspace.id),
       ]);
+
       if (sErr) throw sErr;
       if (tErr) throw tErr;
+
       setSignals((sig ?? []) as DeliverySignal[]);
       setTags((tg ?? []) as ValueTag[]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load telemetry signals");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to load telemetry signals",
+      );
     } finally {
       setLoading(false);
     }
-  }, [workspace?.id]);
+  }, [workspace?.id, projectId]);
 
   const ingest = useCallback(async () => {
-    if (!workspace?.id) {
-      setError("Ingestion bypassed: No active workspace target initialized.");
+    if (!workspace?.id || !projectId) {
+      setError("Select a project before computing delivery signals.");
       return;
     }
 
     setIngesting(true);
     setError(null);
+
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error("Authentication failure: Not signed in");
-      
-      const { error: fnErr } = await supabase.functions.invoke("ingest-delivery-signals", { 
-        body: { workspaceId: workspace.id } 
-      });
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error("Authentication failure: Not signed in");
+      }
+
+      const { data, error: fnErr } =
+        await supabase.functions.invoke(
+          "ingest-delivery-signals",
+          {
+            body: {
+              workspaceId: workspace.id,
+              projectId,
+            },
+          },
+        );
+
       if (fnErr) throw new Error(fnErr.message);
-      
+
+      if ((data as any)?.error) {
+        throw new Error(
+          typeof (data as any).error === "string"
+            ? (data as any).error
+            : "Delivery signal ingestion failed",
+        );
+      }
+
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Ingestion routine execution failure");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Ingestion routine execution failure",
+      );
     } finally {
       setIngesting(false);
     }
-  }, [load, workspace?.id]);
+  }, [load, workspace?.id, projectId]);
 
-  const simulate = useCallback(async (params: { teamDelta: number; scopeDeltaPct: number; deferEpicId?: string | null }): Promise<Simulation | null> => {
-    if (!workspace?.id) return null;
-    const { data, error: fnErr } = await supabase.functions.invoke("simulate-decisions", {
-      body: { workspaceId: workspace.id, ...params },
-    });
-    if (fnErr) throw new Error(fnErr.message);
-    if ((data as any)?.error) throw new Error(typeof (data as any).error === "string" ? (data as any).error : "Simulation runtime failure");
-    return data as Simulation;
-  }, [workspace?.id]);
+  const simulate = useCallback(
+    async (params: {
+      teamDelta: number;
+      scopeDeltaPct: number;
+      deferEpicId?: string | null;
+    }): Promise<Simulation | null> => {
+      if (!workspace?.id || !projectId) return null;
 
-  useEffect(() => { 
-    if (workspace?.id) {
-      load(); 
-    } 
-  }, [workspace?.id, load]);
+      const { data, error: fnErr } =
+        await supabase.functions.invoke(
+          "simulate-decisions",
+          {
+            body: {
+              workspaceId: workspace.id,
+              projectId,
+              ...params,
+            },
+          },
+        );
 
-  return { workspace, signals, tags, loading: loading || wsLoading, ingesting, error, ingest, simulate, refresh: load };
+      if (fnErr) throw new Error(fnErr.message);
+
+      if ((data as any)?.error) {
+        throw new Error(
+          typeof (data as any).error === "string"
+            ? (data as any).error
+            : "Simulation runtime failure",
+        );
+      }
+
+      return data as Simulation;
+    },
+    [workspace?.id, projectId],
+  );
+
+  useEffect(() => {
+    if (workspace?.id && projectId) {
+      load();
+    } else {
+      setSignals([]);
+      setTags([]);
+      setLoading(false);
+    }
+  }, [workspace?.id, projectId, load]);
+
+  return {
+    workspace,
+    signals,
+    tags,
+    loading: loading || wsLoading,
+    ingesting,
+    error,
+    ingest,
+    simulate,
+    refresh: load,
+  };
 }

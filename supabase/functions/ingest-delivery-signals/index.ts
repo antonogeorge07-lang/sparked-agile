@@ -155,7 +155,7 @@ serve(async (req) => {
     if (!ghToken) ghToken = Deno.env.get("GITHUB_TOKEN") ?? null;
 
     if (ghToken) {
-      for (const repo of repos.slice(0, 5)) {
+      for (const repo of repos) {
         const merged = await gh(ghToken, `/search/issues?q=${encodeURIComponent(`repo:${repo} is:pr is:merged merged:>=${sevenAgoDate}`)}&per_page=100`);
         const opened = await gh(ghToken, `/search/issues?q=${encodeURIComponent(`repo:${repo} is:pr created:>=${sevenAgoDate}`)}&per_page=1`);
         const openWip = await gh(ghToken, `/search/issues?q=${encodeURIComponent(`repo:${repo} is:pr is:open`)}&per_page=1`);
