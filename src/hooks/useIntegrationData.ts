@@ -141,11 +141,13 @@ export const useIntegrationData = (projectId: string | null) => {
       setIntegrations(integrationsData || []);
 
       const jiraIntegration = integrationsData?.find(i => i.integration_type === 'jira');
-      const githubIntegration = integrationsData?.find(i => i.integration_type === 'github');
 
-      // Extract config from integrations table directly
+      // GitHub is multi-repository: a project may have many active repo integrations.
+      const githubIntegrations =
+        integrationsData?.filter(i => i.integration_type === 'github') ?? [];
+
+      // Extract Jira config directly.
       const jiraConfig = jiraIntegration?.config as Record<string, any> | null;
-      const githubConfig = githubIntegration?.config as Record<string, any> | null;
 
       // Fetch Jira data with caching and retry
       if (jiraIntegration && jiraConfig?.board_id) {
@@ -188,51 +190,204 @@ export const useIntegrationData = (projectId: string | null) => {
         setJiraData(null);
       }
 
-      // Fetch GitHub data with caching and retry
-      if (githubIntegration && githubConfig?.repo_url) {
+      // Fetch GitHub data for every repository connected to this project.
+      // Requests are processed in batches of 5 so projects can support 5+ repos
+      // without overwhelming the Edge Function or GitHub API.
+      const repoUrls = Array.from(
+        new Set(
+          githubIntegrations
+            .map((integration) => {
+              const config =
+                integration.config as Record<string, any> | null;
+
+              if (!config) return null;
+
+              if (
+                typeof config.repo_url === "string" &&
+                config.repo_url.trim()
+              ) {
+                return config.repo_url.trim();
+              }
+
+              if (config.owner && config.repository) {
+                return `https://github.com/${config.owner}/${config.repository}`;
+              }
+
+              if (
+                typeof config.repo_name === "string" &&
+                config.repo_name.trim()
+              ) {
+                const name = config.repo_name
+                  .trim()
+                  .replace(/^https?:\/\/github\.com\//, "")
+                  .replace(/\.git$/, "");
+
+                return `https://github.com/${name}`;
+              }
+
+              return null;
+            })
+            .filter((url): url is string => Boolean(url))
+        )
+      );
+
+      if (repoUrls.length > 0) {
         const cacheKey = `activity:${projectId}`;
-        
+
         if (!forceRefresh) {
-          const cached = await getCachedData(cacheKey, 'github');
+          const cached = await getCachedData(cacheKey, "github");
+
           if (cached) {
             setGithubData(cached);
             setLastUpdated(new Date());
           }
         }
 
-        if (forceRefresh || !(await getCachedData(cacheKey, 'github'))) {
+        if (
+          forceRefresh ||
+          !(await getCachedData(cacheKey, "github"))
+        ) {
           try {
-            const githubResponse = await fetchWithRetry(async () => {
-              const { data, error } = await supabase.functions.invoke('fetch-github-activity', {
-                body: { 
-                  projectId,
-                  repoUrl: githubConfig.repo_url 
-                }
-              });
-              if (error) throw error;
-              return data;
-            });
-            
-            if (githubResponse) {
-              const data = { 
-                gitCommits: githubResponse.commits || [],
-                gitPullRequests: githubResponse.pullRequests || [],
-                gitIssues: githubResponse.issues || [],
-                repoName: githubResponse.repoName
-              };
-              setGithubData(data);
-              await setCacheData(cacheKey, 'github', data);
-              setLastUpdated(new Date());
+            const CONCURRENCY = 5;
+            const responses: any[] = [];
+
+            for (let i = 0; i < repoUrls.length; i += CONCURRENCY) {
+              const batch = repoUrls.slice(i, i + CONCURRENCY);
+
+              const batchResults = await Promise.all(
+                batch.map(async (repoUrl) => {
+                  try {
+                    return await fetchWithRetry(async () => {
+                      const { data, error } =
+                        await supabase.functions.invoke(
+                          "fetch-github-activity",
+                          {
+                            body: {
+                              projectId,
+                              repoUrl,
+                            },
+                          }
+                        );
+
+                      if (error) throw error;
+                      return data;
+                    });
+                  } catch (error) {
+                    console.error(
+                      `Failed to fetch GitHub activity for ${repoUrl}:`,
+                      error
+                    );
+
+                    return null;
+                  }
+                })
+              );
+
+              responses.push(
+                ...batchResults.filter(Boolean)
+              );
             }
+
+            const dedupe = (
+              items: any[],
+              keyFn: (item: any) => string
+            ) => {
+              const seen = new Set<string>();
+
+              return items.filter((item) => {
+                const key = keyFn(item);
+
+                if (seen.has(key)) return false;
+
+                seen.add(key);
+                return true;
+              });
+            };
+
+            const gitCommits = dedupe(
+              responses.flatMap((response) =>
+                (response?.commits ?? []).map((item: any) => ({
+                  ...item,
+                  repoName: response.repoName,
+                }))
+              ),
+              (item) => `${item.repoName}:${item.sha}`
+            ).sort(
+              (a, b) =>
+                new Date(b.date ?? 0).getTime() -
+                new Date(a.date ?? 0).getTime()
+            );
+
+            const gitPullRequests = dedupe(
+              responses.flatMap((response) =>
+                (response?.pullRequests ?? []).map((item: any) => ({
+                  ...item,
+                  repoName: response.repoName,
+                }))
+              ),
+              (item) => `${item.repoName}:${item.number}`
+            ).sort(
+              (a, b) =>
+                new Date(b.createdAt ?? 0).getTime() -
+                new Date(a.createdAt ?? 0).getTime()
+            );
+
+            const gitIssues = dedupe(
+              responses.flatMap((response) =>
+                (response?.issues ?? []).map((item: any) => ({
+                  ...item,
+                  repoName: response.repoName,
+                }))
+              ),
+              (item) => `${item.repoName}:${item.number}`
+            ).sort(
+              (a, b) =>
+                new Date(b.createdAt ?? 0).getTime() -
+                new Date(a.createdAt ?? 0).getTime()
+            );
+
+            const repoNames = responses
+              .map((response) => response?.repoName)
+              .filter(Boolean);
+
+            const data = {
+              gitCommits,
+              gitPullRequests,
+              gitIssues,
+
+              // Compatibility aliases for older dashboard consumers.
+              commits: gitCommits,
+              pullRequests: gitPullRequests,
+              issues: gitIssues,
+
+              repoNames,
+              repoName:
+                repoNames.length === 1
+                  ? repoNames[0]
+                  : `${repoNames.length} repositories`,
+              repositoryCount: repoNames.length,
+            };
+
+            setGithubData(data);
+            await setCacheData(cacheKey, "github", data);
+            setLastUpdated(new Date());
           } catch (err) {
-            console.error('Error fetching GitHub data after retries:', err);
+            console.error(
+              "Error fetching GitHub repositories:",
+              err
+            );
+
             if (!githubData) setGithubData(null);
-            toast.error('Failed to fetch GitHub data. Will retry automatically.');
+
+            toast.error(
+              "Failed to fetch GitHub data. Will retry automatically."
+            );
           }
         }
       } else {
         setGithubData(null);
       }
+
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);

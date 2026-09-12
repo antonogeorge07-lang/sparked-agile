@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { LoadingState } from "@/components/LoadingState";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { useVelocityTruth, type Simulation } from "@/hooks/useVelocityTruth";
+import { useUserProjects } from "@/hooks/useUserProjects";
 import { Activity, TrendingUp, Gauge, Sparkles, RefreshCw, Target } from "lucide-react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { toast } from "sonner";
@@ -18,7 +19,24 @@ const bandColor = (b: string) =>
 
 export default function VelocityTruth() {
   useRequireAuth();
-  const { workspace, signals, tags, loading, ingesting, error, ingest, simulate } = useVelocityTruth();
+
+  const {
+    projects,
+    selectedProjectId,
+    setSelectedProjectId,
+    loading: projectsLoading,
+  } = useUserProjects({ autoSelectFirst: true });
+
+  const {
+    workspace,
+    signals,
+    tags,
+    loading,
+    ingesting,
+    error,
+    ingest,
+    simulate,
+  } = useVelocityTruth(selectedProjectId);
 
   // Guard the array mapping against null or undefined database states
   const activeSignals = signals ?? [];
@@ -65,7 +83,9 @@ export default function VelocityTruth() {
     }
   };
 
-  if (loading) return <DashboardLayout><LoadingState /></DashboardLayout>;
+  if (loading || projectsLoading) {
+    return <DashboardLayout><LoadingState /></DashboardLayout>;
+  }
 
   return (
     <DashboardLayout>
@@ -75,6 +95,39 @@ export default function VelocityTruth() {
       </Helmet>
 
       <div className="space-y-6">
+        {/* Project scope */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-medium">Project</p>
+                <p className="text-xs text-muted-foreground">
+                  Delivery signals use only GitHub and Jira integrations linked to this project.
+                </p>
+              </div>
+
+              <select
+                value={selectedProjectId ?? ""}
+                onChange={(event) =>
+                  setSelectedProjectId(event.target.value || null)
+                }
+                disabled={projects.length === 0}
+                className="h-10 min-w-[220px] rounded-md border border-input bg-background px-3 text-sm"
+              >
+                {projects.length === 0 && (
+                  <option value="">No projects available</option>
+                )}
+
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Hero */}
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
