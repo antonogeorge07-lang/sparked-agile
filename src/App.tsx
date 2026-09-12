@@ -76,7 +76,7 @@ const AuthGuard = ({ children, requireNewUser = false }: { children: React.React
   const { user, loading, isNewUser } = useRequireAuth();
 
   if (loading) return <PageLoader />;
-  if (!user) return <Navigate to="/" replace />;
+  if (!user) return <Navigate to="/auth" replace />;
 
   // Lifecycle Route 1: Fresh signups must consume the User Guide first
   if (isNewUser && !requireNewUser) {
