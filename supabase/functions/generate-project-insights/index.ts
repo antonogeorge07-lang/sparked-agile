@@ -100,19 +100,39 @@ serve(async (req) => {
       );
     }
 
-    // Verify project membership
-    const { data: membership, error: memberError } = await supabase
-      .from('project_members')
-      .select('id, role')
-      .eq('project_id', projectId)
-      .eq('user_id', user.id)
-      .single();
+    // Authorize using the canonical projects table.
+    // This Supabase client carries the caller's JWT, so RLS remains
+    // the final project-access boundary.
+    const { data: accessibleProject, error: projectAccessError } = await supabase
+      .from('projects')
+      .select('id, name')
+      .eq('id', projectId)
+      .maybeSingle();
 
-    if (memberError || !membership) {
-      console.error(`[${requestId}] User not member of project`);
+    if (projectAccessError) {
+      console.error(
+        `[${requestId}] Project access check failed:`,
+        projectAccessError.message,
+      );
+
       return new Response(
-        JSON.stringify({ error: 'Unauthorized: Not a project member' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'Project access check failed' }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
+      );
+    }
+
+    if (!accessibleProject) {
+      console.error(`[${requestId}] Project not found or access denied`);
+
+      return new Response(
+        JSON.stringify({ error: 'Project not found or access denied' }),
+        {
+          status: 404,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
       );
     }
 
