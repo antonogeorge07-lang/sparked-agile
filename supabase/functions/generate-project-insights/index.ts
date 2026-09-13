@@ -100,23 +100,23 @@ serve(async (req) => {
       );
     }
 
-    // Authorize using the canonical projects table.
-    // This Supabase client carries the caller's JWT, so RLS remains
-    // the final project-access boundary.
-    const { data: accessibleProject, error: projectAccessError } = await supabase
-      .from('projects')
-      .select('id, name')
+    // The Command Centre sends pmi_projects.id.
+    // Resolve its linked canonical project and authorize both through the
+    // caller JWT/RLS rather than treating the PMI id as projects.id.
+    const { data: pmiProject, error: pmiProjectError } = await supabase
+      .from('pmi_projects')
+      .select('id, name, canonical_project_id')
       .eq('id', projectId)
       .maybeSingle();
 
-    if (projectAccessError) {
+    if (pmiProjectError) {
       console.error(
-        `[${requestId}] Project access check failed:`,
-        projectAccessError.message,
+        `[${requestId}] PMI project access check failed:`,
+        pmiProjectError.message,
       );
 
       return new Response(
-        JSON.stringify({ error: 'Project access check failed' }),
+        JSON.stringify({ error: 'PMI project access check failed' }),
         {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -124,11 +124,56 @@ serve(async (req) => {
       );
     }
 
-    if (!accessibleProject) {
-      console.error(`[${requestId}] Project not found or access denied`);
+    if (!pmiProject) {
+      console.error(`[${requestId}] PMI project not found or access denied`);
 
       return new Response(
-        JSON.stringify({ error: 'Project not found or access denied' }),
+        JSON.stringify({ error: 'PMI project not found or access denied' }),
+        {
+          status: 404,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
+      );
+    }
+
+    if (!pmiProject.canonical_project_id) {
+      console.error(`[${requestId}] PMI project is not linked to a canonical project`);
+
+      return new Response(
+        JSON.stringify({ error: 'Project linkage is incomplete' }),
+        {
+          status: 409,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
+      );
+    }
+
+    const { data: canonicalProject, error: canonicalProjectError } = await supabase
+      .from('projects')
+      .select('id, name')
+      .eq('id', pmiProject.canonical_project_id)
+      .maybeSingle();
+
+    if (canonicalProjectError) {
+      console.error(
+        `[${requestId}] Canonical project access check failed:`,
+        canonicalProjectError.message,
+      );
+
+      return new Response(
+        JSON.stringify({ error: 'Canonical project access check failed' }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
+      );
+    }
+
+    if (!canonicalProject) {
+      console.error(`[${requestId}] Canonical project not found or access denied`);
+
+      return new Response(
+        JSON.stringify({ error: 'Canonical project not found or access denied' }),
         {
           status: 404,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
