@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { resolveCommandProject } from "../_shared/command-project.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -45,7 +46,11 @@ serve(async (req) => {
     const rawInput = await req.json();
     const { projectId } = inputSchema.parse(rawInput);
 
-    // Gather comprehensive context data for pattern analysis
+    const projectContext = await resolveCommandProject(supabase, projectId);
+    const canonicalProjectId = projectContext.canonicalProjectId;
+
+    // Gather comprehensive context data for pattern analysis.
+    // Command Centre tables remain scoped by the PMI project id.
     const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
     const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
     const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
@@ -75,7 +80,7 @@ serve(async (req) => {
         .single(),
       supabase.from('project_members')
         .select('user_id, role')
-        .eq('project_id', projectId),
+        .eq('project_id', canonicalProjectId),
       supabase.from('item_activity_log')
         .select('item_id, action, created_at, user_id')
         .eq('project_id', projectId)

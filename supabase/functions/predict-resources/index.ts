@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { resolveCommandProject } from "../_shared/command-project.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -47,7 +48,13 @@ serve(async (req) => {
     const rawInput = await req.json();
     const { projectId, sprintsAhead, forecastType } = inputSchema.parse(rawInput);
 
-    // Gather project data for AI context
+    const projectContext = await resolveCommandProject(supabase, projectId);
+    const pmiProjectId = projectContext.pmiProjectId;
+    const canonicalProjectId = projectContext.canonicalProjectId;
+
+    // Gather project data for AI context.
+    // PMI delivery tables use pmi_projects.id.
+    // project_members uses canonical projects.id.
     const [velocityResult, backlogResult, teamResult, sprintsResult] = await Promise.all([
       supabase.from('sprint_velocity_history')
         .select('sprint_number, committed_points, delivered_points, velocity')
@@ -60,7 +67,7 @@ serve(async (req) => {
         .in('status', ['todo', 'in_progress', 'blocked']),
       supabase.from('project_members')
         .select('id, role')
-        .eq('project_id', projectId),
+        .eq('project_id', canonicalProjectId),
       supabase.from('native_sprints')
         .select('id, name, status, start_date, end_date')
         .eq('project_id', projectId)
